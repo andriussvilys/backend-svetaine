@@ -1,0 +1,30 @@
+{
+    "medium": {
+      "graphics": [
+        "print material",
+        "drawing",
+        "cg"
+      ],
+      "photo": [],
+      "painting": [],
+      "sculpture": [
+        "installation"
+      ]
+    },
+    "public": {
+      "other": [],
+      "exhibitions": [
+        "malonioji",
+        "kkkc",
+        "gotta do"
+      ]
+    },
+    "studio": {
+      "wip": [
+        "sketches",
+        "progress"
+      ],
+      "studio": [],
+      "misc": []
+    }
+  }
