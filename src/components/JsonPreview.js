@@ -6,15 +6,25 @@ export default class JsonPreview extends Component {
     constructor(props){
         super(props)
     }
+    makeList = (data) => {
+      let list = data.map((item, index) => {
+        return(
+          <li key={`${item}${index}JsonPreviewLi`}>
+            {item}
+          </li>
+        )
+      })
+      return list
+    }
     render() {
         // console.log(this.props)
       return (
         <div className="JsonPreview">
             <div>
-                "category:" {` ${this.props.category} `}
+                "category:" {this.makeList(this.props.category)}
             </div>
             <div>
-                "subcategory": {` ${this.props.subcategory} `}
+                {/* "subcategory": {this.makeList(this.props.subcategory)} */}
             </div>
             <div>
                 "listitem:" {` ${this.props.listitem}- `}
