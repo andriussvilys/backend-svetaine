@@ -7,17 +7,17 @@ export default class JsonPreview extends Component {
         super(props)
     }
     render() {
-        console.log(this.props)
+        // console.log(this.props)
       return (
         <div className="JsonPreview">
             <div>
-                "category:" {this.props.category}
+                "category:" {` ${this.props.category} `}
             </div>
             <div>
-                "subcategory": {this.props.subcategory}
+                "subcategory": {` ${this.props.subcategory} `}
             </div>
             <div>
-                "listitem:" {` ${this.props.listitem} `}
+                "listitem:" {` ${this.props.listitem}- `}
             </div>
         </div>
       )

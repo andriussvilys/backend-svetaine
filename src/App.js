@@ -34,9 +34,18 @@ export default class App extends Component{
               this.setState({subcategory: [...this.state.subcategory, input(parent).value]})
               if(input(parent.parentNode).checked !== true){
                 input(parent.parentNode).checked = true;
-                this.setState({category: [...this.state.category, input(parent.parentNode).value]})
+                console.log(`parent.aprentNode.value ${input(parent.parentNode).value}`);
+                console.log(`parent.aprentNode.value ${input(parent).value}`);
+
+                // this.setState({category: [...this.state.category, input(parent.parentNode).value]})
+                // this.setState({category: {[input(parent.parentNode).value]: {[input(parent).value]: [e.target.value]}}})
 
               }
+              this.setState({category: {...this.state.category, [input(parent.parentNode).value]: {[input(parent).value]: [e.target.value]}}})
+              let listItemArray = this.state.category[input(parent.parentNode).value];
+              console.log(this.state.category['medium'])
+              // let listItemArray = this.state.category[input(parent.parentNode).value][input(parent).value];
+              // listItemArray = [...listItemArray, e.target.value]
             }
           }
           // this.setState({category: input.value})
@@ -102,3 +111,10 @@ export default class App extends Component{
 // }
 
 // export default App;
+
+// category: {
+//   medium: {
+//     graphics: [cg, print],
+//     photo: [],
+//   public: {}
+//   }
