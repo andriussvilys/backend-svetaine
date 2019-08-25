@@ -56,6 +56,7 @@ export default class JsonPreview extends Component {
         // console.log(this.props)
       return (
           <div className="jsonPreview">
+            <h3 className="headline">json preview</h3>
             <div className="jsonPreviewContainer">
               <div>{'{'}</div>
               <div className="category">
