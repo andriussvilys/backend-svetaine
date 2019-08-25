@@ -5,6 +5,7 @@ body {
 
 ul {
   padding: 15px 7px;
+  margin: 0;
 }
 
 .list--category {
@@ -37,11 +38,5 @@ input {
   padding: 0;
   height: 100vh;
   overflow-y: scroll;
-}
-
-.JsonPreview {
-  position: absolute;
-  right: 200px;
-  top: 200px;
 }
 /*# sourceMappingURL=main.css.map */
