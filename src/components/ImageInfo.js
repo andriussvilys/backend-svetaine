@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/components/imageInfo.css"
-
-const navData = require('../JSON/navigation.json');
+import "../css/components/imageInfo.css";
 
 export default class ImageInfo extends Component{
 
@@ -15,7 +13,9 @@ export default class ImageInfo extends Component{
 
   render(){
       return(
-          <div className="imageInfo">image info</div>
+          <div className="imageInfo">image info
+          <input type="file" />
+          </div>
       )
   }
 }

@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
+import { Context } from './Provider'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
 
 export default class JsonPreview extends Component {
-    // constructor(props){
-    //     super(props)
-    // }
-    // makeList = (data) => {
-    //   let list = data.map((item, index) => {
-    //     return(
-    //       <li key={`${item}${index}JsonPreviewLi`}>
-    //         {item}
-    //       </li>
-    //     )
-    //   })
-    //   return list
-    // }
+    static contextType = Context;
+
+
 
     makeList = (categories, state) => {
       let list = categories.map((item, index) => {
@@ -64,17 +55,19 @@ export default class JsonPreview extends Component {
     render() {
         // console.log(this.props)
       return (
-        <div className="JsonPreview">
-          {'{'}
-          <div className="category">
-          {`"category": {`}
-            <div>
-              {this.makeList(this.props.category, this.props.state)}
+          <div className="jsonPreview">
+            <div className="jsonPreviewContainer">
+              <div>{'{'}</div>
+              <div className="category">
+              {`"category": {`}
+                <div className="jsonPreviewContent">
+                  {this.makeList(Object.keys(this.context.state.category), this.context.state)}
+                </div>
+                }
+              </div>
+              <div>{'}'}</div>
             </div>
-            }
           </div>
-          }
-        </div>
       )
     }
   }

@@ -1,4 +1,4 @@
-.JsonPreview {
+.jsonPreview {
   height: 100vh;
   position: absolute;
   right: 0px;
@@ -17,11 +17,23 @@
   padding: 5px;
   background-color: #e2e2e2;
   overflow-y: scroll;
+  width: 300px;
+}
+
+.jsonPreviewContainer {
+  margin-left: 15px;
+  width: 260px;
+  position: absolute;
+  top: 50px;
+  padding-bottom: 50px;
 }
 
 .category {
   margin-left: 15px;
-  width: 260px;
+}
+
+.jsonPreviewContent {
+  display: inline;
 }
 
 .jsonPreview--ul, .jsonPreview--subcategory, .jsonPreview--listitem {
