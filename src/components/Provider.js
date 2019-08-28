@@ -1,5 +1,4 @@
 import React from 'react';
-import { reject } from 'q';
 
 export const Context = React.createContext();
 
@@ -7,7 +6,11 @@ export class Provider extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      category: {}
+      category: {},
+      uploadURL: null,
+      fileName: "",
+      fileType: null,
+      themes: require('../JSON/themes.json')
     }
     this.onCheck = (e) => {
 
@@ -179,11 +182,29 @@ export class Provider extends React.Component{
         //   this.setState({[stateKey]: this.state[stateKey].filter(item => item !== e.target.value)})
         // }
     }
+    this.uploadFile = (e) => {
+        console.log('clicked input')
+        // const input = document.getElementById("uploadInput");
+        const input = e.target;
+    
+        var reader = new FileReader();
+    
+            reader.onload = function(){
+            //   var output = document.getElementById('uploadPreview');
+            //   var dataURL = reader.result;
+              this.setState({ uploadURL: reader.result, fileName: input.files[0].name, fileType: input.files[0].type})
+            //   output.src = dataURL;
+            }.bind(this);
+            reader.readAsDataURL(input.files[0])
+    }
+    this.changeFileName = (e) => {
+        this.setState({ fileName: e.target.value })
+    }
 }   
 
   render(){
     return(
-      <Context.Provider value={ {state: this.state, onCheck: this.onCheck} }>
+      <Context.Provider value={ {state: this.state, onCheck: this.onCheck, uploadFile: this.uploadFile, changeFileName: this.changeFileName} }>
         {this.props.children}
       </Context.Provider>
     )

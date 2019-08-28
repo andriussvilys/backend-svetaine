@@ -19,7 +19,7 @@ export default class App extends Component{
       <div>
         <Provider>
             <NavigationInfo onClick={this.onCheck}/>
-            {/* <ImageInfo /> */}
+            <ImageInfo />
             <JsonPreview />
         </Provider>
       </div>

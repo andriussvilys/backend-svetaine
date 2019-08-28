@@ -30,11 +30,37 @@
   color: #6b6b6b;
 }
 
+.imageBox {
+  border: 1px solid;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  padding: 20px 5px 0;
+  position: absolute;
+  top: 50px;
+  width: calc(100% - 10px);
+}
+
+.uploadPreview {
+  height: 200px;
+  min-width: 150px;
+  max-width: 250px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  background-color: #dfdfdf;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
 .jsonPreviewContainer {
   margin-left: 15px;
   width: 260px;
   position: absolute;
-  top: 50px;
+  top: 380px;
   padding-bottom: 50px;
 }
 

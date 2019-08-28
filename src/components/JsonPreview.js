@@ -57,6 +57,16 @@ export default class JsonPreview extends Component {
       return (
           <div className="jsonPreview">
             <h3 className="headline">json preview</h3>
+            <div className="imageBox">
+              <img 
+              // src={this.context.state.uploadURL} 
+              src={this.context.state.uploadURL} 
+              alt="" 
+              className="uploadPreview" 
+              />
+              <p>file name: {this.context.state.fileName}</p>
+              <p>file type: {this.context.state.fileType}</p>
+            </div>
             <div className="jsonPreviewContainer">
               <div>{'{'}</div>
               <div className="category">

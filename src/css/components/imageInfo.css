@@ -4,4 +4,36 @@
   position: absolute;
   left: 300px;
 }
+
+.imageInfo--box {
+  height: 30px;
+  width: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  position: relative;
+}
+
+.imageInfo--fileUpload {
+  width: 85px;
+  position: absolute;
+  right: 0;
+}
+
+.themeSelector {
+  top: 120px;
+  left: 300px;
+}
+
+.themelist {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.themelist__display {
+  display: initial;
+}
 /*# sourceMappingURL=imageInfo.css.map */

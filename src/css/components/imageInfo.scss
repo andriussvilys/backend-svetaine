@@ -4,3 +4,29 @@
     position: absolute;
     left: 300px;
 }
+
+.imageInfo--box{
+    // display: inline;
+    height: 30px;
+    width: 400px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+.imageInfo--fileUpload{
+    width: 85px;
+    position: absolute;
+    right: 0;
+}
+
+.themeSelector{
+    top: 120px;
+    left: 300px;
+}
+.themelist{
+    height: 400px;
+    overflow-y: scroll;
+}
+.themelist__display{
+    display: initial;
+}
