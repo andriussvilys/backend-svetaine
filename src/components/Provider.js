@@ -10,8 +10,11 @@ export class Provider extends React.Component{
       uploadURL: null,
       fileName: "",
       fileType: null,
-      themes: require('../JSON/themes.json')
+      themes: []
     }
+
+    this.themes = require('../JSON/themes.json')
+
     this.onCheck = (e) => {
 
         let stateCategory = this.state.category;
@@ -200,11 +203,21 @@ export class Provider extends React.Component{
     this.changeFileName = (e) => {
         this.setState({ fileName: e.target.value })
     }
+    this.themesCheck = (e) => {
+        this.setState({ themes: [...this.state.themes, e.target.value]})
+    }
 }   
 
   render(){
     return(
-      <Context.Provider value={ {state: this.state, onCheck: this.onCheck, uploadFile: this.uploadFile, changeFileName: this.changeFileName} }>
+      <Context.Provider value={ {
+          state: this.state, 
+          onCheck: this.onCheck, 
+          uploadFile: this.uploadFile, 
+          changeFileName: this.changeFileName,
+          themes: this.themes,
+          themesCheck: this.themesCheck
+          } }>
         {this.props.children}
       </Context.Provider>
     )

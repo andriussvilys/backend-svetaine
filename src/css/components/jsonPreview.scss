@@ -29,6 +29,7 @@
     padding: 20px 5px 0;
     // position: absolute;
     width: 270px;
+    margin-left: 5px;
 }
 .uploadPreview{
     height: 200px;
@@ -82,4 +83,11 @@
     font-weight: initial;
     color: rgb(105, 105, 105);
     font-size: 16px;
+}
+.preview-themes{
+    display:flex;
+}
+.preview-themes > ul{
+    padding: 0;
+    margin-left: 30px;
 }

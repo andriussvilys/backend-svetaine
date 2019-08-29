@@ -16,12 +16,12 @@ export default class ImageInfo extends Component{
   static contextType = Context;
 
   themeList = () => {
-      let sortedArray = this.context.state.themes.sort();
+      let sortedArray = this.context.themes.sort();
       let themes = sortedArray.map((theme, index) => {
           return (
               <li className="dropdown-item themes-list" key={`theme${index}`}>
                   <span className="themes-span">{theme}</span>
-                  <input className="themes-checkbox" type="checkbox"/>
+                  <input className="themes-checkbox" type="checkbox" value={theme} onChange={(e) => this.context.themesCheck(e)}/>
               </li>
           )
       })
@@ -78,24 +78,11 @@ export default class ImageInfo extends Component{
         <Context.Consumer>
           {() => {
             return(
-              // <div className="dropdown themeSelector">
-              //     <button className="btn btn-secondary dropdown-toggle" 
-              //             type="button" 
-              //             id="themeButton" 
-              //             data-toggle="dropdown" 
-              //             aria-haspopup="true" 
-              //             aria-expanded="false"
-              //             onClick={this.themeButton}>
-              //       Select Themes
-              //     </button>
-              //   <ul className="dropdown-menu themelist" id="themelist">
-              //       {this.themeList()}
-              //   </ul>
-              // </div>
+
               <div className="themeSelector">
-                {/* <ul className="themelist" id="themelist"> */}
+
                     {this.themeList()}
-                {/* </ul> */}
+
               </div>
             )
           }}

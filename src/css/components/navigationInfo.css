@@ -23,7 +23,6 @@ input {
   top: 0;
   margin: 0;
   padding: 0;
-  overflow-y: scroll;
   -ms-grid-column: 1;
       grid-column-start: 1;
   grid-column-end: 2;
@@ -33,6 +32,8 @@ input {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   background-color: #a8b4b9;
 }
 

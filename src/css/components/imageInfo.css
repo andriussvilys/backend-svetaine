@@ -31,6 +31,9 @@
   position: relative;
   padding: 5px 0;
   border-bottom: 2px dotted;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .imageInfo--fileUpload {
@@ -44,10 +47,13 @@
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100%;
+  max-width: 678px;
 }
 
 .themelist {
@@ -78,5 +84,8 @@
 
 .themeSelector > ul {
   background-color: #ffeaee;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 /*# sourceMappingURL=imageInfo.css.map */

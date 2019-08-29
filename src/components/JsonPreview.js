@@ -49,6 +49,19 @@ export default class JsonPreview extends Component {
       return list
     }
 
+    themesPreview = (array) => {
+      let themes = array.map(theme => {
+        return(<li>
+          {theme}
+        </li>)
+      })
+      return(
+        <ul>
+          {themes}
+        </ul>
+      )
+    }
+
     // this.state.category[category]
 
 
@@ -66,6 +79,7 @@ export default class JsonPreview extends Component {
               />
               <p>file name: {this.context.state.fileName}</p>
               <p>file type: {this.context.state.fileType}</p>
+              <div className="preview-themes"><span>themes:</span> {this.themesPreview(this.context.state.themes)}</div>
             </div>
             <h3 className="headline">json preview</h3>
             <div className="jsonPreviewContainer">

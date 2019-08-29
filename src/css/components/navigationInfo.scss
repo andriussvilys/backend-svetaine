@@ -11,6 +11,7 @@
 .list--listitem{
     background-color: #e2f1f8;
     font-size: 12px;
+    // white-space: nowrap;
 }
 input{
     margin-right: 20px;
@@ -24,12 +25,13 @@ input{
     padding: 0;
     // height: 400px;
     // height: 100vh;
-    overflow-y: scroll;
+    // overflow-y: scroll;
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
     display: flex;
+    flex-wrap: wrap;
     background-color: #a8b4b9;
 }
 .list-group{
