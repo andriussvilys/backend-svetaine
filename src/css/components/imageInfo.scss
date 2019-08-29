@@ -1,17 +1,27 @@
 .imageInfo{
-    height: 100vh;
-    width: 300px;
-    position: absolute;
-    left: 300px;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.imageInfo--section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    padding: 20px 0;
 }
 
 .imageInfo--box{
     // display: inline;
-    height: 30px;
-    width: 400px;
+    // height: 30px;
+    // width: 400px;
     display: flex;
     justify-content: space-between;
+    margin: 0 70px;
     position: relative;
+    padding: 5px 0;
+    border-bottom: 2px dotted;
 }
 .imageInfo--fileUpload{
     width: 85px;
@@ -20,8 +30,13 @@
 }
 
 .themeSelector{
-    top: 120px;
-    left: 300px;
+    // top: 120px;
+    // left: 300px;
+    // position: absolute;
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
 }
 .themelist{
     height: 400px;
@@ -30,3 +45,22 @@
 .themelist__display{
     display: initial;
 }
+.themes-list{
+    position: relative;
+    width: 200px;
+    border-bottom: 1px solid;
+    height: 30px;
+}
+.themes-span{
+    position: absolute;
+    left: 10px;
+}
+.themes-checkbox{
+    position: absolute;
+    right: 0;
+}
+
+.themeSelector > ul {
+    background-color: rgb(255, 234, 238);
+}
+

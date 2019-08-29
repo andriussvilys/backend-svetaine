@@ -20,17 +20,25 @@ export default class ImageInfo extends Component{
         <Context.Consumer>
           {() => {
             return(
-            <div>
-              <div className="imageInfo">
-                <h3>image info</h3>
-                <div className="imageInfo--box">
-                  <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={this.context.uploadFile} /><br/>
-                </div>
-                <div className="imageInfo--box">
-                  <span>Change name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
+            <div className="imageInfo">
+              <h3>image info</h3>
+              <div className="imageInfo--section">
+                  <h5>file upload</h5>
+                  <div className="imageInfo--box">
+                    <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={this.context.uploadFile} /><br/>
+                  </div>
+                  <div className="imageInfo--box">
+                    <span>Change name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
                 </div>
               </div>
-              <ThemeSelector/>
+
+              <div className="imageInfo--section">
+                <h5>theme selector</h5>
+                <div className="imageInfo--box">
+                  <ThemeSelector/>
+                </div>
+              </div>
+
             </div>
             )
           }}

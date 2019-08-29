@@ -55,8 +55,8 @@ export default class JsonPreview extends Component {
     render() {
         // console.log(this.props)
       return (
-          <div className="jsonPreview">
-            <h3 className="headline">json preview</h3>
+        <div className="jsonPreview">
+            <h3 className="headline">image preview</h3>
             <div className="imageBox">
               <img 
               // src={this.context.state.uploadURL} 
@@ -67,6 +67,7 @@ export default class JsonPreview extends Component {
               <p>file name: {this.context.state.fileName}</p>
               <p>file type: {this.context.state.fileType}</p>
             </div>
+            <h3 className="headline">json preview</h3>
             <div className="jsonPreviewContainer">
               <div>{'{'}</div>
               <div className="category">

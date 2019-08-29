@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Context } from './Provider'
 import "bootstrap/dist/css/bootstrap.min.css";
-import '../css/main.css';
+import '../css/components/navigationInfo.css';
 
 const navData = require('../JSON/navigation.json');
 const categories = Object.keys(navData);
@@ -136,8 +136,11 @@ export default class NavigationInfo extends Component{
     return(
         <Context.Consumer>
             { () => {return(
-                <div className="container">
-                        {this.makeCategories()}
+                <div>
+                    <h3>categories</h3>
+                    <div className="list--container">
+                            {this.makeCategories()}
+                    </div>
                 </div>
             )}
             }

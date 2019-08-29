@@ -16,10 +16,12 @@ export default class App extends Component{
 
   render(){
     return(
-      <div>
+      <div className="container">
         <Provider>
+          <div className="data-container">
             <NavigationInfo onClick={this.onCheck}/>
             <ImageInfo />
+          </div>
             <JsonPreview />
         </Provider>
       </div>
