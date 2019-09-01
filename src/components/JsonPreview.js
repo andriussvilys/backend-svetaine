@@ -51,15 +51,24 @@ export default class JsonPreview extends Component {
 
     themesPreview = (array) => {
       let themes = array.map(theme => {
-        return(<li>
+        return(<li key={`jsonPreview-${theme}`}>
           {theme}
         </li>)
       })
       return(
-        <ul>
+        <ul className="preview--list">
           {themes}
         </ul>
       )
+    }
+
+    booleanString = (stateKey) => {
+      if(this.context.state[stateKey] === true){
+        return "yes"
+      }
+      else{
+        return "no"
+      }
     }
 
     // this.state.category[category]
@@ -68,32 +77,42 @@ export default class JsonPreview extends Component {
     render() {
         // console.log(this.props)
       return (
-        <div className="jsonPreview">
-            <h3 className="headline">image preview</h3>
-            <div className="imageBox">
-              <img 
-              // src={this.context.state.uploadURL} 
-              src={this.context.state.uploadURL} 
-              alt="" 
-              className="uploadPreview" 
-              />
-              <p>file name: {this.context.state.fileName}</p>
-              <p>file type: {this.context.state.fileType}</p>
-              <div className="preview-themes"><span>themes:</span> {this.themesPreview(this.context.state.themes)}</div>
-            </div>
-            <h3 className="headline">json preview</h3>
-            <div className="jsonPreviewContainer">
-              <div>{'{'}</div>
-              <div className="category">
-              {`"category": {`}
-                <div className="jsonPreviewContent">
-                  {this.makeList(Object.keys(this.context.state.category), this.context.state)}
+        <Context.Consumer>
+          {()=>{
+            return(
+            <div className="jsonPreview">
+                <h3 className="headline">image preview</h3>
+                <div className="imageBox">
+                  <img 
+                  // src={this.context.state.uploadURL} 
+                  src={this.context.state.uploadURL} 
+                  alt="" 
+                  className="uploadPreview" 
+                  />
+                  <div className="preview-container"><span className="preview-span">file name:</span> {this.context.state.fileName}</div>
+                  <div className="preview-container"><span className="preview-span">file type:</span> {this.context.state.fileType}</div>
+                  <div className="preview-container"><span className="preview-span">artwork Family:</span> {this.context.state.artworkFamily}</div>
+                  <div className="preview-container"><span className="preview-span">display on Main page:</span> {this.booleanString("displayMain")}</div>
+                  <div className="preview-container"><span className="preview-span">family display index:</span> {this.context.state.familyDisplayIndex}</div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> {this.themesPreview(this.context.state.themes)}</div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> {this.themesPreview(this.context.state.seeAlso)}</div>
                 </div>
-                }
+                <h3 className="headline">json preview</h3>
+                <div className="jsonPreviewContainer">
+                  <div>{'{'}</div>
+                  <div className="category">
+                  {`"category": {`}
+                    <div className="jsonPreviewContent">
+                      {this.makeList(Object.keys(this.context.state.category), this.context.state)}
+                    </div>
+                    }
+                  </div>
+                  <div>{'}'}</div>
+                </div>
               </div>
-              <div>{'}'}</div>
-            </div>
-          </div>
+            )
+          }}
+        </Context.Consumer>
       )
     }
   }

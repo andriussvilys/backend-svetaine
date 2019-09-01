@@ -26,10 +26,36 @@ export default class ImageInfo extends Component{
               <div className="imageInfo--section">
                   <h5>file upload:</h5>
                   <div className="imageInfo--box">
-                    <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={this.context.uploadFile} /><br/>
+                    <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={() => this.context.uploadFile} /><br/>
                   </div>
                   <div className="imageInfo--box">
-                    <span>Change name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
+                    <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
+                </div>
+                <div className="imageInfo--box">
+                <span>display on main page:</span>
+                <form>
+                    <div className="container-radio">
+                        <label htmlFor="mainDisplayIndex_yes">yes</label>
+                        <input 
+                          type="radio" 
+                          defaultChecked 
+                          name="mainDisplayIndex" 
+                          id="mainDisplayIndex__yes" 
+                          value="yes" 
+                          onChange={(e)=>{this.context.onChange(e, "displayMain")}}
+                          />
+                    </div>
+                    <div className="container-radio">
+                        <label htmlFor="mainDisplayIndex_no">no</label>
+                        <input 
+                          type="radio" 
+                          name="mainDisplayIndex" 
+                          id="mainDisplayIndex__no" 
+                          value="no" 
+                          onChange={(e)=>{this.context.onChange(e, "displayMain")}}
+                          />
+                    </div>
+                  </form>
                 </div>
               </div>
 
@@ -40,9 +66,9 @@ export default class ImageInfo extends Component{
 
               <div className="imageInfo--section">
                 <h5>theme selector:</h5>
-                <div className="imageInfo--box">
+                {/* <div className="imageInfo--box"> */}
                   <ThemeSelector/>
-                </div>
+                {/* </div> */}
               </div>
 
             </div>

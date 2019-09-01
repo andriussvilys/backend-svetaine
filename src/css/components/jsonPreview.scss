@@ -84,10 +84,19 @@
     color: rgb(105, 105, 105);
     font-size: 16px;
 }
-.preview-themes{
+.preview-list-container{
     display:flex;
 }
-.preview-themes > ul{
+.preview--list{
     padding: 0;
     margin-left: 30px;
+}
+.preview-container{
+    border-bottom: 1px solid rgb(165, 165, 165);
+    white-space: normal;
+    font-size: 12px;
+}
+.preview-span{
+    font-weight: 600;
+    font-size: 14px;
 }

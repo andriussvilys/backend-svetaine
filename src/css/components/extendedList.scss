@@ -1,0 +1,32 @@
+.extendedList--form{
+    position: relative;
+    width: 100%;
+    border: none !important;
+}
+.extendedList--form > form{
+    position: absolute;
+    top: 5px;
+    right: 0;
+}
+.button-extend{
+    width: 50px;
+    height: 30px;
+    margin-right: 20px;
+}
+.icon--chevron{
+    height: 30px !important;
+    width: 30px !important;
+    // margin-right: 20px;
+}
+// .icon:hover{
+//     transform: scale(1.2);
+//     cursor: pointer;
+//     transition: all 0.2s;
+// }
+.icon-rotate{
+    transform: rotate(180deg);
+}
+.no-display{
+    transition: all 0.2s;
+    display: none !important;
+}

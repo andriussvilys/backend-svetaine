@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export const Context = React.createContext();
 
@@ -9,11 +10,18 @@ export class Provider extends React.Component{
       category: {},
       uploadURL: null,
       fileName: "",
+      artworkFamily: "",
+      artworkTitle: "",
+      displayMain: true,
+      familyDisplayIndex: Number,
       fileType: null,
-      themes: []
+      themes: [],
+      seeAlso: []
     }
 
     this.themes = require('../JSON/themes.json')
+
+    this.artworkData = require('../JSON/artwork.json')
 
     this.onCheck = (e) => {
 
@@ -203,8 +211,111 @@ export class Provider extends React.Component{
     this.changeFileName = (e) => {
         this.setState({ fileName: e.target.value })
     }
-    this.themesCheck = (e) => {
-        this.setState({ themes: [...this.state.themes, e.target.value]})
+    this.themesCheck = (e, string) => {
+        this.setState({ [string]: [...this.state[string], e.target.value]})
+    }
+
+    this.splitList = (array, string) => {
+        // console.log(array)
+        let sortedArray = Array.from(new Set(array.sort()));
+        // console.log(sortedArray)
+        let listItems = sortedArray.map((listItem) => {
+            return (
+                <li className="dropdown-item themes-list" key={`${string}-${listItem}`}>
+                    <span className="themes-span">{listItem}</span>
+                    <input 
+                    id={`${string}-${listItem}`}
+                    className="themes-checkbox" 
+                    type="checkbox" 
+                    value={listItem} 
+                    onChange={(e) => this.themesCheck(e, string)}/>
+                </li>
+            )
+        })
+
+        function columnLists(){
+          const groups = Math.round(sortedArray.length / 10);
+          let columns = [];
+          for (let index = 0; index < groups; index++) {
+            columns = [...columns, []];
+
+          }
+          let counter = 1;
+          let subcounter = 0;
+          listItems.forEach((item, index)=> {
+            // console.log(index)
+  
+            if(index < 9){
+                // console.log(columns[0])
+              columns[0] = [...columns[0], item]
+            }
+            
+            else{
+              // index.toString().startsWith(counter.toString())
+              subcounter += 1;
+            //   console.log(`subcounter is ${subcounter}`)
+              if(Number.isInteger(subcounter / 10)){
+                counter += 1;
+              }
+              columns[counter] = [...columns[counter], item]
+            }
+          })
+          console.log(columns)
+          let finalList = columns.map((array, index) => {
+            return(<ul key={`${string}-${index}`}>
+              {array}
+            </ul>)
+          })
+          console.log(finalList)
+          return finalList;
+        }
+  
+        return columnLists()
+    }
+
+    this.makeDataList = (array, string) => {
+        let options = array.map( optionValue => {
+            return (<option key={`option-${optionValue}`} value={optionValue} />)
+        })
+        return (
+                <form 
+                    onSubmit={
+                        (e) => {
+                            console.log('clicked submit')
+                            console.log(e.target)
+                            e.preventDefault();
+                            if(typeof this[string] !== 'string'){
+                                this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
+                            }
+                            else{
+                                this.setState({ [string]: e.target.firstChild.value })
+                            }
+                            document.getElementById(`${string}-${e.target.firstChild.value}`).checked = true
+                        }
+                    } 
+                >
+                    <input placeholder={string} list={`datalist-${string}`} name={string} />
+                    <datalist id={`datalist-${string}`}>
+                        {options}
+                    </datalist>
+                </form>
+        )
+    }
+    this.extendList = (e, listId) => {
+    e.target.classList.toggle('icon-rotate');
+    document.getElementById(listId).classList.toggle('no-display');
+    }
+    this.onChange = (e, stateTarget) => {
+        console.log(`${stateTarget} = ${e.target.value}`);
+        if(e.target.value === "yes"){
+            this.setState({ [stateTarget]: true})    
+        }
+        else if(e.target.value === "no"){
+            this.setState({ [stateTarget]: false})
+        }
+        else{
+            this.setState({ [stateTarget]: e.target.value})
+        }
     }
 }   
 
@@ -216,7 +327,13 @@ export class Provider extends React.Component{
           uploadFile: this.uploadFile, 
           changeFileName: this.changeFileName,
           themes: this.themes,
-          themesCheck: this.themesCheck
+          artworkData: this.artworkData,
+          themesCheck: this.themesCheck,
+          splitList: this.splitList,
+          makeDataList: this.makeDataList,
+          extendList: this.extendList,
+          onChange: this.onChange,
+          add: this.add
           } }>
         {this.props.children}
       </Context.Provider>
