@@ -12,6 +12,7 @@ router.get('/', (req, res) => {
     ArtworkInfo.find()
         .then(artworks => res.json(artworks))
 })
+
 //@route post api/artworkInfo
 //@description add a new artwork
 //@access Public
@@ -34,6 +35,20 @@ router.post('/', (req, res) => {
 
     newArtwork.save()
         .then(artwork => res.json(artwork))
+})
+
+//@route GET api/artworkInfo/:id
+//@description delete an artwork
+//@access Public
+
+router.delete('/:id', (req, res) => {
+    ArtworkInfo.findById(req.params.id)
+        .then(artwork => {
+            artwork.remove()
+                .then(() => res.json({success: true}))
+                .catch(err => res.status(404).json({success: "404: not found"}))
+            }
+        )
 })
 
 

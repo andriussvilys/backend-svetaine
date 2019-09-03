@@ -50,3 +50,23 @@ let ArtworkInfoSchema = new Schema({
 });
 
 module.exports = ArtworkInfoSchema = mongoose.model('artworkInfo', ArtworkInfoSchema);
+
+// window.addEventListener('DOMContentLoaded', (event) => {
+
+//     function idLoop(id){
+//         if(!document.getElementById(id)){
+//             return
+//         }
+//         console.log(document.getElementById(id))
+//         document.getElementById(id).setAttribute("ga-la","devices_on_top");
+//         document.getElementById(id).setAttribute("data-omni-type","microsite_contentinter");
+//         document.getElementById(id).setAttribute("data-omni","devices_on_top");
+//         document.getElementById(id).setAttribute("ga-ca","tagasiost");
+//         document.getElementById(id).setAttribute("ga-ac","feature");
+//     }
+
+//     const arr = ["gabtn01", "gabtn02", "gabtn03", "gabtn04"]
+
+//     arr.forEach(id => idLoop(id))
+
+//     });
