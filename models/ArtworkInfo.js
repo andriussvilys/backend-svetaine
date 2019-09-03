@@ -5,14 +5,14 @@ let ArtworkInfoSchema = new Schema({
     category: Schema.Types.Mixed,
     uploadURL: {
         type: String,
-        required: true
+        required: false
     },
     fileName: {
         type: String,
-        required: true
+        required: false
     },
     artworkFamily: {
-        type: String,
+        type: [],
         required: true
     },
     artworkTitle: {
@@ -21,15 +21,15 @@ let ArtworkInfoSchema = new Schema({
     },
     displayMain: {
         type: Boolean,
-        required: true
+        required: false
     },
     familyDisplayIndex: {
         type: Number,
-        required: true
+        required: false
     },
     fileType: {
         type: String,
-        required: true
+        required: false
     },
     themes: {
         type: Array,

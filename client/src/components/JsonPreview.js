@@ -6,8 +6,6 @@ import '../css/components/jsonPreview.css';
 export default class JsonPreview extends Component {
     static contextType = Context;
 
-
-
     makeList = (categories, state) => {
       let list = categories.map((item, index) => {
         let subcategories = [];
