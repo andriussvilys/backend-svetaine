@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const artworkInfo = require('./routes/api/artworkInfo');
+const familySetup = require('./routes/api/familySetup');
 
 const app = express();
 
@@ -27,6 +28,7 @@ client.connect(err => {
 
 //Use routes
 app.use('/api/artworkInfo', artworkInfo);
+app.use('/api/familySetup', familySetup);
 
 const port = process.env.PORT || 5000;
 

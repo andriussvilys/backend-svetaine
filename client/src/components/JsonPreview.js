@@ -90,6 +90,7 @@ export default class JsonPreview extends Component {
                   <div className="preview-container"><span className="preview-span">file name:</span> {this.context.state.fileName}</div>
                   <div className="preview-container"><span className="preview-span">file type:</span> {this.context.state.fileType}</div>
                   <div className="preview-container"><span className="preview-span">artwork Family:</span> {this.context.state.artworkFamily}</div>
+                  <div className="preview-container"><span className="preview-span">artwork Title:</span> {this.context.state.artworkTitle}</div>
                   <div className="preview-container"><span className="preview-span">display on Main page:</span> {this.booleanString("displayMain")}</div>
                   <div className="preview-container"><span className="preview-span">family display index:</span> {this.context.state.familyDisplayIndex}</div>
                   <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> {this.themesPreview(this.context.state.themes)}</div>

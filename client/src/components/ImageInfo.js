@@ -80,9 +80,41 @@ export default class ImageInfo extends Component{
                   <span>post to database:</span>
                   <button className="btn btn-primary btn-sm"
                     onClick={()=>{
-                        axios.post('/api/artworkInfo', JSON.stringify(this.context.state))
-                          .then( res => { console.log(res)})
+                        const stateData = this.context.state;
+                        console.log(stateData)
+                        axios.post('/api/artworkInfo', stateData)
+                          .then( res => { console.log(res.data)})
                               .then(() => axios.get('/api/artworkInfo'))
+                                .then( res => console.log(res.data))
+                          }
+                      }
+                    >POST</button>
+                </div>
+                <div className="imageInfo--box">
+                  <span>Create family setup:</span>
+                  <button className="btn btn-primary btn-sm"
+                    onClick={()=>{
+
+                        const {
+                        category,
+                        artworkFamily,
+                        themes,
+                        seeAlso,
+                        location,
+                        year
+                        } = this.context.state;
+                        const familyData = {
+                          category,
+                          artworkFamily,
+                          themes,
+                          seeAlso,
+                          location,
+                          year
+                          };
+                        console.log(familyData)
+                        axios.post('/api/familySetup', familyData)
+                          .then( res => { console.log(res.data)})
+                              .then(() => axios.get('/api/familySetup'))
                                 .then( res => console.log(res.data))
                           }
                       }

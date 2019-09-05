@@ -29,6 +29,17 @@ export default class FamilyInfo extends Component {
                 {()=>{
                     return(
                         <div>
+                            <div className="imageInfo--box">
+                                <div>
+                                    <p>Add Artwork title:</p> 
+                                    <p className="subtitle">(different from family name):</p>
+                                </div>
+                                <input 
+                                type="text" 
+                                value={this.context.state.artworkTitle} 
+                                onChange={(e) => this.context.onChange(e, 'artworkTitle')} 
+                                />
+                            </div>
                             <ExtendedList 
                                 listName="select artwork family: "
                                 array={this.artworks()}
@@ -45,6 +56,7 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplayIndex" 
                                         id="familyDisplayIndex__yes" 
                                         value="yes" 
+                                        disabled
                                         />
                                     </div>
                                     <div className="container-radio">
@@ -53,13 +65,18 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplayIndex" 
                                         id="familyDisplayIndex__no" 
                                         value="no" 
+                                        disabled
                                         />
                                     </div>
                                 </form>
                             </div>
                             <div className="imageInfo--box">
                                 <span>family display index:</span>
-                                <input type="number" onChange={(e) => this.context.onChange(e, "familyDisplayIndex") } />
+                                <input 
+                                type="number" 
+                                min="0" 
+                                onChange={(e) => this.context.onChange(e, "familyDisplayIndex") } 
+                                />
                             </div>
                             <ExtendedList 
                                 listName="add 'see also' items: "

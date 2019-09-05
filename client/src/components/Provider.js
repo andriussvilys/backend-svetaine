@@ -263,7 +263,7 @@ export class Provider extends React.Component{
           })
           console.log(columns)
           let finalList = columns.map((array, index) => {
-            return(<ul key={`${string}-${index}`}>
+            return(<ul className="no-padding" key={`${string}-${index}`}>
               {array}
             </ul>)
           })
@@ -318,6 +318,7 @@ export class Provider extends React.Component{
             this.setState({ [stateTarget]: e.target.value})
         }
     }
+    // this.isDisabled = (stateKey) => { this.state[stateKey] ?  }
 }   
 
   render(){

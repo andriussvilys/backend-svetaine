@@ -1,8 +1,7 @@
 const express = require('express');
 const router = express.Router();
-
+const ArtworkInfo = require('../../models/ArtworkInfo')
 //model
-const ArtworkInfo = require('../../models/ArtworkInfo');
 
 //@route GET api/artworkInfo
 //@description get all artoworks
@@ -18,23 +17,24 @@ router.get('/', (req, res) => {
 //@access Public
 
 router.post('/', (req, res) => {
-    const newArtwork = new ArtworkInfo({
-        category: req.body.category, 
-        uploadURL: req.body.uploadURL, 
-        fileName: req.body.fileName, 
-        artworkFamily: req.body.artworkFamily, 
-        artworkTitle: req.body.artworkTitle, 
-        displayMain: req.body.displayMain, 
-        familyDisplayIndex: req.body.familyDisplayIndex, 
-        fileType: req.body.fileType, 
-        themes: req.body.themes, 
-        seeAlso: req.body.seeAlso, 
-        location: req.body.location, 
-        year: req.body.year
-    })
+    ArtworkInfo.create(req.body).then((artwork)=>{res.send(artwork)})
+    // const newArtwork = new ArtworkInfo({
+    //     category: req.body.category, 
+    //     uploadURL: req.body.uploadURL, 
+    //     fileName: req.body.fileName, 
+    //     artworkFamily: req.body.artworkFamily, 
+    //     artworkTitle: req.body.artworkTitle, 
+    //     displayMain: req.body.displayMain, 
+    //     familyDisplayIndex: req.body.familyDisplayIndex, 
+    //     fileType: req.body.fileType, 
+    //     themes: req.body.themes, 
+    //     seeAlso: req.body.seeAlso, 
+    //     location: req.body.location, 
+    //     year: req.body.year
+    // })
 
-    newArtwork.save()
-        .then(artwork => res.json(artwork))
+    // newArtwork.save()
+    //     .then(artwork => res.json(artwork))
 })
 
 //@route GET api/artworkInfo/:id
