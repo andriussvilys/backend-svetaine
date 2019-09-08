@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 export const Context = React.createContext();
 
@@ -19,11 +20,11 @@ export class Provider extends React.Component{
       location: "",
       year: ""
     }
-
-    this.themes = require('../JSON/themes.json')
+    // this.themes = require('../JSON/themes.json')
+    this.themes = []
 
     this.artworkData = require('../JSON/artwork.json')
-
+    
     this.onCheck = (e) => {
 
         let stateCategory = this.state.category;
@@ -216,7 +217,7 @@ export class Provider extends React.Component{
         this.setState({ [string]: [...this.state[string], e.target.value]})
     }
 
-    this.splitList = (array, string) => {
+    this.createDropDownList = (array, string) => {
         // console.log(array)
         let sortedArray = Array.from(new Set(array.sort()));
         // console.log(sortedArray)
@@ -275,6 +276,14 @@ export class Provider extends React.Component{
     }
 
     this.makeDataList = (array, string) => {
+        console.log('*****make datalist array*****')
+        console.log(string)
+        console.log(array)
+
+        if(array.length === 0){
+            return            
+        }
+
         let options = array.map( optionValue => {
             return (<option key={`option-${optionValue}`} value={optionValue} />)
         })
@@ -302,10 +311,12 @@ export class Provider extends React.Component{
                 </form>
         )
     }
+
     this.extendList = (e, listId) => {
     e.target.classList.toggle('icon-rotate');
     document.getElementById(listId).classList.toggle('no-display');
     }
+
     this.onChange = (e, stateTarget) => {
         console.log(`${stateTarget} = ${e.target.value}`);
         if(e.target.value === "yes"){
@@ -318,8 +329,57 @@ export class Provider extends React.Component{
             this.setState({ [stateTarget]: e.target.value})
         }
     }
-    // this.isDisabled = (stateKey) => { this.state[stateKey] ?  }
+
+    this.loadData = () => {
+    console.log(`loadData ${'themes'}`)
+        axios.get(`/api/themes/`)
+        .then( res => {
+            console.log('*********lLOAD DATA RES')
+            console.log(res)
+            let result = res.data[0].list
+            this.themes = [...this.themes, result];
+            console.log('********************THIS.THEMES')
+            console.log(this.themes)
+        })
+        .catch(err => {console.log('**************load data error'); console.log(err)})
+    }
+
+    this.themesGET = () => {
+    axios.get('/api/themes')
+    .then( res => {
+        // console.log('reached 5000')
+        // console.log(res.data)
+        let themes = res.data[0].list
+        console.log(themes)
+        return themes
+    })
+    }
+
 }   
+
+// componentDidMount(){
+//     this.themes = () => {
+//         axios.get('/api/themes')
+//         .then( res => {
+//           let themes = res.data[0].list
+//           console.log('**********************component did mount')
+//           console.log(themes)
+//           return themes
+//         })
+//     }    
+// }
+
+// themesGET = () => {
+//     axios.get('/api/themes')
+//     .then( res => {
+//       // console.log('reached 5000')
+//       // console.log(res.data)
+//       let themes = res.data[0].list
+//       this.themes = themes;
+//       console.log(themes)
+//       return themes
+//     })
+//   }
 
   render(){
     return(
@@ -331,11 +391,13 @@ export class Provider extends React.Component{
           themes: this.themes,
           artworkData: this.artworkData,
           themesCheck: this.themesCheck,
-          splitList: this.splitList,
+          createDropDownList: this.createDropDownList,
           makeDataList: this.makeDataList,
           extendList: this.extendList,
           onChange: this.onChange,
-          add: this.add
+          add: this.add,
+          loadData: this.loadData,
+          themesGET: this.themesGET
           } }>
         {this.props.children}
       </Context.Provider>

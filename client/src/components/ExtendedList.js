@@ -9,6 +9,11 @@ class ExtendedList extends React.Component{
 
 static contextType = Context;
 
+// componentDidMount(){
+//     console.log('component did mount')
+//     this.context.loadData("themes")
+// }
+
 render(){
     return(
         <Context.Consumer>
@@ -31,7 +36,7 @@ render(){
                                 </button>
                             </div>
                             <div className="themeSelector no-display" style={{margin: '0 70px'}} id={this.props.id}>                
-                                {this.context.splitList(this.props.array, this.props.string)}
+                                {this.context.createDropDownList(this.props.array, this.props.string)}
                             </div>
                         </div>
                     </div>

@@ -18,7 +18,7 @@ export default class FamilyInfo extends Component {
             for (let index = 0; index < objLength; index++) {
                 artworkNames = [...artworkNames, this.context.artworkData[index].artwork]
             }
-            console.log(Array.from(new Set (artworkNames)))
+            // console.log(Array.from(new Set (artworkNames)))
             return artworkNames = Array.from(new Set (artworkNames))
         }
     }

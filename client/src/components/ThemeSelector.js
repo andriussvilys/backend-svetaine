@@ -9,6 +9,8 @@ import "../css/components/imageInfo.css";
 
 export default class ImageInfo extends Component{
 
+  static contextType = Context;
+
   constructor(props){
     super(props);
     this.state = {
@@ -16,7 +18,6 @@ export default class ImageInfo extends Component{
     }
   }
 
-  static contextType = Context;
 
   themeButton = () => {
     if(this.state.button === 0){
@@ -30,14 +31,31 @@ export default class ImageInfo extends Component{
     }
   }
 
-  themesGET = () => {
-    axios.get('/api/themes')
+  // themesGET = () => {
+  //   axios.get('/api/themes')
+  //   .then( res => {
+  //     // console.log('reached 5000')
+  //     // console.log(res.data)
+  //     let themes = res.data[0].list
+  //     console.log(themes)
+  //     return themes
+  //   })
+  // }
+
+  themesADD = () => {
+    const newTheme = document.getElementById('theme-add').value;
+    axios.put('/api/themes/update', {"list": newTheme})
     .then( res => {
-      let themes = res.data[0].list
+      let themes = res.data.list
       console.log(themes)
       return themes
     })
   }
+
+//   componentDidMount(){
+//     console.log('component did mount')
+//     this.context.loadData("themes")
+// }
 
   render(){
       return(
@@ -52,21 +70,24 @@ export default class ImageInfo extends Component{
                 string="themes"
                 id="themeList"
                 >
-  
                 </ExtendedList>
+
                 <div className="imageInfo--box">
-                  <p>add new theme: </p> <input type="text" />
-                  <button onClick={this.themes}>SEND</button>                  
-                  <div>
-                  <button onClick={this.themesGET}>GET</button>
-                  </div>
+                  <p>add new theme: </p> <input id="theme-add" type="text" />
+                  <button onClick={this.themesADD}>SEND</button>  
                 </div>
+
+                <div className="imageInfo--box">
+                  <p>console log all themes: </p>
+                  <button onClick={this.context.themesGET}>GET</button>
+                </div>
+
               </div>
 
               // <div className="themeSelector">
               //       {this.context.makeDataList(this.context.themes, 'theme')}
               //       {/* {this.themeList()} */}
-              //       {this.context.splitList(this.context.themes, 'theme')}
+              //       {this.context.createDropDownList(this.context.themes, 'theme')}
 
               // </div>
             )

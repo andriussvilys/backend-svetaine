@@ -74,8 +74,11 @@ export default class ImageInfo extends Component{
                           .then( res => console.log(res.data))
                       }
                     }
-                    >click to see</button>
+                    >
+                      click to see
+                    </button>
                 </div>
+
                 <div className="imageInfo--box">
                   <span>post to database:</span>
                   <button className="btn btn-primary btn-sm"

@@ -3,7 +3,6 @@ import { Provider } from './components/Provider';
 import JsonPreview from './components/JsonPreview';
 import ImageInfo from './components/ImageInfo';
 import NavigationInfo from './components/NavigationInfo'
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
 
@@ -20,7 +19,7 @@ export default class App extends Component{
         <div className="container">
           <div className="data-container">
             <ImageInfo />
-            <NavigationInfo onClick={this.onCheck}/>
+            <NavigationInfo onClick={this.onCheck} />
           </div>
             <JsonPreview />
       </div>
