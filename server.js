@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const artworkInfo = require('./routes/api/artworkInfo');
 const familySetup = require('./routes/api/familySetup');
+const themes = require('./routes/api/themes');
 
 const app = express();
 
@@ -29,6 +30,9 @@ client.connect(err => {
 //Use routes
 app.use('/api/artworkInfo', artworkInfo);
 app.use('/api/familySetup', familySetup);
+app.use('/api/themes', themes);
+// this uses a folder inside the server
+// app.use(express.static('files'))
 
 const port = process.env.PORT || 5000;
 

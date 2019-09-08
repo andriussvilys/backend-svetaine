@@ -16,7 +16,7 @@ router.get('/', (req, res) => {
 //@description add a new artwork
 //@access Public
 
-router.post('/', (req, res) => {
+router.post('/create', (req, res) => {
     ArtworkInfo.create(req.body).then((artwork)=>{res.send(artwork)})
     // const newArtwork = new ArtworkInfo({
     //     category: req.body.category, 
@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
 //@description delete an artwork
 //@access Public
 
-router.delete('/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
     ArtworkInfo.findById(req.params.id)
         .then(artwork => {
             artwork.remove()
@@ -51,6 +51,25 @@ router.delete('/:id', (req, res) => {
         )
 })
 
+router.put("/update/:id", (req, res, next) => {
+    console.log(Object.keys(req.body))
+    const obj = {}
+    Object.keys(req.body).forEach(key => {
+        obj[key] = req.body[key]
+    })
+    console.log(obj)
+
+    ArtworkInfo.findOneAndUpdate(
+      { _id: req.params.id },  // <-- find stage
+      { $set: obj },
+      {new: true}
+    )
+
+    .then(newObj => {
+      res.status(200).send(newObj)
+    })
+    .catch(err => {console.log(err); res.status(500).send('problem')})
+})
 
 module.exports = router;
 

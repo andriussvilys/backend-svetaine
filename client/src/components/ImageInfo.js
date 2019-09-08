@@ -82,7 +82,7 @@ export default class ImageInfo extends Component{
                     onClick={()=>{
                         const stateData = this.context.state;
                         console.log(stateData)
-                        axios.post('/api/artworkInfo', stateData)
+                        axios.post('/api/artworkInfo/create', stateData)
                           .then( res => { console.log(res.data)})
                               .then(() => axios.get('/api/artworkInfo'))
                                 .then( res => console.log(res.data))
