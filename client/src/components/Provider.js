@@ -18,7 +18,10 @@ export class Provider extends React.Component{
       themes: [],
       seeAlso: [],
       location: "",
-      year: ""
+      year: "",
+      themesData: [],
+      artworkInfoData: [],
+      familySetupData: []
     }
     // this.themes = require('../JSON/themes.json')
     this.themes = []
@@ -237,17 +240,19 @@ export class Provider extends React.Component{
 
         function columnLists(){
           const groups = Math.round(sortedArray.length / 10);
-          let columns = [];
-          for (let index = 0; index < groups; index++) {
+          let columns = [[]];
+          //This create an array with a number of Arrays equal to UL tags that will be needed
+          for (let index = 1; index < groups; index++) {
             columns = [...columns, []];
-
+            console.log('COLUMNS')
+            console.log(columns)
           }
-          let counter = 1;
-          let subcounter = 0;
+          let counter = 0;
+          let subcounter = 10;
           listItems.forEach((item, index)=> {
             // console.log(index)
   
-            if(index < 9){
+            if(index < 10){
                 // console.log(columns[0])
               columns[0] = [...columns[0], item]
             }
@@ -278,9 +283,8 @@ export class Provider extends React.Component{
     this.makeDataList = (array, string) => {
         console.log('*****make datalist array*****')
         console.log(string)
-        console.log(array)
 
-        if(array.length === 0){
+        if(array.length === 0 || !array){
             return            
         }
 
@@ -330,19 +334,19 @@ export class Provider extends React.Component{
         }
     }
 
-    this.loadData = () => {
-    console.log(`loadData ${'themes'}`)
-        axios.get(`/api/themes/`)
-        .then( res => {
-            console.log('*********lLOAD DATA RES')
-            console.log(res)
-            let result = res.data[0].list
-            this.themes = [...this.themes, result];
-            console.log('********************THIS.THEMES')
-            console.log(this.themes)
-        })
-        .catch(err => {console.log('**************load data error'); console.log(err)})
-    }
+    // this.loadData = () => {
+    // console.log(`loadData ${'themes'}`)
+    //     axios.get(`/api/themes/`)
+    //     .then( res => {
+    //         console.log('*********lLOAD DATA RES')
+    //         console.log(res)
+    //         let result = res.data[0].list
+    //         this.themes = [...this.themes, result];
+    //         console.log('********************THIS.THEMES')
+    //         console.log(this.themes)
+    //     })
+    //     .catch(err => {console.log('**************load data error'); console.log(err)})
+    // }
 
     this.themesGET = () => {
     axios.get('/api/themes')
@@ -357,17 +361,48 @@ export class Provider extends React.Component{
 
 }   
 
-// componentDidMount(){
-//     this.themes = () => {
-//         axios.get('/api/themes')
-//         .then( res => {
-//           let themes = res.data[0].list
-//           console.log('**********************component did mount')
-//           console.log(themes)
-//           return themes
-//         })
-//     }    
-// }
+componentDidMount(){
+    console.log('**********************component did mount')
+
+        axios.get('/api/themes')
+        .then( res => {
+        //   this.themes = res.data[0].list
+          console.log('**************themes DATA')
+          console.log(res.data)
+          this.setState({ themesData: res.data[0].list})
+          console.log(this.state.themesData)
+        })
+        .then( resolved => {
+            axios.get('/api/artworkInfo')
+            .then( res => {
+            //   this.themes = res.data[0].list
+              let allNames = []
+              res.data.forEach(obj => {
+                  if(obj.artworkFamily.length > 0){
+                    obj.artworkFamily.forEach(name => allNames.push(name))
+                  }
+              })
+              allNames = allNames.filter(name => name !== "")
+              console.log('**************artworkInfo DATA')
+              console.log(allNames)
+              this.setState({artworkInfoData: allNames})
+              console.log(this.state.artworkInfoData)
+            })
+        }
+        )
+        .then(resolved => {
+            axios.get('/api/familySetup')
+            .then( res => {
+            //   this.themes = res.data[0].list
+              console.log('**************familySetup DATA')
+              console.log(res.data)
+              this.setState({ familySetupData: res.data[0].list})
+              console.log(this.state.familySetupData)
+            })
+        })
+        
+  
+}
 
 // themesGET = () => {
 //     axios.get('/api/themes')

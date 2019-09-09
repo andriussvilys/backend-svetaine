@@ -42,7 +42,8 @@ export default class FamilyInfo extends Component {
                             </div>
                             <ExtendedList 
                                 listName="select artwork family: "
-                                array={this.artworks()}
+                                // array={this.artworks()}
+                                array={this.context.state.artworkInfoData}
                                 string="artworkFamily"
                                 id="familyList"
                             />
@@ -80,7 +81,7 @@ export default class FamilyInfo extends Component {
                             </div>
                             <ExtendedList 
                                 listName="add 'see also' items: "
-                                array={this.artworks()}
+                                array={this.context.state.artworkInfoData}
                                 string="seeAlso"
                                 id="seeAlso"
                             />

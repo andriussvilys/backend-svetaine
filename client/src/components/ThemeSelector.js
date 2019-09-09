@@ -66,7 +66,7 @@ export default class ImageInfo extends Component{
               <div>
                 <ExtendedList 
                 listName="select themes: "
-                array={this.context.themes}
+                array={this.context.state.themesData}
                 string="themes"
                 id="themeList"
                 >
