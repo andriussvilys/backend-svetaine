@@ -309,9 +309,19 @@ export class Provider extends React.Component{
                     } 
                 >
                     <input placeholder={string} list={`datalist-${string}`} name={string} />
-                    <datalist id={`datalist-${string}`}>
-                        {options}
-                    </datalist>
+                    {() => {
+                        //  CHECK IF INPUT WITH THE SAME VALUE/ID ALREADY EXISTS
+                        if(document.getElementById(`datalist-${string}`)){
+                            return
+                        }
+                        else{
+                            return(
+                                <datalist id={`datalist-${string}`}>
+                                    {options}
+                                </datalist>
+                            )
+                        }
+                        }}
                 </form>
         )
     }
@@ -359,7 +369,7 @@ export class Provider extends React.Component{
     })
     }
 
-    this.addNew = (e, id, router, requestKey, stateKey) => {
+    this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
         console.log('addNew Runs')
         console.log(id)
@@ -378,6 +388,11 @@ export class Provider extends React.Component{
         })
         .then(res => {
             this.setState({ [stateKey]: [...this.state[stateKey], newAddition]})
+        })
+        .then(res => {
+            if(callback){
+                callback()
+            }
         })
       }
 
