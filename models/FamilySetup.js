@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 let FamilySetupSchema = new Schema({
     category: Schema.Types.Mixed,
     artworkFamily: {
-        type: [],
+        type: String,
         required: true
     },
     themes: {

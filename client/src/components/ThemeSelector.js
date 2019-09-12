@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
+import AddNew from './AddNew';
 import axios from 'axios';
 import ExtendedList from './ExtendedList';
 
@@ -72,10 +73,16 @@ export default class ImageInfo extends Component{
                 >
                 </ExtendedList>
 
-                <div className="imageInfo--box">
+                {/* <div className="imageInfo--box">
                   <p>add new theme: </p> <input id="theme-add" type="text" />
                   <button onClick={this.themesADD}>SEND</button>  
-                </div>
+                </div> */}
+
+                <AddNew
+                  router={'/api/themes/update'}
+                  stateKey='themesData'
+                  requestKey="list"
+                />
 
                 <div className="imageInfo--box">
                   <p>console log all themes: </p>

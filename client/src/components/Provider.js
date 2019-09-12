@@ -20,13 +20,13 @@ export class Provider extends React.Component{
       location: "",
       year: "",
       themesData: [],
-      artworkInfoData: [],
+      artworkFamilyList: [],
       familySetupData: []
     }
     // this.themes = require('../JSON/themes.json')
     this.themes = []
 
-    this.artworkData = require('../JSON/artwork.json')
+    // this.artworkData = require('../JSON/artwork.json')
     
     this.onCheck = (e) => {
 
@@ -359,7 +359,29 @@ export class Provider extends React.Component{
     })
     }
 
-}   
+    this.addNew = (e, id, router, requestKey, stateKey) => {
+        e.preventDefault();
+        console.log('addNew Runs')
+        console.log(id)
+        console.log(router)
+        console.log('***********************request KEY')
+        console.log(requestKey)
+        const newAddition = document.getElementById(id).value;
+        console.log(newAddition)
+        axios.put(router, {[requestKey]: newAddition})
+        // axios.put(router, requestKey, requestValue)
+        // eg.: axios.put('api/themes/update', {[key]: "value"})
+        .then( res => {
+          let addition = res.data[requestKey]
+          console.log(addition)
+          return addition
+        })
+        .then(res => {
+            this.setState({ [stateKey]: [...this.state[stateKey], newAddition]})
+        })
+      }
+
+}   //END OF CONTSTRUCTOR
 
 componentDidMount(){
     console.log('**********************component did mount')
@@ -372,21 +394,32 @@ componentDidMount(){
           this.setState({ themesData: res.data[0].list})
           console.log(this.state.themesData)
         })
+        // .then( resolved => {
+        //     axios.get('/api/artworkInfo')
+        //     .then( res => {
+        //     //   this.themes = res.data[0].list
+        //       let allNames = []
+        //       res.data.forEach(obj => {
+        //           if(obj.artworkFamily.length > 0){
+        //             obj.artworkFamily.forEach(name => allNames.push(name))
+        //           }
+        //       })
+        //       allNames = allNames.filter(name => name !== "")
+        //       console.log('**************artworkInfo DATA')
+        //       console.log(allNames)
+        //       this.setState({artworkFamilyList: allNames})
+        //       console.log(this.state.artworkFamilyList)
+        //     })
+        // }
+        // )
         .then( resolved => {
-            axios.get('/api/artworkInfo')
+            axios.get('/api/artworkFamilyList')
             .then( res => {
             //   this.themes = res.data[0].list
-              let allNames = []
-              res.data.forEach(obj => {
-                  if(obj.artworkFamily.length > 0){
-                    obj.artworkFamily.forEach(name => allNames.push(name))
-                  }
-              })
-              allNames = allNames.filter(name => name !== "")
-              console.log('**************artworkInfo DATA')
-              console.log(allNames)
-              this.setState({artworkInfoData: allNames})
-              console.log(this.state.artworkInfoData)
+            console.log('**************artworkFamilyList DATA')
+            console.log(res.data)
+            this.setState({ artworkFamilyList: res.data[0].list})
+            console.log(this.state.artworkFamilyList)
             })
         }
         )
@@ -403,6 +436,41 @@ componentDidMount(){
         
   
 }
+// componentDidUpdate(){
+//     console.log('**********************component did UPDATE')
+
+//     if(this.state.themesData.length > this.state.prevState.themesData.length){}
+//     axios.get('/api/themes')
+//     .then( res => {
+//     //   this.themes = res.data[0].list
+//       console.log('**************themes DATA')
+//       console.log(res.data)
+//       this.setState({ themesData: res.data[0].list})
+//       console.log(this.state.themesData)
+//     })
+//     if(this.state.artworkFamilyList.length > this.state.prevState.artworkFamilyList.length){
+//             axios.get('/api/artworkFamilyList')
+//             .then( res => {
+//             //   this.themes = res.data[0].list
+//             console.log('**************artworkFamilyList DATA')
+//             console.log(res.data)
+//             this.setState({ artworkFamilyList: res.data[0].list})
+//             console.log(this.state.artworkFamilyList)
+//             })
+//     }
+
+//     if(this.state.familySetupData.length > this.state.prevState.familySetupData.length){
+//         axios.get('/api/familySetup')
+//         .then( res => {
+//         //   this.themes = res.data[0].list
+//           console.log('**************familySetup DATA')
+//           console.log(res.data)
+//           this.setState({ familySetupData: res.data[0].list})
+//           console.log(this.state.familySetupData)
+//         })
+//     }
+
+// }
 
 // themesGET = () => {
 //     axios.get('/api/themes')
@@ -432,7 +500,8 @@ componentDidMount(){
           onChange: this.onChange,
           add: this.add,
           loadData: this.loadData,
-          themesGET: this.themesGET
+          themesGET: this.themesGET,
+          addNew: this.addNew
           } }>
         {this.props.children}
       </Context.Provider>

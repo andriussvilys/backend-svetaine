@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
+import AddNew from './AddNew';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
 import '../css/components/imageInfo.css'
@@ -12,15 +13,22 @@ export default class FamilyInfo extends Component {
         super(props);
     
         // this.artworks = [];
-        this.artworks = () => {
-            const objLength = Object.keys(this.context.artworkData).length;
-            let artworkNames = [];
-            for (let index = 0; index < objLength; index++) {
-                artworkNames = [...artworkNames, this.context.artworkData[index].artwork]
-            }
-            // console.log(Array.from(new Set (artworkNames)))
-            return artworkNames = Array.from(new Set (artworkNames))
-        }
+        // this.artworks = () => {
+        //     const objLength = Object.keys(this.context.artworkData).length;
+        //     let artworkNames = [];
+        //     for (let index = 0; index < objLength; index++) {
+        //         artworkNames = [...artworkNames, this.context.artworkData[index].artwork]
+        //     }
+        //     // console.log(Array.from(new Set (artworkNames)))
+        //     return artworkNames = Array.from(new Set (artworkNames))
+        // }
+
+        // this.isDisabled = () => { 
+        //     if(this.context.state.artworkFamily.length < 0 ){
+
+        //     }
+        //     let isDisabled = this.context.state.artworkFamily.length < 0 ?   
+        // }
     }
 
     render(){
@@ -43,9 +51,14 @@ export default class FamilyInfo extends Component {
                             <ExtendedList 
                                 listName="select artwork family: "
                                 // array={this.artworks()}
-                                array={this.context.state.artworkInfoData}
+                                array={this.context.state.artworkFamilyList}
                                 string="artworkFamily"
                                 id="familyList"
+                            />
+                            <AddNew
+                            router={'/api/artworkFamilyList/update'}
+                            stateKey='artworkFamilyList'
+                            requestKey="list"
                             />
                             <div className="imageInfo--box" style={{display: 'flex'}}>
                                 <span>use family setup</span>
@@ -57,7 +70,7 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplayIndex" 
                                         id="familyDisplayIndex__yes" 
                                         value="yes" 
-                                        disabled
+                                        disabled={!this.context.state.artworkFamily}
                                         />
                                     </div>
                                     <div className="container-radio">
@@ -66,7 +79,7 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplayIndex" 
                                         id="familyDisplayIndex__no" 
                                         value="no" 
-                                        disabled
+                                        disabled={!this.context.state.artworkFamily}
                                         />
                                     </div>
                                 </form>
@@ -81,7 +94,7 @@ export default class FamilyInfo extends Component {
                             </div>
                             <ExtendedList 
                                 listName="add 'see also' items: "
-                                array={this.context.state.artworkInfoData}
+                                array={this.context.state.artworkFamilyList}
                                 string="seeAlso"
                                 id="seeAlso"
                             />
