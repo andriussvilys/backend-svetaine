@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
 import AddNew from './AddNew';
+import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
 import '../css/components/imageInfo.css'
@@ -11,24 +12,6 @@ export default class FamilyInfo extends Component {
 
     constructor(props){
         super(props);
-    
-        // this.artworks = [];
-        // this.artworks = () => {
-        //     const objLength = Object.keys(this.context.artworkData).length;
-        //     let artworkNames = [];
-        //     for (let index = 0; index < objLength; index++) {
-        //         artworkNames = [...artworkNames, this.context.artworkData[index].artwork]
-        //     }
-        //     // console.log(Array.from(new Set (artworkNames)))
-        //     return artworkNames = Array.from(new Set (artworkNames))
-        // }
-
-        // this.isDisabled = () => { 
-        //     if(this.context.state.artworkFamily.length < 0 ){
-
-        //     }
-        //     let isDisabled = this.context.state.artworkFamily.length < 0 ?   
-        // }
     }
 
     render(){
@@ -84,6 +67,16 @@ export default class FamilyInfo extends Component {
                                     </div>
                                 </form>
                             </div>
+                            <div className="imageInfo--box">
+                                <span>record new family setup:</span>
+                                <Button
+                                 variant="success" 
+                                 size="sm"
+                                 
+                                >
+                                    SEND
+                                </Button>
+                            </div>                            
                             <div className="imageInfo--box">
                                 <span>family display index:</span>
                                 <input 

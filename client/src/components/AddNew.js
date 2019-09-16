@@ -77,7 +77,6 @@ render(){
                         variant="primary" size="sm"
                         type="submit" 
                         form={`formFor-${this.props.stateKey}`}
-                        // value="SEND"
                         className="button-extend"
                         > SEND
                         </Button>
