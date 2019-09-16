@@ -27,7 +27,7 @@ export default class ImageInfo extends Component{
               <div className="imageInfo--section">
                   <h5>file upload:</h5>
                   <div className="imageInfo--box">
-                    <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={this.context.uploadFile} /><br/>
+                    <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
                   </div>
                   <div className="imageInfo--box">
                     <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
@@ -82,7 +82,8 @@ export default class ImageInfo extends Component{
                 <div className="imageInfo--box">
                   <span>post to database:</span>
                   <button className="btn btn-primary btn-sm"
-                    onClick={()=>{
+                    onClick={
+                      ()=>{
                         const stateData = this.context.state;
                         console.log(stateData)
                         axios.post('/api/artworkInfo/create', stateData)
@@ -90,6 +91,22 @@ export default class ImageInfo extends Component{
                               .then(() => axios.get('/api/artworkInfo'))
                                 .then( res => console.log(res.data))
                           }
+                      }
+                    >POST</button>
+                </div>
+                <div className="imageInfo--box">
+                  <span>Upload image to server:</span>
+                  <button className="btn btn-success btn-sm"
+                    onClick={
+                      // ()=>{
+                      //   const stateData = this.context.state;
+                      //   console.log(stateData)
+                      //   axios.post('/api/artworkInfo/create', stateData)
+                      //     .then( res => { console.log(res.data)})
+                      //         .then(() => axios.get('/api/artworkInfo'))
+                      //           .then( res => console.log(res.data))
+                      //     
+                      this.context.uploadFile
                       }
                     >POST</button>
                 </div>

@@ -20,14 +20,14 @@ export default class NavigationInfo extends Component{
             let listitems = navData[category][subcategory].map((listitem, index) => {
             return(
                 <li key={`${listitem}${index}}`} className="list--listitem list-group-item">
-                <input type="checkbox" value={listitem} id={listitem} onChange={this.context.onCheck} />
+                <input className="navigation-input listitem" type="checkbox" value={listitem} id={listitem} onChange={this.context.onCheck} />
                 <span>{listitem}</span>  
                 </li>
             )
             })
             return(
             <ul key={subcategory} value={subcategory} className="list--subcategory list-group list-group-item">
-                <input type="checkbox" value={subcategory} onChange={this.context.onCheck} />
+                <input className="navigation-input subcategory" type="checkbox" value={subcategory} onChange={this.context.onCheck} />
                 <span>{subcategory}</span>
                 {listitems}
             </ul>
@@ -35,7 +35,9 @@ export default class NavigationInfo extends Component{
         })
     return(
         <div key={category} label={category} className="list-group">
-        <ul value={category} className="list--category"> <input type="checkbox" value={category} onChange={this.context.onCheck} /> <span>{category}</span>
+        <ul value={category} className="list--category"> 
+        <input className="navigation-input category" type="checkbox" value={category} onChange={this.context.onCheck} /> 
+        <span>{category}</span>
         {subcategories}
         </ul>
         </div>

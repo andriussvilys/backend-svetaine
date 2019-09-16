@@ -11,7 +11,7 @@
 }
 
 .button-extend {
-  margin-right: 20px;
+  width: 50px !important;
 }
 
 .icon--chevron {

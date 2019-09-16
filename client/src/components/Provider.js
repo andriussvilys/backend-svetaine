@@ -8,13 +8,16 @@ export class Provider extends React.Component{
     super(props);
     this.state = {
       category: {},
-      uploadURL: null,
+
+      file: null,
+      imagePreview: null,
       fileName: "",
+      fileType: null,
+
       artworkFamily: "",
       artworkTitle: "",
       displayMain: true,
       familyDisplayIndex: Number,
-      fileType: null,
       themes: [],
       seeAlso: [],
       location: "",
@@ -23,17 +26,30 @@ export class Provider extends React.Component{
       artworkFamilyList: [],
       familySetupData: []
     }
-    // this.themes = require('../JSON/themes.json')
-    this.themes = []
 
-    // this.artworkData = require('../JSON/artwork.json')
+    this.themes = []
     
     this.onCheck = (e) => {
+        if(!e.target.checked){
+            // console.log(e.target.classList[1])
+            let classname = e.target.classList[1]
+            switch (classname) {
+                case "listitem":
+                    console.log('   CLICKED LIST ITEM')
+                    let subcategory = e.target.parentNode.parentNode
+                    let category = e.target.parentNode.parentNode.parentNode
+                    console.log(`Parent of this checkbox is =====`)
+                    console.log(subcategory)
+                    console.log(`Parent of this checkbox parent is =====`)
+                    console.log(category)
+                    break;
+            
+                default:
+                    break;
+            }
+        }
 
         let stateCategory = this.state.category;
-        // console.log(stateCategory)
-        // console.log('runs')
-        // let parent = e.target.parentNode.parentNode
         const parentCheckbox = (target) => Array.from(target.getElementsByTagName('input'))[0];
     
         const classNameCheck = (name) => {
@@ -198,24 +214,46 @@ export class Provider extends React.Component{
         //   this.setState({[stateKey]: this.state[stateKey].filter(item => item !== e.target.value)})
         // }
     }
-    this.uploadFile = (e) => {
+
+    this.addFileToState = (e) => {
         console.log('clicked input')
-        // const input = document.getElementById("uploadInput");
         const input = e.target;
     
         var reader = new FileReader();
     
             reader.onload = function(){
-            //   var output = document.getElementById('uploadPreview');
-            //   var dataURL = reader.result;
-              this.setState({ uploadURL: reader.result, fileName: input.files[0].name, fileType: input.files[0].type})
+              this.setState({ 
+                imagePreview: reader.result, 
+                file: input.files[0],
+                fileName: input.files[0].name, 
+                fileType: input.files[0].type
+            })
             //   output.src = dataURL;
             }.bind(this);
             reader.readAsDataURL(input.files[0])
     }
-    this.changeFileName = (e) => {
-        this.setState({ fileName: e.target.value })
+
+    this.uploadFile = () => {
+        const fd = new FormData();
+        fd.append('artworkImage', this.state.file, this.state.fileName)
+        // fd.append('name', this.state.fileName)
+        axios.post('/api/artworkInfo/imageUpload', fd)
+            .then(res => {
+                console.log(res)
+            })
     }
+    
+    this.changeFileName = (e) => {
+        let nameWithFileType = `${e.target.value.split('.')[0]}.${this.state.fileType.split('/')[1]}`
+        this.setState({ fileName: nameWithFileType })
+
+        // let fileReader = this.state.file
+        // console.log(fileReader)
+        // fileReader.name = e.target.value
+        // this.setState({ fileReader, fileName: e.target.value
+        // })
+    }
+
     this.themesCheck = (e, string) => {
         this.setState({ [string]: [...this.state[string], e.target.value]})
     }
@@ -505,6 +543,7 @@ componentDidMount(){
           state: this.state, 
           onCheck: this.onCheck, 
           uploadFile: this.uploadFile, 
+          addFileToState: this.addFileToState,
           changeFileName: this.changeFileName,
           themes: this.themes,
           artworkData: this.artworkData,

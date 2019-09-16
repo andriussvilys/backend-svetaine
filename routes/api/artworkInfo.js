@@ -1,6 +1,19 @@
 const express = require('express');
 const router = express.Router();
-const ArtworkInfo = require('../../models/ArtworkInfo')
+const ArtworkInfo = require('../../models/ArtworkInfo');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+    destination: function(req, file, cb){
+        cb(null, './uploads')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.originalname)
+    }
+
+})
+
+const upload = multer({storage: storage})
 //model
 
 //@route GET api/artworkInfo
@@ -16,7 +29,8 @@ router.get('/', (req, res) => {
 //@description add a new artwork
 //@access Public
 
-router.post('/create', (req, res) => {
+
+router.post('/create', upload.single('artworkImage'), (req, res) => {
     ArtworkInfo.create(req.body).then((artwork)=>{res.send(artwork)})
     // const newArtwork = new ArtworkInfo({
     //     category: req.body.category, 
@@ -36,6 +50,15 @@ router.post('/create', (req, res) => {
     // newArtwork.save()
     //     .then(artwork => res.json(artwork))
 })
+
+router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
+})
+// .then(res => {
+//     console.log('REQ')
+//     console.log(req)
+//     console.log('RES')
+//     console.log(res)
+// })
 
 //@route GET api/artworkInfo/:id
 //@description delete an artwork

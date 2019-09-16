@@ -27,10 +27,10 @@
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin: 0 70px;
+  margin: 0 5vw;
   position: relative;
   padding: 5px 0;
-  border-bottom: 2px dotted;
+  border-bottom: 1px dotted;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -50,7 +50,6 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   width: 100%;
-  padding: 7px;
 }
 
 .themelist {
