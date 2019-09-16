@@ -30,20 +30,44 @@ export class Provider extends React.Component{
     this.themes = []
     
     this.onCheck = (e) => {
+        //this is handled if a checkbox is UNCHECKED
         if(!e.target.checked){
-            // console.log(e.target.classList[1])
             let classname = e.target.classList[1]
+            let checkboxId = e.target.id
+            let subcategory = null
+            let category = null
+            let listItemNest = null
+            let subcategoryNest = null
+            let newListitems = null
             switch (classname) {
                 case "listitem":
                     console.log('   CLICKED LIST ITEM')
-                    let subcategory = e.target.parentNode.parentNode
-                    let category = e.target.parentNode.parentNode.parentNode
+                    subcategory = e.target.parentNode.parentNode.id
+                    category = e.target.parentNode.parentNode.parentNode.id
                     console.log(`Parent of this checkbox is =====`)
                     console.log(subcategory)
                     console.log(`Parent of this checkbox parent is =====`)
                     console.log(category)
+                    console.log('LIST ITEM ARRAY WHERE THIS CHECKBOX CAN BE FOUND')
+                    console.log(this.state.category[category][subcategory])
+                    listItemNest = this.state.category[category][subcategory]
+                    newListitems = listItemNest.splice(
+                        listItemNest.indexOf(checkboxId), 1
+                    )
+                    console.log(newListitems)
+                    this.setState({ listItemNest: newListitems})
+                    return
                     break;
-            
+                case "subcategory":
+                        category = e.target.parentNode.parentNode.id
+                        console.log(category)
+                        // subcategoryNest = this.state.category[category]
+                        // console.log(subcategoryNest)
+                        console.log("LISTITEMNEST WHEN CLICKED SUBCATEGORY")
+                        console.log(this.state.category[category])
+                        subcategoryNest = this.state.category[category]
+                        this.setState({subcategoryNest: {}})
+                        return
                 default:
                     break;
             }

@@ -26,7 +26,7 @@ export default class NavigationInfo extends Component{
             )
             })
             return(
-            <ul key={subcategory} value={subcategory} className="list--subcategory list-group list-group-item">
+            <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
                 <input className="navigation-input subcategory" type="checkbox" value={subcategory} onChange={this.context.onCheck} />
                 <span>{subcategory}</span>
                 {listitems}
@@ -35,7 +35,7 @@ export default class NavigationInfo extends Component{
         })
     return(
         <div key={category} label={category} className="list-group">
-        <ul value={category} className="list--category"> 
+        <ul id={category} className="list--category"> 
         <input className="navigation-input category" type="checkbox" value={category} onChange={this.context.onCheck} /> 
         <span>{category}</span>
         {subcategories}
