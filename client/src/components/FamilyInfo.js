@@ -49,7 +49,6 @@ export default class FamilyInfo extends Component {
                                     <div className="container-radio">
                                         <label htmlFor="familyDisplayIndex_yes">yes</label>
                                         <input type="radio" 
-                                        defaultChecked 
                                         name="familyDisplayIndex" 
                                         id="familyDisplayIndex__yes" 
                                         value="yes" 
@@ -63,6 +62,7 @@ export default class FamilyInfo extends Component {
                                         id="familyDisplayIndex__no" 
                                         value="no" 
                                         disabled={!this.context.state.artworkFamily}
+                                        defaultChecked 
                                         />
                                     </div>
                                 </form>
@@ -72,7 +72,9 @@ export default class FamilyInfo extends Component {
                                 <Button
                                  variant="success" 
                                  size="sm"
-                                 
+                                 onClick={
+                                     this.context.createFamilySetup
+                                 }
                                 >
                                     SEND
                                 </Button>

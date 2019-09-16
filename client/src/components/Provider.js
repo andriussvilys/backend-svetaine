@@ -283,11 +283,19 @@ export class Provider extends React.Component{
     }
 
     this.themesCheck = (e, string) => {
+        if(string === "artworkFamily"){
+            this.setState({ [string]:  e.target.value})
+            return
+        }
         this.setState({ [string]: [...this.state[string], e.target.value]})
     }
 
     this.createDropDownList = (array, string) => {
         // console.log(array)
+        let inputType = "checkbox";
+        if(string === "artworkFamily"){
+            inputType = "radio"
+        }
         let sortedArray = Array.from(new Set(array.sort()));
         // console.log(sortedArray)
         let listItems = sortedArray.map((listItem) => {
@@ -295,9 +303,10 @@ export class Provider extends React.Component{
                 <li className="dropdown-item themes-list" key={`${string}-${listItem}`}>
                     <span className="themes-span">{listItem}</span>
                     <input 
+                    name={string}
                     id={`${string}-${listItem}`}
                     className="themes-checkbox" 
-                    type="checkbox" 
+                    type={inputType}
                     value={listItem} 
                     onChange={(e) => this.themesCheck(e, string)}/>
                 </li>
@@ -364,6 +373,10 @@ export class Provider extends React.Component{
                             console.log('clicked submit')
                             console.log(e.target)
                             e.preventDefault();
+                            // if(string === "artworkFamily"){
+                            //     this.setState({ [string]: e.target.firstChild.value})
+                            //     return
+                            // }
                             if(typeof this[string] !== 'string'){
                                 this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
                             }
@@ -462,6 +475,45 @@ export class Provider extends React.Component{
         })
       }
 
+      this.createFamilySetup = () => {
+        let requestBody = {
+            category: this.state.category,
+            artworkFamily: this.state.artworkFamily,
+            themes: this.state.themes,
+            seeAlso: this.state.seeAlso,
+            location: this.state.location,
+            year: this.state.year
+        }
+        console.log(requestBody)
+        axios.post('/api/familySetup', requestBody)
+            .then( res => console.log(res))
+            .catch(err => console.log(err))
+    }
+
+    // SAMPLE MODEL
+            // {
+            //     "category": {
+            //       "studio": {
+            //         "studio": []
+            //       }
+            //     },
+            //     "artworkFamily":
+            //       "new"
+            //     ,
+            //     "themes": [
+            //       "ANDRIUS",
+            //       "<3",
+            //       "Kamil",
+            //       "fruit"
+            //     ],
+            //     "seeAlso": [
+            //       "UUUUUUUUU"
+            //     ],
+            //     "location": "",
+            //     "year": ""
+            //   }
+             
+
 }   //END OF CONTSTRUCTOR
 
 componentDidMount(){
@@ -509,9 +561,13 @@ componentDidMount(){
             .then( res => {
             //   this.themes = res.data[0].list
               console.log('**************familySetup DATA')
-              console.log(res.data)
-              this.setState({ familySetupData: res.data[0].list})
-              console.log(this.state.familySetupData)
+              if(res.data[0]){
+                this.setState({ familySetupData: res.data[0].list}, 
+                    () => {
+                        console.log(res.data)
+                        console.log(this.state.familySetupData)
+                    })
+              }
             })
         })
         
@@ -583,7 +639,8 @@ componentDidMount(){
           add: this.add,
           loadData: this.loadData,
           themesGET: this.themesGET,
-          addNew: this.addNew
+          addNew: this.addNew,
+          createFamilySetup: this.createFamilySetup
           } }>
         {this.props.children}
       </Context.Provider>

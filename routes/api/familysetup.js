@@ -9,6 +9,7 @@ router.get('/', (req, res) => {
 })
 
 router.post('/', (req, res) => {
+    // FamilySetup.create(req.body).then((setup)=>{res.send(setup)})
     FamilySetup.create(req.body).then((setup)=>{res.send(setup)})
 })
 
