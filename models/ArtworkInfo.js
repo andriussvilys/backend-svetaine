@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 let ArtworkInfoSchema = new Schema({
     category: Schema.Types.Mixed,
-    uploadURL: {
+    filePath: {
         type: String,
         required: false
     },
@@ -12,10 +12,18 @@ let ArtworkInfoSchema = new Schema({
         required: false
     },
     artworkFamily: {
-        type: [],
+        type: String,
+        required: true
+    },
+    familyDescription: {
+        type: String,
         required: true
     },
     artworkTitle: {
+        type: String,
+        required: false
+    },
+    artworkDescription: {
         type: String,
         required: false
     },

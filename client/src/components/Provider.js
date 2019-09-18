@@ -10,18 +10,23 @@ export class Provider extends React.Component{
       category: {},
 
       file: null,
+      filePath: "",
       imagePreview: null,
       fileName: "",
       fileType: null,
 
       artworkFamily: "",
-      artworkTitle: "",
-      displayMain: true,
-      familyDisplayIndex: Number,
+      familyDescription: "",
       themes: [],
       seeAlso: [],
       location: "",
       year: "",
+
+      artworkTitle: "",
+      artworkDescription: "",
+      displayMain: true,
+      familyDisplayIndex: Number,
+
       themesData: [],
       artworkFamilyList: [],
       familySetupData: []
@@ -479,6 +484,7 @@ export class Provider extends React.Component{
         let requestBody = {
             category: this.state.category,
             artworkFamily: this.state.artworkFamily,
+            familyDescription: this.state.familyDescription,
             themes: this.state.themes,
             seeAlso: this.state.seeAlso,
             location: this.state.location,

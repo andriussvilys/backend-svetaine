@@ -7,13 +7,17 @@ let FamilySetupSchema = new Schema({
         type: String,
         required: true
     },
+    familyDescription: {
+        type: String,
+        required: false
+    },
     themes: {
         type: Array,
-        required: true
+        required: false
     },
     seeAlso: {
         type: Array,
-        required: true
+        required: false
     },
     location: {
         type: String,

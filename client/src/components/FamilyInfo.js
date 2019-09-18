@@ -93,6 +93,31 @@ export default class FamilyInfo extends Component {
                                 string="seeAlso"
                                 id="seeAlso"
                             />
+                            <div className="imageInfo--box" style={{display: "block"}}>
+                                <div>
+                                    <p>Family description:</p> 
+                                    {/* <p className="subtitle">(different from family name):</p> */}
+                                </div>
+                                <textarea
+                                onChange={
+                                    (e) => this.context.onChange(e, "familyDescription")
+                                }
+                                style={{width: "100%"}}
+                                ></textarea>
+                            </div>
+
+                            <div className="imageInfo--box"  style={{display: "block"}}>
+                                <div>
+                                    <p>Artwork description:</p> 
+                                    <p className="subtitle">this is describes particulars of a work in a series or exhibit in a show</p>
+                                </div>
+                                <textarea
+                                onChange={
+                                    (e) => this.context.onChange(e, "artworkDescription")
+                                }
+                                style={{width: "100%"}}
+                                ></textarea>
+                            </div>
 
                         </div>
                     )
