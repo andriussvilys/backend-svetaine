@@ -288,11 +288,17 @@ export class Provider extends React.Component{
     }
 
     this.themesCheck = (e, string) => {
-        if(string === "artworkFamily"){
-            this.setState({ [string]:  e.target.value})
-            return
+        if(e.target.checked){
+            if(string === "artworkFamily"){
+                this.setState({ [string]:  e.target.value})
+                return
+            }
+            this.setState({ [string]: [...this.state[string], e.target.value]})
         }
-        this.setState({ [string]: [...this.state[string], e.target.value]})
+        else{
+            let stateUpdate = this.state[string].filter(item => item !== e.target.value);
+            this.setState({[string]: stateUpdate})
+        }
     }
 
     this.createDropDownList = (array, string) => {
@@ -378,10 +384,6 @@ export class Provider extends React.Component{
                             console.log('clicked submit')
                             console.log(e.target)
                             e.preventDefault();
-                            // if(string === "artworkFamily"){
-                            //     this.setState({ [string]: e.target.firstChild.value})
-                            //     return
-                            // }
                             if(typeof this[string] !== 'string'){
                                 this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
                             }
