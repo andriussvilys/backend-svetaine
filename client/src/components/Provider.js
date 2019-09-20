@@ -34,6 +34,7 @@ export class Provider extends React.Component{
 
     this.themes = []
     
+    //FUNCTION THE CHECKS BOXES IN CATEGORY COMPONENT
     this.onCheck = (e) => {
         //this is handled if a checkbox is UNCHECKED
         if(!e.target.checked){
@@ -290,7 +291,11 @@ export class Provider extends React.Component{
     this.themesCheck = (e, string) => {
         if(e.target.checked){
             if(string === "artworkFamily"){
-                this.setState({ [string]:  e.target.value})
+                this.setState({ [string]:  e.target.value},
+                    () => this.getFamilySetup()
+                    )
+
+
                 return
             }
             this.setState({ [string]: [...this.state[string], e.target.value]})
