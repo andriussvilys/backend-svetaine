@@ -53,6 +53,7 @@ export default class FamilyInfo extends Component {
                                         id="familyDisplayIndex__yes" 
                                         value="yes" 
                                         disabled={!this.context.state.artworkFamily}
+                                        onClick={this.context.useFamilySetup}
                                         />
                                     </div>
                                     <div className="container-radio">

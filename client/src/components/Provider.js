@@ -520,6 +520,25 @@ export class Provider extends React.Component{
             //     "location": "",
             //     "year": ""
             //   }
+
+    this.getFamilySetup = () => {
+        console.log("clicked useFamiylSetup")
+        let familyName = this.state.artworkFamily;
+        console.log("artworkfamily IS")
+        console.log(familyName)
+
+        axios.get(`/api/familySetup/${familyName}`)
+        .then( res => {
+
+            this.setState({ familySetupData: res.data}, 
+                () => {
+                    console.log(res.data)
+                    console.log(this.state.familySetupData)
+                })
+
+        })
+
+    }
              
 
 }   //END OF CONTSTRUCTOR
@@ -529,105 +548,23 @@ componentDidMount(){
 
         axios.get('/api/themes')
         .then( res => {
-        //   this.themes = res.data[0].list
           console.log('**************themes DATA')
           console.log(res.data)
           this.setState({ themesData: res.data[0].list})
           console.log(this.state.themesData)
         })
-        // .then( resolved => {
-        //     axios.get('/api/artworkInfo')
-        //     .then( res => {
-        //     //   this.themes = res.data[0].list
-        //       let allNames = []
-        //       res.data.forEach(obj => {
-        //           if(obj.artworkFamily.length > 0){
-        //             obj.artworkFamily.forEach(name => allNames.push(name))
-        //           }
-        //       })
-        //       allNames = allNames.filter(name => name !== "")
-        //       console.log('**************artworkInfo DATA')
-        //       console.log(allNames)
-        //       this.setState({artworkFamilyList: allNames})
-        //       console.log(this.state.artworkFamilyList)
-        //     })
-        // }
-        // )
+
         .then( resolved => {
             axios.get('/api/artworkFamilyList')
             .then( res => {
-            //   this.themes = res.data[0].list
             console.log('**************artworkFamilyList DATA')
             console.log(res.data)
             this.setState({ artworkFamilyList: res.data[0].list})
             console.log(this.state.artworkFamilyList)
             })
         }
-        )
-        .then(resolved => {
-            axios.get('/api/familySetup')
-            .then( res => {
-            //   this.themes = res.data[0].list
-              console.log('**************familySetup DATA')
-              if(res.data[0]){
-                this.setState({ familySetupData: res.data[0].list}, 
-                    () => {
-                        console.log(res.data)
-                        console.log(this.state.familySetupData)
-                    })
-              }
-            })
-        })
-        
-  
+        )  
 }
-// componentDidUpdate(){
-//     console.log('**********************component did UPDATE')
-
-//     if(this.state.themesData.length > this.state.prevState.themesData.length){}
-//     axios.get('/api/themes')
-//     .then( res => {
-//     //   this.themes = res.data[0].list
-//       console.log('**************themes DATA')
-//       console.log(res.data)
-//       this.setState({ themesData: res.data[0].list})
-//       console.log(this.state.themesData)
-//     })
-//     if(this.state.artworkFamilyList.length > this.state.prevState.artworkFamilyList.length){
-//             axios.get('/api/artworkFamilyList')
-//             .then( res => {
-//             //   this.themes = res.data[0].list
-//             console.log('**************artworkFamilyList DATA')
-//             console.log(res.data)
-//             this.setState({ artworkFamilyList: res.data[0].list})
-//             console.log(this.state.artworkFamilyList)
-//             })
-//     }
-
-//     if(this.state.familySetupData.length > this.state.prevState.familySetupData.length){
-//         axios.get('/api/familySetup')
-//         .then( res => {
-//         //   this.themes = res.data[0].list
-//           console.log('**************familySetup DATA')
-//           console.log(res.data)
-//           this.setState({ familySetupData: res.data[0].list})
-//           console.log(this.state.familySetupData)
-//         })
-//     }
-
-// }
-
-// themesGET = () => {
-//     axios.get('/api/themes')
-//     .then( res => {
-//       // console.log('reached 5000')
-//       // console.log(res.data)
-//       let themes = res.data[0].list
-//       this.themes = themes;
-//       console.log(themes)
-//       return themes
-//     })
-//   }
 
   render(){
     return(
@@ -648,7 +585,8 @@ componentDidMount(){
           loadData: this.loadData,
           themesGET: this.themesGET,
           addNew: this.addNew,
-          createFamilySetup: this.createFamilySetup
+          createFamilySetup: this.createFamilySetup,
+          getFamilySetup: this.getFamilySetup
           } }>
         {this.props.children}
       </Context.Provider>
