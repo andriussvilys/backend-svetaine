@@ -292,7 +292,14 @@ export class Provider extends React.Component{
         if(e.target.checked){
             if(string === "artworkFamily"){
                 this.setState({ [string]:  e.target.value},
-                    () => this.getFamilySetup()
+                    () => this.getFamilySetup(
+                        function callback(){
+                            if(document.getElementById("familyDisplaySetup__radio-yes").checked){
+                                console.log("RADIO IS CHECKED ********************************")
+                                this.useFamilySetup()
+                            }
+                        }
+                    )
                     )
 
 
@@ -303,6 +310,15 @@ export class Provider extends React.Component{
         else{
             let stateUpdate = this.state[string].filter(item => item !== e.target.value);
             this.setState({[string]: stateUpdate})
+        }
+    }
+
+    this.autoCheck = (stateKey, value) => {
+        if(this.state[stateKey].includes(value)){
+            return true
+        }
+        else{
+            return false
         }
     }
 
@@ -323,7 +339,8 @@ export class Provider extends React.Component{
                     id={`${string}-${listItem}`}
                     className="themes-checkbox" 
                     type={inputType}
-                    value={listItem} 
+                    value={listItem}
+                    checked={this.autoCheck(string, listItem)} 
                     onChange={(e) => this.themesCheck(e, string)}/>
                 </li>
             )
@@ -526,22 +543,58 @@ export class Provider extends React.Component{
             //     "year": ""
             //   }
 
-    this.getFamilySetup = () => {
-        console.log("clicked useFamiylSetup")
+    this.getFamilySetup = (callback) => {
         let familyName = this.state.artworkFamily;
-        console.log("artworkfamily IS")
-        console.log(familyName)
 
         axios.get(`/api/familySetup/${familyName}`)
         .then( res => {
 
             this.setState({ familySetupData: res.data}, 
-                () => {
-                    console.log(res.data)
-                    console.log(this.state.familySetupData)
-                })
+                callback
+            )
 
         })
+
+    }
+
+    this.useFamilySetup = () => {
+
+        if(this.state.familySetupData){
+            Object.keys(this.state.familySetupData).forEach(property => {
+                console.log(property)
+                console.log(this.state.familySetupData[property] === "")
+                console.log("_____________________________________________________")
+                this.setState({ [property]: this.state.familySetupData[property]})
+            })
+        }
+        else{
+            this.setState({
+                familyDescription: "",
+                themes: [],
+                seeAlso: [],
+                location: "",
+                year: "",
+                category: {
+
+                }              
+            })
+        }
+
+    // {   
+    //     category: Schema.Types.Mixed,
+    //     artworkFamily: {
+    //     },
+    //     familyDescription: {
+    //     },
+    //     themes: {
+    //     },
+    //     seeAlso: {
+    //     },
+    //     location: {
+    //     },
+    //     year: {
+    //     }
+    // }
 
     }
              
@@ -591,7 +644,8 @@ componentDidMount(){
           themesGET: this.themesGET,
           addNew: this.addNew,
           createFamilySetup: this.createFamilySetup,
-          getFamilySetup: this.getFamilySetup
+          getFamilySetup: this.getFamilySetup,
+          useFamilySetup: this.useFamilySetup
           } }>
         {this.props.children}
       </Context.Provider>

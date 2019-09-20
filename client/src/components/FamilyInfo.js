@@ -47,20 +47,23 @@ export default class FamilyInfo extends Component {
                                 <span>use family setup</span>
                                 <form >
                                     <div className="container-radio">
-                                        <label htmlFor="familyDisplayIndex_yes">yes</label>
+                                        <label 
+                                        htmlFor="familyDisplaySetup_yes"
+                                        id="familyDisplaySetup_yes"
+                                        >yes</label>
                                         <input type="radio" 
-                                        name="familyDisplayIndex" 
-                                        id="familyDisplayIndex__yes" 
+                                        name="familyDisplaySetup" 
+                                        id="familyDisplaySetup__radio-yes" 
                                         value="yes" 
                                         disabled={!this.context.state.artworkFamily}
                                         onClick={this.context.useFamilySetup}
                                         />
                                     </div>
                                     <div className="container-radio">
-                                        <label htmlFor="familyDisplayIndex_no">no</label>
+                                        <label htmlFor="familyDisplaySetup_no">no</label>
                                         <input type="radio" 
-                                        name="familyDisplayIndex" 
-                                        id="familyDisplayIndex__no" 
+                                        name="familyDisplaySetup" 
+                                        id="familyDisplaySetup__radio-no" 
                                         value="no" 
                                         disabled={!this.context.state.artworkFamily}
                                         defaultChecked 
@@ -100,6 +103,7 @@ export default class FamilyInfo extends Component {
                                     {/* <p className="subtitle">(different from family name):</p> */}
                                 </div>
                                 <textarea
+                                value={this.context.state.familyDescription}
                                 onChange={
                                     (e) => this.context.onChange(e, "familyDescription")
                                 }
