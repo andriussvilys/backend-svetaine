@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Context } from './Provider'
+import { Context } from './Provider';
+import axios from 'axios';
+import Button from 'react-bootstrap/Button';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
 
@@ -70,9 +72,21 @@ export default class JsonPreview extends Component {
     }
 
     // this.state.category[category]
-
+    isDisabled = () => {
+      if(
+        Object.keys(this.context.state.category).length > 0 &&
+        this.context.state.file
+      ){
+        return false
+      }
+      else{return true}
+    }
 
     render() {
+      console.log("CATEGORY LENGTH")
+      console.log(Object.keys(this.context.state.category).length > 0)
+      console.log("file")
+      console.log(this.context.state.file)
         // console.log(this.props)
       return (
         <Context.Consumer>
@@ -108,6 +122,37 @@ export default class JsonPreview extends Component {
                     }
                   </div>
                   <div>{'}'}</div>
+                </div>
+                <div
+                  style={{
+                    position: "fixed",
+                    bottom: 0,
+                    display: "flex",
+                    height: "70px",
+                    backgroundColor: "#2f2f2f",
+                    alignItems: "center"
+                  }}
+                >
+                  <Button  
+                    variant="success"
+                    disabled={this.isDisabled()}                 
+                    onClick={
+                          ()=>{
+                            const stateData = this.context.state;
+                            console.log(stateData)
+                            axios.post('/api/artworkInfo/create', stateData)
+                              .then( res => { console.log(res.data)})
+                                  .then(() => axios.get('/api/artworkInfo'))
+                                    .then( res => console.log(res.data))
+                              }
+                          }
+                    style={{
+                      width: "282px",
+                      height: "45px"
+                    }}
+                  >
+                    SEND TO DATABSE
+                  </Button>
                 </div>
               </div>
             )

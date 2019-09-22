@@ -3,6 +3,7 @@ import { Context } from './Provider';
 import axios from 'axios';
 import ThemeSelector from './ThemeSelector';
 import FamilyInfo from './FamilyInfo';
+import ArtworkInfo from './ArtworkInfo';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/components/imageInfo.css";
 
@@ -32,7 +33,7 @@ export default class ImageInfo extends Component{
                   <div className="imageInfo--box">
                     <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
                 </div>
-                <div className="imageInfo--box">
+                {/* <div className="imageInfo--box">
                   <span>display on main page:</span>
                   <form>
                       <div className="container-radio">
@@ -57,8 +58,8 @@ export default class ImageInfo extends Component{
                             />
                       </div>
                     </form>
-                </div>
-                <div className="imageInfo--box">
+                </div> */}
+                {/* <div className="imageInfo--box">
                   <span>display state in console:</span>
                   <button className="btn btn-primary btn-sm"
                   onClick={()=>{console.log(JSON.stringify(this.context.state))
@@ -77,9 +78,9 @@ export default class ImageInfo extends Component{
                     >
                       click to see
                     </button>
-                </div>
+                </div> */}
 
-                <div className="imageInfo--box">
+                {/* <div className="imageInfo--box">
                   <span>post to database:</span>
                   <button className="btn btn-primary btn-sm"
                     onClick={
@@ -139,8 +140,9 @@ export default class ImageInfo extends Component{
                           }
                       }
                     >POST</button>
-                </div>
+                </div> */}
               </div>
+
 
               <div className="imageInfo--section">
                 <h5>family info:</h5>
@@ -148,10 +150,8 @@ export default class ImageInfo extends Component{
               </div>
 
               <div className="imageInfo--section">
-                <h5>theme selector:</h5>
-                {/* <div className="imageInfo--box"> */}
-                  <ThemeSelector/>
-                {/* </div> */}
+                <h5>artwork info:</h5>
+                <ArtworkInfo/>
               </div>
 
             </div>

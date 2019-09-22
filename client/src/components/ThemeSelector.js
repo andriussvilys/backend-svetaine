@@ -84,19 +84,12 @@ export default class ImageInfo extends Component{
                   requestKey="list"
                 />
 
-                <div className="imageInfo--box">
+                {/* <div className="imageInfo--box">
                   <p>console log all themes: </p>
                   <button onClick={this.context.themesGET}>GET</button>
-                </div>
+                </div> */}
 
               </div>
-
-              // <div className="themeSelector">
-              //       {this.context.makeDataList(this.context.themes, 'theme')}
-              //       {/* {this.themeList()} */}
-              //       {this.context.createDropDownList(this.context.themes, 'theme')}
-
-              // </div>
             )
           }}
         </Context.Consumer>

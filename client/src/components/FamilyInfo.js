@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
 import AddNew from './AddNew';
+import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
@@ -20,17 +21,7 @@ export default class FamilyInfo extends Component {
                 {()=>{
                     return(
                         <div>
-                            <div className="imageInfo--box">
-                                <div>
-                                    <p>Add Artwork title:</p> 
-                                    <p className="subtitle">(different from family name):</p>
-                                </div>
-                                <input 
-                                type="text" 
-                                value={this.context.state.artworkTitle} 
-                                onChange={(e) => this.context.onChange(e, 'artworkTitle')} 
-                                />
-                            </div>
+
                             <ExtendedList 
                                 listName="select artwork family: "
                                 // array={this.artworks()}
@@ -70,27 +61,7 @@ export default class FamilyInfo extends Component {
                                         />
                                     </div>
                                 </form>
-                            </div>
-                            <div className="imageInfo--box">
-                                <span>record new family setup:</span>
-                                <Button
-                                 variant="success" 
-                                 size="sm"
-                                 onClick={
-                                     this.context.createFamilySetup
-                                 }
-                                >
-                                    SEND
-                                </Button>
-                            </div>                            
-                            <div className="imageInfo--box">
-                                <span>family display index:</span>
-                                <input 
-                                type="number" 
-                                min="0" 
-                                onChange={(e) => this.context.onChange(e, "familyDisplayIndex") } 
-                                />
-                            </div>
+                            </div>                      
                             <ExtendedList 
                                 listName="add 'see also' items: "
                                 array={this.context.state.artworkFamilyList}
@@ -111,18 +82,23 @@ export default class FamilyInfo extends Component {
                                 ></textarea>
                             </div>
 
-                            <div className="imageInfo--box"  style={{display: "block"}}>
-                                <div>
-                                    <p>Artwork description:</p> 
-                                    <p className="subtitle">this is describes particulars of a work in a series or exhibit in a show</p>
-                                </div>
-                                <textarea
-                                onChange={
-                                    (e) => this.context.onChange(e, "artworkDescription")
-                                }
-                                style={{width: "100%"}}
-                                ></textarea>
-                            </div>
+                            <ThemeSelector/>
+
+                            <div className="imageInfo--box">
+                                <span>record new family setup:</span>
+                                <Button
+                                 variant="success" 
+                                 size="sm"
+                                 onClick={
+                                     this.context.createFamilySetup
+                                 }
+                                >
+                                    SEND
+                                </Button>
+                            </div>      
+
+
+
 
                         </div>
                     )
