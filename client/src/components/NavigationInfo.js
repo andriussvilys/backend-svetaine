@@ -133,18 +133,14 @@ export default class NavigationInfo extends Component{
 
                     <div className="imageInfo--section">
                         <h5>add new category</h5>
-                        <form>
-                            <label 
-                                htmlFor="familyDisplaySetup_yes"
-                                id="familyDisplaySetup_yes"
-                            >yes
-                            </label>
+                        <div>
                             <input type="text" 
                                 name="familyDisplaySetup" 
                                 id="familyDisplaySetup__radio-yes" 
-                                value="yes" 
+                                value="" 
+                                placeholder="category"
                             />
-                        </form>
+                        </div>
                     </div>
 
                     <div className="list--container">

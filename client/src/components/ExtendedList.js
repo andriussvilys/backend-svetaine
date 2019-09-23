@@ -21,10 +21,12 @@ render(){
         {()=>{
             return(
                     <div className="themeSelector ">
+                        
                         <div className="extendedList--form imageInfo--box">
                             <span>{this.props.listName}</span>
                             {this.context.makeDataList(this.props.array, this.props.string, this.props.id)}
                         </div>
+
                         <div style={{width: '100%'}}>
                             <div className="imageInfo--box">
                                 <span className="subtitle">extend full list: </span>

@@ -416,6 +416,10 @@ export class Provider extends React.Component{
                             console.log('clicked submit')
                             console.log(e.target)
                             e.preventDefault();
+                            if(!array.includes(e.target.firstChild.value)){
+                                alert(`no such ${string} exists. Please "ADD NEW" and repeat`)
+                                return
+                            }
                             if(typeof this[string] !== 'string'){
                                 this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
                             }
@@ -426,7 +430,11 @@ export class Provider extends React.Component{
                         }
                     } 
                 >
-                    <input placeholder={string} list={`datalist-${string}`} name={string} />
+                    <input 
+                    placeholder={string} 
+                    // value={typeof this.state[string] === 'string' ? this.state[string] : this.state[string][this.state[string].length-1]}
+                    list={`datalist-${string}`} 
+                    name={string} />
                     {() => {
                         //  CHECK IF INPUT WITH THE SAME VALUE/ID ALREADY EXISTS
                         if(document.getElementById(`datalist-${string}`)){
