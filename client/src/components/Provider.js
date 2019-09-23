@@ -29,7 +29,8 @@ export class Provider extends React.Component{
 
       themesData: [],
       artworkFamilyList: [],
-      familySetupData: []
+      familySetupData: [],
+      categoriesData: []
     }
 
     // this.themes = () => {
@@ -624,6 +625,14 @@ componentDidMount(){
             })
         }
         )  
+        .then(resolved => {
+            axios.get('/api/categories')
+            .then(res => {
+                console.log('*********************categories DATA')
+                console.log(res.data)
+                this.setState({categoriesData: res.data})
+            })
+        })
 }
 
   render(){
@@ -655,3 +664,4 @@ componentDidMount(){
   }
 
 }
+

@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let CategoriesSchema = (category, subcategory, listitem) =>  {
+let CategoriesSchema = 
     new Schema({
-        [category]: {
-            type: Schema.Types.Mixed,
-            [subcategory]: {
-                type: Schema.Types.Mixed,
-                [listItem]: {
-                    type: Array
-                }
-            }
+        category: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        subcategory: {
+            type:  Schema.Types.Mixed
         }
+
     }   
     // {
     // $addToSet: {
@@ -24,6 +24,6 @@ let CategoriesSchema = (category, subcategory, listitem) =>  {
     // // }
     // }
     )
-}
+
 
 module.exports = CategoriesSchema = mongoose.model('categories', CategoriesSchema);
