@@ -32,7 +32,16 @@ export class Provider extends React.Component{
       familySetupData: []
     }
 
-    this.themes = []
+    // this.themes = () => {
+    //     axios.get('/api/themes')
+    //     .then( res => {
+    //        console.log("******************THEMES ACTIVATED") 
+    //        let data = res.data[0].list 
+    //        console.log(data)
+    //       return data
+
+    //     })
+    // }
     
     //FUNCTION THE CHECKS BOXES IN CATEGORY COMPONENT
     this.onCheck = (e) => {
@@ -465,18 +474,6 @@ export class Provider extends React.Component{
     //     })
     //     .catch(err => {console.log('**************load data error'); console.log(err)})
     // }
-
-    this.themesGET = () => {
-    axios.get('/api/themes')
-    .then( res => {
-        // console.log('reached 5000')
-        // console.log(res.data)
-        let themes = res.data[0].list
-        console.log(themes)
-        return themes
-    })
-    }
-
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
         console.log('addNew Runs')
@@ -561,9 +558,9 @@ export class Provider extends React.Component{
 
         if(this.state.familySetupData){
             Object.keys(this.state.familySetupData).forEach(property => {
-                console.log(property)
-                console.log(this.state.familySetupData[property] === "")
-                console.log("_____________________________________________________")
+                // console.log(property)
+                // console.log(this.state.familySetupData[property] === "")
+                // console.log("_____________________________________________________")
                 this.setState({ [property]: this.state.familySetupData[property]})
             })
         }
@@ -597,9 +594,11 @@ export class Provider extends React.Component{
     // }
 
     }
-             
-
+           
+    
 }   //END OF CONTSTRUCTOR
+
+themes = {}
 
 componentDidMount(){
     console.log('**********************component did mount')
@@ -610,6 +609,9 @@ componentDidMount(){
           console.log(res.data)
           this.setState({ themesData: res.data[0].list})
           console.log(this.state.themesData)
+          this.themes = res.data[0].list
+          console.log("*********************THEMES PROP")
+          console.log(this.themes)
         })
 
         .then( resolved => {
@@ -645,7 +647,7 @@ componentDidMount(){
           addNew: this.addNew,
           createFamilySetup: this.createFamilySetup,
           getFamilySetup: this.getFamilySetup,
-          useFamilySetup: this.useFamilySetup
+          useFamilySetup: this.useFamilySetup,
           } }>
         {this.props.children}
       </Context.Provider>

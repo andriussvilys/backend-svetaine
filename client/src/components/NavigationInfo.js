@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from './Provider'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/navigationInfo.css';
+import '../css/components/imageInfo.css';
 
 const navData = require('../JSON/navigation.json');
 const categories = Object.keys(navData);
@@ -106,6 +107,23 @@ export default class NavigationInfo extends Component{
             { () => {return(
                 <div>
                     <h3>categories</h3>
+
+                    <div className="imageInfo--section">
+                        <h5>add new category</h5>
+                        <form>
+                            <label 
+                                htmlFor="familyDisplaySetup_yes"
+                                id="familyDisplaySetup_yes"
+                            >yes
+                            </label>
+                            <input type="text" 
+                                name="familyDisplaySetup" 
+                                id="familyDisplaySetup__radio-yes" 
+                                value="yes" 
+                            />
+                        </form>
+                    </div>
+
                     <div className="list--container">
                             {this.makeCategories()}
                     </div>

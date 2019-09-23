@@ -43,15 +43,15 @@ export default class ImageInfo extends Component{
   //   })
   // }
 
-  themesADD = () => {
-    const newTheme = document.getElementById('theme-add').value;
-    axios.put('/api/themes/update', {"list": newTheme})
-    .then( res => {
-      let themes = res.data.list
-      console.log(themes)
-      return themes
-    })
-  }
+  // themesADD = () => {
+  //   const newTheme = document.getElementById('theme-add').value;
+  //   axios.put('/api/themes/update', {"list": newTheme})
+  //   .then( res => {
+  //     let themes = res.data.list
+  //     console.log(themes)
+  //     return themes
+  //   })
+  // }
 
 //   componentDidMount(){
 //     console.log('component did mount')

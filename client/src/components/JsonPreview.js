@@ -96,8 +96,8 @@ export default class JsonPreview extends Component {
                 <h3 className="headline">image preview</h3>
                 <div className="imageBox">
                   <img 
-                  src={this.context.state.imagePreview} 
-                  // src={'uploads/first.JPG'}
+                  // src={this.context.state.imagePreview} 
+                  src={this.context.state.imagePreview ? this.context.state.imagePreview : 'uploads/image-2019-08-16-12-43-14-175.png'}
                   alt="" 
                   className="uploadPreview" 
                   />
