@@ -9,10 +9,10 @@ let CategoriesSchema =
             unique: true
         },
         subcategory: {
-            type:  Schema.Types.Mixed
+            type:  Object
         }
-
-    }   
+    },
+    {minimize: false}
     // {
     // $addToSet: {
     //     type: String,

@@ -12,7 +12,9 @@ router.get('/', (req, res) => {
 })
 
 router.post('/create', (req, res) => {
-  Categories.create(req.body).then((category)=>{res.send(category)})
+  Categories.create(req.body)
+    .then((category)=>{res.send(category)})
+
   // const newArtwork = new ArtworkInfo({
   //     category: req.body.category, 
   //     uploadURL: req.body.uploadURL, 
@@ -37,11 +39,19 @@ router.post('/create', (req, res) => {
 //UPDATE ROUTE
 router.put("/update/", (req, res, next) => {
 
-    Themes.findOneAndUpdate(
-      { main: true },  // <-- find stage
-      { $addToSet: req.body },
-      {new: true}
-    )
+    // console.log(req.body.category)
+    // console.log(req.body.subcategory)
+    // Categories.findOneAndUpdate(
+    //   { category: req.body.category },  // <-- find stage
+    //   { subacategory: req.body.subcategory },
+    //   {new: true}
+    // )
+
+     Categories.replaceOne(
+       {category: req.body.category},
+       req.body
+     ) 
+
     .then(newObj => {
       res.status(200).send(newObj)
     })

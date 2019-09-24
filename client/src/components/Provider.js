@@ -30,7 +30,9 @@ export class Provider extends React.Component{
       themesData: [],
       artworkFamilyList: [],
       familySetupData: [],
-      categoriesData: []
+
+      categoriesData: [],
+      categoryNames: []
     }
 
     // this.themes = () => {
@@ -510,7 +512,7 @@ export class Provider extends React.Component{
         })
       }
 
-      this.createFamilySetup = () => {
+    this.createFamilySetup = () => {
         let requestBody = {
             category: this.state.category,
             artworkFamily: this.state.artworkFamily,
@@ -603,6 +605,107 @@ export class Provider extends React.Component{
     // }
 
     }
+
+    this.categoryMethods = {
+        getCategoryNames: () => {
+            if(this.state.categoryNames.length < 1){
+                console.log('***get category names')
+                if(this.state.categoriesData){
+                    let categoryNames =  this.state.categoriesData.map(obj => obj.category)
+                    this.setState({categoryNames: categoryNames}, ()=>{
+                        let categoryOptionList = this.state.categoryNames.map(name => {
+                            return <option key={`add-category-${name}`} value={name}>{name}</option>
+                        })
+                        return this.setState({categoryDatalist: categoryOptionList})
+                    })
+                }
+            }
+            else{return}
+        },
+
+        getSubcategoryNames: () => {
+            if(document.getElementById("add-category").value){
+                let selectedCategory = document.getElementById("add-category").value;
+                let subcategories = this.state.categoriesData.find(item => item.category === selectedCategory)
+                if(subcategories && subcategories.subcategory){
+                    let subcategoriesDatalist = Object.keys(subcategories.subcategory).map(subcategory => {
+                        let option = <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option> 
+                        console.log(option)
+                        return option
+                    })
+                    this.setState({subcategoryDatalist: subcategoriesDatalist})
+                }
+            }
+    
+        },
+
+        submitNewCategory: () => {
+
+            const categoryInput = document.getElementById("add-category")
+            const subcategoryInput = document.getElementById("add-subcategory")
+            const listitemInput = document.getElementById("add-listitem")
+    
+            let reqBody = {category: null, subcategory: {}}
+            //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
+            if(this.state.categoryNames.indexOf(categoryInput.value) < 0){
+                reqBody = {category: categoryInput.value}
+                if(subcategoryInput.value){
+                    reqBody.subcategory = {[subcategoryInput.value]: []}
+                }
+                if(listitemInput.value){
+                    reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
+                }
+                // reqBody = JSON.stringify(reqBody)
+                // console.log(reqBody)
+                axios.post('/api/categories/create', reqBody)
+                .then(res => {
+                    console.log(res)
+                    this.setState({
+                        categoriesData: [...this.state.categoriesData, res.data], 
+                        categoryNames: [...this.state.categoryNames, res.data.category]
+                    })
+                })
+                .catch(err => console.log(err))
+            }
+        },
+
+        updateCategory: () => {
+            const categoryInput = document.getElementById("add-category")
+            const subcategoryInput = document.getElementById("add-subcategory")
+            const listitemInput = document.getElementById("add-listitem")
+
+            //check if the CATGORY input value is already recorded in the database
+            //if it is run submitNewCategory method instead and exit this function
+            if(this.state.categoryNames.indexOf(categoryInput.value) < 0){
+                console.log('this category doesnt exist')
+                this.categoryMethods.submitNewCategory()
+                return
+            }
+
+            //if category name already exists
+            let objToUpdate = this.state.categoriesData.find(obj => obj.category === categoryInput.value)
+            console.log(objToUpdate)
+            let objIndex = this.state.categoriesData.indexOf(objToUpdate)
+
+
+            let categoriesDataUpdate = this.state.categoriesData
+            let subcategoryArray = categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value]
+            //if subcategory doesnt exist, initiate it
+            if(!subcategoryArray){
+                subcategoryArray = []
+                categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = subcategoryArray
+            }
+            //if new listitem has been entered
+            if(listitemInput.value){
+                categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
+            }
+            this.setState({categoriesDataUpdate},
+                () => {console.log(objToUpdate);
+                axios.put('/api/categories/update', objToUpdate)
+                })
+        }
+    
+    }
            
     
 }   //END OF CONTSTRUCTOR
@@ -665,6 +768,7 @@ componentDidMount(){
           createFamilySetup: this.createFamilySetup,
           getFamilySetup: this.getFamilySetup,
           useFamilySetup: this.useFamilySetup,
+          categoryMethods: this.categoryMethods
           } }>
         {this.props.children}
       </Context.Provider>

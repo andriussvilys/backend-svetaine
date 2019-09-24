@@ -53,6 +53,7 @@ router.post('/create', upload.single('artworkImage'), (req, res) => {
 
 router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
 })
+
 // .then(res => {
 //     console.log('REQ')
 //     console.log(req)
