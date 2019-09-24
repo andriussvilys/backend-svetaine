@@ -11,7 +11,11 @@ export default class NavigationInfo extends Component{
     constructor(props){
         super(props);
         this.state = {
-            categories: null
+            categoryNames: [],
+            categoryDatalist: null,
+            selectedCategory: null,
+            subcategoryDatalist: null
+
         }
     }
 
@@ -123,6 +127,36 @@ export default class NavigationInfo extends Component{
     //     this.makeCategories()
     // }
 
+    getCategoryNames = () => {
+        if(this.state.categoryNames.length < 1){
+            console.log('***get category names')
+            if(this.context.state.categoriesData){
+                let categoryNames =  this.context.state.categoriesData.map(obj => obj.category)
+                this.setState({categoryNames: categoryNames}, ()=>{
+                    let categoryOptionList = this.state.categoryNames.map(name => {
+                        return <option key={`add-category-${name}`} value={name}>{name}</option>
+                    })
+                    return this.setState({categoryDatalist: categoryOptionList})
+                })
+            }
+        }
+        else{return}
+    }
+
+    getSubcategoryNames = () => {
+        if(document.getElementById("add-category").value){
+            let selectedCategory = document.getElementById("add-category").value;
+            let subcategories = this.context.state.categoriesData.find(item => item.category === selectedCategory)
+            let subcategoriesDatalist = Object.keys(subcategories.subcategory).map(subcategory => {
+                let option = <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option> 
+                console.log(option)
+                return option
+            })
+            this.setState({subcategoryDatalist: subcategoriesDatalist})
+        }
+
+    }
+
 
   render(){
     return(
@@ -131,14 +165,38 @@ export default class NavigationInfo extends Component{
                 <div>
                     <h3>categories</h3>
 
-                    <div className="imageInfo--section">
+                    <div className="imageInfo--section" >
                         <h5>add new category</h5>
-                        <div>
+                        <div className="imageInfo--box" style={{display: "block"}}>
                             <input type="text" 
-                                name="familyDisplaySetup" 
-                                id="familyDisplaySetup__radio-yes" 
-                                value="" 
+                                list="datalist-add-categories"
+                                name="add-category" 
+                                id="add-category" 
                                 placeholder="category"
+                                style={{marginRight: "30px"}}
+                                onFocus={this.getCategoryNames}
+                            />
+                            <datalist id="datalist-add-categories">
+                                {this.state.categoryDatalist}
+                            </datalist>
+
+                            <input type="text" 
+                                list="datalist-add-subcategories"
+                                name="add-subcategory" 
+                                id="add-subcategory" 
+                                placeholder="subcategory"
+                                style={{marginRight: "30px"}}
+                                onFocus={this.getSubcategoryNames}
+                            />
+                            <datalist id="datalist-add-subcategories">
+                                {this.state.subcategoryDatalist}
+                            </datalist>
+
+                            <input type="text" 
+                                name="add-listitem" 
+                                id="add-listitem" 
+                                placeholder="listitem"
+                                style={{marginRight: "30px"}}
                             />
                         </div>
                     </div>

@@ -10,9 +10,4 @@ router.get('/:artworkFamily', (req, res) => {
         .catch(err => console.log(err))
 })
 
-router.post('/', (req, res) => {
-    // FamilySetup.create(req.body).then((setup)=>{res.send(setup)})
-    FamilySetup.create(req.body).then((setup)=>{res.send(setup)})
-})
-
 module.exports = router;

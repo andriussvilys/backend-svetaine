@@ -407,7 +407,7 @@ export class Provider extends React.Component{
         }
 
         let options = array.map( optionValue => {
-            return (<option key={`option-${optionValue}`} value={optionValue} />)
+            return (<option key={`option-${optionValue}`} value={optionValue}>{optionValue}</option>)
         })
         return (
                 <form 
