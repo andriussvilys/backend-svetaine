@@ -196,7 +196,11 @@ export default class NavigationInfo extends Component{
                 <div>
                     <h3>categories</h3>
 
-                    <div className="imageInfo--section" >
+                    <div className="list--container">
+                            {this.makeCategories()}
+                    </div>
+
+                    <div className="imageInfo--section" style={{backgroundColor: "#a8b4b9"}} >
                         <h5>add new category</h5>
                         <div className="imageInfo--box" style={{display: "block", position: "relative"}}>
                             <input type="text" 
@@ -229,7 +233,7 @@ export default class NavigationInfo extends Component{
                                 placeholder="listitem"
                                 style={{marginRight: "30px"}}
                             />
-                            <Button
+                            {/* <Button
                                 style={{position: "absolute", right: 0, bottom: "5px"}}
                                 variant="success" 
                                 size="sm"
@@ -239,23 +243,19 @@ export default class NavigationInfo extends Component{
                                 // disabled={document.getElementById("add-category").value ? false : true}
                             >
                                 SUBMIT
-                            </Button>
+                            </Button> */}
                             <Button
-                                style={{position: "absolute", right: "70px", bottom: "5px"}}
-                                variant="primary" 
+                                style={{position: "absolute", right: "0", bottom: "5px"}}
+                                variant="success" 
                                 size="sm"
                                 onClick={
                                     this.context.categoryMethods.updateCategory
                                 }
                                 // disabled={document.getElementById("add-category").value ? false : true}
                             >
-                                UPDATE
+                                SUBMIT
                             </Button>
                         </div>
-                    </div>
-
-                    <div className="list--container">
-                            {this.makeCategories()}
                     </div>
                 </div>
             )}

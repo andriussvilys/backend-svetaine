@@ -28,7 +28,7 @@ render(){
                         </div>
 
                         <div style={{width: '100%'}}>
-                            <div className="imageInfo--box">
+                            {/* <div className="imageInfo--box">
                                 <span className="subtitle">extend full list: </span>
                                 <Button 
                                 variant="primary" size="sm"
@@ -37,7 +37,7 @@ render(){
                                 >    
                                     < IoIosArrowDown className="icon--chevron icon" />
                                 </Button>
-                            </div>
+                            </div> */}
                             <div className="themeSelector no-display" style={{margin: '0 70px'}} id={this.props.id}>                
                                 {this.context.createDropDownList(this.props.array, this.props.string)}
                             </div>

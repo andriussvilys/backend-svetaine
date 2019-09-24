@@ -400,7 +400,7 @@ export class Provider extends React.Component{
         return columnLists()
     }
 
-    this.makeDataList = (array, string) => {
+    this.makeDataList = (array, string, listId) => {
         // console.log('*****make datalist array*****')
         // console.log(string)
 
@@ -436,7 +436,10 @@ export class Provider extends React.Component{
                     placeholder={string} 
                     // value={typeof this.state[string] === 'string' ? this.state[string] : this.state[string][this.state[string].length-1]}
                     list={`datalist-${string}`} 
-                    name={string} />
+                    name={string} 
+                    onFocus={() => {document.getElementById(listId).classList.remove('no-display')}}
+                    // onBlur={() => {document.getElementById(listId).classList.toggle('no-display')}}
+                    />
                     {() => {
                         //  CHECK IF INPUT WITH THE SAME VALUE/ID ALREADY EXISTS
                         if(document.getElementById(`datalist-${string}`)){
@@ -455,7 +458,9 @@ export class Provider extends React.Component{
     }
 
     this.extendList = (e, listId) => {
-    e.target.classList.toggle('icon-rotate');
+        console.log(listId)
+        console.log(e.target)
+    // e.target.classList.toggle('icon-rotate');
     document.getElementById(listId).classList.toggle('no-display');
     }
 

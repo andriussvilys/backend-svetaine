@@ -74,7 +74,7 @@ render(){
                             id={`add-${this.props.stateKey}-item`} 
                         />
                         <Button 
-                        variant="primary" size="sm"
+                        variant="success" size="sm"
                         type="submit" 
                         form={`formFor-${this.props.stateKey}`}
                         className="button-extend"
