@@ -38,7 +38,7 @@ render(){
                                     < IoIosArrowDown className="icon--chevron icon" />
                                 </Button>
                             </div> */}
-                            <div className="themeSelector no-display" style={{margin: '0 70px'}} id={this.props.id}>                
+                            <div className="themeSelector no-display" id={this.props.id}>                
                                 {this.context.createDropDownList(this.props.array, this.props.string)}
                             </div>
                         </div>
