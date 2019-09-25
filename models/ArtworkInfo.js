@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let ArtworkInfoSchema = new Schema({
-    category: Schema.Types.Mixed,
+    category: {
+        type:Schema.Types.Mixed,
+        required: true
+    },
     filePath: {
         type: String,
-        required: false
+        required: true
     },
     fileName: {
         type: String,
@@ -13,11 +16,11 @@ let ArtworkInfoSchema = new Schema({
     },
     artworkFamily: {
         type: String,
-        required: true
+        required: false
     },
     familyDescription: {
         type: String,
-        required: true
+        required: false
     },
     artworkTitle: {
         type: String,

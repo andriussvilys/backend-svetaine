@@ -112,4 +112,8 @@
   font-weight: 600;
   font-size: 14px;
 }
+
+.whiteSpace--break {
+  white-space: normal;
+}
 /*# sourceMappingURL=jsonPreview.css.map */

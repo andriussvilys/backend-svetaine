@@ -5,7 +5,8 @@ let FamilySetupSchema = new Schema({
     category: Schema.Types.Mixed,
     artworkFamily: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     familyDescription: {
         type: String,

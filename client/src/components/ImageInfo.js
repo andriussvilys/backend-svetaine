@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
+import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import ThemeSelector from './ThemeSelector';
 import FamilyInfo from './FamilyInfo';
@@ -33,6 +34,13 @@ export default class ImageInfo extends Component{
                   <div className="imageInfo--box">
                     <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
                 </div>
+                    {/* <Button
+                    variant="success"
+                    size="sm"
+                    onClick={this.context.uploadFile}
+                    >
+                      UPLOAD IMAGE
+                    </Button> */}
                 {/* <div className="imageInfo--box">
                   <span>display on main page:</span>
                   <form>

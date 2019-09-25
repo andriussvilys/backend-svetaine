@@ -10,6 +10,7 @@ const categories = require('./routes/api/categories');
 
 const app = express();
 
+app.use(bodyParser({limit: '50mb'}))
 app.use(bodyParser.json());
 
 //DB config

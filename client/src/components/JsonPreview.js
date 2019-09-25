@@ -75,7 +75,7 @@ export default class JsonPreview extends Component {
     isDisabled = () => {
       if(
         Object.keys(this.context.state.category).length > 0 &&
-        this.context.state.file
+        this.context.state.file 
       ){
         return false
       }
@@ -83,10 +83,10 @@ export default class JsonPreview extends Component {
     }
 
     render() {
-      console.log("CATEGORY LENGTH")
-      console.log(Object.keys(this.context.state.category).length > 0)
-      console.log("file")
-      console.log(this.context.state.file)
+      // console.log("CATEGORY LENGTH")
+      // console.log(Object.keys(this.context.state.category).length > 0)
+      // console.log("file")
+      // console.log(this.context.state.file)
         // console.log(this.props)
       return (
         <Context.Consumer>
@@ -97,19 +97,19 @@ export default class JsonPreview extends Component {
                 <div className="imageBox">
                   <img 
                   // src={this.context.state.imagePreview} 
-                  src={this.context.state.imagePreview ? this.context.state.imagePreview : 'uploads/image-2019-08-16-12-43-14-175.png'}
+                  src={this.context.state.imagePreview ? this.context.state.imagePreview : 'uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png'}
                   alt="" 
                   className="uploadPreview" 
                   />
-                  <div className="preview-container"><span className="preview-span">file name:</span> {this.context.state.fileName}</div>
-                  <div className="preview-container"><span className="preview-span">file type:</span> {this.context.state.fileType}</div>
-                  <div className="preview-container"><span className="preview-span">artwork Family:</span> {this.context.state.artworkFamily}</div>
-                  <div className="preview-container"><span className="preview-span">artwork Title:</span> 
-                  {() => this.context.state.file.name ? this.context.state.file.name : "" }</div>
-                  <div className="preview-container"><span className="preview-span">display on Main page:</span> {this.booleanString("displayMain")}</div>
-                  <div className="preview-container"><span className="preview-span">family display index:</span> {this.context.state.familyDisplayIndex}</div>
-                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> {this.themesPreview(this.context.state.themes)}</div>
-                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> {this.themesPreview(this.context.state.seeAlso)}</div>
+                  <div className="preview-container"><span className="preview-span">file name:</span> <p className="whiteSpace--break">{this.context.state.fileName}</p></div>
+                  <div className="preview-container"><span className="preview-span">file type:</span> <p className="whiteSpace--break">{this.context.state.fileType}</p></div>
+                  <div className="preview-container"><span className="preview-span">file path:</span> <p className="whiteSpace--break">{this.context.state.filePath}</p></div>
+                  <div className="preview-container"><span className="preview-span">artwork Family:</span> <p className="whiteSpace--break">{this.context.state.artworkFamily}</p></div>
+                  <div className="preview-container"><span className="preview-span">artwork Title:</span> <p className="whiteSpace--break">{this.context.state.artworkTitle}</p></div>
+                  <div className="preview-container"><span className="preview-span">display on Main page:</span> <p className="whiteSpace--break">{this.booleanString("displayMain")}</p></div>
+                  <div className="preview-container"><span className="preview-span">family display index:</span> <p className="whiteSpace--break">{this.context.state.familyDisplayIndex}</p></div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <p className="whiteSpace--break">{this.themesPreview(this.context.state.themes)}</p></div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <p className="whiteSpace--break">{this.themesPreview(this.context.state.seeAlso)}</p></div>
                 </div>
                 <h3 className="headline">json preview</h3>
                 <div className="jsonPreviewContainer">
@@ -128,22 +128,48 @@ export default class JsonPreview extends Component {
                     position: "fixed",
                     bottom: 0,
                     display: "flex",
-                    height: "70px",
+                    flexDirection: "column",
+                    height: "100px",
                     backgroundColor: "#2f2f2f",
-                    alignItems: "center"
+                    alignItems: "left",
+                    color: "#a8a8a8",
+                    fontSize: "12px"
+
                   }}
                 >
+                  <p className="whiteSpace--break">minimal requirements:</p>
+                  <p>Upload File</p>
+                  <p>Select Categories</p>
                   <Button  
                     variant="success"
                     disabled={this.isDisabled()}                 
                     onClick={
                           ()=>{
-                            const stateData = this.context.state;
-                            console.log(stateData)
-                            axios.post('/api/artworkInfo/create', stateData)
+
+                          let artworkInfoData = 
+                          {                          
+                          category: this.context.state.category ?  this.context.state.category : null,
+                          filePath: this.context.state.filePath ?  this.context.state.filePath : null,
+                          fileName: this.context.state.fileName ?  this.context.state.fileName : null,
+                          artworkFamily: this.context.state.artworkFamily ?  this.context.state.artworkFamily : null,
+                          familyDescription: this.context.state.familyDescription ?  this.context.state.familyDescription : null,
+                          artworkTitle: this.context.state.artworkTitle ?  this.context.state.artworkTitle : null,
+                          artworkDescription: this.context.state.artworkDescription ?  this.context.state.artworkDescription : null,
+                          displayMain: this.context.state.displayMain ?  this.context.state.displayMain : null,
+                          familyDisplayIndex: this.context.state.familyDisplayIndex ?  this.context.state.familyDisplayIndex : null,
+                          fileType: this.context.state.fileType ?  this.context.state.fileType : null,
+                          themes: this.context.state.themes ?  this.context.state.themes : null,
+                          seeAlso: this.context.state.seeAlso ?  this.context.state.seeAlso : null,
+                          location: this.context.state.location ?  this.context.state.location : null,
+                          year: this.context.state.year ?  this.context.state.yea : null
+                          }
+
+                            console.log(artworkInfoData)
+                            axios.post('/api/artworkInfo/create', artworkInfoData)
                               .then( res => { console.log(res.data)})
-                                  .then(() => axios.get('/api/artworkInfo'))
-                                    .then( res => console.log(res.data))
+                              .then(res => this.context.uploadFile())
+                                  // .then(() => axios.get('/api/artworkInfo'))
+                                  //   .then( res => console.log(res.data))
                               }
                           }
                     style={{

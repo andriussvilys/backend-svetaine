@@ -272,14 +272,15 @@ export class Provider extends React.Component{
                 imagePreview: reader.result, 
                 file: input.files[0],
                 fileName: input.files[0].name, 
-                fileType: input.files[0].type
+                fileType: input.files[0].type,
+                filePath: `uploads/${input.files[0].name}`
             })
-            //   output.src = dataURL;
             }.bind(this);
             reader.readAsDataURL(input.files[0])
     }
 
     this.uploadFile = () => {
+        console.log('UPLOAD FILE RUNS')
         const fd = new FormData();
         fd.append('artworkImage', this.state.file, this.state.fileName)
         // fd.append('name', this.state.fileName)
@@ -287,11 +288,12 @@ export class Provider extends React.Component{
             .then(res => {
                 console.log(res)
             })
+            .catch(err => alert(err))
     }
     
     this.changeFileName = (e) => {
         let nameWithFileType = `${e.target.value.split('.')[0]}.${this.state.fileType.split('/')[1]}`
-        this.setState({ fileName: nameWithFileType })
+        this.setState({ fileName: nameWithFileType, filePath: `uploads/${nameWithFileType}` })
 
         // let fileReader = this.state.file
         // console.log(fileReader)
@@ -528,9 +530,9 @@ export class Provider extends React.Component{
             year: this.state.year
         }
         console.log(requestBody)
-        axios.post('/api/familySetup', requestBody)
+        axios.post('/api/familySetup/create', requestBody)
             .then( res => console.log(res))
-            .catch(err => console.log(err))
+            .catch(err => {console.log(err); alert(err)})
     }
 
     // SAMPLE MODEL

@@ -5,7 +5,8 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, './uploads')
+        cb(null, './client/public/uploads')
+        // cb(null, './uploads')
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname)
@@ -30,7 +31,9 @@ router.get('/', (req, res) => {
 //@access Public
 
 
-router.post('/create', upload.single('artworkImage'), (req, res) => {
+router.post('/create', 
+upload.single('artworkImage'), 
+(req, res) => {
     ArtworkInfo.create(req.body).then((artwork)=>{res.send(artwork)})
     // const newArtwork = new ArtworkInfo({
     //     category: req.body.category, 
