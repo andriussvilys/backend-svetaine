@@ -1,5 +1,5 @@
 .jsonPreview {
-  height: 100vh;
+  height: calc(100vh - 100px);
   width: 300px;
   -ms-grid-column: 2;
       grid-column-start: 2;

@@ -23,7 +23,7 @@ render(){
                     <div className="themeSelector ">
                         
                         <div className="extendedList--form imageInfo--box">
-                            <span>{this.props.listName}</span>
+                            <p>{this.props.listName}</p>
                             {this.context.makeDataList(this.props.array, this.props.string, this.props.id)}
                         </div>
 

@@ -202,7 +202,7 @@ export default class NavigationInfo extends Component{
 
                     <div className="imageInfo--section" style={{backgroundColor: "#a8b4b9"}} >
                         <h5>add new category</h5>
-                        <div className="imageInfo--box" style={{display: "block", position: "relative"}}>
+                        <div className="imageInfo--box">
                             <input type="text" 
                                 list="datalist-add-categories"
                                 name="add-category" 
@@ -245,7 +245,7 @@ export default class NavigationInfo extends Component{
                                 SUBMIT
                             </Button> */}
                             <Button
-                                style={{position: "absolute", right: "0", bottom: "5px"}}
+                                style={{marginRight: "30px"}}
                                 variant="success" 
                                 size="sm"
                                 onClick={

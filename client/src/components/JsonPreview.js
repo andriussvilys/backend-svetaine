@@ -130,6 +130,7 @@ export default class JsonPreview extends Component {
                     display: "flex",
                     flexDirection: "column",
                     height: "100px",
+                    width: "100%",
                     backgroundColor: "#2f2f2f",
                     alignItems: "left",
                     color: "#a8a8a8",
@@ -173,7 +174,7 @@ export default class JsonPreview extends Component {
                               }
                           }
                     style={{
-                      width: "282px",
+                      width: "298px",
                       height: "45px"
                     }}
                   >

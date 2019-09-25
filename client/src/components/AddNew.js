@@ -54,6 +54,7 @@ render(){
                         Add new {this.props.stateKey}
                     </span>
                     <form 
+                    style={{flexWrap: "wrap"}}
                     id={`formFor-${this.props.stateKey}`}
                     action={this.props.router}
                     // onSubmit={ (e) => {

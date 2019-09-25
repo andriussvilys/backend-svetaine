@@ -1,11 +1,9 @@
 .extendedList--form {
-  position: relative;
   width: 100%;
   border: none !important;
 }
 
 .extendedList--form > form {
-  position: absolute;
   top: 5px;
   right: 0;
 }
