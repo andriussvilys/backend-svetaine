@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
+import ArtworkOrderDnd from './ArtworkOrderDnD';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/components/imageInfo.css";
 
@@ -69,6 +70,8 @@ export default class ImageInfo extends Component{
                         onChange={(e) => this.context.onChange(e, "familyDisplayIndex") } 
                         />
                     </div>
+
+                    <ArtworkOrderDnd/>
 
                     <div className="imageInfo--box">
                         <span>year:</span>

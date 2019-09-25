@@ -726,9 +726,9 @@ componentDidMount(){
         .then( res => {
           console.log('**************themes DATA')
           console.log(res.data)
-          this.setState({ themesData: res.data[0].list})
+          this.setState({ themesData: res.data.list})
           console.log(this.state.themesData)
-          this.themes = res.data[0].list
+          this.themes = res.data.list
           console.log("*********************THEMES PROP")
           console.log(this.themes)
         })

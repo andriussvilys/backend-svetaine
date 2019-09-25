@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import Button from 'react-bootstrap/Button';
-import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/navigationInfo.css';
 import '../css/components/imageInfo.css';
@@ -109,7 +108,7 @@ export default class NavigationInfo extends Component{
             console.log('are subcategories formed')
             console.log(subcategories)
             return (
-            <div label={obj.category} className="list-group">
+            <div key={obj.category} className="list-group">
                 <ul id={obj.category} className="list--category"> 
                     <input 
                         className="navigation-input category" 

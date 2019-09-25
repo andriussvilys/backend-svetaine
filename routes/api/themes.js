@@ -1,12 +1,12 @@
 const express = require('express');
-const mongoose = require('mongoose')
 const router = express.Router();
+const mongoose = require('mongoose')
 mongoose.set('useFindAndModify', false)
 const Themes = require('../../models/Themes')
 
 //GET ROUTE
 router.get('/', (req, res) => {
-    Themes.find()
+    Themes.findOne({main: true})
         .then(main => {
           // console.log(main); 
           res.send(main)

@@ -101,15 +101,15 @@ export default class JsonPreview extends Component {
                   alt="" 
                   className="uploadPreview" 
                   />
-                  <div className="preview-container"><span className="preview-span">file name:</span> <p className="whiteSpace--break">{this.context.state.fileName}</p></div>
-                  <div className="preview-container"><span className="preview-span">file type:</span> <p className="whiteSpace--break">{this.context.state.fileType}</p></div>
-                  <div className="preview-container"><span className="preview-span">file path:</span> <p className="whiteSpace--break">{this.context.state.filePath}</p></div>
-                  <div className="preview-container"><span className="preview-span">artwork Family:</span> <p className="whiteSpace--break">{this.context.state.artworkFamily}</p></div>
-                  <div className="preview-container"><span className="preview-span">artwork Title:</span> <p className="whiteSpace--break">{this.context.state.artworkTitle}</p></div>
-                  <div className="preview-container"><span className="preview-span">display on Main page:</span> <p className="whiteSpace--break">{this.booleanString("displayMain")}</p></div>
-                  <div className="preview-container"><span className="preview-span">family display index:</span> <p className="whiteSpace--break">{this.context.state.familyDisplayIndex}</p></div>
-                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <p className="whiteSpace--break">{this.themesPreview(this.context.state.themes)}</p></div>
-                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <p className="whiteSpace--break">{this.themesPreview(this.context.state.seeAlso)}</p></div>
+                  <div className="preview-container"><span className="preview-span">file name:</span> <div className="whiteSpace--break">{this.context.state.fileName}</div></div>
+                  <div className="preview-container"><span className="preview-span">file type:</span> <div className="whiteSpace--break">{this.context.state.fileType}</div></div>
+                  <div className="preview-container"><span className="preview-span">file path:</span> <div className="whiteSpace--break">{this.context.state.filePath}</div></div>
+                  <div className="preview-container"><span className="preview-span">artwork Family:</span> <div className="whiteSpace--break">{this.context.state.artworkFamily}</div></div>
+                  <div className="preview-container"><span className="preview-span">artwork Title:</span> <div className="whiteSpace--break">{this.context.state.artworkTitle}</div></div>
+                  <div className="preview-container"><span className="preview-span">display on Main page:</span> <div className="whiteSpace--break">{this.booleanString("displayMain")}</div></div>
+                  <div className="preview-container"><span className="preview-span">family display index:</span> <div className="whiteSpace--break">{this.context.state.familyDisplayIndex}</div></div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.themes)}</div></div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.seeAlso)}</div></div>
                 </div>
                 <h3 className="headline">json preview</h3>
                 <div className="jsonPreviewContainer">
