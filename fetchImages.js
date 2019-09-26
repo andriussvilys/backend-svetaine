@@ -37,8 +37,9 @@ router.get('/', (req, res) => {
 
     let filesArray = fs.readdirSync('client/public/uploads')
 
-    console.log(filesArray)
+    // console.log(filesArray)
     res.send(filesArray)
+    // res.console.log(filesArray)
 
 })
 

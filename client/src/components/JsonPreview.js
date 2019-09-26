@@ -162,7 +162,7 @@ export default class JsonPreview extends Component {
                           themes: this.context.state.themes ?  this.context.state.themes : null,
                           seeAlso: this.context.state.seeAlso ?  this.context.state.seeAlso : null,
                           location: this.context.state.location ?  this.context.state.location : null,
-                          year: this.context.state.year ?  this.context.state.yea : null
+                          year: this.context.state.year ?  this.context.state.year : null
                           }
 
                             console.log(artworkInfoData)

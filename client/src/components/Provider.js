@@ -32,7 +32,9 @@ export class Provider extends React.Component{
       familySetupData: [],
 
       categoriesData: [],
-      categoryNames: []
+      categoryNames: [],
+
+      imageDir: []
     }
 
     // this.themes = () => {
@@ -714,7 +716,11 @@ export class Provider extends React.Component{
     
     }
            
-    
+    this.readImageDir = () => {
+        axios.get('/fetchImages')
+        // .then(res => {console.log(res.data)})
+        .then(res => this.setState({imageDir: res.data}))
+    }
 }   //END OF CONTSTRUCTOR
 
 themes = {}
@@ -751,6 +757,7 @@ componentDidMount(){
                 this.setState({categoriesData: res.data})
             })
         })
+        .then(res => this.readImageDir())
 }
 
   render(){
