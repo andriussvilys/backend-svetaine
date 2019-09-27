@@ -34,7 +34,23 @@ export class Provider extends React.Component{
       categoriesData: [],
       categoryNames: [],
 
-      imageDir: []
+      imageDir: { 
+          files: {
+              "file-1": {id: "file-1", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+              "file-2": {id: "file-2", content:  "image-2019-08-16-12-43-14-175.png"},
+              "file-3": {id: "file-3", content: "MO-JtoA.jpg"},
+              "file-4": {id: "file-4", content: "test.png"}
+          },
+          columns: {
+              "column-1": {
+                  id: "column-1",
+                  title: "Order files",
+                  fileIds: ["file-1","file-2","file-3","file-4"]
+              }
+          },
+          columnOrder: ["column-1"]
+        }
+            
     }
 
     // this.themes = () => {
