@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import ArtworkOrderDnd from './ArtworkOrderDnD';
+import DragAndDropContext from './dragAndDrop/DragAndDropContext'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/components/imageInfo.css";
 
@@ -71,7 +72,8 @@ export default class ImageInfo extends Component{
                         />
                     </div>
 
-                    <ArtworkOrderDnd/>
+                    {/* <ArtworkOrderDnd/> */}
+                    <DragAndDropContext state={this.context.state.imageDir}/>
 
                     <div className="imageInfo--box">
                         <span>year:</span>
