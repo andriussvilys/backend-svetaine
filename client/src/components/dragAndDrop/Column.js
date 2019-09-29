@@ -7,11 +7,14 @@ export default class Column extends React.Component{
     render(){
         return(
             <div>
-                <div>
-                <span className="dnd-title">{this.props.column.title}</span>
+                <span className="dnd-title">
+                {/* {this.props.column.title} */}
+                </span>
                     <Droppable droppableId={this.props.column.id}
                     direction="horizontal">
                         {provided =>{
+                            console.log('RENDERING COLUMNS');
+                            console.log(this.props.files);
                             return(
                                 <div 
                                 ref={provided.innerRef}
@@ -20,12 +23,14 @@ export default class Column extends React.Component{
                                 // style={{display: "flex", flexWrap: "wrap"}}
                                 >
                                     {this.props.files.map((file, fileIndex) => {
-                                        console.log(this.props.column)
                                         return (<File 
-                                            key={file.id} 
+                                            key={`${file.id} in ${this.props.column.id}`} 
                                             file={file} 
+                                            columnId={this.props.column.id}
                                             // index={this.props.column.fileIds.indexOf(file.id)}
-                                            index={fileIndex}
+                                            index={fileIndex + this.props.columnIndex * 4}
+                                            indexColor={this.props.column.indexColor}
+                                            // index={fileIndex}
                                             >
                                             </File>
                                         )
@@ -35,7 +40,6 @@ export default class Column extends React.Component{
                             )
                         }}
                     </Droppable>
-                </div>
             </div>
         ) 
     }

@@ -43,21 +43,33 @@ export class Provider extends React.Component{
               "file-5": {id: "file-5", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
               "file-6": {id: "file-6", content:  "image-2019-08-16-12-43-14-175.png"},
               "file-7": {id: "file-7", content: "MO-JtoA.jpg"},
-              "file-8": {id: "file-8", content: "test.png"}
+              "file-8": {id: "file-8", content: "test.png"},
+              "file-9": {id: "file-9", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+              "file-10": {id: "file-10", content:  "image-2019-08-16-12-43-14-175.png"},
+              "file-11": {id: "file-11", content: "MO-JtoA.jpg"},
+              "file-12": {id: "file-12", content: "test.png"}
             },
           columns: {
               "column-1": {
                   id: "column-1",
                   title: "Order files:",
-                  fileIds: ["file-1","file-2","file-3","file-4"]
+                  fileIds: ["file-1","file-2","file-3","file-4",],
+                  indexColor: "#f2ff3b"
               },
               "column-2": {
                 id: "column-2",
                 title: "Order files-2:",
-                fileIds: ["file-5","file-6","file-7","file-8"]
-            }
+                fileIds: ["file-5","file-6","file-7","file-8"],
+                indexColor: "#c1ff3b"
+              },
+              "column-3": {
+                id: "column-3",
+                title: "Order files-2:",
+                fileIds: ["file-9","file-10","file-11","file-12"],
+                indexColor: "#7de63c"
+              }
           },
-          columnOrder: ["column-1", "column-2"]
+          columnOrder: ["column-1", "column-2", "column-3"]
         }
             
     }

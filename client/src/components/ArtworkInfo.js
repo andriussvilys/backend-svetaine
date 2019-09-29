@@ -63,14 +63,14 @@ export default class ImageInfo extends Component{
                     
                     </div>
 
-                    <div className="imageInfo--box">
+                    {/* <div className="imageInfo--box">
                         <span>family display index:</span>
                         <input 
                         type="number" 
                         min="0" 
                         onChange={(e) => this.context.onChange(e, "familyDisplayIndex") } 
                         />
-                    </div>
+                    </div> */}
 
                     {/* <ArtworkOrderDnd/> */}
                     <DragAndDropContext state={this.context.state.imageDir}/>

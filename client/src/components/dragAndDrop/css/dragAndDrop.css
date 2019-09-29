@@ -1,13 +1,18 @@
 .filesList{
     display:flex;
+    /* flex-wrap: wrap; */
+    max-width: 610px;
+    background-color: rgb(255, 255, 130);
+    height: 150px;
 }
 .fileContainer{
-    height: 150px;
-    width: 150px;
+    height: 100%;
+    max-width: 25%;
     position: relative;
+    flex: 0 0 150px;
 }
 .file{
-    height: 100%;
+    height: calc(100% - 30px);
     width: 100%;
     object-fit: contain;
     border: 1px solid black;
@@ -17,10 +22,19 @@
     position: absolute;
     top: 6px;
     right: 6px;
-    height: 30px;
-    width: 30px;
+    height: 26px;
+    width: 26px;
     border-radius: 999px;
-    background-color: yellow;
+    /* background-color: yellow; */
     text-align: center;
-    padding-top: 4px;
+    /* padding-top: 4px; */
+    border: 1px solid;
+}
+.file-title{
+    position: absolute;
+    height: 30px;
+    background-color: rgb(255, 192, 255);
+    width: 100%;
+    bottom: 0;
+    border: 1px dotted;
 }

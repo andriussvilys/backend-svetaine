@@ -3,6 +3,9 @@ import {Draggable} from "react-beautiful-dnd"
 import './css/dragAndDrop.css';
 
 export default class File extends React.Component{
+    bgColor = () => this.props.columnId === "column-2" ? {backgroundColor: "lime"} : {backgroundColor: "yellow"};
+
+
     render(){
         return(
             <Draggable 
@@ -29,7 +32,11 @@ export default class File extends React.Component{
                             src={`uploads/${this.props.file.content}`}
                             alt={this.props.file.content}
                             />
-                            <p className="file-index">{this.props.index}</p>
+                            <p className="file-index"
+                            style={{backgroundColor: `${this.props.indexColor}`}}
+                            // style={this.props.columnId === "column-2" ? {backgroundColor: "lime"} : {backgroundColor: "yellow"}}
+                            >{this.props.index}</p>
+                            <p className="file-title" >{this.props.file.id}</p>
                         </div>
                     )
                 }}
