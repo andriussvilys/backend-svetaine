@@ -7,8 +7,8 @@ export default class Column extends React.Component{
     render(){
         return(
             <div>
-                <div className="dnd-container imageInfo--box" style={{display: "block"}}>
-                <span className="dnd-title">Order Files:</span>
+                <div>
+                <span className="dnd-title">{this.props.column.title}</span>
                     <Droppable droppableId={this.props.column.id}
                     direction="horizontal">
                         {provided =>{

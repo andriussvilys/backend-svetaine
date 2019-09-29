@@ -39,16 +39,25 @@ export class Provider extends React.Component{
               "file-1": {id: "file-1", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
               "file-2": {id: "file-2", content:  "image-2019-08-16-12-43-14-175.png"},
               "file-3": {id: "file-3", content: "MO-JtoA.jpg"},
-              "file-4": {id: "file-4", content: "test.png"}
+              "file-4": {id: "file-4", content: "test.png"},
+              "file-5": {id: "file-5", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+              "file-6": {id: "file-6", content:  "image-2019-08-16-12-43-14-175.png"},
+              "file-7": {id: "file-7", content: "MO-JtoA.jpg"},
+              "file-8": {id: "file-8", content: "test.png"}
             },
           columns: {
               "column-1": {
                   id: "column-1",
-                  title: "Order files",
+                  title: "Order files:",
                   fileIds: ["file-1","file-2","file-3","file-4"]
-              }
+              },
+              "column-2": {
+                id: "column-2",
+                title: "Order files-2:",
+                fileIds: ["file-5","file-6","file-7","file-8"]
+            }
           },
-          columnOrder: ["column-1"]
+          columnOrder: ["column-1", "column-2"]
         }
             
     }
