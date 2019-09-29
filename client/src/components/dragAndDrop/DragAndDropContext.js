@@ -15,21 +15,51 @@ export default class NavigationInfo extends Component{
         this.state = this.props.state
     }
 
-    onDragEnd = () => {
-        alert('move ended')
+    onDragEnd = (result) => {
+        const {destination, source, draggableId} = result;
+        if(!destination){
+            return
+        }
+        if(destination.droppanleId === source.droppanleId &&
+            destination.index === source.index){
+                return
+            }
+        const column = this.state.columns[source.droppableId];
+        const newFileIds = Array.from(column.fileIds)
+        newFileIds.splice(source.index, 1)
+        newFileIds.splice(destination.index, 0, draggableId)
+
+        const newColumn = {
+            ...column,
+            fileIds: newFileIds
+        }
+
+        const newState = {
+            ...this.state,
+            columns: {
+                ...this.state.columns,
+                [newColumn.id]: newColumn
+            }
+        }
+
+        this.setState(newState)
     }
 
     render(){
-            return this.state.columnOrder.map(columnId => {
-                const column = this.state.columns[columnId];
-                const files = column.fileIds.map(fileId => {
-                    return this.state.files[fileId]
-                })
-                return <Column 
-                key={column.id}
-                column={column}
-                files={files}
-                ></Column>
-            })
-        }
+        return(
+            <DragDropContext onDragEnd={this.onDragEnd}>
+                {this.state.columnOrder.map(columnId => {
+                    const column = this.state.columns[columnId];
+                    const files = column.fileIds.map(fileId => {
+                        return this.state.files[fileId]
+                    })
+                    return <Column 
+                    key={column.id}
+                    column={column}
+                    files={files}
+                    ></Column>
+                })}
+            </DragDropContext>
+        )
+    }
 }
