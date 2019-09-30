@@ -38,6 +38,8 @@ export default class NavigationInfo extends Component{
 
 
             newFileIds.splice(source.index - this.state.columnOrder.indexOf(column.id) * 4, 1)
+            newFileIds.splice(destination.index, 0, draggableId)
+
 
 
     
@@ -120,7 +122,9 @@ export default class NavigationInfo extends Component{
 
             //check if element goes up or down
             //if destination is below 
-            if(this.state.columnOrder.indexOf(startColumn.id) < this.state.columnOrder.indexOf(finishColumn.id)){
+            if(this.state.columnOrder.indexOf(startColumn.id) < this.state.columnOrder.indexOf(finishColumn.id) ||
+                this.state.columnOrder.indexOf(startColumn.id) === this.state.columnOrder.length - 1  &&
+                this.state.columnOrder.indexOf(finishColumn.id) === 0){
 
                 for(var i = 0; i < columnOrder.length; i++  ){
                     console.log(`start counter is ${cascadeStartIndex}`)
@@ -188,6 +192,8 @@ export default class NavigationInfo extends Component{
                 let sourceArray = this.state.columns[source.droppableId].fileIds
                 let finishArray = this.state.columns[destination.droppableId].fileIds
 
+                finishArray.splice(destination.index, 0, draggableId)
+                sourceArray.splice(source.index - this.state.columnOrder.indexOf(source.droppableId) * 4, 1) 
                 sourceArray.unshift(finishArray[finishArray.length - 1])
                 finishArray.pop()
 
