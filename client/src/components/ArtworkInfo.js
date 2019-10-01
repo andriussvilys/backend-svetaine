@@ -73,7 +73,12 @@ export default class ImageInfo extends Component{
                     </div> */}
 
                     {/* <ArtworkOrderDnd/> */}
-                    <DragAndDropContext state={this.context.state.imageDir}/>
+                    
+                    <DragAndDropContext 
+                    title={"set family display index:"}
+                    state={this.context.state.imageDir}
+                    data={this.context.state.imageDir}
+                    />
 
                     <div className="imageInfo--box">
                         <span>year:</span>

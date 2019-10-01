@@ -29,7 +29,7 @@ export default class File extends React.Component{
                             //     border: "1px solid black",
                             //     backgroundColor: "white"
                             // }}
-                            src={`uploads/${this.props.file.content}`}
+                            src={this.props.file.content}
                             alt={this.props.file.content}
                             />
                             <p className="file-index"

@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Context } from '../Provider';
 import { DragDropContext } from 'react-beautiful-dnd';
+import Button from 'react-bootstrap/Button'
+
 import Column from './Column';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../../css/components/navigationInfo.css';
@@ -12,7 +14,7 @@ export default class NavigationInfo extends Component{
 
     constructor(props){
         super(props);
-        this.state = this.props.state
+        this.state = null
     }
 
     onDragEnd = (result) => {
@@ -39,9 +41,6 @@ export default class NavigationInfo extends Component{
 
             newFileIds.splice(source.index - this.state.columnOrder.indexOf(column.id) * 4, 1)
             newFileIds.splice(destination.index, 0, draggableId)
-
-
-
     
             const newColumn = {
                 ...column,
@@ -60,45 +59,6 @@ export default class NavigationInfo extends Component{
             return;
         }
 
-
-        // let startFileIds = Array.from(startColumn.fileIds);
-        // let finishFileIds = Array.from(finishColumn.fileIds);
-
-        // const rewriteFileIdsArray = () => {
-        //     startFileIds.splice(source.index - this.state.columnOrder.indexOf(startColumn.id) * 4, 1);
-        //     finishFileIds.splice(destination.index, 0, draggableId);
-
-        //     console.log("source")
-        //     console.log(source)
-        //     console.log("destination")
-        //     console.log(destination)
-
-        // }
-
-        // rewriteFileIdsArray()
-
-        // const newStart = {
-        //     ...startColumn,
-        //     fileIds: startFileIds
-        // };
-
-        // // finishFileIds.splice(destination.index, 0, draggableId);
-
-        // const newFinish = {
-        //     ...finishColumn,
-        //     fileIds: finishFileIds,
-        // };
-
-        // const newState = {
-        //     ...this.state,
-        //     columns: {
-        //         ...this.state.columns,
-        //         [newStart.id]: newStart,
-        //         [newFinish.id]: newFinish,
-        //     }
-        // }
-
-            
             let newState ={...this.state, columns: {...this.state.columns}}
 
             const reorderFiles = () => {
@@ -167,27 +127,6 @@ export default class NavigationInfo extends Component{
                     
                 }
             else{
-                // let cascadeStartArray = dummyColumns[columnOrder[cascadeStartIndex]].fileIds
-                // let cascadeFinishArray = dummyColumns[columnOrder[cascadeEndIndex]].fileIds
-
-                // const startStateTarget = columnOrder[cascadeStartIndex]
-                // const finishStateTarget = columnOrder[cascadeEndIndex]
-
-                // console.log(`cascadeStart ${cascadeStartIndex}`)
-                // console.log(`cascadeFinish ${cascadeEndIndex}`)
-
-                // cascadeFinishArray.unshift(cascadeFinishArray[cascadeFinishArray.length -1])
-                // // cascadeStartArray.unshift(cascadeStartArray[cascadeStartArray.length -1])
-
-                // //THEN POP THE LAST ELEMENT FROM THE SOURCE ARRAY
-                // cascadeFinishArray.pop()
-                // cascadeFinishArray.splice(source.index, 1)
-
-                // newState.columns[startStateTarget].fileIds = cascadeStartArray
-                // newState.columns[finishStateTarget].fileIds = cascadeFinishArray
-
-                // startColumn = this.state.columns[source.droppableId]
-                // finishColumn = this.state.columns[destination.droppableId]
 
                 let sourceArray = this.state.columns[source.droppableId].fileIds
                 let finishArray = this.state.columns[destination.droppableId].fileIds
@@ -197,14 +136,9 @@ export default class NavigationInfo extends Component{
                 sourceArray.unshift(finishArray[finishArray.length - 1])
                 finishArray.pop()
 
-                // let newStart = startColumn.fileIds
-                // newStart.unshift(finishColumn.fileIds[finishColumn.fileIds.length - 1])
-                // let newFinish = finishColumn.fileIds
-                // newFinish.pop()
                 newState.columns[source.droppableId].fileIds = sourceArray
                 newState.columns[destination.droppableId].fileIds = finishArray
             }
-                // this.setState({newState})
                 console.log("new STATE")
                 console.log(newState)
                 this.setState(newState)
@@ -215,24 +149,45 @@ export default class NavigationInfo extends Component{
             return
         }
 
+    fetchFiles = (data) => {
+        // const newState = this.props.data
+        this.setState(data)
+    }
+
 
     render(){
         return(
-            <div className="dnd-container imageInfo--box" style={{display: "block"}}>
-                <DragDropContext onDragEnd={this.onDragEnd}>
-                    {this.state.columnOrder.map(columnId => {
-                        const column = this.state.columns[columnId];
-                        const files = column.fileIds.map(fileId => {
-                            return this.state.files[fileId]
-                        })
-                        return <Column 
-                        key={column.id}
-                        column={column}
-                        files={files}
-                        columnIndex={this.state.columnOrder.indexOf(column.id)}
-                        ></Column>
-                    })}
-                </DragDropContext>
+            <div className="dnd-container imageInfo--box" 
+            style={{display: "block"}}
+            >
+                <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-between"}}>
+                    <span style={{whiteSpace: "nowrap"}}>{this.props.title}</span>
+                    <Button
+                    style={{marginBottom: "5px", whiteSpace: "nowrap"}}
+                    size="sm"
+                    onClick={
+                        () => this.fetchFiles(this.props.data)
+                    }
+                    >
+                        Fetch files
+                    </Button>
+                </div>
+                <div>
+                    <DragDropContext onDragEnd={this.onDragEnd}>
+                        {this.state ? this.state.columnOrder.map(columnId => {
+                            const column = this.state.columns[columnId];
+                            const files = column.fileIds.map(fileId => {
+                                return this.state.files[fileId]
+                            })
+                            return <Column 
+                            key={column.id}
+                            column={column}
+                            files={files}
+                            columnIndex={this.state.columnOrder.indexOf(column.id)}
+                            ></Column>
+                        }) : null}
+                    </DragDropContext>
+                </div>
             </div>
         )
     }

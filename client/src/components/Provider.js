@@ -14,6 +14,7 @@ export class Provider extends React.Component{
       imagePreview: null,
       fileName: "",
       fileType: null,
+      fileArray: [],
 
       artworkFamily: "",
       familyDescription: "",
@@ -36,18 +37,18 @@ export class Provider extends React.Component{
 
       imageDir: { 
           files: {
-              "file-1": {id: "file-1", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-              "file-2": {id: "file-2", content:  "image-2019-08-16-12-43-14-175.png"},
-              "file-3": {id: "file-3", content: "MO-JtoA.jpg"},
-              "file-4": {id: "file-4", content: "test.png"},
-              "file-5": {id: "file-5", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-              "file-6": {id: "file-6", content:  "image-2019-08-16-12-43-14-175.png"},
-              "file-7": {id: "file-7", content: "MO-JtoA.jpg"},
-              "file-8": {id: "file-8", content: "test.png"},
-              "file-9": {id: "file-9", content: "galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-              "file-10": {id: "file-10", content:  "image-2019-08-16-12-43-14-175.png"},
-              "file-11": {id: "file-11", content: "MO-JtoA.jpg"},
-              "file-12": {id: "file-12", content: "test.png"}
+              "file-1": {id: "file-1", content: 'uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png'},
+              "file-2": {id: "file-2", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
+              "file-3": {id: "file-3", content: "uploads/MO-JtoA.jpg"},
+              "file-4": {id: "file-4", content: "uploads/test.png"},
+              "file-5": {id: "file-5", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+              "file-6": {id: "file-6", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
+              "file-7": {id: "file-7", content: "uploads/MO-JtoA.jpg"},
+              "file-8": {id: "file-8", content: "uploads/test.png"},
+              "file-9": {id: "file-9", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+              "file-10": {id: "file-10", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
+              "file-11": {id: "file-11", content: "uploads/MO-JtoA.jpg"},
+              "file-12": {id: "file-12", content: "uploads/test.png"}
             },
           columns: {
               "column-1": {
@@ -301,21 +302,61 @@ export class Provider extends React.Component{
     }
 
     this.addFileToState = (e) => {
-        console.log('clicked input')
-        const input = e.target;
+        // e.target.files.forEach(file => {
+        //     const reader = new FileReader();
+        //     reader.onload = () => {
+        //       var image = new Image();
+        //       image.src = String(reader.result);
+        //       preview.appendChild(image);
+        //     }
+        //     reader.readAsDataURL(file);
+        // })
+
+        const initialArray = e.target.files
+
+        let fileArray = []
+        
+        Array.from(e.target.files).forEach(file => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+            let obj = {}
+            //   var image = new Image();
+                obj.preview = String(reader.result);
+                obj.imagePreview = reader.result;
+                obj.file = file;
+                obj.fileName = file.name; 
+                obj.fileType = file.type;
+                obj.filePath = `uploads/${file.name}`
+                fileArray.push(obj)
+                if(fileArray.length === initialArray.length){
+                    console.log(fileArray)
+                    this.setState({fileArray: fileArray})
+
+                }
+            }
+            reader.readAsDataURL(file);
+        });
+
+        // console.log('clicked input')
+        // const input = e.target;
     
-        var reader = new FileReader();
-    
-            reader.onload = function(){
-              this.setState({ 
-                imagePreview: reader.result, 
-                file: input.files[0],
-                fileName: input.files[0].name, 
-                fileType: input.files[0].type,
-                filePath: `uploads/${input.files[0].name}`
-            })
-            }.bind(this);
-            reader.readAsDataURL(input.files[0])
+        // var reader = new FileReader();
+
+        // console.log(reader.files)
+
+        //     reader.onload = function(){
+        //         console.log(input)
+        //         console.log(reader)
+        //       this.setState({ 
+        //         imagePreview: reader.result, 
+        //         file: input.files[0],
+        //         fileName: input.files[0].name, 
+        //         fileType: input.files[0].type,
+        //         filePath: `uploads/${input.files[0].name}`
+        //     })
+        //     }.bind(this);
+        //     reader.readAsDataURL(input.files[0])
     }
 
     this.uploadFile = () => {

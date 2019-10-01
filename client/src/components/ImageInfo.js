@@ -5,8 +5,8 @@ import axios from 'axios';
 import ThemeSelector from './ThemeSelector';
 import FamilyInfo from './FamilyInfo';
 import ArtworkInfo from './ArtworkInfo';
+import ImagesPreview from './ImagesPreview';
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/components/imageInfo.css";
 
 export default class ImageInfo extends Component{
 
@@ -29,11 +29,13 @@ export default class ImageInfo extends Component{
               <div className="imageInfo--section">
                   <h5>file upload:</h5>
                   <div className="imageInfo--box">
-                    <span>Upload file:</span> <input type="file" className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
+                    <span>Upload file:</span> 
+                    <input type="file" multiple className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
                   </div>
                   <div className="imageInfo--box">
                     <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
-                </div>
+                  </div>
+                  <ImagesPreview data={this.context.state.fileArray} />
               </div>
 
               <div className="imageInfo--section">
