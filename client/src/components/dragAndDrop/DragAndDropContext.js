@@ -8,7 +8,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import '../../css/components/navigationInfo.css';
 import '../../css/components/imageInfo.css';
 
-export default class NavigationInfo extends Component{
+export default class DragAndDropContext extends Component{
 
     static contextType = Context;
 
