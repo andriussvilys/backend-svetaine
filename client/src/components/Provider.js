@@ -14,7 +14,7 @@ export class Provider extends React.Component{
       imagePreview: null,
       fileName: "",
       fileType: null,
-      fileArray: [],
+      fileData: [],
 
       artworkFamily: "",
       familyDescription: "",
@@ -312,26 +312,52 @@ export class Provider extends React.Component{
         //     reader.readAsDataURL(file);
         // })
 
-        const initialArray = e.target.files
+        const fileCount = e.target.files.length
 
-        let fileArray = []
+        // let fileData = []
+        let obj = {
+            files: {},
+            column: {
+                id: 'column-1',
+                fileIds: []
+            },
+            columnOrder: ['column-1']
+        }
         
         Array.from(e.target.files).forEach(file => {
             const reader = new FileReader();
 
             reader.onload = () => {
-            let obj = {}
+                console.log("FILE")
+                console.log(file.name)
+
+            // imgDir = {
+            //     files: {
+            //         [fileName]: {id: fileName, content: path}
+            //     },
+            //     columns: {
+            //         id:
+            //         title:
+            //         fileIds: []
+    
+            //     },
+            //     columnOrder: []
+            // }
             //   var image = new Image();
-                obj.preview = String(reader.result);
-                obj.imagePreview = reader.result;
-                obj.file = file;
-                obj.fileName = file.name; 
-                obj.fileType = file.type;
-                obj.filePath = `uploads/${file.name}`
-                fileArray.push(obj)
-                if(fileArray.length === initialArray.length){
-                    console.log(fileArray)
-                    this.setState({fileArray: fileArray})
+
+                obj.files[file.name] = {                    
+                    preview: String(reader.result),
+                    file: file,
+                    fileName: file.name, 
+                    fileType: file.type,
+                    src: `uploads/${file.name}`
+                }
+                obj.column.fileIds.push(file.name)
+
+                // fileData.push(obj)
+                if(obj.column.fileIds.length === fileCount){
+                    console.log(obj)
+                    this.setState({fileData: obj})
 
                 }
             }

@@ -6,6 +6,7 @@ import ThemeSelector from './ThemeSelector';
 import FamilyInfo from './FamilyInfo';
 import ArtworkInfo from './ArtworkInfo';
 import ImagesPreview from './ImagesPreview';
+import DnDListContainer from './DragAndDropList/DnDListContainer'
 import "bootstrap/dist/css/bootstrap.min.css";
 
 export default class ImageInfo extends Component{
@@ -36,6 +37,12 @@ export default class ImageInfo extends Component{
                     <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
                   </div>
                   <ImagesPreview data={this.context.state.fileArray} />
+                  <div className="imageInfo--box" style={{display: "block"}}>
+                    <span>DnD list</span>
+                    <DnDListContainer 
+                      data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
+                    />
+                  </div>
               </div>
 
               <div className="imageInfo--section">

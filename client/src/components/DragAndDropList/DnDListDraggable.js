@@ -1,15 +1,22 @@
 import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
+import Button from 'react-bootstrap/Button';
+import './css/ImagesPreview.css';
 
 export default class DnDListDraggable extends React.Component{
 
     render(){
+        console.log("DRAGGABLE PROPS")
+        console.log(this.props)
+        // return null
         return(
             <Draggable
-                draggableId={this.props.file.id} 
+                draggableId={this.props.file.fileName} 
                 index={this.props.index}
             >
                 {(provided)=>{
+                    console.log('DRAGGABLE PROPS')
+                    console.log(this.props)
                     return(
                         <div className="ImagesPreview--container"
                             {...provided.draggableProps}
@@ -19,18 +26,18 @@ export default class DnDListDraggable extends React.Component{
                             <div>
 
                                 <div className="ImagesPreview--imageContainer">
-                                    <img className="ImagesPreview--image" alt={currentFile.fileName} src={currentFile.preview} />
+                                    <img className="ImagesPreview--image" alt={this.props.file.fileName} src={this.props.file.preview} />
                                     <input
                                     type="text" 
                                     className="ImagesPreview--fileName"
-                                    placeholder={currentFile.fileName}
+                                    placeholder={this.props.file.fileName}
                                     >
                                     </input>
                                 </div>
 
                                 <div className="ImagesPreview--indexContainer">
-                                    <span>Index:</span>
-                                    <div className="ImagesPreview--index"></div>
+                                    <span>index:</span>
+                                    <div className="ImagesPreview--index">{this.props.index}</div>
                                 </div>
                             </div>
                             <Button
