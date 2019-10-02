@@ -39,9 +39,15 @@ export default class ImageInfo extends Component{
                   <ImagesPreview data={this.context.state.fileArray} />
                   <div className="imageInfo--box" style={{display: "block"}}>
                     <span>DnD list</span>
-                    <DnDListContainer 
-                      data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
-                    />
+                    <Context.Consumer>
+                      {()=>{
+                        return(
+                          <DnDListContainer 
+                            data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
+                          />
+                        )
+                      }}
+                    </Context.Consumer>
                   </div>
               </div>
 

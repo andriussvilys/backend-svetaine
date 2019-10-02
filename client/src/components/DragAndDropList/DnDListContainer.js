@@ -1,10 +1,13 @@
 import React from 'react';
+import { Context } from '../Provider';
 import { DragDropContext } from 'react-beautiful-dnd';
 import DnDListDroppable from './DnDListDroppable'
 import Button from 'react-bootstrap/Button'
 import './css/ImagesPreview.css'
 
 export default class DnDListContainer extends React.Component{
+    static contextType = Context;
+
     constructor(props){
         super(props)
         this.state = null
@@ -47,9 +50,9 @@ export default class DnDListContainer extends React.Component{
         return(
             <div>
                 <DnDListDroppable 
-                key={this.state.column.id}
-                column={this.state.column}
-                files={this.state.files}
+                key={this.props.data.column.id}
+                column={this.props.data.column}
+                files={this.props.data.files}
                 columnIndex={0}
                 >
                 </DnDListDroppable>
@@ -74,32 +77,40 @@ export default class DnDListContainer extends React.Component{
 
     }
 
-    componentDidUpdate(){
-        this.setUpState()
-    }
+    // componentDidUpdate(){
+    //     this.setUpState()
+    // }
 
     render(){
         //if this component receives props, we set up the its state
 
+        return(
+            <Context.Consumer>
+                {() => {
+                        if(this.props.data){
+                            console.log('CONTEXT STATE')
+                            console.log(this.context.state)
+                            return(
+                                <div> 
+                                    {/* <Button
+                                        onClick={this.setUpState()}
+                                    >
+                                    </Button> */}
+                
+                                    <DragDropContext onDragEnd={this.context.onDragEnd}>
+                                        {this.props.data ? this.createDroppable() : null}
+                                    </DragDropContext>  
+                                </div>
+                            )
+                
+                        }
+                        else{
+                            return null
+                        }
+                }
 
-
-        if(this.props.data){
-            return(
-                <div> 
-                    {/* <Button
-                        onClick={this.setUpState()}
-                    >
-                    </Button> */}
-
-                    <DragDropContext onDragEnd={this.onDragEnd}>
-                        {this.state ? this.createDroppable() : null}
-                    </DragDropContext>  
-                </div>
-            )
-
-        }
-        else{
-            return null
-        }
+                }
+            </Context.Consumer>
+        )
     }
 }

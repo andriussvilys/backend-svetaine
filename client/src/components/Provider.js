@@ -14,7 +14,13 @@ export class Provider extends React.Component{
       imagePreview: null,
       fileName: "",
       fileType: null,
-      fileData: {},
+      fileData: {
+          files: {},
+          column: {
+          id: 'column-1',
+          fileIds: []
+      },
+      columnOrder: ['column-1']},
 
       artworkFamily: "",
       familyDescription: "",
@@ -324,8 +330,14 @@ export class Provider extends React.Component{
             columnOrder: ['column-1']
         }
         
+        
         Array.from(e.target.files).forEach(file => {
             const reader = new FileReader();
+            
+            if(this.state.fileData.column.fileIds.indexOf(file.name) >= 0){
+                alert(`the file ${file.name} has already been selected`)
+                return
+            }
 
             reader.onload = () => {
                 console.log("FILE")
@@ -338,12 +350,23 @@ export class Provider extends React.Component{
                     fileType: file.type,
                     src: `uploads/${file.name}`
                 }
+
+                let newState = {
+                    ...this.state, 
+                    fileData: {
+                        ...this.state.fileData,
+                        files: {...this.state.fileData.files, [file.name]: obj.files[file.name]},
+                        column: {...this.state.fileData.column, fileIds: [...this.state.fileData.column.fileIds, file.name]}
+                }} 
+
+
                 obj.column.fileIds.push(file.name)
 
                 if(obj.column.fileIds.length === fileCount){
                     console.log(obj)                    
                 }
-                this.setState({fileData: obj})
+                // this.setState({fileData: obj})
+                this.setState(newState)
 
             }
             reader.readAsDataURL(file);
@@ -814,6 +837,38 @@ export class Provider extends React.Component{
 
 themes = {}
 
+onDragEnd = (result) => {
+
+    const {destination, source, draggableId} = result;
+
+    if(!destination){
+        return
+    }
+    
+    const column = this.state.fileData.column[source.droppableId];
+    // const column = this.state.column[source.droppableId];
+
+        let newFileIds = this.state.fileData.column.fileIds
+
+        newFileIds.splice(source.index, 1)
+        newFileIds.splice(destination.index, 0, draggableId)
+
+        const newColumn = {
+            ...column,
+            fileIds: newFileIds
+        }
+
+        const newState = {
+            ...this.state.fileData.column,
+            columns: {
+                ...this.state.fileData.column,
+                [newColumn.id]: newColumn
+            }
+        }
+
+        this.setState(newState)
+}
+
 componentDidMount(){
     console.log('**********************component did mount')
 
@@ -871,7 +926,8 @@ componentDidMount(){
           createFamilySetup: this.createFamilySetup,
           getFamilySetup: this.getFamilySetup,
           useFamilySetup: this.useFamilySetup,
-          categoryMethods: this.categoryMethods
+          categoryMethods: this.categoryMethods,
+          onDragEnd: this.onDragEnd
           } }>
         {this.props.children}
       </Context.Provider>
