@@ -6,17 +6,14 @@ import './css/ImagesPreview.css';
 export default class DnDListDraggable extends React.Component{
 
     render(){
-        console.log("DRAGGABLE PROPS")
-        console.log(this.props)
-        // return null
         return(
             <Draggable
                 draggableId={this.props.file.fileName} 
                 index={this.props.index}
             >
                 {(provided)=>{
-                    console.log('DRAGGABLE PROPS')
-                    console.log(this.props)
+                    // console.log('DRAGGABLE PROPS')
+                    // console.log(this.props)
                     return(
                         <div className="ImagesPreview--container"
                             {...provided.draggableProps}

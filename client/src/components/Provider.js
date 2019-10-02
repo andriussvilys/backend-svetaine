@@ -14,7 +14,7 @@ export class Provider extends React.Component{
       imagePreview: null,
       fileName: "",
       fileType: null,
-      fileData: [],
+      fileData: {},
 
       artworkFamily: "",
       familyDescription: "",
@@ -331,20 +331,6 @@ export class Provider extends React.Component{
                 console.log("FILE")
                 console.log(file.name)
 
-            // imgDir = {
-            //     files: {
-            //         [fileName]: {id: fileName, content: path}
-            //     },
-            //     columns: {
-            //         id:
-            //         title:
-            //         fileIds: []
-    
-            //     },
-            //     columnOrder: []
-            // }
-            //   var image = new Image();
-
                 obj.files[file.name] = {                    
                     preview: String(reader.result),
                     file: file,
@@ -354,12 +340,11 @@ export class Provider extends React.Component{
                 }
                 obj.column.fileIds.push(file.name)
 
-                // fileData.push(obj)
                 if(obj.column.fileIds.length === fileCount){
-                    console.log(obj)
-                    this.setState({fileData: obj})
-
+                    console.log(obj)                    
                 }
+                this.setState({fileData: obj})
+
             }
             reader.readAsDataURL(file);
         });

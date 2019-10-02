@@ -56,9 +56,11 @@
 }
 
 .ImagesPreview--index {
-  height: 36px;
-  width: 36px;
+  height: 26px;
+  width: 26px;
   border-radius: 999px;
+  text-align: center;
+  padding-top: 2px;
   background-color: #ffff8e;
 }
 

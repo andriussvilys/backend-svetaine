@@ -11,7 +11,12 @@ export default class DnDListContainer extends React.Component{
     }
 
     onDragEnd = (result) => {
+
         const {destination, source, draggableId} = result;
+
+        if(!destination){
+            return
+        }
         
         const column = this.state.column[source.droppableId];
         // const column = this.state.column[source.droppableId];
@@ -61,20 +66,30 @@ export default class DnDListContainer extends React.Component{
 
                     () => {if(callback){callback()}}
             )
+            return
         }
+        else{
+            console.log('state exists')
+        }
+
+    }
+
+    componentDidUpdate(){
+        this.setUpState()
     }
 
     render(){
         //if this component receives props, we set up the its state
 
+
+
         if(this.props.data){
             return(
                 <div> 
-                    <Button
+                    {/* <Button
                         onClick={this.setUpState()}
                     >
-
-                    </Button>
+                    </Button> */}
 
                     <DragDropContext onDragEnd={this.onDragEnd}>
                         {this.state ? this.createDroppable() : null}
