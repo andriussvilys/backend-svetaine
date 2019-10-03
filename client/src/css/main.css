@@ -83,6 +83,7 @@ p {
 
 Button {
   margin-top: 3px;
+  white-space: nowrap;
 }
 
 .dnd-image {

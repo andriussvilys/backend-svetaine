@@ -94,13 +94,13 @@ export default class JsonPreview extends Component {
             return(
             <div className="DnD-jsonPreview">
                 <div className="DnD-imageBox">
-                  <div className="preview-container"><span className="preview-span">file name:</span> <div className="whiteSpace--break">{this.context.state.fileName}</div></div>
-                  <div className="preview-container"><span className="preview-span">file type:</span> <div className="whiteSpace--break">{this.context.state.fileType}</div></div>
-                  <div className="preview-container"><span className="preview-span">file path:</span> <div className="whiteSpace--break">{this.context.state.filePath}</div></div>
+                  <div className="preview-container"><span className="preview-span">file name:</span> <div className="whiteSpace--break">{this.props.file.fileName}</div></div>
+                  <div className="preview-container"><span className="preview-span">file type:</span> <div className="whiteSpace--break">{this.props.file.fileType}</div></div>
+                  <div className="preview-container"><span className="preview-span">file path:</span> <div className="whiteSpace--break">{this.props.file.src}</div></div>
                   <div className="preview-container"><span className="preview-span">artwork Family:</span> <div className="whiteSpace--break">{this.context.state.artworkFamily}</div></div>
                   <div className="preview-container"><span className="preview-span">artwork Title:</span> <div className="whiteSpace--break">{this.context.state.artworkTitle}</div></div>
                   <div className="preview-container"><span className="preview-span">display on Main page:</span> <div className="whiteSpace--break">{this.booleanString("displayMain")}</div></div>
-                  <div className="preview-container"><span className="preview-span">family display index:</span> <div className="whiteSpace--break">{this.context.state.familyDisplayIndex}</div></div>
+                  <div className="preview-container"><span className="preview-span">family display index:</span> <div className="whiteSpace--break">{this.props.index}</div></div>
                   <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.themes)}</div></div>
                   <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.seeAlso)}</div></div>
                 </div>

@@ -7,8 +7,9 @@ import Card from 'react-bootstrap/Card'
 
 import ArtowrkInfo from './infoComponents/ArtworkInfo'
 import JsonPreview from './infoComponents/JsonPreview'
+import FamilyInfo from './infoComponents/FamilyInfo'
+import NavigationInfo from './infoComponents/NavigationInfo'
 import './css/ImagesPreview.css';
-
 
 export default class DnDListDraggable extends React.Component{
     static contextType = Context;
@@ -58,7 +59,11 @@ export default class DnDListDraggable extends React.Component{
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                         <Card.Body>
-                                                            <JsonPreview />
+                                                            <JsonPreview 
+                                                                fileName={this.props.file.fileName}
+                                                                file={this.props.file}
+                                                                index={this.props.index}
+                                                            />
                                                         </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>
@@ -74,6 +79,22 @@ export default class DnDListDraggable extends React.Component{
                                                         <Accordion.Collapse eventKey="0">
                                                         <Card.Body>
                                                             <ArtowrkInfo style={{width: "75%"}} />
+                                                        </Card.Body>
+                                                        </Accordion.Collapse>
+                                                    </Card>
+                                                </Accordion>
+
+                                                <Accordion >
+                                                    <Card>
+                                                        <Card.Header>
+                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                            Edit Artwork info
+                                                        </Accordion.Toggle>
+                                                        </Card.Header>
+                                                        <Accordion.Collapse eventKey="0">
+                                                        <Card.Body>
+                                                            <FamilyInfo/>
+                                                            <NavigationInfo/>
                                                         </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>
