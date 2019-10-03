@@ -25,7 +25,6 @@
 }
 
 .ImagesPreview--image{
-    height: 150px;
     width: 150px;
     object-fit: contain;
     border: 1px solid;
@@ -46,4 +45,18 @@
     margin-top: 5px;
     justify-content: space-between;
     align-items: center;
+}
+.ImagesPreview--dragHandle{
+        height: 30px; 
+        width: 49px; 
+        background-color:yellow;
+        text-align: center;
+        font-size: 14px;
+        font-weight: bold;
+        padding-top: 4px;
+        border-radius: 5px;
+        border: 1px solid;
+    }
+.mouseDown{
+    background-color: lime;
 }

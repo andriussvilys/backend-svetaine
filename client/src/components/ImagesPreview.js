@@ -2,8 +2,6 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 import { DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import "../css/components/imageInfo.css";
-import "../css/components/ImagesPreview.css";
-
 
 export default class ImagesPreview extends React.Component{
     constructor(props){

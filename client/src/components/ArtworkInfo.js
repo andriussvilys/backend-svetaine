@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
-import ArtworkOrderDnd from './ArtworkOrderDnD';
-import DragAndDropContext from './dragAndDrop/DragAndDropContext'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/components/imageInfo.css";
 
@@ -62,23 +60,6 @@ export default class ImageInfo extends Component{
                     </form>
                     
                     </div>
-
-                    {/* <div className="imageInfo--box">
-                        <span>family display index:</span>
-                        <input 
-                        type="number" 
-                        min="0" 
-                        onChange={(e) => this.context.onChange(e, "familyDisplayIndex") } 
-                        />
-                    </div> */}
-
-                    {/* <ArtworkOrderDnd/> */}
-                    
-                    <DragAndDropContext 
-                    title={"set family display index:"}
-                    state={this.context.state.imageDir}
-                    data={this.context.state.imageDir}
-                    />
 
                     <div className="imageInfo--box">
                         <span>year:</span>
