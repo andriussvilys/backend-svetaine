@@ -13,6 +13,12 @@ import './css/ImagesPreview.css';
 
 export default class DnDListDraggable extends React.Component{
     static contextType = Context;
+
+    constructor(props){
+        super(props)
+        this.state = {}
+    }
+
     render(){
         return(
             <Context.Consumer>
@@ -88,7 +94,7 @@ export default class DnDListDraggable extends React.Component{
                                                     <Card>
                                                         <Card.Header>
                                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                            Edit Artwork info
+                                                            Update Family Info/Search Categories
                                                         </Accordion.Toggle>
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">

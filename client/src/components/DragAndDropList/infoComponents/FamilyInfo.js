@@ -21,7 +21,7 @@ export default class FamilyInfo extends Component {
                 {()=>{
                     return(
                         <div>
-                            <div className="imageInfo--box" style={{display: 'flex'}}>
+                            <div className="DnD-imageInfo--box" style={{display: 'flex'}}>
                                 <span>use family setup</span>
                                 <form >
                                     <div className="container-radio">
@@ -62,7 +62,7 @@ export default class FamilyInfo extends Component {
                                 string="seeAlso"
                                 id="seeAlso"
                             />
-                            <div className="imageInfo--box" style={{display: "block"}}>
+                            <div className="DnD-imageInfo--box" style={{display: "block"}}>
                                 <div>
                                     <p>Family description:</p> 
                                     {/* <p className="subtitle">(different from family name):</p> */}
