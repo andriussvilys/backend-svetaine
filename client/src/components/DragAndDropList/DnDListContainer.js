@@ -46,7 +46,7 @@ export default class DnDListContainer extends React.Component{
     }
     createDroppable = () => {
         console.log('HELLOW')
-        console.log(this.state)
+        console.log(this.props)
         return(
             <div>
                 <DnDListDroppable 

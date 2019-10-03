@@ -1,0 +1,77 @@
+.imageInfo{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+.imageInfo--section{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    padding: 20px 0;
+}
+
+.imageInfo--box{
+    // display: inline;
+    // height: 30px;
+    // width: 400px;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 5vw;
+    position: relative;
+    padding: 5px 0;
+    border-bottom: 1px dotted;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.imageInfo--fileUpload{
+    width: 85px;
+    position: absolute;
+    right: 0;
+}
+
+.themeSelector{
+    // top: 120px;
+    // left: 300px;
+    // position: absolute;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    // padding: 7px;
+    // max-width: 678px;
+}
+.themelist{
+    height: 400px;
+    overflow-y: scroll;
+}
+.themelist__display{
+    display: initial;
+}
+.themes-list{
+    position: relative;
+    width: 200px;
+    border-bottom: 1px solid;
+    height: 22px;
+}
+.themes-span{
+    position: absolute;
+    left: 10px;
+    height: 30px;
+    overflow: hidden;
+    width: 150px;
+    font-size: 12px;
+}
+.themes-checkbox{
+    position: absolute;
+    right: 0;
+}
+
+.themeSelector > ul {
+    background-color: rgb(255, 234, 238);
+    // flex: 1;
+    
+}
+

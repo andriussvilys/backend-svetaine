@@ -869,6 +869,34 @@ onDragEnd = (result) => {
         this.setState(newState)
 }
 
+removeFile = (fileName) => {
+    let newFiles = {}
+    Object.keys(this.state.fileData.files).forEach(file => {
+        console.log('CURRENT FILE')
+        console.log(file)
+        if(file.fileName === fileName){
+            return
+        }
+        newFiles = {...newFiles, [file]: this.state.fileData.files[file]}
+    })
+
+    console.log('NEW FIELS')
+    console.log(newFiles)
+
+    let newState = {
+        ...this.state,
+        fileData: {
+            ...this.state.fileData,
+            column: {
+                ...this.state.fileData.column,
+                fileIds: this.state.fileData.column.fileIds.filter(file => file !== fileName)
+            },
+            files: newFiles
+        }}
+    
+    this.setState(newState)
+}
+
 componentDidMount(){
     console.log('**********************component did mount')
 
@@ -927,7 +955,8 @@ componentDidMount(){
           getFamilySetup: this.getFamilySetup,
           useFamilySetup: this.useFamilySetup,
           categoryMethods: this.categoryMethods,
-          onDragEnd: this.onDragEnd
+          onDragEnd: this.onDragEnd,
+          removeFile: this.removeFile
           } }>
         {this.props.children}
       </Context.Provider>

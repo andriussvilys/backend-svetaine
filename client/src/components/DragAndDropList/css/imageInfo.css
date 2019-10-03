@@ -1,0 +1,93 @@
+.imageInfo {
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 2;
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  grid-row-end: 3;
+}
+
+.imageInfo--section {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 1px solid;
+  padding: 20px 0;
+}
+
+.imageInfo--box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin: 0 5vw;
+  position: relative;
+  padding: 5px 0;
+  border-bottom: 1px dotted;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.imageInfo--fileUpload {
+  width: 85px;
+  position: absolute;
+  right: 0;
+}
+
+.themeSelector {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  width: 100%;
+}
+
+.themelist {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.themelist__display {
+  display: initial;
+}
+
+.themes-list {
+  position: relative;
+  width: 200px;
+  border-bottom: 1px solid;
+  height: 22px;
+}
+
+.themes-span {
+  position: absolute;
+  left: 10px;
+  height: 30px;
+  overflow: hidden;
+  width: 150px;
+  font-size: 12px;
+}
+
+.themes-checkbox {
+  position: absolute;
+  right: 0;
+}
+
+.themeSelector > ul {
+  background-color: #ffeaee;
+}
+/*# sourceMappingURL=imageInfo.css.map */

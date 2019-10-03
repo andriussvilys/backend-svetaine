@@ -30,17 +30,17 @@ export default class ImageInfo extends Component{
               <div className="imageInfo--section">
                   <h5>file upload:</h5>
                   <div className="imageInfo--box">
-                    <span>Upload file:</span> 
+                    <span>Upload file(-s):</span> 
                     <input type="file" multiple className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
                   </div>
-                  <div className="imageInfo--box">
+                  {/* <div className="imageInfo--box">
                     <span>Change file name:</span> <input type="text" value={this.context.state.fileName} onChange={this.context.changeFileName} />
-                  </div>
-                  <ImagesPreview data={this.context.state.fileArray} />
+                  </div> */}
                   <div className="imageInfo--box" style={{display: "block"}}>
                     <span>DnD list</span>
                       <DnDListContainer 
                         data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
+                        contextMethods={this.context.removeFile}
                       />
                   </div>
               </div>
