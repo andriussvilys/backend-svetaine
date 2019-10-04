@@ -55,11 +55,11 @@ export default class DnDListDraggable extends React.Component{
                                                 </div>
                                             </div>
         
-                                            <div class="accordion-container">
-                                                <Accordion >
+                                            <div style={{width: "100%"}}>
+                                                <Accordion>
                                                     <Card>
                                                         <Card.Header>
-                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
                                                             View Data
                                                         </Accordion.Toggle>
                                                         </Card.Header>
@@ -78,33 +78,33 @@ export default class DnDListDraggable extends React.Component{
                                                 <Accordion >
                                                     <Card>
                                                         <Card.Header>
-                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
                                                             Edit Artwork info
                                                         </Accordion.Toggle>
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
-                                                        <Card.Body>
+                                                        <Card.Body style={{padding: "15px"}}>
                                                             <ArtowrkInfo style={{width: "75%"}} />
                                                         </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>
                                                 </Accordion>
 
-                                                <Accordion >
+                                                <Accordion>
                                                     <Card>
                                                         <Card.Header>
-                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
                                                             Update Family Info
                                                         </Accordion.Toggle>
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
-                                                        <Card.Body>
+                                                        <Card.Body style={{padding: "15px"}} >
                                                             <FamilyInfo/>
 
                                                             <Accordion >
                                                                 <Card>
                                                                     <Card.Header>
-                                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
                                                                         Update Search Categories
                                                                     </Accordion.Toggle>
                                                                     </Card.Header>

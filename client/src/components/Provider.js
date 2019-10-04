@@ -451,6 +451,9 @@ export class Provider extends React.Component{
 
     this.autoCheck = (stateKey, value) => {
         if(this.state[stateKey].includes(value)){
+            if(this.state.familySetupData[stateKey] && this.state.familySetupData[stateKey].includes(value)){
+               return true
+            }
             return true
         }
         else{

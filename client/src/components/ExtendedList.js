@@ -5,7 +5,7 @@ import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import '../css/components/extendedList.css';
 import '../css/components/imageInfo.css';
-import { IoIosArrowDown } from "react-icons/io";
+
 // import openIconic from 'open-iconic';
 
 class ExtendedList extends React.Component{

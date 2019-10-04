@@ -21,7 +21,7 @@ export default class FamilyInfo extends Component {
                 {()=>{
                     return(
                         <div>
-                            
+
                             <ExtendedList 
                                 listName="select artwork family: "
                                 // array={this.artworks()}
@@ -79,7 +79,7 @@ export default class FamilyInfo extends Component {
                                     (e) => this.context.onChange(e, "familyDescription")
                                 }
                                 style={{width: "100%"}}
-                                placeholder={this.context.state.familyDescription ? this.context.state.familyDescription : null}
+                                value={this.context.state.familySetupData.familyDescription ? this.context.state.familySetupData.familyDescription : null}
                                 ></textarea>
                             </div>
 

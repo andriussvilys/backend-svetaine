@@ -43,12 +43,12 @@ render(){
                             <Accordion >
                                 <Card>
                                     <Card.Header>
-                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
                                         View Full List
-                                    </Accordion.Toggle>
+                                    </Accordion.Toggle >
                                     </Card.Header>
                                     <Accordion.Collapse eventKey="0">
-                                    <Card.Body>
+                                    <Card.Body style={{display: "flex", flexWrap: "wrap"}}>
                                         {this.context.createDropDownList(this.props.array, this.props.string)}
                                     </Card.Body>
                                     </Accordion.Collapse>
