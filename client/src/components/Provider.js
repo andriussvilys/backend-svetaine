@@ -36,7 +36,15 @@ export class Provider extends React.Component{
 
       themesData: [],
       artworkFamilyList: [],
-      familySetupData: [],
+      familySetupData: {
+          artworkFamily: null,
+          familyDescription: null,
+          location: null,
+          year: null,
+          seeAlso: [],
+          themes: [],
+          category: {}
+      },
 
       categoriesData: [],
       categoryNames: [],
@@ -103,7 +111,7 @@ export class Provider extends React.Component{
             let listItemNest = null
             let subcategoryNest = null
             let newListitems = null
-            let stateCopy = {...this.state}
+            let stateCopy = {...this.state.familySetupData}
 
             if(classname === "listitem"){
                 console.log('   CLICKED LIST ITEM')
@@ -114,13 +122,26 @@ export class Provider extends React.Component{
                 console.log(`Parent of this checkbox parent is =====`)
                 console.log(category)
                 console.log('LIST ITEM ARRAY WHERE THIS CHECKBOX CAN BE FOUND')
-                console.log(this.state.category[category][subcategory])
-                listItemNest = this.state.category[category][subcategory]
+                console.log(this.state.familySetupData.category[category][subcategory])
+                listItemNest = this.state.familySetupData.category[category][subcategory]
                 newListitems = listItemNest.splice(
                     listItemNest.indexOf(checkboxId), 1
                 )
                 console.log(newListitems)
-                this.setState({ listItemNest: newListitems})
+                let newState = { 
+                    ...this.state,
+                    familySetupData: {
+                        ...this.state.familySetupData,
+                        category: {
+                            ...this.state.familySetupData.category,
+                            [category]: {
+                                ...this.state.familySetupData.category[category],
+                                 [subcategory]:newListitems
+                            }
+                        }
+                    }
+                }
+                this.setState(newState)
                 // e.target.parentNode.classList.toggle('themes-list--selected')
                 // e.target.parentNode.parentNode.classList.toggle('themes-list--selected')
                 // e.target.parentNode.parentNode.parentNode.classList.toggle('themes-list--selected')
@@ -147,7 +168,7 @@ export class Provider extends React.Component{
             }
             }
 
-        let stateCategory = this.state.category;
+        let stateCategory = this.state.familySetupData.category;
         const parentCheckbox = (target) => Array.from(target.getElementsByTagName('input'))[0];
     
         const classNameCheck = (name) => {
@@ -157,24 +178,34 @@ export class Provider extends React.Component{
         const checkboxCheck = (checkbox, subcategory, callback) => {
             checkbox.checked = true
             if(!subcategory){
-                this.setState({ category: {
-                    ...stateCategory, [checkbox.value]: {} 
-                    }                 
+                this.setState({ 
+                    ...this.state,
+                    familySetupData: {
+                        ...this.state.familySetupData,
+                        category: {
+                        ...this.state.familySetupData.category, [checkbox.value]: {} 
+                        }                 
+                    }
                   })
              }
                 else{
                     const categoryPromise = new Promise((resolve, reject) => {
                         subcategory.checked = true;
                         console.log('clicked a listitem')
-                        if(!this.state.category[checkbox.value]){ 
+                        if(!this.state.familySetupData.category[checkbox.value]){ 
                             console.log('category doesnt exist')
                             checkbox.checked = true;
-                            this.setState({ category: {
-                                ...stateCategory, [checkbox.value]:{}
-                                } 
+                            this.setState({ 
+                                ...this.state,
+                                familySetupData:{
+                                    ...this.state.familySetupData,
+                                    category: {
+                                    ...this.state.familySetupData.category, [checkbox.value]:{}
+                                    } 
+                                }
                             },
                                 () => {
-                                    if(this.state.category[checkbox.value]){
+                                    if(this.state.familySetupData.category[checkbox.value]){
                                         return resolve('created new category'); 
                                     }
                                     else{
@@ -192,22 +223,25 @@ export class Provider extends React.Component{
                     .then((resolveMessage)=>{
                         console.log(resolveMessage)
                         const subcategoryPromise = new Promise((res, reject)=>{
-                            console.log('inside subcategoryPromise');
-                            console.log(this.state)
-                            console.log(this.state.category[checkbox.value])
-                            if(!this.state.category[checkbox.value][subcategory.value]){
+                            if(!this.state.familySetupData.category[checkbox.value][subcategory.value]){
                                 console.log('subcategory dont exist')
                                 console.log(stateCategory)
                                 subcategory.checked = true;
                                 this.setState({ 
-                                    category: {
-                                        ...stateCategory, [checkbox.value]:{
-                                            ...stateCategory[checkbox.value], [subcategory.value]: []
-                                            }  
-                                        }
+                                    ...this.state,
+                                    familySetupData:{
+                                        ...this.state.familySetupData,
+                                        category: {
+                                            ...this.state.familySetupData.category, 
+                                            [checkbox.value]:{
+                                                ...this.state.familySetupData.category[checkbox.value], 
+                                                [subcategory.value]: []
+                                                }  
+                                            }
+                                    }
                                 }, 
                                     ()=>{
-                                        if(this.state.category[checkbox.value][subcategory.value]){
+                                        if(this.state.familySetupData.category[checkbox.value][subcategory.value]){
                                             console.log('create new subcategory')
                                             return res('created new subcategory')
                                         }
@@ -239,7 +273,16 @@ export class Provider extends React.Component{
         switch (true) {
     
         case classNameCheck('list--category'):
-            this.setState({ category: {...this.state.category, [e.target.value]: {} } })
+            let newState = {
+                familySetupData:{
+                    ...this.state.familySetupData,
+                    category: {
+                        ...this.state.familySetupData.category, 
+                        [e.target.value]: {} 
+                    }
+                }
+            }
+            this.setState(newState)
         break;
         
         case classNameCheck('list--subcategory'):
@@ -247,47 +290,59 @@ export class Provider extends React.Component{
     
             checkboxCheck(category)
             
-            this.setState({ category: {
-                ...this.state.category, [category.value]:{
-                ...this.state.category[category.value], [subcategory.value]:[
-                ]
-                } 
+            // let newState = {
+            //     ...this.state,
+            //     familySetupData:{
+            //         ...this.state.familySetupData,
+            //         category: {
+            //             ...this.state.category, 
+            //             [e.target.value]: {},
+
+            //         }
+            //     }
+            // }
+
+            this.setState({ 
+                familySetupData:{
+                ...this.state.familySetupData,
+                    category: {
+                        ...this.state.familySetupData.category, [category.value]:{
+                            ...this.state.familySetupData.category[category.value], [subcategory.value]:[
+                            ]
+                        } 
+                    } 
             } 
             })
     
         break;
             
         case classNameCheck('list--listitem'):
-    
+            alert('LISTITEM CHECKED')
             category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
             subcategory = parentCheckbox(e.target.parentNode.parentNode)
 
             const newListItem = e.target.value;
             
-            // this.setState({ category: {
-                //     ...this.state.category, [category.value]: {
-            //     ...this.state.category[category.value], [subcategory.value]:[
-                //     ...this.state.category[category.value][subcategory.value], newListItem
-            //     ]
-            //     } 
-            // } 
-            // })
-            
             const callback = () => {
                 console.log('inside callback')
                 console.log(this.state)
                 // console.log(this.state[category.value][subcategory.value])
-                const newList = [...this.state.category[category.value][subcategory.value], newListItem]
+                const newList = [...this.state.familySetupData.category[category.value][subcategory.value], newListItem]
+                console.log('*************************************NEW LIST *********************************')
                 console.log(newList)
-                this.setState({ category: {
-                    ...this.state.category, [category.value]: {
-                        ...this.state.category[category.value], [subcategory.value]:newList
-                        // [
-                        // ...this.state.category[category.value][subcategory.value], newListItem
-                        // ]
-                    } 
-                } 
-            })
+                let newState = { 
+                        ...this.state,
+                        familySetupData: {
+                            ...this.state.familySetupData,
+                            category: {
+                            ...this.state.familySetupData.category, [category.value]: {
+                                ...this.state.familySetupData.category[category.value], 
+                                [subcategory.value]: newList
+                            } 
+                        } 
+                        }
+                }
+                this.setState(newState)
         }
         
         checkboxCheck(category, subcategory, callback);
@@ -439,12 +494,26 @@ export class Provider extends React.Component{
 
                 return
             }
-            this.setState({ [string]: [...this.state[string], e.target.value]})
+            let newState = {
+                ...this.state,
+                familySetupData: {
+                    ...this.state.familySetupData,
+                    [string]: [...this.state.familySetupData[string], e.target.value]
+                }
+            }
+            this.setState(newState)
             e.target.parentNode.classList.toggle('themes-list--selected')
         }
         else{
-            let stateUpdate = this.state[string].filter(item => item !== e.target.value);
-            this.setState({[string]: stateUpdate})
+            let newNest = this.state.familySetupData[string].filter(item => item !== e.target.value);
+            let newState = {
+                ...this.state,
+                familySetupData: {
+                    ...this.state.familySetupData,
+                    [string]: newNest
+                }
+            }
+            this.setState(newState)
             e.target.parentNode.classList.toggle('themes-list--selected')
         }
     }
@@ -582,7 +651,7 @@ export class Provider extends React.Component{
                     id={`datalist-input-${string}`}
                     // onFocus={() => {document.getElementById(listId).classList.remove('no-display')}}
                     />
-                    <label for={`datalist-input-${string}`} className="subtitle" style={{fontSize: "11px"}}>
+                    <label htmlFor={`datalist-input-${string}`} className="subtitle" style={{fontSize: "11px"}}>
                         double click to view list of options<br/>
                         press 'Enter' to submit
                         </label>
