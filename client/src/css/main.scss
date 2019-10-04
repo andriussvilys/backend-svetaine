@@ -50,8 +50,10 @@ form{
     display: flex;
 }
 .subtitle{
-    font-size: 12px;
+    font-size: 11px;
     color: rgb(165, 165, 165);
+    white-space: nowrap;
+    margin: 0;
 }
 
 p{
@@ -79,4 +81,9 @@ Button{
 .dnd-list{
     list-style-type:none;
     display: flex;
+}
+.center-column{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }

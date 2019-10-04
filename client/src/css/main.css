@@ -69,8 +69,10 @@ form {
 }
 
 .subtitle {
-  font-size: 12px;
+  font-size: 11px;
   color: #a5a5a5;
+  white-space: nowrap;
+  margin: 0;
 }
 
 p {
@@ -103,5 +105,18 @@ Button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+}
+
+.center-column {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 /*# sourceMappingURL=main.css.map */

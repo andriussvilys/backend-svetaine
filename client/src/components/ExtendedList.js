@@ -1,6 +1,8 @@
 import React from 'react';
 import { Context } from './Provider';
-import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
 import '../css/components/extendedList.css';
 import '../css/components/imageInfo.css';
 import { IoIosArrowDown } from "react-icons/io";
@@ -25,24 +27,23 @@ render(){
                         <div className="extendedList--form imageInfo--box">
                             <p>{this.props.listName}</p>
                             {this.context.makeDataList(this.props.array, this.props.string, this.props.id)}
-                        </div>
 
-                        <div style={{width: '100%'}}>
-                            {/* <div className="imageInfo--box">
-                                <span className="subtitle">extend full list: </span>
-                                <Button 
-                                variant="primary" size="sm"
-                                className="button-extend"
-                                onClick={(e) => this.context.extendList(e, this.props.id)}
-                                >    
-                                    < IoIosArrowDown className="icon--chevron icon" />
-                                </Button>
-                            </div> */}
-                            <div className="themeSelector no-display" id={this.props.id}>                
-                                {this.context.createDropDownList(this.props.array, this.props.string)}
-                            </div>
+                            <Accordion >
+                                <Card>
+                                    <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        View List
+                                    </Accordion.Toggle>
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="0">
+                                    <Card.Body style={{display: "flex", flexWrap: "wrap"}}>
+                                        {this.context.createDropDownList(this.props.array, this.props.string)}
+                                    </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>  
                         </div>
-                    </div>
+                        </div>
             )
         }}
         </Context.Consumer>

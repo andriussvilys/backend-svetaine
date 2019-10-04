@@ -483,33 +483,26 @@ export class Provider extends React.Component{
             console.log('COLUMNS')
             console.log(columns)
           }
+          //this defines column index
           let counter = 0;
-          let subcounter = 10;
-          listItems.forEach((item, index)=> {
-            // console.log(index)
-  
-            if(index < 10){
-                // console.log(columns[0])
-              columns[0] = [...columns[0], item]
-            }
-            
-            else{
-              // index.toString().startsWith(counter.toString())
-              subcounter += 1;
-            //   console.log(`subcounter is ${subcounter}`)
-              if(Number.isInteger(subcounter / 10)){
-                counter += 1;
-              }
-              columns[counter] = [...columns[counter], item]
-            }
-          })
-        //   console.log(columns)
+          //this counts the number of LIs in a coumn
+          let subcounter = 0;
+
+          listItems.forEach((li) => {
+              columns[counter] = [...columns[counter], li]
+                subcounter += 1
+                //if theres 10 LIs in the column, increment column index (push LIs to the next column)
+                if(subcounter === 10 ){
+                    counter += 1;
+                    subcounter = 0
+                }
+            })
+
           let finalList = columns.map((array, index) => {
             return(<ul className="no-padding" key={`${string}-${index}`}>
               {array}
             </ul>)
           })
-        //   console.log(finalList)
           return finalList;
         }
   
@@ -525,10 +518,13 @@ export class Provider extends React.Component{
         }
 
         let options = array.map( optionValue => {
-            return (<option key={`option-${optionValue}`} value={optionValue}>{optionValue}</option>)
+            return (<option key={`option-${optionValue}`} value={optionValue}/>)
         })
+        let datalist = <datalist id={`datalist-${string}`}>{options}</datalist>
         return (
+            <div>
                 <form 
+                    className="center-column"
                     onSubmit={
                         (e) => {
                             console.log('clicked submit')
@@ -552,24 +548,15 @@ export class Provider extends React.Component{
                     placeholder={string} 
                     // value={typeof this.state[string] === 'string' ? this.state[string] : this.state[string][this.state[string].length-1]}
                     list={`datalist-${string}`} 
-                    name={string} 
-                    onFocus={() => {document.getElementById(listId).classList.remove('no-display')}}
-                    // onBlur={() => {document.getElementById(listId).classList.toggle('no-display')}}
+                    name={`datalist-${string}`} 
+                    id={`datalist-input-${string}`}
+                    // onFocus={() => {document.getElementById(listId).classList.remove('no-display')}}
                     />
-                    {() => {
-                        //  CHECK IF INPUT WITH THE SAME VALUE/ID ALREADY EXISTS
-                        if(document.getElementById(`datalist-${string}`)){
-                            return
-                        }
-                        else{
-                            return(
-                                <datalist id={`datalist-${string}`}>
-                                    {options}
-                                </datalist>
-                            )
-                        }
-                        }}
+                    <label for={`datalist-input-${string}`} className="subtitle" style={{fontSize: "11px"}}>double click to view list of options</label>
+
+                    {datalist}               
                 </form>
+            </div>
         )
     }
 
@@ -642,6 +629,10 @@ export class Provider extends React.Component{
             seeAlso: this.state.seeAlso,
             location: this.state.location,
             year: this.state.year
+        }
+        if(!this.state.artworkFamily){
+            alert('select or add new Family Name')
+            return
         }
         console.log(requestBody)
         axios.post('/api/familySetup/create', requestBody)

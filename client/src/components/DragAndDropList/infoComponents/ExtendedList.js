@@ -1,5 +1,8 @@
 import React from 'react';
 import { Context } from '../../Provider';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card'
+import Button from 'react-bootstrap/Button'
 import '../css/extendedList.css';
 import '../css/imageInfo.css';
 // import openIconic from 'open-iconic';
@@ -36,9 +39,22 @@ render(){
                                     < IoIosArrowDown className="icon--chevron icon" />
                                 </Button>
                             </div> */}
-                            <div className="themeSelector no-display" id={this.props.id}>                
-                                {this.context.createDropDownList(this.props.array, this.props.string)}
-                            </div>
+
+                            <Accordion >
+                                <Card>
+                                    <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                        View Full List
+                                    </Accordion.Toggle>
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="0">
+                                    <Card.Body>
+                                        {this.context.createDropDownList(this.props.array, this.props.string)}
+                                    </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>  
+
                         </div>
                     </div>
             )
