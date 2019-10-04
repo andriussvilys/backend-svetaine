@@ -121,6 +121,9 @@ export class Provider extends React.Component{
                 )
                 console.log(newListitems)
                 this.setState({ listItemNest: newListitems})
+                // e.target.parentNode.classList.toggle('themes-list--selected')
+                // e.target.parentNode.parentNode.classList.toggle('themes-list--selected')
+                // e.target.parentNode.parentNode.parentNode.classList.toggle('themes-list--selected')
                 return                
             }
             else if (classname === "subcategory"){
@@ -129,6 +132,8 @@ export class Provider extends React.Component{
                 Array.from(document.getElementById(checkboxId).getElementsByTagName('input'))
                     .forEach(item => item.checked = false)
                 this.setState(stateCopy)
+                // e.target.parentNode.classList.toggle('themes-list--selected')
+                // e.target.parentNode.parentNode.classList.toggle('themes-list--selected')
                 return
             }
             else if (classname === "category"){
@@ -137,6 +142,7 @@ export class Provider extends React.Component{
                 Array.from(document.getElementById(category).getElementsByTagName('input'))
                     .forEach(item => item.checked = false)
                 this.setState(stateCopy)
+                // e.target.parentNode.classList.toggle('themes-list--selected')
                 return
             }
             }
@@ -434,10 +440,12 @@ export class Provider extends React.Component{
                 return
             }
             this.setState({ [string]: [...this.state[string], e.target.value]})
+            e.target.parentNode.classList.toggle('themes-list--selected')
         }
         else{
             let stateUpdate = this.state[string].filter(item => item !== e.target.value);
             this.setState({[string]: stateUpdate})
+            e.target.parentNode.classList.toggle('themes-list--selected')
         }
     }
 
@@ -552,7 +560,10 @@ export class Provider extends React.Component{
                     id={`datalist-input-${string}`}
                     // onFocus={() => {document.getElementById(listId).classList.remove('no-display')}}
                     />
-                    <label for={`datalist-input-${string}`} className="subtitle" style={{fontSize: "11px"}}>double click to view list of options</label>
+                    <label for={`datalist-input-${string}`} className="subtitle" style={{fontSize: "11px"}}>
+                        double click to view list of options<br/>
+                        press 'Enter' to submit
+                        </label>
 
                     {datalist}               
                 </form>

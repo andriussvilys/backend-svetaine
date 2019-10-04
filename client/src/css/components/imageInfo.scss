@@ -55,6 +55,11 @@
     width: 200px;
     border-bottom: 1px solid;
     height: 22px;
+    background-color: rgba(0,0,0,.055);
+}
+.themes-list--selected{
+    background-color: #c9eec9 !important;
+    transition: all 0.2s;
 }
 .themes-span{
     position: absolute;
