@@ -94,13 +94,28 @@ export default class DnDListDraggable extends React.Component{
                                                     <Card>
                                                         <Card.Header>
                                                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                            Update Family Info/Search Categories
+                                                            Update Family Info
                                                         </Accordion.Toggle>
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                         <Card.Body>
                                                             <FamilyInfo/>
-                                                            <NavigationInfo/>
+
+                                                            <Accordion >
+                                                                <Card>
+                                                                    <Card.Header>
+                                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                                                                        Update Search Categories
+                                                                    </Accordion.Toggle>
+                                                                    </Card.Header>
+                                                                    <Accordion.Collapse eventKey="0">
+                                                                    <Card.Body>
+                                                                        <NavigationInfo/>
+                                                                    </Card.Body>
+                                                                    </Accordion.Collapse>
+                                                                </Card>
+                                                            </Accordion>
+                                                            
                                                         </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>

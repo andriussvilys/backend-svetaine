@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Context } from '../../Provider';
-import ExtendedList from '../../ExtendedList';
-import AddNew from '../../AddNew';
-import ThemeSelector from '../../ThemeSelector';
+import ExtendedList from './ExtendedList';
+import AddNew from './AddNew';
+import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/jsonPreview.css';

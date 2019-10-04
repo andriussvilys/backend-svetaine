@@ -21,7 +21,7 @@ export default class ImageInfo extends Component{
                 return(
                 <div>
 
-                    <div className="imageInfo--box">
+                    <div className="DnD-imageInfo--box">
                         <div>
                         <p>Add Artwork title:</p> 
                         <p className="subtitle">(different from family name):</p>
@@ -33,7 +33,7 @@ export default class ImageInfo extends Component{
                         />
                     </div>
 
-                    <div className="imageInfo--box">
+                    <div className="DnD-imageInfo--box">
                   <span>display on main page:</span>
                   <form>
                       <div className="container-radio">
@@ -61,7 +61,7 @@ export default class ImageInfo extends Component{
                     
                     </div>
 
-                    <div className="imageInfo--box">
+                    <div className="DnD-imageInfo--box">
                         <span>year:</span>
                             <input 
                             type="number" 
@@ -70,7 +70,7 @@ export default class ImageInfo extends Component{
                             />
                     </div>
 
-                    <div className="imageInfo--box">
+                    <div className="DnD-imageInfo--box">
                         <span>location:</span>
                             <input 
                             type="text" 
@@ -79,10 +79,10 @@ export default class ImageInfo extends Component{
                     </div>
 
 
-                    <div className="imageInfo--box"></div>
+                    <div className="DnD-imageInfo--box"></div>
 
                     {/* DESCRIPTION */}
-                    <div className="imageInfo--box"  style={{display: "block"}}>
+                    <div className="DnD-imageInfo--box"  style={{display: "block"}}>
                         <div>
                             <p>Artwork description:</p> 
                             <p className="subtitle">this is describes particulars of a work in a series or exhibit in a show</p>
