@@ -450,15 +450,34 @@ export class Provider extends React.Component{
     }
 
     this.autoCheck = (stateKey, value) => {
-        if(this.state[stateKey].includes(value)){
-            if(this.state.familySetupData[stateKey] && this.state.familySetupData[stateKey].includes(value)){
-               return true
+
+        let inputParent = null
+
+        if(document.getElementById(`${stateKey}-${value}`)){
+            inputParent = document.getElementById(`${stateKey}-${value}`).parentNode;
+        }
+
+        if(this.state.familySetupData[stateKey]){
+            if(this.state[stateKey].includes(value) || this.state.familySetupData[stateKey].includes(value)){
+                if(!inputParent.classList.contains('themes-list--selected')){
+                    inputParent.classList.add('themes-list--selected')
+                }
+                return true
             }
-            return true
         }
-        else{
+        else if(!this.state.familySetupData[stateKey]){
+            if(this.state[stateKey].includes(value)){
+                if(!inputParent.classList.contains('themes-list--selected')){
+                    inputParent.classList.add('themes-list--selected')
+                }
+                return true
+            }
+        }
+
+            if(inputParent && inputParent.classList.contains('themes-list--selected')){
+                inputParent.classList.remove('themes-list--selected')
+            }
             return false
-        }
     }
 
     this.createDropDownList = (array, string) => {
