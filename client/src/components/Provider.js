@@ -37,6 +37,7 @@ export class Provider extends React.Component{
       themesData: [],
       artworkFamilyList: [],
       familySetupData: {
+          useFamilySetup: false,
           artworkFamily: null,
           familyDescription: null,
           location: null,
@@ -420,44 +421,58 @@ export class Provider extends React.Component{
     }
 
     this.themesCheck = (e, string) => {
-        if(e.target.checked){
+        
             if(string === "artworkFamily"){
-                this.setState({ [string]:  e.target.value},
-                    () => this.getFamilySetup(
-                        function callback(){
-                            if(document.getElementById("familyDisplaySetup__radio-yes").checked){
-                                console.log("RADIO IS CHECKED ********************************")
-                                this.useFamilySetup()
-                            }
-                        }
-                    )
-                    )
 
-
+                this.getFamilySetup(e)
                 return
             }
-            let newState = {
-                ...this.state,
-                familySetupData: {
-                    ...this.state.familySetupData,
-                    [string]: [...this.state.familySetupData[string], e.target.value]
+            //     else{
+            //         let newState = {
+            //             ...this.state,
+            //             familySetupData: {
+            //                 ...this.state.familySetupData,
+            //                 useFamilySetup: false
+            //             }
+            //         }
+            //         this.setState(newState)
+            //         return
+            //     }
+            //     alert('themesChecked radio')
+            //     // this.setState({ [string]:  e.target.value},
+            //     //     () => this.getFamilySetup(
+            //     //         function callback(){
+            //     //             if(document.getElementById("familyDisplaySetup__radio-yes").checked){
+            //     //                 this.useFamilySetup(true)
+            //     //             }
+            //     //         }
+            //     //     )
+            //     //     )
+
+            // }
+            if(e.target.checked){
+                let newState = {
+                    ...this.state,
+                    familySetupData: {
+                        ...this.state.familySetupData,
+                        [string]: [...this.state.familySetupData[string], e.target.value]
+                    }
                 }
+                this.setState(newState)
+                e.target.parentNode.classList.toggle('themes-list--selected')
             }
-            this.setState(newState)
-            e.target.parentNode.classList.toggle('themes-list--selected')
-        }
-        else{
-            let newNest = this.state.familySetupData[string].filter(item => item !== e.target.value);
-            let newState = {
-                ...this.state,
-                familySetupData: {
-                    ...this.state.familySetupData,
-                    [string]: newNest
+            else{
+                let newNest = this.state.familySetupData[string].filter(item => item !== e.target.value);
+                let newState = {
+                    ...this.state,
+                    familySetupData: {
+                        ...this.state.familySetupData,
+                        [string]: newNest
+                    }
                 }
+                this.setState(newState)
+                e.target.parentNode.classList.toggle('themes-list--selected')
             }
-            this.setState(newState)
-            e.target.parentNode.classList.toggle('themes-list--selected')
-        }
     }
 
     this.autoCheckCategory = () => {
@@ -515,10 +530,10 @@ export class Provider extends React.Component{
                     name={string}
                     id={`${string}-${listItem}`}
                     className="themes-checkbox" 
-                    type={inputType}
+                    type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
                     checked={this.autoCheck(string, listItem)} 
-                    onChange={(e) => this.themesCheck(e, string)}/>
+                    onChange={(e) => {this.themesCheck(e, string)}}/>
                 </li>
             )
         })
@@ -717,59 +732,60 @@ export class Provider extends React.Component{
             //     "year": ""
             //   }
 
-    this.getFamilySetup = (callback) => {
-        let familyName = this.state.artworkFamily;
-
-        axios.get(`/api/familySetup/${familyName}`)
+    this.getFamilySetup = (e) => {
+        axios.get(`/api/familySetup/${e.target.value}`)
         .then( res => {
-
-            this.setState({ familySetupData: res.data}, 
-                callback
-            )
+            let newFamilySetup = {}
+            Object.keys(res.data).forEach(objKey => {
+                console.log('objKEY')
+                console.log(objKey)
+                newFamilySetup = {
+                    ...newFamilySetup,
+                    [objKey]: res.data[objKey]
+                    }
+            })
+            console.log('newState')
+            console.log(newFamilySetup)
+            this.setState({ familySetupData: newFamilySetup})
 
         })
 
     }
 
-    this.useFamilySetup = () => {
+    this.useFamilySetup = (value) => {
 
-        if(this.state.familySetupData){
-            Object.keys(this.state.familySetupData).forEach(property => {
-                // console.log(property)
-                // console.log(this.state.familySetupData[property] === "")
-                // console.log("_____________________________________________________")
-                this.setState({ [property]: this.state.familySetupData[property]})
-            })
-        }
-        else{
-            this.setState({
-                familyDescription: "",
-                themes: [],
-                seeAlso: [],
-                location: "",
-                year: "",
-                category: {
-
-                }              
-            })
+        let newState = {
+            ...this.state,
+            familySetupData: {
+                ...this.state.familySetupData,
+                useFamilySetup: value
+            }
         }
 
-    // {   
-    //     category: Schema.Types.Mixed,
-    //     artworkFamily: {
-    //     },
-    //     familyDescription: {
-    //     },
-    //     themes: {
-    //     },
-    //     seeAlso: {
-    //     },
-    //     location: {
-    //     },
-    //     year: {
-    //     }
-    // }
+        this.setState(newState)
 
+        // if(this.state.familySetupData){
+
+        //     Object.keys(this.state.familySetupData).forEach(property => {
+        //         // console.log(property)
+        //         // console.log(this.state.familySetupData[property] === "")
+        //         // console.log("_____________________________________________________")
+        //         this.setState({ [property]: this.state.familySetupData[property]})
+        //     })
+        // }
+
+        // else{
+        //     this.setState({
+        //         familyDescription: "",
+        //         themes: [],
+        //         seeAlso: [],
+        //         location: "",
+        //         year: "",
+        //         category: {
+
+        //         }              
+        //     })
+        // }
     }
 
     this.categoryMethods = {
@@ -878,6 +894,7 @@ export class Provider extends React.Component{
         // .then(res => {console.log(res.data)})
         .then(res => this.setState({imageDir: res.data}))
     }
+
 }   //END OF CONTSTRUCTOR
 
 themes = {}

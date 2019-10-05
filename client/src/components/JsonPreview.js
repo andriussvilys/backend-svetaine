@@ -92,7 +92,7 @@ export default class JsonPreview extends Component {
         <Context.Consumer>
           {()=>{
             return(
-            <div className="jsonPreview">
+            <div className="jsonPreview" style={{display: "none"}}>
                 <h3 className="headline">image preview</h3>
                 <div className="imageBox">
                   <img 
@@ -125,6 +125,7 @@ export default class JsonPreview extends Component {
                 </div>
                 <div
                   style={{
+                    display: "none",
                     position: "fixed",
                     bottom: 0,
                     display: "flex",

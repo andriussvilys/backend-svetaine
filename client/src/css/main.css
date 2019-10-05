@@ -20,8 +20,6 @@ ul {
   max-width: none !important;
   margin: 0 !important;
   padding: 0 !important;
-  display: -ms-grid;
-  display: grid;
   -ms-grid-columns: 1fr 300px;
       grid-template-columns: 1fr 300px;
   -ms-grid-rows: auto 1fr;

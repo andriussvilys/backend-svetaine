@@ -16,7 +16,9 @@ export default class DnDListDraggable extends React.Component{
 
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+            tomato: "yes"
+        }
     }
 
     render(){
@@ -31,6 +33,7 @@ export default class DnDListDraggable extends React.Component{
                         {(provided)=>{
                             // console.log('DRAGGABLE PROPS')
                             // console.log(this.props)
+                            // if(this.context.state)
                             return(
                                 <div className="ImagesPreview--container"
                                     {...provided.draggableProps}
@@ -84,7 +87,7 @@ export default class DnDListDraggable extends React.Component{
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                         <Card.Body style={{padding: "15px"}}>
-                                                            <ArtowrkInfo style={{width: "75%"}} />
+                                                            <ArtowrkInfo />
                                                         </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>

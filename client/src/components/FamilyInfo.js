@@ -46,8 +46,8 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplaySetup" 
                                         id="familyDisplaySetup__radio-yes" 
                                         value="yes" 
-                                        disabled={!this.context.state.artworkFamily}
-                                        onClick={this.context.useFamilySetup}
+                                        disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
+                                        onClick={() => this.context.useFamilySetup(true)}
                                         />
                                     </div>
                                     <div className="container-radio">
@@ -56,7 +56,8 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplaySetup" 
                                         id="familyDisplaySetup__radio-no" 
                                         value="no" 
-                                        disabled={!this.context.state.artworkFamily}
+                                        disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
+                                        onClick={() => this.context.useFamilySetup(false)}
                                         defaultChecked 
                                         />
                                     </div>
