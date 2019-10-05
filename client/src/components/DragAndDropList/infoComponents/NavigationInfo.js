@@ -22,11 +22,10 @@ export default class NavigationInfo extends Component{
 
     //methods that check cheboxes if state has appropriate values and vice versa
     autoCheckListItem = (category, subcategory, listitem) => {
-        if(this.context.state.category[category]){
-            console.log("STATE HAS THIS CATEGORY")
-            if(this.context.state.category[category][subcategory]){
-                console.log("STATE HAS THIS CATEGORY")
-                if(this.context.state.category[category][subcategory].includes(listitem)){
+        if(!this.context.state.familySetupData.category){return}
+        if(this.context.state.familySetupData.category[category]){
+            if(this.context.state.familySetupData.category[category][subcategory]){
+                if(this.context.state.familySetupData.category[category][subcategory].includes(listitem)){
                     return true
                 } 
                 else{
@@ -36,8 +35,9 @@ export default class NavigationInfo extends Component{
         }
     }
     autoCheckSubcategory = (category, subcategory) => {
-        if(this.context.state.category[category]){
-            if(this.context.state.category[category][subcategory]){
+        if(!this.context.state.familySetupData.category){return}
+        if(this.context.state.familySetupData.category[category]){
+            if(this.context.state.familySetupData.category[category][subcategory]){
                 return true
             }
             else{
@@ -46,7 +46,8 @@ export default class NavigationInfo extends Component{
         }
     }
     autoCheckCategory = (category) => {
-        if(this.context.state.category[category]){
+        if(!this.context.state.familySetupData.category){return}
+        if(this.context.state.familySetupData.category[category]){
                 return true
             }
             else{

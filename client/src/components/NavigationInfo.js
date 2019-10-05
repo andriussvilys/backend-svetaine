@@ -20,13 +20,17 @@ export default class NavigationInfo extends Component{
         }
     }
 
-    //methods that check cheboxes if state has appropriate values and vice versa
+    //methods that check cheboxes if state has appropriate values and unchecks it if not
     autoCheckListItem = (category, subcategory, listitem) => {
-        if(this.context.state.category[category]){
-            console.log("STATE HAS THIS CATEGORY")
-            if(this.context.state.category[category][subcategory]){
-                console.log("STATE HAS THIS CATEGORY")
-                if(this.context.state.category[category][subcategory].includes(listitem)){
+        if(!this.context.state.familySetupData.category){return}
+        if(this.context.state.familySetupData.category[category]){
+            console.log('********************list item autochecked--CATEGORY')
+            console.log(`this subcategory is`)
+            console.log(subcategory)
+            if(this.context.state.familySetupData.category[category][subcategory]){
+                console.log('********************list item autochecked--SUBCATEGORY')
+                if(this.context.state.familySetupData.category[category][subcategory].includes(listitem)){
+                    console.log('********************list item autochecked-LISTITEM')
                     return true
                 } 
                 else{
@@ -36,8 +40,9 @@ export default class NavigationInfo extends Component{
         }
     }
     autoCheckSubcategory = (category, subcategory) => {
-        if(this.context.state.category[category]){
-            if(this.context.state.category[category][subcategory]){
+        if(!this.context.state.familySetupData.category){return}
+        if(this.context.state.familySetupData.category[category]){
+            if(this.context.state.familySetupData.category[category][subcategory]){
                 return true
             }
             else{
@@ -46,7 +51,8 @@ export default class NavigationInfo extends Component{
         }
     }
     autoCheckCategory = (category) => {
-        if(this.context.state.category[category]){
+        if(!this.context.state.familySetupData.category){return}
+        if(this.context.state.familySetupData.category[category]){
                 return true
             }
             else{
@@ -78,16 +84,13 @@ export default class NavigationInfo extends Component{
                                 value={listitem} 
                                 id={listitem} 
                                 onChange={this.context.onCheck} 
-                                checked={this.autoCheckListItem(obj.category, obj.subcategory, listitem)}
+                                checked={this.autoCheckListItem(obj.category, subcategory, listitem)}
                                 />
             
                                 <span>{listitem}</span>  
                             </li>
                         )
                     })
-    
-                    // console.log('******************LIST iTEMS')
-                    // console.log(listItems)
                     
                     return(
                     <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
@@ -104,9 +107,6 @@ export default class NavigationInfo extends Component{
                      </ul>)
                 })
             }
-
-            console.log('are subcategories formed')
-            console.log(subcategories)
             return (
             <div key={obj.category} className="list-group">
                 <ul id={obj.category} className="list--category"> 

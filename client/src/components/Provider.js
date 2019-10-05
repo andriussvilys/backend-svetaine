@@ -102,6 +102,7 @@ export class Provider extends React.Component{
     
     //FUNCTION THE CHECKS BOXES IN CATEGORY COMPONENT
     this.onCheck = (e) => {
+
         //this is handled if a checkbox is UNCHECKED
         if(!e.target.checked){
             let classname = e.target.classList[1]
@@ -114,20 +115,21 @@ export class Provider extends React.Component{
             let stateCopy = {...this.state.familySetupData}
 
             if(classname === "listitem"){
-                console.log('   CLICKED LIST ITEM')
                 subcategory = e.target.parentNode.parentNode.id
                 category = e.target.parentNode.parentNode.parentNode.id
-                console.log(`Parent of this checkbox is =====`)
-                console.log(subcategory)
-                console.log(`Parent of this checkbox parent is =====`)
-                console.log(category)
-                console.log('LIST ITEM ARRAY WHERE THIS CHECKBOX CAN BE FOUND')
-                console.log(this.state.familySetupData.category[category][subcategory])
                 listItemNest = this.state.familySetupData.category[category][subcategory]
-                newListitems = listItemNest.splice(
-                    listItemNest.indexOf(checkboxId), 1
-                )
+
+                // console.log('LISTITEM ID')
+                // console.log(checkboxId)
+
+                // newListitems = listItemNest.splice(
+                //     listItemNest.indexOf(checkboxId), 1
+                // )
+
+                newListitems = listItemNest.filter(item => item !== checkboxId)
+                console.log('***********************listitem unchecked')
                 console.log(newListitems)
+
                 let newState = { 
                     ...this.state,
                     familySetupData: {
@@ -136,15 +138,15 @@ export class Provider extends React.Component{
                             ...this.state.familySetupData.category,
                             [category]: {
                                 ...this.state.familySetupData.category[category],
-                                 [subcategory]:newListitems
+                                 [subcategory]: newListitems
                             }
                         }
                     }
                 }
+
+                console.log('new state after listitem uncheck')
+                console.log(newState)
                 this.setState(newState)
-                // e.target.parentNode.classList.toggle('themes-list--selected')
-                // e.target.parentNode.parentNode.classList.toggle('themes-list--selected')
-                // e.target.parentNode.parentNode.parentNode.classList.toggle('themes-list--selected')
                 return                
             }
             else if (classname === "subcategory"){
@@ -153,8 +155,6 @@ export class Provider extends React.Component{
                 Array.from(document.getElementById(checkboxId).getElementsByTagName('input'))
                     .forEach(item => item.checked = false)
                 this.setState(stateCopy)
-                // e.target.parentNode.classList.toggle('themes-list--selected')
-                // e.target.parentNode.parentNode.classList.toggle('themes-list--selected')
                 return
             }
             else if (classname === "category"){
@@ -176,7 +176,7 @@ export class Provider extends React.Component{
         }
     
         const checkboxCheck = (checkbox, subcategory, callback) => {
-            checkbox.checked = true
+            // checkbox.checked = true
             if(!subcategory){
                 this.setState({ 
                     ...this.state,
@@ -190,7 +190,7 @@ export class Provider extends React.Component{
              }
                 else{
                     const categoryPromise = new Promise((resolve, reject) => {
-                        subcategory.checked = true;
+                        // subcategory.checked = true;
                         console.log('clicked a listitem')
                         if(!this.state.familySetupData.category[checkbox.value]){ 
                             console.log('category doesnt exist')
@@ -264,9 +264,8 @@ export class Provider extends React.Component{
 
                     .catch((reject)=>console.log(reject))
                 }
-            }
+        }
 
-    
         let category = parentCheckbox(e.target.parentNode.parentNode)
         let subcategory = parentCheckbox(e.target.parentNode)
     
@@ -283,24 +282,13 @@ export class Provider extends React.Component{
                 }
             }
             this.setState(newState)
+
         break;
         
         case classNameCheck('list--subcategory'):
             console.log('subcategory was clicked')
     
             checkboxCheck(category)
-            
-            // let newState = {
-            //     ...this.state,
-            //     familySetupData:{
-            //         ...this.state.familySetupData,
-            //         category: {
-            //             ...this.state.category, 
-            //             [e.target.value]: {},
-
-            //         }
-            //     }
-            // }
 
             this.setState({ 
                 familySetupData:{
@@ -317,7 +305,6 @@ export class Provider extends React.Component{
         break;
             
         case classNameCheck('list--listitem'):
-            alert('LISTITEM CHECKED')
             category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
             subcategory = parentCheckbox(e.target.parentNode.parentNode)
 
@@ -346,38 +333,13 @@ export class Provider extends React.Component{
         }
         
         checkboxCheck(category, subcategory, callback);
-    
-            // this.setState({ category: {
-            //   ...this.state.category, [category.value]:{
-            //     ...this.state.category[category.value], [subcategory.value]:[
-            //         e.target.value
-            //       ]
-            //     } 
-            //   } 
-            // })
-    
-    
         break;
         default:
             return
         }
-    
-        //THIS REMOVES CHECK AND E.TARGET.VALUE FROM STATE
-        // else{
-        //   this.setState({[stateKey]: this.state[stateKey].filter(item => item !== e.target.value)})
-        // }
     }
 
     this.addFileToState = (e) => {
-        // e.target.files.forEach(file => {
-        //     const reader = new FileReader();
-        //     reader.onload = () => {
-        //       var image = new Image();
-        //       image.src = String(reader.result);
-        //       preview.appendChild(image);
-        //     }
-        //     reader.readAsDataURL(file);
-        // })
 
         const fileCount = e.target.files.length
 
@@ -432,28 +394,8 @@ export class Provider extends React.Component{
             }
             reader.readAsDataURL(file);
         });
-
-        // console.log('clicked input')
-        // const input = e.target;
-    
-        // var reader = new FileReader();
-
-        // console.log(reader.files)
-
-        //     reader.onload = function(){
-        //         console.log(input)
-        //         console.log(reader)
-        //       this.setState({ 
-        //         imagePreview: reader.result, 
-        //         file: input.files[0],
-        //         fileName: input.files[0].name, 
-        //         fileType: input.files[0].type,
-        //         filePath: `uploads/${input.files[0].name}`
-        //     })
-        //     }.bind(this);
-        //     reader.readAsDataURL(input.files[0])
     }
-
+    //THIS UPLOADS FILE TO SERVER
     this.uploadFile = () => {
         console.log('UPLOAD FILE RUNS')
         const fd = new FormData();
@@ -518,8 +460,16 @@ export class Provider extends React.Component{
         }
     }
 
+    this.autoCheckCategory = () => {
+
+    }
+
+    //this is used for non-nested inputs like ARTWORK FAMILY or THEMES
     this.autoCheck = (stateKey, value) => {
 
+        if(stateKey === "artworkFamily"){
+            return
+        }
         let inputParent = null
 
         if(document.getElementById(`${stateKey}-${value}`)){
@@ -634,7 +584,9 @@ export class Provider extends React.Component{
                                 return
                             }
                             if(typeof this[string] !== 'string'){
-                                this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
+                                console.log('this is not a string')
+                                console.log(string)
+                                // this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
                             }
                             else{
                                 this.setState({ [string]: e.target.firstChild.value })
