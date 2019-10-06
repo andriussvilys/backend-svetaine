@@ -29,11 +29,11 @@ export default class FamilyInfo extends Component {
                                 string="artworkFamily"
                                 id="familyList"
                             />
-                            <AddNew
+                            {/* <AddNew
                             router={'/api/artworkFamilyList/update'}
                             stateKey='artworkFamilyList'
                             requestKey="list"
-                            />
+                            /> */}
                             <div className="imageInfo--box" style={{display: 'flex'}}>
                                 <span>use family setup</span>
                                 <form >
@@ -80,7 +80,7 @@ export default class FamilyInfo extends Component {
                                     (e) => this.context.onChange(e, "familyDescription")
                                 }
                                 style={{width: "100%"}}
-                                value={this.context.state.familySetupData.familyDescription ? this.context.state.familySetupData.familyDescription : null}
+                                value={this.context.state.familySetupData.familyDescription ? this.context.state.familySetupData.familyDescription : ""}
                                 ></textarea>
                             </div>
 

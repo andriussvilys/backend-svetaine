@@ -10,6 +10,11 @@ router.get('/:artworkFamily', (req, res) => {
         .catch(err => console.log(err))
 })
 
+router.get('/', (req, res) => {
+  FamilySetup.find()
+      .then(category => res.json(category))
+})
+
 router.post('/create', (req, res) => {
     FamilySetup.create(req.body)
       .then((category)=>{res.send(category)})

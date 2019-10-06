@@ -488,27 +488,47 @@ export class Provider extends React.Component{
             inputParent = document.getElementById(`${stateKey}-${value}`).parentNode;
         }
 
+        //if state contains this key (e.g. artworkFamily)
         if(this.state.familySetupData[stateKey]){
-            if(this.state[stateKey].includes(value) || this.state.familySetupData[stateKey].includes(value)){
-                if(!inputParent.classList.contains('themes-list--selected')){
-                    inputParent.classList.add('themes-list--selected')
+            //check if the checkbox value is recorded in this state nest:
+            if(this.state.familySetupData[stateKey].includes(value)){
+                //if checkbox parent is not highlighted, highlight it
+                if(inputParent){
+                    if(!inputParent.classList.contains('themes-list--selected')){
+                        inputParent.classList.add('themes-list--selected')
+                    }
                 }
+                //check the checkbox 
                 return true
             }
-        }
-        else if(!this.state.familySetupData[stateKey]){
-            if(this.state[stateKey].includes(value)){
-                if(!inputParent.classList.contains('themes-list--selected')){
-                    inputParent.classList.add('themes-list--selected')
+            //if the value is not present in state
+            else {
+                //unhighlight checkbox parent
+                if(inputParent){
+                    if(inputParent.classList.contains('themes-list--selected')){
+                        inputParent.classList.remove('themes-list--selected')
+                    }
                 }
-                return true
+                // set checked={} to false
+                return false
             }
         }
 
-            if(inputParent && inputParent.classList.contains('themes-list--selected')){
-                inputParent.classList.remove('themes-list--selected')
-            }
-            return false
+        else return false
+        // else if(!this.state.familySetupData[stateKey]){
+        //     if(this.state.familySetupData[stateKey].includes(value)){
+        //         if(!inputParent.classList.contains('themes-list--selected')){
+        //             inputParent.classList.add('themes-list--selected')
+        //         }
+        //         return true
+        //     }
+        //     return false
+        // }
+
+        //     if(inputParent && inputParent.classList.contains('themes-list--selected')){
+        //         inputParent.classList.remove('themes-list--selected')
+        //     }
+        //     return false
     }
 
     this.createDropDownList = (array, string) => {
@@ -690,22 +710,21 @@ export class Provider extends React.Component{
 
     this.createFamilySetup = () => {
         let requestBody = {
-            category: this.state.category,
-            artworkFamily: this.state.artworkFamily,
-            familyDescription: this.state.familyDescription,
-            themes: this.state.themes,
-            seeAlso: this.state.seeAlso,
-            location: this.state.location,
-            year: this.state.year
+            category: this.state.familySetupData.category,
+            artworkFamily: this.state.familySetupData.artworkFamily,
+            familyDescription: this.state.familySetupData.familyDescription,
+            themes: this.state.familySetupData.themes,
+            seeAlso: this.state.familySetupData.seeAlso,
+            location: this.state.familySetupData.location,
+            year: this.state.familySetupData.year
         }
-        if(!this.state.artworkFamily){
+        if(!this.state.familySetupData.artworkFamily){
             alert('select or add new Family Name')
             return
         }
-        console.log(requestBody)
         axios.post('/api/familySetup/create', requestBody)
-            .then( res => console.log(res))
-            .catch(err => {console.log(err); alert(err)})
+            .then( res => {console.log(res); alert('success')})
+            .catch(err => {console.log(err); alert(err.data)})
     }
 
     // SAMPLE MODEL
@@ -748,6 +767,12 @@ export class Provider extends React.Component{
             this.setState({ familySetupData: newFamilySetup})
 
         })
+        .catch(err => 
+            {
+            alert(err)
+            this.setState({familySetupData: {...this.state.familySetupData, artworkFamily: value}})
+            }
+        )
 
     }
 
@@ -971,17 +996,24 @@ componentDidMount(){
           console.log("*********************THEMES PROP")
           console.log(this.themes)
         })
-
-        .then( resolved => {
-            axios.get('/api/artworkFamilyList')
-            .then( res => {
-            console.log('**************artworkFamilyList DATA')
-            console.log(res.data)
-            this.setState({ artworkFamilyList: res.data[0].list})
-            console.log(this.state.artworkFamilyList)
+        // .then( resolved => {
+        //     axios.get('/api/artworkFamilyList')
+        //     .then( res => {
+        //     this.setState({ artworkFamilyList: res.data[0].list})
+        //     })
+        // }
+        // )  
+        .then( res => {
+            axios.get('/api/familySetup')
+            .then(res => {
+                console.log('**********************FAMILY SETUP RES')
+                console.log(res.data)
+                let familyList = Object.keys(res.data).map(obj => {
+                    return res.data[obj].artworkFamily
+                })
+                this.setState({artworkFamilyList: familyList})
             })
-        }
-        )  
+        })
         .then(resolved => {
             axios.get('/api/categories')
             .then(res => {
