@@ -87,7 +87,10 @@ export default class DnDListDraggable extends React.Component{
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                         <Card.Body style={{padding: "15px"}}>
-                                                            <ArtowrkInfo />
+                                                            <ArtowrkInfo 
+                                                            fileName={this.props.file.fileName}
+                                                            onChange={this.context.fileDataMethods.onChange}
+                                                            />
                                                         </Card.Body>
                                                         </Accordion.Collapse>
                                                     </Card>

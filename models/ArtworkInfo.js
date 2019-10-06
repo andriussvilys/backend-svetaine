@@ -32,7 +32,8 @@ let ArtworkInfoSchema = new Schema({
     },
     displayMain: {
         type: Boolean,
-        required: false
+        required: false,
+        default: "false"
     },
     familyDisplayIndex: {
         type: Number,

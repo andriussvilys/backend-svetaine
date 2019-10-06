@@ -28,8 +28,9 @@ export default class ImageInfo extends Component{
                         </div>
                         <input 
                         type="text" 
-                        value={this.context.state.artworkTitle} 
-                        onChange={(e) => this.context.onChange(e, 'artworkTitle')} 
+                        // value={this.context.state.fileData.files[this.props.fileName].fileName} 
+                        placeholder={this.context.state.fileData.files[this.props.fileName].fileName}
+                        onChange={(e) => this.props.onChange(e, this.props.fileName, 'artworkTitle')} 
                         />
                     </div>
 
@@ -40,21 +41,21 @@ export default class ImageInfo extends Component{
                           <label htmlFor="mainDisplayIndex_yes">yes</label>
                           <input 
                             type="radio" 
-                            defaultChecked 
                             name="mainDisplayIndex" 
                             id="mainDisplayIndex__yes" 
-                            value="yes" 
-                            onChange={(e)=>{this.context.onChange(e, "displayMain")}}
+                            value={true} 
+                            onChange={(e) => this.props.onChange(e, this.props.fileName, 'displayMain')}
                             />
                       </div>
                       <div className="container-radio">
                           <label htmlFor="mainDisplayIndex_no">no</label>
                           <input 
                             type="radio" 
+                            defaultChecked 
                             name="mainDisplayIndex" 
                             id="mainDisplayIndex__no" 
-                            value="no" 
-                            onChange={(e)=>{this.context.onChange(e, "displayMain")}}
+                            value={false} 
+                            onChange={(e) => this.props.onChange(e, this.props.fileName, 'displayMain')}
                             />
                       </div>
                     </form>
@@ -66,7 +67,7 @@ export default class ImageInfo extends Component{
                             <input 
                             type="number" 
                             min="1992" 
-                            onChange={(e) => this.context.onChange(e, "year") } 
+                            onChange={(e) => this.props.onChange(e, this.props.fileName, 'year')}  
                             />
                     </div>
 
@@ -74,7 +75,7 @@ export default class ImageInfo extends Component{
                         <span>location:</span>
                             <input 
                             type="text" 
-                            onChange={(e) => this.context.onChange(e, "location") } 
+                            onChange={(e) => this.props.onChange(e, this.props.fileName, 'location')}  
                             />
                     </div>
 
@@ -88,9 +89,7 @@ export default class ImageInfo extends Component{
                             <p className="subtitle">this is describes particulars of a work in a series or exhibit in a show</p>
                         </div>
                         <textarea
-                        onChange={
-                            (e) => this.context.onChange(e, "artworkDescription")
-                        }
+                        onChange={(e) => this.props.onChange(e, this.props.fileName, 'artworkDescription')} 
                         style={{width: "100%"}}
                         ></textarea>
                     </div>

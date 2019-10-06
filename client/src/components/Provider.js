@@ -724,7 +724,7 @@ export class Provider extends React.Component{
         }
         axios.post('/api/familySetup/create', requestBody)
             .then( res => {console.log(res); alert('success')})
-            .catch(err => {console.log(err); alert(err.data)})
+            .catch(err => {console.log(err); alert(err)})
     }
 
     // SAMPLE MODEL
@@ -919,6 +919,25 @@ export class Provider extends React.Component{
         .then(res => this.setState({imageDir: res.data}))
     }
 
+    this.fileDataMethods = {
+        onChange: (e, fileName, stateKey) => {
+            let newState = {
+                ...this.state,
+                fileData: {
+                    ...this.state.fileData,
+                    files: {
+                        ...this.state.fileData.files,
+                        [fileName]: {
+                            ...this.state.fileData.files[fileName],
+                            [stateKey]: e.target.value
+                        }
+                    }
+                }
+            }
+            this.setState(newState)
+        }
+    }
+
 }   //END OF CONTSTRUCTOR
 
 themes = {}
@@ -1048,6 +1067,7 @@ componentDidMount(){
           getFamilySetup: this.getFamilySetup,
           useFamilySetup: this.useFamilySetup,
           categoryMethods: this.categoryMethods,
+          fileDataMethods: this.fileDataMethods,
           onDragEnd: this.onDragEnd,
           removeFile: this.removeFile
           } }>
