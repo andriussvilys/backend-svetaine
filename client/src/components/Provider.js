@@ -481,31 +481,11 @@ export class Provider extends React.Component{
 
     //this is used for non-nested inputs like ARTWORK FAMILY or THEMES
     this.autoCheck = (stateKey, value) => {
-        let inputParent = null
-
-        if(stateKey === "artworkFamily"){
 
         let inputParent = null
 
         if(document.getElementById(`${stateKey}-${value}`)){
             inputParent = document.getElementById(`${stateKey}-${value}`).parentNode;
-        }
-        else{
-            return false
-        }
-
-            if(this.state.familySetupData.artworkFamily === value){
-                if(!inputParent.classList.contains('themes-list--selected')){
-                    inputParent.classList.add('themes-list--selected')
-                }
-                return true
-            }
-            else{
-                if(inputParent.classList.contains('themes-list--selected')){
-                    inputParent.classList.remove('themes-list--selected')
-                }
-            }
-            return false
         }
 
         if(this.state.familySetupData[stateKey]){
