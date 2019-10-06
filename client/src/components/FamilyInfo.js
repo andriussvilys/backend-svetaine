@@ -80,7 +80,9 @@ export default class FamilyInfo extends Component {
                                     (e) => this.context.onChange(e, "familyDescription")
                                 }
                                 style={{width: "100%"}}
-                                value={this.context.state.familySetupData.familyDescription ? this.context.state.familySetupData.familyDescription : ""}
+                                value={this.context.state.familySetupData.familyDescription ? 
+                                    this.context.state.familySetupData.familyDescription : 
+                                    ""}
                                 ></textarea>
                             </div>
 

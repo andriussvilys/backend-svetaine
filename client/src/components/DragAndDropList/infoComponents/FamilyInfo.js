@@ -15,6 +15,39 @@ export default class FamilyInfo extends Component {
         super(props);
     }
 
+    useFamilySetup = (stateKey) => {
+        if(this.context.state.familySetupData[stateKey] 
+            && this.context.state.familySetupData.useFamilySetup
+            && !this.context.state.fileData.files[this.props.fileName][stateKey]){
+                return this.context.state.familySetupData[stateKey] 
+            }
+        if(this.context.state.fileData.files[this.props.fileName][stateKey]){
+            return this.context.state.fileData.files[this.props.fileName][stateKey]
+        }
+        else return null
+    }
+
+
+
+    // componentDidMount(fileName){
+    //     if(this.context.state.familySetupData.useFamilySetup){
+    //         let newFileData = this.state.fileData;
+    //         Object.keys(this.state.familySetupData).forEach(key => {
+    //             newFileData = {
+    //                 ...newFileData, 
+    //                     files: {
+    //                         ...newFileData.files,
+    //                         [fileName]: {
+    //                             ...newFileData.files[fileName],
+    //                             [key]: this.state.familySetupData[key]
+    //                         }
+    //                     }}
+    //         });
+    //         console.log('DRAGGABLE DID MOUNT -- THIS IS NEW STATE')
+    //         this.setState({fileData: newFileData})
+    //     }
+    // }
+
     render(){
         return(
             <Context.Consumer>
@@ -33,8 +66,9 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplaySetup" 
                                         id="familyDisplaySetup__radio-yes" 
                                         value="yes" 
-                                        disabled={!this.context.state.artworkFamily}
-                                        onClick={this.context.useFamilySetup}
+                                        disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
+                                        onClick={() => this.context.useFamilySetup(true)}
+                                        checked={this.context.state.familySetupData.useFamilySetup}
                                         />
                                     </div>
                                     <div className="container-radio">
@@ -43,7 +77,9 @@ export default class FamilyInfo extends Component {
                                         name="familyDisplaySetup" 
                                         id="familyDisplaySetup__radio-no" 
                                         value="no" 
-                                        disabled={!this.context.state.artworkFamily}
+                                        disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
+                                        onClick={() => this.context.useFamilySetup(false)}
+                                        checked={!this.context.state.familySetupData.useFamilySetup}
                                         defaultChecked 
                                         />
                                     </div>
@@ -68,9 +104,9 @@ export default class FamilyInfo extends Component {
                                     {/* <p className="subtitle">(different from family name):</p> */}
                                 </div>
                                 <textarea
-                                value={this.context.state.familyDescription}
+                                value={this.useFamilySetup("familyDescription")}
                                 onChange={
-                                    (e) => this.context.onChange(e, "familyDescription")
+                                    (e) => this.props.onChange(e, this.props.fileName, "familyDescription")
                                 }
                                 style={{width: "100%"}}
                                 ></textarea>

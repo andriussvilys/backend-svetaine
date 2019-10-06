@@ -459,7 +459,7 @@ export class Provider extends React.Component{
                     }
                 }
                 this.setState(newState)
-                e.target.parentNode.classList.toggle('themes-list--selected')
+                // e.target.parentNode.classList.toggle('themes-list--selected')
             }
             else{
                 let newNest = this.state.familySetupData[string].filter(item => item !== e.target.value);
@@ -471,7 +471,7 @@ export class Provider extends React.Component{
                     }
                 }
                 this.setState(newState)
-                e.target.parentNode.classList.toggle('themes-list--selected')
+                // e.target.parentNode.classList.toggle('themes-list--selected')
             }
     }
 
@@ -935,6 +935,25 @@ export class Provider extends React.Component{
                 }
             }
             this.setState(newState)
+        },
+
+        onDraggableDidMount: (fileName) => {
+            if(this.state.familySetupData.useFamilySetup){
+                let newFileData = this.state.fileData;
+                Object.keys(this.state.familySetupData).forEach(key => {
+                    newFileData = {
+                        ...newFileData, 
+                            files: {
+                                ...newFileData.files,
+                                [fileName]: {
+                                    ...newFileData.files[fileName],
+                                    [key]: this.state.familySetupData[key]
+                                }
+                            }}
+                });
+                console.log('DRAGGABLE DID MOUNT -- THIS IS NEW STATE')
+                this.setState({fileData: newFileData})
+            }
         }
     }
 

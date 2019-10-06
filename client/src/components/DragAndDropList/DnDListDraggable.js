@@ -21,6 +21,10 @@ export default class DnDListDraggable extends React.Component{
         }
     }
 
+    componentDidMount(){
+        this.context.fileDataMethods.onDraggableDidMount(this.props.file.fileName)
+    }
+
     render(){
         return(
             <Context.Consumer>
@@ -105,7 +109,10 @@ export default class DnDListDraggable extends React.Component{
                                                         </Card.Header>
                                                         <Accordion.Collapse eventKey="0">
                                                         <Card.Body style={{padding: "15px"}} >
-                                                            <FamilyInfo/>
+                                                            <FamilyInfo
+                                                                fileName={this.props.file.fileName}
+                                                                onChange={this.context.fileDataMethods.onChange}
+                                                            />
 
                                                             <Accordion >
                                                                 <Card>
