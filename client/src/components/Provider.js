@@ -424,7 +424,7 @@ export class Provider extends React.Component{
         
             if(string === "artworkFamily"){
 
-                this.getFamilySetup(e)
+                this.getFamilySetup(e.target.value)
                 return
             }
             //     else{
@@ -481,14 +481,31 @@ export class Provider extends React.Component{
 
     //this is used for non-nested inputs like ARTWORK FAMILY or THEMES
     this.autoCheck = (stateKey, value) => {
+        let inputParent = null
 
         if(stateKey === "artworkFamily"){
-            return
-        }
+
         let inputParent = null
 
         if(document.getElementById(`${stateKey}-${value}`)){
             inputParent = document.getElementById(`${stateKey}-${value}`).parentNode;
+        }
+        else{
+            return false
+        }
+
+            if(this.state.familySetupData.artworkFamily === value){
+                if(!inputParent.classList.contains('themes-list--selected')){
+                    inputParent.classList.add('themes-list--selected')
+                }
+                return true
+            }
+            else{
+                if(inputParent.classList.contains('themes-list--selected')){
+                    inputParent.classList.remove('themes-list--selected')
+                }
+            }
+            return false
         }
 
         if(this.state.familySetupData[stateKey]){
@@ -591,17 +608,19 @@ export class Provider extends React.Component{
                     className="center-column"
                     onSubmit={
                         (e) => {
-                            console.log('clicked submit')
-                            console.log(e.target)
                             e.preventDefault();
+
+                            if(string === "artworkFamily"){
+                                const newTarget = document.getElementById(`datalist-input-${string}`).value
+                                this.getFamilySetup(newTarget)
+                                return
+                            }
+
                             if(!array.includes(e.target.firstChild.value)){
                                 alert(`no such ${string} exists. Please "ADD NEW" and repeat`)
                                 return
                             }
                             if(typeof this[string] !== 'string'){
-                                console.log('this is not a string')
-                                console.log(string)
-                                // this.setState({ [string]: [...this.state[string], e.target.firstChild.value] })
                             }
                             else{
                                 this.setState({ [string]: e.target.firstChild.value })
@@ -732,8 +751,8 @@ export class Provider extends React.Component{
             //     "year": ""
             //   }
 
-    this.getFamilySetup = (e) => {
-        axios.get(`/api/familySetup/${e.target.value}`)
+    this.getFamilySetup = (value) => {
+        axios.get(`/api/familySetup/${value}`)
         .then( res => {
             let newFamilySetup = {}
             Object.keys(res.data).forEach(objKey => {
