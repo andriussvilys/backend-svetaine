@@ -850,8 +850,8 @@ export class Provider extends React.Component{
                     ...newFileData, 
                     files: {
                         ...newFileData.files,
-                            [fileName]: {
-                                ...newFileData.files[fileName],
+                        [fileName]: {
+                            ...newFileData.files[fileName],
                                 useFamilySetup: true
                             }
                         }
@@ -863,6 +863,9 @@ export class Provider extends React.Component{
 
     this.familySetupMethods = {
         onChange: (value, string) => {
+
+            console.log(`value ${value}`)
+            console.log(`string ${string}`)
 
             const addNewValue = (newValue) => {
                 let newState = {}

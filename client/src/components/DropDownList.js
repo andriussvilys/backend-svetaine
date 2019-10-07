@@ -22,12 +22,15 @@ export default class DropDownList extends React.Component{
  */
     createDropDownList = (array, string, state) => {
 
+        console.log('this.context.state.familySetupData[string]')
+        console.log(string)
+        console.log(state.familySetupData[string])
+
         const highlighter = (string, listItem) => {
-            if(state.familySetupData[string] &&
-                typeof state.familySetupData[string] === 'string'||
-                Array.isArray(state.familySetupData[string])
-                ){
-                return state.familySetupData[string].includes(listItem)
+            if(state.familySetupData[string]){
+                if( typeof state.familySetupData[string] === 'string'|| Array.isArray(state.familySetupData[string]) ){
+                        return state.familySetupData[string].includes(listItem)
+                    }
             }
             else return null
         }
@@ -37,7 +40,6 @@ export default class DropDownList extends React.Component{
             return (
                 <li 
                 className={`dropdown-item themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
-                // className={`dropdown-item themes-list ${state.familySetupData[string].includes(listItem) ? 'themes-list--selected' : null}`} 
                 key={`${string}-${listItem}`}
                 >
                     <span className="themes-span">{listItem}</span>
@@ -46,7 +48,7 @@ export default class DropDownList extends React.Component{
                     type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
                     checked={highlighter(string, listItem) ? true : false}
-                    onChange={this.props.onChange}
+                    onChange={() => this.props.onChange(listItem, string)}
                     />
                 </li>
             )
