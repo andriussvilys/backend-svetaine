@@ -5,6 +5,8 @@ import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion' 
 import Card from 'react-bootstrap/Card'
 
+import DropDownList from '../DropDownList'
+
 import ArtowrkInfo from './infoComponents/ArtworkInfo'
 import JsonPreview from './infoComponents/JsonPreview'
 import FamilyInfo from './infoComponents/FamilyInfo'

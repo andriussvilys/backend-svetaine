@@ -564,15 +564,24 @@ export class Provider extends React.Component{
     }
 
     this.onChange = (e, stateTarget) => {
-        if(e.target.value === "yes"){
-            this.setState({ [stateTarget]: true})    
+        let newValue = {
+            ...this.state,
+            familySetupData: {
+                ...this.state.familySetupData,
+                [stateTarget]: e.target.value
+            }
         }
-        else if(e.target.value === "no"){
-            this.setState({ [stateTarget]: false})
-        }
-        else{
-            this.setState({ [stateTarget]: e.target.value})
-        }
+
+        this.setState(newValue)
+        // if(e.target.value === "yes"){
+        //     this.setState({ [stateTarget]: true})    
+        // }
+        // else if(e.target.value === "no"){
+        //     this.setState({ [stateTarget]: false})
+        // }
+        // else{
+        //     this.setState({ [stateTarget]: e.target.value})
+        // }
     }
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
