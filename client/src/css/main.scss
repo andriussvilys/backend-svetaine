@@ -103,3 +103,7 @@ textarea{
     font-size: 13px;
     padding: 15px;
 }
+.themes-list--selected{
+    background-color: #c9eec9 !important;
+    transition: all 0.2s;
+}

@@ -957,6 +957,70 @@ export class Provider extends React.Component{
         }
     }
 
+    this.familySetupMethods = {
+        onChange: (e, string) => {
+
+            const input = e.target
+
+            const addNewValue = (newValue) => {
+                let newState = {}
+                //if state nest is a String, eg artworkFamily
+                if(typeof this.state.familySetupData[string] === "string"){              
+                    newState = {
+                        ...this.state,
+                        familySetupData: {
+                            ...this.state.familySetupData,
+                            [string]: newValue
+                        }
+                    }
+                }
+                //if state nest is Array (eg themes or seeAlso)
+                else{              
+                    newState = {
+                        ...this.state,
+                        familySetupData: {
+                            ...this.state.familySetupData,
+                            [string]: [...this.state.familySetupData[string], newValue]
+                        }
+                    }
+                }
+                this.setState(newState)
+            }
+    
+            const removeValue = (value) => {
+                let newState = {}
+                if(typeof this.state.familySetupData[string] === "string"){
+                    return
+                }
+                else{
+                    let newArray = this.state.familySetupData[string].filter(item => item !== value)
+                    newState = {
+                        ...this.state,
+                        familySetupData: {
+                            ...this.state.familySetupData,
+                            [string]: newArray
+                        }
+                    }
+                    this.setState(newState)
+                }
+            }
+    
+            if(this.state.familySetupData[string].includes(e.target.value)){
+                removeValue(e.target.value)
+            }
+            else{
+                addNewValue(e.target.value)
+            }
+          },
+
+        isChecked: (string, value) => {
+            if(this.state.familySetupData[string].includes(value)){
+                return true
+            } 
+            else return false
+        }
+    }
+
 }   //END OF CONTSTRUCTOR
 
 themes = {}
@@ -1087,6 +1151,7 @@ componentDidMount(){
           useFamilySetup: this.useFamilySetup,
           categoryMethods: this.categoryMethods,
           fileDataMethods: this.fileDataMethods,
+          familySetupMethods: this.familySetupMethods,
           onDragEnd: this.onDragEnd,
           removeFile: this.removeFile
           } }>

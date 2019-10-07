@@ -1,30 +1,105 @@
 import React from 'react';
+import '../css/main.css'
 
 export default class DropDownList extends React.Component{
+
+    constructor(props){
+        super(props);
+        this.state = {
+          category: {}
+        }
+      }
+
+      onRadioCheck = (e) => {
+
+      }
+
+    //   onChange= (e, string) => {
+
+    //     const addNewValue = (newValue) => {
+    //         let newState = {}
+    //         //if state nest is a String, eg artworkFamily
+    //         if(typeof this.state.familySetupData[string] === "string"){              
+    //             newState = {
+    //                 ...this.state,
+    //                 familySetupData: {
+    //                     ...this.state.familySetupData,
+    //                     [string]: newValue
+    //                 }
+    //             }
+    //         }
+    //         //if state nest is Array (eg themes or seeAlso)
+    //         else{              
+    //             newState = {
+    //                 ...this.state,
+    //                 familySetupData: {
+    //                     ...this.state.familySetupData,
+    //                     [string]: [...this.state.familySetupData[string], newValue]
+    //                 }
+    //             }
+    //         }
+    //         this.setState(newState)
+    //     }
+
+    //     const removeValue = (value) => {
+    //         let newState = {}
+    //         if(typeof this.state.familySetupData[string] === "string"){
+    //             return
+    //         }
+    //         else{
+    //             let valueIndex = this.state.familySetupData[string].indexOf(value)
+    //             let newArray = this.state.familySetupData[string].splice(valueIndex, 1)
+    //             newState = {
+    //                 ...this.state,
+    //                 familySetupData: {
+    //                     ...this.state.familySetupData,
+    //                     [string]: newArray
+    //                 }
+    //             }
+    //             this.setState(newState)
+    //         }
+    //     }
+
+    //     if(this.state.familySetupData[string].includes(e.target.value)){
+    //         removeValue(e.target.value)
+    //     }
+    //     else{
+    //         addNewValue(e.target.value)
+    //     }
+    //   }
+
 /**
  *@param {array} array source data for list
  *@param {string} string used for ids/names 
  */
-    createDropDownList = (array, string) => {
-        // console.log(array)
-        let inputType = "checkbox";
-        if(string === "artworkFamily"){
-            inputType = "radio"
+    createDropDownList = (array, string, state) => {
+        console.log('DROP DOWN LIST STATE')
+        console.log(state)
+        if(!state.familySetupData[string]){
+            return
         }
         let sortedArray = Array.from(new Set(array.sort()));
         // console.log(sortedArray)
         let listItems = sortedArray.map((listItem) => {
             return (
-                <li className="dropdown-item themes-list" key={`${string}-${listItem}`}>
+                <li 
+                className={`dropdown-item themes-list ${state.familySetupData[string].includes(listItem) ? 'themes-list--selected' : null}`} 
+                key={`${string}-${listItem}`}
+                >
                     <span className="themes-span">{listItem}</span>
                     <input 
-                    name={string}
-                    id={`${string}-${listItem}`}
+                    // name={`${string}-dropdown`}
+                    // id={`${string}-${listItem}-dropDown`}
                     className="themes-checkbox" 
                     type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
-                    checked={this.autoCheck(string, listItem)} 
-                    onChange={(e) => {this.themesCheck(e, string)}}/>
+                    // checked={this.autoCheck(string, listItem)} 
+                    // onChange={(e) => {this.themesCheck(e, string)}}
+                    checked={this.props.state.familySetupData[string].includes(listItem) ? true : false}
+                    onChange={(e) => {
+                        this.props.onChange(e, string)
+                    }}
+                    />
                 </li>
             )
         })
@@ -66,7 +141,10 @@ export default class DropDownList extends React.Component{
 
     render(){
         return(
-            <div>{this.createDropDownList(this.props.array, this.props.string)}</div>
+            <div>
+                <h3>{`DROPDOWNLIST ${this.props.string}`}</h3>
+                <div>{this.createDropDownList(this.props.array, this.props.string, this.props.state)}</div>
+            </div>
         )
     }
 }

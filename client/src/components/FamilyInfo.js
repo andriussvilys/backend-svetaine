@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
-import DropDrownList from './DropDrownList'
+import DropDownList from './DropDownList'
 import AddNew from './AddNew';
 import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
@@ -31,9 +31,20 @@ export default class FamilyInfo extends Component {
                                 id="familyList"
                             />
 
-                            <DropDrownList 
+                            <DropDownList 
+                                state={this.context.state}
                                 array={this.context.state.artworkFamilyList}
-                                string={"Artwork Family List"}
+                                string={"artworkFamily"}
+                                onChange={this.context.familySetupMethods.onChange}
+                                isChecked={this.context.familySetupMethods.isChecked}
+                            />
+
+                            <DropDownList 
+                                state={this.context.state}
+                                array={this.context.state.themesData}
+                                string={"themes"}
+                                onChange={this.context.familySetupMethods.onChange}
+                                isChecked={this.context.familySetupMethods.isChecked}
                             />
 
                             {/* <AddNew

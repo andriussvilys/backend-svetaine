@@ -137,4 +137,10 @@ textarea {
   font-size: 13px;
   padding: 15px;
 }
+
+.themes-list--selected {
+  background-color: #c9eec9 !important;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
 /*# sourceMappingURL=main.css.map */
