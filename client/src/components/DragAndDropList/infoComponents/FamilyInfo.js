@@ -11,6 +11,10 @@ import '../css/imageInfo.css'
 export default class FamilyInfo extends Component {
     static contextType = Context;
 
+    constructor(props){
+        super(props)
+    }
+
     useFamilySetup = (stateKey) => {
         if(this.context.state.familySetupData[stateKey] 
             && this.context.state.familySetupData.useFamilySetup
@@ -42,8 +46,8 @@ export default class FamilyInfo extends Component {
                                         id="familyDisplaySetup__radio-yes" 
                                         value="yes" 
                                         disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
-                                        onClick={() => this.context.useFamilySetup(true)}
-                                        checked={this.context.state.familySetupData.useFamilySetup}
+                                        onClick={() => {this.context.fileDataMethods.transferState(this.props.fileName)}}
+                                        checked={this.context.state.fileData.files[this.props.fileName].useFamilySetup}
                                         />
                                     </div>
                                     <div className="container-radio">
@@ -54,8 +58,8 @@ export default class FamilyInfo extends Component {
                                         value="no" 
                                         disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
                                         onClick={() => this.context.useFamilySetup(false)}
-                                        checked={!this.context.state.familySetupData.useFamilySetup}
-                                        defaultChecked 
+                                        checked={!this.context.state.fileData.files[this.props.fileName].useFamilySetup}
+                                        // defaultChecked 
                                         />
                                     </div>
                                 </form>
@@ -103,7 +107,7 @@ export default class FamilyInfo extends Component {
                                     {/* <p className="subtitle">(different from family name):</p> */}
                                 </div>
                                 <textarea
-                                value={this.useFamilySetup("familyDescription")}
+                                value={this.useFamilySetup("familyDescription") ? this.useFamilySetup("familyDescription") : ""}
                                 onChange={
                                     (e) => this.props.onChange(e, this.props.fileName, "familyDescription")
                                 }

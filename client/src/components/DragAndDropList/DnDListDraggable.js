@@ -23,9 +23,9 @@ export default class DnDListDraggable extends React.Component{
         }
     }
 
-    componentDidMount(){
-        this.context.fileDataMethods.transferState(this.props.file.fileName)
-    }
+    // componentDidMount(){
+    //     this.context.fileDataMethods.transferState(this.props.file.fileName)
+    // }
 
     render(){
         return(

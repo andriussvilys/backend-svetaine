@@ -833,7 +833,6 @@ export class Provider extends React.Component{
         },
 
         transferState: (fileName) => {
-            if(this.state.familySetupData.useFamilySetup){
                 let newFileData = this.state.fileData;
                 Object.keys(this.state.familySetupData).forEach(key => {
                     newFileData = {
@@ -844,12 +843,23 @@ export class Provider extends React.Component{
                                     ...newFileData.files[fileName],
                                     [key]: this.state.familySetupData[key]
                                 }
-                            }}
-                });
+                            }
+                        }
+                    })
+                newFileData = {
+                    ...newFileData, 
+                    files: {
+                        ...newFileData.files,
+                            [fileName]: {
+                                ...newFileData.files[fileName],
+                                useFamilySetup: true
+                            }
+                        }
+                    }
+                console.log(newFileData)
                 this.setState({fileData: newFileData})
             }
         }
-    }
 
     this.familySetupMethods = {
         onChange: (value, string) => {
