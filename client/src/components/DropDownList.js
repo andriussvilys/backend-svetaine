@@ -89,7 +89,10 @@ export default class DropDownList extends React.Component{
 
             <div className="themeSelector ">
                         
-            <div className="extendedList--form imageInfo--box">
+            <div 
+            className="extendedList--form imageInfo--box"
+            style={{margin: 0}}
+            >
                 <p>{this.props.listName}</p>
                 {/* {this.context.makeDataList(this.props.array, this.props.string, this.props.id)} */}
 

@@ -44,10 +44,9 @@ export default class DnDListDraggable extends React.Component{
                                 <div className="ImagesPreview--container"
                                     {...provided.draggableProps}
                                     ref={provided.innerRef}
-                                >
-        
-                                        <div style={{display: "flex", width: "100%"}}>
-                                            <div className="image-index-box">
+                                >       
+                                        
+                                        <div className="image-index-box">
                                                 <div className="ImagesPreview--imageContainer">
                                                     <img className="ImagesPreview--image" alt={this.props.file.fileName} src={this.props.file.preview} />
                                                     <input
@@ -64,82 +63,80 @@ export default class DnDListDraggable extends React.Component{
                                                 </div>
                                             </div>
         
-                                            <div style={{width: "100%"}}>
-                                                <Accordion>
-                                                    <Card>
-                                                        <Card.Header>
-                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
-                                                            View Data
-                                                        </Accordion.Toggle>
-                                                        </Card.Header>
-                                                        <Accordion.Collapse eventKey="0">
-                                                        <Card.Body>
-                                                            <JsonPreview 
-                                                                fileName={this.props.file.fileName}
-                                                                file={this.props.file}
-                                                                index={this.props.index}
-                                                            />
-                                                        </Card.Body>
-                                                        </Accordion.Collapse>
-                                                    </Card>
-                                                </Accordion>  
-                                                
-                                                <Accordion >
-                                                    <Card>
-                                                        <Card.Header>
-                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
-                                                            Edit Artwork info
-                                                        </Accordion.Toggle>
-                                                        </Card.Header>
-                                                        <Accordion.Collapse eventKey="0">
-                                                        <Card.Body style={{padding: "15px"}}>
-                                                            <ArtowrkInfo 
+                                        <div style={{flex: "1", minWidth: "250px"}}>
+                                            <Accordion>
+                                                <Card>
+                                                    <Card.Header>
+                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
+                                                        View Data
+                                                    </Accordion.Toggle>
+                                                    </Card.Header>
+                                                    <Accordion.Collapse eventKey="0">
+                                                    <Card.Body>
+                                                        <JsonPreview 
+                                                            fileName={this.props.file.fileName}
+                                                            file={this.props.file}
+                                                            index={this.props.index}
+                                                        />
+                                                    </Card.Body>
+                                                    </Accordion.Collapse>
+                                                </Card>
+                                            </Accordion>  
+                                            
+                                            <Accordion >
+                                                <Card>
+                                                    <Card.Header>
+                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
+                                                        Edit Artwork info
+                                                    </Accordion.Toggle>
+                                                    </Card.Header>
+                                                    <Accordion.Collapse eventKey="0">
+                                                    <Card.Body style={{padding: "15px"}}>
+                                                        <ArtowrkInfo 
+                                                        fileName={this.props.file.fileName}
+                                                        onChange={this.context.fileDataMethods.onChange}
+                                                        />
+                                                    </Card.Body>
+                                                    </Accordion.Collapse>
+                                                </Card>
+                                            </Accordion>
+
+                                            <Accordion>
+                                                <Card>
+                                                    <Card.Header>
+                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
+                                                        Update Family Info
+                                                    </Accordion.Toggle>
+                                                    </Card.Header>
+                                                    <Accordion.Collapse eventKey="0">
+                                                    <Card.Body style={{padding: "15px"}} >
+                                                        <FamilyInfo
                                                             fileName={this.props.file.fileName}
                                                             onChange={this.context.fileDataMethods.onChange}
-                                                            />
-                                                        </Card.Body>
-                                                        </Accordion.Collapse>
-                                                    </Card>
-                                                </Accordion>
+                                                        />
 
-                                                <Accordion>
-                                                    <Card>
-                                                        <Card.Header>
-                                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-main">
-                                                            Update Family Info
-                                                        </Accordion.Toggle>
-                                                        </Card.Header>
-                                                        <Accordion.Collapse eventKey="0">
-                                                        <Card.Body style={{padding: "15px"}} >
-                                                            <FamilyInfo
-                                                                fileName={this.props.file.fileName}
-                                                                onChange={this.context.fileDataMethods.onChange}
-                                                            />
-
-                                                            <Accordion >
-                                                                <Card>
-                                                                    <Card.Header>
-                                                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
-                                                                        Update Search Categories
-                                                                    </Accordion.Toggle>
-                                                                    </Card.Header>
-                                                                    <Accordion.Collapse eventKey="0">
-                                                                    <Card.Body>
-                                                                        <NavigationInfo/>
-                                                                    </Card.Body>
-                                                                    </Accordion.Collapse>
-                                                                </Card>
-                                                            </Accordion>
-                                                            
-                                                        </Card.Body>
-                                                        </Accordion.Collapse>
-                                                    </Card>
-                                                </Accordion>
-                                            </div>
-        
-                                        
+                                                        <Accordion >
+                                                            <Card>
+                                                                <Card.Header>
+                                                                <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
+                                                                    Update Search Categories
+                                                                </Accordion.Toggle>
+                                                                </Card.Header>
+                                                                <Accordion.Collapse eventKey="0">
+                                                                <Card.Body>
+                                                                    <NavigationInfo/>
+                                                                </Card.Body>
+                                                                </Accordion.Collapse>
+                                                            </Card>
+                                                        </Accordion>
+                                                        
+                                                    </Card.Body>
+                                                    </Accordion.Collapse>
+                                                </Card>
+                                            </Accordion>
+                                        </div>
                                             
-                                            <div className="button-container">
+                                        <div className="button-container">
                                                 <div className="ImagesPreview--dragHandle custom-button"
                                                 id={`draghandle--${this.props.index}`}
                                                 {...provided.dragHandleProps}
@@ -174,7 +171,6 @@ export default class DnDListDraggable extends React.Component{
                                                 </div>
                                             </div>
         
-                                        </div>
                                
                                 </div>
                             )
