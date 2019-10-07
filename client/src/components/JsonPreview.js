@@ -107,7 +107,7 @@ export default class JsonPreview extends Component {
                   <div className="preview-container"><span className="preview-span">artwork Family:</span> <div className="whiteSpace--break">{this.context.state.artworkFamily}</div></div>
                   <div className="preview-container"><span className="preview-span">artwork Title:</span> <div className="whiteSpace--break">{this.context.state.artworkTitle}</div></div>
                   <div className="preview-container"><span className="preview-span">display on Main page:</span> <div className="whiteSpace--break">{this.booleanString("displayMain")}</div></div>
-                  <div className="preview-container"><span className="preview-span">family display index:</span> <div className="whiteSpace--break">{this.context.state.familyDisplayIndex}</div></div>
+                  <div className="preview-container"><span className="preview-span">family display index:</span> <div className="whiteSpace--break">{this.context.state.familyDisplayIndex()}</div></div>
                   <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.themes)}</div></div>
                   <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.seeAlso)}</div></div>
                 </div>

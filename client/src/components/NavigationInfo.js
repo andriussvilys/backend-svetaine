@@ -24,13 +24,8 @@ export default class NavigationInfo extends Component{
     autoCheckListItem = (category, subcategory, listitem) => {
         if(!this.context.state.familySetupData.category){return}
         if(this.context.state.familySetupData.category[category]){
-            console.log('********************list item autochecked--CATEGORY')
-            console.log(`this subcategory is`)
-            console.log(subcategory)
             if(this.context.state.familySetupData.category[category][subcategory]){
-                console.log('********************list item autochecked--SUBCATEGORY')
                 if(this.context.state.familySetupData.category[category][subcategory].includes(listitem)){
-                    console.log('********************list item autochecked-LISTITEM')
                     return true
                 } 
                 else{
@@ -83,8 +78,8 @@ export default class NavigationInfo extends Component{
                                 type="checkbox" 
                                 value={listitem} 
                                 id={listitem} 
-                                onChange={this.context.onCheck} 
-                                checked={this.autoCheckListItem(obj.category, subcategory, listitem)}
+                                onChange={(e) => this.context.onCheck(e)} 
+                                checked={this.context.categoryMethods.autoCheckListItem(obj.category, subcategory, listitem)}
                                 />
             
                                 <span>{listitem}</span>  
@@ -98,8 +93,8 @@ export default class NavigationInfo extends Component{
                         className="navigation-input subcategory" 
                         type="checkbox" 
                         value={subcategory} 
-                        onChange={this.context.onCheck} 
-                        checked={this.autoCheckSubcategory(obj.category, subcategory)}
+                        onChange={(e) => this.context.onCheck(e)} 
+                        checked={this.context.categoryMethods.autoCheckSubcategory(obj.category, subcategory)}
                         />
     
                         <span>{subcategory}</span>
@@ -114,8 +109,8 @@ export default class NavigationInfo extends Component{
                         className="navigation-input category" 
                         type="checkbox" 
                         value={obj.category} 
-                        onChange={this.context.onCheck} 
-                        checked={this.autoCheckCategory(obj.category)}
+                        onChange={(e) => this.context.onCheck(e)} 
+                        checked={this.context.categoryMethods.autoCheckCategory(obj.category)}
                     /> 
                     <span>{obj.category}</span>
                     {subcategories}
@@ -178,7 +173,6 @@ export default class NavigationInfo extends Component{
                                 onClick={
                                     this.context.categoryMethods.updateCategory
                                 }
-                                // disabled={document.getElementById("add-category").value ? false : true}
                             >
                                 SUBMIT
                             </Button>

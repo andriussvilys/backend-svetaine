@@ -15,14 +15,20 @@ export default class DropDownList extends React.Component{
  *@param {string} string used for ids/names 
  */
     createDropDownList = (array, string, state) => {
-        if(!state.familySetupData[string]){
-            return
+
+        const highlighter = (string, listItem) => {
+            if(state.familySetupData[string]){
+                return state.familySetupData[string].includes(listItem)
+            }
+            else return null
         }
+
         let sortedArray = Array.from(new Set(array.sort()));
         let listItems = sortedArray.map((listItem) => {
             return (
                 <li 
-                className={`dropdown-item themes-list ${state.familySetupData[string].includes(listItem) ? 'themes-list--selected' : null}`} 
+                className={`dropdown-item themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
+                // className={`dropdown-item themes-list ${state.familySetupData[string].includes(listItem) ? 'themes-list--selected' : null}`} 
                 key={`${string}-${listItem}`}
                 >
                     <span className="themes-span">{listItem}</span>
@@ -30,9 +36,9 @@ export default class DropDownList extends React.Component{
                     className="themes-checkbox" 
                     type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
-                    checked={this.props.state.familySetupData[string].includes(listItem) ? true : false}
+                    checked={highlighter(string, listItem) ? true : false}
                     onChange={(e) => {
-                        this.props.onChange(e, string)
+                        this.props.onChange(e.target.value, string)
                     }}
                     />
                 </li>

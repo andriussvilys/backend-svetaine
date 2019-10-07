@@ -144,6 +144,9 @@ export class Provider extends React.Component{
                 return
             }
             }
+
+
+        //This creates checkbox trees and and values to it
         const parentCheckbox = (target) => Array.from(target.getElementsByTagName('input'))[0];
     
         const classNameCheck = (name) => {
@@ -671,7 +674,6 @@ export class Provider extends React.Component{
             }
             else{return}
         },
-
         getSubcategoryNames: () => {
             if(document.getElementById("add-category").value){
                 let selectedCategory = document.getElementById("add-category").value;
@@ -686,7 +688,6 @@ export class Provider extends React.Component{
             }
     
         },
-
         submitNewCategory: () => {
 
             const categoryInput = document.getElementById("add-category")
@@ -713,7 +714,6 @@ export class Provider extends React.Component{
                 .catch(err => console.log(err))
             }
         },
-
         updateCategory: () => {
             const categoryInput = document.getElementById("add-category")
             const subcategoryInput = document.getElementById("add-subcategory")
@@ -746,6 +746,42 @@ export class Provider extends React.Component{
                 () => {console.log(objToUpdate);
                 axios.put('/api/categories/update', objToUpdate)
                 })
+        },
+        autoCheckListItem: (category, subcategory, listitem) => {
+            if(!this.state.familySetupData.category){return}
+            if(this.state.familySetupData.category[category]){
+                if(this.state.familySetupData.category[category][subcategory]){
+                    if(this.state.familySetupData.category[category][subcategory].includes(listitem)){
+                        return true
+                    } 
+                    else{
+                        return false
+                    }
+                }
+                return false
+            }
+            return false
+        },
+        autoCheckSubcategory: (category, subcategory) => {
+            if(!this.state.familySetupData.category){return}
+            if(this.state.familySetupData.category[category]){
+                if(this.state.familySetupData.category[category][subcategory]){
+                    return true
+                }
+                else{
+                    return false
+                }
+            }
+            return false
+        },
+        autoCheckCategory: (category) => {
+            if(!this.state.familySetupData.category){return}
+            if(this.state.familySetupData.category[category]){
+                    return true
+                }
+                else{
+                    return false
+                }
         }
     
     }
@@ -773,7 +809,7 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
 
-        onDraggableDidMount: (fileName) => {
+        transferState: (fileName) => {
             if(this.state.familySetupData.useFamilySetup){
                 let newFileData = this.state.fileData;
                 Object.keys(this.state.familySetupData).forEach(key => {
@@ -793,7 +829,7 @@ export class Provider extends React.Component{
     }
 
     this.familySetupMethods = {
-        onChange: (e, string) => {
+        onChange: (value, string) => {
 
             const addNewValue = (newValue) => {
                 let newState = {}
@@ -837,12 +873,13 @@ export class Provider extends React.Component{
                     this.setState(newState)
                 }
             }
-    
-            if(this.state.familySetupData[string].includes(e.target.value)){
-                removeValue(e.target.value)
+            
+
+            if(this.state.familySetupData[string] && this.state.familySetupData[string].includes(value)){
+                removeValue(value)
             }
             else{
-                addNewValue(e.target.value)
+                addNewValue(value)
             }
           },
 

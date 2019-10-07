@@ -22,7 +22,7 @@ export default class DnDListDraggable extends React.Component{
     }
 
     componentDidMount(){
-        this.context.fileDataMethods.onDraggableDidMount(this.props.file.fileName)
+        this.context.fileDataMethods.transferState(this.props.file.fileName)
     }
 
     render(){
@@ -173,22 +173,6 @@ export default class DnDListDraggable extends React.Component{
                                             </div>
         
                                         </div>
-                                 
-                                    
-                                    {/* <Accordion >
-                                        <Card>
-                                            <Card.Header>
-                                            <Accordion.Toggle as={Button} variant="link" eventKey="0">
-                                                Edit Artwork info
-                                            </Accordion.Toggle>
-                                            </Card.Header>
-                                            <Accordion.Collapse eventKey="0">
-                                            <Card.Body>
-                                                <ArtowrkInfo style={{width: "75%"}} />
-                                            </Card.Body>
-                                            </Accordion.Collapse>
-                                        </Card>
-                                    </Accordion> */}
                                
                                 </div>
                             )

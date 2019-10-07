@@ -30,7 +30,8 @@ export default class FamilyInfo extends Component {
                                 state={this.context.state}
                                 array={this.context.state.artworkFamilyList}
                                 string={"artworkFamily"}
-                                onChange={this.context.familySetupMethods.onChange}
+                                // onChange={this.context.familySetupMethods.onChange}
+                                onChange={this.context.getFamilySetup}
                                 isChecked={this.context.familySetupMethods.isChecked}
                             />
 

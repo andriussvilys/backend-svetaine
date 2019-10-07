@@ -78,7 +78,7 @@ export default class NavigationInfo extends Component{
                                 value={listitem} 
                                 id={listitem} 
                                 onChange={this.context.onCheck} 
-                                checked={this.autoCheckListItem(obj.category, obj.subcategory, listitem)}
+                                checked={this.context.state.familySetupData.useFamilySetup ? this.autoCheckListItem(obj.category, obj.subcategory, listitem) : false}
                                 />
             
                                 <span>{listitem}</span>  
@@ -96,7 +96,7 @@ export default class NavigationInfo extends Component{
                         type="checkbox" 
                         value={subcategory} 
                         onChange={this.context.onCheck} 
-                        checked={this.autoCheckSubcategory(obj.category, subcategory)}
+                        checked={this.context.state.familySetupData.useFamilySetup ? this.autoCheckSubcategory(obj.category, subcategory) : false}
                         />
     
                         <span>{subcategory}</span>
@@ -115,7 +115,7 @@ export default class NavigationInfo extends Component{
                         type="checkbox" 
                         value={obj.category} 
                         onChange={this.context.onCheck} 
-                        checked={this.autoCheckCategory(obj.category)}
+                        checked={this.context.state.familySetupData.useFamilySetup ? this.autoCheckCategory(obj.category) : false}
                     /> 
                     <span>{obj.category}</span>
                     {subcategories}
