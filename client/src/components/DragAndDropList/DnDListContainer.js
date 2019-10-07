@@ -2,7 +2,6 @@ import React from 'react';
 import { Context } from '../Provider';
 import { DragDropContext } from 'react-beautiful-dnd';
 import DnDListDroppable from './DnDListDroppable'
-import Button from 'react-bootstrap/Button'
 import './css/ImagesPreview.css'
 
 export default class DnDListContainer extends React.Component{
@@ -45,8 +44,6 @@ export default class DnDListContainer extends React.Component{
             this.setState(newState)
     }
     createDroppable = () => {
-        console.log('HELLOW')
-        console.log(this.props)
         return(
             <div>
                 <DnDListDroppable 
@@ -62,17 +59,13 @@ export default class DnDListContainer extends React.Component{
 
     setUpState = (callback) => {
         if(!this.state){
-            console.log('no state atm, lets set up')
             this.setState(this.props.data, 
-                    // console.log('DND CONTAINER STATE')
-                    // console.log(this.state)
-
                     () => {if(callback){callback()}}
             )
             return
         }
         else{
-            console.log('state exists')
+            return
         }
 
     }
@@ -88,8 +81,6 @@ export default class DnDListContainer extends React.Component{
             <Context.Consumer>
                 {() => {
                         if(this.props.data){
-                            console.log('CONTEXT STATE')
-                            console.log(this.context.state)
                             return(
                                 <div> 
                                     {/* <Button

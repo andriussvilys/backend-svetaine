@@ -1,19 +1,13 @@
 import React, { Component } from 'react';
 import { Context } from '../../Provider';
 import ExtendedList from './ExtendedList';
-import AddNew from './AddNew';
 import ThemeSelector from './ThemeSelector';
-import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/jsonPreview.css';
 import '../css/imageInfo.css'
 
 export default class FamilyInfo extends Component {
     static contextType = Context;
-
-    constructor(props){
-        super(props);
-    }
 
     useFamilySetup = (stateKey) => {
         if(this.context.state.familySetupData[stateKey] 
@@ -26,27 +20,6 @@ export default class FamilyInfo extends Component {
         }
         else return null
     }
-
-
-
-    // componentDidMount(fileName){
-    //     if(this.context.state.familySetupData.useFamilySetup){
-    //         let newFileData = this.state.fileData;
-    //         Object.keys(this.state.familySetupData).forEach(key => {
-    //             newFileData = {
-    //                 ...newFileData, 
-    //                     files: {
-    //                         ...newFileData.files,
-    //                         [fileName]: {
-    //                             ...newFileData.files[fileName],
-    //                             [key]: this.state.familySetupData[key]
-    //                         }
-    //                     }}
-    //         });
-    //         console.log('DRAGGABLE DID MOUNT -- THIS IS NEW STATE')
-    //         this.setState({fileData: newFileData})
-    //     }
-    // }
 
     render(){
         return(

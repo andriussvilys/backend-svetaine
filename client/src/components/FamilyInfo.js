@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
 import DropDownList from './DropDownList'
-import AddNew from './AddNew';
 import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,10 +10,6 @@ import '../css/components/imageInfo.css';
 
 export default class FamilyInfo extends Component {
     static contextType = Context;
-
-    constructor(props){
-        super(props);
-    }
 
     render(){
         return(
@@ -46,12 +41,6 @@ export default class FamilyInfo extends Component {
                                 onChange={this.context.familySetupMethods.onChange}
                                 isChecked={this.context.familySetupMethods.isChecked}
                             />
-
-                            {/* <AddNew
-                            router={'/api/artworkFamilyList/update'}
-                            stateKey='artworkFamilyList'
-                            requestKey="list"
-                            /> */}
                             <div className="imageInfo--box" style={{display: 'flex'}}>
                                 <span>use family setup</span>
                                 <form >

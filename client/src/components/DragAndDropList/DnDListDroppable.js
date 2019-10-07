@@ -31,8 +31,6 @@ export default class DndListDroppable extends React.Component{
                         droppableId={this.props.column.id}
                         >
                         {provided =>{
-                                        console.log('RENDERING COLUMNS');
-                                        console.log(this.props.files);
                                         return(
                                             <div 
                                             ref={provided.innerRef}

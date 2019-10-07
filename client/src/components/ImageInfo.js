@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
-import Button from 'react-bootstrap/Button';
-import axios from 'axios';
-import ThemeSelector from './ThemeSelector';
 import FamilyInfo from './FamilyInfo';
 import DnDListContainer from './DragAndDropList/DnDListContainer'
 import "bootstrap/dist/css/bootstrap.min.css";

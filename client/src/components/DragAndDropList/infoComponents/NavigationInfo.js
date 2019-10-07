@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Context } from '../../Provider';
-import Button from 'react-bootstrap/Button';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/navigationInfo.css';
 import '../css/imageInfo.css';

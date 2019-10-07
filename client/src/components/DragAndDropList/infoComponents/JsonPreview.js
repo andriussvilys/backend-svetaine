@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Context } from '../../Provider';
-import axios from 'axios';
-import Button from 'react-bootstrap/Button';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/jsonPreview.css';
 
@@ -71,7 +69,6 @@ export default class JsonPreview extends Component {
       }
     }
 
-    // this.state.category[category]
     isDisabled = () => {
       if(
         Object.keys(this.context.state.category).length > 0 &&
@@ -83,11 +80,6 @@ export default class JsonPreview extends Component {
     }
 
     render() {
-      // console.log("CATEGORY LENGTH")
-      // console.log(Object.keys(this.context.state.category).length > 0)
-      // console.log("file")
-      // console.log(this.context.state.file)
-        // console.log(this.props)
       return (
         <Context.Consumer>
           {()=>{

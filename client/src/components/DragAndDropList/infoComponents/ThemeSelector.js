@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Context } from '../../Provider';
 import AddNew from './AddNew';
-import axios from 'axios';
 import ExtendedList from './ExtendedList';
 
 // import "bootstrap/js/dist/util.js";

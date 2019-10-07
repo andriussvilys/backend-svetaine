@@ -126,67 +126,6 @@ export default class NavigationInfo extends Component{
 
         return result
     }
-    //****************************MOVED TO PROVIDER ************************* */
-
-    // getCategoryNames = () => {
-    //     if(this.state.categoryNames.length < 1){
-    //         console.log('***get category names')
-    //         if(this.context.state.categoriesData){
-    //             let categoryNames =  this.context.state.categoriesData.map(obj => obj.category)
-    //             this.setState({categoryNames: categoryNames}, ()=>{
-    //                 let categoryOptionList = this.state.categoryNames.map(name => {
-    //                     return <option key={`add-category-${name}`} value={name}>{name}</option>
-    //                 })
-    //                 return this.setState({categoryDatalist: categoryOptionList})
-    //             })
-    //         }
-    //     }
-    //     else{return}
-    // }
-
-    // getSubcategoryNames = () => {
-    //     if(document.getElementById("add-category").value){
-    //         let selectedCategory = document.getElementById("add-category").value;
-    //         let subcategories = this.context.state.categoriesData.find(item => item.category === selectedCategory)
-    //         if(subcategories && subcategories.subcategory){
-    //             let subcategoriesDatalist = Object.keys(subcategories.subcategory).map(subcategory => {
-    //                 let option = <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option> 
-    //                 console.log(option)
-    //                 return option
-    //             })
-    //             this.setState({subcategoryDatalist: subcategoriesDatalist})
-    //         }
-    //     }
-    // }
-
-    //****************************MOVED TO PROVIDER ************************* */
-
-    // submitNewCategory = () => {
-
-    //     const categoryInput = document.getElementById("add-category")
-    //     const subcategoryInput = document.getElementById("add-subcategory")
-    //     const listitemInput = document.getElementById("add-listitem")
-
-    //     let reqBody = {category: null, subcategory: {}}
-    //     //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
-    //     if(this.state.categoryNames.indexOf(categoryInput) < 0){
-    //         reqBody = {category: categoryInput.value}
-    //         if(subcategoryInput.value){
-    //             reqBody.subcategory = {[subcategoryInput.value]: []}
-    //         }
-    //         if(listitemInput.value){
-    //             reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
-    //         }
-    //         // reqBody = JSON.stringify(reqBody)
-    //         // console.log(reqBody)
-    //         axios.post('/api/categories/create', reqBody)
-    //         .then(res => {
-    //             console.log(res)
-    //         })
-    //         .catch(err => console.log(err))
-    //     }
-    // }
-
 
   render(){
     return(
@@ -232,17 +171,6 @@ export default class NavigationInfo extends Component{
                                 placeholder="listitem"
                                 style={{marginRight: "30px"}}
                             />
-                            {/* <Button
-                                style={{position: "absolute", right: 0, bottom: "5px"}}
-                                variant="success" 
-                                size="sm"
-                                onClick={
-                                    this.context.categoryMethods.submitNewCategory
-                                }
-                                // disabled={document.getElementById("add-category").value ? false : true}
-                            >
-                                SUBMIT
-                            </Button> */}
                             <Button
                                 style={{marginRight: "30px"}}
                                 variant="success" 

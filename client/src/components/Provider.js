@@ -89,17 +89,6 @@ export class Provider extends React.Component{
         }
             
     }
-
-    // this.themes = () => {
-    //     axios.get('/api/themes')
-    //     .then( res => {
-    //        console.log("******************THEMES ACTIVATED") 
-    //        let data = res.data[0].list 
-    //        console.log(data)
-    //       return data
-
-    //     })
-    // }
     
     //FUNCTION THE CHECKS BOXES IN CATEGORY COMPONENT
     this.onCheck = (e) => {
@@ -111,7 +100,6 @@ export class Provider extends React.Component{
             let subcategory = null
             let category = null
             let listItemNest = null
-            let subcategoryNest = null
             let newListitems = null
             let stateCopy = {...this.state.familySetupData}
 
@@ -119,17 +107,7 @@ export class Provider extends React.Component{
                 subcategory = e.target.parentNode.parentNode.id
                 category = e.target.parentNode.parentNode.parentNode.id
                 listItemNest = this.state.familySetupData.category[category][subcategory]
-
-                // console.log('LISTITEM ID')
-                // console.log(checkboxId)
-
-                // newListitems = listItemNest.splice(
-                //     listItemNest.indexOf(checkboxId), 1
-                // )
-
                 newListitems = listItemNest.filter(item => item !== checkboxId)
-                console.log('***********************listitem unchecked')
-                console.log(newListitems)
 
                 let newState = { 
                     ...this.state,
@@ -145,8 +123,6 @@ export class Provider extends React.Component{
                     }
                 }
 
-                console.log('new state after listitem uncheck')
-                console.log(newState)
                 this.setState(newState)
                 return                
             }
@@ -168,8 +144,6 @@ export class Provider extends React.Component{
                 return
             }
             }
-
-        let stateCategory = this.state.familySetupData.category;
         const parentCheckbox = (target) => Array.from(target.getElementsByTagName('input'))[0];
     
         const classNameCheck = (name) => {
@@ -192,9 +166,7 @@ export class Provider extends React.Component{
                 else{
                     const categoryPromise = new Promise((resolve, reject) => {
                         // subcategory.checked = true;
-                        console.log('clicked a listitem')
                         if(!this.state.familySetupData.category[checkbox.value]){ 
-                            console.log('category doesnt exist')
                             checkbox.checked = true;
                             this.setState({ 
                                 ...this.state,
@@ -222,11 +194,8 @@ export class Provider extends React.Component{
 
                     categoryPromise
                     .then((resolveMessage)=>{
-                        console.log(resolveMessage)
                         const subcategoryPromise = new Promise((res, reject)=>{
                             if(!this.state.familySetupData.category[checkbox.value][subcategory.value]){
-                                console.log('subcategory dont exist')
-                                console.log(stateCategory)
                                 subcategory.checked = true;
                                 this.setState({ 
                                     ...this.state,
@@ -243,7 +212,6 @@ export class Provider extends React.Component{
                                 }, 
                                     ()=>{
                                         if(this.state.familySetupData.category[checkbox.value][subcategory.value]){
-                                            console.log('create new subcategory')
                                             return res('created new subcategory')
                                         }
                                         else{
@@ -258,7 +226,6 @@ export class Provider extends React.Component{
                         })
 
                         subcategoryPromise.then(message=>{
-                            console.log(message)
                             callback()
                         }).catch(message => console.log(message))
                         })
@@ -287,8 +254,6 @@ export class Provider extends React.Component{
         break;
         
         case classNameCheck('list--subcategory'):
-            console.log('subcategory was clicked')
-    
             checkboxCheck(category)
 
             this.setState({ 
@@ -312,12 +277,7 @@ export class Provider extends React.Component{
             const newListItem = e.target.value;
             
             const callback = () => {
-                console.log('inside callback')
-                console.log(this.state)
-                // console.log(this.state[category.value][subcategory.value])
                 const newList = [...this.state.familySetupData.category[category.value][subcategory.value], newListItem]
-                console.log('*************************************NEW LIST *********************************')
-                console.log(newList)
                 let newState = { 
                         ...this.state,
                         familySetupData: {
@@ -364,8 +324,6 @@ export class Provider extends React.Component{
             }
 
             reader.onload = () => {
-                console.log("FILE")
-                console.log(file.name)
 
                 obj.files[file.name] = {                    
                     preview: String(reader.result),
@@ -386,10 +344,8 @@ export class Provider extends React.Component{
 
                 obj.column.fileIds.push(file.name)
 
-                if(obj.column.fileIds.length === fileCount){
-                    console.log(obj)                    
+                if(obj.column.fileIds.length === fileCount){                 
                 }
-                // this.setState({fileData: obj})
                 this.setState(newState)
 
             }
@@ -398,13 +354,11 @@ export class Provider extends React.Component{
     }
     //THIS UPLOADS FILE TO SERVER
     this.uploadFile = () => {
-        console.log('UPLOAD FILE RUNS')
         const fd = new FormData();
         fd.append('artworkImage', this.state.file, this.state.fileName)
         // fd.append('name', this.state.fileName)
         axios.post('/api/artworkInfo/imageUpload', fd)
             .then(res => {
-                console.log(res)
             })
             .catch(err => alert(err))
     }
@@ -412,12 +366,6 @@ export class Provider extends React.Component{
     this.changeFileName = (e) => {
         let nameWithFileType = `${e.target.value.split('.')[0]}.${this.state.fileType.split('/')[1]}`
         this.setState({ fileName: nameWithFileType, filePath: `uploads/${nameWithFileType}` })
-
-        // let fileReader = this.state.file
-        // console.log(fileReader)
-        // fileReader.name = e.target.value
-        // this.setState({ fileReader, fileName: e.target.value
-        // })
     }
 
     this.themesCheck = (e, string) => {
@@ -427,29 +375,6 @@ export class Provider extends React.Component{
                 this.getFamilySetup(e.target.value)
                 return
             }
-            //     else{
-            //         let newState = {
-            //             ...this.state,
-            //             familySetupData: {
-            //                 ...this.state.familySetupData,
-            //                 useFamilySetup: false
-            //             }
-            //         }
-            //         this.setState(newState)
-            //         return
-            //     }
-            //     alert('themesChecked radio')
-            //     // this.setState({ [string]:  e.target.value},
-            //     //     () => this.getFamilySetup(
-            //     //         function callback(){
-            //     //             if(document.getElementById("familyDisplaySetup__radio-yes").checked){
-            //     //                 this.useFamilySetup(true)
-            //     //             }
-            //     //         }
-            //     //     )
-            //     //     )
-
-            // }
             if(e.target.checked){
                 let newState = {
                     ...this.state,
@@ -459,7 +384,6 @@ export class Provider extends React.Component{
                     }
                 }
                 this.setState(newState)
-                // e.target.parentNode.classList.toggle('themes-list--selected')
             }
             else{
                 let newNest = this.state.familySetupData[string].filter(item => item !== e.target.value);
@@ -471,7 +395,6 @@ export class Provider extends React.Component{
                     }
                 }
                 this.setState(newState)
-                // e.target.parentNode.classList.toggle('themes-list--selected')
             }
     }
 
@@ -515,30 +438,10 @@ export class Provider extends React.Component{
         }
 
         else return false
-        // else if(!this.state.familySetupData[stateKey]){
-        //     if(this.state.familySetupData[stateKey].includes(value)){
-        //         if(!inputParent.classList.contains('themes-list--selected')){
-        //             inputParent.classList.add('themes-list--selected')
-        //         }
-        //         return true
-        //     }
-        //     return false
-        // }
-
-        //     if(inputParent && inputParent.classList.contains('themes-list--selected')){
-        //         inputParent.classList.remove('themes-list--selected')
-        //     }
-        //     return false
     }
 
     this.createDropDownList = (array, string) => {
-        // console.log(array)
-        let inputType = "checkbox";
-        if(string === "artworkFamily"){
-            inputType = "radio"
-        }
         let sortedArray = Array.from(new Set(array.sort()));
-        // console.log(sortedArray)
         let listItems = sortedArray.map((listItem) => {
             return (
                 <li className="dropdown-item themes-list" key={`${string}-${listItem}`}>
@@ -561,8 +464,6 @@ export class Provider extends React.Component{
           //This create an array with a number of Arrays equal to UL tags that will be needed
           for (let index = 1; index < groups; index++) {
             columns = [...columns, []];
-            console.log('COLUMNS')
-            console.log(columns)
           }
           //this defines column index
           let counter = 0;
@@ -591,9 +492,6 @@ export class Provider extends React.Component{
     }
 
     this.makeDataList = (array, string, listId) => {
-        // console.log('*****make datalist array*****')
-        // console.log(string)
-
         if(array.length === 0 || !array){
             return            
         }
@@ -649,14 +547,10 @@ export class Provider extends React.Component{
     }
 
     this.extendList = (e, listId) => {
-        console.log(listId)
-        console.log(e.target)
-    // e.target.classList.toggle('icon-rotate');
     document.getElementById(listId).classList.toggle('no-display');
     }
 
     this.onChange = (e, stateTarget) => {
-        console.log(`${stateTarget} = ${e.target.value}`);
         if(e.target.value === "yes"){
             this.setState({ [stateTarget]: true})    
         }
@@ -667,35 +561,12 @@ export class Provider extends React.Component{
             this.setState({ [stateTarget]: e.target.value})
         }
     }
-
-    // this.loadData = () => {
-    // console.log(`loadData ${'themes'}`)
-    //     axios.get(`/api/themes/`)
-    //     .then( res => {
-    //         console.log('*********lLOAD DATA RES')
-    //         console.log(res)
-    //         let result = res.data[0].list
-    //         this.themes = [...this.themes, result];
-    //         console.log('********************THIS.THEMES')
-    //         console.log(this.themes)
-    //     })
-    //     .catch(err => {console.log('**************load data error'); console.log(err)})
-    // }
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
-        console.log('addNew Runs')
-        console.log(id)
-        console.log(router)
-        console.log('***********************request KEY')
-        console.log(requestKey)
         const newAddition = document.getElementById(id).value;
-        console.log(newAddition)
         axios.put(router, {[requestKey]: newAddition})
-        // axios.put(router, requestKey, requestValue)
-        // eg.: axios.put('api/themes/update', {[key]: "value"})
         .then( res => {
           let addition = res.data[requestKey]
-          console.log(addition)
           return addition
         })
         .then(res => {
@@ -755,15 +626,11 @@ export class Provider extends React.Component{
         .then( res => {
             let newFamilySetup = {}
             Object.keys(res.data).forEach(objKey => {
-                console.log('objKEY')
-                console.log(objKey)
                 newFamilySetup = {
                     ...newFamilySetup,
                     [objKey]: res.data[objKey]
                     }
             })
-            console.log('newState')
-            console.log(newFamilySetup)
             this.setState({ familySetupData: newFamilySetup})
 
         })
@@ -787,35 +654,11 @@ export class Provider extends React.Component{
         }
 
         this.setState(newState)
-
-        // if(this.state.familySetupData){
-
-        //     Object.keys(this.state.familySetupData).forEach(property => {
-        //         // console.log(property)
-        //         // console.log(this.state.familySetupData[property] === "")
-        //         // console.log("_____________________________________________________")
-        //         this.setState({ [property]: this.state.familySetupData[property]})
-        //     })
-        // }
-
-        // else{
-        //     this.setState({
-        //         familyDescription: "",
-        //         themes: [],
-        //         seeAlso: [],
-        //         location: "",
-        //         year: "",
-        //         category: {
-
-        //         }              
-        //     })
-        // }
     }
 
     this.categoryMethods = {
         getCategoryNames: () => {
             if(this.state.categoryNames.length < 1){
-                console.log('***get category names')
                 if(this.state.categoriesData){
                     let categoryNames =  this.state.categoriesData.map(obj => obj.category)
                     this.setState({categoryNames: categoryNames}, ()=>{
@@ -836,7 +679,6 @@ export class Provider extends React.Component{
                 if(subcategories && subcategories.subcategory){
                     let subcategoriesDatalist = Object.keys(subcategories.subcategory).map(subcategory => {
                         let option = <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option> 
-                        console.log(option)
                         return option
                     })
                     this.setState({subcategoryDatalist: subcategoriesDatalist})
@@ -861,11 +703,8 @@ export class Provider extends React.Component{
                 if(listitemInput.value){
                     reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
                 }
-                // reqBody = JSON.stringify(reqBody)
-                // console.log(reqBody)
                 axios.post('/api/categories/create', reqBody)
                 .then(res => {
-                    console.log(res)
                     this.setState({
                         categoriesData: [...this.state.categoriesData, res.data], 
                         categoryNames: [...this.state.categoryNames, res.data.category]
@@ -883,14 +722,12 @@ export class Provider extends React.Component{
             //check if the CATGORY input value is already recorded in the database
             //if it is run submitNewCategory method instead and exit this function
             if(this.state.categoryNames.indexOf(categoryInput.value) < 0){
-                console.log('this category doesnt exist')
                 this.categoryMethods.submitNewCategory()
                 return
             }
 
             //if category name already exists
             let objToUpdate = this.state.categoriesData.find(obj => obj.category === categoryInput.value)
-            console.log(objToUpdate)
             let objIndex = this.state.categoriesData.indexOf(objToUpdate)
 
 
@@ -915,7 +752,6 @@ export class Provider extends React.Component{
            
     this.readImageDir = () => {
         axios.get('/fetchImages')
-        // .then(res => {console.log(res.data)})
         .then(res => this.setState({imageDir: res.data}))
     }
 
@@ -951,7 +787,6 @@ export class Provider extends React.Component{
                                 }
                             }}
                 });
-                console.log('DRAGGABLE DID MOUNT -- THIS IS NEW STATE')
                 this.setState({fileData: newFileData})
             }
         }
@@ -959,8 +794,6 @@ export class Provider extends React.Component{
 
     this.familySetupMethods = {
         onChange: (e, string) => {
-
-            const input = e.target
 
             const addNewValue = (newValue) => {
                 let newState = {}
@@ -1060,16 +893,11 @@ onDragEnd = (result) => {
 removeFile = (fileName) => {
     let newFiles = {}
     Object.keys(this.state.fileData.files).forEach(file => {
-        console.log('CURRENT FILE')
-        console.log(file)
         if(file.fileName === fileName){
             return
         }
         newFiles = {...newFiles, [file]: this.state.fileData.files[file]}
     })
-
-    console.log('NEW FIELS')
-    console.log(newFiles)
 
     let newState = {
         ...this.state,
@@ -1086,30 +914,15 @@ removeFile = (fileName) => {
 }
 
 componentDidMount(){
-    console.log('**********************component did mount')
 
         axios.get('/api/themes')
         .then( res => {
-          console.log('**************themes DATA')
-          console.log(res.data)
           this.setState({ themesData: res.data.list})
-          console.log(this.state.themesData)
           this.themes = res.data.list
-          console.log("*********************THEMES PROP")
-          console.log(this.themes)
         })
-        // .then( resolved => {
-        //     axios.get('/api/artworkFamilyList')
-        //     .then( res => {
-        //     this.setState({ artworkFamilyList: res.data[0].list})
-        //     })
-        // }
-        // )  
         .then( res => {
             axios.get('/api/familySetup')
             .then(res => {
-                console.log('**********************FAMILY SETUP RES')
-                console.log(res.data)
                 let familyList = Object.keys(res.data).map(obj => {
                     return res.data[obj].artworkFamily
                 })
@@ -1119,8 +932,6 @@ componentDidMount(){
         .then(resolved => {
             axios.get('/api/categories')
             .then(res => {
-                console.log('*********************categories DATA')
-                console.log(res.data)
                 this.setState({categoriesData: res.data})
             })
         })
