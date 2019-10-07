@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
+import DropDrownList from './DropDrownList'
 import AddNew from './AddNew';
 import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
-import '../css/components/imageInfo.css'
+import '../css/components/imageInfo.css';
 
 export default class FamilyInfo extends Component {
     static contextType = Context;
@@ -29,6 +30,12 @@ export default class FamilyInfo extends Component {
                                 string="artworkFamily"
                                 id="familyList"
                             />
+
+                            <DropDrownList 
+                                array={this.context.state.artworkFamilyList}
+                                string={"Artwork Family List"}
+                            />
+
                             {/* <AddNew
                             router={'/api/artworkFamilyList/update'}
                             stateKey='artworkFamilyList'
