@@ -118,7 +118,7 @@ export default class FamilyInfo extends Component {
                             
                             <DropDownList 
                                 title={"Select Family Themes"}
-                                state={this.context.state}
+                                state={this.context.state.fileData.files[this.props.fileName]}
                                 array={this.context.state.themesData}
                                 string={"themes"}
                                 onChange={this.context.familySetupMethods.onChange}

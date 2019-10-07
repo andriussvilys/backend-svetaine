@@ -5,6 +5,8 @@
     grid-row-start: 1;
     grid-row-end: 3;
     display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     border: 1px solid;
     // padding: 5px;
     // background-color: rgb(226, 226, 226);

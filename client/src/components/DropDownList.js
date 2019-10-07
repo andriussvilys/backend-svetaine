@@ -23,7 +23,10 @@ export default class DropDownList extends React.Component{
     createDropDownList = (array, string, state) => {
 
         const highlighter = (string, listItem) => {
-            if(state.familySetupData[string]){
+            if(state.familySetupData[string] &&
+                typeof state.familySetupData[string] === 'string'||
+                Array.isArray(state.familySetupData[string])
+                ){
                 return state.familySetupData[string].includes(listItem)
             }
             else return null
@@ -43,9 +46,7 @@ export default class DropDownList extends React.Component{
                     type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
                     checked={highlighter(string, listItem) ? true : false}
-                    onChange={(e) => {
-                        this.props.onChange(e.target.value, string)
-                    }}
+                    onChange={this.props.onChange}
                     />
                 </li>
             )
