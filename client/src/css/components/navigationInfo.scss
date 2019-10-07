@@ -7,10 +7,21 @@
 .list--subcategory{
     background-color: #c1cdd3;
     font-size: 14px;
+    display: flex;
 }
+.list--subcategory > div{
+    border: 1px solid rgba(0,0,0,.2);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
 .list--listitem{
     background-color: #e2f1f8;
     font-size: 12px;
+    width: 95%;
+    align-self: center;
     // white-space: nowrap;
 }
 .navigation-input{

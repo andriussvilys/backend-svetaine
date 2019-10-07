@@ -7,11 +7,30 @@
 .list--subcategory {
   background-color: #c1cdd3;
   font-size: 14px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.list--subcategory > div {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding-left: 10px;
 }
 
 .list--listitem {
   background-color: #e2f1f8;
   font-size: 12px;
+  width: 95%;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
 }
 
 .navigation-input {

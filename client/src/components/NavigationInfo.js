@@ -72,32 +72,35 @@ export default class NavigationInfo extends Component{
     
                     let listItems = obj.subcategory[subcategory].map((listitem, index) => {
                         return (
-                            <li key={`${listitem}${index}}`} className="list--listitem list-group-item">
-                                <input 
-                                className="navigation-input listitem" 
-                                type="checkbox" 
-                                value={listitem} 
-                                id={listitem} 
-                                onChange={(e) => this.context.onCheck(e)} 
-                                checked={this.context.categoryMethods.autoCheckListItem(obj.category, subcategory, listitem)}
-                                />
-            
-                                <span>{listitem}</span>  
+                            <li key={`${listitem}${index}}`} 
+                            className={
+                            `list--listitem list-group-item
+                            ${this.context.categoryMethods.autoCheckListItem(obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
+                                    <input 
+                                    className="navigation-input listitem" 
+                                    type="checkbox" 
+                                    value={listitem} 
+                                    id={listitem} 
+                                    onChange={(e) => this.context.onCheck(e)} 
+                                    checked={this.context.categoryMethods.autoCheckListItem(obj.category, subcategory, listitem)}
+                                    />
+                                    <span>{listitem}</span>  
                             </li>
                         )
                     })
                     
                     return(
                     <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
-                        <input 
-                        className="navigation-input subcategory" 
-                        type="checkbox" 
-                        value={subcategory} 
-                        onChange={(e) => this.context.onCheck(e)} 
-                        checked={this.context.categoryMethods.autoCheckSubcategory(obj.category, subcategory)}
-                        />
-    
-                        <span>{subcategory}</span>
+                        <div className={this.context.categoryMethods.autoCheckSubcategory(obj.category, subcategory) ? "themes-list--selected" : null}>
+                            <input 
+                            className="navigation-input subcategory" 
+                            type="checkbox" 
+                            value={subcategory} 
+                            onChange={(e) => this.context.onCheck(e)} 
+                            checked={this.context.categoryMethods.autoCheckSubcategory(obj.category, subcategory)}
+                            />
+                            <span>{subcategory}</span>
+                        </div>
                         {listItems}
                      </ul>)
                 })
@@ -105,14 +108,16 @@ export default class NavigationInfo extends Component{
             return (
             <div key={obj.category} className="list-group">
                 <ul id={obj.category} className="list--category"> 
-                    <input 
-                        className="navigation-input category" 
-                        type="checkbox" 
-                        value={obj.category} 
-                        onChange={(e) => this.context.onCheck(e)} 
-                        checked={this.context.categoryMethods.autoCheckCategory(obj.category)}
-                    /> 
-                    <span>{obj.category}</span>
+                    <div className={this.context.categoryMethods.autoCheckCategory(obj.category) ? "themes-list--selected" : null}>
+                        <input 
+                            className="navigation-input category" 
+                            type="checkbox" 
+                            value={obj.category} 
+                            onChange={(e) => this.context.onCheck(e)} 
+                            checked={this.context.categoryMethods.autoCheckCategory(obj.category)}
+                        /> 
+                        <span>{obj.category}</span>
+                    </div>
                     {subcategories}
                 </ul>
             </div>

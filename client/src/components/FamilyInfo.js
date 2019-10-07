@@ -18,30 +18,52 @@ export default class FamilyInfo extends Component {
                     return(
                         <div>
 
-                            <ExtendedList 
+                            {/* <ExtendedList 
                                 listName="select artwork family: "
                                 // array={this.artworks()}
                                 array={this.context.state.artworkFamilyList}
                                 string="artworkFamily"
                                 id="familyList"
-                            />
+                            /> */}
 
                             <DropDownList 
+                                title={'Select Artwork Family'}
                                 state={this.context.state}
                                 array={this.context.state.artworkFamilyList}
                                 string={"artworkFamily"}
                                 // onChange={this.context.familySetupMethods.onChange}
                                 onChange={this.context.getFamilySetup}
                                 isChecked={this.context.familySetupMethods.isChecked}
+                                id="List-of-artwork-families"
+                                router={'api/artworkFamilyList/update'}
+                                addNewTarget={'artworkFamilyList'}
+                                displayAddNew="initial"
                             />
 
                             <DropDownList 
+                                title={"Select Family Themes"}
                                 state={this.context.state}
                                 array={this.context.state.themesData}
                                 string={"themes"}
                                 onChange={this.context.familySetupMethods.onChange}
                                 isChecked={this.context.familySetupMethods.isChecked}
+                                id="Themes-list"
+                                router={'/api/themes/update'}
+                                addNewTarget={'themesData'}
+                                displayAddNew="initial"
                             />
+
+                            <DropDownList 
+                                title={"Set 'See Also' artwork families"}
+                                state={this.context.state}
+                                array={this.context.state.artworkFamilyList}
+                                string={"seeAlso"}
+                                onChange={this.context.familySetupMethods.onChange}
+                                isChecked={this.context.familySetupMethods.isChecked}
+                                id="seeAlso-list"
+                                displayAddNew="none"
+                            />
+
                             <div className="imageInfo--box" style={{display: 'flex'}}>
                                 <span>use family setup</span>
                                 <form >
@@ -71,12 +93,12 @@ export default class FamilyInfo extends Component {
                                     </div>
                                 </form>
                             </div>                      
-                            <ExtendedList 
+                            {/* <ExtendedList 
                                 listName="add 'see also' items: "
                                 array={this.context.state.artworkFamilyList}
                                 string="seeAlso"
                                 id="seeAlso"
-                            />
+                            /> */}
                             <div className="imageInfo--box" style={{display: "block"}}>
                                 <div>
                                     <p>Family description:</p> 
@@ -94,7 +116,7 @@ export default class FamilyInfo extends Component {
                                 ></textarea>
                             </div>
 
-                            <ThemeSelector/>
+                            {/* <ThemeSelector/> */}
 
                             <div className="imageInfo--box">
                                 <span>record new family setup:</span>

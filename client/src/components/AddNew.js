@@ -49,7 +49,14 @@ render(){
         <Context.Consumer>
         {()=>{
             return(
-                <div className="imageInfo--box">
+                <div 
+                className="imageInfo--box" 
+                style={{
+                    display: `${this.props.displayAddNew}`,
+                    margin: "0px",
+                    marginLeft: "10px"
+                    
+                    }}>
                     <span className="subtitle">
                         Add new {this.props.stateKey}
                     </span>
@@ -57,17 +64,6 @@ render(){
                     style={{flexWrap: "wrap", width: "100%", justifyContent: "space-between"}}
                     id={`formFor-${this.props.stateKey}`}
                     action={this.props.router}
-                    // onSubmit={ (e) => {
-                    //     this.context.addNew(
-                    //         e,
-                    //         e.target.firstChild.id,
-                    //         e.target.action,
-                    //         this.props.requestKey,
-                    //         this.props.stateKey,
-                    //         this.handleShow
-                    //     )
-                    // }
-                    // }
                     onSubmit={this.handleShow}
                     >
                         <input 

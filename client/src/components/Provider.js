@@ -105,6 +105,8 @@ export class Provider extends React.Component{
 
             if(classname === "listitem"){
                 subcategory = e.target.parentNode.parentNode.id
+                console.log('clicked listitem')
+                console.log(subcategory)
                 category = e.target.parentNode.parentNode.parentNode.id
                 listItemNest = this.state.familySetupData.category[category][subcategory]
                 newListitems = listItemNest.filter(item => item !== checkboxId)
@@ -127,7 +129,8 @@ export class Provider extends React.Component{
                 return                
             }
             else if (classname === "subcategory"){
-                category = e.target.parentNode.parentNode.id
+                category = e.target.parentNode.parentNode.parentNode.id
+
                 delete stateCopy.category[category][checkboxId]
                 Array.from(document.getElementById(checkboxId).getElementsByTagName('input'))
                     .forEach(item => item.checked = false)
@@ -135,7 +138,7 @@ export class Provider extends React.Component{
                 return
             }
             else if (classname === "category"){
-                category = e.target.parentNode.id
+                category = e.target.parentNode.parentNode.id
                 delete stateCopy.category[category]
                 Array.from(document.getElementById(category).getElementsByTagName('input'))
                     .forEach(item => item.checked = false)
@@ -147,10 +150,16 @@ export class Provider extends React.Component{
 
 
         //This creates checkbox trees and and values to it
-        const parentCheckbox = (target) => Array.from(target.getElementsByTagName('input'))[0];
+        const parentCheckbox = (target) => {
+            return Array.from(target.getElementsByTagName('input'))[0]; 
+        };
     
         const classNameCheck = (name) => {
-        return e.target.parentNode.classList.contains(name)
+
+            if(name === "list--listitem"){
+                return e.target.parentNode.classList.contains(name)    
+            }
+            return e.target.parentNode.parentNode.classList.contains(name)
         }
     
         const checkboxCheck = (checkbox, subcategory, callback) => {
@@ -237,8 +246,8 @@ export class Provider extends React.Component{
                 }
         }
 
-        let category = parentCheckbox(e.target.parentNode.parentNode)
-        let subcategory = parentCheckbox(e.target.parentNode)
+        let category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
+        let subcategory = parentCheckbox(e.target.parentNode.parentNode)
     
         switch (true) {
     
@@ -248,31 +257,14 @@ export class Provider extends React.Component{
                     ...this.state.familySetupData,
                     category: {
                         ...this.state.familySetupData.category, 
-                        [e.target.value]: {} 
+                        [category.value]: {} 
                     }
                 }
             }
             this.setState(newState)
 
         break;
-        
-        case classNameCheck('list--subcategory'):
-            checkboxCheck(category)
 
-            this.setState({ 
-                familySetupData:{
-                ...this.state.familySetupData,
-                    category: {
-                        ...this.state.familySetupData.category, [category.value]:{
-                            ...this.state.familySetupData.category[category.value], [subcategory.value]:[
-                            ]
-                        } 
-                    } 
-            } 
-            })
-    
-        break;
-            
         case classNameCheck('list--listitem'):
             category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
             subcategory = parentCheckbox(e.target.parentNode.parentNode)
@@ -297,6 +289,24 @@ export class Provider extends React.Component{
         }
         
         checkboxCheck(category, subcategory, callback);
+
+        break;
+        
+        case classNameCheck('list--subcategory'):
+            checkboxCheck(category)
+
+            this.setState({ 
+                familySetupData:{
+                ...this.state.familySetupData,
+                    category: {
+                        ...this.state.familySetupData.category, [category.value]:{
+                            ...this.state.familySetupData.category[category.value], [subcategory.value]:[
+                            ]
+                        } 
+                    } 
+            } 
+            })
+    
         break;
         default:
             return
@@ -567,9 +577,13 @@ export class Provider extends React.Component{
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
         const newAddition = document.getElementById(id).value;
+        console.log('ITEM TO ADD')
+        console.log(newAddition)
         axios.put(router, {[requestKey]: newAddition})
         .then( res => {
           let addition = res.data[requestKey]
+          console.log("JSON obj")
+          console.log(addition)
           return addition
         })
         .then(res => {

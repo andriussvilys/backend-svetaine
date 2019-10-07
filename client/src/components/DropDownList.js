@@ -1,5 +1,11 @@
 import React from 'react';
-import '../css/main.css'
+import '../css/main.css';
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import AddNew from './AddNew';
+import '../css/components/extendedList.css';
+import '../css/components/imageInfo.css';
 
 export default class DropDownList extends React.Component{
 
@@ -75,15 +81,45 @@ export default class DropDownList extends React.Component{
           return finalList;
         }
   
-        return columnLists()
+        return <div style={{width: "100%", display: "flex"}}>{columnLists()}</div>
     }
 
     render(){
         return(
-            <div>
-                <h3>{`DROPDOWNLIST ${this.props.string}`}</h3>
-                <div>{this.createDropDownList(this.props.array, this.props.string, this.props.state)}</div>
+
+            <div className="themeSelector ">
+                        
+            <div className="extendedList--form imageInfo--box">
+                <p>{this.props.listName}</p>
+                {/* {this.context.makeDataList(this.props.array, this.props.string, this.props.id)} */}
+
+                <Accordion >
+                    <Card>
+                        <Card.Header>
+                        <Accordion.Toggle as={Button} variant="link" eventKey="0">
+                            <h6>{this.props.title}</h6>
+                        </Accordion.Toggle>
+                        </Card.Header>
+                        <Accordion.Collapse eventKey="0">
+                        <Card.Body style={{display: "flex", flexWrap: "wrap"}}>
+                                {this.createDropDownList(this.props.array, this.props.string, this.props.state)}
+                                <AddNew 
+                                    displayAddNew={this.props.displayAddNew}
+                                    router={this.props.router}
+                                    stateKey={this.props.addNewTarget}
+                                    requestKey="list"
+                                />
+                        </Card.Body>
+                        </Accordion.Collapse>
+                    </Card>
+                </Accordion>  
             </div>
+            </div>
+
+            // <div>
+            //     <h3>{`DROPDOWNLIST ${this.props.string}`}</h3>
+            //     <div>{this.createDropDownList(this.props.array, this.props.string, this.props.state)}</div>
+            // </div>
         )
     }
 }
