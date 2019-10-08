@@ -682,6 +682,11 @@ export class Provider extends React.Component{
         this.setState(newState)
     }
 
+    this.readImageDir = () => {
+        axios.get('/fetchImages')
+        .then(res => this.setState({imageDir: res.data}))
+    }
+
     this.categoryMethods = {
         getCategoryNames: () => {
             if(this.state.categoryNames.length < 1){
@@ -809,14 +814,48 @@ export class Provider extends React.Component{
     
     }
            
-    this.readImageDir = () => {
-        axios.get('/fetchImages')
-        .then(res => this.setState({imageDir: res.data}))
-    }
-
     this.fileDataMethods = {
-        onChange: (e, fileName, stateKey) => {
-            let newState = {
+        onChange: (value, string, fileName) => {
+            // let newState = {
+            //     ...this.state,
+            //     fileData: {
+            //         ...this.state.fileData,
+            //         files: {
+            //             ...this.state.fileData.files,
+            //             [fileName]: {
+            //                 ...this.state.fileData.files[fileName],
+            //                 [string]: string !== "artworkFamily" ?  
+            //                           [...this.state.fileData.files[fileName][string], value] : 
+            //                           value
+            //             }
+            //         }
+            //     }
+            // }
+            // this.setState(newState)
+
+            let newState = {}
+            //if state nest is a String, eg artworkFamily
+            if(string === "artworkFamily"){              
+                newState = {
+                    ...this.state,
+                    fileData: {
+                        ...this.state.fileData,
+                        files: {
+                            ...this.state.fileData.files,
+                            [fileName]: {
+                                ...this.state.fileData.files[fileName],
+                                [string]: value
+                            }
+                        }
+                    }
+                }
+            }
+
+            if(!this.state.fileData.files[fileName][string]){
+                this.state.fileData.files[fileName][string] = []
+            }
+
+            newState = {
                 ...this.state,
                 fileData: {
                     ...this.state.fileData,
@@ -824,12 +863,14 @@ export class Provider extends React.Component{
                         ...this.state.fileData.files,
                         [fileName]: {
                             ...this.state.fileData.files[fileName],
-                            [stateKey]: e.target.value
+                            [string]: [...this.state.fileData.files[fileName][string], value]
                         }
                     }
                 }
             }
+
             this.setState(newState)
+
         },
 
         transferState: (fileName) => {
@@ -858,7 +899,15 @@ export class Provider extends React.Component{
                     }
                 console.log(newFileData)
                 this.setState({fileData: newFileData})
+        },
+
+        isChecked: (string, value, fileName) => {
+            if(this.state.fileData.files[fileName][string].includes(value)){
+                return true
             }
+            else return false
+        }
+    
         }
 
     this.familySetupMethods = {

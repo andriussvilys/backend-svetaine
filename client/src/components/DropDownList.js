@@ -57,7 +57,7 @@ export default class DropDownList extends React.Component{
                     type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
                     checked={highlighter(string, listItem) ? true : false}
-                    onChange={() => this.props.onChange(listItem, string)}
+                    onChange={() => this.props.onChange(listItem, string, fileName)}
                     />
                 </li>
             )

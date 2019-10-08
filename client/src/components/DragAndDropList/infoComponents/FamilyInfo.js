@@ -83,9 +83,9 @@ export default class FamilyInfo extends Component {
                                 fileName={this.props.fileName}
                                 array={this.context.state.artworkFamilyList}
                                 string={"artworkFamily"}
-                                // onChange={this.context.familySetupMethods.onChange}
+                                // onChange={this.context.fileDataMethods.onChange}
                                 onChange={this.context.getFamilySetup}
-                                isChecked={this.context.familySetupMethods.isChecked}
+                                isChecked={this.context.fileDataMethods.isChecked}
                                 id="List-of-artwork-families"
                                 router={'api/artworkFamilyList/update'}
                                 addNewTarget={'artworkFamilyList'}
@@ -98,8 +98,8 @@ export default class FamilyInfo extends Component {
                                 fileName={this.props.fileName}
                                 array={this.context.state.artworkFamilyList}
                                 string={"seeAlso"}
-                                onChange={this.context.familySetupMethods.onChange}
-                                isChecked={this.context.familySetupMethods.isChecked}
+                                onChange={this.context.fileDataMethods.onChange}
+                                isChecked={this.context.fileDataMethods.isChecked}
                                 id="seeAlso-list"
                                 displayAddNew="none"
                             />
@@ -124,8 +124,8 @@ export default class FamilyInfo extends Component {
                                 fileName={this.props.fileName}
                                 array={this.context.state.themesData}
                                 string={"themes"}
-                                onChange={this.context.familySetupMethods.onChange}
-                                isChecked={this.context.familySetupMethods.isChecked}
+                                onChange={this.context.fileDataMethods.onChange}
+                                isChecked={this.context.fileDataMethods.isChecked}
                                 id="Themes-list"
                                 router={'/api/themes/update'}
                                 addNewTarget={'themesData'}
