@@ -111,7 +111,7 @@ export default class FamilyInfo extends Component {
                                 <textarea
                                 value={this.useFamilySetup("familyDescription") ? this.useFamilySetup("familyDescription") : ""}
                                 onChange={
-                                    (e) => this.props.onChange(e, this.props.fileName, "familyDescription")
+                                    (e) => this.props.onChange(e, "familyDescription", this.props.fileName)
                                 }
                                 style={{width: "100%"}}
                                 ></textarea>

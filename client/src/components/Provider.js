@@ -7,32 +7,32 @@ export class Provider extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      category: {},
+    //   category: {},
+    //   file: null,
+    //   filePath: "",
+    //   imagePreview: null,
+    //   fileName: "",
+    //   fileType: null,
+    fileData: {
+        files: {},
+        column: {
+            id: 'column-1',
+            fileIds: []
+        },
+        columnOrder: ['column-1']
+    },
 
-      file: null,
-      filePath: "",
-      imagePreview: null,
-      fileName: "",
-      fileType: null,
-      fileData: {
-          files: {},
-          column: {
-          id: 'column-1',
-          fileIds: []
-      },
-      columnOrder: ['column-1']},
+    //   artworkFamily: "",
+    //   familyDescription: "",
+    //   themes: [],
+    //   seeAlso: [],
+    //   location: "",
+    //   year: "",
 
-      artworkFamily: "",
-      familyDescription: "",
-      themes: [],
-      seeAlso: [],
-      location: "",
-      year: "",
-
-      artworkTitle: "",
-      artworkDescription: "",
-      displayMain: true,
-      familyDisplayIndex: Number,
+    //   artworkTitle: "",
+    //   artworkDescription: "",
+    //   displayMain: true,
+    //   familyDisplayIndex: Number,
 
       themesData: [],
       artworkFamilyList: [],
@@ -46,52 +46,193 @@ export class Provider extends React.Component{
           themes: [],
           category: {}
       },
-
       categoriesData: [],
       categoryNames: [],
 
-      imageDir: { 
-          files: {
-              "file-1": {id: "file-1", content: 'uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png'},
-              "file-2": {id: "file-2", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
-              "file-3": {id: "file-3", content: "uploads/MO-JtoA.jpg"},
-              "file-4": {id: "file-4", content: "uploads/test.png"},
-              "file-5": {id: "file-5", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-              "file-6": {id: "file-6", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
-              "file-7": {id: "file-7", content: "uploads/MO-JtoA.jpg"},
-              "file-8": {id: "file-8", content: "uploads/test.png"},
-              "file-9": {id: "file-9", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-              "file-10": {id: "file-10", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
-              "file-11": {id: "file-11", content: "uploads/MO-JtoA.jpg"},
-              "file-12": {id: "file-12", content: "uploads/test.png"}
-            },
-          columns: {
-              "column-1": {
-                  id: "column-1",
-                  title: "Order files:",
-                  fileIds: ["file-1","file-2","file-3","file-4",],
-                  indexColor: "#f2ff3b"
-              },
-              "column-2": {
-                id: "column-2",
-                title: "Order files-2:",
-                fileIds: ["file-5","file-6","file-7","file-8"],
-                indexColor: "#c1ff3b"
-              },
-              "column-3": {
-                id: "column-3",
-                title: "Order files-2:",
-                fileIds: ["file-9","file-10","file-11","file-12"],
-                indexColor: "#7de63c"
-              }
-          },
-          columnOrder: ["column-1", "column-2", "column-3"]
-        }
+    //   imageDir: { 
+    //       files: {
+    //           "file-1": {id: "file-1", content: 'uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png'},
+    //           "file-2": {id: "file-2", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
+    //           "file-3": {id: "file-3", content: "uploads/MO-JtoA.jpg"},
+    //           "file-4": {id: "file-4", content: "uploads/test.png"},
+    //           "file-5": {id: "file-5", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+    //           "file-6": {id: "file-6", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
+    //           "file-7": {id: "file-7", content: "uploads/MO-JtoA.jpg"},
+    //           "file-8": {id: "file-8", content: "uploads/test.png"},
+    //           "file-9": {id: "file-9", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
+    //           "file-10": {id: "file-10", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
+    //           "file-11": {id: "file-11", content: "uploads/MO-JtoA.jpg"},
+    //           "file-12": {id: "file-12", content: "uploads/test.png"}
+    //         },
+    //       columns: {
+    //           "column-1": {
+    //               id: "column-1",
+    //               title: "Order files:",
+    //               fileIds: ["file-1","file-2","file-3","file-4",],
+    //               indexColor: "#f2ff3b"
+    //           },
+    //           "column-2": {
+    //             id: "column-2",
+    //             title: "Order files-2:",
+    //             fileIds: ["file-5","file-6","file-7","file-8"],
+    //             indexColor: "#c1ff3b"
+    //           },
+    //           "column-3": {
+    //             id: "column-3",
+    //             title: "Order files-2:",
+    //             fileIds: ["file-9","file-10","file-11","file-12"],
+    //             indexColor: "#7de63c"
+    //           }
+    //       },
+    //       columnOrder: ["column-1", "column-2", "column-3"]
+    //     }
             
     }
     
     //FUNCTION THE CHECKS BOXES IN CATEGORY COMPONENT
-    this.onCheck = (e) => {
+    this.onCheck = (e, fileName) => {
+
+        let statePath = this.state.familySetupData
+        
+        if(fileName){
+            statePath = this.state.fileData.files[fileName]
+            if(!this.state.fileData.files[fileName].category){
+                this.state.fileData.files[fileName].category = {}
+            }
+        }
+
+        const listItemPath = (category, subcategory, newListitems, fileName) => {
+            let newState = {}
+
+            if(fileName){
+                newState = {
+                    ...this.state,
+                   fileData: {
+                       ...this.state.fileData,
+                       files: {
+                           ...this.state.fileData.files,
+                           [fileName]: {
+                                ...this.state.fileData.files[fileName],
+                                category: {
+                                    ...this.state.fileData.files[fileName].category,
+                                        [category]: {
+                                            ...this.state.fileData.files[fileName].category[category],
+                                            [subcategory]: newListitems
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }                        
+                }
+
+                else{
+                    newState = {
+                        ...this.state,
+                        familySetupData: {
+                            ...this.state.familySetupData,
+                            category: {
+                                ...this.state.familySetupData.category,
+                                [category]: {
+                                    ...this.state.familySetupData.category[category],
+                                    [subcategory]: newListitems
+                                }
+                            }
+                        }
+                    }
+                }
+
+                console.log(newState)
+                return newState
+        }
+
+        const categoryPath = (newCategory, fileName) => {
+            console.log('category path runs')
+            let newState = {}
+
+                if(fileName){
+                    console.log("*********FILENAME IN CATEGORYPATH")
+                    newState = { 
+                            ...this.state,
+                            fileData:{
+                                ...this.state.fileData,
+                                files: {
+                                    ...this.state.fileData.files,
+                                    [fileName]: {
+                                        ...this.state.fileData.files[fileName],
+                                        category: {
+                                            ...this.state.fileData.files[fileName].category,
+                                            [newCategory]:{}
+                                        }
+                                    }
+                                }
+                            } 
+                        }
+                    }
+
+                else{
+                    newState = { 
+                        ...this.state,
+                        familySetupData:{
+                            ...this.state.familySetupData,
+                            category: {
+                                ...this.state.familySetupData.category, [newCategory]:{}
+                                } 
+                            }
+                        }
+                }
+
+                console.log('state with new category')
+                console.log(newState)
+                return newState
+        }
+
+        const subcategoryPath = (newCategory, newSubcategory, fileName) => {
+            console.log('SUBCATEGORY PATH RUNS')
+            let newState = {}
+
+            if(fileName){
+                newState = { 
+                        ...this.state,
+                        fileData:{
+                            ...this.state.fileData,
+                            files: {
+                                ...this.state.fileData.files,
+                                [fileName]: {
+                                    ...this.state.fileData.files[fileName],
+                                    category: {
+                                        ...this.state.fileData.files[fileName].category,
+                                        [newCategory]:{ 
+                                            ...this.state.fileData.files[fileName].category[newCategory],
+                                            [newSubcategory]: []
+                                        }
+                                    }
+                                }
+                            }
+                        } 
+                    }
+                }
+
+            else{
+                newState = { 
+                    ...this.state,
+                    familySetupData:{
+                        ...this.state.familySetupData,
+                        category: {
+                            ...this.state.familySetupData.category, 
+                            [newCategory]:{
+                                ...this.state.familySetupData.category[newCategory],
+                                [newSubcategory]: []
+                            }
+                        } 
+                    }
+                }
+            }
+
+            console.log('state with new SUBcategory')
+            console.log(newState)
+            return newState
+        }
 
         //this is handled if a checkbox is UNCHECKED
         if(!e.target.checked){
@@ -101,31 +242,17 @@ export class Provider extends React.Component{
             let category = null
             let listItemNest = null
             let newListitems = null
-            let stateCopy = {...this.state.familySetupData}
+            let stateCopy = {...statePath}
 
             if(classname === "listitem"){
                 subcategory = e.target.parentNode.parentNode.id
                 console.log('clicked listitem')
                 console.log(subcategory)
                 category = e.target.parentNode.parentNode.parentNode.id
-                listItemNest = this.state.familySetupData.category[category][subcategory]
+                listItemNest = statePath.category[category][subcategory]
                 newListitems = listItemNest.filter(item => item !== checkboxId)
 
-                let newState = { 
-                    ...this.state,
-                    familySetupData: {
-                        ...this.state.familySetupData,
-                        category: {
-                            ...this.state.familySetupData.category,
-                            [category]: {
-                                ...this.state.familySetupData.category[category],
-                                 [subcategory]: newListitems
-                            }
-                        }
-                    }
-                }
-
-                this.setState(newState)
+                this.setState(listItemPath(category, subcategory, newListitems, fileName))
                 return                
             }
             else if (classname === "subcategory"){
@@ -146,14 +273,15 @@ export class Provider extends React.Component{
                 // e.target.parentNode.classList.toggle('themes-list--selected')
                 return
             }
-            }
-
+        };
 
         //This creates checkbox trees and and values to it
         const parentCheckbox = (target) => {
             return Array.from(target.getElementsByTagName('input'))[0]; 
         };
     
+        //returns a boolean for SWITCH statement
+        //checks for className of input parent 
         const classNameCheck = (name) => {
 
             if(name === "list--listitem"){
@@ -161,89 +289,22 @@ export class Provider extends React.Component{
             }
             return e.target.parentNode.parentNode.classList.contains(name)
         }
-    
+        
+
+        //creates nests in category obj
         const checkboxCheck = (checkbox, subcategory, callback) => {
-            // checkbox.checked = true
+
+            //if we only need to set a category
             if(!subcategory){
-                this.setState({ 
-                    ...this.state,
-                    familySetupData: {
-                        ...this.state.familySetupData,
-                        category: {
-                        ...this.state.familySetupData.category, [checkbox.value]: {} 
-                        }                 
-                    }
-                  })
-             }
-                else{
-                    const categoryPromise = new Promise((resolve, reject) => {
-                        // subcategory.checked = true;
-                        if(!this.state.familySetupData.category[checkbox.value]){ 
-                            checkbox.checked = true;
-                            this.setState({ 
-                                ...this.state,
-                                familySetupData:{
-                                    ...this.state.familySetupData,
-                                    category: {
-                                    ...this.state.familySetupData.category, [checkbox.value]:{}
-                                    } 
-                                }
-                            },
-                                () => {
-                                    if(this.state.familySetupData.category[checkbox.value]){
-                                        return resolve('created new category'); 
-                                    }
-                                    else{
-                                        return reject('couldnt craete category')
-                                    }
-                                }
-                            )
-                        }
-                        else{
-                            return resolve('category exists')
-                        }
-                    })
-
-                    categoryPromise
-                    .then((resolveMessage)=>{
-                        const subcategoryPromise = new Promise((res, reject)=>{
-                            if(!this.state.familySetupData.category[checkbox.value][subcategory.value]){
-                                subcategory.checked = true;
-                                this.setState({ 
-                                    ...this.state,
-                                    familySetupData:{
-                                        ...this.state.familySetupData,
-                                        category: {
-                                            ...this.state.familySetupData.category, 
-                                            [checkbox.value]:{
-                                                ...this.state.familySetupData.category[checkbox.value], 
-                                                [subcategory.value]: []
-                                                }  
-                                            }
-                                    }
-                                }, 
-                                    ()=>{
-                                        if(this.state.familySetupData.category[checkbox.value][subcategory.value]){
-                                            return res('created new subcategory')
-                                        }
-                                        else{
-                                            return reject('couldnt craete subcategory');
-                                        }
-                                    }
-                                )
-                            }
-                            else{
-                                return res('subcategory already exists');
-                            }
-                        })
-
-                        subcategoryPromise.then(message=>{
-                            callback()
-                        }).catch(message => console.log(message))
-                        })
-
-                    .catch((reject)=>console.log(reject))
-                }
+                this.setState(categoryPath(checkbox.value, fileName), console.log('just created a category'))
+            }
+            else{
+                this.setState(categoryPath(checkbox.value, fileName), 
+                    this.setState(subcategoryPath(checkbox.value, subcategory.value),
+                        callback()
+                    )
+                )
+            }
         }
 
         let category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
@@ -252,17 +313,7 @@ export class Provider extends React.Component{
         switch (true) {
     
         case classNameCheck('list--category'):
-            let newState = {
-                familySetupData:{
-                    ...this.state.familySetupData,
-                    category: {
-                        ...this.state.familySetupData.category, 
-                        [category.value]: {} 
-                    }
-                }
-            }
-            this.setState(newState)
-
+            this.setState(categoryPath(category.value, fileName))
         break;
 
         case classNameCheck('list--listitem'):
@@ -270,43 +321,22 @@ export class Provider extends React.Component{
             subcategory = parentCheckbox(e.target.parentNode.parentNode)
 
             const newListItem = e.target.value;
-            
-            const callback = () => {
-                const newList = [...this.state.familySetupData.category[category.value][subcategory.value], newListItem]
-                let newState = { 
-                        ...this.state,
-                        familySetupData: {
-                            ...this.state.familySetupData,
-                            category: {
-                            ...this.state.familySetupData.category, [category.value]: {
-                                ...this.state.familySetupData.category[category.value], 
-                                [subcategory.value]: newList
-                            } 
-                        } 
-                        }
-                }
-                this.setState(newState)
-        }
-        
-        checkboxCheck(category, subcategory, callback);
+            let newList = [newListItem]
 
+            if(statePath.category){
+                if(statePath.category[category.value]){
+                    if(statePath.category[category.value][subcategory.value]){
+                        if(statePath.category[category.value][subcategory.value].length > 0){
+                            newList = [...statePath.category[category.value][subcategory.value], newListItem]
+                        }
+                    }
+                }
+            }
+            this.setState(listItemPath(category.value, subcategory.value, newList, fileName))
         break;
         
         case classNameCheck('list--subcategory'):
-            checkboxCheck(category)
-
-            this.setState({ 
-                familySetupData:{
-                ...this.state.familySetupData,
-                    category: {
-                        ...this.state.familySetupData.category, [category.value]:{
-                            ...this.state.familySetupData.category[category.value], [subcategory.value]:[
-                            ]
-                        } 
-                    } 
-            } 
-            })
-    
+            this.setState(subcategoryPath(category.value, subcategory.value, fileName))
         break;
         default:
             return
@@ -817,46 +847,62 @@ export class Provider extends React.Component{
                 axios.put('/api/categories/update', objToUpdate)
                 })
         },
-        autoCheckListItem: (category, subcategory, listitem) => {
-            if(!this.state.familySetupData.category){return}
-            if(this.state.familySetupData.category[category]){
-                if(this.state.familySetupData.category[category][subcategory]){
-                    if(this.state.familySetupData.category[category][subcategory].includes(listitem)){
+        autoCheckCategories: (category, subcategory, listitem, fileName) => {
+
+            let statePath = this.state.familySetupData.category
+
+            if(fileName){
+                statePath = this.state.fileData.files[fileName].category
+            }
+
+            if(listitem){
+                if(!statePath){return}
+                if(statePath[category]){
+                    if(statePath[category][subcategory]){
+                        if(statePath[category][subcategory].includes(listitem)){
+                            return true
+                        } 
+                        else{
+                            return false
+                        }
+                    }
+                    return false
+                }
+                return false
+            }
+
+            if(subcategory){
+                if(!statePath){return}
+                if(statePath[category]){
+                    if(statePath[category][subcategory]){
                         return true
-                    } 
+                    }
                     else{
                         return false
                     }
                 }
                 return false
             }
-            return false
-        },
-        autoCheckSubcategory: (category, subcategory) => {
-            if(!this.state.familySetupData.category){return}
-            if(this.state.familySetupData.category[category]){
-                if(this.state.familySetupData.category[category][subcategory]){
-                    return true
-                }
-                else{
-                    return false
-                }
-            }
-            return false
-        },
-        autoCheckCategory: (category) => {
-            if(!this.state.familySetupData.category){return}
-            if(this.state.familySetupData.category[category]){
-                    return true
-                }
-                else{
-                    return false
-                }
+
+            if(category){
+                if(!statePath){return}
+                if(statePath[category]){
+                        return true
+                    }
+                    else{
+                        return false
+                    }
+            }    
         }
-    
     }
            
     this.fileDataMethods = {
+        /**
+         * @param value the value to be added to state
+         * @param string the name of the family nest where the new value will be added
+         * @param fileName optional: decided which file to update with new value
+         * @returns updated context state
+         */
         onChange: (value, string, fileName) => {
 
             if(string !== "artworkFamily"){

@@ -21,7 +21,7 @@ export default class NavigationInfo extends Component{
     }
 
     //methods that check cheboxes if state has appropriate values and unchecks it if not
-    autoCheckListItem = (category, subcategory, listitem) => {
+    autoCheckCategories = (category, subcategory, listitem) => {
         if(!this.context.state.familySetupData.category){return}
         if(this.context.state.familySetupData.category[category]){
             if(this.context.state.familySetupData.category[category][subcategory]){
@@ -34,7 +34,7 @@ export default class NavigationInfo extends Component{
             }
         }
     }
-    autoCheckSubcategory = (category, subcategory) => {
+    autoCheckCategories = (category, subcategory) => {
         if(!this.context.state.familySetupData.category){return}
         if(this.context.state.familySetupData.category[category]){
             if(this.context.state.familySetupData.category[category][subcategory]){
@@ -45,7 +45,7 @@ export default class NavigationInfo extends Component{
             }
         }
     }
-    autoCheckCategory = (category) => {
+    autoCheckCategories = (category) => {
         if(!this.context.state.familySetupData.category){return}
         if(this.context.state.familySetupData.category[category]){
                 return true
@@ -75,14 +75,14 @@ export default class NavigationInfo extends Component{
                             <li key={`${listitem}${index}}`} 
                             className={
                             `list--listitem list-group-item
-                            ${this.context.categoryMethods.autoCheckListItem(obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
+                            ${this.context.categoryMethods.autoCheckCategories(obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
                                     <input 
                                     className="navigation-input listitem" 
                                     type="checkbox" 
                                     value={listitem} 
                                     id={listitem} 
                                     onChange={(e) => this.context.onCheck(e)} 
-                                    checked={this.context.categoryMethods.autoCheckListItem(obj.category, subcategory, listitem)}
+                                    checked={this.context.categoryMethods.autoCheckCategories(obj.category, subcategory, listitem)}
                                     />
                                     <span>{listitem}</span>  
                             </li>
@@ -91,13 +91,13 @@ export default class NavigationInfo extends Component{
                     
                     return(
                     <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
-                        <div className={this.context.categoryMethods.autoCheckSubcategory(obj.category, subcategory) ? "themes-list--selected" : null}>
+                        <div className={this.context.categoryMethods.autoCheckCategories(obj.category, subcategory) ? "themes-list--selected" : null}>
                             <input 
                             className="navigation-input subcategory" 
                             type="checkbox" 
                             value={subcategory} 
                             onChange={(e) => this.context.onCheck(e)} 
-                            checked={this.context.categoryMethods.autoCheckSubcategory(obj.category, subcategory)}
+                            checked={this.context.categoryMethods.autoCheckCategories(obj.category, subcategory)}
                             />
                             <span>{subcategory}</span>
                         </div>
@@ -108,13 +108,13 @@ export default class NavigationInfo extends Component{
             return (
             <div key={obj.category} className="list-group">
                 <ul id={obj.category} className="list--category"> 
-                    <div className={this.context.categoryMethods.autoCheckCategory(obj.category) ? "themes-list--selected" : null}>
+                    <div className={this.context.categoryMethods.autoCheckCategories(obj.category) ? "themes-list--selected" : null}>
                         <input 
                             className="navigation-input category" 
                             type="checkbox" 
                             value={obj.category} 
                             onChange={(e) => this.context.onCheck(e)} 
-                            checked={this.context.categoryMethods.autoCheckCategory(obj.category)}
+                            checked={this.context.categoryMethods.autoCheckCategories(obj.category)}
                         /> 
                         <span>{obj.category}</span>
                     </div>

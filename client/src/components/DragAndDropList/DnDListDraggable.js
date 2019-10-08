@@ -123,7 +123,9 @@ export default class DnDListDraggable extends React.Component{
                                                                 </Card.Header>
                                                                 <Accordion.Collapse eventKey="0">
                                                                 <Card.Body>
-                                                                    <NavigationInfo/>
+                                                                    <NavigationInfo
+                                                                        fileName={this.props.file.fileName}
+                                                                    />
                                                                 </Card.Body>
                                                                 </Accordion.Collapse>
                                                             </Card>

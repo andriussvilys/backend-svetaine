@@ -22,8 +22,8 @@ export default class DropDownList extends React.Component{
  */
     createDropDownList = (array, string, state, fileName) => {
 
-        console.log('state in dropdrownlist')
-        console.log(state)
+        // console.log('state in dropdrownlist')
+        // console.log(state)
 
         let statePath = state.familySetupData
 
@@ -31,9 +31,9 @@ export default class DropDownList extends React.Component{
             statePath = state.fileData.files[fileName]
         }
 
-        console.log('this.context.state.familySetupData[string]')
-        console.log(string)
-        console.log(statePath[string])
+        // console.log('this.context.state.familySetupData[string]')
+        // console.log(string)
+        // console.log(statePath[string])
 
         const highlighter = (string, listItem) => {
             if(statePath[string]){
