@@ -647,16 +647,58 @@ export class Provider extends React.Component{
             //     "year": ""
             //   }
 
-    this.getFamilySetup = (value) => {
+    this.getFamilySetup = (value, string, fileName) => {
+
+        console.log('GET FAMILY SETUP*******************************')
+        console.log(`value ${value}`)
+        console.log(`fileName ${fileName}`)
+
         axios.get(`/api/familySetup/${value}`)
         .then( res => {
+
             let newFamilySetup = {}
+            let newState = {}
+
+            if(fileName){
+                newFamilySetup = {...this.state.fileData.files[fileName]}
+            }
+
             Object.keys(res.data).forEach(objKey => {
                 newFamilySetup = {
                     ...newFamilySetup,
                     [objKey]: res.data[objKey]
                     }
             })
+
+            console.log('new family setup')
+            console.log(newFamilySetup)
+
+            if(fileName){
+
+                Object.keys(res.data).forEach(objKey => {
+                    newFamilySetup = {
+                        ...newFamilySetup,
+                            [objKey]: res.data[objKey]
+                        }
+                })
+
+                newState = {...this.state,
+                    fileData: {
+                        ...this.state.fileData,
+                        files: {
+                            ...this.state.fileData.files,
+                            [fileName]: newFamilySetup
+                        }
+                    }
+                }
+
+                console.log('newState')
+                console.log(newFamilySetup)
+
+                this.setState(newState)
+                return
+            }
+
             this.setState({ familySetupData: newFamilySetup})
 
         })
@@ -816,6 +858,35 @@ export class Provider extends React.Component{
            
     this.fileDataMethods = {
         onChange: (value, string, fileName) => {
+
+            if(string !== "artworkFamily"){
+                if(!this.state.fileData.files[fileName][string]){
+                    this.state.fileData.files[fileName][string] = []
+                }
+            }
+
+            if(this.state.fileData.files[fileName][string].includes(value) && 
+                Array.isArray(this.state.fileData.files[fileName][string])
+                ){
+                let newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
+
+                let newState = {
+                    ...this.state,
+                    fileData: {
+                        ...this.state.fileData,
+                        files: {
+                            ...this.state.fileData.files,
+                            [fileName]: {
+                                ...this.state.fileData.files[fileName],
+                                [string]: newList
+                            }
+                        }
+                    }
+                }
+
+                this.setState(newState)
+                return
+            }
             // let newState = {
             //     ...this.state,
             //     fileData: {
@@ -849,10 +920,6 @@ export class Provider extends React.Component{
                         }
                     }
                 }
-            }
-
-            if(!this.state.fileData.files[fileName][string]){
-                this.state.fileData.files[fileName][string] = []
             }
 
             newState = {
@@ -906,7 +973,15 @@ export class Provider extends React.Component{
                 return true
             }
             else return false
-        }
+        },
+        
+    //     if(this.state.familySetupData[string] && this.state.familySetupData[string].includes(value)){
+    //         removeValue(value)
+    //     }
+    //     else{
+    //         addNewValue(value)
+    //     }
+    //   },
     
         }
 
@@ -1013,6 +1088,16 @@ onDragEnd = (result) => {
 }
 
 removeFile = (fileName) => {
+
+    alert('REMOVE FILE')
+
+    // let newState = {...this.state}
+
+    // delete newState.fileData.files[fileName]
+
+    // console.log("REMOVE FILE")
+    // console.log(newState)
+
     let newFiles = {}
     Object.keys(this.state.fileData.files).forEach(file => {
         if(file.fileName === fileName){

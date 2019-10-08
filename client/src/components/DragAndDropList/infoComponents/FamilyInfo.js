@@ -34,7 +34,7 @@ export default class FamilyInfo extends Component {
                     return(
                         <div>
                             <div className="DnD-imageInfo--box" style={{display: 'flex'}}>
-                                <span>use family setup</span>
+                                <span>use global family setup</span>
                                 <form >
                                     <div className="container-radio">
                                         <label 
