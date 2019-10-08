@@ -80,6 +80,7 @@ export default class FamilyInfo extends Component {
                             <DropDownList 
                                 title={'Select Artwork Family'}
                                 state={this.context.state}
+                                fileName={this.props.fileName}
                                 array={this.context.state.artworkFamilyList}
                                 string={"artworkFamily"}
                                 // onChange={this.context.familySetupMethods.onChange}
@@ -94,6 +95,7 @@ export default class FamilyInfo extends Component {
                             <DropDownList 
                                 title={"Set 'See Also' artwork families"}
                                 state={this.context.state}
+                                fileName={this.props.fileName}
                                 array={this.context.state.artworkFamilyList}
                                 string={"seeAlso"}
                                 onChange={this.context.familySetupMethods.onChange}
@@ -119,6 +121,7 @@ export default class FamilyInfo extends Component {
                             <DropDownList 
                                 title={"Select Family Themes"}
                                 state={this.context.state}
+                                fileName={this.props.fileName}
                                 array={this.context.state.themesData}
                                 string={"themes"}
                                 onChange={this.context.familySetupMethods.onChange}

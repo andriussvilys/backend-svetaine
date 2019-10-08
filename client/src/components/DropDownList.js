@@ -20,16 +20,25 @@ export default class DropDownList extends React.Component{
  *@param {array} array source data for list
  *@param {string} string used for ids/names 
  */
-    createDropDownList = (array, string, state) => {
+    createDropDownList = (array, string, state, fileName) => {
+
+        console.log('state in dropdrownlist')
+        console.log(state)
+
+        let statePath = state.familySetupData
+
+        if(fileName){
+            statePath = state.fileData.files[fileName]
+        }
 
         console.log('this.context.state.familySetupData[string]')
         console.log(string)
-        console.log(state.familySetupData[string])
+        console.log(statePath[string])
 
         const highlighter = (string, listItem) => {
-            if(state.familySetupData[string]){
-                if( typeof state.familySetupData[string] === 'string'|| Array.isArray(state.familySetupData[string]) ){
-                        return state.familySetupData[string].includes(listItem)
+            if(statePath[string]){
+                if( typeof statePath[string] === 'string'|| Array.isArray(statePath[string]) ){
+                        return statePath[string].includes(listItem)
                     }
             }
             else return null
@@ -108,7 +117,8 @@ export default class DropDownList extends React.Component{
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                         <Card.Body style={{display: "flex", flexWrap: "wrap"}}>
-                                {this.createDropDownList(this.props.array, this.props.string, this.props.state)}
+                                {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
+                                {/* displayAddNew controls wether this component will be visible */}
                                 <AddNew 
                                     displayAddNew={this.props.displayAddNew}
                                     router={this.props.router}

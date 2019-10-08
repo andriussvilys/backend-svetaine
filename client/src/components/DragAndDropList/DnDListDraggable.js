@@ -62,7 +62,6 @@ export default class DnDListDraggable extends React.Component{
                                                     <div className="ImagesPreview--index">{this.props.index}</div>
                                                 </div>
                                             </div>
-        
                                         <div style={{flex: "1", minWidth: "250px"}}>
                                             <Accordion>
                                                 <Card>

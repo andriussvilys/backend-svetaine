@@ -56,7 +56,8 @@ render(){
                     margin: "0px",
                     marginLeft: "10px"
                     
-                    }}>
+                }}>
+                    {/* displayAddNew controls wether this component will be visible */}
                     <span className="subtitle">
                         Add new {this.props.stateKey}
                     </span>
