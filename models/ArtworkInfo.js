@@ -59,7 +59,7 @@ let ArtworkInfoSchema = new Schema({
         type: String,
         required: false
     }
-});
+}, {minimize: false});
 
 module.exports = ArtworkInfoSchema = mongoose.model('artworkInfo', ArtworkInfoSchema);
 

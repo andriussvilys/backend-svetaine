@@ -9,7 +9,7 @@ let ArtworkFamilyListSchema = new Schema({
         type: String,
         required: false
     }
-}
+}, {minimize: false}
     // {
     // $addToSet: {
     //     type: String,

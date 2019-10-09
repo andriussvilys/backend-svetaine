@@ -64,7 +64,7 @@ export default class DropDownList extends React.Component{
         })
 
         function columnLists(){
-          const groups = Math.round(sortedArray.length / 10);
+          const groups = Math.ceil(sortedArray.length / 10);
           let columns = [[]];
           //This create an array with a number of Arrays equal to UL tags that will be needed
           for (let index = 1; index < groups; index++) {
