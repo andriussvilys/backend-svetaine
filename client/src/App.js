@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Provider } from './components/Provider';
-import JsonPreview from './components/JsonPreview';
 import ImageInfo from './components/ImageInfo';
 import NavigationInfo from './components/NavigationInfo'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,7 +20,6 @@ export default class App extends Component{
             <ImageInfo />
             <NavigationInfo />
           </div>
-            <JsonPreview />
       </div>
         </Provider>
     )

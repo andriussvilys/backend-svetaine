@@ -7,12 +7,7 @@ export class Provider extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-    //   category: {},
-    //   file: null,
-    //   filePath: "",
-    //   imagePreview: null,
-    //   fileName: "",
-    //   fileType: null,
+
     fileData: {
         files: {},
         column: {
@@ -21,22 +16,7 @@ export class Provider extends React.Component{
         },
         columnOrder: ['column-1']
     },
-
-    //   artworkFamily: "",
-    //   familyDescription: "",
-    //   themes: [],
-    //   seeAlso: [],
-    //   location: "",
-    //   year: "",
-
-    //   artworkTitle: "",
-    //   artworkDescription: "",
-    //   displayMain: true,
-    //   familyDisplayIndex: Number,
-
-      themesData: [],
-      artworkFamilyList: [],
-      familySetupData: {
+    familySetupData: {
           useFamilySetup: false,
           artworkFamily: null,
           familyDescription: null,
@@ -45,47 +25,10 @@ export class Provider extends React.Component{
           seeAlso: [],
           themes: [],
           category: {}
-      },
-      categoriesData: [],
-      categoryNames: [],
-
-    //   imageDir: { 
-    //       files: {
-    //           "file-1": {id: "file-1", content: 'uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png'},
-    //           "file-2": {id: "file-2", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
-    //           "file-3": {id: "file-3", content: "uploads/MO-JtoA.jpg"},
-    //           "file-4": {id: "file-4", content: "uploads/test.png"},
-    //           "file-5": {id: "file-5", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-    //           "file-6": {id: "file-6", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
-    //           "file-7": {id: "file-7", content: "uploads/MO-JtoA.jpg"},
-    //           "file-8": {id: "file-8", content: "uploads/test.png"},
-    //           "file-9": {id: "file-9", content: "uploads/galaxy-s10plus-g975f-sm-g975fckhseb-backceramicblack.png"},
-    //           "file-10": {id: "file-10", content:  "uploads/image-2019-08-16-12-43-14-175.png"},
-    //           "file-11": {id: "file-11", content: "uploads/MO-JtoA.jpg"},
-    //           "file-12": {id: "file-12", content: "uploads/test.png"}
-    //         },
-    //       columns: {
-    //           "column-1": {
-    //               id: "column-1",
-    //               title: "Order files:",
-    //               fileIds: ["file-1","file-2","file-3","file-4",],
-    //               indexColor: "#f2ff3b"
-    //           },
-    //           "column-2": {
-    //             id: "column-2",
-    //             title: "Order files-2:",
-    //             fileIds: ["file-5","file-6","file-7","file-8"],
-    //             indexColor: "#c1ff3b"
-    //           },
-    //           "column-3": {
-    //             id: "column-3",
-    //             title: "Order files-2:",
-    //             fileIds: ["file-9","file-10","file-11","file-12"],
-    //             indexColor: "#7de63c"
-    //           }
-    //       },
-    //       columnOrder: ["column-1", "column-2", "column-3"]
-    //     }
+    },
+    categoriesData: [],
+    themesData: [],
+    artworkFamilyList: [],
             
     }
     
@@ -127,6 +70,7 @@ export class Provider extends React.Component{
                 }
 
                 else{
+
                     newState = {
                         ...this.state,
                         familySetupData: {
@@ -636,14 +580,23 @@ export class Provider extends React.Component{
       }
 
     this.createFamilySetup = () => {
+
+        const artworkFamily = this.state.familySetupData.artworkFamily;
+        const category = this.state.familySetupData.category ? this.state.familySetupData.category : {};
+        const familyDescription = this.state.familySetupData.familyDescription ? this.state.familySetupData.familyDescription : "";
+        const themes = this.state.familySetupData.themes ? this.state.familySetupData.themes : [];
+        const seeAlso = this.state.familySetupData.seeAlso ? this.state.familySetupData.seeAlso : [];
+        const location = this.state.familySetupData.location ? this.state.familySetupData.location : "";
+        const year = this.state.familySetupData.year ? this.state.familySetupData.year : "";
+
         let requestBody = {
-            category: this.state.familySetupData.category,
-            artworkFamily: this.state.familySetupData.artworkFamily,
-            familyDescription: this.state.familySetupData.familyDescription,
-            themes: this.state.familySetupData.themes,
-            seeAlso: this.state.familySetupData.seeAlso,
-            location: this.state.familySetupData.location,
-            year: this.state.familySetupData.year
+            category: category,
+            artworkFamily: artworkFamily,
+            familyDescription: familyDescription,
+            themes: themes,
+            seeAlso: seeAlso,
+            location: location,
+            year: year
         }
         if(!this.state.familySetupData.artworkFamily){
             alert('select or add new Family Name')
@@ -756,7 +709,7 @@ export class Provider extends React.Component{
 
     this.readImageDir = () => {
         axios.get('/fetchImages')
-        .then(res => this.setState({imageDir: res.data}))
+        .then(res => this.setState({serverFileDir: res.data}))
     }
 
     this.categoryMethods = {

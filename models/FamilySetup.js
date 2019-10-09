@@ -36,7 +36,7 @@ let FamilySetupSchema = new Schema({
         required: false,
         default: ""
     }
-});
+}, {minimize: false});
 
 module.exports = FamilySetupSchema = mongoose.model('familySetup', FamilySetupSchema);
 
