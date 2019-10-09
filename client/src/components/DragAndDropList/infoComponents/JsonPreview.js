@@ -6,7 +6,18 @@ import '../css/jsonPreview.css';
 export default class JsonPreview extends Component {
     static contextType = Context;
 
-    makeList = (categories, state) => {
+    makeList = (categoriesData, state) => {
+
+      if(!categoriesData || !state){
+        return
+      }
+
+      const categories = Object.keys(categoriesData)
+
+      console.log('INSIDE JSONPREVIEW MAKE LIST ******************************')
+      console.log(categories)
+      console.log(state)
+
       let list = categories.map((item, index) => {
         let subcategories = [];
         // console.log(categories)
@@ -48,6 +59,11 @@ export default class JsonPreview extends Component {
     }
 
     themesPreview = (array) => {
+
+      if(!array){
+        return
+      }
+
       let themes = array.map(theme => {
         return(<li key={`jsonPreview-${theme}`}>
           {theme}
@@ -80,28 +96,31 @@ export default class JsonPreview extends Component {
     }
 
     render() {
+
+      const fileName = this.props.fileName
+
       return (
         <Context.Consumer>
           {()=>{
             return(
             <div className="DnD-jsonPreview">
                 <div className="DnD-imageBox">
-                  <div className="preview-container"><span className="preview-span">file name:</span> <div className="whiteSpace--break">{this.props.file.fileName}</div></div>
+                  <div className="preview-container"><span className="preview-span">file name:</span> <div className="whiteSpace--break">{fileName}</div></div>
                   <div className="preview-container"><span className="preview-span">file type:</span> <div className="whiteSpace--break">{this.props.file.fileType}</div></div>
                   <div className="preview-container"><span className="preview-span">file path:</span> <div className="whiteSpace--break">{this.props.file.src}</div></div>
                   <div className="preview-container"><span className="preview-span">artwork Family:</span> <div className="whiteSpace--break">{this.context.state.artworkFamily}</div></div>
                   <div className="preview-container"><span className="preview-span">artwork Title:</span> <div className="whiteSpace--break">{this.context.state.artworkTitle}</div></div>
                   <div className="preview-container"><span className="preview-span">display on Main page:</span> <div className="whiteSpace--break">{this.booleanString("displayMain")}</div></div>
                   <div className="preview-container"><span className="preview-span">family display index:</span> <div className="whiteSpace--break">{this.props.index}</div></div>
-                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.themes)}</div></div>
-                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.seeAlso)}</div></div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">themes:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.fileData.files[this.props.file.fileName].themes)}</div></div>
+                  <div className="preview-list-container preview-container"><span className="preview-span">seeAlso:</span> <div className="whiteSpace--break">{this.themesPreview(this.context.state.fileData.files[this.props.file.fileName].seeAlsoż)}</div></div>
                 </div>
                 <div className="jsonPreviewContainer">
                   <div>{'{'}</div>
                   <div className="category">
                   {`"category": {`}
                     <div className="jsonPreviewContent">
-                      {this.makeList(Object.keys(this.context.state.category), this.context.state)}
+                      {this.makeList(this.context.state.fileData.files[fileName].category, this.context.state.fileData.files[fileName])}
                     </div>
                     }
                   </div>
