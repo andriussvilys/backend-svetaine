@@ -858,54 +858,62 @@ export class Provider extends React.Component{
          */
         onChange: (value, string, fileName) => {
 
-            if(string !== "artworkFamily"){
+            console.log('on change')
+            console.log(value)
+
+            console.log('STRING')
+            console.log(string)
+
+            let nestType = () => {
+                if(string === "themes" || string ==="seeAlso"){
+                    return "array"
+                }
+                else{ return "string"}
+            }
+
+            if(nestType() === "array"){
                 if(!this.state.fileData.files[fileName][string]){
                     this.state.fileData.files[fileName][string] = []
                 }
             }
 
-            if(this.state.fileData.files[fileName][string].includes(value) && 
-                Array.isArray(this.state.fileData.files[fileName][string])
-                ){
-                let newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
-
-                let newState = {
-                    ...this.state,
-                    fileData: {
-                        ...this.state.fileData,
-                        files: {
-                            ...this.state.fileData.files,
-                            [fileName]: {
-                                ...this.state.fileData.files[fileName],
-                                [string]: newList
-                            }
-                        }
-                    }
-                }
-
-                this.setState(newState)
-                return
-            }
-            // let newState = {
-            //     ...this.state,
-            //     fileData: {
-            //         ...this.state.fileData,
-            //         files: {
-            //             ...this.state.fileData.files,
-            //             [fileName]: {
-            //                 ...this.state.fileData.files[fileName],
-            //                 [string]: string !== "artworkFamily" ?  
-            //                           [...this.state.fileData.files[fileName][string], value] : 
-            //                           value
-            //             }
-            //         }
+            // if(string === "themes" || string ==="seeAlso"){
+            //     if(!this.state.fileData.files[fileName][string]){
+            //         this.state.fileData.files[fileName][string] = []
             //     }
             // }
-            // this.setState(newState)
+            // else{
+            //     this.state.fileData.files[fileName][string] = null
+            // }
+
+            if(this.state.fileData.files[fileName][string]){
+                if(this.state.fileData.files[fileName][string].includes(value)){
+                    let newState = []    
+                    if(Array.isArray(this.state.fileData.files[fileName][string])){
+                            let newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
+            
+                            newState = {
+                                ...this.state,
+                                fileData: {
+                                    ...this.state.fileData,
+                                    files: {
+                                        ...this.state.fileData.files,
+                                        [fileName]: {
+                                            ...this.state.fileData.files[fileName],
+                                            [string]: newList
+                                        }
+                                    }
+                                }
+                            }
+                        }    
+                    this.setState(newState)
+                    return
+                }
+            }
 
             let newState = {}
-            //if state nest is a String, eg artworkFamily
-            if(string === "artworkFamily"){              
+
+            if(nestType() === "string"){              
                 newState = {
                     ...this.state,
                     fileData: {
@@ -921,15 +929,17 @@ export class Provider extends React.Component{
                 }
             }
 
-            newState = {
-                ...this.state,
-                fileData: {
-                    ...this.state.fileData,
-                    files: {
-                        ...this.state.fileData.files,
-                        [fileName]: {
-                            ...this.state.fileData.files[fileName],
-                            [string]: [...this.state.fileData.files[fileName][string], value]
+            else{
+                newState = {
+                    ...this.state,
+                    fileData: {
+                        ...this.state.fileData,
+                        files: {
+                            ...this.state.fileData.files,
+                            [fileName]: {
+                                ...this.state.fileData.files[fileName],
+                                [string]: [...this.state.fileData.files[fileName][string], value]
+                            }
                         }
                     }
                 }
