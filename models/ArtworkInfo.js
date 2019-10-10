@@ -33,11 +33,11 @@ let ArtworkInfoSchema = new Schema({
     displayMain: {
         type: Boolean,
         required: false,
-        default: "false"
+        default: false
     },
     familyDisplayIndex: {
         type: Number,
-        required: false
+        required: false,
     },
     fileType: {
         type: String,

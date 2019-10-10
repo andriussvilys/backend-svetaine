@@ -8,27 +8,27 @@ export class Provider extends React.Component{
     super(props);
     this.state = {
 
-    fileData: {
-        files: {},
-        column: {
-            id: 'column-1',
-            fileIds: []
+        fileData: {
+            files: {},
+            column: {
+                id: 'column-1',
+                fileIds: []
+            },
+            columnOrder: ['column-1']
         },
-        columnOrder: ['column-1']
-    },
-    familySetupData: {
-          useFamilySetup: false,
-          artworkFamily: null,
-          familyDescription: null,
-          location: null,
-          year: null,
-          seeAlso: [],
-          themes: [],
-          category: {}
-    },
-    categoriesData: [],
-    themesData: [],
-    artworkFamilyList: [],
+        familySetupData: {
+            useFamilySetup: false,
+            artworkFamily: null,
+            familyDescription: null,
+            location: null,
+            year: null,
+            seeAlso: [],
+            themes: [],
+            category: {}
+        },
+        categoriesData: [],
+        themesData: [],
+        artworkFamilyList: [],
             
     }
         
@@ -48,6 +48,7 @@ export class Provider extends React.Component{
         this.setState(newValue)
     }
 
+    //adds new family name/theme
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
         const newAddition = document.getElementById(id).value;
@@ -70,11 +71,13 @@ export class Provider extends React.Component{
         })
     }
 
+    //creates an array of all files in the server uploads folder
     this.readImageDir = () => {
         axios.get('/fetchImages')
         .then(res => this.setState({serverFileDir: res.data}))
     }
 
+    //this takes care of CATEGORIES used for navigation
     this.categoryMethods = {
         getCategoryNames: () => {
             if(this.state.categoryNames.length < 1){
@@ -464,8 +467,9 @@ export class Provider extends React.Component{
             }
         }
     }
-           
+    //this deal with file input uploads and uploads to server
     this.fileDataMethods = {
+        
         /**
          * @param value the value to be added to state
          * @param string the name of the family nest where the new value will be added
@@ -502,7 +506,7 @@ export class Provider extends React.Component{
             //     this.state.fileData.files[fileName][string] = null
             // }
 
-            if(this.state.fileData.files[fileName][string]){
+            if(!!this.state.fileData.files[fileName][string]){
                 if(this.state.fileData.files[fileName][string].includes(value)){
                     let newState = []    
                     if(Array.isArray(this.state.fileData.files[fileName][string])){
@@ -670,7 +674,6 @@ export class Provider extends React.Component{
                 console.log(filename)
                 )})
         },
-
         //THIS UPLOADS FILE TO SERVER
         uploadFile: (fileName) => {
             
@@ -684,7 +687,6 @@ export class Provider extends React.Component{
                 })
                 .catch(err => alert(err))
         },
-        
         //Removes selected file from state and thus DOM
         removeFile: (fileName) => {
 
@@ -749,10 +751,40 @@ export class Provider extends React.Component{
                 }
         
                 this.setState(newState)
+        },
+        postArtworkInfo: (fileName) => {
+
+            const fileData = this.state.fileData.files[fileName]
+
+            let fileDataObject = 
+            {                          
+            category: fileData.category ?  fileData.category : null,
+            filePath: fileData.filePath ?  fileData.filePath : null,
+            fileName: fileData.fileName ?  fileData.fileName : null,
+            artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
+            familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
+            artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
+            artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
+            familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
+            fileType: fileData.fileType ?  fileData.fileType : null,
+            themes: fileData.themes ?  fileData.themes : null,
+            seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
+            location: fileData.location ?  fileData.location : null,
+            year: fileData.year ?  fileData.year : null
+            }
+
+            fileDataObject.displayMain = this.state.fileData.column.fileIds.indexOf(fileName)
+
+            console.log(fileDataObject)
+            axios.post('/api/artworkInfo/create', fileDataObject)
+                .then( res => { console.log(res.data)})
+                .then(res => this.context.uploadFile(fileName))
+                    // .then(() => axios.get('/api/artworkInfo'))
+                    //   .then( res => console.log(res.data))
         }
     
     }
-
+    //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
         onChange: (value, string) => {
 
@@ -917,40 +949,36 @@ export class Provider extends React.Component{
 
     }
 
-
 }   //END OF CONTSTRUCTOR
 
+    componentDidMount(){
 
-
-
-componentDidMount(){
-
-        axios.get('/api/themes')
-        .then( res => {
-          this.setState({ themesData: res.data.list})
-          this.themes = res.data.list
-        })
-        .then( res => {
-            axios.get('/api/familySetup')
-            .then(res => {
-                let familyList = Object.keys(res.data).map(obj => {
-                    return res.data[obj].artworkFamily
+            axios.get('/api/themes')
+            .then( res => {
+            this.setState({ themesData: res.data.list})
+            this.themes = res.data.list
+            })
+            .then( res => {
+                axios.get('/api/familySetup')
+                .then(res => {
+                    let familyList = Object.keys(res.data).map(obj => {
+                        return res.data[obj].artworkFamily
+                    })
+                    this.setState({artworkFamilyList: familyList})
                 })
-                this.setState({artworkFamilyList: familyList})
             })
-        })
-        .then(resolved => {
-            axios.get('/api/categories')
-            .then(res => {
-                this.setState({categoriesData: res.data})
+            .then(resolved => {
+                axios.get('/api/categories')
+                .then(res => {
+                    this.setState({categoriesData: res.data})
+                })
             })
-        })
-        .then(res => this.readImageDir())
-}
+            .then(res => this.readImageDir())
+    }
 
-  render(){
+    render(){
     return(
-      <Context.Provider value={ {
+        <Context.Provider value={ {
             state: this.state, 
             
             categoryMethods: this.categoryMethods,
@@ -972,11 +1000,11 @@ componentDidMount(){
             onChange: this.onChange,
             addNew: this.addNew,
 
-          } }>
+            } }>
         {this.props.children}
-      </Context.Provider>
+        </Context.Provider>
     )
-  }
+    }
 
 }
 
