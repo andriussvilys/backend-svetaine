@@ -14,9 +14,9 @@ export default class JsonPreview extends Component {
 
       const categories = Object.keys(categoriesData)
 
-      console.log('INSIDE JSONPREVIEW MAKE LIST ******************************')
-      console.log(categories)
-      console.log(state)
+      // console.log('INSIDE JSONPREVIEW MAKE LIST ******************************')
+      // console.log(categories)
+      // console.log(state)
 
       let list = categories.map((item, index) => {
         let subcategories = [];

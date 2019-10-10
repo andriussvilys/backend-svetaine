@@ -28,6 +28,10 @@ export default class DnDListDraggable extends React.Component{
     //     this.context.fileDataMethods.transferState(this.props.file.fileName)
     // }
 
+    componentDidMount(){
+        this.context.fileDataMethods.initialIndex()
+    }
+
     render(){
         return(
             <Context.Consumer>
@@ -61,10 +65,13 @@ export default class DnDListDraggable extends React.Component{
                                                 <FilePreview 
                                                     file={this.props.file}
                                                 />
-        
                                                 <div className="ImagesPreview--indexContainer">
-                                                    <span>index:</span>
-                                                    <div className="ImagesPreview--index">{this.props.index}</div>
+                                                    <div>artwork family name:</div>
+                                                    <div>{this.props.file.artworkFamily ? this.props.file.artworkFamily : "N/A"}</div>
+                                                </div>        
+                                                <div className="ImagesPreview--indexContainer">
+                                                    <span>family display index:</span>
+                                                    <div className="ImagesPreview--index">{ this.props.file.familyDisplayIndex }</div>
                                                 </div>
                                             </div>
                                         <div style={{flex: "1", minWidth: "250px"}}>

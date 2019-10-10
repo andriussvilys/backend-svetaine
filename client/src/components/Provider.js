@@ -627,10 +627,6 @@ export class Provider extends React.Component{
                 let objPromise = new Promise ((resolve, rejects) => {
                     Array.from(fileInput).forEach((file, index) => {
 
-                        console.log('FILE')
-                        console.log(fileInput[index])
-
-
                     const reader = new FileReader();
                         
                     if(this.state.fileData.column.fileIds.indexOf(file.name) >= 0){
@@ -639,14 +635,13 @@ export class Provider extends React.Component{
                     }
 
                         reader.onload = () => {
-                            
-                            console.log(fileInput[index])
 
                             obj.files[file.name] = {                    
                                 preview: String(reader.result),
                                 file: fileInput[index],
                                 fileName: file.name, 
                                 fileType: file.type,
+                                familyDisplayIndex: null,
                                 src: `uploads/${file.name}`
                             }
             
@@ -731,15 +726,7 @@ export class Provider extends React.Component{
                     fileIds: newFileIds
                 }
         
-                // const newState = {
-                //     ...this.state.fileData.column,
-                //     columns: {
-                //         ...this.state.fileData.column,
-                //         [newColumn.id]: newColumn
-                //     }
-                // }
-        
-                const newState = {
+                let newState = {
                     ...this.state,
                     fileData: {
                         ...this.state.fileData,
@@ -749,6 +736,13 @@ export class Provider extends React.Component{
                         }
                     }
                 }
+
+                // Object.keys(this.state.fileData.files).forEach(fileName => {
+                //     const file = newState.fileData.files[fileName]
+                //     file.familyDisplayIndex = this.fileDataMethods.getFamilyDisplayIndex(file)
+                // })
+
+                newState = this.fileDataMethods.getFamilyDisplayIndex(newColumn.fileIds, newState)
         
                 this.setState(newState)
         },
@@ -760,17 +754,18 @@ export class Provider extends React.Component{
             {                          
             category: fileData.category ?  fileData.category : null,
             filePath: `uploads/${fileData.fileName}`,
-            fileName: fileData.fileName ?  fileData.fileName : null,
+            fileName: fileData.fileName,
+            fileType: fileData.fileType,
+
             artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
             familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
             artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
             artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
             // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
-            fileType: fileData.fileType ?  fileData.fileType : null,
             themes: fileData.themes ?  fileData.themes : null,
             seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
             location: fileData.location ?  fileData.location : null,
-            year: fileData.year ?  fileData.year : null,
+            year: fileData.year ? fileData.year : null,
 
             displayMain: fileData.displayMain ? fileData.displayMain : null 
             }
@@ -783,7 +778,53 @@ export class Provider extends React.Component{
                 .then(res => this.fileDataMethods.uploadFile(fileName))
                     // .then(() => axios.get('/api/artworkInfo'))
                     //   .then( res => console.log(res.data))
+        },
+        getFamilyDisplayIndex: (newColumnOrder, newStateCopy) => {
+
+            //the array of fileIds after drag ends
+            const fileIdsArray = newColumnOrder
+            //context state after drag
+            let newState = {...newStateCopy}
+
+            let hasNotFamilyName = newColumnOrder.filter(fileName => !newState.fileData.files[fileName].artworkFamily)
+            console.log('HASNOTFAMILYNAME AT INITIATION')
+            console.log(hasNotFamilyName)
+            let hasFamilyName = []
+            let familyChildren = {}
+
+            fileIdsArray.forEach(fileName => {
+                const file = this.state.fileData.files[fileName]
+                // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
+
+                if(hasNotFamilyName.includes(fileName)){
+                    newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
+                }
+                else{
+                    if(!familyChildren[file.artworkFamily]){
+                        familyChildren[file.artworkFamily] = []
+                    }
+                    familyChildren[file.artworkFamily].push(fileName)
+                    console.log('family children index')
+                    console.log(familyChildren[file.artworkFamily].indexOf(fileName))
+                    newState.fileData.files[fileName].familyDisplayIndex = familyChildren[file.artworkFamily].indexOf(fileName)
+                }
+            })
+
+            console.log('familyChildren Array')
+            console.log(familyChildren)
+            console.log('noFamilyChildren Array')
+            console.log(hasNotFamilyName)
+
+            return newState
+        },
+        initialIndex: () => {
+            let newState = {...this.state}
+            this.state.fileData.column.fileIds.forEach((fileName, index) => {
+                this.state.fileData.files[fileName].familyDisplayIndex = index
+            })
+            this.setState(newState)
         }
+
     
     }
     //this deals with creating and pulling artwork family data and attaching it to files
@@ -891,8 +932,8 @@ export class Provider extends React.Component{
                         }
                     }
     
-                    console.log('newState')
-                    console.log(newFamilySetup)
+                    // console.log('newState')
+                    // console.log(newFamilySetup)
     
                     this.setState(newState)
                     return
