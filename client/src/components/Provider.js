@@ -1122,20 +1122,9 @@ removeFile = (fileName) => {
 
     alert('REMOVE FILE')
 
-    // let newState = {...this.state}
+    let newFiles = {...this.state.fileData.files}
 
-    // delete newState.fileData.files[fileName]
-
-    // console.log("REMOVE FILE")
-    // console.log(newState)
-
-    let newFiles = {}
-    Object.keys(this.state.fileData.files).forEach(file => {
-        if(file.fileName === fileName){
-            return
-        }
-        newFiles = {...newFiles, [file]: this.state.fileData.files[file]}
-    })
+    delete newFiles[fileName]
 
     let newState = {
         ...this.state,
