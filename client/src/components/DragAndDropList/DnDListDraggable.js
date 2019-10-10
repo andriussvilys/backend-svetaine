@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card'
 
 import DropDownList from '../DropDownList'
 
+import FilePreview from '../FilePreview'
 import ArtowrkInfo from './infoComponents/ArtworkInfo'
 import JsonPreview from './infoComponents/JsonPreview'
 import FamilyInfo from './infoComponents/FamilyInfo'
@@ -47,7 +48,7 @@ export default class DnDListDraggable extends React.Component{
                                 >       
                                         
                                         <div className="image-index-box">
-                                                <div className="ImagesPreview--imageContainer">
+                                                {/* <div className="ImagesPreview--imageContainer">
                                                     <img className="ImagesPreview--image" alt={this.props.file.fileName} src={this.props.file.preview} />
                                                     <input
                                                     type="text" 
@@ -55,7 +56,11 @@ export default class DnDListDraggable extends React.Component{
                                                     placeholder={this.props.file.fileName}
                                                     >
                                                     </input>
-                                                </div>
+                                                </div> */}
+
+                                                <FilePreview 
+                                                    file={this.props.file}
+                                                />
         
                                                 <div className="ImagesPreview--indexContainer">
                                                     <span>index:</span>

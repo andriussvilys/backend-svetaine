@@ -36,10 +36,11 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  width: 200px;
 }
 
 .ImagesPreview--fileName {
-  width: 150px;
+  width: 100%;
 }
 
 .ImagesPreview--button {
@@ -47,7 +48,7 @@
 }
 
 .ImagesPreview--image {
-  width: 150px;
+  width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
   border: 1px solid;

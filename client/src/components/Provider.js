@@ -300,62 +300,150 @@ export class Provider extends React.Component{
             columnOrder: ['column-1']
         }
 
+        
+
         let newState = {...this.state}
         let objCounter = 0;
-    
-        let objPromise = new Promise ((resolve, rejects) => {
-            Array.from(e.target.files).forEach(file => {
+
+            let objPromise = new Promise ((resolve, rejects) => {
+                Array.from(e.target.files).forEach(file => {
+
                 const reader = new FileReader();
-                
+                    
                 if(this.state.fileData.column.fileIds.indexOf(file.name) >= 0){
                     alert(`the file ${file.name} has already been selected`)
                     return
                 }
+
+                if (file.type.match('image')){
+
+                    reader.onload = () => {
+        
+                        obj.files[file.name] = {                    
+                            preview: String(reader.result),
+                            file: file,
+                            fileName: file.name, 
+                            fileType: file.type,
+                            src: `uploads/${file.name}`
+                        }
+        
+                        newState = {
+                            ...this.state, 
+                            fileData: {
+                                ...this.state.fileData,
+                                files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
+                                column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
+                        }} 
+        
+        
+                        // newState.fileData.column.fileIds.push(file.name)
     
-                reader.onload = () => {
+                        objCounter += 1
     
-                    obj.files[file.name] = {                    
-                        preview: String(reader.result),
-                        file: file,
-                        fileName: file.name, 
-                        fileType: file.type,
-                        src: `uploads/${file.name}`
+                        console.log(`objCounter ${objCounter}`)
+                        console.log(`fileCount ${fileCount}`)
+    
+                        if(objCounter === fileCount){
+                            console.log(objCounter === fileCount)
+                            console.log(newState)
+                            resolve()
+                        }
+                        
                     }
-    
-                    newState = {
-                        ...this.state, 
-                        fileData: {
-                            ...this.state.fileData,
-                            files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
-                            column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
-                    }} 
-    
-    
-                    // newState.fileData.column.fileIds.push(file.name)
-
-                    objCounter += 1
-
-                    console.log(`objCounter ${objCounter}`)
-                    console.log(`fileCount ${fileCount}`)
-
-                    if(objCounter === fileCount){
-                        console.log(objCounter === fileCount)
-                        console.log(newState)
-                        resolve()
-                    }
-                    
+                    reader.readAsDataURL(file)
                 }
-                reader.readAsDataURL(file);
-            });
-            
-        }) 
 
-        objPromise.then(res => {this.setState(newState)})
-            
-            
-        // console.log(obj)
-        // this.setState({fileData: obj}, console.log(this.state))
+                else if  (file.type.match('video')){
+                    reader.onload = function() {
+                        console.log('video file')
+                        console.log(reader.result)
+                        console.log('file')
+                        console.log(file)
 
+                        console.log('state')
+                        console.log(this.state)
+                        console.log('newState')
+                        console.log(newState)
+
+
+                        obj.files[file.name] = {                    
+                            preview: String(reader.result),
+                            file: file,
+                            fileName: file.name, 
+                            fileType: file.type,
+                            src: `uploads/${file.name}`
+                        }
+        
+                        newState = {
+                            fileData: {
+                                ...newState.fileData,
+                                files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
+                                column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
+                        }} 
+        
+        
+                        // newState.fileData.column.fileIds.push(file.name)
+    
+                        objCounter += 1
+    
+                        console.log(`objCounter ${objCounter}`)
+                        console.log(`fileCount ${fileCount}`)
+    
+                        if(objCounter === fileCount){
+                            console.log(objCounter === fileCount)
+                            console.log(newState)
+                            resolve()
+                        }
+                //       var blob = new Blob([reader.result], {type: file.type});
+                //       var url = URL.createObjectURL(blob);
+                //       var video = document.createElement('video');
+                //       console.log('blob')
+                //       console.log(blob)
+                //       var timeupdate = function() {
+                //         if (snapImage()) {
+                //           video.removeEventListener('timeupdate', timeupdate);
+                //           video.pause();
+                //         }
+                //       };
+                //       video.addEventListener('loadeddata', function() {
+                //         if (snapImage()) {
+                //           video.removeEventListener('timeupdate', timeupdate);
+                //         }
+                //       });
+                //       var snapImage = function() {
+                //         // var canvas = document.createElement('canvas');
+                //         // canvas.width = video.videoWidth;
+                //         // canvas.height = video.videoHeight;
+                //         // canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+                //         // var image = canvas.toDataURL();
+                //         // var success = image.length > 100000;
+                //         // if (success) {
+                //           var img = document.createElement('img');
+                //           img.src = image;
+                //           document.getElementsByTagName('div')[0].appendChild(img);
+                //           URL.revokeObjectURL(url);
+                //           console.log('img.src')
+                //           console.log(img.src)
+                //         }
+                //         return success;
+                //       };
+                //       video.addEventListener('timeupdate', timeupdate);
+                //       video.preload = 'metadata';
+                //       video.src = url;
+                //       // Load video in Safari / IE11
+                //       video.muted = true;
+                //       video.playsInline = true;
+                //       video.play();
+                //     };
+                //     reader.readAsArrayBuffer(file);
+                    }
+                
+                    reader.readAsDataURL(file)
+                    }
+            })
+        })
+    
+        objPromise.then(res => {console.log('objPromise RESOLVED'); this.setState(newState)})
     }
 
 

@@ -17,16 +17,17 @@
 .ImagesPreview--imageContainer{
     display: flex;
     flex-direction: column;
+    width: 200px;
 }
 .ImagesPreview--fileName{
-    width: 150px;
+    width: 100%;
 }
 .ImagesPreview--button{
     height: 30px !important;
 }
 
 .ImagesPreview--image{
-    width: 150px;
+    width: 100%;
     object-fit: contain;
     border: 1px solid;
     border-bottom: none;
