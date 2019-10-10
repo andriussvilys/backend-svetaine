@@ -759,26 +759,28 @@ export class Provider extends React.Component{
             let fileDataObject = 
             {                          
             category: fileData.category ?  fileData.category : null,
-            filePath: fileData.filePath ?  fileData.filePath : null,
+            filePath: `uploads/${fileData.fileName}`,
             fileName: fileData.fileName ?  fileData.fileName : null,
             artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
             familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
             artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
             artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-            familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
+            // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
             fileType: fileData.fileType ?  fileData.fileType : null,
             themes: fileData.themes ?  fileData.themes : null,
             seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
             location: fileData.location ?  fileData.location : null,
-            year: fileData.year ?  fileData.year : null
+            year: fileData.year ?  fileData.year : null,
+
+            displayMain: fileData.displayMain ? fileData.displayMain : null 
             }
 
-            fileDataObject.displayMain = this.state.fileData.column.fileIds.indexOf(fileName)
+            fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
 
             console.log(fileDataObject)
             axios.post('/api/artworkInfo/create', fileDataObject)
                 .then( res => { console.log(res.data)})
-                .then(res => this.context.uploadFile(fileName))
+                .then(res => this.fileDataMethods.uploadFile(fileName))
                     // .then(() => axios.get('/api/artworkInfo'))
                     //   .then( res => console.log(res.data))
         }
