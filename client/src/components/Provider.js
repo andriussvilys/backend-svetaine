@@ -291,7 +291,6 @@ export class Provider extends React.Component{
 
         const fileCount = e.target.files.length
 
-        // let fileData = []
         let obj = {
             files: {},
             column: {
@@ -300,45 +299,68 @@ export class Provider extends React.Component{
             },
             columnOrder: ['column-1']
         }
-        
-        
-        Array.from(e.target.files).forEach(file => {
-            const reader = new FileReader();
+
+        let newState = {...this.state}
+        let objCounter = 0;
+    
+        let objPromise = new Promise ((resolve, rejects) => {
+            Array.from(e.target.files).forEach(file => {
+                const reader = new FileReader();
+                
+                if(this.state.fileData.column.fileIds.indexOf(file.name) >= 0){
+                    alert(`the file ${file.name} has already been selected`)
+                    return
+                }
+    
+                reader.onload = () => {
+    
+                    obj.files[file.name] = {                    
+                        preview: String(reader.result),
+                        file: file,
+                        fileName: file.name, 
+                        fileType: file.type,
+                        src: `uploads/${file.name}`
+                    }
+    
+                    newState = {
+                        ...this.state, 
+                        fileData: {
+                            ...this.state.fileData,
+                            files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
+                            column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
+                    }} 
+    
+    
+                    // newState.fileData.column.fileIds.push(file.name)
+
+                    objCounter += 1
+
+                    console.log(`objCounter ${objCounter}`)
+                    console.log(`fileCount ${fileCount}`)
+
+                    if(objCounter === fileCount){
+                        console.log(objCounter === fileCount)
+                        console.log(newState)
+                        resolve()
+                    }
+                    
+                }
+                reader.readAsDataURL(file);
+            });
             
-            if(this.state.fileData.column.fileIds.indexOf(file.name) >= 0){
-                alert(`the file ${file.name} has already been selected`)
-                return
-            }
+        }) 
 
-            reader.onload = () => {
+        objPromise.then(res => {this.setState(newState)})
+            
+            
+        // console.log(obj)
+        // this.setState({fileData: obj}, console.log(this.state))
 
-                obj.files[file.name] = {                    
-                    preview: String(reader.result),
-                    file: file,
-                    fileName: file.name, 
-                    fileType: file.type,
-                    src: `uploads/${file.name}`
-                }
-
-                let newState = {
-                    ...this.state, 
-                    fileData: {
-                        ...this.state.fileData,
-                        files: {...this.state.fileData.files, [file.name]: obj.files[file.name]},
-                        column: {...this.state.fileData.column, fileIds: [...this.state.fileData.column.fileIds, file.name]}
-                }} 
-
-
-                obj.column.fileIds.push(file.name)
-
-                if(obj.column.fileIds.length === fileCount){                 
-                }
-                this.setState(newState)
-
-            }
-            reader.readAsDataURL(file);
-        });
     }
+
+
+
+
     //THIS UPLOADS FILE TO SERVER
     this.uploadFile = () => {
         const fd = new FormData();
