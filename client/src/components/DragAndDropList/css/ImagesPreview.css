@@ -41,6 +41,7 @@
 
 .ImagesPreview--fileName {
   width: 100%;
+  font-size: 12px;
 }
 
 .ImagesPreview--button {
@@ -49,6 +50,7 @@
 
 .ImagesPreview--image {
   width: 100%;
+  max-height: 120px;
   -o-object-fit: contain;
      object-fit: contain;
   border: 1px solid;

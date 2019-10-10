@@ -16,13 +16,22 @@ export default class FilePreview extends React.Component{
             return(
                 <video 
                 className="ImagesPreview--image" 
-                // width="320" 
-                // height="240" 
                 controls
                 >
                     <source src={this.props.file.preview} type={this.props.file.fileType} />
                     Your browser does not support the video tag.
                 </video> 
+            )
+        }
+        if(this.props.file.fileType.match('audio')){
+            return(
+                <audio 
+                className="ImagesPreview--image" 
+                controls
+                >
+                    <source src={this.props.file.preview} type={this.props.file.fileType} />
+                    Your browser does not support the audio tag.
+                </audio> 
             )
         }
     }

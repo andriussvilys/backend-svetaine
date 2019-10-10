@@ -174,6 +174,14 @@ export default class DnDListDraggable extends React.Component{
                                                     >
                                                         Submit
                                                     </Button>
+
+                                                    <Button
+                                                        variant="primary"
+                                                        className="custom-button"
+                                                        onClick={() => this.context.uploadFile(this.props.file.fileName)}
+                                                    >
+                                                        Upload Image
+                                                    </Button>
                                                 </div>
                                             </div>
         

@@ -289,7 +289,9 @@ export class Provider extends React.Component{
 
     this.addFileToState = (e) => {
 
-        const fileCount = e.target.files.length
+        const fileInput = e.target.files
+        const fileCount = fileInput.length
+        let filename = null
 
         let obj = {
             files: {},
@@ -300,13 +302,17 @@ export class Provider extends React.Component{
             columnOrder: ['column-1']
         }
 
-        
+        console.log('FILE INPUT')
 
         let newState = {...this.state}
         let objCounter = 0;
 
             let objPromise = new Promise ((resolve, rejects) => {
-                Array.from(e.target.files).forEach(file => {
+                Array.from(fileInput).forEach((file, index) => {
+
+                    console.log('FILE')
+                    console.log(fileInput[index])
+
 
                 const reader = new FileReader();
                     
@@ -315,13 +321,13 @@ export class Provider extends React.Component{
                     return
                 }
 
-                if (file.type.match('image')){
-
                     reader.onload = () => {
-        
+                        
+                        console.log(fileInput[index])
+
                         obj.files[file.name] = {                    
                             preview: String(reader.result),
-                            file: file,
+                            file: fileInput[index],
                             fileName: file.name, 
                             fileType: file.type,
                             src: `uploads/${file.name}`
@@ -334,125 +340,37 @@ export class Provider extends React.Component{
                                 files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
                                 column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
                         }} 
-        
-        
-                        // newState.fileData.column.fileIds.push(file.name)
     
                         objCounter += 1
     
-                        console.log(`objCounter ${objCounter}`)
-                        console.log(`fileCount ${fileCount}`)
-    
                         if(objCounter === fileCount){
-                            console.log(objCounter === fileCount)
-                            console.log(newState)
+                            filename = file.name
+                            alert(filename)
                             resolve()
                         }
                         
                     }
                     reader.readAsDataURL(file)
-                }
-
-                else if  (file.type.match('video')){
-                    reader.onload = function() {
-                        console.log('video file')
-                        console.log(reader.result)
-                        console.log('file')
-                        console.log(file)
-
-                        console.log('state')
-                        console.log(this.state)
-                        console.log('newState')
-                        console.log(newState)
-
-
-                        obj.files[file.name] = {                    
-                            preview: String(reader.result),
-                            file: file,
-                            fileName: file.name, 
-                            fileType: file.type,
-                            src: `uploads/${file.name}`
-                        }
-        
-                        newState = {
-                            fileData: {
-                                ...newState.fileData,
-                                files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
-                                column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
-                        }} 
-        
-        
-                        // newState.fileData.column.fileIds.push(file.name)
-    
-                        objCounter += 1
-    
-                        console.log(`objCounter ${objCounter}`)
-                        console.log(`fileCount ${fileCount}`)
-    
-                        if(objCounter === fileCount){
-                            console.log(objCounter === fileCount)
-                            console.log(newState)
-                            resolve()
-                        }
-                //       var blob = new Blob([reader.result], {type: file.type});
-                //       var url = URL.createObjectURL(blob);
-                //       var video = document.createElement('video');
-                //       console.log('blob')
-                //       console.log(blob)
-                //       var timeupdate = function() {
-                //         if (snapImage()) {
-                //           video.removeEventListener('timeupdate', timeupdate);
-                //           video.pause();
-                //         }
-                //       };
-                //       video.addEventListener('loadeddata', function() {
-                //         if (snapImage()) {
-                //           video.removeEventListener('timeupdate', timeupdate);
-                //         }
-                //       });
-                //       var snapImage = function() {
-                //         // var canvas = document.createElement('canvas');
-                //         // canvas.width = video.videoWidth;
-                //         // canvas.height = video.videoHeight;
-                //         // canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-                //         // var image = canvas.toDataURL();
-                //         // var success = image.length > 100000;
-                //         // if (success) {
-                //           var img = document.createElement('img');
-                //           img.src = image;
-                //           document.getElementsByTagName('div')[0].appendChild(img);
-                //           URL.revokeObjectURL(url);
-                //           console.log('img.src')
-                //           console.log(img.src)
-                //         }
-                //         return success;
-                //       };
-                //       video.addEventListener('timeupdate', timeupdate);
-                //       video.preload = 'metadata';
-                //       video.src = url;
-                //       // Load video in Safari / IE11
-                //       video.muted = true;
-                //       video.playsInline = true;
-                //       video.play();
-                //     };
-                //     reader.readAsArrayBuffer(file);
-                    }
-                
-                    reader.readAsDataURL(file)
-                    }
             })
         })
     
-        objPromise.then(res => {console.log('objPromise RESOLVED'); this.setState(newState)})
+        objPromise.then(res => {console.log('objPromise RESOLVED'); this.setState(newState, 
+            console.log(filename)
+            )})
     }
 
 
 
 
     //THIS UPLOADS FILE TO SERVER
-    this.uploadFile = () => {
+    this.uploadFile = (fileName) => {
+        
+        const fileData = this.state.fileData.files
+
         const fd = new FormData();
-        fd.append('artworkImage', this.state.file, this.state.fileName)
+        fd.append('artworkImage', fileData[fileName].file, fileData[fileName].fileName)
+        console.log("FD*******************")
+        console.log(fd)
         // fd.append('name', this.state.fileName)
         axios.post('/api/artworkInfo/imageUpload', fd)
             .then(res => {
@@ -1195,11 +1113,22 @@ onDragEnd = (result) => {
             fileIds: newFileIds
         }
 
+        // const newState = {
+        //     ...this.state.fileData.column,
+        //     columns: {
+        //         ...this.state.fileData.column,
+        //         [newColumn.id]: newColumn
+        //     }
+        // }
+
         const newState = {
-            ...this.state.fileData.column,
-            columns: {
-                ...this.state.fileData.column,
-                [newColumn.id]: newColumn
+            ...this.state,
+            fileData: {
+                ...this.state.fileData,
+                column: {
+                    ...this.state.fileData.column,
+                    [newColumn.id]: newColumn    
+                }
             }
         }
 

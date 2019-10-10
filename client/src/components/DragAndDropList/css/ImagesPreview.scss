@@ -21,6 +21,7 @@
 }
 .ImagesPreview--fileName{
     width: 100%;
+    font-size: 12px;
 }
 .ImagesPreview--button{
     height: 30px !important;
@@ -28,6 +29,7 @@
 
 .ImagesPreview--image{
     width: 100%;
+    max-height: 120px;
     object-fit: contain;
     border: 1px solid;
     border-bottom: none;
