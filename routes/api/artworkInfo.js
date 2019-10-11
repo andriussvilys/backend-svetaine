@@ -26,6 +26,14 @@ router.get('/', (req, res) => {
         .then(artworks => res.json(artworks))
 })
 
+router.get('api/artworkInfo/:artworkFamily', (req, res) => {
+    console.log('REQ PARMS')
+    console.log(req.params.artworkFamily)
+    ArtworkInfo.find( {"artworkFamily": req.params.artworkFamily} )
+        .then(artworks => res.json(artworks))
+        .catch(err => console.log(err))
+})
+
 //@route post api/artworkInfo
 //@description add a new artwork
 //@access Public

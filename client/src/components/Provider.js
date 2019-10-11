@@ -838,50 +838,28 @@ export class Provider extends React.Component{
 
             return newState
         },
-        // getFamilyDisplayIndex: (newColumnOrder, newStateCopy) => {
-
-        //     //the array of fileIds after drag ends
-        //     const fileIdsArray = newColumnOrder
-        //     //context state after drag
-        //     let newState = {...newStateCopy}
-
-        //     let hasNotFamilyName = newColumnOrder.filter(fileName => !newState.fileData.files[fileName].artworkFamily)
-        //     console.log('HASNOTFAMILYNAME AT INITIATION')
-        //     console.log(hasNotFamilyName)
-        //     let hasFamilyName = []
-        //     let familyChildren = {}
-
-        //     fileIdsArray.forEach(fileName => {
-        //         const file = this.state.fileData.files[fileName]
-        //         // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
-
-        //         if(hasNotFamilyName.includes(fileName)){
-        //             newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
-        //         }
-        //         else{
-        //             if(!familyChildren[file.artworkFamily]){
-        //                 familyChildren[file.artworkFamily] = []
-        //             }
-        //             familyChildren[file.artworkFamily].push(fileName)
-        //             console.log('family children index')
-        //             console.log(familyChildren[file.artworkFamily].indexOf(fileName))
-        //             newState.fileData.files[fileName].familyDisplayIndex = familyChildren[file.artworkFamily].indexOf(fileName)
-        //         }
-        //     })
-
-        //     console.log('familyChildren Array')
-        //     console.log(familyChildren)
-        //     console.log('noFamilyChildren Array')
-        //     console.log(hasNotFamilyName)
-
-        //     return newState
-        // },
         initialIndex: () => {
             let newState = {...this.state}
             this.state.fileData.column.fileIds.forEach((fileName, index) => {
                 this.state.fileData.files[fileName].familyDisplayIndex = index
             })
             this.setState(newState)
+        },
+
+        /**
+         * @param artworkFamily - query key to find appropriate database records
+         * @param fileName - which file data obj receives res.data
+         */
+        getAllByArtworkFamily: (artworkFamily, fileName) => {
+            console.log(artworkFamily)
+            axios.get(`/api/artworkInfo/all/${artworkFamily}`)
+
+                .then(res => {
+                    let newState ={...this.state}
+                    let fileNest = {...this.state.fileData.files[fileName]}
+                    newState = {...this.state.fileData.files[fileName], relatedAtwork: res.data}
+                    this.setState(newState)
+                })
         }
     
     }

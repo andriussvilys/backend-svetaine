@@ -178,16 +178,18 @@ export default class DnDListDraggable extends React.Component{
                                                     <Button
                                                         variant="success"
                                                         className="custom-button"
+                                                        onClick={() => this.context.fileDataMethods.postArtworkInfo(this.props.file.fileName)}
                                                     >
-                                                        Submit
+                                                        Submit to server
                                                     </Button>
 
                                                     <Button
                                                         variant="primary"
                                                         className="custom-button"
-                                                        onClick={() => this.context.fileDataMethods.postArtworkInfo(this.props.file.fileName)}
+                                                        disabled={!this.props.file.artworkFamily ? true : false}
+                                                        onClick={() => this.context.fileDataMethods.getAllByArtworkFamily(this.props.file.artworkFamily, this.props.file.fielName)}
                                                     >
-                                                        Upload Image
+                                                        Get a list of related artwork <span>{!this.props.file.artworkFamily ? "disabled" : ""}</span>
                                                     </Button>
                                                 </div>
                                             </div>
