@@ -34,6 +34,11 @@ export default class FilePreview extends React.Component{
                 </audio> 
             )
         }
+        if(this.props.file.fileType.match("application/pdf")){
+            return(
+                    <iframe src={this.props.file.preview} style={{width: "100%"}}></iframe>
+            )
+        }
     }
 
     render(){

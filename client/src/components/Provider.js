@@ -571,6 +571,7 @@ export class Provider extends React.Component{
 
         transferState: (fileName) => {
                 let newFileData = this.state.fileData;
+
                 Object.keys(this.state.familySetupData).forEach(key => {
                     newFileData = {
                         ...newFileData, 
@@ -592,9 +593,19 @@ export class Provider extends React.Component{
                                 useFamilySetup: true
                             }
                         }
+                    }    
+
+                let newState = {
+                    ...this.state,
+                    fileData: {
+                        ...newFileData
                     }
+                }
+
+                this.fileDataMethods.getFamilyDisplayIndex(newState.fileData.column.fileIds, newState)
+                
                 console.log(newFileData)
-                this.setState({fileData: newFileData})
+                this.setState(newState)
         },
 
         isChecked: (string, value, fileName) => {
@@ -637,7 +648,7 @@ export class Provider extends React.Component{
                         reader.onload = () => {
 
                             obj.files[file.name] = {                    
-                                preview: String(reader.result),
+                                preview: reader.result,
                                 file: fileInput[index],
                                 fileName: file.name, 
                                 fileType: file.type,
@@ -645,6 +656,15 @@ export class Provider extends React.Component{
                                 src: `uploads/${file.name}`
                             }
             
+                            if(file.type.match("application/pdf")){
+                                // const previewInfo = "data:application/pdf;base64,"
+                                // const previewSlice = obj.files[file.name].preview.slice(previewInfo.length)
+                                // console.log(previewSlice)
+                                // obj.files[file.name].preview = atob(previewSlice)
+                                // console.log( obj.files[file.name])
+
+                            }
+
                             newState = {
                                 ...this.state, 
                                 fileData: {
@@ -793,9 +813,10 @@ export class Provider extends React.Component{
             let familyChildren = {}
 
             fileIdsArray.forEach(fileName => {
-                const file = this.state.fileData.files[fileName]
+                const file = newStateCopy.fileData.files[fileName]
                 // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
-
+                console.log('file artworkFamily')
+                console.log(file.artworkFamily)
                 if(hasNotFamilyName.includes(fileName)){
                     newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
                 }
@@ -817,6 +838,44 @@ export class Provider extends React.Component{
 
             return newState
         },
+        // getFamilyDisplayIndex: (newColumnOrder, newStateCopy) => {
+
+        //     //the array of fileIds after drag ends
+        //     const fileIdsArray = newColumnOrder
+        //     //context state after drag
+        //     let newState = {...newStateCopy}
+
+        //     let hasNotFamilyName = newColumnOrder.filter(fileName => !newState.fileData.files[fileName].artworkFamily)
+        //     console.log('HASNOTFAMILYNAME AT INITIATION')
+        //     console.log(hasNotFamilyName)
+        //     let hasFamilyName = []
+        //     let familyChildren = {}
+
+        //     fileIdsArray.forEach(fileName => {
+        //         const file = this.state.fileData.files[fileName]
+        //         // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
+
+        //         if(hasNotFamilyName.includes(fileName)){
+        //             newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
+        //         }
+        //         else{
+        //             if(!familyChildren[file.artworkFamily]){
+        //                 familyChildren[file.artworkFamily] = []
+        //             }
+        //             familyChildren[file.artworkFamily].push(fileName)
+        //             console.log('family children index')
+        //             console.log(familyChildren[file.artworkFamily].indexOf(fileName))
+        //             newState.fileData.files[fileName].familyDisplayIndex = familyChildren[file.artworkFamily].indexOf(fileName)
+        //         }
+        //     })
+
+        //     console.log('familyChildren Array')
+        //     console.log(familyChildren)
+        //     console.log('noFamilyChildren Array')
+        //     console.log(hasNotFamilyName)
+
+        //     return newState
+        // },
         initialIndex: () => {
             let newState = {...this.state}
             this.state.fileData.column.fileIds.forEach((fileName, index) => {
@@ -824,7 +883,6 @@ export class Provider extends React.Component{
             })
             this.setState(newState)
         }
-
     
     }
     //this deals with creating and pulling artwork family data and attaching it to files
@@ -931,6 +989,8 @@ export class Provider extends React.Component{
                             }
                         }
                     }
+
+                    this.fileDataMethods.getFamilyDisplayIndex(newState.fileData.column.fileIds, newState)
     
                     // console.log('newState')
                     // console.log(newFamilySetup)
@@ -940,6 +1000,7 @@ export class Provider extends React.Component{
                 }
     
                 this.setState({ familySetupData: newFamilySetup})
+                // this.fileDatamethods.getFamilyDisplayIndex()
     
             })
             .catch(err => 
