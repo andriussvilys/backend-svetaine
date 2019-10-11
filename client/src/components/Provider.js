@@ -852,12 +852,21 @@ export class Provider extends React.Component{
          */
         getAllByArtworkFamily: (artworkFamily, fileName) => {
             console.log(artworkFamily)
-            axios.get(`/api/artworkInfo/all/${artworkFamily}`)
+            axios.get(`/api/artworkInfo/${artworkFamily}`)
 
                 .then(res => {
+                    //returns and array of all artworks with specified artwork family stored in the database
+                    console.log(res.data)
                     let newState ={...this.state}
                     let fileNest = {...this.state.fileData.files[fileName]}
                     newState = {...this.state.fileData.files[fileName], relatedAtwork: res.data}
+
+                    Object.keys(this.state.fileData.files).forEach(obj => {
+                        if(this.state.fileData.files[obj].artworkFamily){
+                            
+                        }
+                    })
+
                     this.setState(newState)
                 })
         }

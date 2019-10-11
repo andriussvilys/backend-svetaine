@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
         .then(artworks => res.json(artworks))
 })
 
-router.get('api/artworkInfo/:artworkFamily', (req, res) => {
+router.get('/:artworkFamily', (req, res) => {
     console.log('REQ PARMS')
     console.log(req.params.artworkFamily)
     ArtworkInfo.find( {"artworkFamily": req.params.artworkFamily} )
