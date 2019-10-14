@@ -569,43 +569,99 @@ export class Provider extends React.Component{
 
         },
 
-        transferState: (fileName) => {
-                let newFileData = this.state.fileData;
+        transferState: (file) => {
 
-                Object.keys(this.state.familySetupData).forEach(key => {
-                    newFileData = {
-                        ...newFileData, 
+                let newState = {...this.state}
+
+                //pverwrite file data witch each familySetUp property
+                Object.keys(this.state.familySetupData).forEach(property => {
+                    console.log(property)
+                    newState = {
+                        ...newState,
+                        fileData: {
+                            ...newState.fileData,
                             files: {
-                                ...newFileData.files,
-                                [fileName]: {
-                                    ...newFileData.files[fileName],
-                                    [key]: this.state.familySetupData[key]
+                                ...newState.fileData.files,
+                                [file.fileName]: {
+                                    ...newState.fileData.files[file.fileName],
+                                    [property]: this.state.familySetupData[property]
                                 }
                             }
                         }
-                    })
-                newFileData = {
-                    ...newFileData, 
-                    files: {
-                        ...newFileData.files,
-                        [fileName]: {
-                            ...newFileData.files[fileName],
-                                useFamilySetup: true
-                            }
-                        }
-                    }    
-
-                let newState = {
-                    ...this.state,
-                    fileData: {
-                        ...newFileData
                     }
-                }
+                })
 
-                this.fileDataMethods.getFamilyDisplayIndex(newState.fileData.column.fileIds, newState)
-                
-                console.log(newFileData)
-                this.setState(newState)
+                this.fileDataMethods.getRelatedArtwork(file, newState)
+                console.log('STATE AFTER E GET-RELATED-ARTWORK************************')
+                console.log(newState)
+
+                console.log(file)
+
+                // const relatedArtwork = async () =>  this.fileDataMethods.getRelatedArtwork(newState.fileData.files[file.fileName], newState) 
+                const relatedArtwork = this.fileDataMethods.getRelatedArtwork(newState.fileData.files[file.fileName], newState)
+
+                relatedArtwork
+                    .then(res => {
+                        console.log('res')
+                        console.log(res)
+                        res.fileData.files[file.fileName].useFamilySetup = true
+                        this.setState(res)
+                    }        
+                )
+
+                console.log("relatedArtwork")
+                console.log(relatedArtwork)
+
+                // this.setState(await relatedArtwork())
+        },
+
+        getRelatedArtwork: (file, newState) => {
+            if(!file.artworkFamily){
+                return null
+            }
+
+            console.log('RELATED ARTWROK RUNS WITH FILE')
+            console.log(file)
+            //get all files that have selected family, but are not uploaded to server yet
+            const getStateFamily = () => {
+                let filesInFamily = Object.keys(newState.fileData.files).map(obj => {
+                    if(newState.fileData.files[obj].artworkFamily === file.artworkFamily){
+                        return newState.fileData.files[obj]
+                    }
+                    return 
+                })
+                return filesInFamily
+            }
+            let stateFamily = getStateFamily()
+
+            //this will concat files pertaining to a family both in state and server
+            //once the ASYNC function of fetching file records from server is complete
+            let relatedArtwork = []
+            let stateUpdate = null
+
+            console.log('AXIOS RUNS')
+            //get all records from the selected family from database
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/artworkInfo/${file.artworkFamily}`)
+                    .then(res =>{
+        
+                        //concat server files and state files 
+                        relatedArtwork = [...stateFamily, ...res.data]
+    
+                        
+                        stateUpdate = newState
+                        
+                        if(!stateUpdate.fileData.files[file.fileName].relatedArtwork){
+                            stateUpdate.fileData.files[file.fileName].relatedArtwork = []
+                        }
+    
+                        stateUpdate.fileData.files[file.fileName].relatedArtwork = relatedArtwork;
+                        
+                        if(stateUpdate){
+                            resolve(stateUpdate)
+                        }
+                    })
+            }) 
         },
 
         isChecked: (string, value, fileName) => {
@@ -734,7 +790,6 @@ export class Provider extends React.Component{
             }
             
             const column = this.state.fileData.column[source.droppableId];
-            // const column = this.state.column[source.droppableId];
         
                 let newFileIds = this.state.fileData.column.fileIds
         
@@ -745,22 +800,10 @@ export class Provider extends React.Component{
                     ...column,
                     fileIds: newFileIds
                 }
-        
-                let newState = {
-                    ...this.state,
-                    fileData: {
-                        ...this.state.fileData,
-                        column: {
-                            ...this.state.fileData.column,
-                            [newColumn.id]: newColumn    
-                        }
-                    }
-                }
+                
+                let newState = {...this.state}
 
-                // Object.keys(this.state.fileData.files).forEach(fileName => {
-                //     const file = newState.fileData.files[fileName]
-                //     file.familyDisplayIndex = this.fileDataMethods.getFamilyDisplayIndex(file)
-                // })
+                newState.fileData.column[newColumn.id] = newColumn
 
                 newState = this.fileDataMethods.getFamilyDisplayIndex(newColumn.fileIds, newState)
         
@@ -850,26 +893,6 @@ export class Provider extends React.Component{
          * @param artworkFamily - query key to find appropriate database records
          * @param fileName - which file data obj receives res.data
          */
-        getAllByArtworkFamily: (artworkFamily, fileName) => {
-            console.log(artworkFamily)
-            axios.get(`/api/artworkInfo/${artworkFamily}`)
-
-                .then(res => {
-                    //returns and array of all artworks with specified artwork family stored in the database
-                    console.log(res.data)
-                    let newState ={...this.state}
-                    let fileNest = {...this.state.fileData.files[fileName]}
-                    newState = {...this.state.fileData.files[fileName], relatedAtwork: res.data}
-
-                    Object.keys(this.state.fileData.files).forEach(obj => {
-                        if(this.state.fileData.files[obj].artworkFamily){
-                            
-                        }
-                    })
-
-                    this.setState(newState)
-                })
-        }
     
     }
     //this deals with creating and pulling artwork family data and attaching it to files
@@ -1036,7 +1059,29 @@ export class Provider extends React.Component{
             axios.post('/api/familySetup/create', requestBody)
                 .then( res => {console.log(res); alert('success')})
                 .catch(err => {console.log(err); alert(err)})
-        }
+        },
+        // getAllByArtworkFamily: (artworkFamily, fileName) => {
+        //     console.log(artworkFamily)
+        //     axios.get(`/api/artworkInfo/${artworkFamily}`)
+
+        //         .then(res => {
+        //             //returns and array of all artworks with specified artwork family stored in the database
+        //             console.log(res.data)
+        //             let newState ={...this.state}
+        //             let fileNest = {...this.state.fileData.files[fileName]}
+        //             newState = {...this.state.fileData.files[fileName], relatedAtwork: res.data}
+
+        //             Object.keys(this.state.fileData.files).forEach(obj => {
+        //                 if(this.state.fileData.files[obj].artworkFamily === artworkFamily){
+        //                     if(newState.fileData.files[fileName].relatedArtwork){
+                                
+        //                     }
+        //                 }
+        //             })
+
+        //             this.setState(newState)
+        //         })
+        // },
 
     }
 

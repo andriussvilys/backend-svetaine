@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from '../../Provider';
 
 import DropDownList from '../../DropDownList'
+import FamilyPreview from '../../FamilyPreview'
 import ExtendedList from './ExtendedList';
 import ThemeSelector from './ThemeSelector';
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -46,7 +47,7 @@ export default class FamilyInfo extends Component {
                                         id="familyDisplaySetup__radio-yes" 
                                         value="yes" 
                                         disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
-                                        onClick={() => {this.context.fileDataMethods.transferState(this.props.fileName)}}
+                                        onClick={() => {this.context.fileDataMethods.transferState(this.props.file)}}
                                         checked={this.context.state.fileData.files[this.props.fileName].useFamilySetup}
                                         />
                                     </div>
@@ -64,19 +65,7 @@ export default class FamilyInfo extends Component {
                                     </div>
                                 </form>
                             </div>  
-                            {/* <ExtendedList 
-                                listName="select artwork family: "
-                                // array={this.artworks()}
-                                array={this.context.state.artworkFamilyList}
-                                string="artworkFamily"
-                                id="familyList"
-                            />                    
-                            <ExtendedList 
-                                listName="add 'see also' items: "
-                                array={this.context.state.artworkFamilyList}
-                                string="seeAlso"
-                                id="seeAlso"
-                            /> */}
+
                             <DropDownList 
                                 title={'Select Artwork Family'}
                                 state={this.context.state}
@@ -90,6 +79,12 @@ export default class FamilyInfo extends Component {
                                 router={'api/artworkFamilyList/update'}
                                 addNewTarget={'artworkFamilyList'}
                                 displayAddNew="initial"
+                            />
+
+                            <FamilyPreview
+                                file={this.props.file}
+                                context={this.props.context}
+                                state={this.context.state}
                             />
 
                             <DropDownList 

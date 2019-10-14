@@ -6,37 +6,45 @@ export default class FilePreview extends React.Component{
         super(props)
     }
 
-    fileContainer = () => {
-        if(this.props.file.fileType.match('image')){
+    fileContainer = (fileType, file) => {
+
+        const previewSource = file.filePath ? file.filePath : file.preview
+
+        // console.log('previewSource')
+        // console.log(previewSource)
+
+        if(fileType.match('image')){
+            let image = <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
+            console.log(image)
             return(
-                <img className="ImagesPreview--image" alt={this.props.file.fileName} src={this.props.file.preview} />    
+                    image
             )
         }
-        if(this.props.file.fileType.match('video')){
+        if(fileType.match('video')){
             return(
                 <video 
                 className="ImagesPreview--image" 
                 controls
                 >
-                    <source src={this.props.file.preview} type={this.props.file.fileType} />
+                    <source src={previewSource} type={fileType} />
                     Your browser does not support the video tag.
                 </video> 
             )
         }
-        if(this.props.file.fileType.match('audio')){
+        if(fileType.match('audio')){
             return(
                 <audio 
                 className="ImagesPreview--image" 
                 controls
                 >
-                    <source src={this.props.file.preview} type={this.props.file.fileType} />
+                    <source src={previewSource} type={fileType} />
                     Your browser does not support the audio tag.
                 </audio> 
             )
         }
-        if(this.props.file.fileType.match("application/pdf")){
+        if(fileType.match("application/pdf")){
             return(
-                    <iframe src={this.props.file.preview} style={{width: "100%"}}></iframe>
+                    <iframe src={previewSource} style={{width: "100%"}}></iframe>
             )
         }
     }
@@ -45,7 +53,7 @@ export default class FilePreview extends React.Component{
         return(
 
         <div className="ImagesPreview--imageContainer">
-            {this.fileContainer()}
+            {this.fileContainer(this.props.file.fileType, this.props.file)}
             <input
             type="text" 
             className="ImagesPreview--fileName"

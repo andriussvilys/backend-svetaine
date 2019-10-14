@@ -12,7 +12,7 @@ let ArtworkInfoSchema = new Schema({
     },
     fileName: {
         type: String,
-        required: false
+        required: true
     },
     artworkFamily: {
         type: String,
@@ -41,23 +41,27 @@ let ArtworkInfoSchema = new Schema({
     },
     fileType: {
         type: String,
-        required: false
+        required: true
     },
     themes: {
         type: Array,
-        required: false
+        required: false,
+        default: []
     },
     seeAlso: {
         type: Array,
-        required: false
+        required: false,
+        default: []
     },
     location: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     },
     year: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     }
 }, {minimize: false});
 

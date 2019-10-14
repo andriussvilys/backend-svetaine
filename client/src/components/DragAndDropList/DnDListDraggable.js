@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card'
 import DropDownList from '../DropDownList'
 
 import FilePreview from '../FilePreview'
+import FamilyPreview from '../FamilyPreview'
 import ArtowrkInfo from './infoComponents/ArtworkInfo'
 import JsonPreview from './infoComponents/JsonPreview'
 import FamilyInfo from './infoComponents/FamilyInfo'
@@ -52,28 +53,19 @@ export default class DnDListDraggable extends React.Component{
                                 >       
                                         
                                         <div className="image-index-box">
-                                                {/* <div className="ImagesPreview--imageContainer">
-                                                    <img className="ImagesPreview--image" alt={this.props.file.fileName} src={this.props.file.preview} />
-                                                    <input
-                                                    type="text" 
-                                                    className="ImagesPreview--fileName"
-                                                    placeholder={this.props.file.fileName}
-                                                    >
-                                                    </input>
-                                                </div> */}
-
-                                                <FilePreview 
-                                                    file={this.props.file}
-                                                />
-                                                <div className="ImagesPreview--indexContainer">
-                                                    <div>artwork family name:</div>
-                                                    <div>{this.props.file.artworkFamily ? this.props.file.artworkFamily : "N/A"}</div>
-                                                </div>        
-                                                <div className="ImagesPreview--indexContainer">
-                                                    <span>family display index:</span>
-                                                    <div className="ImagesPreview--index">{ this.props.file.familyDisplayIndex }</div>
-                                                </div>
+                                            <FilePreview 
+                                                file={this.props.file}
+                                            />
+                                            <div className="ImagesPreview--indexContainer">
+                                                <div>artwork family name:</div>
+                                                <div>{this.props.file.artworkFamily ? this.props.file.artworkFamily : "N/A"}</div>
+                                            </div>        
+                                            <div className="ImagesPreview--indexContainer">
+                                                <span>family display index:</span>
+                                                <div className="ImagesPreview--index">{ this.props.file.familyDisplayIndex }</div>
                                             </div>
+                                        </div>
+                                        
                                         <div style={{flex: "1", minWidth: "250px"}}>
                                             <Accordion>
                                                 <Card>
@@ -123,6 +115,9 @@ export default class DnDListDraggable extends React.Component{
                                                     <Card.Body style={{padding: "15px"}} >
                                                         <FamilyInfo
                                                             fileName={this.props.file.fileName}
+                                                            file={this.props.file}
+                                                            state={this.context.state}
+                                                            context={this.context}
                                                             onChange={this.context.fileDataMethods.onChange}
                                                         />
 
@@ -187,7 +182,7 @@ export default class DnDListDraggable extends React.Component{
                                                         variant="primary"
                                                         className="custom-button"
                                                         disabled={!this.props.file.artworkFamily ? true : false}
-                                                        onClick={() => this.context.fileDataMethods.getAllByArtworkFamily(this.props.file.artworkFamily, this.props.file.fielName)}
+                                                        onClick={() => this.context.familySetupMethods.getAllByArtworkFamily(this.props.file.artworkFamily, this.props.file.fielName)}
                                                     >
                                                         Get a list of related artwork <span>{!this.props.file.artworkFamily ? "disabled" : ""}</span>
                                                     </Button>
