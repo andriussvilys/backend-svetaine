@@ -591,142 +591,112 @@ export class Provider extends React.Component{
                     }
                 })
 
-                this.fileDataMethods.getRelatedArtwork(file, newState)
-                console.log('STATE AFTER E GET-RELATED-ARTWORK************************')
-                console.log(newState)
+                const relatedArtworkPromise = this.familySetupMethods.getRelatedArtwork(newState.fileData.files[file.fileName].artworkFamily, newState)
 
-                console.log(file)
-
-                // const relatedArtwork = async () =>  this.fileDataMethods.getRelatedArtwork(newState.fileData.files[file.fileName], newState) 
-                const relatedArtwork = this.fileDataMethods.getRelatedArtwork(newState.fileData.files[file.fileName], newState)
-
-                relatedArtwork
-                    .then(res => {
-                        console.log('res')
-                        console.log(res)
-                        res.fileData.files[file.fileName].useFamilySetup = true
-                        this.setState(res)
-                    }        
-                )
-
-                console.log("relatedArtwork")
-                console.log(relatedArtwork)
-
-                // this.setState(await relatedArtwork())
-        },
-
-        getRelatedArtwork: (file, newState) => {
-            if(!file.artworkFamily){
-                return null
-            }
-
-            let relatedArtwork = {}
-
-            console.log('RELATED ARTWROK RUNS WITH FILE')
-            console.log(file)
-            //get all files that have selected family, but are not uploaded to server yet
-            const getStateFamily = () => {
-                Object.keys(newState.fileData.files).forEach(obj => {
-                    if(obj.artworkFamily === file.artworkFamily){
-
-                        Object.keys(obj).forEach(property => {
-                            relatedArtwork[obj.fileName] = {
-                                [property]: obj[property]
-                            }
-                        })
-
-                    }
+                relatedArtworkPromise.then(res => {
+                    newState.fileData.files[file.fileName].relatedArtwork = res
+                    this.setState(newState)
                 })
-
-                console.log("relatedArtwork")
-                console.log(relatedArtwork)
-            }
-
-            getStateFamily()
-
-            //this will concat files pertaining to a family both in state and server
-            //once the ASYNC function of fetching file records from server is complete
-            let stateUpdate = null
-
-            console.log('AXIOS RUNS')
-            //get all records from the selected family from database
-            return new Promise((resolve, reject) => {
-                axios.get(`/api/artworkInfo/${file.artworkFamily}`)
-                    .then(res =>{
-        
-                        //concat server files and state files 
-
-                        console.log("RES.DATA")
-                        console.log(res.data)
-
-                            res.data.forEach(obj => {
-                                console.log("FILE NAME")
-                                console.log(obj.fileName)
-
-                            Object.keys(obj).forEach(property => {
-                                console.log("PROPERTY")
-                                console.log(property)
-
-                                    relatedArtwork[obj.fileName] = {
-                                        [property]: obj[property]
-                                    }
-                                })
-                                console.log('relatedArtwork')
-                                console.log(relatedArtwork)
-                            })               
-
-
-
-                        // relatedArtwork = [...stateFamily, ...databaseArray]
-                        
-                        
-                        stateUpdate = newState
-                        
-                        
-
-                        if(!stateUpdate.familySetupData.relatedArtwork){
-                            stateUpdate.familySetupData.relatedArtwork = {...stateUpdate.familySetupData.relatedArtwork}
-                        }
-
-                        if(!stateUpdate.familySetupData.relatedArtwork.files){
-                            stateUpdate.familySetupData.relatedArtwork.files = []
-                        }
-
-                        console.log("relatedArtwork")
-                        console.log(relatedArtwork)
-
-                        // console.log()
-
-                        stateUpdate.familySetupData.relatedArtwork = {...stateUpdate.familySetupData.relatedArtwork, files: relatedArtwork};
-
-                        stateUpdate.fileData.files[file.fileName] = {
-                            ...stateUpdate.fileData.files[file.fileName], 
-                            relatedArtwork: { 
-                                files: relatedArtwork,                            
-                                column: {
-                                    fileIds: Object.keys(relatedArtwork).map(objName => objName),
-                                    id: `${file.artworkFamily}-${file.fileName}`
-                                },
-                                columnOrder: [`${file.artworkFamily}-${file.fileName}`]
-                            },
-                        
-                        }
-
-                        console.log("stateUpdate")
-                        console.log(stateUpdate)
-
-                        // if(!stateUpdate.fileData.files[file.fileName].relatedArtwork){
-                        //     stateUpdate.fileData.files[file.fileName].relatedArtwork = []
-                        // }
-    
-                        // stateUpdate.fileData.files[file.fileName].relatedArtwork = relatedArtwork;
-                        
-                        if(stateUpdate){
-                            resolve(stateUpdate)
-                        }
-                    })
-            }) 
         },
+
+        // getRelatedArtwork: (file, newState) => {
+        //     if(!file.artworkFamily){
+        //         return null
+        //     }
+
+        //     let relatedArtwork = {}
+
+        //         Object.keys(newState.fileData.files).forEach(fileName => {
+        //             if(newState.fileData.files[fileName].artworkFamily === file.artworkFamily){
+
+
+
+        //                 Object.keys(newState.fileData.files[fileName]).forEach(property => {
+
+        //                     console.log(`file ${fileName} with familyName in state`)
+
+        //                     relatedArtwork = {
+        //                         ...relatedArtwork,
+        //                         [fileName]: {
+        //                             ...relatedArtwork[fileName],
+        //                             [property]: newState.fileData.files[fileName][property]
+        //                         }
+        //                     }
+
+        //                 })
+
+        //             }
+        //         })
+
+        //         console.log("relatedArtwork--STATE")
+        //         console.log(relatedArtwork)
+
+
+        //     //this will concat files pertaining to a family both in state and server
+        //     //once the ASYNC function of fetching file records from server is complete
+        //     let stateUpdate = null
+
+        //     console.log('AXIOS RUNS')
+        //     //get all records from the selected family from database
+        //     return new Promise((resolve, reject) => {
+        //         axios.get(`/api/artworkInfo/${file.artworkFamily}`)
+        //             .then(res =>{
+
+        //                     res.data.forEach((obj, index) => {
+        //                     Object.keys(obj).forEach(property => {
+
+        //                             relatedArtwork = {
+        //                                 ...relatedArtwork,
+        //                                 [obj.fileName]: {
+        //                                     ...relatedArtwork[obj.fileName],
+        //                                     [property]: obj[property]
+        //                                 }
+        //                             }
+        //                         })
+        //                         console.log(`relatedArtwork--server (${index})`)
+        //                         console.log(relatedArtwork)
+        //                     })               
+                        
+        //                 stateUpdate = newState
+
+        //                 console.log('stateUpdate')
+
+        //                 if(!stateUpdate.familySetupData.relatedArtwork){
+        //                     stateUpdate.familySetupData.relatedArtwork = {}
+        //                 }
+
+        //                 if(!stateUpdate.fileData.files[file.fileName].relatedArtwork){
+        //                     stateUpdate.fileData.files[file.fileName].relatedArtwork = {}
+        //                 }
+
+        //                 stateUpdate.familySetupData.relatedArtwork = {
+        //                     ...stateUpdate.familySetupData.relatedArtwork, 
+        //                     files: relatedArtwork,
+        //                     column: {
+        //                         fileIds: Object.keys(relatedArtwork).map(objName => objName),
+        //                         id: `${file.artworkFamily}-${file.fileName}`
+        //                     },
+        //                     columnOrder: [`${file.artworkFamily}-${file.fileName}`]
+        //                 };
+
+        //                 stateUpdate.fileData.files[file.fileName].relatedArtwork = { 
+        //                             files: relatedArtwork,                            
+        //                             column: {
+        //                                 fileIds: Object.keys(relatedArtwork).map(objName => objName),
+        //                                 id: `${file.artworkFamily}-${file.fileName}`
+        //                             },
+        //                             columnOrder: [`${file.artworkFamily}-${file.fileName}`]
+        //                     };
+
+        //                 console.log("stateUpdate")
+        //                 console.log(stateUpdate)
+                        
+        //                 if(stateUpdate){
+        //                     resolve(stateUpdate)
+        //                 }
+        //             })
+        //     }) 
+        // },
 
         isChecked: (string, value, fileName) => {
             if(this.state.fileData.files[fileName][string].includes(value)){
@@ -933,45 +903,45 @@ export class Provider extends React.Component{
                     // .then(() => axios.get('/api/artworkInfo'))
                     //   .then( res => console.log(res.data))
         },
-        getFamilyDisplayIndex: (newColumnOrder, newStateCopy) => {
+        // getFamilyDisplayIndex: (newColumnOrder, newStateCopy) => {
 
-            //the array of fileIds after drag ends
-            const fileIdsArray = newColumnOrder
-            //context state after drag
-            let newState = {...newStateCopy}
+        //     //the array of fileIds after drag ends
+        //     const fileIdsArray = newColumnOrder
+        //     //context state after drag
+        //     let newState = {...newStateCopy}
 
-            let hasNotFamilyName = newColumnOrder.filter(fileName => !newState.fileData.files[fileName].artworkFamily)
-            console.log('HASNOTFAMILYNAME AT INITIATION')
-            console.log(hasNotFamilyName)
-            let hasFamilyName = []
-            let familyChildren = {}
+        //     let hasNotFamilyName = newColumnOrder.filter(fileName => !newState.fileData.files[fileName].artworkFamily)
+        //     console.log('HASNOTFAMILYNAME AT INITIATION')
+        //     console.log(hasNotFamilyName)
+        //     let hasFamilyName = []
+        //     let familyChildren = {}
 
-            fileIdsArray.forEach(fileName => {
-                const file = newStateCopy.fileData.files[fileName]
-                // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
-                console.log('file artworkFamily')
-                console.log(file.artworkFamily)
-                if(hasNotFamilyName.includes(fileName)){
-                    newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
-                }
-                else{
-                    if(!familyChildren[file.artworkFamily]){
-                        familyChildren[file.artworkFamily] = []
-                    }
-                    familyChildren[file.artworkFamily].push(fileName)
-                    console.log('family children index')
-                    console.log(familyChildren[file.artworkFamily].indexOf(fileName))
-                    newState.fileData.files[fileName].familyDisplayIndex = familyChildren[file.artworkFamily].indexOf(fileName)
-                }
-            })
+        //     fileIdsArray.forEach(fileName => {
+        //         const file = newStateCopy.fileData.files[fileName]
+        //         // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
+        //         console.log('file artworkFamily')
+        //         console.log(file.artworkFamily)
+        //         if(hasNotFamilyName.includes(fileName)){
+        //             newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
+        //         }
+        //         else{
+        //             if(!familyChildren[file.artworkFamily]){
+        //                 familyChildren[file.artworkFamily] = []
+        //             }
+        //             familyChildren[file.artworkFamily].push(fileName)
+        //             console.log('family children index')
+        //             console.log(familyChildren[file.artworkFamily].indexOf(fileName))
+        //             newState.fileData.files[fileName].familyDisplayIndex = familyChildren[file.artworkFamily].indexOf(fileName)
+        //         }
+        //     })
 
-            console.log('familyChildren Array')
-            console.log(familyChildren)
-            console.log('noFamilyChildren Array')
-            console.log(hasNotFamilyName)
+        //     console.log('familyChildren Array')
+        //     console.log(familyChildren)
+        //     console.log('noFamilyChildren Array')
+        //     console.log(hasNotFamilyName)
 
-            return newState
-        },
+        //     return newState
+        // },
         initialIndex: () => {
             let newState = {...this.state}
             this.state.fileData.column.fileIds.forEach((fileName, index) => {
@@ -979,6 +949,13 @@ export class Provider extends React.Component{
             })
             this.setState(newState)
         },
+        // getRelatedArtwork: (artworkFamily) => {
+        //     this.familySetupData.getAllByArtworkFamily(artworkFamily)
+        //         .then(res => {
+        //             console.log('getAllByArtworkFamily res')
+        //             console.log(res)
+        //         })
+        // }
 
         /**
          * @param artworkFamily - query key to find appropriate database records
@@ -1056,24 +1033,11 @@ export class Provider extends React.Component{
             .then( res => {
     
                 let newFamilySetup = {}
-                let newState = {}
-    
+                let newState = {...this.state}
+
                 if(fileName){
                     newFamilySetup = {...this.state.fileData.files[fileName]}
-                }
-    
-                Object.keys(res.data).forEach(objKey => {
-                    newFamilySetup = {
-                        ...newFamilySetup,
-                        [objKey]: res.data[objKey]
-                        }
-                })
-    
-                console.log('new family setup')
-                console.log(newFamilySetup)
-    
-                if(fileName){
-    
+
                     Object.keys(res.data).forEach(objKey => {
                         newFamilySetup = {
                             ...newFamilySetup,
@@ -1090,24 +1054,60 @@ export class Provider extends React.Component{
                             }
                         }
                     }
-
-                    this.fileDataMethods.getFamilyDisplayIndex(newState.fileData.column.fileIds, newState)
-    
-                    // console.log('newState')
-                    // console.log(newFamilySetup)
-    
-                    this.setState(newState)
-                    return
+                    console.log('if FILE NAME state')
+                    console.log(newState)
                 }
+
+                else if(!fileName){
+                    Object.keys(res.data).forEach(objKey => {
+                        newFamilySetup = {
+                            ...newFamilySetup,
+                            [objKey]: res.data[objKey]
+                        }
+                    })
+                    
+                    newState = {...this.state, familySetupData: newFamilySetup}
+                    console.log('no FILE NAME state')
+                    console.log(newState)
+                }
+
+                const withRelatedArtwork = this.familySetupMethods.getRelatedArtwork(value, newState)
     
-                this.setState({ familySetupData: newFamilySetup})
+                withRelatedArtwork
+                    .then(  res => {
+                        console.log('   with related artwork  ')
+                        console.log(res)
+                        if(fileName){
+                            newState = {...newState, 
+                                fileData: {
+                                    ...newState.fileData,
+                                    files: {
+                                        ...newState.fileData.files,
+                                        [fileName]: {
+                                            ...newState.fileData.files[fileName],
+                                            relatedArtwork: res
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        else{
+                            newState = {...newState, familySetupData: {...newState.familySetupData, relatedArtwork: res}}
+                        }
+
+                        console.log("newState")
+                        console.log(newState)
+                        this.setState(newState)
+                    } 
+                    )
                 // this.fileDatamethods.getFamilyDisplayIndex()
     
             })
             .catch(err => 
                 {
-                alert(err)
-                this.setState({familySetupData: {...this.state.familySetupData, artworkFamily: value}})
+                console.error(err)
+                // this.setState({familySetupData: {...this.state.familySetupData, artworkFamily: value}})
                 }
             )
     
@@ -1153,10 +1153,78 @@ export class Provider extends React.Component{
                 .then( res => {console.log(res); alert('success')})
                 .catch(err => {console.log(err); alert(err)})
         },
+        getRelatedArtwork: (artworkFamily, newState) => {
 
-    }
+            let relatedArtwork = {}
 
-}   //END OF CONTSTRUCTOR
+            if(newState.fileData.files){
+                Object.keys(newState.fileData.files).forEach(fileName => {
+                    if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
+
+                        Object.keys(newState.fileData.files[fileName]).forEach(property => {
+                            console.log(`file ${fileName} with familyName in state`)
+                            relatedArtwork = {
+                                ...relatedArtwork,
+                                    [fileName]: {
+                                        ...relatedArtwork[fileName],
+                                        [property]: newState.fileData.files[fileName][property]
+                                    }
+                                }
+                        })
+                    }
+                })
+                console.log('relatedArtwork from state')
+                console.log(relatedArtwork)
+            }
+
+            console.log('AXIOS RUNS')
+            //get all records from the selected family from database
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/artworkInfo/${artworkFamily}`)
+                    .then(res =>{
+
+                    //for each fileData object in res.data array 
+                        res.data.forEach((obj, index) => {
+                        //paste all properties of this file object unto relatedArtwork object
+                        Object.keys(obj).forEach(property => {
+                                relatedArtwork = {
+                                    ...relatedArtwork,
+                                        [obj.fileName]: {
+                                            ...relatedArtwork[obj.fileName],
+                                            [property]: obj[property]
+                                        }
+                                    }
+                            })
+                            console.log(`relatedArtwork--server (${index})`)
+                            console.log(relatedArtwork)
+                        })               
+                        
+
+                        //add additional properties: 
+                        //column (with id and array of files in order)
+                        //id
+                        let finalRelatedArtwork = {
+                            files: relatedArtwork,
+                            column: {
+                                fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                id: `${artworkFamily}-relatedArtworks`
+                            },
+                            columnOrder: [`${artworkFamily}-relatedArtworks`]
+                        };
+                            console.log("finalRelatedArtwork")
+                            console.log(finalRelatedArtwork)
+                            resolve(finalRelatedArtwork)
+                    })
+            }) 
+        },
+        // getAllByArtworkFamily: (artworkFamily) => {
+        //    return  axios.get(`/api/artworkInfo/${artworkFamily}`)
+        //         .then(res => res.data)
+        // }
+
+    }//end of familySetupMethods
+
+}//END OF CONTSTRUCTOR
 
     componentDidMount(){
 

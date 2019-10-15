@@ -48,7 +48,7 @@ export default class DndListDroppable extends React.Component{
 
                                                     <FamilyListDraggable
                                                         key={`${fileId}-in-${this.props.column.id}-${index}-familyList`} 
-                                                        file={this.props.files[index]} 
+                                                        file={this.props.files[fileId]} 
                                                         columnId={this.props.column.id}
                                                         index={index}
                                                         relatedArtwork={this.props}
