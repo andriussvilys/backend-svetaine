@@ -14,9 +14,10 @@ export default class FamilyPreview extends React.Component{
      * @param fileType
      * @param file
      */
-    fileContainer = (fileType, file) => {
+    fileContainer = (fileType, file, index) => {
 
         const previewSource = file.filePath ? file.filePath : file.preview
+        const key = `${file.fileName}-${index}`
 
         console.log(file.filePath ? 'file.filePath' : 'file.preview')
         console.log(previewSource)
@@ -24,7 +25,7 @@ export default class FamilyPreview extends React.Component{
         if(fileType.match('image')){
             console.log('RETURN IMAGE')
             return(
-                <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />    
+                <img key={key} className="ImagesPreview--image" alt={file.fileName} src={previewSource} />    
             )
         }
         if(fileType.match('video')){
@@ -32,6 +33,7 @@ export default class FamilyPreview extends React.Component{
                 <video 
                 className="ImagesPreview--image" 
                 controls
+                key={key}
                 >
                     <source src={previewSource} type={fileType} />
                     Your browser does not support the video tag.
@@ -44,6 +46,7 @@ export default class FamilyPreview extends React.Component{
                 <audio 
                 className="ImagesPreview--image" 
                 controls
+                key={key}
                 >
                     <source src={previewSource} type={fileType} />
                     Your browser does not support the audio tag.
@@ -52,56 +55,26 @@ export default class FamilyPreview extends React.Component{
         }
         if(fileType.match("application/pdf")){
             return(
-                    <iframe src={previewSource} style={{width: "100%"}}></iframe>
+                    <iframe key={key} src={previewSource} style={{width: "100%"}}></iframe>
             )
         }
     }
 
     createFamilyList = (props) => {
-        if(!props.file.artworkFamily){
-            return null
+        if(!props.file.relatedArtwork){
+            return []
         }
 
-        let serverFamily = null;
-
-        //get all records from the selected family from database
-        axios.get(`/api/artworkInfo/${props.file.artworkFamily}`)
-            .then(res =>{
-
-                serverFamily = res.data
-                
-                //get all files that have selected family, but are not uploaded to server yet
-                const getStateFamily = (props) => {
-                    let filesInFamily = Object.keys(props.state.fileData.files).map(obj => {
-                        if(props.state.fileData.files[obj].artworkFamily === props.file.artworkFamily){
-                            return props.state.fileData.files[obj]
-                        }
-                        return 
-                    })
-                    return filesInFamily
-                }
-                let stateFamily = getStateFamily(props)
-        
-                //put server files and state files in one array
-                const allInFamily = [...serverFamily, ...stateFamily]
-
-                // console.log('allInFamily')
-                // console.log(allInFamily)
-        
-                let previews = allInFamily.map(file => {
-                    return (
-                        // this.fileContainer(file.fileType, file)
-                        <FilePreview 
-                            file={file}
-                        />
-                    )
-                })
-
-                this.familyList = previews
-                 console.log('previews')
-                console.log(previews)
-                return this.setState({familyList: previews})
-            })
+        let previews = Object.keys(this.props.file.relatedArtwork.files).forEach(fileName => {
+            console.log('previews file')
+            console.log(this.props.file.relatedArtwork.files[fileName])
+            return (
+                <FilePreview 
+                    file={this.props.file.relatedArtwork.files[fileName]}
+                /> 
+            )
+        })
+        return previews
     }
 
     render(){
@@ -124,7 +97,13 @@ export default class FamilyPreview extends React.Component{
                Load all Family records
            </Button>
        
-           <div>{this.state.familyList}</div> 
+           <div>
+            {!this.props.file.relatedArtwork ? null : 
+                this.props.file.relatedArtwork.column.fileIds.map((fileName, index) => {
+                    return this.fileContainer(this.props.file.relatedArtwork.files[fileName].fileType, this.props.file.relatedArtwork.files[fileName], index)
+                })
+            }
+            </div> 
        
         </div>
         )

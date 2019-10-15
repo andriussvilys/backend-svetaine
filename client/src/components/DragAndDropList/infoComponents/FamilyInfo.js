@@ -81,11 +81,11 @@ export default class FamilyInfo extends Component {
                                 displayAddNew="initial"
                             />
 
-                            {/* <FamilyPreview
+                            <FamilyPreview
                                 file={this.props.file}
                                 context={this.props.context}
                                 state={this.context.state}
-                            /> */}
+                            /> 
 
                             <DropDownList 
                                 title={"Set 'See Also' artwork families"}
