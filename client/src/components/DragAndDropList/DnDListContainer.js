@@ -12,37 +12,37 @@ export default class DnDListContainer extends React.Component{
         this.state = null
     }
 
-    onDragEnd = (result) => {
+    // onDragEnd = (result) => {
 
-        const {destination, source, draggableId} = result;
+    //     const {destination, source, draggableId} = result;
 
-        if(!destination){
-            return
-        }
+    //     if(!destination){
+    //         return
+    //     }
         
-        const column = this.state.column[source.droppableId];
-        // const column = this.state.column[source.droppableId];
+    //     const column = this.state.column[source.droppableId];
+    //     // const column = this.state.column[source.droppableId];
 
-            let newFileIds = this.state.column.fileIds
+    //         let newFileIds = this.state.column.fileIds
 
-            newFileIds.splice(source.index, 1)
-            newFileIds.splice(destination.index, 0, draggableId)
+    //         newFileIds.splice(source.index, 1)
+    //         newFileIds.splice(destination.index, 0, draggableId)
     
-            const newColumn = {
-                ...column,
-                fileIds: newFileIds
-            }
+    //         const newColumn = {
+    //             ...column,
+    //             fileIds: newFileIds
+    //         }
     
-            const newState = {
-                ...this.state.column,
-                columns: {
-                    ...this.state.column,
-                    [newColumn.id]: newColumn
-                }
-            }
+    //         const newState = {
+    //             ...this.state.column,
+    //             columns: {
+    //                 ...this.state.column,
+    //                 [newColumn.id]: newColumn
+    //             }
+    //         }
     
-            this.setState(newState)
-    }
+    //         this.setState(newState)
+    // }
     createDroppable = () => {
         return(
             <div>
@@ -57,38 +57,29 @@ export default class DnDListContainer extends React.Component{
         )
     }
 
-    setUpState = (callback) => {
-        if(!this.state){
-            this.setState(this.props.data, 
-                    () => {if(callback){callback()}}
-            )
-            return
-        }
-        else{
-            return
-        }
+    // setUpState = (callback) => {
+    //     if(!this.state){
+    //         this.setState(this.props.data, 
+    //                 () => {if(callback){callback()}}
+    //         )
+    //         return
+    //     }
+    //     else{
+    //         return
+    //     }
 
-    }
-
-    // componentDidUpdate(){
-    //     this.setUpState()
     // }
 
     render(){
         //if this component receives props, we set up the its state
-
         return(
             <Context.Consumer>
                 {() => {
                         if(this.props.data){
                             return(
                                 <div> 
-                                    {/* <Button
-                                        onClick={this.setUpState()}
-                                    >
-                                    </Button> */}
-                
-                                    <DragDropContext onDragEnd={this.context.onDragEnd}>
+                                    <DragDropContext 
+                                        onDragEnd={this.context.onDragEnd}>
                                         {this.props.data ? this.createDroppable() : null}
                                     </DragDropContext>  
                                 </div>

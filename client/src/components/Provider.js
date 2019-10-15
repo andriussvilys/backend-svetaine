@@ -620,23 +620,32 @@ export class Provider extends React.Component{
                 return null
             }
 
+            let relatedArtwork = {}
+
             console.log('RELATED ARTWROK RUNS WITH FILE')
             console.log(file)
             //get all files that have selected family, but are not uploaded to server yet
             const getStateFamily = () => {
-                let filesInFamily = Object.keys(newState.fileData.files).map(obj => {
-                    if(newState.fileData.files[obj].artworkFamily === file.artworkFamily){
-                        return newState.fileData.files[obj]
+                Object.keys(newState.fileData.files).forEach(obj => {
+                    if(obj.artworkFamily === file.artworkFamily){
+
+                        Object.keys(obj).forEach(property => {
+                            relatedArtwork[obj.fileName] = {
+                                [property]: obj[property]
+                            }
+                        })
+
                     }
-                    return 
                 })
-                return filesInFamily
+
+                console.log("relatedArtwork")
+                console.log(relatedArtwork)
             }
-            let stateFamily = getStateFamily()
+
+            getStateFamily()
 
             //this will concat files pertaining to a family both in state and server
             //once the ASYNC function of fetching file records from server is complete
-            let relatedArtwork = []
             let stateUpdate = null
 
             console.log('AXIOS RUNS')
@@ -646,16 +655,71 @@ export class Provider extends React.Component{
                     .then(res =>{
         
                         //concat server files and state files 
-                        relatedArtwork = [...stateFamily, ...res.data]
-    
+
+                        console.log("RES.DATA")
+                        console.log(res.data)
+
+                            res.data.forEach(obj => {
+                                console.log("FILE NAME")
+                                console.log(obj.fileName)
+
+                            Object.keys(obj).forEach(property => {
+                                console.log("PROPERTY")
+                                console.log(property)
+
+                                    relatedArtwork[obj.fileName] = {
+                                        [property]: obj[property]
+                                    }
+                                })
+                                console.log('relatedArtwork')
+                                console.log(relatedArtwork)
+                            })               
+
+
+
+                        // relatedArtwork = [...stateFamily, ...databaseArray]
+                        
                         
                         stateUpdate = newState
                         
-                        if(!stateUpdate.fileData.files[file.fileName].relatedArtwork){
-                            stateUpdate.fileData.files[file.fileName].relatedArtwork = []
+                        
+
+                        if(!stateUpdate.familySetupData.relatedArtwork){
+                            stateUpdate.familySetupData.relatedArtwork = {...stateUpdate.familySetupData.relatedArtwork}
                         }
+
+                        if(!stateUpdate.familySetupData.relatedArtwork.files){
+                            stateUpdate.familySetupData.relatedArtwork.files = []
+                        }
+
+                        console.log("relatedArtwork")
+                        console.log(relatedArtwork)
+
+                        // console.log()
+
+                        stateUpdate.familySetupData.relatedArtwork = {...stateUpdate.familySetupData.relatedArtwork, files: relatedArtwork};
+
+                        stateUpdate.fileData.files[file.fileName] = {
+                            ...stateUpdate.fileData.files[file.fileName], 
+                            relatedArtwork: { 
+                                files: relatedArtwork,                            
+                                column: {
+                                    fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                    id: `${file.artworkFamily}-${file.fileName}`
+                                },
+                                columnOrder: [`${file.artworkFamily}-${file.fileName}`]
+                            },
+                        
+                        }
+
+                        console.log("stateUpdate")
+                        console.log(stateUpdate)
+
+                        // if(!stateUpdate.fileData.files[file.fileName].relatedArtwork){
+                        //     stateUpdate.fileData.files[file.fileName].relatedArtwork = []
+                        // }
     
-                        stateUpdate.fileData.files[file.fileName].relatedArtwork = relatedArtwork;
+                        // stateUpdate.fileData.files[file.fileName].relatedArtwork = relatedArtwork;
                         
                         if(stateUpdate){
                             resolve(stateUpdate)
@@ -805,9 +869,36 @@ export class Provider extends React.Component{
 
                 newState.fileData.column[newColumn.id] = newColumn
 
-                newState = this.fileDataMethods.getFamilyDisplayIndex(newColumn.fileIds, newState)
+                // newState = this.fileDataMethods.getFamilyDisplayIndex(newColumn.fileIds, newState)
         
                 this.setState(newState)
+        },
+        onDragEndFamilyList: (result, fileName) => {
+            const {destination, source, draggableId} = result;
+        
+            if(!destination){
+                return
+            }
+
+            const column = this.state.fileData.files[fileName].relatedArtwork.column[source.droppableId];
+        
+            let newFileIds = this.state.fileData.files[fileName].relatedArtwork.column.fileIds
+    
+            newFileIds.splice(source.index, 1)
+            newFileIds.splice(destination.index, 0, draggableId)
+    
+            const newColumn = {
+                ...column,
+                fileIds: newFileIds
+            }
+            
+            let newState = {...this.state}
+
+            newState.fileData.files[fileName].relatedArtwork.column[newColumn.id] = newColumn
+
+            // newState = this.fileDataMethods.getFamilyDisplayIndex(newColumn.fileIds, newState)
+    
+            this.setState(newState)
         },
         postArtworkInfo: (fileName) => {
 
@@ -1039,6 +1130,7 @@ export class Provider extends React.Component{
             const category = this.state.familySetupData.category ? this.state.familySetupData.category : {};
             const familyDescription = this.state.familySetupData.familyDescription ? this.state.familySetupData.familyDescription : "";
             const themes = this.state.familySetupData.themes ? this.state.familySetupData.themes : [];
+            const relatedArtwork = this.state.familySetupData.relatedArtwork ? this.state.familySetupData.relatedArtwork : [];
             const seeAlso = this.state.familySetupData.seeAlso ? this.state.familySetupData.seeAlso : [];
             const location = this.state.familySetupData.location ? this.state.familySetupData.location : "";
             const year = this.state.familySetupData.year ? this.state.familySetupData.year : "";
@@ -1048,6 +1140,7 @@ export class Provider extends React.Component{
                 artworkFamily: artworkFamily,
                 familyDescription: familyDescription,
                 themes: themes,
+                relatedArtwork: relatedArtwork,
                 seeAlso: seeAlso,
                 location: location,
                 year: year
@@ -1060,28 +1153,6 @@ export class Provider extends React.Component{
                 .then( res => {console.log(res); alert('success')})
                 .catch(err => {console.log(err); alert(err)})
         },
-        // getAllByArtworkFamily: (artworkFamily, fileName) => {
-        //     console.log(artworkFamily)
-        //     axios.get(`/api/artworkInfo/${artworkFamily}`)
-
-        //         .then(res => {
-        //             //returns and array of all artworks with specified artwork family stored in the database
-        //             console.log(res.data)
-        //             let newState ={...this.state}
-        //             let fileNest = {...this.state.fileData.files[fileName]}
-        //             newState = {...this.state.fileData.files[fileName], relatedAtwork: res.data}
-
-        //             Object.keys(this.state.fileData.files).forEach(obj => {
-        //                 if(this.state.fileData.files[obj].artworkFamily === artworkFamily){
-        //                     if(newState.fileData.files[fileName].relatedArtwork){
-                                
-        //                     }
-        //                 }
-        //             })
-
-        //             this.setState(newState)
-        //         })
-        // },
 
     }
 

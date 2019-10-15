@@ -13,6 +13,9 @@ import ArtowrkInfo from './infoComponents/ArtworkInfo'
 import JsonPreview from './infoComponents/JsonPreview'
 import FamilyInfo from './infoComponents/FamilyInfo'
 import NavigationInfo from './infoComponents/NavigationInfo'
+
+import FamilyListDnDContainer from './FamilyListDnD/FamilyListDnDContainer'
+
 import './css/ImagesPreview.css';
 
 export default class DnDListDraggable extends React.Component{
@@ -53,9 +56,14 @@ export default class DnDListDraggable extends React.Component{
                                 >       
                                         
                                         <div className="image-index-box">
-                                            <FilePreview 
+
+                                        <FilePreview 
+                                            file={this.props.file}
+                                        />
+
+                                            {/* <FilePreview 
                                                 file={this.props.file}
-                                            />
+                                            /> */}
                                             <div className="ImagesPreview--indexContainer">
                                                 <div>artwork family name:</div>
                                                 <div>{this.props.file.artworkFamily ? this.props.file.artworkFamily : "N/A"}</div>
@@ -113,6 +121,9 @@ export default class DnDListDraggable extends React.Component{
                                                     </Card.Header>
                                                     <Accordion.Collapse eventKey="0">
                                                     <Card.Body style={{padding: "15px"}} >
+                                                        <FamilyListDnDContainer
+                                                            data={this.context.state.fileData.files[this.props.file.fileName].relatedArtwork}
+                                                        />
                                                         <FamilyInfo
                                                             fileName={this.props.file.fileName}
                                                             file={this.props.file}

@@ -21,6 +21,11 @@ let FamilySetupSchema = new Schema({
         required: false,
         default: []
     },
+    relatedArtwork: {
+        type: Array,
+        required: false,
+        default: []        
+    },
     seeAlso: {
         type: Array,
         required: false,
