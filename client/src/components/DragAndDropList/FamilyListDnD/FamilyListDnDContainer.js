@@ -21,6 +21,7 @@ export default class FamilyListDnDContainer extends React.Component{
                 files={this.props.data.files}
                 columnIndex={0}
                 fileName={this.props.fileName}
+                artworkFamily={this.props.artworkFamily}
                 >
                 </FamilyListDroppable>
             </div>

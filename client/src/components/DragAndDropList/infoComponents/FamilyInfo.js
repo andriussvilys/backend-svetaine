@@ -29,6 +29,15 @@ export default class FamilyInfo extends Component {
         else return null
     }
 
+    familyListData = () => {
+        if(!this.props.file.artworkFamily){
+           return null
+        }
+        else{
+            return this.context.state.relatedArtwork[this.props.file.artworkFamily]
+        }
+    } 
+
     render(){
         return(
             <Context.Consumer>
@@ -89,8 +98,10 @@ export default class FamilyInfo extends Component {
                             />  */}
 
                             <FamilyListDnDContainer 
-                            data={!this.props.file.relatedArtwork ? null : this.props.file.relatedArtwork}
+                            data={this.familyListData()}
+                            // data={!this.props.file.relatedArtwork ? null : this.props.file.relatedArtwork}
                             fileName={this.props.file.fileName}
+                            artworkFamily={this.props.file.artworkFamily}
                             />
 
                             <DropDownList 

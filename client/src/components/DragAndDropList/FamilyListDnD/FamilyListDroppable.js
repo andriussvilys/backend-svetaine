@@ -30,7 +30,8 @@ export default class DndListDroppable extends React.Component{
                 {() => {
                     return(
                         <Droppable 
-                        droppableId={`${this.props.fileName}`}
+                        droppableId={`${this.props.artworkFamily}-relatedArtworks`}
+                        // droppableId={`${this.props.fileName}`}
                         >
                         {provided =>{
                                         return(

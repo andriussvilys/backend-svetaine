@@ -26,6 +26,7 @@ export class Provider extends React.Component{
             themes: [],
             category: {}
         },
+        relatedArtwork: {},
         categoriesData: [],
         themesData: [],
         artworkFamilyList: [],
@@ -749,10 +750,12 @@ export class Provider extends React.Component{
         onDragEndFamilyList: (result) => {
 
             const fileName = result.destination.droppableId
+            const artworkFamily = fileName.slice(0, fileName.match("-relatedArtworks").index)
 
             console.log('RESULT AND FAMILY NAME*****************')
             console.log(result)
             console.log(fileName)
+            console.log(artworkFamily)
 
             const {destination, source, draggableId} = result;
         
@@ -760,9 +763,12 @@ export class Provider extends React.Component{
                 return
             }
 
-            const column = this.state.fileData.files[fileName].relatedArtwork.column[source.droppableId];
+            const column = this.state.relatedArtwork[artworkFamily].column[source.droppableId];
         
-            let newFileIds = this.state.fileData.files[fileName].relatedArtwork.column.fileIds
+            let newFileIds = this.state.relatedArtwork[artworkFamily].column.fileIds
+            // const column = this.state.fileData.files[fileName].relatedArtwork.column[source.droppableId];
+        
+            // let newFileIds = this.state.fileData.files[fileName].relatedArtwork.column.fileIds
     
             newFileIds.splice(source.index, 1)
             newFileIds.splice(destination.index, 0, draggableId)
@@ -774,10 +780,10 @@ export class Provider extends React.Component{
             
             let newState = {...this.state}
 
-            newState.fileData.files[fileName].relatedArtwork.column[newColumn.id] = newColumn
+            newState.relatedArtwork[artworkFamily].column[newColumn.id] = newColumn
 
-            // newState = this.fileDataMethods.getFamilyDisplayIndex(newColumn.fileIds, newState)
-    
+
+
             this.setState(newState)
         },
         postArtworkInfo: (fileName) => {
@@ -949,24 +955,25 @@ export class Provider extends React.Component{
                     .then(  res => {
                         console.log('   with related artwork  ')
                         console.log(res)
-                        if(fileName){
-                            newState = {...newState, 
-                                fileData: {
-                                    ...newState.fileData,
-                                    files: {
-                                        ...newState.fileData.files,
-                                        [fileName]: {
-                                            ...newState.fileData.files[fileName],
-                                            relatedArtwork: res
-                                        }
-                                    }
-                                }
-                            }
-                        }
+                        // if(fileName){
+                        //     newState = {...newState, 
+                        //         fileData: {
+                        //             ...newState.fileData,
+                        //             files: {
+                        //                 ...newState.fileData.files,
+                        //                 [fileName]: {
+                        //                     ...newState.fileData.files[fileName],
+                        //                     relatedArtwork: res
+                        //                 }
+                        //             }
+                        //         }
+                        //     }
+                        // }
 
-                        else{
-                            newState = {...newState, familySetupData: {...newState.familySetupData, relatedArtwork: res}}
-                        }
+                        // else{
+                        //     newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
+                        // }
+                        newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
 
                         console.log("newState")
                         console.log(newState)
@@ -1029,29 +1036,16 @@ export class Provider extends React.Component{
 
             let relatedArtwork = {}
 
-            // if(newState.fileData.files){
-            //     Object.keys(newState.fileData.files).forEach(fileName => {
-            //         if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
-
-            //             Object.keys(newState.fileData.files[fileName]).forEach(property => {
-            //                 console.log(`file ${fileName} with familyName in state`)
-            //                 relatedArtwork = {
-            //                     ...relatedArtwork,
-            //                         [fileName]: {
-            //                             ...relatedArtwork[fileName],
-            //                             [property]: newState.fileData.files[fileName][property]
-            //                         }
-            //                     }
-            //             })
-            //         }
-            //     })
-            //     console.log('relatedArtwork from state')
-            //     console.log(relatedArtwork)
-            // }
+            
 
             console.log('AXIOS RUNS')
             //get all records from the selected family from database
             return new Promise((resolve, reject) => {
+                // if(this.state.relatedArtwork[value]){
+                //     relatedArtwork = {...this.state.relatedArtwork}
+                // }
+
+
                 axios.get(`/api/artworkInfo/${artworkFamily}`)
                     .then(res =>{
 
@@ -1096,12 +1090,12 @@ export class Provider extends React.Component{
                         //column (with id and array of files in order)
                         //id
                         let finalRelatedArtwork = {
-                            files: relatedArtwork,
-                            column: {
-                                fileIds: Object.keys(relatedArtwork).map(objName => objName),
-                                id: `${artworkFamily}-relatedArtworks`
-                            },
-                            columnOrder: [`${artworkFamily}-relatedArtworks`]
+                                files: relatedArtwork,
+                                column: {
+                                    fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                    id: `${artworkFamily}-relatedArtworks`
+                                },
+                                columnOrder: [`${artworkFamily}-relatedArtworks`]
                         };
                             console.log("finalRelatedArtwork")
                             console.log(finalRelatedArtwork)
@@ -1113,7 +1107,6 @@ export class Provider extends React.Component{
         //    return  axios.get(`/api/artworkInfo/${artworkFamily}`)
         //         .then(res => res.data)
         // }
-
     }//end of familySetupMethods
 
 }//END OF CONTSTRUCTOR
