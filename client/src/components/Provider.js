@@ -813,45 +813,7 @@ export class Provider extends React.Component{
                     // .then(() => axios.get('/api/artworkInfo'))
                     //   .then( res => console.log(res.data))
         },
-        // getFamilyDisplayIndex: (newColumnOrder, newStateCopy) => {
 
-        //     //the array of fileIds after drag ends
-        //     const fileIdsArray = newColumnOrder
-        //     //context state after drag
-        //     let newState = {...newStateCopy}
-
-        //     let hasNotFamilyName = newColumnOrder.filter(fileName => !newState.fileData.files[fileName].artworkFamily)
-        //     console.log('HASNOTFAMILYNAME AT INITIATION')
-        //     console.log(hasNotFamilyName)
-        //     let hasFamilyName = []
-        //     let familyChildren = {}
-
-        //     fileIdsArray.forEach(fileName => {
-        //         const file = newStateCopy.fileData.files[fileName]
-        //         // file.artworkFamily ? hasFamilyName.push(fileName) : hasNotFamilyName.push(fileName)
-        //         console.log('file artworkFamily')
-        //         console.log(file.artworkFamily)
-        //         if(hasNotFamilyName.includes(fileName)){
-        //             newState.fileData.files[fileName].familyDisplayIndex = hasNotFamilyName.indexOf(fileName)
-        //         }
-        //         else{
-        //             if(!familyChildren[file.artworkFamily]){
-        //                 familyChildren[file.artworkFamily] = []
-        //             }
-        //             familyChildren[file.artworkFamily].push(fileName)
-        //             console.log('family children index')
-        //             console.log(familyChildren[file.artworkFamily].indexOf(fileName))
-        //             newState.fileData.files[fileName].familyDisplayIndex = familyChildren[file.artworkFamily].indexOf(fileName)
-        //         }
-        //     })
-
-        //     console.log('familyChildren Array')
-        //     console.log(familyChildren)
-        //     console.log('noFamilyChildren Array')
-        //     console.log(hasNotFamilyName)
-
-        //     return newState
-        // },
         initialIndex: () => {
             let newState = {...this.state}
             this.state.fileData.column.fileIds.forEach((fileName, index) => {
@@ -1067,25 +1029,25 @@ export class Provider extends React.Component{
 
             let relatedArtwork = {}
 
-            if(newState.fileData.files){
-                Object.keys(newState.fileData.files).forEach(fileName => {
-                    if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
+            // if(newState.fileData.files){
+            //     Object.keys(newState.fileData.files).forEach(fileName => {
+            //         if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
 
-                        Object.keys(newState.fileData.files[fileName]).forEach(property => {
-                            console.log(`file ${fileName} with familyName in state`)
-                            relatedArtwork = {
-                                ...relatedArtwork,
-                                    [fileName]: {
-                                        ...relatedArtwork[fileName],
-                                        [property]: newState.fileData.files[fileName][property]
-                                    }
-                                }
-                        })
-                    }
-                })
-                console.log('relatedArtwork from state')
-                console.log(relatedArtwork)
-            }
+            //             Object.keys(newState.fileData.files[fileName]).forEach(property => {
+            //                 console.log(`file ${fileName} with familyName in state`)
+            //                 relatedArtwork = {
+            //                     ...relatedArtwork,
+            //                         [fileName]: {
+            //                             ...relatedArtwork[fileName],
+            //                             [property]: newState.fileData.files[fileName][property]
+            //                         }
+            //                     }
+            //             })
+            //         }
+            //     })
+            //     console.log('relatedArtwork from state')
+            //     console.log(relatedArtwork)
+            // }
 
             console.log('AXIOS RUNS')
             //get all records from the selected family from database
@@ -1107,7 +1069,27 @@ export class Provider extends React.Component{
                             })
                             console.log(`relatedArtwork--server (${index})`)
                             console.log(relatedArtwork)
-                        })               
+                        })        
+                        
+                        if(newState.fileData.files){
+                            Object.keys(newState.fileData.files).forEach(fileName => {
+                                if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
+            
+                                    Object.keys(newState.fileData.files[fileName]).forEach(property => {
+                                        console.log(`file ${fileName} with familyName in state`)
+                                        relatedArtwork = {
+                                            ...relatedArtwork,
+                                                [fileName]: {
+                                                    ...relatedArtwork[fileName],
+                                                    [property]: newState.fileData.files[fileName][property]
+                                                }
+                                            }
+                                    })
+                                }
+                            })
+                            console.log('relatedArtwork from state')
+                            console.log(relatedArtwork)
+                        }
                         
 
                         //add additional properties: 
