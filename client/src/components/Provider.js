@@ -498,14 +498,6 @@ export class Provider extends React.Component{
                 }
             }
 
-            // if(string === "themes" || string ==="seeAlso"){
-            //     if(!this.state.fileData.files[fileName][string]){
-            //         this.state.fileData.files[fileName][string] = []
-            //     }
-            // }
-            // else{
-            //     this.state.fileData.files[fileName][string] = null
-            // }
 
             if(!!this.state.fileData.files[fileName][string]){
                 if(this.state.fileData.files[fileName][string].includes(value)){
@@ -595,7 +587,7 @@ export class Provider extends React.Component{
                 const relatedArtworkPromise = this.familySetupMethods.getRelatedArtwork(newState.fileData.files[file.fileName].artworkFamily, newState)
 
                 relatedArtworkPromise.then(res => {
-                    newState.fileData.files[file.fileName].relatedArtwork = res
+                    newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
                     this.setState(newState)
                 })
         },
@@ -827,14 +819,6 @@ export class Provider extends React.Component{
             })
             this.setState(newState)
         },
-        // getRelatedArtwork: (artworkFamily) => {
-        //     this.familySetupData.getAllByArtworkFamily(artworkFamily)
-        //         .then(res => {
-        //             console.log('getAllByArtworkFamily res')
-        //             console.log(res)
-        //         })
-        // }
-
         /**
          * @param artworkFamily - query key to find appropriate database records
          * @param fileName - which file data obj receives res.data
@@ -1036,15 +1020,12 @@ export class Provider extends React.Component{
 
             let relatedArtwork = {}
 
-            
-
             console.log('AXIOS RUNS')
             //get all records from the selected family from database
             return new Promise((resolve, reject) => {
                 // if(this.state.relatedArtwork[value]){
                 //     relatedArtwork = {...this.state.relatedArtwork}
                 // }
-
 
                 axios.get(`/api/artworkInfo/${artworkFamily}`)
                     .then(res =>{

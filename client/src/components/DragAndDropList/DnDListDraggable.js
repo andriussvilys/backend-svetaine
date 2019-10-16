@@ -72,6 +72,7 @@ export default class DnDListDraggable extends React.Component{
                                         </div>
                                         
                                         <div style={{flex: "1", minWidth: "250px"}}>
+
                                             <Accordion>
                                                 <Card>
                                                     <Card.Header>
