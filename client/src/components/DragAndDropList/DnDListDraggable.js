@@ -119,10 +119,6 @@ export default class DnDListDraggable extends React.Component{
                                                     </Card.Header>
                                                     <Accordion.Collapse eventKey="0">
                                                     <Card.Body style={{padding: "15px"}} >
-{/* 
-                                                        <FamilyListDnDContainer
-                                                            data={this.context.state.fileData.files[this.props.file.fileName].relatedArtwork}
-                                                        /> */}
 
                                                         <FamilyInfo
                                                             fileName={this.props.file.fileName}

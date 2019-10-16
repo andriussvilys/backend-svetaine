@@ -35,7 +35,10 @@ export default class ImageInfo extends Component{
                     </div>
 
                     <div className="DnD-imageInfo--box">
-                  <span>display on main page:</span>
+                        <div>
+                            <span>display on main page:</span>
+                            <p className="subtitle">will be as representative if artworkFamily is used as a seeAlso</p>
+                        </div>
                   <form>
                       <div className="container-radio">
                           <label htmlFor="mainDisplayIndex_yes">yes</label>

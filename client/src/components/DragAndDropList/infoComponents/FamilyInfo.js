@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Context } from '../../Provider';
+import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion' 
+import Card from 'react-bootstrap/Card'
 
 import DropDownList from '../../DropDownList'
 import FamilyPreview from '../../FamilyPreview'
@@ -70,7 +73,6 @@ export default class FamilyInfo extends Component {
                                         disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
                                         onClick={() => this.context.useFamilySetup(false)}
                                         checked={!this.context.state.fileData.files[this.props.fileName].useFamilySetup}
-                                        // defaultChecked 
                                         />
                                     </div>
                                 </form>
@@ -82,7 +84,6 @@ export default class FamilyInfo extends Component {
                                 fileName={this.props.fileName}
                                 array={this.context.state.artworkFamilyList}
                                 string={"artworkFamily"}
-                                // onChange={this.context.fileDataMethods.onChange}
                                 onChange={this.context.getFamilySetup}
                                 isChecked={this.context.fileDataMethods.isChecked}
                                 id="List-of-artwork-families"
@@ -90,19 +91,34 @@ export default class FamilyInfo extends Component {
                                 addNewTarget={'artworkFamilyList'}
                                 displayAddNew="initial"
                             />
-{/* 
-                            <FamilyPreview
-                                file={this.props.file}
-                                context={this.props.context}
-                                state={this.context.state}
-                            />  */}
 
-                            <FamilyListDnDContainer 
+                            {/* <FamilyListDnDContainer 
                             data={this.familyListData()}
-                            // data={!this.props.file.relatedArtwork ? null : this.props.file.relatedArtwork}
                             fileName={this.props.file.fileName}
                             artworkFamily={this.props.file.artworkFamily}
-                            />
+                            /> */}
+
+                            <Accordion >
+                                <Card>
+                                    <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
+                                        Arrange family display order
+                                        <p className="subtitle">{!this.props.file.artworkFamily ? "please select an artworkFamily first" : null}</p>
+                                    </Accordion.Toggle>
+                                    </Card.Header>
+                                    <Accordion.Collapse eventKey="0">
+                                    <Card.Body>
+
+                                    <FamilyListDnDContainer 
+                                        data={this.familyListData()}
+                                        fileName={this.props.file.fileName}
+                                        artworkFamily={this.props.file.artworkFamily}
+                                    />
+
+                                    </Card.Body>
+                                    </Accordion.Collapse>
+                                </Card>
+                            </Accordion>
 
                             <DropDownList 
                                 title={"Set 'See Also' artwork families"}
@@ -118,7 +134,6 @@ export default class FamilyInfo extends Component {
                             <div className="DnD-imageInfo--box" style={{display: "block"}}>
                                 <div>
                                     <p>Family description:</p> 
-                                    {/* <p className="subtitle">(different from family name):</p> */}
                                 </div>
                                 <textarea
                                 value={this.useFamilySetup("familyDescription") ? this.useFamilySetup("familyDescription") : ""}

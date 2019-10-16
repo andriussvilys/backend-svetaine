@@ -741,6 +741,12 @@ export class Provider extends React.Component{
         },
         onDragEndFamilyList: (result) => {
 
+            const {destination, source, draggableId} = result;
+
+            if(!destination){
+                return
+            }
+
             const fileName = result.destination.droppableId
             const artworkFamily = fileName.slice(0, fileName.match("-relatedArtworks").index)
 
@@ -748,12 +754,6 @@ export class Provider extends React.Component{
             console.log(result)
             console.log(fileName)
             console.log(artworkFamily)
-
-            const {destination, source, draggableId} = result;
-        
-            if(!destination){
-                return
-            }
 
             const column = this.state.relatedArtwork[artworkFamily].column[source.droppableId];
         
