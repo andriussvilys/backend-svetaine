@@ -30,7 +30,7 @@ export default class DndListDroppable extends React.Component{
                 {() => {
                     return(
                         <Droppable 
-                        droppableId={`${this.props.column.id}-familyList`}
+                        droppableId={`${this.props.fileName}`}
                         >
                         {provided =>{
                                         return(
@@ -41,9 +41,9 @@ export default class DndListDroppable extends React.Component{
                                             // style={{display: "flex", flexWrap: "wrap"}}
                                             >
                                                 {this.props.column.fileIds.map((fileId, index) => {
-                                                    console.log('craete dragables')
-                                                    console.log(this.props)
-                                                    console.log(fileId)
+                                                    // console.log('craete dragables')
+                                                    // console.log(this.props)
+                                                    // console.log(fileId)
                                                     return (
 
                                                     <FamilyListDraggable

@@ -599,105 +599,6 @@ export class Provider extends React.Component{
                 })
         },
 
-        // getRelatedArtwork: (file, newState) => {
-        //     if(!file.artworkFamily){
-        //         return null
-        //     }
-
-        //     let relatedArtwork = {}
-
-        //         Object.keys(newState.fileData.files).forEach(fileName => {
-        //             if(newState.fileData.files[fileName].artworkFamily === file.artworkFamily){
-
-
-
-        //                 Object.keys(newState.fileData.files[fileName]).forEach(property => {
-
-        //                     console.log(`file ${fileName} with familyName in state`)
-
-        //                     relatedArtwork = {
-        //                         ...relatedArtwork,
-        //                         [fileName]: {
-        //                             ...relatedArtwork[fileName],
-        //                             [property]: newState.fileData.files[fileName][property]
-        //                         }
-        //                     }
-
-        //                 })
-
-        //             }
-        //         })
-
-        //         console.log("relatedArtwork--STATE")
-        //         console.log(relatedArtwork)
-
-
-        //     //this will concat files pertaining to a family both in state and server
-        //     //once the ASYNC function of fetching file records from server is complete
-        //     let stateUpdate = null
-
-        //     console.log('AXIOS RUNS')
-        //     //get all records from the selected family from database
-        //     return new Promise((resolve, reject) => {
-        //         axios.get(`/api/artworkInfo/${file.artworkFamily}`)
-        //             .then(res =>{
-
-        //                     res.data.forEach((obj, index) => {
-        //                     Object.keys(obj).forEach(property => {
-
-        //                             relatedArtwork = {
-        //                                 ...relatedArtwork,
-        //                                 [obj.fileName]: {
-        //                                     ...relatedArtwork[obj.fileName],
-        //                                     [property]: obj[property]
-        //                                 }
-        //                             }
-        //                         })
-        //                         console.log(`relatedArtwork--server (${index})`)
-        //                         console.log(relatedArtwork)
-        //                     })               
-                        
-        //                 stateUpdate = newState
-
-        //                 console.log('stateUpdate')
-
-        //                 if(!stateUpdate.familySetupData.relatedArtwork){
-        //                     stateUpdate.familySetupData.relatedArtwork = {}
-        //                 }
-
-        //                 if(!stateUpdate.fileData.files[file.fileName].relatedArtwork){
-        //                     stateUpdate.fileData.files[file.fileName].relatedArtwork = {}
-        //                 }
-
-        //                 stateUpdate.familySetupData.relatedArtwork = {
-        //                     ...stateUpdate.familySetupData.relatedArtwork, 
-        //                     files: relatedArtwork,
-        //                     column: {
-        //                         fileIds: Object.keys(relatedArtwork).map(objName => objName),
-        //                         id: `${file.artworkFamily}-${file.fileName}`
-        //                     },
-        //                     columnOrder: [`${file.artworkFamily}-${file.fileName}`]
-        //                 };
-
-        //                 stateUpdate.fileData.files[file.fileName].relatedArtwork = { 
-        //                             files: relatedArtwork,                            
-        //                             column: {
-        //                                 fileIds: Object.keys(relatedArtwork).map(objName => objName),
-        //                                 id: `${file.artworkFamily}-${file.fileName}`
-        //                             },
-        //                             columnOrder: [`${file.artworkFamily}-${file.fileName}`]
-        //                     };
-
-        //                 console.log("stateUpdate")
-        //                 console.log(stateUpdate)
-                        
-        //                 if(stateUpdate){
-        //                     resolve(stateUpdate)
-        //                 }
-        //             })
-        //     }) 
-        // },
-
         isChecked: (string, value, fileName) => {
             if(this.state.fileData.files[fileName][string].includes(value)){
                 return true
@@ -816,6 +717,8 @@ export class Provider extends React.Component{
         },
         //change display index by dragging file preview
         onDragEnd: (result) => {
+            console.log('ondragend result')
+            console.log(result)
 
             const {destination, source, draggableId} = result;
         
@@ -843,7 +746,14 @@ export class Provider extends React.Component{
         
                 this.setState(newState)
         },
-        onDragEndFamilyList: (result, fileName) => {
+        onDragEndFamilyList: (result) => {
+
+            const fileName = result.destination.droppableId
+
+            console.log('RESULT AND FAMILY NAME*****************')
+            console.log(result)
+            console.log(fileName)
+
             const {destination, source, draggableId} = result;
         
             if(!destination){

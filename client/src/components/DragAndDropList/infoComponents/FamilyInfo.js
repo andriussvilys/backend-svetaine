@@ -8,6 +8,7 @@ import ThemeSelector from './ThemeSelector';
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/jsonPreview.css';
 import '../css/imageInfo.css'
+import FamilyListDnDContainer from '../FamilyListDnD/FamilyListDnDContainer';
 
 export default class FamilyInfo extends Component {
     static contextType = Context;
@@ -80,12 +81,17 @@ export default class FamilyInfo extends Component {
                                 addNewTarget={'artworkFamilyList'}
                                 displayAddNew="initial"
                             />
-
+{/* 
                             <FamilyPreview
                                 file={this.props.file}
                                 context={this.props.context}
                                 state={this.context.state}
-                            /> 
+                            />  */}
+
+                            <FamilyListDnDContainer 
+                            data={!this.props.file.relatedArtwork ? null : this.props.file.relatedArtwork}
+                            fileName={this.props.file.fileName}
+                            />
 
                             <DropDownList 
                                 title={"Set 'See Also' artwork families"}

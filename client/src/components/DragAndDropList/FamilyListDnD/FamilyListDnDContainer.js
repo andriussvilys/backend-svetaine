@@ -20,6 +20,7 @@ export default class FamilyListDnDContainer extends React.Component{
                 column={this.props.data.column}
                 files={this.props.data.files}
                 columnIndex={0}
+                fileName={this.props.fileName}
                 >
                 </FamilyListDroppable>
             </div>
@@ -37,7 +38,7 @@ export default class FamilyListDnDContainer extends React.Component{
                             return(
                                 <div> 
                                     <DragDropContext 
-                                        onDragEnd={this.context.onDragEndFamilyList}>
+                                        onDragEnd={this.context.fileDataMethods.onDragEndFamilyList}>
                                         {this.props.data ? this.createDroppable() : null}
                                     </DragDropContext>  
                                 </div>
