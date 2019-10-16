@@ -71,7 +71,7 @@ export default class DnDListDraggable extends React.Component{
                                             </div>
                                         </div>
                                         
-                                        <div style={{flex: "1", minWidth: "250px"}}>
+                                        <div style={{flex: "1"}}>
 
                                             <Accordion>
                                                 <Card>
@@ -153,10 +153,35 @@ export default class DnDListDraggable extends React.Component{
                                                     </Accordion.Collapse>
                                                 </Card>
                                             </Accordion>
-                                        </div>
-                                            
-                                        <div className="button-container">
-                                                <div className="ImagesPreview--dragHandle custom-button"
+
+                                            <div className="button-container">    
+                                            <div className="submit-delete-container">                                                
+                                                <Button
+                                                    variant="danger"
+                                                    className="custom-button"
+                                                    onClick={ () => this.context.removeFile(this.props.file.fileName)}
+                                                >
+                                                    Remove
+                                                </Button>   
+                                                <Button
+                                                    variant="success"
+                                                    className="custom-button"
+                                                    onClick={() => this.context.fileDataMethods.postArtworkInfo(this.props.file.fileName)}
+                                                >
+                                                    Submit to server
+                                                </Button>
+                                            </div>    
+
+                                            {/* <Button
+                                                variant="primary"
+                                                className="custom-button"
+                                                disabled={!this.props.file.artworkFamily ? true : false}
+                                                onClick={() => this.context.familySetupMethods.getAllByArtworkFamily(this.props.file.artworkFamily, this.props.file.fielName)}
+                                            >
+                                                Get a list of related artwork <span>{!this.props.file.artworkFamily ? "disabled" : ""}</span>
+                                            </Button> */}
+
+                                            <div className="ImagesPreview--dragHandle custom-button"
                                                 id={`draghandle--${this.props.index}`}
                                                 {...provided.dragHandleProps}
                                                 onMouseDown={(e)=>{
@@ -171,36 +196,10 @@ export default class DnDListDraggable extends React.Component{
                                                 }
                                                 >
                                                     DRAG
-                                                </div>   
-        
-                                                <div>
-                                                    <Button
-                                                        variant="danger"
-                                                        className="custom-button"
-                                                        onClick={ () => this.context.removeFile(this.props.file.fileName)}
-                                                    >
-                                                        Remove
-                                                    </Button>   
-                                                    <Button
-                                                        variant="success"
-                                                        className="custom-button"
-                                                        onClick={() => this.context.fileDataMethods.postArtworkInfo(this.props.file.fileName)}
-                                                    >
-                                                        Submit to server
-                                                    </Button>
-
-                                                    <Button
-                                                        variant="primary"
-                                                        className="custom-button"
-                                                        disabled={!this.props.file.artworkFamily ? true : false}
-                                                        onClick={() => this.context.familySetupMethods.getAllByArtworkFamily(this.props.file.artworkFamily, this.props.file.fielName)}
-                                                    >
-                                                        Get a list of related artwork <span>{!this.props.file.artworkFamily ? "disabled" : ""}</span>
-                                                    </Button>
-                                                </div>
-                                            </div>
-        
-                               
+                                            </div>   
+                                        </div>
+                                        </div>
+                                                                   
                                 </div>
                             )
                         }}

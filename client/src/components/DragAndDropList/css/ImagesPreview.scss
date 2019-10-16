@@ -52,7 +52,7 @@
 }
 .custom-button{
         height: 30px; 
-        width: 100%;
+        width: 180px;;
         text-align: center;
         font-size: 14px;
         font-weight: bold;
@@ -61,10 +61,12 @@
         border: 2px solid rgb(158, 158, 158);
         text-transform: uppercase;
         background-color: rgb(209, 209, 209);
+        margin: 4px 0;
     }
 .ImagesPreview--dragHandle{
     background-color: yellow;
     border: 1px solid black;
+    width: 50px;
 }
 .mouseDown{
     background-color: lime;
@@ -80,6 +82,7 @@
 }
 .image-index-box{
     padding: 0 10px;
+    align-self: start;
 }
 .accordion-container{
     width: 100%;
@@ -89,10 +92,18 @@
 }
 .button-container{
     display:flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    // flex-direction: column;
     justify-content: space-between;
-    margin-left: 5px;
+    padding: 10px 15px;
+    background-color: rgb(214, 214, 214);
+    border-radius: 5px;
 }
+.submit-delete-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1;
+} 
 // .custom-button{
 //     width: "100%";
 //     text-transform:"uppercase";
