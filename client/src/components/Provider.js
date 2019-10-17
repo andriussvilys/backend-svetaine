@@ -682,7 +682,7 @@ export class Provider extends React.Component{
             fd.append('artworkImage', fileData[fileName].file, fileData[fileName].fileName)
 
             axios.post('/api/artworkInfo/imageUpload', fd)
-                .then(res => {
+                .then(res => { this.readImageDir()
                 })
                 .catch(err => alert(err))
         },
@@ -778,38 +778,70 @@ export class Provider extends React.Component{
 
             this.setState(newState)
         },
-        postArtworkInfo: (fileName) => {
+        postArtworkInfo: (artworkFamily) => {
 
-            const fileData = this.state.fileData.files[fileName]
 
-            let fileDataObject = 
-            {                          
-            category: fileData.category ?  fileData.category : null,
-            filePath: `uploads/${fileData.fileName}`,
-            fileName: fileData.fileName,
-            fileType: fileData.fileType,
+            Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
+                
+                const obj = this.state.relatedArtwork[artworkFamily].files[objName]
+                const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
+                let fileData = null
 
-            artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
-            familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
-            artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
-            artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-            // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
-            themes: fileData.themes ?  fileData.themes : null,
-            seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
-            location: fileData.location ?  fileData.location : null,
-            year: fileData.year ? fileData.year : null,
+                console.log('const OBJ')
+                console.log(obj)
+                console.log("familyIndex")
+                console.log(familyIndex)
+                
 
-            displayMain: fileData.displayMain ? fileData.displayMain : null 
-            }
+                //check if the file is uploaded to server
+                if(this.state.serverFileDir.includes(obj.fileName)){
+                    fileData = obj
+                    fileData.familyDisplayIndex = familyIndex
 
-            fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
+                    console.log("fileData")
+                    console.log(fileData)
 
-            console.log(fileDataObject)
-            axios.post('/api/artworkInfo/create', fileDataObject)
-                .then( res => { console.log(res.data)})
-                .then(res => this.fileDataMethods.uploadFile(fileName))
-                    // .then(() => axios.get('/api/artworkInfo'))
-                    //   .then( res => console.log(res.data))
+                    axios.put(`api/artworkInfo/update/${obj.fileName}`, fileData)
+                }
+    
+                else{
+                    fileData = this.state.fileData.files[obj.fileName]
+
+                    console.log("fileData")
+                    console.log(fileData)
+        
+                    let fileDataObject = {                          
+                    category: fileData.category ?  fileData.category : null,
+                    filePath: `uploads/${fileData.fileName}`,
+                    fileName: fileData.fileName,
+                    fileType: fileData.fileType,
+        
+                    artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
+                    familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
+                    artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
+                    artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
+                    // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
+                    themes: fileData.themes ?  fileData.themes : null,
+                    seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
+                    location: fileData.location ?  fileData.location : null,
+                    year: fileData.year ? fileData.year : null,
+        
+                    displayMain: fileData.displayMain ? fileData.displayMain : null 
+                    }
+        
+                    // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
+                    fileDataObject.familyDisplayIndex = familyIndex
+                    
+                    console.log("fileDataObject")
+                    console.log(fileDataObject)
+                    axios.post('/api/artworkInfo/create', fileDataObject)
+                        .then( res => { console.log(res.data)})
+                        .then(res => this.fileDataMethods.uploadFile(fileDataObject.fileName))
+                }
+            })
+
+
+
         },
 
         initialIndex: () => {
