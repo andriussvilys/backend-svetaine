@@ -59,8 +59,9 @@ p{
     margin: 0 !important;
 }
 .no-padding{
-    padding: 10px;
+    padding: 0 !important;
     background-color: rgba(0,0,0,.055);
+    margin-bottom: 0 !important;
 }
 Button{
     margin-top: 3px;

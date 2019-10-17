@@ -3,6 +3,7 @@ import { Context } from './Provider';
 import FamilyInfo from './FamilyInfo';
 import DnDListContainer from './DragAndDropList/DnDListContainer'
 import "bootstrap/dist/css/bootstrap.min.css";
+import FileUpdate from './FileUpdate';
 
 export default class ImageInfo extends Component{
 
@@ -29,12 +30,13 @@ export default class ImageInfo extends Component{
                     <input type="file" multiple className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
                   </div>
                   <div className="imageInfo--box" style={{display: "block"}}>
-                    <span>DnD list</span>
+                    <span>List of Files</span>
                       <DnDListContainer 
                         data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
                         contextMethods={this.context.removeFile}
                       />
                   </div>
+                  <FileUpdate />
               </div>
 
               <div className="imageInfo--section">

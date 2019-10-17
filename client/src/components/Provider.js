@@ -963,7 +963,7 @@ export class Provider extends React.Component{
             else return false
         },
         getFamilySetup: (value, string, fileName) => {
-    
+
             axios.get(`/api/familySetup/${value}`)
             .then( res => {
     

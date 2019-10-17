@@ -93,7 +93,7 @@ export default class DropDownList extends React.Component{
           return finalList;
         }
   
-        return <div style={{width: "100%", display: "flex"}}>{columnLists()}</div>
+        return columnLists()
     }
 
     render(){
@@ -116,9 +116,10 @@ export default class DropDownList extends React.Component{
                         </Accordion.Toggle>
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
-                        <Card.Body style={{display: "flex", flexWrap: "wrap"}}>
-                                {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
-                                {/* displayAddNew controls wether this component will be visible */}
+                        <Card.Body >
+                                <div style={{display: "flex", flexWrap: "wrap"}}>
+                                    {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
+                                </div>
                                 <AddNew 
                                     displayAddNew={this.props.displayAddNew}
                                     router={this.props.router}

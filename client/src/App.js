@@ -18,7 +18,6 @@ export default class App extends Component{
         <div className="container">
           <div className="data-container">
             <ImageInfo />
-            <NavigationInfo />
           </div>
       </div>
         </Provider>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
 import DropDownList from './DropDownList'
+import NavigationInfo from './NavigationInfo'
 import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -16,16 +17,9 @@ export default class FamilyInfo extends Component {
             <Context.Consumer>
                 {()=>{
                     return(
-                        <div>
+                        <div className="familyInfo-container">
 
-                            {/* <ExtendedList 
-                                listName="select artwork family: "
-                                // array={this.artworks()}
-                                array={this.context.state.artworkFamilyList}
-                                string="artworkFamily"
-                                id="familyList"
-                            /> */}
-
+                            <div className="familyInfo-child">
                             <div className="imageInfo--box">
                                 <DropDownList 
                                     title={'Select Artwork Family'}
@@ -66,41 +60,6 @@ export default class FamilyInfo extends Component {
                                 />
                             </div>
 
-                            <div className="imageInfo--box" style={{display: 'flex'}}>
-                                <span>use family setup</span>
-                                <form >
-                                    <div className="container-radio">
-                                        <label 
-                                        htmlFor="familyDisplaySetup_yes"
-                                        id="familyDisplaySetup_yes"
-                                        >yes</label>
-                                        <input type="radio" 
-                                        name="familyDisplaySetup" 
-                                        id="familyDisplaySetup__radio-yes" 
-                                        value="yes" 
-                                        disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
-                                        onClick={() => this.context.useFamilySetup(true)}
-                                        />
-                                    </div>
-                                    <div className="container-radio">
-                                        <label htmlFor="familyDisplaySetup_no">no</label>
-                                        <input type="radio" 
-                                        name="familyDisplaySetup" 
-                                        id="familyDisplaySetup__radio-no" 
-                                        value="no" 
-                                        disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
-                                        onClick={() => this.context.useFamilySetup(false)}
-                                        defaultChecked 
-                                        />
-                                    </div>
-                                </form>
-                            </div>                      
-                            {/* <ExtendedList 
-                                listName="add 'see also' items: "
-                                array={this.context.state.artworkFamilyList}
-                                string="seeAlso"
-                                id="seeAlso"
-                            /> */}
                             <div className="imageInfo--box" style={{display: "block"}}>
                                 <div>
                                     <p>Family description:</p> 
@@ -133,7 +92,11 @@ export default class FamilyInfo extends Component {
                                 </Button>
                             </div>      
 
+                            </div>
 
+                            <div className="familyInfo-child">
+                                <NavigationInfo />
+                            </div>
 
 
                         </div>

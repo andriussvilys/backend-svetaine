@@ -21,7 +21,7 @@
     margin: 0 5vw;
     position: relative;
     padding: 5px 0;
-    border-bottom: 1px dotted;
+    // border-bottom: 1px dotted;
     align-items: center;
     flex-wrap: wrap;
 }
@@ -78,5 +78,16 @@
     background-color: rgb(255, 234, 238);
     // flex: 1;
     
+}
+.familyInfo-child{
+    flex: 1;
+    max-width: 915px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.familyInfo-container{
+    display: flex;
+    flex-wrap: wrap;
 }
 

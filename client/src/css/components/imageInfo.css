@@ -30,7 +30,6 @@
   margin: 0 5vw;
   position: relative;
   padding: 5px 0;
-  border-bottom: 1px dotted;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -96,5 +95,30 @@
 
 .themeSelector > ul {
   background-color: #ffeaee;
+}
+
+.familyInfo-child {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  max-width: 915px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.familyInfo-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 /*# sourceMappingURL=imageInfo.css.map */
