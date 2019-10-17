@@ -2,19 +2,22 @@ import React from 'react';
 import { Context } from '../Provider';
 import { Draggable } from 'react-beautiful-dnd';
 import Button from 'react-bootstrap/Button';
-import Accordion from 'react-bootstrap/Accordion' 
-import Card from 'react-bootstrap/Card'
+import Accordion from 'react-bootstrap/Accordion';
+import Card from 'react-bootstrap/Card';
+import Modal from 'react-bootstrap/Modal';
+import Spinner from 'react-bootstrap/Spinner';
 
-import DropDownList from '../DropDownList'
+import DropDownList from '../DropDownList';
 
-import FilePreview from '../FilePreview'
-import FamilyPreview from '../FamilyPreview'
-import ArtowrkInfo from './infoComponents/ArtworkInfo'
-import JsonPreview from './infoComponents/JsonPreview'
-import FamilyInfo from './infoComponents/FamilyInfo'
-import NavigationInfo from './infoComponents/NavigationInfo'
+import LoaderModal from '../LoaderModal'
+import FilePreview from '../FilePreview';
+import FamilyPreview from '../FamilyPreview';
+import ArtowrkInfo from './infoComponents/ArtworkInfo';
+import JsonPreview from './infoComponents/JsonPreview';
+import FamilyInfo from './infoComponents/FamilyInfo';
+import NavigationInfo from './infoComponents/NavigationInfo';
 
-import FamilyListDnDContainer from './FamilyListDnD/FamilyListDnDContainer'
+import FamilyListDnDContainer from './FamilyListDnD/FamilyListDnDContainer';
 
 import './css/ImagesPreview.css';
 
@@ -166,6 +169,12 @@ export default class DnDListDraggable extends React.Component{
                                                 >
                                                     Submit to server
                                                 </Button>
+
+                                                <LoaderModal
+                                                    showModal={this.context.state.showModal}
+                                                />
+
+
                                             </div>    
 
                                             {/* <Button

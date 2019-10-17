@@ -30,7 +30,8 @@ export class Provider extends React.Component{
         categoriesData: [],
         themesData: [],
         artworkFamilyList: [],
-            
+        serverFileDir: [],
+        showModal: false,
     }
         
     this.changeFileName = (e) => {
@@ -564,6 +565,8 @@ export class Provider extends React.Component{
 
         transferState: (file) => {
 
+                this.setState({showModal: true})
+
                 let newState = {...this.state}
 
                 //pverwrite file data witch each familySetUp property
@@ -588,7 +591,8 @@ export class Provider extends React.Component{
 
                 relatedArtworkPromise.then(res => {
                     newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
-                    this.setState(newState)
+                    this.setState(newState, this.setState({showModal: false})
+                    )
                 })
         },
 
@@ -674,18 +678,25 @@ export class Provider extends React.Component{
                 )})
         },
         //THIS UPLOADS FILE TO SERVER
+
         uploadFile: (fileName) => {
-            
-            const fileData = this.state.fileData.files
+            // return new Promise ((res, rej) => {
+                const fileData = this.state.fileData.files
+    
+                const fd = new FormData();
+                fd.append('artworkImage', fileData[fileName].file, fileData[fileName].fileName)
+    
+                axios.post('/api/artworkInfo/imageUpload', fd)
+                    .then(res => { this.readImageDir()
+                    })
+                    .catch(err => alert(err))
 
-            const fd = new FormData();
-            fd.append('artworkImage', fileData[fileName].file, fileData[fileName].fileName)
-
-            axios.post('/api/artworkInfo/imageUpload', fd)
-                .then(res => { this.readImageDir()
-                })
-                .catch(err => alert(err))
+            //     if(this.state.serverFileDir.includes(fileName)){
+            //         resolve()
+            //     }
+            // })
         },
+
         //Removes selected file from state and thus DOM
         removeFile: (fileName) => {
 
@@ -780,67 +791,97 @@ export class Provider extends React.Component{
         },
         postArtworkInfo: (artworkFamily) => {
 
+            this.setState({showModal: true})
 
-            Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
+            const postPromise = new Promise((resolve, rej) => {
+                    const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length
+                    let progressCount = 0
+
+                    Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
+                        
+                        const obj = this.state.relatedArtwork[artworkFamily].files[objName]
+                        const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
+                        let fileData = null
+        
+                        console.log('const OBJ')
+                        console.log(obj)
+                        console.log("familyIndex")
+                        console.log(familyIndex)
+                        
+        
+                        //check if the file is uploaded to server
+                        if(this.state.serverFileDir.includes(obj.fileName)){
+                            fileData = obj
+                            fileData.familyDisplayIndex = familyIndex
+        
+                            console.log("fileData")
+                            console.log(fileData)
+        
+                            axios.put(`api/artworkInfo/update/${obj.fileName}`, fileData)
+                                .then(res => {
+                                    progressCount += 1
+                                    console.log("updateLength")
+                                    console.log(updateLength)
+                                    console.log("progressCount")
+                                    console.log(progressCount)
+                                    if(progressCount === updateLength){
+                                        resolve()
+                                    }
+                                })
+
+                        }
+            
+                        else{
+                            fileData = this.state.fileData.files[obj.fileName]
+        
+                            console.log("fileData")
+                            console.log(fileData)
                 
-                const obj = this.state.relatedArtwork[artworkFamily].files[objName]
-                const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
-                let fileData = null
-
-                console.log('const OBJ')
-                console.log(obj)
-                console.log("familyIndex")
-                console.log(familyIndex)
+                            let fileDataObject = {                          
+                            category: fileData.category ?  fileData.category : null,
+                            filePath: `uploads/${fileData.fileName}`,
+                            fileName: fileData.fileName,
+                            fileType: fileData.fileType,
                 
+                            artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
+                            familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
+                            artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
+                            artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
+                            // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
+                            themes: fileData.themes ?  fileData.themes : null,
+                            seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
+                            location: fileData.location ?  fileData.location : null,
+                            year: fileData.year ? fileData.year : null,
+                
+                            displayMain: fileData.displayMain ? fileData.displayMain : null 
+                            }
+                
+                            // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
+                            fileDataObject.familyDisplayIndex = familyIndex
+                            
+                            console.log("fileDataObject")
+                            console.log(fileDataObject)
+                            axios.post('/api/artworkInfo/create', fileDataObject)
+                                .then( res => { console.log(res.data)})
+                                .then(res => this.fileDataMethods.uploadFile(fileDataObject.fileName))
+                                .then(res => {
+                                    progressCount += 1
+                                    console.log("updateLength")
+                                    console.log(updateLength)
+                                    console.log("progressCount")
+                                    console.log(progressCount)
+                                    if(progressCount === updateLength){
+                                        resolve()
+                                    }
+                                })
+                                
+                        }
+                    })
+                })
 
-                //check if the file is uploaded to server
-                if(this.state.serverFileDir.includes(obj.fileName)){
-                    fileData = obj
-                    fileData.familyDisplayIndex = familyIndex
-
-                    console.log("fileData")
-                    console.log(fileData)
-
-                    axios.put(`api/artworkInfo/update/${obj.fileName}`, fileData)
-                }
-    
-                else{
-                    fileData = this.state.fileData.files[obj.fileName]
-
-                    console.log("fileData")
-                    console.log(fileData)
-        
-                    let fileDataObject = {                          
-                    category: fileData.category ?  fileData.category : null,
-                    filePath: `uploads/${fileData.fileName}`,
-                    fileName: fileData.fileName,
-                    fileType: fileData.fileType,
-        
-                    artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
-                    familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
-                    artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
-                    artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-                    // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
-                    themes: fileData.themes ?  fileData.themes : null,
-                    seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
-                    location: fileData.location ?  fileData.location : null,
-                    year: fileData.year ? fileData.year : null,
-        
-                    displayMain: fileData.displayMain ? fileData.displayMain : null 
-                    }
-        
-                    // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
-                    fileDataObject.familyDisplayIndex = familyIndex
-                    
-                    console.log("fileDataObject")
-                    console.log(fileDataObject)
-                    axios.post('/api/artworkInfo/create', fileDataObject)
-                        .then( res => { console.log(res.data)})
-                        .then(res => this.fileDataMethods.uploadFile(fileDataObject.fileName))
-                }
+            postPromise.then(res => {
+                this.setState({showModal: false})
             })
-
-
 
         },
 
