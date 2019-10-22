@@ -6,11 +6,13 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 
+import DropDownList from './DropDownList'
+
 export default class FileUpdate extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {fileList: []}
+        this.state = {fileList: [], renderList: []}
     }
 
     renderAllFiles = new Promise((resolve, rej) => {
@@ -32,18 +34,36 @@ export default class FileUpdate extends React.Component{
                                 res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
                             })
 
+                            let fileList = []
 
-                            let fileList = databaseFiles.map((file, index) => {
+                            databaseFiles.forEach((file, index) => {
                                 if(usedNames.includes(file.fileName)){
                                     return
                                 }
                                 usedNames = [...usedNames, file.fileName]
-                                return (
-                                <FilePreview 
-                                    key={`fileUpload-${file.fileName}-${index}`}
-                                    file={file}
-                                />
-                                )
+                                let newFile = {
+                                    fileName: file.fileName,
+                                    artworkFamily: file.artworkFamily,
+                                    file: 
+                                        <div style={{maxWidth: "200px"}}>
+                                            <FilePreview 
+                                                key={`fileUpload-${file.fileName}-${index}`}
+                                                file={file}
+                                            />
+                                            <p style={{fontSize: "10px"}}>{file.fileName}</p>
+                                            <p style={{fontSize: "12px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+                                        </div>
+                                }
+                                    // <div style={{maxWidth: "200px"}}>
+                                    //     <FilePreview 
+                                    //         key={`fileUpload-${file.fileName}-${index}`}
+                                    //         file={file}
+                                    //     />
+                                    //     <p style={{fontSize: "10px"}}>{file.fileName}</p>
+                                    //     <p style={{fontSize: "12px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+                                    // </div>
+                                return fileList = [...fileList, newFile] 
+
                             })
 
                             resolve(fileList)
@@ -51,12 +71,29 @@ export default class FileUpdate extends React.Component{
                     })   
         })
 
+    filterByFamily = (value) => {
+        const artworkFamily = value
+        console.log(`filterByFmaily ${value}`)
+        let newRenderList = []
+        this.state.fileList.forEach(obj => {
+            if(obj.artworkFamily === value){
+                newRenderList = [...newRenderList, obj]
+            }
+        })
+        this.setState({renderList: newRenderList})
+    }
+
+    resetRenderFiles = () => {
+        this.setState({renderList: this.state.fileList})
+    }
+
     componentDidMount(){
         this.renderAllFiles
             .then(res => {
                 console.log('component mount res.data')
                 console.log(res)
-                this.setState({fileList: res})})
+                this.setState({fileList: res, renderList: res})
+            })
     }
 
     render(){
@@ -73,9 +110,29 @@ export default class FileUpdate extends React.Component{
                             <Accordion.Collapse eventKey="0">
                             <Card.Body>
 
+                            <div>
+                                <DropDownList 
+                                        title={"filter by artwork families"}
+                                        state={this.props.state}
+                                        array={this.props.state.artworkFamilyList}
+                                        string={"artworkFamily"}
+                                        onChange={this.filterByFamily}
+                                        // isChecked={this.props.familySetupMethods.isChecked}
+                                        id="artworkFamily-fileUpdata"
+                                        displayAddNew="none"
+                                />
+                                <Button
+                                    size="sm"
+                                    variant="primary"
+                                    onClick={this.resetRenderFiles}
+                                >
+                                    load all files
+                                </Button>
+                            </div>
+
                             <div style={{display: "flex", flexWrap: "wrap"}}>
-                                {this.state.fileList.length > 0 ?
-                                this.state.fileList.map(filePreview => filePreview)
+                                {this.state.renderList.length > 0 ?
+                                this.state.renderList.map(filePreview => filePreview.file)
                                 : null}
                             </div>
 

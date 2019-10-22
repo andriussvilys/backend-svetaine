@@ -36,7 +36,10 @@ export default class ImageInfo extends Component{
                         contextMethods={this.context.removeFile}
                       />
                   </div>
-                  <FileUpdate />
+                  <FileUpdate 
+                    state={this.context.state}
+                    familySetupMethods={this.context.familySetupMethods}
+                  />
               </div>
 
               <div className="imageInfo--section">
