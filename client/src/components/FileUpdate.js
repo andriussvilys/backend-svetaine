@@ -13,33 +13,50 @@ export default class FileUpdate extends React.Component{
         this.state = {fileList: []}
     }
 
-    renderAllFiles = () => {
-        return new Promise((resolve, rej) => {
+    renderAllFiles = new Promise((resolve, rej) => {
+
+            let serverFileNames = null;
 
             axios.get('/fetchImages')
                 .then(res => {
                     console.log('renderall fiels runs')
                     console.log(res.data)
-                    let fileList = res.data.map(file => {
-                        return (
-                        <FilePreview 
-                            key={`fileUpload-${file}`}
-                            file={file}
-                        />
-                        )
-                    })
-                    if(fileList.length === res.data.length){
-                        console.log(fileList)
-                        this.setState({fileList: fileList}, resolve())
-                    }
-                })
-                
+                    serverFileNames = res.data
+
+                    axios.get('/api/artworkInfo')
+                        .then(res => {
+                            let databaseFiles = []
+                            let usedNames = []
+
+                            serverFileNames.forEach(fileName => {
+                                res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
+                            })
+
+
+                            let fileList = databaseFiles.map((file, index) => {
+                                if(usedNames.includes(file.fileName)){
+                                    return
+                                }
+                                usedNames = [...usedNames, file.fileName]
+                                return (
+                                <FilePreview 
+                                    key={`fileUpload-${file.fileName}-${index}`}
+                                    file={file}
+                                />
+                                )
+                            })
+
+                            resolve(fileList)
+                        })
+                    })   
         })
-    }
 
     componentDidMount(){
-
-        this.renderAllFiles()
+        this.renderAllFiles
+            .then(res => {
+                console.log('component mount res.data')
+                console.log(res)
+                this.setState({fileList: res})})
     }
 
     render(){

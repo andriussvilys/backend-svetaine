@@ -62,4 +62,10 @@
           flex: 1;
   border: 1px solid #e2e2e2;
 }
+
+.list-group-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
 /*# sourceMappingURL=navigationInfo.css.map */
