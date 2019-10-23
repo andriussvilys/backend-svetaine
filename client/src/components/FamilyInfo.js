@@ -60,11 +60,13 @@ export default class FamilyInfo extends Component {
                                     displayAddNew="none"
                                 /> */}
                                 <SeeAlsoSelector 
+                                    renderAllFiles={this.context.familySetupMethods.renderAllFiles}
                                     state={this.context.state}
                                     array={this.context.state.familySetupData.seeAlso}
                                     stateNest={this.context.state.familySetupData.seeAlso}
                                     onChange={this.context.familySetupMethods.onChange}
                                     isChecked={this.context.familySetupMethods.isChecked}
+                                    serverFileDir={this.context.state.serverFileDir}
                                 />
                             </div>
 

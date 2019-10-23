@@ -45,7 +45,7 @@ export default class FileUpdate extends React.Component{
                                     fileName: file.fileName,
                                     artworkFamily: file.artworkFamily,
                                     file: 
-                                        <div style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}>
+                                        <div key={`fileLibrary-${file.fileName}`} style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}>
                                             <div style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}>
                                                 <div>
                                                     <p className="subtitle">file name:</p>
@@ -90,21 +90,13 @@ export default class FileUpdate extends React.Component{
 
                                         </div>
                                 }
-                                    // <div style={{maxWidth: "200px"}}>
-                                    //     <FilePreview 
-                                    //         key={`fileUpload-${file.fileName}-${index}`}
-                                    //         file={file}
-                                    //     />
-                                    //     <p style={{fontSize: "10px"}}>{file.fileName}</p>
-                                    //     <p style={{fontSize: "12px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
-                                    // </div>
-                                return fileList = [...fileList, newFile] 
+                                fileList = [...fileList, newFile] 
 
                             })
 
                             resolve(fileList)
                         })
-                    })   
+                })   
         })
 
     filterByFamily = (value) => {
@@ -130,6 +122,21 @@ export default class FileUpdate extends React.Component{
                 console.log(res)
                 this.setState({fileList: res, renderList: res})
             })
+    }
+
+    createFileList = () => {
+        let allPreviews = []
+        this.renderAllFiles.then(res => allPreviews = res.map(filePreview => {return filePreview.file}))
+        console.log('allPreviews**********************************************')
+        console.log(allPreviews)
+        return allPreviews
+
+        // this.renderAllFiles
+        // .then(res => {
+        //     console.log('component mount res.data')
+        //     console.log(res)
+        //     return res
+        // })
     }
 
     render(){
@@ -167,9 +174,11 @@ export default class FileUpdate extends React.Component{
                             </div>
 
                             <div style={{display: "flex", flexWrap: "wrap"}}>
-                                {this.state.renderList.length > 0 ?
-                                this.state.renderList.map(filePreview => filePreview.file)
-                                : null}
+
+                                {this.state.renderList.map(preview => {
+                                    return preview.file
+                                    })
+                                }
                             </div>
 
                             </Card.Body>

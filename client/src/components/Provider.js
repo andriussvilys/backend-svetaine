@@ -900,7 +900,91 @@ export class Provider extends React.Component{
     }
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
-        onChange: (value, string, e) => {
+        // renderAllFiles: new Promise((resolve, rej) => {
+
+        //     let serverFileNames = null;
+    
+        //     axios.get('/fetchImages')
+        //         .then(res => {
+        //             serverFileNames = res.data
+    
+        //             axios.get('/api/artworkInfo')
+        //                 .then(res => {
+        //                     let databaseFiles = []
+        //                     let usedNames = []
+    
+        //                     serverFileNames.forEach(fileName => {
+        //                         res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
+        //                     })
+    
+        //                     let fileList = []
+    
+        //                     databaseFiles.forEach((file, index) => {
+        //                         if(usedNames.includes(file.fileName)){
+        //                             return
+        //                         }
+        //                         usedNames = [...usedNames, file.fileName]
+        //                         let newFile = {
+        //                             fileName: file.fileName,
+        //                             artworkFamily: file.artworkFamily,
+        //                             file: 
+        //                                 <div key={`fileLibrary-${file.fileName}`} 
+        //                                 style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
+        //                                 className={`${this.state.familySetupData.seeAlso.includes(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
+        //                                 >
+        //                                     <div style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}>
+        //                                         <div>
+        //                                             <p className="subtitle">file name:</p>
+        //                                             <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
+        //                                             <p className="subtitle">family name:</p>
+        //                                             <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+        //                                         </div>
+        //                                         <FilePreview 
+        //                                             key={`fileUpload-${file.fileName}-${index}`}
+        //                                             file={file}
+        //                                         />
+        //                                     </div>
+    
+        //                                     <div style={{border: "1px solid grey", padding: "2px"}}>
+        //                                         <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
+        //                                         <form style={{display:"flex", justifyContent:"space-evenly"}}>
+        //                                             <div className="container-radio">
+        //                                                 <input type="radio" 
+        //                                                 name="useAsSeeAlso" 
+        //                                                 id="useAsSeeAlso__radio-yes" 
+        //                                                 value="yes" 
+        //                                                 onChange={() => {this.props.onChange("seeAlso", file.fileName)}}
+        //                                                 checked={this.highlighter(this.state.familySetupData.seeAlso, file.fileName) ? true : false}
+        //                                                 />
+        //                                                 <label 
+        //                                                 htmlFor="useAsSeeAlso_yes"
+        //                                                 id="useAsSeeAlso_yes"
+        //                                                 >yes</label>
+        //                                             </div>
+        //                                             <div className="container-radio">
+        //                                                 <input type="radio" 
+        //                                                 name="useAsSeeAlso" 
+        //                                                 id="useAsSeeAlso__radio-no" 
+        //                                                 value="no" 
+        //                                                 onChange={() => {this.props.onChange("seeAlso", file.fileName)}}
+        //                                                 checked={!this.state.familySetupData.seeAlso.includes(file.fileName) ? true : false}
+        //                                                 />
+        //                                                 <label htmlFor="useAsSeeAlso_no">no</label>
+        //                                             </div>
+        //                                         </form>
+        //                                     </div>
+    
+        //                                 </div>
+        //                         }
+        //                         fileList = [...fileList, newFile] 
+    
+        //                     })
+    
+        //                     resolve(fileList)
+        //                 })
+        //         })   
+        // }),
+        onChange: (string, value, e) => {
 
             // if(e){
             //     e.target.checked = true
@@ -961,6 +1045,7 @@ export class Provider extends React.Component{
             }
         },
         isChecked: (string, value) => {
+            console.log(`check if ${value} is included in ${string}`)
             if(this.state.familySetupData[string].includes(value)){
                 console.log(`includes ${value}`)
                 return true
