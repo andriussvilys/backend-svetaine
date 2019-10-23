@@ -20,4 +20,33 @@ router.post('/create', (req, res) => {
       .then((category)=>{res.send(category)})
   })
 
+router.put('/update/:artworkFamily', (req, res, next) => {
+
+    // const obj = {}
+    // Object.keys(req.body).forEach(key => {
+    //     obj[key] = req.body[key]
+    // })
+
+    FamilySetup.replaceOne(
+      {artworkFamily: req.body.artworkFamily},
+      req.body
+    ) 
+
+   .then(newObj => {
+     res.status(200).send(newObj)
+   })
+   .catch(err => {console.log(err); res.status(500).send('problem')})
+
+    // FamilySetup.findOneAndReplace(
+    //   { "artworkFamily": req.params.artworkFamily },  // <-- find stage
+    //   { $set: req.body },
+    //   {new: true}
+    // )
+
+    // .then(newObj => {
+    //   res.status(200).send(newObj)
+    // })
+    // .catch(err => {console.log(err); res.status(500).send('problem')})
+})
+
 module.exports = router;

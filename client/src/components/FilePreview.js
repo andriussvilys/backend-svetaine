@@ -57,12 +57,12 @@ export default class FilePreview extends React.Component{
 
         <div className="ImagesPreview--imageContainer">
             {this.fileContainer(this.props.file.fileType, this.props.file)}
-            <input
+            {/* <input
             type="text" 
             className="ImagesPreview--fileName"
             placeholder={this.props.file.fileName}
             >
-            </input>
+            </input> */}
         </div>
 
         )

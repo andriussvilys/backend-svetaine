@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from './components/Provider';
+import { BrowserRouter, Route } from 'react-router-dom';
 import ImageInfo from './components/ImageInfo';
-import NavigationInfo from './components/NavigationInfo'
+import FrontEndIndex from './components/FrontEnd/FrontEndIndex'
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
 
@@ -14,13 +15,16 @@ export default class App extends Component{
 
   render(){
     return(
-      <Provider>
-        <div className="container">
-          <div className="data-container">
-            <ImageInfo />
+      <BrowserRouter>
+        <Provider>
+          <div className="container">
+            <div className="data-container">
+              <FrontEndIndex />
+              <Route path="/admin" component={ImageInfo} />
+            </div>
           </div>
-      </div>
-        </Provider>
+          </Provider>
+      </BrowserRouter>
     )
   }
 }

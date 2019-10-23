@@ -900,7 +900,11 @@ export class Provider extends React.Component{
     }
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
-        onChange: (value, string) => {
+        onChange: (value, string, e) => {
+
+            // if(e){
+            //     e.target.checked = true
+            // }
 
             console.log(`value ${value}`)
             console.log(`string ${string}`)
@@ -958,9 +962,13 @@ export class Provider extends React.Component{
         },
         isChecked: (string, value) => {
             if(this.state.familySetupData[string].includes(value)){
+                console.log(`includes ${value}`)
                 return true
             } 
-            else return false
+            else{
+                console.log(`doesnt include ${value}`)
+                return false
+            } 
         },
         getFamilySetup: (value, string, fileName) => {
 
@@ -1089,6 +1097,41 @@ export class Provider extends React.Component{
                 .then( res => {console.log(res); alert('success')})
                 .catch(err => {console.log(err); alert(err)})
         },
+        updateFamilySetup: (familyName) => {
+            const artworkFamily = this.state.familySetupData.artworkFamily;
+            const category = this.state.familySetupData.category ? this.state.familySetupData.category : {};
+            const familyDescription = this.state.familySetupData.familyDescription ? this.state.familySetupData.familyDescription : "";
+            const themes = this.state.familySetupData.themes ? this.state.familySetupData.themes : [];
+            const relatedArtwork = this.state.familySetupData.relatedArtwork ? this.state.familySetupData.relatedArtwork : [];
+            const seeAlso = this.state.familySetupData.seeAlso ? this.state.familySetupData.seeAlso : [];
+            const location = this.state.familySetupData.location ? this.state.familySetupData.location : "";
+            const year = this.state.familySetupData.year ? this.state.familySetupData.year : "";
+    
+            let requestBody = {
+                category: category,
+                artworkFamily: artworkFamily,
+                familyDescription: familyDescription,
+                themes: themes,
+                relatedArtwork: relatedArtwork,
+                seeAlso: seeAlso,
+                location: location,
+                year: year
+            }
+
+            console.log(requestBody)
+            console.log(`/api/familySetup/update/${this.state.familySetupData.artworkFamily}`)
+
+            if(!this.state.familySetupData.artworkFamily){
+                alert('select or add new Family Name')
+                return
+            }
+
+            axios.put(`/api/familySetup/update/${familyName}`, requestBody)
+                .then( res => {console.log(res); alert('success')})
+                .catch(err => {console.log(err); alert(err)})
+
+        },
+
         getRelatedArtwork: (artworkFamily, newState) => {
 
             let relatedArtwork = {}
@@ -1115,8 +1158,6 @@ export class Provider extends React.Component{
                                         }
                                     }
                             })
-                            console.log(`relatedArtwork--server (${index})`)
-                            console.log(relatedArtwork)
                         })        
                         
                         if(newState.fileData.files){
@@ -1157,10 +1198,6 @@ export class Provider extends React.Component{
                     })
             }) 
         },
-        // getAllByArtworkFamily: (artworkFamily) => {
-        //    return  axios.get(`/api/artworkInfo/${artworkFamily}`)
-        //         .then(res => res.data)
-        // }
     }//end of familySetupMethods
 
 }//END OF CONTSTRUCTOR

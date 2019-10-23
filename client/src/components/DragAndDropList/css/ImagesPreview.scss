@@ -17,7 +17,7 @@
 .ImagesPreview--imageContainer{
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: end;
     width: 200px;
     height: 140px;
 
@@ -31,10 +31,9 @@
 }
 
 .ImagesPreview--image{
-    width: 100%;
+    width: calc(100% - 2px);
     max-height: 120px;
     object-fit: contain;
-    border: 1px solid;
     border-bottom: none;
     background-color: rgb(252, 252, 252);
 }

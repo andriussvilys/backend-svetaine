@@ -8,11 +8,23 @@ import Accordion from 'react-bootstrap/Accordion';
 
 import DropDownList from './DropDownList'
 
-export default class FileUpdate extends React.Component{
+export default class SeeAlsoSelector extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {fileList: [], renderList: []}
+    }
+
+    highlighter = (stateNest, fileName) => {
+        console.log('seealso at familysetupdata')
+        console.log(stateNest)
+        console.log(fileName)
+        if(stateNest){
+            if( typeof stateNest === 'string'|| Array.isArray(stateNest) ){
+                    return stateNest.includes(fileName)
+                }
+        }
+        else return null
     }
 
     renderAllFiles = new Promise((resolve, rej) => {
@@ -45,59 +57,55 @@ export default class FileUpdate extends React.Component{
                                     fileName: file.fileName,
                                     artworkFamily: file.artworkFamily,
                                     file: 
-                                        <div style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}>
-                                            <div style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}>
-                                                <div>
-                                                    <p className="subtitle">file name:</p>
-                                                    <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
-                                                    <p className="subtitle">family name:</p>
-                                                    <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+                                        <div 
+                                        className={`${this.highlighter(this.props.array, file.fileName) ? 'themes-list--selected' : null}`}
+                                        style={{width:"200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
+                                        >
+                                                <div style={{width: "100%", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
+
+                                                    <div>
+                                                        <p className="subtitle">file name:</p>
+                                                        <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
+                                                        <p className="subtitle">family name:</p>
+                                                        <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+                                                    </div>
+
+                                                    <FilePreview 
+                                                        key={`fileUpload-${file.fileName}-${index}`}
+                                                        file={file}
+                                                    />
+
                                                 </div>
-                                                <FilePreview 
-                                                    key={`fileUpload-${file.fileName}-${index}`}
-                                                    file={file}
-                                                />
-                                            </div>
-
-                                            <div style={{border: "1px solid grey", padding: "2px"}}>
-                                                <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
-                                                <form style={{display:"flex", justifyContent:"space-evenly"}}>
-                                                    <div className="container-radio">
-                                                        <input type="radio" 
-                                                        name="useAsSeeAlso" 
-                                                        id="useAsSeeAlso__radio-yes" 
-                                                        value="yes" 
-                                                        // onClick={() => {this.context.fileDataMethods.transferState(this.props.file)}}
-                                                        // checked={this.context.state.fileData.files[this.props.fileName].useFamilySetup}
-                                                        />
-                                                        <label 
-                                                        htmlFor="useAsSeeAlso_yes"
-                                                        id="useAsSeeAlso_yes"
-                                                        >yes</label>
+                                                    <div style={{border: "1px solid grey", padding: "2px"}}>
+                                                        <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
+                                                        <form style={{display:"flex", justifyContent:"space-evenly"}}>
+                                                            <div className="container-radio">
+                                                                <input type="radio" 
+                                                                name="useAsSeeAlso" 
+                                                                id="useAsSeeAlso__radio-yes" 
+                                                                value="yes" 
+                                                                onChange={(e) => {this.props.onChange(file.fileName, "seeAlso", e)}}
+                                                                checked={this.props.isChecked("seeAlso", file.fileName) ? true : false}
+                                                                />
+                                                                <label 
+                                                                htmlFor="useAsSeeAlso_yes"
+                                                                id="useAsSeeAlso_yes"
+                                                                >yes</label>
+                                                            </div>
+                                                            <div className="container-radio">
+                                                                <input type="radio" 
+                                                                name="useAsSeeAlso" 
+                                                                id="useAsSeeAlso__radio-no" 
+                                                                value="no" 
+                                                                onChange={() => {this.props.onChange(file.fileName, "seeAlso")}}
+                                                                checked={this.props.isChecked("seeAlso", file.fileName) ? true : false}
+                                                                />
+                                                                <label htmlFor="useAsSeeAlso_no">no</label>
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <div className="container-radio">
-                                                        <input type="radio" 
-                                                        name="useAsSeeAlso" 
-                                                        id="useAsSeeAlso__radio-no" 
-                                                        value="no" 
-                                                        // onClick={() => this.context.useFamilySetup(false)}
-                                                        // checked={!this.context.state.fileData.files[this.props.fileName].useFamilySetup}
-                                                        />
-                                                        <label htmlFor="useAsSeeAlso_no">no</label>
-                                                    </div>
-                                                </form>
-                                            </div>
-
                                         </div>
                                 }
-                                    // <div style={{maxWidth: "200px"}}>
-                                    //     <FilePreview 
-                                    //         key={`fileUpload-${file.fileName}-${index}`}
-                                    //         file={file}
-                                    //     />
-                                    //     <p style={{fontSize: "10px"}}>{file.fileName}</p>
-                                    //     <p style={{fontSize: "12px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
-                                    // </div>
                                 return fileList = [...fileList, newFile] 
 
                             })
@@ -134,13 +142,12 @@ export default class FileUpdate extends React.Component{
 
     render(){
         return(
-            <div>
-                <div>
+            <div className="themeSelector">
                     <Accordion >
                         <Card>
                             <Card.Header>
                             <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
-                                View all server files
+                                Select "see also" elements
                             </Accordion.Toggle>
                             </Card.Header>
                             <Accordion.Collapse eventKey="0">
@@ -176,7 +183,6 @@ export default class FileUpdate extends React.Component{
                             </Accordion.Collapse>
                         </Card>
                     </Accordion>
-                </div>
             </div>
         )
     }

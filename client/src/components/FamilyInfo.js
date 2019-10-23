@@ -3,6 +3,7 @@ import { Context } from './Provider';
 import ExtendedList from './ExtendedList';
 import DropDownList from './DropDownList'
 import NavigationInfo from './NavigationInfo'
+import SeeAlsoSelector from './SeeAlsoSelector'
 import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -47,7 +48,7 @@ export default class FamilyInfo extends Component {
                                     addNewTarget={'themesData'}
                                     displayAddNew="initial"
                                 />
-
+{/* 
                                 <DropDownList 
                                     title={"Set 'See Also' artwork families"}
                                     state={this.context.state}
@@ -57,6 +58,13 @@ export default class FamilyInfo extends Component {
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     id="seeAlso-list"
                                     displayAddNew="none"
+                                /> */}
+                                <SeeAlsoSelector 
+                                    state={this.context.state}
+                                    array={this.context.state.familySetupData.seeAlso}
+                                    stateNest={this.context.state.familySetupData.seeAlso}
+                                    onChange={this.context.familySetupMethods.onChange}
+                                    isChecked={this.context.familySetupMethods.isChecked}
                                 />
                             </div>
 
@@ -86,6 +94,18 @@ export default class FamilyInfo extends Component {
                                  size="sm"
                                  onClick={
                                      this.context.createFamilySetup
+                                 }
+                                >
+                                    SEND
+                                </Button>
+                            </div>      
+                            <div className="imageInfo--box">
+                                <span>update family setup:</span>
+                                <Button
+                                 variant="primary" 
+                                 size="sm"
+                                 onClick={
+                                    () => this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
                                  }
                                 >
                                     SEND
