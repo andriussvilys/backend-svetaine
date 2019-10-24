@@ -202,7 +202,7 @@ export default class SeeAlsoSelector extends React.Component{
                                         </div>
 
                                         <div style={{display: "flex", flexWrap: "wrap"}}>
-                                            {this.renderAllFiles(this.context.state.seeAlsoData.renderFiles)}
+                                            {this.renderAllFiles(this.props.highlighterSource)}
                                         </div>
 
                                         </Card.Body>
