@@ -1045,7 +1045,6 @@ export class Provider extends React.Component{
             newState.seeAlsoData.renderFiles = {...newState.seeAlsoData.fileList, fileNames: newState.seeAlsoData.renderFiles.fileNames, }
             this.setState(newState)
         },
-
         onChange: (value, string, e) => {
 
             console.log(`value ${value}`)

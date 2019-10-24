@@ -5,6 +5,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 
 import DropDownList from '../../DropDownList'
+import SeeAlsoSelector from '../../SeeAlsoSelector'
 import FamilyPreview from '../../FamilyPreview'
 import ExtendedList from './ExtendedList';
 import ThemeSelector from './ThemeSelector';
@@ -120,7 +121,7 @@ export default class FamilyInfo extends Component {
                                 </Card>
                             </Accordion>
 
-                            <DropDownList 
+                            {/* <DropDownList 
                                 title={"Set 'See Also' artwork families"}
                                 state={this.context.state}
                                 fileName={this.props.fileName}
@@ -130,7 +131,22 @@ export default class FamilyInfo extends Component {
                                 isChecked={this.context.fileDataMethods.isChecked}
                                 id="seeAlso-list"
                                 displayAddNew="none"
+                            /> */}
+
+                            <SeeAlsoSelector 
+                                renderAllFiles={this.context.familySetupMethods.renderAllFiles}
+                                state={this.context.state}
+                                //array is for dropdown list of artworkFamily names
+                                array={this.context.state.familySetupData.seeAlso}
+                                //stateNest is for highlighting records already in state
+                                stateNest={this.context.state.fileData.files[this.props.fileName]}
+                                onChange={this.context.fileDataMethods.onChange}
+                                isChecked={this.context.familySetupMethods.isChecked}
+                                serverFileDir={this.context.state.serverFileDir}
                             />
+
+{/* onChange: (value, string, fileName) */}
+
                             <div className="DnD-imageInfo--box" style={{display: "block"}}>
                                 <div>
                                     <p>Family description:</p> 
