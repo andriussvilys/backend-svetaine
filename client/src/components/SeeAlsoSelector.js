@@ -195,7 +195,7 @@ export default class SeeAlsoSelector extends React.Component{
                                             <Button
                                                 size="sm"
                                                 variant="primary"
-                                                onClick={this.resetRenderFiles}
+                                                onClick={() => this.context.familySetupMethods.resetRenderFiles()}
                                             >
                                                 load all files
                                             </Button>

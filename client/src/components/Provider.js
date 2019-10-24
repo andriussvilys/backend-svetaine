@@ -917,7 +917,6 @@ export class Provider extends React.Component{
             this.setState({seeAlsoData: {...this.state.seeAlsoData, renderFiles: newRenderList}})
             // this.setState({renderList: newRenderList})
         },
-
         renderAllFiles: (highlighterState) => 
         {
             return new Promise((resolve, rej) => {
@@ -1010,9 +1009,25 @@ export class Provider extends React.Component{
                                     }
                                     fileList = {...fileList, [file.fileName]: newFile}
                                 })
-    
-                                let renderFiles = fileList
-                                renderFiles.fileNames = Object.keys(fileList).map(fileName => fileName)
+                                
+                                
+                                let renderFiles = {}
+
+                                if(this.state.seeAlsoData.fileList){
+                                        const currentRenderFiles = Object.keys(this.state.seeAlsoData.renderFiles)
+                                        Object.keys(fileList).forEach(fileName => {
+                                            if(currentRenderFiles.includes(fileName)){
+                                                renderFiles = {...renderFiles, [fileName]: fileList[fileName]}
+                                            }
+                                        })
+                                        console.log('renderFiles')
+                                        console.log(renderFiles)
+                                }
+                                else{
+                                    renderFiles = fileList
+                                }
+
+                                renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
     
                                 let newSeeAlso = {fileList, renderFiles}
                                 // let fileNames = fileList.map(obj => obj.fileName)
@@ -1025,11 +1040,17 @@ export class Provider extends React.Component{
                     })   
             })
         },
+        resetRenderFiles: () => {
+            let newState = this.state
+            newState.seeAlsoData.renderFiles = {...newState.seeAlsoData.fileList, fileNames: newState.seeAlsoData.renderFiles.fileNames, }
+            this.setState(newState)
+        },
 
         onChange: (value, string, e) => {
 
             console.log(`value ${value}`)
             console.log(`string ${string}`)
+            
 
             const addNewValue = (newValue) => {
                 let newState = {}
@@ -1079,6 +1100,7 @@ export class Provider extends React.Component{
             if(this.state.familySetupData[string] && this.state.familySetupData[string].includes(value)){
                 let newState = removeValue(value)
                 this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res => {
+                    let seeAlsoData = {}
                     newState = {...newState, seeAlsoData: res}
                     this.setState(newState)
                 })
