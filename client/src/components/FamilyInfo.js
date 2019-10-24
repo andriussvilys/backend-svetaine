@@ -48,17 +48,7 @@ export default class FamilyInfo extends Component {
                                     addNewTarget={'themesData'}
                                     displayAddNew="initial"
                                 />
-{/* 
-                                <DropDownList 
-                                    title={"Set 'See Also' artwork families"}
-                                    state={this.context.state}
-                                    array={this.context.state.artworkFamilyList}
-                                    string={"seeAlso"}
-                                    onChange={this.context.familySetupMethods.onChange}
-                                    isChecked={this.context.familySetupMethods.isChecked}
-                                    id="seeAlso-list"
-                                    displayAddNew="none"
-                                /> */}
+
                                 <SeeAlsoSelector 
                                     renderAllFiles={this.context.familySetupMethods.renderAllFiles}
                                     state={this.context.state}

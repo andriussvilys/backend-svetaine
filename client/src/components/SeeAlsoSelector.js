@@ -1,14 +1,17 @@
 import React, { Fragment } from 'react';
-import FilePreview from './FilePreview';
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 
+import { Context } from './Provider';
+import FilePreview from './FilePreview';
 import DropDownList from './DropDownList'
 
 export default class SeeAlsoSelector extends React.Component{
+
+    static contextType = Context;
 
     constructor(props){
         super(props);
@@ -26,110 +29,6 @@ export default class SeeAlsoSelector extends React.Component{
         }
         else return null
     }
-
-    // renderAllFiles = new Promise((resolve, reject) => {
-        
-    //     const allFiles = new Promise((resolve, rej) => {
-
-    //         console.log('ALL FILES RUNS')
-    //             let serverFileNames = null;
-    //             let databaseFiles = []
-    //             let fileList = []
-    
-    //             axios.get('/fetchImages')
-    //                 .then(res => {
-    //                     console.log('renderall fiels runs')
-    //                     console.log(res.data)
-    //                     serverFileNames = res.data
-                        
-    //                     //get all artworkd records from database
-    //                     axios.get('/api/artworkInfo')
-    //                     .then(res => {
-                            
-    //                         let usedNames = []
-    //                         serverFileNames.forEach(fileName => {
-    //                             res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
-    //                         })
-
-    //                         databaseFiles.forEach((file, index) => {
-                                
-    //                             if(usedNames.includes(file.fileName)){
-    //                                 return
-    //                             }
-    //                             usedNames = [...usedNames, file.fileName]
-    //                             let newFile = {
-    //                                 fileName: file.fileName,
-    //                                 artworkFamily: file.artworkFamily,
-    //                                 file: 
-    //                                     <div 
-    //                                     className={`${this.highlighter(this.props.array, file.fileName) ? 'themes-list--selected' : null}`}
-    //                                     style={{width:"200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
-    //                                     >
-    //                                             <div style={{width: "100%", height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
-
-    //                                                 <div>
-    //                                                     <p className="subtitle">file name:</p>
-    //                                                     <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
-    //                                                     <p className="subtitle">family name:</p>
-    //                                                     <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
-    //                                                 </div>
-
-    //                                                 <FilePreview 
-    //                                                     key={`fileUpload-${file.fileName}-${index}`}
-    //                                                     file={file}
-    //                                                 />
-
-    //                                             </div>
-    //                                                 <div style={{border: "1px solid grey", padding: "2px"}}>
-    //                                                     <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
-    //                                                     <form style={{display:"flex", justifyContent:"space-evenly"}}>
-    //                                                         <div className="container-radio">
-    //                                                             <input type="radio" 
-    //                                                             name="useAsSeeAlso" 
-    //                                                             id="useAsSeeAlso__radio-yes" 
-    //                                                             value="yes" 
-    //                                                             onChange={(e) => {this.props.onChange(file.fileName, "seeAlso", e)}}
-    //                                                             checked={this.props.isChecked("seeAlso", file.fileName) ? true : false}
-    //                                                             />
-    //                                                             <label 
-    //                                                             htmlFor="useAsSeeAlso_yes"
-    //                                                             id="useAsSeeAlso_yes"
-    //                                                             >yes</label>
-    //                                                         </div>
-    //                                                         <div className="container-radio">
-    //                                                             <input type="radio" 
-    //                                                             name="useAsSeeAlso" 
-    //                                                             id="useAsSeeAlso__radio-no" 
-    //                                                             value="no" 
-    //                                                             onChange={() => {this.props.onChange(file.fileName, "seeAlso")}}
-    //                                                             checked={this.props.isChecked("seeAlso", file.fileName) ? true : false}
-    //                                                             />
-    //                                                             <label htmlFor="useAsSeeAlso_no">no</label>
-    //                                                         </div>
-    //                                                     </form>
-    //                                                 </div>
-    //                                     </div>
-    //                             }
-    //                             return fileList = [...fileList, newFile] 
-
-    //                         })
-    //                             console.log("fileList")
-    //                             console.log(fileList)
-    //                             resolve(fileList)
-    //                     })
-    //                 })
-
-    //             })
-   
-    //     // console.log('ALL FILES')
-    //     // console.log(allFiles)
-
-    //     allFiles.then(res => {
-    //         console.log('all Files promise resolve')
-    //         console.log(res)
-    //         return res})
-    // })
-
     getAllFiles = new Promise((resolve, rej) => {
 
         let serverFileNames = null;
@@ -183,8 +82,8 @@ export default class SeeAlsoSelector extends React.Component{
                                                     name="useAsSeeAlso" 
                                                     id="useAsSeeAlso__radio-yes" 
                                                     value="yes" 
+                                                    checked={this.context.state.familySetupData.seeAlso.includes(file.fileName)} 
                                                     onChange={() => {this.props.onChange("seeAlso", file.fileName)}}
-                                                    checked={this.highlighter(this.props.stateNest, file.fileName) ? true : false}
                                                     />
                                                     <label 
                                                     htmlFor="useAsSeeAlso_yes"
@@ -197,7 +96,7 @@ export default class SeeAlsoSelector extends React.Component{
                                                     id="useAsSeeAlso__radio-no" 
                                                     value="no" 
                                                     onChange={() => {this.props.onChange("seeAlso", file.fileName)}}
-                                                    checked={!this.props.stateNest.includes(file.fileName) ? true : false}
+                                                    checked={!this.context.state.familySetupData.seeAlso.includes(file.fileName)}
                                                     />
                                                     <label htmlFor="useAsSeeAlso_no">no</label>
                                                 </div>
@@ -231,33 +130,36 @@ export default class SeeAlsoSelector extends React.Component{
         this.setState({renderList: this.state.fileList})
     }
 
-    renderAllFiles = () => {
-        console.log('render all files')
-        // const fileList = this.getAllFiles;
-        // console.log('all files')
-        // console.log(fileList)
+    // renderAllFiles = () => {
+    //     console.log('render all files')
 
-        this.getAllFiles.then(res => {
-            console.log('all files fulfilled')
-            console.log(res)
-            return res})
-        // if(Array.isArray(fileList)){
-        //     return fileList
-        // }
-            // .then(res => {
-            //     console.log('**********************************')
-            //     console.log(res)
-            //     // this.setState({fileList: res, renderList: res})
-            //     return res
-            // })
+    //     this.getAllFiles.then(res => {
+    //         console.log('all files fulfilled')
+    //         console.log(res)
+    //         return res})
+    // }
+
+    /**
+     * @params fileList = takes an object with file data 
+     */
+    renderAllFiles = (fileList) => {
+        console.log(' RENDER ALLL ')
+       let domNodes =  Object.keys(fileList).map(fileName => {
+        if(fileName === "fileNames"){
+            return
+        }
+        console.log(fileName)
+        console.log(fileList[fileName].checked)   
+        return fileList[fileName].file})
+       return domNodes
     }
 
 
 
-    // componentDidMount(){
 
+    // componentDidMount(){
     //     console.log('SEE ALSO SELECTOR mounted')
-    //     this.props.renderAllFiles
+    //     this.getAllFiles
     //         .then(res => {
     //             console.log('**********************************')
     //             console.log(res)
@@ -267,49 +169,53 @@ export default class SeeAlsoSelector extends React.Component{
 
     render(){
         return(
-            <div className="themeSelector">
-                    <Accordion >
-                        <Card>
-                            <Card.Header>
-                            <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
-                                Select "see also" elements
-                            </Accordion.Toggle>
-                            </Card.Header>
-                            <Accordion.Collapse eventKey="0">
-                            <Card.Body>
+            <Context.Consumer>
+                {() => {
+                    return(
+                        <div className="themeSelector">
+                                <Accordion >
+                                    <Card>
+                                        <Card.Header>
+                                        <Accordion.Toggle as={Button} variant="link" eventKey="0" className="accordion-secondary">
+                                            Select "see also" elements
+                                        </Accordion.Toggle>
+                                        </Card.Header>
+                                        <Accordion.Collapse eventKey="0">
+                                        <Card.Body>
 
-                            <div>
-                                <DropDownList 
-                                        title={"filter by artwork families"}
-                                        state={this.props.state}
-                                        array={this.props.state.artworkFamilyList}
-                                        string={"artworkFamily"}
-                                        onChange={this.filterByFamily}
-                                        // isChecked={this.props.familySetupMethods.isChecked}
-                                        id="artworkFamily-fileUpdata"
-                                        displayAddNew="none"
-                                />
-                                <Button
-                                    size="sm"
-                                    variant="primary"
-                                    onClick={this.resetRenderFiles}
-                                >
-                                    load all files
-                                </Button>
-                            </div>
+                                        <div>
+                                            <DropDownList 
+                                                    title={"filter by artwork families"}
+                                                    state={this.props.state}
+                                                    array={this.props.state.artworkFamilyList}
+                                                    string={"fileNames"}
+                                                    onChange={this.context.familySetupMethods.filterByFamily}
+                                                    isChecked={this.context.familySetupMethods.isChecked}
+                                                    id="artworkFamily-fileUpdata"
+                                                    displayAddNew="none"
+                                            />
+                                            <Button
+                                                size="sm"
+                                                variant="primary"
+                                                onClick={this.resetRenderFiles}
+                                            >
+                                                load all files
+                                            </Button>
+                                        </div>
 
-                            <div style={{display: "flex", flexWrap: "wrap"}}>
-                                    {this.renderAllFiles().map(filePreview => {
-                                        console.log('render all map method PREVIEW')
-                                        console.log(filePreview.fileName)
-                                        return filePreview.file})}
-                            </div>
+                                        <div style={{display: "flex", flexWrap: "wrap"}}>
+                                            {this.renderAllFiles(this.context.state.seeAlsoData.renderFiles)}
+                                        </div>
 
-                            </Card.Body>
-                            </Accordion.Collapse>
-                        </Card>
-                    </Accordion>
-            </div>
+                                        </Card.Body>
+                                        </Accordion.Collapse>
+                                    </Card>
+                                </Accordion>
+                        </div>
+                    )
+                }
+            }
+            </Context.Consumer>
         )
     }
 }

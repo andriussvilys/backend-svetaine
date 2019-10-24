@@ -1,6 +1,8 @@
 import React from 'react';
 import axios from 'axios';
 
+import FilePreview from './FilePreview'
+
 export const Context = React.createContext();
 
 export class Provider extends React.Component{
@@ -28,6 +30,7 @@ export class Provider extends React.Component{
         },
         relatedArtwork: {},
         categoriesData: [],
+        seeAlsoData: {renderFiles: {fileNames: []}},
         themesData: [],
         artworkFamilyList: [],
         serverFileDir: [],
@@ -900,95 +903,134 @@ export class Provider extends React.Component{
     }
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
-        // renderAllFiles: new Promise((resolve, rej) => {
+        filterByFamily: (value) => {
+            console.log(`filterByFmaily ${value}`)
+            let newRenderList = {}
+            Object.keys(this.state.seeAlsoData.fileList).forEach(fileName => {
+                const file = this.state.seeAlsoData.fileList[fileName]
+                if(file.artworkFamily === value){
+                    newRenderList = {...newRenderList, [file.fileName]: file}
+                    newRenderList.fileNames = Object.keys(newRenderList).map(fileName => fileName)
+                }
+            })
 
-        //     let serverFileNames = null;
-    
-        //     axios.get('/fetchImages')
-        //         .then(res => {
-        //             serverFileNames = res.data
-    
-        //             axios.get('/api/artworkInfo')
-        //                 .then(res => {
-        //                     let databaseFiles = []
-        //                     let usedNames = []
-    
-        //                     serverFileNames.forEach(fileName => {
-        //                         res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
-        //                     })
-    
-        //                     let fileList = []
-    
-        //                     databaseFiles.forEach((file, index) => {
-        //                         if(usedNames.includes(file.fileName)){
-        //                             return
-        //                         }
-        //                         usedNames = [...usedNames, file.fileName]
-        //                         let newFile = {
-        //                             fileName: file.fileName,
-        //                             artworkFamily: file.artworkFamily,
-        //                             file: 
-        //                                 <div key={`fileLibrary-${file.fileName}`} 
-        //                                 style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
-        //                                 className={`${this.state.familySetupData.seeAlso.includes(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
-        //                                 >
-        //                                     <div style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}>
-        //                                         <div>
-        //                                             <p className="subtitle">file name:</p>
-        //                                             <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
-        //                                             <p className="subtitle">family name:</p>
-        //                                             <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
-        //                                         </div>
-        //                                         <FilePreview 
-        //                                             key={`fileUpload-${file.fileName}-${index}`}
-        //                                             file={file}
-        //                                         />
-        //                                     </div>
-    
-        //                                     <div style={{border: "1px solid grey", padding: "2px"}}>
-        //                                         <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
-        //                                         <form style={{display:"flex", justifyContent:"space-evenly"}}>
-        //                                             <div className="container-radio">
-        //                                                 <input type="radio" 
-        //                                                 name="useAsSeeAlso" 
-        //                                                 id="useAsSeeAlso__radio-yes" 
-        //                                                 value="yes" 
-        //                                                 onChange={() => {this.props.onChange("seeAlso", file.fileName)}}
-        //                                                 checked={this.highlighter(this.state.familySetupData.seeAlso, file.fileName) ? true : false}
-        //                                                 />
-        //                                                 <label 
-        //                                                 htmlFor="useAsSeeAlso_yes"
-        //                                                 id="useAsSeeAlso_yes"
-        //                                                 >yes</label>
-        //                                             </div>
-        //                                             <div className="container-radio">
-        //                                                 <input type="radio" 
-        //                                                 name="useAsSeeAlso" 
-        //                                                 id="useAsSeeAlso__radio-no" 
-        //                                                 value="no" 
-        //                                                 onChange={() => {this.props.onChange("seeAlso", file.fileName)}}
-        //                                                 checked={!this.state.familySetupData.seeAlso.includes(file.fileName) ? true : false}
-        //                                                 />
-        //                                                 <label htmlFor="useAsSeeAlso_no">no</label>
-        //                                             </div>
-        //                                         </form>
-        //                                     </div>
-    
-        //                                 </div>
-        //                         }
-        //                         fileList = [...fileList, newFile] 
-    
-        //                     })
-    
-        //                     resolve(fileList)
-        //                 })
-        //         })   
-        // }),
-        onChange: (string, value, e) => {
+            this.setState({seeAlsoData: {...this.state.seeAlsoData, renderFiles: newRenderList}})
+            // this.setState({renderList: newRenderList})
+        },
 
-            // if(e){
-            //     e.target.checked = true
-            // }
+        renderAllFiles: (highlighterState) => 
+        {
+
+            
+            return new Promise((resolve, rej) => {
+    
+                const highlighter = (fileName) => {
+                        console.log(`familysetupdata includes ${fileName} === ${highlighterState.includes(fileName)}`)
+                        console.log(highlighterState)
+                        return highlighterState.includes(fileName)
+                }
+    
+                let serverFileNames = null;
+        
+                axios.get('/fetchImages')
+                    .then(res => {
+                        serverFileNames = res.data
+        
+                        axios.get('/api/artworkInfo')
+                            .then(res => {
+                                let databaseFiles = []
+                                let usedNames = []
+        
+                                serverFileNames.forEach(fileName => {
+                                    res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
+                                })
+        
+                                let fileList = []
+        
+                                databaseFiles.forEach((file, index) => {
+                                    if(usedNames.includes(file.fileName)){
+                                        return
+                                    }
+                                    usedNames = [...usedNames, file.fileName]
+                                    let newFile = {
+                                        fileName: file.fileName,
+                                        artworkFamily: file.artworkFamily,
+                                        checked: highlighter(file.fileName),
+                                        file: 
+                                            <div key={`fileLibrary-${file.fileName}`} 
+                                            style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
+                                            className={
+                                                `${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`
+                                            } 
+                                            >
+                                                <div 
+                                                style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}
+                                                onClick={(e) => (console.log(file))}
+                                                >
+                                                    <div>
+                                                        <p className="subtitle">file name:</p>
+                                                        <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
+                                                        <p className="subtitle">family name:</p>
+                                                        <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+                                                    </div>
+                                                    <FilePreview 
+                                                        key={`fileUpload-${file.fileName}-${index}`}
+                                                        file={file}
+                                                    />
+                                                </div>
+        
+                                                <div style={{border: "1px solid grey", padding: "2px"}}>
+                                                    <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
+                                                    <form style={{display:"flex", justifyContent:"space-evenly"}}>
+                                                        <div className="container-radio">
+                                                            <input type="radio" 
+                                                            name="useAsSeeAlso" 
+                                                            id="useAsSeeAlso__radio-yes" 
+                                                            value="yes" 
+                                                            onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso")}}
+                                                            checked={highlighter(file.fileName)}
+                                                            />
+                                                            <label 
+                                                            htmlFor="useAsSeeAlso_yes"
+                                                            id="useAsSeeAlso_yes"
+                                                            >yes</label>
+                                                        </div>
+                                                        <div className="container-radio">
+                                                            <input type="radio" 
+                                                            name="useAsSeeAlso" 
+                                                            id="useAsSeeAlso__radio-no" 
+                                                            value="no" 
+                                                            onChange={() => {this.familySetupMethods.onChange(file.fileName, "seeAlso")}}
+                                                            checked={!highlighter(file.fileName)}
+                                                            />
+                                                            <label htmlFor="useAsSeeAlso_no">no</label>
+                                                        </div>
+                                                    </form>
+                                                </div>
+        
+                                            </div>
+                                    }
+                                    fileList = {...fileList, [file.fileName]: newFile}
+                                })
+    
+                                let renderFiles = fileList
+                                renderFiles.fileNames = Object.keys(fileList).map(fileName => fileName)
+    
+                                let newSeeAlso = {fileList, renderFiles}
+                                // let fileNames = fileList.map(obj => obj.fileName)
+                                // renderFiles.fileNames = fileList.map(obj => obj.fileName)
+                                // renderFiles = {...renderFiles, fileNames: fileNames}
+                                
+                                // this.setState({...this.state, seeAlsoData:{ fileList: fileList, renderFiles: fileList}})
+                                resolve(newSeeAlso)
+                            })
+                    })   
+            })
+        }
+        
+        ,
+
+        onChange: (value, string, e) => {
 
             console.log(`value ${value}`)
             console.log(`string ${string}`)
@@ -1095,7 +1137,6 @@ export class Provider extends React.Component{
                     })
                     
                     newState = {...this.state, familySetupData: newFamilySetup}
-                    console.log('no FILE NAME state')
                     console.log(newState)
                 }
 
@@ -1105,38 +1146,25 @@ export class Provider extends React.Component{
                     .then(  res => {
                         console.log('   with related artwork  ')
                         console.log(res)
-                        // if(fileName){
-                        //     newState = {...newState, 
-                        //         fileData: {
-                        //             ...newState.fileData,
-                        //             files: {
-                        //                 ...newState.fileData.files,
-                        //                 [fileName]: {
-                        //                     ...newState.fileData.files[fileName],
-                        //                     relatedArtwork: res
-                        //                 }
-                        //             }
-                        //         }
-                        //     }
-                        // }
 
-                        // else{
-                        //     newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
-                        // }
                         newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
 
-                        console.log("newState")
-                        console.log(newState)
-                        this.setState(newState)
+                        this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res =>{ 
+                            
+                            console.log('promise res')
+                            console.log(res)
+                            newState.seeAlsoData = res
+                            console.log("newState")
+                            console.log(newState)
+                            this.setState(newState)
+                        })
+
                     } 
                     )
-                // this.fileDatamethods.getFamilyDisplayIndex()
-    
             })
             .catch(err => 
                 {
                 console.error(err)
-                // this.setState({familySetupData: {...this.state.familySetupData, artworkFamily: value}})
                 }
             )
     
@@ -1216,7 +1244,6 @@ export class Provider extends React.Component{
                 .catch(err => {console.log(err); alert(err)})
 
         },
-
         getRelatedArtwork: (artworkFamily, newState) => {
 
             let relatedArtwork = {}
@@ -1310,6 +1337,7 @@ export class Provider extends React.Component{
                 })
             })
             .then(res => this.readImageDir())
+            .then(res => {this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => this.setState({seeAlsoData: res}))})
     }
 
     render(){

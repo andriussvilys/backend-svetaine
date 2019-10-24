@@ -31,17 +31,13 @@ export default class DropDownList extends React.Component{
             statePath = state.fileData.files[fileName]
         }
 
-        // console.log('this.context.state.familySetupData[string]')
-        // console.log(string)
-        // console.log(statePath[string])
-
         const highlighter = (string, listItem) => {
             if(statePath[string]){
                 if( typeof statePath[string] === 'string'|| Array.isArray(statePath[string]) ){
                         return statePath[string].includes(listItem)
                     }
             }
-            else return null
+            else return false
         }
 
         let sortedArray = Array.from(new Set(array.sort()));
@@ -56,7 +52,8 @@ export default class DropDownList extends React.Component{
                     className="themes-checkbox" 
                     type={string === "artworkFamily" ? "radio" : "checkbox"}
                     value={listItem}
-                    checked={highlighter(string, listItem) ? true : false}
+                    checked={highlighter(string, listItem)}
+                    // checked={highlighter(string, listItem)}
                     onChange={(e) => this.props.onChange(e.target.value, string, fileName)}
                     />
                 </li>
