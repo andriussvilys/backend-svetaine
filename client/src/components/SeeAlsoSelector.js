@@ -148,8 +148,6 @@ export default class SeeAlsoSelector extends React.Component{
         if(fileName === "fileNames"){
             return
         }
-        console.log(fileName)
-        console.log(fileList[fileName].checked)   
         return fileList[fileName].file})
        return domNodes
     }

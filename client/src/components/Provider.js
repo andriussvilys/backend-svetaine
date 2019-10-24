@@ -920,13 +920,11 @@ export class Provider extends React.Component{
 
         renderAllFiles: (highlighterState) => 
         {
-
-            
             return new Promise((resolve, rej) => {
     
                 const highlighter = (fileName) => {
-                        console.log(`familysetupdata includes ${fileName} === ${highlighterState.includes(fileName)}`)
-                        console.log(highlighterState)
+                        // console.log(`familysetupdata includes ${fileName} === ${highlighterState.includes(fileName)}`)
+                        // console.log(highlighterState)
                         return highlighterState.includes(fileName)
                 }
     
@@ -1026,9 +1024,7 @@ export class Provider extends React.Component{
                             })
                     })   
             })
-        }
-        
-        ,
+        },
 
         onChange: (value, string, e) => {
 
@@ -1057,7 +1053,8 @@ export class Provider extends React.Component{
                         }
                     }
                 }
-                this.setState(newState)
+                // this.setState(newState)
+                return newState
             }
     
             const removeValue = (value) => {
@@ -1074,16 +1071,24 @@ export class Provider extends React.Component{
                             [string]: newArray
                         }
                     }
-                    this.setState(newState)
+                    // this.setState(newState)
+                    return newState
                 }
             }
             
-
             if(this.state.familySetupData[string] && this.state.familySetupData[string].includes(value)){
-                removeValue(value)
+                let newState = removeValue(value)
+                this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res => {
+                    newState = {...newState, seeAlsoData: res}
+                    this.setState(newState)
+                })
             }
             else{
-                addNewValue(value)
+                let newState = addNewValue(value)
+                this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res => {
+                    newState = {...newState, seeAlsoData: res}
+                    this.setState(newState)
+                })
             }
         },
         isChecked: (string, value) => {
