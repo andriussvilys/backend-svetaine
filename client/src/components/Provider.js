@@ -34,7 +34,7 @@ export class Provider extends React.Component{
         themesData: [],
         artworkFamilyList: [],
         serverFileDir: [],
-        showModal: false,
+        showModal: true,
     }
         
     this.changeFileName = (e) => {
@@ -489,6 +489,9 @@ export class Provider extends React.Component{
             console.log('STRING')
             console.log(string)
 
+            console.log('fileName')
+            console.log(fileName)
+
             let nestType = () => {
                 if(string === "themes" || string ==="seeAlso"){
                     return "array"
@@ -501,7 +504,6 @@ export class Provider extends React.Component{
                     this.state.fileData.files[fileName][string] = []
                 }
             }
-
 
             if(!!this.state.fileData.files[fileName][string]){
                 if(this.state.fileData.files[fileName][string].includes(value)){
@@ -644,7 +646,10 @@ export class Provider extends React.Component{
                                 fileName: file.name, 
                                 fileType: file.type,
                                 familyDisplayIndex: null,
-                                src: `uploads/${file.name}`
+                                src: `uploads/${file.name}`,
+                                themes: [],
+                                seeAlso: [],
+                                categories: {}
                             }
             
                             if(file.type.match("application/pdf")){
@@ -903,7 +908,7 @@ export class Provider extends React.Component{
     }
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
-        filterByFamily: (value) => {
+        filterByFamily: (value, fileName) => {
             console.log(`filterByFmaily ${value}`)
             let newRenderList = {}
             Object.keys(this.state.seeAlsoData.fileList).forEach(fileName => {
@@ -922,25 +927,29 @@ export class Provider extends React.Component{
             return new Promise((resolve, rej) => {
     
                 const highlighter = (fileName) => {
-                        // console.log(`familysetupdata includes ${fileName} === ${highlighterState.includes(fileName)}`)
-                        // console.log(highlighterState)
                         return highlighterState.includes(fileName)
                 }
     
                 let serverFileNames = null;
-        
+                
+                //get an array of all file names in the server
                 axios.get('/fetchImages')
                     .then(res => {
                         serverFileNames = res.data
         
+                        //get all artwork records from database
                         axios.get('/api/artworkInfo')
                             .then(res => {
                                 let databaseFiles = []
                                 let usedNames = []
-        
+                                
+                                //check that a record has a file in the server
                                 serverFileNames.forEach(fileName => {
                                     res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
                                 })
+
+                                console.log("databaseFiles**************************************")
+                                console.log(databaseFiles)
         
                                 let fileList = []
         
@@ -956,9 +965,7 @@ export class Provider extends React.Component{
                                         file: 
                                             <div key={`fileLibrary-${file.fileName}`} 
                                             style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
-                                            className={
-                                                `${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`
-                                            } 
+                                            className={`${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
                                             >
                                                 <div 
                                                 style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}
@@ -1013,33 +1020,59 @@ export class Provider extends React.Component{
                                 
                                 let renderFiles = {}
 
+                                //check RENDERLIST and filter out unselected objects 
                                 if(this.state.seeAlsoData.fileList){
                                         const currentRenderFiles = Object.keys(this.state.seeAlsoData.renderFiles)
+
                                         Object.keys(fileList).forEach(fileName => {
                                             if(currentRenderFiles.includes(fileName)){
                                                 renderFiles = {...renderFiles, [fileName]: fileList[fileName]}
                                             }
                                         })
-                                        console.log('renderFiles')
-                                        console.log(renderFiles)
+
                                 }
                                 else{
                                     renderFiles = fileList
                                 }
 
+                                //add an array of all file object
                                 renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
     
                                 let newSeeAlso = {fileList, renderFiles}
-                                // let fileNames = fileList.map(obj => obj.fileName)
-                                // renderFiles.fileNames = fileList.map(obj => obj.fileName)
-                                // renderFiles = {...renderFiles, fileNames: fileNames}
-                                
-                                // this.setState({...this.state, seeAlsoData:{ fileList: fileList, renderFiles: fileList}})
+
                                 resolve(newSeeAlso)
                             })
                     })   
             })
         },
+        getArtworkInfo: () => {
+                return new Promise((resolve, rej) => {
+        
+                    let serverFileNames = null;
+                    
+                    //get an array of all file names in the server
+                    axios.get('/fetchImages')
+                        .then(res => {
+                            serverFileNames = res.data
+            
+                            //get all artwork records from database
+                            axios.get('/api/artworkInfo')
+                                .then(res => {
+                                    let databaseFiles = []
+                                    
+                                    //check that a record has a file in the server
+                                    serverFileNames.forEach(fileName => {
+                                        res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
+                                    })
+
+                                    //add an array of all file object
+                                    // renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
+    
+                                    resolve(databaseFiles)
+                                })
+                        })   
+                })
+            },
         resetRenderFiles: () => {
             let newState = this.state
             newState.seeAlsoData.renderFiles = {...newState.seeAlsoData.fileList, fileNames: newState.seeAlsoData.renderFiles.fileNames, }
@@ -1342,10 +1375,11 @@ export class Provider extends React.Component{
 
     componentDidMount(){
 
+            let newState = {...this.state}
+
             axios.get('/api/themes')
             .then( res => {
-            this.setState({ themesData: res.data.list})
-            this.themes = res.data.list
+            newState.themesData = res.data.list
             })
             .then( res => {
                 axios.get('/api/familySetup')
@@ -1353,17 +1387,26 @@ export class Provider extends React.Component{
                     let familyList = Object.keys(res.data).map(obj => {
                         return res.data[obj].artworkFamily
                     })
-                    this.setState({artworkFamilyList: familyList})
+                    newState.artworkFamilyList = familyList
                 })
             })
             .then(resolved => {
                 axios.get('/api/categories')
                 .then(res => {
-                    this.setState({categoriesData: res.data})
+                    newState.categoriesData = res.data
                 })
             })
             .then(res => this.readImageDir())
-            .then(res => {this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => this.setState({seeAlsoData: res}))})
+            .then(res => {this.familySetupMethods.getArtworkInfo().then(res => newState.artworkInfoData = res)})
+            .then(res => {
+                this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => {
+                    newState.seeAlsoData = res
+                    console.log('newSTATE after context MOUNT')
+                    console.log(newState)
+                    newState.showModal = false
+                    this.setState(newState)
+                })
+            })
     }
 
     render(){

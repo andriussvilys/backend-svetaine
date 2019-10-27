@@ -5,7 +5,7 @@ import Accordion from 'react-bootstrap/Accordion'
 import Card from 'react-bootstrap/Card'
 
 import DropDownList from '../../DropDownList'
-import SeeAlsoSelector from '../../SeeAlsoSelector'
+import SeeAlsoSelector from './SeeAlsoSelector'
 import FamilyPreview from '../../FamilyPreview'
 import ExtendedList from './ExtendedList';
 import ThemeSelector from './ThemeSelector';
@@ -121,31 +121,27 @@ export default class FamilyInfo extends Component {
                                 </Card>
                             </Accordion>
 
-                            {/* <DropDownList 
-                                title={"Set 'See Also' artwork families"}
-                                state={this.context.state}
-                                fileName={this.props.fileName}
-                                array={this.context.state.artworkFamilyList}
-                                string={"seeAlso"}
-                                onChange={this.context.fileDataMethods.onChange}
-                                isChecked={this.context.fileDataMethods.isChecked}
-                                id="seeAlso-list"
-                                displayAddNew="none"
-                            /> */}
-
                             <SeeAlsoSelector 
+                                fileName={this.props.file.fileName}
                                 renderAllFiles={this.context.familySetupMethods.renderAllFiles}
+                                resetFilelist={this.context.familySetupMethods.resetRenderFiles}
+
+                                fileList={this.context.state.artworkInfoData}
+                                renderList={this.context.state.seeAlsoData.renderFiles}
+
                                 state={this.context.state}
+                                highlighterReference={this.context.state.fileData.files[this.props.fileName].seeAlso}
                                 //array is for dropdown list of artworkFamily names
                                 array={this.context.state.familySetupData.seeAlso}
                                 //stateNest is for highlighting records already in state
                                 stateNest={this.context.state.fileData.files[this.props.fileName]}
-                                onChange={this.context.fileDataMethods.onChange}
+
+                                inputOnChange={this.context.fileDataMethods.onChange}
+                                OnChange={this.context.familySetupMethods.filterByFamily}
                                 isChecked={this.context.familySetupMethods.isChecked}
+
                                 serverFileDir={this.context.state.serverFileDir}
                             />
-
-{/* onChange: (value, string, fileName) */}
 
                             <div className="DnD-imageInfo--box" style={{display: "block"}}>
                                 <div>
