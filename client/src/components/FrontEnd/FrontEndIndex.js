@@ -6,7 +6,7 @@ const FrontEndIndex = () => {
     return(
         <div>
             <h3>Home</h3>
-            <Link to='/admin' >
+            <Link to='/admin/create' >
                 <Button>
                     Admin
                 </Button>
