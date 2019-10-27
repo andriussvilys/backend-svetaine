@@ -52,6 +52,7 @@ export default class FamilyInfo extends Component {
                                 <SeeAlsoSelector 
                                     renderAllFiles={this.context.familySetupMethods.renderAllFiles}
                                     state={this.context.state}
+                                    highlighterReference={this.context.state.seeAlsoData.renderFiles}
                                     array={this.context.state.familySetupData.seeAlso}
                                     stateNest={this.context.state.familySetupData.seeAlso}
                                     onChange={this.context.familySetupMethods.onChange}
