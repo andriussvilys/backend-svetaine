@@ -1,5 +1,5 @@
 import React from 'react';
-import { Context } from '../Provider';
+import { Context } from './Provider';
 import { Draggable } from 'react-beautiful-dnd';
 import Button from 'react-bootstrap/Button';
 import Accordion from 'react-bootstrap/Accordion';
@@ -7,19 +7,14 @@ import Card from 'react-bootstrap/Card';
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
 
-import DropDownList from '../DropDownList';
-
-import LoaderModal from '../LoaderModal'
-import FilePreview from '../FilePreview';
-import FamilyPreview from '../FamilyPreview';
+import LoaderModal from './LoaderModal'
+import FilePreview from './FilePreview';
 import ArtowrkInfo from './infoComponents/ArtworkInfo';
 import JsonPreview from './infoComponents/JsonPreview';
 import FamilyInfo from './infoComponents/FamilyInfo';
 import NavigationInfo from './infoComponents/NavigationInfo';
 
-import FamilyListDnDContainer from './FamilyListDnD/FamilyListDnDContainer';
-
-import './css/ImagesPreview.css';
+import '../css/ImagesPreview.css';
 
 export default class DnDListDraggable extends React.Component{
     static contextType = Context;
@@ -44,18 +39,7 @@ export default class DnDListDraggable extends React.Component{
             <Context.Consumer>
                 {() => {
                     return(
-                        <Draggable
-                        draggableId={this.props.file.fileName} 
-                        index={this.props.index}
-                        >
-                        {(provided)=>{
-                            // console.log('DRAGGABLE PROPS')
-                            // console.log(this.props)
-                            // if(this.context.state)
-                            return(
                                 <div className="ImagesPreview--container"
-                                    {...provided.draggableProps}
-                                    ref={provided.innerRef}
                                 >       
                                         
                                         <div className="image-index-box">
@@ -179,13 +163,11 @@ export default class DnDListDraggable extends React.Component{
 
                                             <div className="ImagesPreview--dragHandle custom-button"
                                                 id={`draghandle--${this.props.index}`}
-                                                {...provided.dragHandleProps}
                                                 onMouseDown={(e)=>{
                                                     const dragHandle = e.target
                                                     if(!e.target.classList.contains('mouseDown')){
                                                         e.target.classList.add('mouseDown')
                                                     }
-                                                    provided.dragHandleProps.onMouseDown(e)
         
                                                     document.addEventListener('mouseup', () => {dragHandle.classList.remove('mouseDown')})
                                                     }
@@ -198,9 +180,6 @@ export default class DnDListDraggable extends React.Component{
                                                                    
                                 </div>
                             )
-                        }}
-                    </Draggable>
-                    )
                 }
                 }
             </Context.Consumer>

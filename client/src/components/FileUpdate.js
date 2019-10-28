@@ -59,7 +59,7 @@ export default class FileUpdate extends React.Component{
                                                 />
                                             </div>
 
-                                            <div style={{border: "1px solid grey", padding: "2px"}}>
+                                            {/* <div style={{border: "1px solid grey", padding: "2px"}}>
                                                 <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
                                                 <form style={{display:"flex", justifyContent:"space-evenly"}}>
                                                     <div className="container-radio">
@@ -86,6 +86,12 @@ export default class FileUpdate extends React.Component{
                                                         <label htmlFor="useAsSeeAlso_no">no</label>
                                                     </div>
                                                 </form>
+                                            </div> */}
+                                            <div style={{border: "1px solid grey", padding: "2px"}}>
+                                                <Button>
+                                                    Edit
+                                                </Button>
+
                                             </div>
 
                                         </div>

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from './Provider';
 import FamilyInfo from './FamilyInfo';
 import DnDListContainer from './DragAndDropList/DnDListContainer'
+import FamilyContainer from './FamilyContainer'
 import "bootstrap/dist/css/bootstrap.min.css";
 import FileUpdate from './FileUpdate';
 
@@ -35,6 +36,11 @@ export default class ImageInfo extends Component{
                         data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
                         contextMethods={this.context.removeFile}
                       />
+                      <FamilyContainer
+                        data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
+                        contextMethods={this.context.removeFile}
+                      />
+                      
                   </div>
                   <FileUpdate 
                     state={this.context.state}
