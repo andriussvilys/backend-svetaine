@@ -41,8 +41,10 @@ router.get('/:artworkFamily', (req, res) => {
 
 router.post('/create', 
 upload.single('artworkImage'), 
-(req, res) => {
-    ArtworkInfo.create(req.body).then((artwork)=>{res.send(artwork)})
+(req, res, rej) => {
+    ArtworkInfo.create(req.body)
+    .then((artwork)=>{res.send(artwork)})
+    .catch(err => console.error(err))
     // const newArtwork = new ArtworkInfo({
     //     category: req.body.category, 
     //     uploadURL: req.body.uploadURL, 

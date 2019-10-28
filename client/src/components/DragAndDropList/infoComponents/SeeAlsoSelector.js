@@ -126,13 +126,6 @@ export default class SeeAlsoSelector extends React.Component{
 
             fileListPromise
             .then(res => {
-
-                console.log('fileList promise res')
-                console.log(res)
-                const highlighter = (fileName) => {
-                    return highlighterReference.includes(fileName)
-                }
-
                 let usedNames = [];
         
                 res.forEach((file, index) => {
@@ -144,7 +137,7 @@ export default class SeeAlsoSelector extends React.Component{
                         
                         renderList = [...renderList, newFile]
                     })
-
+                
                 resolve(renderList)
                 }
             )
@@ -156,19 +149,13 @@ export default class SeeAlsoSelector extends React.Component{
     }
 
     componentDidMount(){
-
-        console.log('   SEE ALSO COMPONENTS MOUNTS')
         let newState = {...this.state}
 
         newState.fileList = this.props.fileList
 
         this.componentMountRenderAllFiles(this.props.fileList, this.props.highlighterReference).then(
             res => {
-                console.log('renderAllFiles res')
-                console.log(res)
                 newState.renderList = res
-                console.log("newState")
-                console.log(newState)
                 this.setState(newState)
             }
         )

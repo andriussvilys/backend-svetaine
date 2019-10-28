@@ -165,7 +165,7 @@ export default class DnDListDraggable extends React.Component{
                                                 <Button
                                                     variant="success"
                                                     className="custom-button"
-                                                    onClick={() => this.context.fileDataMethods.postArtworkInfo(this.props.file.artworkFamily)}
+                                                    onClick={() => this.context.fileDataMethods.postArtworkInfo(this.props.file)}
                                                 >
                                                     Submit to server
                                                 </Button>

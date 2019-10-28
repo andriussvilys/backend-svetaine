@@ -61,7 +61,7 @@ export default class FamilyInfo extends Component {
                                         id="familyDisplaySetup__radio-yes" 
                                         value="yes" 
                                         disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
-                                        onClick={() => {this.context.fileDataMethods.transferState(this.props.file)}}
+                                        onChange={() => {this.context.fileDataMethods.transferState(this.props.file)}}
                                         checked={this.context.state.fileData.files[this.props.fileName].useFamilySetup}
                                         />
                                     </div>
@@ -72,7 +72,7 @@ export default class FamilyInfo extends Component {
                                         id="familyDisplaySetup__radio-no" 
                                         value="no" 
                                         disabled={this.context.state.familySetupData.artworkFamily === null ? true : false}
-                                        onClick={() => this.context.useFamilySetup(false)}
+                                        onChange={() => this.context.useFamilySetup(false)}
                                         checked={!this.context.state.fileData.files[this.props.fileName].useFamilySetup}
                                         />
                                     </div>
