@@ -25,7 +25,8 @@ export default class SeeAlsoSelector extends React.Component{
      * @params fileList = takes an object with file data 
      */
     renderAllFiles = (fileList) => {
-        console.log(' RENDER ALLL ')
+        console.log(' seeAlsoSelector -GLOBAL- ')
+        console.log(fileList)
         
        let domNodes =  Object.keys(fileList).map(fileName => {
         if(fileName === "fileNames"){
@@ -33,6 +34,10 @@ export default class SeeAlsoSelector extends React.Component{
         }
         return fileList[fileName].file})
        return domNodes
+    }
+
+    componentDidMount(){
+        this.setState({renderList: this.props.renderList})
     }
 
     render(){
@@ -72,7 +77,8 @@ export default class SeeAlsoSelector extends React.Component{
                                         </div>
 
                                         <div style={{display: "flex", flexWrap: "wrap"}}>
-                                            {this.renderAllFiles(this.props.highlighterSource)}
+                                            {/* {!this.props.renderList ? null : this.renderAllFiles(this.props.renderList)} */}
+                                            {this.renderAllFiles(this.props.renderFiles)}
                                         </div>
 
                                         </Card.Body>

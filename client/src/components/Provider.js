@@ -39,7 +39,7 @@ export class Provider extends React.Component{
         
     this.changeFileName = (e) => {
         let nameWithFileType = `${e.target.value.split('.')[0]}.${this.state.fileType.split('/')[1]}`
-        this.setState({ fileName: nameWithFileType, filePath: `uploads/${nameWithFileType}` })
+        this.setState({ fileName: nameWithFileType, filePath: `/uploads/${nameWithFileType}` })
     }
 
     this.onChange = (e, stateTarget) => {
@@ -646,7 +646,7 @@ export class Provider extends React.Component{
                                 fileName: file.name, 
                                 fileType: file.type,
                                 familyDisplayIndex: null,
-                                src: `uploads/${file.name}`,
+                                src: `/uploads/${file.name}`,
                                 themes: [],
                                 seeAlso: [],
                                 categories: {}
@@ -847,7 +847,7 @@ export class Provider extends React.Component{
                 
                             let fileDataObject = {                          
                             category: fileData.category ?  fileData.category : null,
-                            filePath: `uploads/${fileData.fileName}`,
+                            filePath: `/uploads/${fileData.fileName}`,
                             fileName: fileData.fileName,
                             fileType: fileData.fileType,
                 
