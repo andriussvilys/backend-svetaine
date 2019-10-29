@@ -1,7 +1,7 @@
 import React from 'react';
 import { Context } from './Provider';
 import FileDetail from './FileDetail'
-import '../css/ImagesPreview.css'
+import './DragAndDropList/css/ImagesPreview.css'
 
 export default class DnDListContainer extends React.Component{
     static contextType = Context;
@@ -14,13 +14,13 @@ export default class DnDListContainer extends React.Component{
     createFileDetail = () => {
         return(
             <div>
-                <FileDetail 
+                {/* <FileDetail 
                 key={this.props.data.column.id}
                 column={this.props.data.column}
                 files={this.props.data.files}
                 columnIndex={0}
                 >
-                </FileDetail>
+                </FileDetail> */}
             </div>
         )
     }

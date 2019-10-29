@@ -9,12 +9,12 @@ import Spinner from 'react-bootstrap/Spinner';
 
 import LoaderModal from './LoaderModal'
 import FilePreview from './FilePreview';
-import ArtowrkInfo from './infoComponents/ArtworkInfo';
-import JsonPreview from './infoComponents/JsonPreview';
-import FamilyInfo from './infoComponents/FamilyInfo';
-import NavigationInfo from './infoComponents/NavigationInfo';
+import ArtowrkInfo from './DragAndDropList/infoComponents/ArtworkInfo';
+import JsonPreview from './DragAndDropList/infoComponents/JsonPreview';
+import FamilyInfo from './DragAndDropList/infoComponents/FamilyInfo';
+import NavigationInfo from './DragAndDropList/infoComponents/NavigationInfo';
 
-import '../css/ImagesPreview.css';
+import './DragAndDropList/css/ImagesPreview.css'
 
 export default class DnDListDraggable extends React.Component{
     static contextType = Context;
