@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import FileUpdate from './FileUpdate'
+import EditDetailContainer from './EditPage/EditDetailContainer'
 
 export default class Edit extends Component{
     static contextType = Context;
@@ -10,10 +11,16 @@ export default class Edit extends Component{
               {
                   () => {
                     return(
-                        <FileUpdate 
-                            state={this.context.state}
-                            familySetupMethods={this.context.familySetupMethods}
-                        />
+                        <div>
+                            {/* <FileUpdate 
+                                state={this.context.state}
+                                familySetupMethods={this.context.familySetupMethods}
+                            /> */}
+                            <EditDetailContainer 
+                                state={this.context.state}
+                                familySetupMethods={this.context.familySetupMethods}
+                            />
+                        </div>
                     )
                 }
             }
