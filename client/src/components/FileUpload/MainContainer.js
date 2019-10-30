@@ -1,11 +1,14 @@
 import React from 'react';
 import FamilyList from './FamilyList'
+import { Context } from '../Provider';
 
 
-const MainContainer = (props) => {
+export default class MainContainer extends React.Component{
+
+    static contextType = Context;
     
-    let filesData = () => Object.keys(props.data.files).map(objName => {
-        return props.data.files[objName]
+    filesData = () => Object.keys(this.props.data.files).map(objName => {
+        return this.props.data.files[objName]
     })
     
     /**
@@ -13,12 +16,12 @@ const MainContainer = (props) => {
      * #1: familyNames: an Array of FamilyNames of uploaded files 
      * #2: fileByFamily: an Object that's a collection of arrays sorted by artworkFamily
      */
-    const sortByFamily = () => {
+    sortByFamily = () => {
 
         let fileByFamily = {}
         let familyNames = []
 
-            filesData().forEach(file => {
+            this.filesData().forEach(file => {
             if(!file.artworkFamily){
                 if(!fileByFamily.none){
                     fileByFamily.none = []
@@ -39,31 +42,69 @@ const MainContainer = (props) => {
         return {fileByFamily, familyNames}
     }
 
-    const renderNames = (data) => {
+    renderNames = (data) => {
         if(!data){
             return
         }
 
-        const sortedData = sortByFamily()
+        const sortedData = this.sortByFamily()
 
-        let list = sortByFamily().familyNames.map(familyName => {
+        // let list = this.sortByFamily().familyNames.map(familyName => {
+        //     return (
+        //         <FamilyList 
+        //         familyDropDown={{
+        //             state:this.context.state,
+        //             familyList: this.context.state.artworkFamilyList,
+        //             context:this.context,
+        //             fileName:
+        //         }}
+        //         familyName={familyName}
+        //         files={sortedData.fileByFamily[familyName]}
+        //         controls={{
+        //             removeFile: this.context.fileDataMethods.removeFile,
+        //             postArtworkInfo: this.context.fileDataMethods.postArtworkInfo,
+        //             fileDataMethods: this.context.fileDataMethods,
+        //             onChange: this.context.onChange
+        //         }}
+
+        //         />
+        //     ) 
+        // })
+        let list = this.sortByFamily().familyNames.map(familyName => {
             return (
                 <FamilyList 
+                familyDropDown={{
+                    state:this.context.state,
+                    familyList: this.context.state.artworkFamilyList,
+                    context:this.context,
+                }}
                 familyName={familyName}
                 files={sortedData.fileByFamily[familyName]}
+                controls={{
+                    removeFile: this.context.fileDataMethods.removeFile,
+                    postArtworkInfo: this.context.fileDataMethods.postArtworkInfo,
+                    fileDataMethods: this.context.fileDataMethods,
+                    onChange: this.context.onChange
+                }}
+
                 />
             ) 
         })
         return list
     }
     
-
-    return(
-        <div>
-            <h5>family Names:</h5>
-            {renderNames(props.data)}
-        </div>
-    )
+    render(){
+        return(
+            <Context.Consumer>
+                {() => {
+                    return(
+                        <div>
+                            <h5>family Names:</h5>
+                            {this.renderNames(this.props.data.files)}
+                        </div>
+                    )
+                }}
+            </Context.Consumer>
+        )
+    }
 }
-
-export default MainContainer

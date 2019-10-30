@@ -19,6 +19,8 @@ export default class DropDownList extends React.Component{
 /**
  *@param {array} array source data for list
  *@param {string} string used for ids/names 
+ *@param {state} object main App state context or redux
+ *@param {fileName} string targets a particular file record in state
  */
     createDropDownList = (array, string, state, fileName) => {
 

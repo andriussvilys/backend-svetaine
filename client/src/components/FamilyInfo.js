@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
-import ExtendedList from './ExtendedList';
 import DropDownList from './DropDownList'
 import NavigationInfo from './NavigationInfo'
 import SeeAlsoSelector from './SeeAlsoSelector'
-import ThemeSelector from './ThemeSelector';
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
