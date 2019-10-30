@@ -46,6 +46,8 @@ const FamilyList = (props) => {
                     >
                         <FamilyInfo 
                         familyDropDown={{...props.familyDropDown, fileName: file.fileName}}
+                        themesDropDown={{...props.themesDropDown, fileName: file.fileName}}
+                        seeAlso={{...props.seeAlso, fileName: file.fileName}}
                         // state={props.familyDropDown.state}
                         // familyList={props.familyDropDown.familyList}
                         // context={props.familyDropDown.context}

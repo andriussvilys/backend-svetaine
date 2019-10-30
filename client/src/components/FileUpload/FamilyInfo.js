@@ -24,13 +24,14 @@ const FamilyInfo = (props) => {
                         displayAddNew="initial"
                     />
 
-                    {/* <DropDownList 
+                    <DropDownList 
                         title={"Select Family Themes"}
-                        state={this.context.state}
-                        array={this.context.state.themesData}
+                        state={props.themesDropDown.state}
+                        array={props.themesDropDown.themesData}
                         string={"themes"}
-                        onChange={this.context.familySetupMethods.onChange}
-                        isChecked={this.context.familySetupMethods.isChecked}
+                        fileName={props.familyDropDown.fileName}
+                        onChange={props.themesDropDown.context.fileDataMethods.onChange}
+                        isChecked={props.themesDropDown.context.familySetupMethods.isChecked}
                         id="Themes-list"
                         router={'/api/themes/update'}
                         addNewTarget={'themesData'}
@@ -38,17 +39,18 @@ const FamilyInfo = (props) => {
                     />
 
                     <SeeAlsoSelector 
-                        renderFiles={this.context.state.seeAlsoData.renderFiles}
-                        renderAllFiles={this.context.familySetupMethods.renderAllFiles}
-                        state={this.context.state}
-                        highlighterReference={this.context.state.seeAlsoData.renderFiles}
-                        array={this.context.state.familySetupData.seeAlso}
-                        stateNest={this.context.state.familySetupData.seeAlso}
-                        onChange={this.context.familySetupMethods.onChange}
-                        isChecked={this.context.familySetupMethods.isChecked}
-                        serverFileDir={this.context.state.serverFileDir}
+                        fileName={props.fileName}
+                        renderFiles={props.seeAlso.state.seeAlsoData.renderFiles}
+                        renderAllFiles={props.seeAlso.context.familySetupMethods.renderAllFiles}
+                        state={props.seeAlso.state}
+                        highlighterReference={props.seeAlso.state.seeAlsoData.renderFiles}
+                        array={props.seeAlso.state.familySetupData.seeAlso}
+                        stateNest={props.seeAlso.state.familySetupData.seeAlso}
+                        onChange={props.seeAlso.context.fileDataMethods.onChange}
+                        isChecked={props.seeAlso.context.familySetupMethods.isChecked}
+                        serverFileDir={props.seeAlso.state.serverFileDir}
                     />
-                </div>
+                {/* </div>
 
                 <div className="imageInfo--box" style={{display: "block"}}>
                     <div>

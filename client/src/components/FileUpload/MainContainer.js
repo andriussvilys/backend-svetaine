@@ -78,6 +78,15 @@ export default class MainContainer extends React.Component{
                     familyList: this.context.state.artworkFamilyList,
                     context:this.context,
                 }}
+                themesDropDown={{
+                    state:this.context.state,
+                    themesData:this.context.state.themesData,
+                    context: this.context
+                }}
+                seeAlso={{
+                    state: this.context.state,
+                    context: this.context
+                }}
                 familyName={familyName}
                 files={sortedData.fileByFamily[familyName]}
                 controls={{
