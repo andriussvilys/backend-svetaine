@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import axios from 'axios';
+import {BrowserRouter, Link} from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -58,12 +59,11 @@ export default class FileUpdate extends React.Component{
                             />
                         </div>
                         <div style={{border: "1px solid grey", padding: "2px"}}>
-                            <Button
-                                onClick={() => {this.setState({showPopUp: true})}}
-                            >
-                                Edit
-                            </Button>
-            
+                            <Link to={`/admin/edit/${file.fileName}`}>
+                                <Button>
+                                    Edit
+                                </Button>
+                            </Link>
                         </div>
             
                     </div>
@@ -144,52 +144,37 @@ export default class FileUpdate extends React.Component{
 
     render(){
         return(
-            <div 
-            id={'familyContainer'}
-            style={{position: "relative"}}
-            >
                 <div 
-                className={!this.state.showPopUp ? "no-display" : null }
-                id={'EditDetailPopUp'}
-                style={{
-                    position:"absolute",
-                    height: "92vh",
-                    width: "96vw",
-                    margin: "0 2vw 2vw 2vw",
-                    opacity: "0.8",
-                    backgroundColor: "yellow",
-                    zIndex: "10"
-                }}
+                id={'familyContainer'}
+                style={{position: "relative"}}
                 >
+                    <div>
+                        <DropDownList 
+                                title={"filter by artwork families"}
+                                state={this.props.state}
+                                array={this.props.state.artworkFamilyList}
+                                string={"artworkFamily"}
+                                onChange={this.filterByFamily}
+                                // isChecked={this.props.familySetupMethods.isChecked}
+                                id="artworkFamily-fileUpdata"
+                                displayAddNew="none"
+                        />
+                        <Button
+                            size="sm"
+                            variant="primary"
+                            onClick={this.resetRenderFiles}
+                        >
+                            reload file list
+                        </Button>
+                    </div>
 
+                    <div style={{display: "flex", flexWrap: "wrap"}}>
+                        {this.state.renderList.map(preview => {
+                            return preview.file
+                            })
+                        }
+                    </div>
                 </div>
-                <div>
-                    <DropDownList 
-                            title={"filter by artwork families"}
-                            state={this.props.state}
-                            array={this.props.state.artworkFamilyList}
-                            string={"artworkFamily"}
-                            onChange={this.filterByFamily}
-                            // isChecked={this.props.familySetupMethods.isChecked}
-                            id="artworkFamily-fileUpdata"
-                            displayAddNew="none"
-                    />
-                    <Button
-                        size="sm"
-                        variant="primary"
-                        onClick={this.resetRenderFiles}
-                    >
-                        load all files
-                    </Button>
-                </div>
-
-                <div style={{display: "flex", flexWrap: "wrap"}}>
-                    {this.state.renderList.map(preview => {
-                        return preview.file
-                        })
-                    }
-                </div>
-            </div>
         )
     }
 }

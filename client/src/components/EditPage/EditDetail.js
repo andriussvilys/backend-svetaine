@@ -1,4 +1,5 @@
 import React from 'react'
+import { BrowserRouter, Link } from 'react-router-dom'
 import Button from 'react-bootstrap/Button'
 import FilePreview from '../FilePreview'
 
@@ -6,6 +7,7 @@ const EditDetail = (props) => {
     console.log('EDIT DETAIL PROPS')
     console.log(props)
     return(
+        <BrowserRouter>
                 <div 
                     id={`EditDetail-${props.file.fileName}`}
                     key={`fileLibrary-${props.file.fileName}`} 
@@ -39,13 +41,13 @@ const EditDetail = (props) => {
                         />
                     </div>
                     <div style={{border: "1px solid grey", padding: "2px"}}>
-                        <Button>
-                            Edit
-                        </Button>
-        
+                        <Link to={`/admin/edit/${props.file.fileName}`} >
+                                Edit
+                        </Link>
                     </div>
         
                 </div>
+        </BrowserRouter>
     )
 }
 

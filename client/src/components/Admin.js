@@ -34,7 +34,7 @@ const Admin = (props) => {
               <div className="data-container">
                 {/* <ImageInfo/> */}
                 <Route path="/admin/create" component={ImageInfo} />
-                <Route path="/admin/edit" component={Edit} />
+                <Route exact path="/admin/edit" component={Edit} />
               </div>
             </div>
             </Provider>

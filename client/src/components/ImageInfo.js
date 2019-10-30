@@ -5,6 +5,7 @@ import DnDListContainer from './DragAndDropList/DnDListContainer'
 import FamilyContainer from './FamilyContainer'
 import "bootstrap/dist/css/bootstrap.min.css";
 import FileUpdate from './FileUpdate';
+import MainContainer from './FileUpload/MainContainer';
 
 export default class ImageInfo extends Component{
 
@@ -36,16 +37,12 @@ export default class ImageInfo extends Component{
                         data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
                         contextMethods={this.context.removeFile}
                       />
-                      <FamilyContainer
-                        data={Object.keys(this.context.state.fileData).length > 0 ? this.context.state.fileData : null}
-                        contextMethods={this.context.removeFile}
-                      />
-                      
                   </div>
-                  <FileUpdate 
-                    state={this.context.state}
-                    familySetupMethods={this.context.familySetupMethods}
-                  />
+                  <div>
+                    <MainContainer
+                     data={this.context.state.fileData}
+                     />
+                  </div>
               </div>
 
               <div className="imageInfo--section">
