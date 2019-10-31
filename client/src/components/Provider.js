@@ -1111,11 +1111,17 @@ export class Provider extends React.Component{
                             //get all artwork records from database
                             axios.get('/api/artworkInfo')
                                 .then(res => {
-                                    let databaseFiles = []
+                                    let databaseFiles = {}
+                                    let usedNames = []
                                     
                                     //check that a record has a file in the server
                                     serverFileNames.forEach(fileName => {
-                                        res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
+                                        res.data.forEach(obj => {
+                                            if(obj.fileName === fileName && !usedNames.includes[fileName]){
+                                                usedNames = [...usedNames, fileName]
+                                            return databaseFiles = {...databaseFiles, [fileName]: obj}
+                                        }
+                                    })
                                     })
 
                                     //add an array of all file object
