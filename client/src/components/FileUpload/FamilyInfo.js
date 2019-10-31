@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import DropDownList from '../DropDownList'
-import SeeAlsoSelector from '../SeeAlsoSelector'
+import SeeAlsoSelector from './SeeAlsoSelector'
 import Button from 'react-bootstrap/Button'
 
 const FamilyInfo = (props) => {
@@ -39,15 +39,21 @@ const FamilyInfo = (props) => {
                     />
 
                     <SeeAlsoSelector 
-                        fileName={props.fileName}
-                        renderFiles={props.seeAlso.state.seeAlsoData.renderFiles}
-                        renderAllFiles={props.seeAlso.context.familySetupMethods.renderAllFiles}
+                        initialData={props.seeAlso.state.artworkInfoData}
+                        highlightReference={props.seeAlso.state.fileData.files[props.fileName] ? 
+                            props.seeAlso.state.fileData.files[props.fileName].seeAlso :
+                            null
+                        }
+                        fileName={props.seeAlso.fileName}
+                        // renderFiles={props.seeAlso.state.seeAlsoData.renderFiles}
+                        // renderAllFiles={props.seeAlso.context.familySetupMethods.renderAllFiles}
                         state={props.seeAlso.state}
-                        highlighterReference={props.seeAlso.state.seeAlsoData.renderFiles}
+                        context={props.seeAlso.context}
+                        // highlighterReference={props.seeAlso.state.seeAlsoData.renderFiles}
                         array={props.seeAlso.state.familySetupData.seeAlso}
                         stateNest={props.seeAlso.state.familySetupData.seeAlso}
                         onChange={props.seeAlso.context.fileDataMethods.onChange}
-                        isChecked={props.seeAlso.context.familySetupMethods.isChecked}
+                        isChecked={props.seeAlso.context.fileDataMethods.isChecked}
                         serverFileDir={props.seeAlso.state.serverFileDir}
                     />
                 {/* </div>

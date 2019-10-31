@@ -4,7 +4,7 @@ import FilePreview from './FilePreview'
 import FamilyInfo from './FamilyInfo'
 import Button from 'react-bootstrap/Button'
 import Accordion from '../Accordion'
-import ArtowrkInfo from '../ArtworkInfo'
+import ArtworkInfo from '../ArtworkInfo'
 
 //this component returns a div with a family name and FilePreviews of each child in the family
 
@@ -32,7 +32,7 @@ const FamilyList = (props) => {
                     className={`UploadFile-${file.fileName}`}
                     title={'Edit Artwork Info'}
                     >
-                        <ArtowrkInfo 
+                        <ArtworkInfo 
                             file={file}
                             fileName={file.fileName}
                             onChange={props.controls.fileDataMethods.onChange}

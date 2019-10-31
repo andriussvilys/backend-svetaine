@@ -708,7 +708,6 @@ export class Provider extends React.Component{
             //     }
             // })
         },
-
         //Removes selected file from state and thus DOM
         removeFile: (fileName) => {
 

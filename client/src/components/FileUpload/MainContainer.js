@@ -49,27 +49,6 @@ export default class MainContainer extends React.Component{
 
         const sortedData = this.sortByFamily()
 
-        // let list = this.sortByFamily().familyNames.map(familyName => {
-        //     return (
-        //         <FamilyList 
-        //         familyDropDown={{
-        //             state:this.context.state,
-        //             familyList: this.context.state.artworkFamilyList,
-        //             context:this.context,
-        //             fileName:
-        //         }}
-        //         familyName={familyName}
-        //         files={sortedData.fileByFamily[familyName]}
-        //         controls={{
-        //             removeFile: this.context.fileDataMethods.removeFile,
-        //             postArtworkInfo: this.context.fileDataMethods.postArtworkInfo,
-        //             fileDataMethods: this.context.fileDataMethods,
-        //             onChange: this.context.onChange
-        //         }}
-
-        //         />
-        //     ) 
-        // })
         let list = this.sortByFamily().familyNames.map(familyName => {
             return (
                 <FamilyList 
@@ -85,7 +64,7 @@ export default class MainContainer extends React.Component{
                 }}
                 seeAlso={{
                     state: this.context.state,
-                    context: this.context
+                    context: this.context,
                 }}
                 familyName={familyName}
                 files={sortedData.fileByFamily[familyName]}
