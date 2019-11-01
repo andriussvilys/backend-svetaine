@@ -47,7 +47,10 @@ const FamilyList = (props) => {
                         <FamilyInfo 
                         familyDropDown={{...props.familyDropDown, fileName: file.fileName}}
                         themesDropDown={{...props.themesDropDown, fileName: file.fileName}}
-                        seeAlso={{...props.seeAlso, fileName: file.fileName}}
+                        seeAlso={{...props.seeAlso, 
+                            fileName: file.fileName, 
+                            highlightReference: props.seeAlso.state.fileData.files[file.fileName].seeAlso
+                        }}
                         // state={props.familyDropDown.state}
                         // familyList={props.familyDropDown.familyList}
                         // context={props.familyDropDown.context}

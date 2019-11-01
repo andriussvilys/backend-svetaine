@@ -40,10 +40,7 @@ const FamilyInfo = (props) => {
 
                     <SeeAlsoSelector 
                         initialData={props.seeAlso.state.artworkInfoData}
-                        highlightReference={props.seeAlso.state.fileData.files[props.fileName] ? 
-                            props.seeAlso.state.fileData.files[props.fileName].seeAlso :
-                            null
-                        }
+                        highlightReference={props.seeAlso.highlightReference}
                         fileName={props.seeAlso.fileName}
                         // renderFiles={props.seeAlso.state.seeAlsoData.renderFiles}
                         // renderAllFiles={props.seeAlso.context.familySetupMethods.renderAllFiles}

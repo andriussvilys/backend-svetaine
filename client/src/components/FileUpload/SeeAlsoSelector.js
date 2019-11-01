@@ -45,13 +45,26 @@ export default class SeeAlsoSelector extends React.Component{
        return domNodes
     }
 
+    filterByFamily = (value) => {
+        console.log(`filterByFmaily ${value}`)
+        let newRenderList = []
+        Object.keys(this.state.fileList).forEach(fileName => {
+            const file = this.state.fileList[fileName]
+            if(file.artworkFamily === value){
+                newRenderList = [...newRenderList, file]
+                // newRenderList.fileNames = Object.keys(newRenderList).map(fileName => fileName)
+            }
+        })
+        this.setState({renderList: newRenderList})
+    }
+
     componentDidMount(){
-        console.log('FileUpload COmpoenent mounter')
-        console.log(this.props.initialData)
+        console.log('FILE UPLOAD PROPS')
+        console.log(this.props)
+        console.log(this.props.onChange)
         //initial data = this.context.state.artworkInfoData
         let dataArray = Object.keys(this.props.initialData)
-        console.log('dataArray')
-        console.log(dataArray)
+
 
         let fileList = dataArray.map(objName => {
 
@@ -126,6 +139,10 @@ export default class SeeAlsoSelector extends React.Component{
         this.setState({fileList: fileList, renderList: fileList}, console.log('fileUpload state', this.state))
     }
 
+    
+
+
+
     render(){
         return(
             <div className="themeSelector">
@@ -146,7 +163,7 @@ export default class SeeAlsoSelector extends React.Component{
                                         array={this.props.state.artworkFamilyList}
                                         string={"fileNames"}
                                         fileName={this.props.fileName}
-                                        onChange={this.props.context.fileDataMethods.filterByFamily}
+                                        onChange={this.filterByFamily}
                                         isChecked={this.props.context.fileDataMethods.isChecked}
                                         id="artworkFamily-fileUpdate"
                                         displayAddNew="none"
@@ -161,7 +178,6 @@ export default class SeeAlsoSelector extends React.Component{
                             </div>
 
                             <div style={{display: "flex", flexWrap: "wrap"}}>
-                                {/* {!this.props.renderList ? null : this.renderAllFiles(this.props.renderList)} */}
                                 {this.state.renderList ? this.renderAllFiles(this.state.renderList) : null}
                             </div>
 

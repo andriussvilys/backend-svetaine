@@ -483,6 +483,8 @@ export class Provider extends React.Component{
          */
         onChange: (value, string, fileName) => {
 
+            alert('ON CHANGE CALLED')
+
             console.log('on change')
             console.log(value)
 
