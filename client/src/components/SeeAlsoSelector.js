@@ -25,8 +25,6 @@ export default class SeeAlsoSelector extends React.Component{
      * @params fileList = takes an object with file data 
      */
     renderAllFiles = (fileList) => {
-        console.log(' seeAlsoSelector -GLOBAL- ')
-        console.log(fileList)
         
        let domNodes =  Object.keys(fileList).map(fileName => {
         if(fileName === "fileNames"){

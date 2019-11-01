@@ -39,8 +39,6 @@ export default class DndListDroppable extends React.Component{
                                             // style={{display: "flex", flexWrap: "wrap"}}
                                             >
                                                 {this.props.column.fileIds.map((fileId, index) => {
-                                                    console.log('this props files -----------------------')
-                                                    console.log(this.props.files)
                                                     return (
                                                     <DndListDraggable
                                                         key={`${fileId} in ${this.props.column.id}`} 

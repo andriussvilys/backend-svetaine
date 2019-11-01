@@ -12,7 +12,7 @@ export default class SeeAlsoSelector extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {fileList: {}, renderList: {}}
+        this.state = {}
     }
     /**
      * @params fileList = takes an object with file data 
@@ -162,7 +162,7 @@ export default class SeeAlsoSelector extends React.Component{
 
                             <div style={{display: "flex", flexWrap: "wrap"}}>
                                 {/* {!this.props.renderList ? null : this.renderAllFiles(this.props.renderList)} */}
-                                {this.renderAllFiles(this.state.renderFiles)}
+                                {this.state.renderList ? this.renderAllFiles(this.state.renderList) : null}
                             </div>
 
                             </Card.Body>

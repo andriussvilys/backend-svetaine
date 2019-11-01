@@ -65,6 +65,7 @@ export default class MainContainer extends React.Component{
                 seeAlso={{
                     state: this.context.state,
                     context: this.context,
+                    initialData: this.context.state.artworkInfoData
                 }}
                 familyName={familyName}
                 files={sortedData.fileByFamily[familyName]}

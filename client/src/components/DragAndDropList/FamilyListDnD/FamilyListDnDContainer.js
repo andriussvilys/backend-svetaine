@@ -29,8 +29,6 @@ export default class FamilyListDnDContainer extends React.Component{
     }
 
     render(){
-        console.log('FAMILY LIST COTNAINER PROPS')
-        console.log(this.props.data)
         //if this component receives props, we set up the its state
         return(
             <Context.Consumer>
