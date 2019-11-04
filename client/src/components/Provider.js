@@ -974,7 +974,7 @@ export class Provider extends React.Component{
             })
 
             this.setState({seeAlsoData: {...this.state.seeAlsoData, renderFiles: newRenderList}})
-            // this.setState({renderList: newRenderList})
+            // this.setState({renderList: newRenderList})v
         },
         renderAllFiles: (highlighterState) => 
         {

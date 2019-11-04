@@ -36,18 +36,16 @@ export default class SeeAlsoSelector extends React.Component{
     }
     //for dropdown
     filterByFamily = (value) => {
-        console.log(`filterByFmaily ${value}`)
-        let newRenderList = []
-        Object.keys(this.state.fileList).forEach(fileName => {
-            const file = this.state.fileList[fileName]
-            if(file.artworkFamily === value){
-                newRenderList = [...newRenderList, file]
-                // newRenderList.fileNames = Object.keys(newRenderList).map(fileName => fileName)
-            }
-        })
-        this.setState({renderList: newRenderList})
-    }
 
+
+        let newRenderList = this.state.fileList.filter(obj => obj.artworkFamily === value).map(obj => obj.fileName)
+
+        this.setState({fileNames: newRenderList})
+    }
+    resetData = () => {
+        let initialData = this.state.fileList.map(obj => obj.fileName)
+        this.setState({fileNames: initialData})
+    }
     /**
      * @param {array}: takes an array of file names
      */
@@ -176,9 +174,9 @@ export default class SeeAlsoSelector extends React.Component{
                                 <Button
                                     size="sm"
                                     variant="primary"
-                                    onClick={() => this.props.context.familySetupMethods.resetRenderFiles()}
+                                    onClick={() => this.resetData()}
                                 >
-                                    load all files
+                                    reload all files
                                 </Button>
                             </div>
 
