@@ -26,16 +26,6 @@ export default class SeeAlsoSelector extends React.Component{
             return
         }
         console.log(fileList)
-        
-    //    let domNodes =  Object.keys(fileList).map(fileName => {
-    //     if(fileName === "fileNames"){
-    //         return
-    //     }
-
-    //     console.log(fileList[fileName].file)
-    //     return fileList[fileName].file
-    // })
-
         let domNodes =  fileList.map(fileObj => {
 
             console.log(fileObj)
@@ -44,7 +34,7 @@ export default class SeeAlsoSelector extends React.Component{
         console.log('domNodes', domNodes)
        return domNodes
     }
-
+    //for dropdown
     filterByFamily = (value) => {
         console.log(`filterByFmaily ${value}`)
         let newRenderList = []
@@ -58,14 +48,10 @@ export default class SeeAlsoSelector extends React.Component{
         this.setState({renderList: newRenderList})
     }
 
-    componentDidMount(){
-        console.log('FILE UPLOAD PROPS')
-        console.log(this.props)
-        console.log(this.props.onChange)
-        //initial data = this.context.state.artworkInfoData
-        let dataArray = Object.keys(this.props.initialData)
-
-
+    /**
+     * @param {array}: takes an array of file names
+     */
+    createPreviews = (dataArray) => {
         let fileList = dataArray.map(objName => {
 
             const file = this.props.initialData[objName]
@@ -108,7 +94,10 @@ export default class SeeAlsoSelector extends React.Component{
                                     name="useAsSeeAlso" 
                                     id="useAsSeeAlso__radio-yes" 
                                     value="yes" 
-                                    onChange={() => {this.props.onChange( file.fileName, "seeAlso", this.props.fileName)}}
+                                    onChange={() => {
+                                        this.props.onChange( file.fileName, "seeAlso", this.props.fileName)
+                                        this.setState({renderList: this.state.renderList})
+                                    }}
                                     checked={highlighter(file.fileName)}
                                     />
                                     <label 
@@ -121,7 +110,10 @@ export default class SeeAlsoSelector extends React.Component{
                                     name="useAsSeeAlso" 
                                     id="useAsSeeAlso__radio-no" 
                                     value="no" 
-                                    onChange={() => {this.props.onChange(file.fileName, "seeAlso", this.props.fileName)}}
+                                    onChange={() => {
+                                        this.props.onChange( file.fileName, "seeAlso", this.props.fileName)
+                                        this.setState({renderList: this.state.renderList})
+                                    }}
                                     checked={!highlighter(file.fileName)}
                                     />
                                     <label htmlFor="useAsSeeAlso_no">no</label>
@@ -134,9 +126,22 @@ export default class SeeAlsoSelector extends React.Component{
 
             return newFile
         })
+
+        // this.setState({renderList: fileList})
+        return fileList
+    }
+
+    componentDidMount(){
+        console.log('FILE UPLOAD PROPS')
+        console.log(this.props)
+        console.log(this.props.onChange)
+        //initial data = this.context.state.artworkInfoData
+        const dataArray = Object.keys(this.props.initialData)
+
+         let fileList =  this.createPreviews(dataArray)
         console.log('fileList')
         console.log(fileList)
-        this.setState({fileList: fileList, renderList: fileList}, console.log('fileUpload state', this.state))
+        this.setState({fileList: fileList, renderList: fileList, fileNames: dataArray}, console.log('fileUpload state', this.state))
     }
 
     
@@ -178,7 +183,10 @@ export default class SeeAlsoSelector extends React.Component{
                             </div>
 
                             <div style={{display: "flex", flexWrap: "wrap"}}>
-                                {this.state.renderList ? this.renderAllFiles(this.state.renderList) : null}
+                                {this.state.fileNames ? console.log(this.state) : null}
+                                {this.state.fileNames ? this.createPreviews(this.state.fileNames).map(fileObj => {return fileObj.file}) : null}
+                                {/* {this.state.renderList ? this.renderAllFiles(this.state.renderList) : null} */}
+                                {/* {this.state.fileNames ?  this.createPreviews(this.state.fileNames).this.renderAllFiles(this.state.renderList) : null} */}
                             </div>
 
                             </Card.Body>
