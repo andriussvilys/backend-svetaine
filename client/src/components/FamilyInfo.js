@@ -3,6 +3,7 @@ import { Context } from './Provider';
 import DropDownList from './DropDownList'
 import NavigationInfo from './NavigationInfo'
 import SeeAlsoSelector from './SeeAlsoSelector'
+import SeeAlsoSelector2 from './FileUpload/SeeAlsoSelector'
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
@@ -57,6 +58,14 @@ export default class FamilyInfo extends Component {
                                     onChange={this.context.familySetupMethods.onChange}
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     serverFileDir={this.context.state.serverFileDir}
+                                />
+                                <SeeAlsoSelector2 
+                                    initialData={this.context.state.artworkInfoData ? this.context.state.artworkInfoData : {} }
+                                    highlightReference={this.context.state.familySetupData.seeAlso}
+                                    state={this.context.state}
+                                    context={this.context}
+                                    onChange={this.context.familySetupMethods.onChange}
+                                    isChecked={this.context.familySetupMethods.isChecked}
                                 />
                             </div>
 

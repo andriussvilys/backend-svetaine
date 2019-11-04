@@ -24,6 +24,12 @@ export default class DropDownList extends React.Component{
  */
     createDropDownList = (array, string, state, fileName) => {
 
+        console.log("CREATE DROP DOWN LIST PROPS")
+        console.log(this.props)
+
+        console.log('ARGUMENTS')
+        console.log({array, string, state, fileName})
+
         // console.log('state in dropdrownlist')
         // console.log(state)
 

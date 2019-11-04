@@ -132,7 +132,7 @@ export default class SeeAlsoSelector extends React.Component{
     componentDidMount(){
         console.log('FILE UPLOAD PROPS')
         console.log(this.props)
-        console.log(this.props.onChange)
+        console.log(this.props.fileName)
         //initial data = this.context.state.artworkInfoData
         const dataArray = Object.keys(this.props.initialData)
 
@@ -161,11 +161,12 @@ export default class SeeAlsoSelector extends React.Component{
 
                             <div>
                                 <DropDownList 
-                                        title={"filter by artwork families"}
-                                        state={this.props.state}
                                         array={this.props.state.artworkFamilyList}
                                         string={"fileNames"}
+                                        state={this.props.state}
                                         fileName={this.props.fileName}
+
+                                        title={"filter by artwork families"}
                                         onChange={this.filterByFamily}
                                         isChecked={this.props.context.fileDataMethods.isChecked}
                                         id="artworkFamily-fileUpdate"

@@ -5,6 +5,8 @@ import SeeAlsoSelector from './SeeAlsoSelector'
 import Button from 'react-bootstrap/Button'
 
 const FamilyInfo = (props) => {
+    console.log('FAMILY INFO FILE NAME')
+    console.log(props.seeAlso.fileName)
         return(
             <div className="familyInfo-container">
 
@@ -42,59 +44,14 @@ const FamilyInfo = (props) => {
                         initialData={props.seeAlso.state.artworkInfoData}
                         highlightReference={props.seeAlso.highlightReference}
                         fileName={props.seeAlso.fileName}
-                        // renderFiles={props.seeAlso.state.seeAlsoData.renderFiles}
-                        // renderAllFiles={props.seeAlso.context.familySetupMethods.renderAllFiles}
                         state={props.seeAlso.state}
                         context={props.seeAlso.context}
-                        // highlighterReference={props.seeAlso.state.seeAlsoData.renderFiles}
                         array={props.seeAlso.state.familySetupData.seeAlso}
                         stateNest={props.seeAlso.state.familySetupData.seeAlso}
                         onChange={props.seeAlso.context.fileDataMethods.onChange}
                         isChecked={props.seeAlso.context.fileDataMethods.isChecked}
                         serverFileDir={props.seeAlso.state.serverFileDir}
                     />
-                {/* </div>
-
-                <div className="imageInfo--box" style={{display: "block"}}>
-                    <div>
-                        <p>Family description:</p> 
-                    </div>
-                    <textarea
-                    value={this.context.state.familyDescription}
-                    onChange={
-                        (e) => this.context.onChange(e, "familyDescription")
-                    }
-                    style={{width: "100%"}}
-                    value={this.context.state.familySetupData.familyDescription ? 
-                        this.context.state.familySetupData.familyDescription : 
-                        ""}
-                    ></textarea>
-                </div> */}
-
-                {/* <div className="imageInfo--box">
-                    <span>record new family setup:</span>
-                    <Button
-                        variant="success" 
-                        size="sm"
-                        onClick={
-                            this.context.createFamilySetup
-                        }
-                    >
-                        SEND
-                    </Button>
-                </div>      
-                <div className="imageInfo--box">
-                    <span>update family setup:</span>
-                    <Button
-                        variant="primary" 
-                        size="sm"
-                        onClick={
-                        () => this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
-                        }
-                    >
-                        SEND
-                    </Button>
-                </div>       */}
 
                 </div>
 
