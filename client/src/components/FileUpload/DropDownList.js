@@ -1,11 +1,8 @@
 import React from 'react';
-import '../css/main.css';
 import Accordion from 'react-bootstrap/Accordion';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import AddNew from './AddNew';
-import '../css/components/extendedList.css';
-import '../css/components/imageInfo.css';
+import AddNew from '../AddNew';
 
 export default class DropDownList extends React.Component{
 
@@ -24,20 +21,23 @@ export default class DropDownList extends React.Component{
  */
     createDropDownList = (array, string, state, fileName) => {
 
+        console.log("CREATE DROP DOWN LIST PROPS")
+        console.log(this.props)
+        console.log('ARGUMENTS')
+        console.log({array, string, state, fileName})
+
         // console.log('state in dropdrownlist')
         // console.log(state)
 
-        let statePath = state.familySetupData
-
-        if(fileName){
-            statePath = state.fileData.files[fileName]
-        }
+        let statePath = state
 
         const highlighter = (string, listItem) => {
             if(!statePath[string]){
                 return false
             }
             if(statePath[string]){
+                console.log('statepathhhhhhhhhhhhhhh')
+                console.log(statePath[string])
                 if( typeof statePath[string] === 'string'|| Array.isArray(statePath[string]) ){
                         return statePath[string].includes(listItem)
                     }

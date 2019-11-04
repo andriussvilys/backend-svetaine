@@ -6,13 +6,13 @@ import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 
 import FilePreview from '../FilePreview';
-import DropDownList from '../DropDownList'
+import DDList from './DropDownList'
 
 export default class SeeAlsoSelector extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {checkedFamily: []}
     }
     /**
      * @params fileList = takes an object with file data 
@@ -44,7 +44,27 @@ export default class SeeAlsoSelector extends React.Component{
     }
     resetData = () => {
         let initialData = this.state.fileList.map(obj => obj.fileName)
-        this.setState({fileNames: initialData})
+        this.setState({fileNames: initialData, checkedFamily: []})
+    }
+    onDropDownChange = (value) => {
+
+        let checkedFamily = []
+        let newFamilyList = []
+
+        if(!this.state.checkedFamily.includes(value)){
+            checkedFamily = [value]
+            newFamilyList = this.state.fileList.filter(obj => obj.artworkFamily === value).map(obj => obj.fileName)
+        }
+        else{
+            this.state.checkedFamily.includes(value)
+            checkedFamily = []
+            newFamilyList = this.state.constFileNames
+        }
+        this.setState({checkedFamily, fileNames: newFamilyList})
+    }
+
+    dropDownChecked = (value) => {
+        this.state.checkedFamily.includes(value)
     }
     /**
      * @param {array}: takes an array of file names
@@ -139,7 +159,7 @@ export default class SeeAlsoSelector extends React.Component{
          let fileList =  this.createPreviews(dataArray)
         console.log('fileList')
         console.log(fileList)
-        this.setState({fileList: fileList, renderList: fileList, fileNames: dataArray}, console.log('fileUpload state', this.state))
+        this.setState({fileList: fileList, constFileNames: dataArray, fileNames: dataArray}, console.log('fileUpload state', this.state))
     }
 
     
@@ -160,15 +180,13 @@ export default class SeeAlsoSelector extends React.Component{
                             <Card.Body>
 
                             <div>
-                                <DropDownList 
+                                <DDList 
                                         array={this.props.state.artworkFamilyList}
-                                        string={"fileNames"}
-                                        state={this.props.state}
+                                        string={"checkedFamily"}
+                                        state={this.state}
                                         fileName={this.props.fileName}
-
                                         title={"filter by artwork families"}
-                                        onChange={this.filterByFamily}
-                                        isChecked={this.props.context.fileDataMethods.isChecked}
+                                        onChange={this.onDropDownChange}
                                         id="artworkFamily-fileUpdate"
                                         displayAddNew="none"
                                 />

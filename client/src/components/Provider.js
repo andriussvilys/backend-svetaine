@@ -483,8 +483,6 @@ export class Provider extends React.Component{
          */
         onChange: (value, string, fileName) => {
 
-            alert('ON CHANGE CALLED')
-
             console.log('on change')
             console.log(value)
 
@@ -960,6 +958,7 @@ export class Provider extends React.Component{
          */
     
     }
+
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
         filterByFamily: (value, fileName) => {
@@ -974,7 +973,7 @@ export class Provider extends React.Component{
             })
 
             this.setState({seeAlsoData: {...this.state.seeAlsoData, renderFiles: newRenderList}})
-            // this.setState({renderList: newRenderList})v
+            // this.setState({renderList: newRenderList})
         },
         renderAllFiles: (highlighterState) => 
         {

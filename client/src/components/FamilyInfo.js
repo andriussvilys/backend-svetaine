@@ -59,14 +59,14 @@ export default class FamilyInfo extends Component {
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     serverFileDir={this.context.state.serverFileDir}
                                 />
-                                <SeeAlsoSelector2 
+                                {/* <SeeAlsoSelector2 
                                     initialData={this.context.state.artworkInfoData ? this.context.state.artworkInfoData : {} }
                                     highlightReference={this.context.state.familySetupData.seeAlso}
                                     state={this.context.state}
                                     context={this.context}
                                     onChange={this.context.familySetupMethods.onChange}
                                     isChecked={this.context.familySetupMethods.isChecked}
-                                />
+                                /> */}
                             </div>
 
                             <div className="imageInfo--box" style={{display: "block"}}>
