@@ -5,6 +5,9 @@ import FamilyInfo from './FamilyInfo'
 import Button from 'react-bootstrap/Button'
 import Accordion from '../Accordion'
 import ArtworkInfo from '../ArtworkInfo'
+import FamilyListDnDContainer from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
+import NavigationInfo from '../DragAndDropList/infoComponents/NavigationInfo'
+
 
 //this component returns a div with a family name and FilePreviews of each child in the family
 
@@ -21,11 +24,20 @@ const FamilyList = (props) => {
     const renderList = (files, props) => {
         let list = files.map(file => {
             return (
-                <div>
-                    <FilePreview 
-                        file={file}
-                    >
-                    </FilePreview>
+                <div className="FamilyList--detail">
+
+                    <div className="FamilyList--detail__image">
+                        <FilePreview 
+                            file={file}
+                        >
+                        </FilePreview>
+                        <div className="FamilyList--detail__image__text">
+                            <p className="title">fileName:</p> 
+                            <p>{file.fileName}</p>
+                        </div>
+                    </div>
+
+                    <div className="FamilyList--detail__info">
 
                     {/* ARTWORK DATA */}
                     <Accordion
@@ -51,14 +63,31 @@ const FamilyList = (props) => {
                             fileName: file.fileName, 
                             highlightReference: props.seeAlso.state.fileData.files[file.fileName].seeAlso
                         }}
-                        // state={props.familyDropDown.state}
-                        // familyList={props.familyDropDown.familyList}
-                        // context={props.familyDropDown.context}
-                        />
+                        >
+
+                            <Accordion
+                                title={'Arrange Indexes'}
+                            >
+                                <FamilyListDnDContainer 
+                                    data={props.relatedArtwork}
+                                    fileName={file.fileName}
+                                    artworkFamily={file.artworkFamily}
+                                />
+                            </Accordion>
+
+                            <Accordion
+                                title={'Adjust tags'}
+                            >
+                                <NavigationInfo
+                                    fileName={file.fileName}
+                                />
+                            </Accordion>
+
+
+                        </FamilyInfo>
                     </Accordion>
 
-
-                    <div className="submit-delete-container">                                                
+                    <div className="submit-delete-container">  
                         <Button
                             variant="danger"
                             className="custom-button"
@@ -73,13 +102,13 @@ const FamilyList = (props) => {
                         >
                             Submit to server
                         </Button>
+                    </div>
 
                         {/* <LoaderModal
                             showModal={props.showModal}
                         /> */}
-
-
                     </div>    
+
                 </div>
             )
         }); 
@@ -88,8 +117,10 @@ const FamilyList = (props) => {
     }
 
     return (
-        <div>
-            <h5>{props.familyName}</h5>
+        <div className="ImagesPreview--container FamilyList--main">
+            <div className="FamilyList--familyName">
+                <h5 className="FamilyList--familyName__text">{props.familyName}</h5>
+            </div>
             {renderList(props.files, props)}
         </div>
     ) 

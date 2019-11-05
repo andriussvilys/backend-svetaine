@@ -34,7 +34,7 @@ export class Provider extends React.Component{
         themesData: [],
         artworkFamilyList: [],
         serverFileDir: [],
-        showModal: true,
+        showModal: false,
     }
         
     this.changeFileName = (e) => {
@@ -1456,16 +1456,21 @@ export class Provider extends React.Component{
                 })
             })
             .then(res => this.readImageDir())
-            .then(res => {this.familySetupMethods.getArtworkInfo().then(res => newState.artworkInfoData = res)})
-            .then(res => {
-                this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => {
-                    newState.seeAlsoData = res
-                    console.log('newSTATE after context MOUNT')
-                    console.log(newState)
-                    newState.showModal = false
+            .then(res => {this.familySetupMethods.getArtworkInfo()
+                .then(res => {
+                    newState.artworkInfoData = res
                     this.setState(newState)
                 })
             })
+            // .then(res => {
+            //     this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => {
+            //         newState.seeAlsoData = res
+            //         console.log('newSTATE after context MOUNT')
+            //         console.log(newState)
+            //         newState.showModal = false
+            //         this.setState(newState)
+            //     })
+            // })
     }
 
     render(){

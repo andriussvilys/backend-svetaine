@@ -68,6 +68,9 @@ export default class MainContainer extends React.Component{
                     initialData: this.context.state.artworkInfoData,
                     onChange: this.context.fileDataMethods.onChange, 
                 }}
+
+                relatedArtwork={this.context.state.relatedArtwork[familyName] ? this.context.state.relatedArtwork[familyName] : null}
+                
                 familyName={familyName}
                 files={sortedData.fileByFamily[familyName]}
                 controls={{

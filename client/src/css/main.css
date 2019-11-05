@@ -143,4 +143,74 @@ textarea {
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
+
+.FamilyList--container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border: 1px solid;
+  margin: 3px 0;
+}
+
+.FamilyList--familyName {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: black;
+  margin-bottom: 2vw;
+}
+
+.FamilyList--familyName__text {
+  color: white;
+  text-transform: uppercase;
+  margin: 0;
+  padding: 0;
+}
+
+.FamilyList--main {
+  border: 5px solid !important;
+  padding: 0 !important;
+  margin: 0;
+  width: auto !important;
+}
+
+.FamilyList--detail {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  border: 1px solid;
+  margin: 3px 2vw;
+}
+
+.FamilyList--detail__info {
+  padding: 4px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.FamilyList--detail__image {
+  padding: 4px;
+  width: 200px;
+  border-right: 1px solid #afafaf;
+}
+
+.FamilyList--detail__image__text {
+  margin: 4px 2px;
+  font-size: 12px;
+  border: 1px solid #afafaf;
+  padding: 4px;
+}
+
+.title {
+  font-weight: 600;
+}
 /*# sourceMappingURL=main.css.map */

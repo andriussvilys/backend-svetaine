@@ -52,7 +52,7 @@ const FamilyInfo = (props) => {
                         isChecked={props.seeAlso.context.fileDataMethods.isChecked}
                         serverFileDir={props.seeAlso.state.serverFileDir}
                     />
-
+                    {props.children}
                 </div>
 
             </div>

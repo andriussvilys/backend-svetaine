@@ -111,7 +111,9 @@ export default class FamilyInfo extends Component {
                                     <Card.Body>
 
                                     <FamilyListDnDContainer 
-                                        data={this.familyListData()}
+                                        //data props is a nest in state.relatedArtwork[artworkFamily]
+                                        // data={this.familyListData()}
+                                        data={this.context.state.relatedArtwork[this.props.file.artworkFamily] ? this.context.state.relatedArtwork[this.props.file.artworkFamily]: null}
                                         fileName={this.props.file.fileName}
                                         artworkFamily={this.props.file.artworkFamily}
                                     />
