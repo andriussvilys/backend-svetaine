@@ -886,7 +886,8 @@ export class Provider extends React.Component{
                     }
                 else{
                         const artworkFamily = file.artworkFamily
-                        const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length
+                        const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length 
+     
                         let progressCount = 0
         
                         Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {

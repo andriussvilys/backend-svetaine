@@ -34,7 +34,7 @@ export default class ImageInfo extends Component{
 
                     <div className="imageInfo--box">
                   <span>display on main page:</span>
-                  <form>
+                  <form className="artworkinfo--form">
                       <div className="container-radio">
                           <label htmlFor="mainDisplayIndex_yes">yes</label>
                           <input 

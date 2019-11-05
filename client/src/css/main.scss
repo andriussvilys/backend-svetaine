@@ -177,3 +177,36 @@ h5{
     font-weight: 600 !important;
     font-size: 1.25vw !important;
 }
+label{
+    margin: 0 !important;
+}
+.ImageInfo--transferState{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+    position: relative;
+    padding: 5px;
+    border: 1px solid;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 12px;
+    background-color: rgb(241, 255, 220);
+}
+.container-radio{
+    font-size: 8px;
+    margin: 0 !important;
+}
+.ImageInfo--transferState__radios{
+    margin-top: 3px;
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+}
+.artworkinfo--form{
+    display: flex;
+    justify-content: space-around;
+    width: 50px;
+    height: 40px;
+    align-items: center;
+}

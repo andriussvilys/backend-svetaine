@@ -38,7 +38,7 @@ export default class ImageInfo extends Component{
                   
               </div>
 
-              <h3>set up global data:</h3>
+              <h3>set up global family data:</h3>
               <div className="imageInfo--section">
                 <h5>family info:</h5>
                 <FamilyInfo/>

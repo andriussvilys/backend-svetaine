@@ -35,6 +35,47 @@ const FamilyList = (props) => {
                             <p className="title">fileName:</p> 
                             <p>{file.fileName}</p>
                         </div>
+                        <div className="ImageInfo--transferState" style={{display: 'flex'}}>
+                            <p>use global family setup</p>
+
+                            <p className="subtitle"
+                            style={
+                                props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
+                            }
+                            >
+                            please select global artwork family 
+                            </p>
+{/* 
+                            {props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
+                            <form className="ImageInfo--transferState__radios">
+                                <div className="container-radio">
+                                    <input type="radio" 
+                                    name="familyDisplaySetup" 
+                                    id="familyDisplaySetup__radio-yes" 
+                                    value="yes" 
+                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
+                                    onChange={() => {props.context.fileDataMethods.transferState(file, true)}}
+                                    checked={props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    />
+                                    <label 
+                                    htmlFor="familyDisplaySetup_yes"
+                                    id="familyDisplaySetup_yes"
+                                    >yes</label>
+                                </div>
+                                <div className="container-radio">
+                                    <input type="radio" 
+                                    name="familyDisplaySetup" 
+                                    id="familyDisplaySetup__radio-no" 
+                                    value="no" 
+                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
+                                    onChange={() => props.context.fileDataMethods.transferState(file)}
+                                    checked={!props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    
+                                    />
+                                    <label htmlFor="familyDisplaySetup_no">no</label>
+                                </div>
+                            </form>
+                        </div>  
                     </div>
 
                     <div className="FamilyList--detail__info">
@@ -102,39 +143,6 @@ const FamilyList = (props) => {
                         >
                             Submit to server
                         </Button>
-
-                        <div className="DnD-imageInfo--box" style={{display: 'flex'}}>
-                            <span>use global family setup</span>
-                            <form >
-                                <div className="container-radio">
-                                    <label 
-                                    htmlFor="familyDisplaySetup_yes"
-                                    id="familyDisplaySetup_yes"
-                                    >yes</label>
-                                    <input type="radio" 
-                                    name="familyDisplaySetup" 
-                                    id="familyDisplaySetup__radio-yes" 
-                                    value="yes" 
-                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                                    onChange={() => {props.context.fileDataMethods.transferState(file, true)}}
-                                    checked={props.context.state.fileData.files[file.fileName].useFamilySetup}
-                                    />
-                                </div>
-                                <div className="container-radio">
-                                    <label htmlFor="familyDisplaySetup_no">no</label>
-                                    <input type="radio" 
-                                    name="familyDisplaySetup" 
-                                    id="familyDisplaySetup__radio-no" 
-                                    value="no" 
-                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                                    onChange={() => props.context.fileDataMethods.transferState(file)}
-                                    checked={!props.context.state.fileData.files[file.fileName].useFamilySetup}
-                                    
-                                    />
-                                </div>
-                            </form>
-                        </div>  
-
                     </div>
 
                         {/* <LoaderModal
@@ -152,7 +160,7 @@ const FamilyList = (props) => {
     return (
         <div className="ImagesPreview--container FamilyList--main">
             <div className="FamilyList--familyName">
-                <h5 className="FamilyList--familyName__text">{props.familyName}</h5>
+                <h5 className="FamilyList--familyName__text">{props.familyName ? props.familyName : "none"}</h5>
             </div>
             {renderList(props.files, props)}
         </div>
