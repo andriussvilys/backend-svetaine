@@ -568,13 +568,11 @@ export class Provider extends React.Component{
 
         },
 
-        transferState: (file) => {
+        transferState: (file, radioValue) => {
+            let newState = {...this.state}
 
-                alert('transfer state')
-
+            if(radioValue === true){
                 this.setState({showModal: true})
-
-                let newState = {...this.state}
 
                 //pverwrite file data witch each familySetUp property
                 Object.keys(this.state.familySetupData).forEach(property => {
@@ -599,11 +597,49 @@ export class Provider extends React.Component{
 
                     newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
                     newState.fileData.files[file.fileName].relatedArtwork = res
+                    newState.fileData.files[file.fileName].useFamilySetup = true
                     console.log("********************************************NEW STATE")
                     console.log(newState)
                     this.setState(newState, this.setState({showModal: false})
                     )
                 })
+            }
+
+            else{
+                const checkType = (elem) => {
+                    let elemType = null
+                    elemType = typeof elem
+                    if(elemType === "object"){
+                        if(Array.isArray(elem)){
+                            return new Array
+                        }
+                        else{
+                            return new Object
+                        }
+                    }
+                    else{
+                        return new String
+                    }
+                }
+
+                Object.keys(this.state.familySetupData).forEach(property => {
+                    newState = {
+                        ...newState,
+                        fileData: {
+                            ...newState.fileData,
+                            files: {
+                                ...newState.fileData.files,
+                                [file.fileName]: {
+                                    ...newState.fileData.files[file.fileName],
+                                    [property]: checkType(this.state.fileData.files[file.fileName][property])
+                                }
+                            }
+                        }
+                    }
+                })
+                newState.fileData.files[file.fileName].useFamilySetup = false
+                this.setState(newState)
+            }
         },
 
         isChecked: (string, value, fileName) => {
@@ -1286,6 +1322,20 @@ export class Provider extends React.Component{
                 }
             )
     
+        },
+        restoreFamilySetup: (fileName) => {
+            let newState ={
+                ...this.state,
+                fileData: {
+                    ...this.state.fileData,
+                    files: {
+                        ...this.state.fileData.files,
+                        [fileName]: {
+
+                        }
+                    }
+                }
+            }
         },
         useFamilySetup: (value) => {
     

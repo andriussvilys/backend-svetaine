@@ -87,7 +87,7 @@ const FamilyList = (props) => {
                         </FamilyInfo>
                     </Accordion>
 
-                    <div className="submit-delete-container">  
+                    <div className="FamilyList--submit-delete-container">  
                         <Button
                             variant="danger"
                             className="custom-button"
@@ -102,6 +102,39 @@ const FamilyList = (props) => {
                         >
                             Submit to server
                         </Button>
+
+                        <div className="DnD-imageInfo--box" style={{display: 'flex'}}>
+                            <span>use global family setup</span>
+                            <form >
+                                <div className="container-radio">
+                                    <label 
+                                    htmlFor="familyDisplaySetup_yes"
+                                    id="familyDisplaySetup_yes"
+                                    >yes</label>
+                                    <input type="radio" 
+                                    name="familyDisplaySetup" 
+                                    id="familyDisplaySetup__radio-yes" 
+                                    value="yes" 
+                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
+                                    onChange={() => {props.context.fileDataMethods.transferState(file, true)}}
+                                    checked={props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    />
+                                </div>
+                                <div className="container-radio">
+                                    <label htmlFor="familyDisplaySetup_no">no</label>
+                                    <input type="radio" 
+                                    name="familyDisplaySetup" 
+                                    id="familyDisplaySetup__radio-no" 
+                                    value="no" 
+                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
+                                    onChange={() => props.context.fileDataMethods.transferState(file)}
+                                    checked={!props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    
+                                    />
+                                </div>
+                            </form>
+                        </div>  
+
                     </div>
 
                         {/* <LoaderModal

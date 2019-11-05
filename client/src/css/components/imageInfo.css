@@ -7,19 +7,6 @@
   grid-row-end: 3;
 }
 
-.imageInfo--section {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  border: 1px solid;
-  padding: 20px 0;
-}
-
 .imageInfo--box {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -29,7 +16,6 @@
           justify-content: space-between;
   margin: 0 5vw;
   position: relative;
-  padding: 5px 0;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;

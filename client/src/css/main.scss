@@ -137,16 +137,20 @@ textarea{
     display: flex;
     flex-wrap: wrap;
     border: 1px solid;
-    margin: 3px 2vw;
+    margin: 3px 5px;
+    justify-content: center;
 }
 .FamilyList--detail__info{
     padding: 4px;
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid rgb(175, 175, 175);
+
 }
 .FamilyList--detail__image{
     padding: 4px;
     width: 200px;
-    border-right: 1px solid rgb(175, 175, 175);
 }
 .FamilyList--detail__image__text{
     margin: 4px 2px;
@@ -156,4 +160,20 @@ textarea{
 }
 .title{
     font-weight: 600;
+}
+.FamilyList--submit-delete-container{
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+}
+h3{
+    margin-bottom: 2vw;
+    text-transform: uppercase;
+    font-weight: 600 !important;
+    font-size: 1.45vw !important;
+}
+h5{
+    font-weight: 600 !important;
+    font-size: 1.25vw !important;
 }

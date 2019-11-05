@@ -70,7 +70,7 @@ export default class MainContainer extends React.Component{
                 }}
 
                 relatedArtwork={this.context.state.relatedArtwork[familyName] ? this.context.state.relatedArtwork[familyName] : null}
-                
+                context={this.context}
                 familyName={familyName}
                 files={sortedData.fileByFamily[familyName]}
                 controls={{
@@ -92,7 +92,7 @@ export default class MainContainer extends React.Component{
                 {() => {
                     return(
                         <div>
-                            <h5>family Names:</h5>
+                            {/* <h5>{Object.keys(this.props.data.files).length > 0 ? "family Names:" : null}</h5> */}
                             {this.renderNames(this.props.data.files)}
                         </div>
                     )

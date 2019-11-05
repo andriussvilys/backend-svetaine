@@ -16,8 +16,7 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  border: 1px solid;
-  padding: 20px 0;
+  padding: 15px 0;
 }
 
 .DnD-imageInfo--box {
