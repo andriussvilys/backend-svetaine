@@ -60,7 +60,10 @@ export default class FileUpdate extends React.Component{
                         </div>
                         <div style={{border: "1px solid grey", padding: "2px"}}>
                             <Link to={`/admin/edit/${file.fileName}`}>
-                                <Button>
+                                <Button
+                                    onClick={(e) => {
+                                        this.props.context.fileDataMethods.serverFileToState(file)}}
+                                >
                                     Edit
                                 </Button>
                             </Link>
@@ -77,8 +80,6 @@ export default class FileUpdate extends React.Component{
 
             axios.get('/fetchImages')
                 .then(res => {
-                    console.log('renderall fiels runs')
-                    console.log(res.data)
                     serverFileNames = res.data
 
                     axios.get('/api/artworkInfo')
@@ -98,8 +99,6 @@ export default class FileUpdate extends React.Component{
                                 }
                                 usedNames = [...usedNames, file.fileName]
                                 let newFile = this.EditDetail(file)
-                                console.log("newFile")
-                                console.log(newFile)
                                 fileList = [...fileList, newFile] 
 
                             })
@@ -111,7 +110,6 @@ export default class FileUpdate extends React.Component{
 
     filterByFamily = (value) => {
         const artworkFamily = value
-        console.log(`filterByFmaily ${value}`)
         let newRenderList = []
         this.state.fileList.forEach(obj => {
             if(obj.artworkFamily === value){
@@ -128,8 +126,6 @@ export default class FileUpdate extends React.Component{
     componentDidMount(){
         this.renderAllFiles
             .then(res => {
-                console.log('component mount res.data')
-                console.log(res)
                 this.setState({fileList: res, renderList: res})
             })
     }
@@ -137,8 +133,6 @@ export default class FileUpdate extends React.Component{
     createFileList = () => {
         let allPreviews = []
         this.renderAllFiles.then(res => allPreviews = res.map(filePreview => {return filePreview.file}))
-        console.log('allPreviews**********************************************')
-        console.log(allPreviews)
         return allPreviews
     }
 

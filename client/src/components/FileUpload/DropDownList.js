@@ -21,10 +21,6 @@ export default class DropDownList extends React.Component{
  */
     createDropDownList = (array, string, state, fileName) => {
 
-        console.log("CREATE DROP DOWN LIST PROPS")
-        console.log(this.props)
-        console.log('ARGUMENTS')
-        console.log({array, string, state, fileName})
 
         // console.log('state in dropdrownlist')
         // console.log(state)
@@ -36,8 +32,7 @@ export default class DropDownList extends React.Component{
                 return false
             }
             if(statePath[string]){
-                console.log('statepathhhhhhhhhhhhhhh')
-                console.log(statePath[string])
+
                 if( typeof statePath[string] === 'string'|| Array.isArray(statePath[string]) ){
                         return statePath[string].includes(listItem)
                     }
@@ -108,7 +103,6 @@ export default class DropDownList extends React.Component{
             style={{margin: 0}}
             >
                 <p>{this.props.listName}</p>
-                {/* {this.context.makeDataList(this.props.array, this.props.string, this.props.id)} */}
 
                 <Accordion >
                     <Card>
@@ -135,10 +129,6 @@ export default class DropDownList extends React.Component{
             </div>
             </div>
 
-            // <div>
-            //     <h3>{`DROPDOWNLIST ${this.props.string}`}</h3>
-            //     <div>{this.createDropDownList(this.props.array, this.props.string, this.props.state)}</div>
-            // </div>
         )
     }
 }

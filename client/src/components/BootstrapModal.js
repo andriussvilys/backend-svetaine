@@ -13,7 +13,7 @@ export default class BootstrapModal extends Component {
     constructor(props){
         super(props);
         this.state = {
-            show: props.modalShow,
+            show: props.showModal,
             setShow: false
         }
         this.handleClose = () => this.setState({setShow: false, show: false});
@@ -21,7 +21,7 @@ export default class BootstrapModal extends Component {
     }
 
     static getDerivedStateFromProps(props, state){
-        if(props.modalShow){
+        if(props.showModal){
             return{show: true}
         }
         else{
@@ -39,9 +39,9 @@ export default class BootstrapModal extends Component {
         
             <Modal show={this.state.show} onHide={this.handleClose}>
                 <Modal.Header closeButton>
-                <Modal.Title>Modal heading</Modal.Title>
+                <Modal.Title>{this.props.header}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+                <Modal.Body>{this.props.message}</Modal.Body>
                 <Modal.Footer>
                 <Button variant="secondary" onClick={this.handleClose}>
                     Close

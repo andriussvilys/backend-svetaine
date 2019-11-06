@@ -74,6 +74,11 @@ form {
 
 p {
   margin: 0 !important;
+  word-wrap: break-word;
+}
+
+img {
+  font-size: 8px;
 }
 
 .no-padding {

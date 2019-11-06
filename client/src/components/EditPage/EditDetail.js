@@ -10,6 +10,7 @@ const EditDetail = (props) => {
         <BrowserRouter>
                 <div 
                     id={`EditDetail-${props.file.fileName}`}
+                    className="EditDetail-container"
                     key={`fileLibrary-${props.file.fileName}`} 
                     style={{
                         maxWidth: "200px", 
@@ -41,8 +42,10 @@ const EditDetail = (props) => {
                         />
                     </div>
                     <div style={{border: "1px solid grey", padding: "2px"}}>
-                        <Link to={`/admin/edit/${props.file.fileName}`} >
-                                Edit
+                        <Link 
+                        to={`/admin/edit/${props.file.fileName}`} 
+                        >
+                            Edit
                         </Link>
                     </div>
         

@@ -474,6 +474,12 @@ export class Provider extends React.Component{
     }
     //this deal with file input uploads and uploads to server
     this.fileDataMethods = {
+
+        serverFileToState: (file) => {
+            let newState = {...this.state}
+            newState.fileData.files = {...newState.fileData.files, [file.fileName]: file}
+            this.setState(newState)
+        },
         
         /**
          * @param value the value to be added to state
@@ -904,6 +910,7 @@ export class Provider extends React.Component{
             
                             //check if the file is uploaded to server
                             if(this.state.serverFileDir.includes(obj.fileName)){
+                                alert('update')
                                 fileData = obj
                                 fileData.familyDisplayIndex = familyIndex
             
@@ -1156,7 +1163,8 @@ export class Provider extends React.Component{
                                         res.data.forEach(obj => {
                                             if(obj.fileName === fileName && !usedNames.includes[fileName]){
                                                 usedNames = [...usedNames, fileName]
-                                            return databaseFiles = {...databaseFiles, [fileName]: obj}
+                                             databaseFiles = {...databaseFiles, [fileName]: obj}
+                                            databaseFiles[fileName].useFamilySetup = false
                                         }
                                     })
                                     })
@@ -1479,6 +1487,11 @@ export class Provider extends React.Component{
                     })
             }) 
         },
+        updateContext: (value, propertyName, callback) => {
+            console.log('callback')
+            console.log(callback)
+            this.setState({[propertyName]: value}, callback())
+        }
     }//end of familySetupMethods
 
 }//END OF CONTSTRUCTOR

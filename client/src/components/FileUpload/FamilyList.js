@@ -5,8 +5,9 @@ import FamilyInfo from './FamilyInfo'
 import Button from 'react-bootstrap/Button'
 import Accordion from '../Accordion'
 import ArtworkInfo from '../ArtworkInfo'
-import FamilyListDnDContainer from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
+import ChangeIndex from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
 import NavigationInfo from '../DragAndDropList/infoComponents/NavigationInfo'
+import BootstrapModal from '../BootstrapModal'
 
 
 //this component returns a div with a family name and FilePreviews of each child in the family
@@ -21,8 +22,16 @@ const FamilyList = (props) => {
      * @param {*} data = takes an array of files data
      */
 
+    const isChecked = () => {
+
+    }
+
     const renderList = (files, props) => {
+        console.log("FAMILY LIST RENDERFILES --- FILES PROP")
+        console.log(files)
         let list = files.map(file => {
+            console.log('FAMILY LIST ------ FILE')
+            console.log(file)
             return (
                 <div className="FamilyList--detail">
 
@@ -55,7 +64,7 @@ const FamilyList = (props) => {
                                     value="yes" 
                                     disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
                                     onChange={() => {props.context.fileDataMethods.transferState(file, true)}}
-                                    checked={props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    checked={!props.context.state.fileData.files[file.fileName].useFamilySetup ? false : props.context.state.fileData.files[file.fileName].useFamilySetup}
                                     />
                                     <label 
                                     htmlFor="familyDisplaySetup_yes"
@@ -109,7 +118,7 @@ const FamilyList = (props) => {
                             <Accordion
                                 title={'Arrange Indexes'}
                             >
-                                <FamilyListDnDContainer 
+                                <ChangeIndex 
                                     data={props.relatedArtwork}
                                     fileName={file.fileName}
                                     artworkFamily={file.artworkFamily}
@@ -126,6 +135,7 @@ const FamilyList = (props) => {
 
 
                         </FamilyInfo>
+
                     </Accordion>
 
                     <div className="FamilyList--submit-delete-container">  
@@ -143,8 +153,13 @@ const FamilyList = (props) => {
                         >
                             Submit to server
                         </Button>
+
                     </div>
 
+                        <BootstrapModal 
+                            showModal={props.context.state.showModal}
+                            message={"Save file to databse?"}
+                        />
                         {/* <LoaderModal
                             showModal={props.showModal}
                         /> */}

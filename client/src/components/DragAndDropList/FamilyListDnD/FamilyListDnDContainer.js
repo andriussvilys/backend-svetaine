@@ -38,6 +38,7 @@ export default class FamilyListDnDContainer extends React.Component{
     // } 
 
     render(){
+        alert('change index RENDERS')
         //if this component receives props, we set up the its state
         return(
             <Context.Consumer>

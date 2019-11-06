@@ -16,7 +16,8 @@ let ArtworkInfoSchema = new Schema({
     },
     artworkFamily: {
         type: String,
-        required: false
+        required: false,
+        default: "none"
     },
     familyDescription: {
         type: String,
