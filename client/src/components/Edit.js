@@ -41,6 +41,7 @@ export default class Edit extends Component{
     }
 
     returnFile = () => {
+        console.log('EDIT COMPONENT - RETURN FILE')
         if(!this.props.match || !this.props.location || !this.context.state.artworkInfoData){
             return
         }
@@ -52,16 +53,10 @@ export default class Edit extends Component{
         if(!file){
             return
         }
-        console.log('EDIT PROPS')
-        console.log(this.props)
-        console.log('file')
-        console.log(file)
-        const familyName = file.artworkFamily
+
+        const familyName = file.artworkFamily? file.artworkFamily : "none"
 
         let sortedData = this.sortByFamily()
-
-        console.log("sortedData")
-        console.log(sortedData)
 
                 return <div>
                     <ServerFileUpdate 
@@ -82,7 +77,7 @@ export default class Edit extends Component{
                             onChange: this.context.fileDataMethods.onChange, 
                         }}
 
-                        relatedArtwork={this.context.state.relatedArtwork[familyName] ? this.context.state.relatedArtwork[familyName] : null}
+                        // relatedArtwork={this.context.state.relatedArtwork[familyName]}
                         context={this.context}
                         familyName={familyName}
                         file={file}

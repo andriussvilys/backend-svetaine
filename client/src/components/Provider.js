@@ -1487,10 +1487,8 @@ export class Provider extends React.Component{
                     })
             }) 
         },
-        updateContext: (value, propertyName, callback) => {
-            console.log('callback')
-            console.log(callback)
-            this.setState({[propertyName]: value}, callback())
+        updateContext: (value, propertyName) => {
+            return this.setState({[propertyName]: value})
         }
     }//end of familySetupMethods
 

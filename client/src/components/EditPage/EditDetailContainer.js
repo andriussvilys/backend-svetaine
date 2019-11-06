@@ -62,7 +62,9 @@ export default class FileUpdate extends React.Component{
                             <Link to={`/admin/edit/${file.fileName}`}>
                                 <Button
                                     onClick={(e) => {
-                                        this.props.context.fileDataMethods.serverFileToState(file)}}
+                                        console.log("EIT DETAIL CONTAINER EDIT ONCLICK")
+                                        this.props.context.fileDataMethods.serverFileToState(file)
+                                    }}
                                 >
                                     Edit
                                 </Button>
@@ -106,7 +108,7 @@ export default class FileUpdate extends React.Component{
                             resolve(fileList)
                         })
                 })   
-        })
+    })
 
     filterByFamily = (value) => {
         const artworkFamily = value
@@ -123,6 +125,12 @@ export default class FileUpdate extends React.Component{
         this.setState({renderList: this.state.fileList})
     }
 
+    createFileList = () => {
+        let allPreviews = []
+        this.renderAllFiles.then(res => allPreviews = res.map(filePreview => {return filePreview.file}))
+        return allPreviews
+    }
+
     componentDidMount(){
         this.renderAllFiles
             .then(res => {
@@ -130,13 +138,9 @@ export default class FileUpdate extends React.Component{
             })
     }
 
-    createFileList = () => {
-        let allPreviews = []
-        this.renderAllFiles.then(res => allPreviews = res.map(filePreview => {return filePreview.file}))
-        return allPreviews
-    }
 
     render(){
+
         return(
                 <div 
                 id={'familyContainer'}

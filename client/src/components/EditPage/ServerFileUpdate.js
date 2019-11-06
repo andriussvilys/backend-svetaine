@@ -24,6 +24,60 @@ import BootstrapModal from '../BootstrapModal'
  */
 const ServerFileUpdate = (props) => {
 
+    const getRelatedArtwork = () => {
+
+        const relatedPromise = new Promise((res) => {
+            let result = null
+            console.log('SERVERFILEUPDATE GET RELATED ARTWORK')
+            console.log(props.file.artworkFamily)
+            if(!props.context.state.relatedArtwork[props.file.artworkFamily]){
+                 props.context.familySetupMethods.getRelatedArtwork(props.file.artworkFamily, props.context.state).then(resolve => {
+                     console.log('promise result in server fileUpdate')
+                     console.log(resolve)
+                     result = resolve
+                     res(result)
+                        return 
+                    })
+                //  if(result){
+                //     console.log('RES**********')
+                //     console.log(res)
+                //     res(result)
+                // }
+            }
+            else{
+                result = props.context.state.relatedArtwork[props.file.artworkFamily]
+                if(result){
+                    console.log('RES**********')
+                    console.log(res)
+                    res(result)
+                    return
+                }
+            }
+        })
+
+        relatedPromise.then(res => {
+            console.log('RETURNING CHANGE INDEX')
+            console.log(res)
+            console.log(props.file.fileName)
+            console.log(props.file.artworkFamily)
+            
+            return <div>
+                <h5>{props.file.artworkFamily}</h5>
+                <ChangeIndex 
+                // data={props.relatedArtwork}
+                data={res}
+                fileName={props.file.fileName}
+                artworkFamily={props.file.artworkFamily}
+                />
+            </div>
+        })
+        .catch(err => {
+            console.log('PROMISE BROKE')
+            console.error(err)
+        })
+
+    }
+
     return(
     <div className="FamilyList--detail">
 
@@ -111,10 +165,15 @@ const ServerFileUpdate = (props) => {
                     title={'Arrange Indexes'}
                 >
                     <ChangeIndex 
-                        data={props.relatedArtwork}
+                        // data={props.relatedArtwork}
+                        data={getRelatedArtwork()}
                         fileName={props.file.fileName}
                         artworkFamily={props.file.artworkFamily}
                     />
+                    
+                    {/* {getRelatedArtwork()} */}
+
+
                 </Accordion>
 
                 <Accordion
