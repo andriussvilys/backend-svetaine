@@ -30,7 +30,7 @@ export default class FileUpdate extends React.Component{
                     <div 
                         key={`fileLibrary-${file.fileName}`} 
                         style={{
-                            maxWidth: "200px", 
+                            width: "200px", 
                             display:"flex", 
                             flexDirection:"column", 
                             justifyContent:"space-between", 

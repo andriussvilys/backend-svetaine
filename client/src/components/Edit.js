@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { Context } from './Provider';
 import FileUpdate from './FileUpdate'
 import EditDetailContainer from './EditPage/EditDetailContainer'
@@ -40,86 +40,58 @@ export default class Edit extends Component{
         return {fileByFamily, familyNames}
     }
 
-    returnFile = () => {
-        console.log('EDIT COMPONENT - RETURN FILE')
-        if(!this.props.match || !this.props.location || !this.context.state.artworkInfoData){
-            return
-        }
-        const location = this.props.location.pathname
-
-        const fileName = location.substring(this.props.match.path.length + 1)
-        const file = this.context.state.artworkInfoData[fileName]
-
-        if(!file){
-            return
-        }
-
-        const familyName = file.artworkFamily? file.artworkFamily : "none"
-
-        let sortedData = this.sortByFamily()
-
-                return <div>
-                    <ServerFileUpdate 
-                        familyDropDown={{
-                            state:this.context.state,
-                            familyList: this.context.state.artworkFamilyList,
-                            context:this.context,
-                        }}
-                        themesDropDown={{
-                            state:this.context.state,
-                            themesData:this.context.state.themesData,
-                            context: this.context
-                        }}
-                        seeAlso={{
-                            state: this.context.state,
-                            context: this.context,
-                            initialData: this.context.state.artworkInfoData,
-                            onChange: this.context.fileDataMethods.onChange, 
-                        }}
-
-                        // relatedArtwork={this.context.state.relatedArtwork[familyName]}
-                        context={this.context}
-                        familyName={familyName}
-                        file={file}
-                        files={sortedData.fileByFamily[familyName]}
-                        controls={{
-                            removeFile: this.context.fileDataMethods.removeFile,
-                            postArtworkInfo: this.context.fileDataMethods.postArtworkInfo,
-                            fileDataMethods: this.context.fileDataMethods,
-                            onChange: this.context.onChange
-                        }}
-                    />
-
-                </div>
-
-    }
-
     render(){
         return(
                 <Context.Consumer>
                 {
                     () => {
                         return(
-                            <div>
-                                <Route exact path="/admin/edit">
-                                    <EditDetailContainer 
-                                        context={this.context}
-                                        state={this.context.state}
-                                        familySetupMethods={this.context.familySetupMethods}
-                                    />
-                                </Route>
-                                <Route path="/admin/edit/:fileName"
-                                > 
-                                    <div style={{
-                                        height: "calc (100vh - 8px)",
-                                        width: "calc (100vw - 8px)",
-                                        border: "4px solid black",
-                                        boxSizing: "content-box"
-                                    }}>
-                                       {this.returnFile()} 
-                                    </div>
-                                </Route>
-                            </div>
+                                <Switch>
+                                    <Route exact path="/admin/edit">
+                                        <EditDetailContainer 
+                                            context={this.context}
+                                            state={this.context.state}
+                                            familySetupMethods={this.context.familySetupMethods}
+                                        />
+                                    </Route>
+                                    <Route 
+                                        path="/admin/edit/:fileName"
+                                        render={(props) => 
+                                            {return <ServerFileUpdate 
+                                                        familyDropDown={{
+                                                            state:this.context.state,
+                                                            familyList: this.context.state.artworkFamilyList,
+                                                            context:this.context,
+                                                        }}
+                                                        themesDropDown={{
+                                                            state:this.context.state,
+                                                            themesData:this.context.state.themesData,
+                                                            context: this.context
+                                                        }}
+                                                        seeAlso={{
+                                                            state: this.context.state,
+                                                            context: this.context,
+                                                            initialData: this.context.state.artworkInfoData,
+                                                            onChange: this.context.fileDataMethods.onChange, 
+                                                        }}
+                                
+                                                        // relatedArtwork={this.context.state.relatedArtwork[familyName]}
+                                                        context={this.context}
+                                                        familyName={this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily}
+                                                        file={this.context.state.artworkInfoData[props.match.params.fileName]}
+                                                        files={this.sortByFamily().fileByFamily[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
+                                                        relatedArtwork={this.context.state.relatedArtwork[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
+                                                        controls={{
+                                                            removeFile: this.context.fileDataMethods.removeFile,
+                                                            postArtworkInfo: this.context.fileDataMethods.postArtworkInfo,
+                                                            fileDataMethods: this.context.fileDataMethods,
+                                                            onChange: this.context.onChange
+                                                        }}
+                                                    />
+                                                }
+                                        }
+                                    /> 
+                                </Switch>
                         )
                     }
                 }

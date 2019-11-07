@@ -1,11 +1,16 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import Spinner from 'react-bootstrap/Spinner'
+
 import FamilyInfo from './FamilyInfo';
 import DnDListContainer from './DragAndDropList/DnDListContainer'
 import FamilyContainer from './FamilyContainer'
-import "bootstrap/dist/css/bootstrap.min.css";
+
 import FileUpdate from './FileUpdate';
 import MainContainer from './FileUpload/MainContainer';
+import BootstrapModal from './BootstrapModal';
 
 export default class ImageInfo extends Component{
 
@@ -14,7 +19,6 @@ export default class ImageInfo extends Component{
   constructor(props){
     super(props);
     this.state = {
-      category: {}
     }
   }
 
@@ -43,6 +47,14 @@ export default class ImageInfo extends Component{
                 <h5>family info:</h5>
                 <FamilyInfo/>
               </div>
+
+              <Modal show={this.context.state.showModal} onHide={this.handleClose}>
+                <Modal.Body>
+                  <Spinner animation="grow" variant="primary" />
+                  <Spinner animation="grow" variant="primary" />
+                  <Spinner animation="grow" variant="primary" />
+                </Modal.Body>
+            </Modal>
 
             </div>
             )

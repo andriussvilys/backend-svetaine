@@ -1061,7 +1061,7 @@ export class Provider extends React.Component{
                                         checked: highlighter(file.fileName),
                                         file: 
                                             <div key={`fileLibrary-${file.fileName}`} 
-                                            style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
+                                            style={{width: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
                                             className={`${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
                                             >
                                                 <div 
@@ -1498,13 +1498,17 @@ export class Provider extends React.Component{
 
             let newState = {...this.state}
 
+            this.setState({showModal: true})
+
             axios.get('/api/themes')
             .then( res => {
+                console.log('got themes')
             newState.themesData = res.data.list
             })
             .then( res => {
                 axios.get('/api/familySetup')
                 .then(res => {
+                    console.log('got family setup')
                     let familyList = Object.keys(res.data).map(obj => {
                         return res.data[obj].artworkFamily
                     })
@@ -1514,16 +1518,48 @@ export class Provider extends React.Component{
             .then(resolved => {
                 axios.get('/api/categories')
                 .then(res => {
+                    console.log('got categories')
                     newState.categoriesData = res.data
+
+                    newState.artworkFamilyList.forEach(familyName => {
+                        console.log(familyName)
+                        this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 
+                            newState.relatedArtwork[familyName] = res
+                        )
+                        console.log(newState.relatedArtwork)
+                    })
                 })
             })
-            .then(res => this.readImageDir())
+            // .then(res => this.readImageDir())
+            // .then(res => {
+            //         let counter = 0;
+            //         newState.artworkFamilyList.forEach(familyName => {
+            //             console.log(familyName)
+            //             this.getRelatedArtwork(familyName, newState).then(res => 
+            //                 newState.relatedArtwork[familyName] = res
+            //             )
+            //             console.log(newState.relatedArtwork)
+            //         })
+            //         return res
+            //     })
             .then(res => {this.familySetupMethods.getArtworkInfo()
                 .then(res => {
                     newState.artworkInfoData = res
-                    this.setState(newState)
+                        this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
+                            .then(res => {
+                                newState.seeAlsoData = res
+                                console.log('newSTATE after context MOUNT')
+                                console.log(newState)
+                                newState.showModal = false
+                                this.setState(newState)
+                            })
                 })
             })
+                setTimeout(() => {
+                    if(!this.state.artworkInfoData){
+                        document.location.reload(true)
+                    }
+                },2000);
             // .then(res => {
             //     this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => {
             //         newState.seeAlsoData = res

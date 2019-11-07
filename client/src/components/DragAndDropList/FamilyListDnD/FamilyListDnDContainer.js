@@ -38,9 +38,8 @@ export default class FamilyListDnDContainer extends React.Component{
     // } 
 
     render(){
-        console.log('CHANGE INDEX PROPS')
+        console.log('RENDER CHANGE INDEX LIST****************************************')
         console.log(this.props)
-        //if this component receives props, we set up the its state
         return(
             <Context.Consumer>
                 {() => {

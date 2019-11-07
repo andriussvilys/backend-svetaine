@@ -31,6 +31,9 @@ export default class BootstrapModal extends Component {
     }
 
     render(){
+        // if(!this.props.showModal){
+        //     this.setState({show: false})
+        // }
         return(
             <>
             {/* <Button variant="primary" onClick={this.handleShow}>

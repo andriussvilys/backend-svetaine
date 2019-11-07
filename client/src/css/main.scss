@@ -25,6 +25,8 @@ ul{
 .data-container{
     overflow-y: scroll;
     height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h3{
@@ -137,7 +139,7 @@ textarea{
     width: auto !important;
 }
 .FamilyList--detail{
-    width: 100%;
+    flex: 1;
     display: flex;
     flex-wrap: wrap;
     border: 1px solid;
