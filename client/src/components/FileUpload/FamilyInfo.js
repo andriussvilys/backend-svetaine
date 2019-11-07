@@ -1,12 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 import DropDownList from '../DropDownList'
 import SeeAlsoSelector from './SeeAlsoSelector'
-import Button from 'react-bootstrap/Button'
 
 const FamilyInfo = (props) => {
-    console.log('FAMILY INFO FILE NAME')
-    console.log(props.seeAlso.fileName)
+
         return(
             <div className="familyInfo-container">
 

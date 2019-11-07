@@ -49,9 +49,6 @@ export default class DnDListDraggable extends React.Component{
                         index={this.props.index}
                         >
                         {(provided)=>{
-                            // console.log('DRAGGABLE PROPS')
-                            // console.log(this.props)
-                            // if(this.context.state)
                             return(
                                 <div className="ImagesPreview--container"
                                     {...provided.draggableProps}

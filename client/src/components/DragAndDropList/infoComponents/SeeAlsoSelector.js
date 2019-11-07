@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -16,7 +15,6 @@ export default class SeeAlsoSelector extends React.Component{
     }
 
     filterByFamily = (value) => {
-        console.log(`filterByFmaily ${value}`)
         let newRenderList = []
         this.state.fileList.forEach(file => {
             if(file.artworkFamily === value){
@@ -26,7 +24,6 @@ export default class SeeAlsoSelector extends React.Component{
         })
 
         this.setState({renderList: newRenderList})
-        // this.setState({renderList: newRenderList})
     }
 
     reRenderAllFiles = (fileList, highlighterReference) => {
@@ -103,9 +100,6 @@ export default class SeeAlsoSelector extends React.Component{
 
                     renderList = [...renderList, newFile]
                 })
-
-            console.log('render LIST **********************')
-            console.log(renderList)
 
             return renderList
         

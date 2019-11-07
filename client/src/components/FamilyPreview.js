@@ -1,6 +1,5 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import FilePreview from './FilePreview';
-import axios from 'axios';
 import Button from 'react-bootstrap/Button';
 
 export default class FamilyPreview extends React.Component{
@@ -19,11 +18,7 @@ export default class FamilyPreview extends React.Component{
         const previewSource = file.filePath ? file.filePath : file.preview
         const key = `${file.fileName}-${index}`
 
-        console.log(file.filePath ? 'file.filePath' : 'file.preview')
-        console.log(previewSource)
-
         if(fileType.match('image')){
-            console.log('RETURN IMAGE')
             return(
                 <img key={key} className="ImagesPreview--image" alt={file.fileName} src={previewSource} />    
             )
@@ -41,7 +36,6 @@ export default class FamilyPreview extends React.Component{
             )
         }
         if(fileType.match('audio')){
-            console.log('RETURN AUDIO')
             return(
                 <audio 
                 className="ImagesPreview--image" 
@@ -55,7 +49,7 @@ export default class FamilyPreview extends React.Component{
         }
         if(fileType.match("application/pdf")){
             return(
-                    <iframe key={key} src={previewSource} style={{width: "100%"}}></iframe>
+                    <iframe title={key} key={key} src={previewSource} style={{width: "100%"}}></iframe>
             )
         }
     }
@@ -66,8 +60,6 @@ export default class FamilyPreview extends React.Component{
         }
 
         let previews = Object.keys(this.props.file.relatedArtwork.files).forEach(fileName => {
-            console.log('previews file')
-            console.log(this.props.file.relatedArtwork.files[fileName])
             return (
                 <FilePreview 
                     file={this.props.file.relatedArtwork.files[fileName]}

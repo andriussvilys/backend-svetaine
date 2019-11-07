@@ -252,15 +252,16 @@ textarea {
 }
 
 h3 {
-  margin-bottom: 2vw;
+  margin-bottom: calc(16px + 0.75vw);
   text-transform: uppercase;
   font-weight: 600 !important;
-  font-size: 1.45vw !important;
+  font-size: calc(12px + 0.75vw) !important;
 }
 
 h5 {
   font-weight: 600 !important;
-  font-size: 1.25vw !important;
+  font-size: calc(12px + 0.75vw) !important;
+  padding-bottom: 5px;
 }
 
 label {

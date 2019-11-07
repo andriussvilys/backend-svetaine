@@ -3,7 +3,6 @@ import { Context } from './Provider';
 import DropDownList from './DropDownList'
 import NavigationInfo from './NavigationInfo'
 import SeeAlsoSelector from './SeeAlsoSelector'
-import SeeAlsoSelector2 from './FileUpload/SeeAlsoSelector'
 import Button from 'react-bootstrap/Button'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
@@ -26,7 +25,6 @@ export default class FamilyInfo extends Component {
                                     state={this.context.state}
                                     array={this.context.state.artworkFamilyList}
                                     string={"artworkFamily"}
-                                    // onChange={this.context.familySetupMethods.onChange}
                                     onChange={this.context.getFamilySetup}
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     id="List-of-artwork-families"
@@ -59,20 +57,11 @@ export default class FamilyInfo extends Component {
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     serverFileDir={this.context.state.serverFileDir}
                                 />
-                                {/* <SeeAlsoSelector2 
-                                    initialData={this.context.state.artworkInfoData ? this.context.state.artworkInfoData : {} }
-                                    highlightReference={this.context.state.familySetupData.seeAlso}
-                                    state={this.context.state}
-                                    context={this.context}
-                                    onChange={this.context.familySetupMethods.onChange}
-                                    isChecked={this.context.familySetupMethods.isChecked}
-                                /> */}
                             </div>
 
                             <div className="imageInfo--box" style={{display: "block"}}>
                                 <div>
                                     <p>Family description:</p> 
-                                    {/* <p className="subtitle">(different from family name):</p> */}
                                 </div>
                                 <textarea
                                 value={this.context.state.familyDescription}

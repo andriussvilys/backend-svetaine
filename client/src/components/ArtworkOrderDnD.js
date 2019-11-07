@@ -28,7 +28,6 @@ export default class ArtworkOrderDnD extends Component{
                 let images = [];
                 const files = this.context.state.imageDir.files
                 images = Object.keys(this.context.state.imageDir.files).map(fileRecord => {
-                    console.log(`uploads/${files[fileRecord].content}`)
                     return(
                     <li key={files[fileRecord].content} className="dnd-listItem">
                         <img 

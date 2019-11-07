@@ -16,16 +16,6 @@ export default class DnDListDraggable extends React.Component{
         }
     }
 
-    // componentDidMount(){
-    //     this.context.fileDataMethods.transferState(this.props.file.fileName)
-    // }
-
-    // componentDidMount(){
-    //     console.log('FAMILY LIST DRAGGABLE PROPS')
-    //     console.log(this.props)
-    //     this.context.fileDataMethods.initialIndex()
-    // }
-
     render(){
         return(
             <Context.Consumer>
@@ -34,17 +24,12 @@ export default class DnDListDraggable extends React.Component{
                         return
                     }
                     else
-                    console.log('DRAGGABLE PROPS')
-                    console.log(this.props)
                     return(
                         <Draggable
                         draggableId={this.props.file.fileName} 
                         index={this.props.index}
                         >
                         {(provided)=>{
-                            // console.log('DRAGGABLE PROPS')
-                            // console.log(this.props)
-                            // if(this.context.state)
                             return(
                                 <div className="ImagesPreview--container"
                                     {...provided.draggableProps}

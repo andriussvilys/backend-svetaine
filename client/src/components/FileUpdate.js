@@ -1,10 +1,8 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import FilePreview from './FilePreview';
 import axios from 'axios';
 
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Accordion from 'react-bootstrap/Accordion';
 
 import DropDownList from './DropDownList'
 
@@ -21,8 +19,6 @@ export default class FileUpdate extends React.Component{
 
             axios.get('/fetchImages')
                 .then(res => {
-                    console.log('renderall fiels runs')
-                    console.log(res.data)
                     serverFileNames = res.data
 
                     axios.get('/api/artworkInfo')
@@ -78,7 +74,6 @@ export default class FileUpdate extends React.Component{
 
     filterByFamily = (value) => {
         const artworkFamily = value
-        console.log(`filterByFmaily ${value}`)
         let newRenderList = []
         this.state.fileList.forEach(obj => {
             if(obj.artworkFamily === value){
@@ -95,8 +90,6 @@ export default class FileUpdate extends React.Component{
     componentDidMount(){
         this.renderAllFiles
             .then(res => {
-                console.log('component mount res.data')
-                console.log(res)
                 this.setState({fileList: res, renderList: res})
             })
     }
@@ -104,8 +97,6 @@ export default class FileUpdate extends React.Component{
     createFileList = () => {
         let allPreviews = []
         this.renderAllFiles.then(res => allPreviews = res.map(filePreview => {return filePreview.file}))
-        console.log('allPreviews**********************************************')
-        console.log(allPreviews)
         return allPreviews
     }
 

@@ -32,9 +32,6 @@ export default class MainContainer extends React.Component{
                 fileByFamily[file.artworkFamily] = []
             }
             fileByFamily[file.artworkFamily] = [...fileByFamily[file.artworkFamily], file]
-        
-            console.log('SORTED BY FMAILY NAME ****************     ')
-            console.log(fileByFamily)
         })
 
         familyNames = Object.keys(fileByFamily)

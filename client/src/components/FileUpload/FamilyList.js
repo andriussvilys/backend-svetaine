@@ -14,24 +14,12 @@ import BootstrapModal from '../BootstrapModal'
 
 const FamilyList = (props) => {
 
-    console.log('FAMILY LIST PROPS')
-    console.log(props)
-
     /**
      * 
      * @param {*} data = takes an array of files data
      */
-
-    const isChecked = () => {
-
-    }
-
     const renderList = (files, props) => {
-        console.log("FAMILY LIST RENDERFILES --- FILES PROP")
-        console.log(files)
         let list = files.map(file => {
-            console.log('FAMILY LIST ------ FILE')
-            console.log(file)
             return (
                 <div className="FamilyList--detail">
 

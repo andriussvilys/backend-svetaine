@@ -21,10 +21,6 @@ export default class DropDownList extends React.Component{
  */
     createDropDownList = (array, string, state, fileName) => {
 
-
-        // console.log('state in dropdrownlist')
-        // console.log(state)
-
         let statePath = state
 
         const highlighter = (string, listItem) => {

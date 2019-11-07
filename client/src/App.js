@@ -8,7 +8,6 @@ import Edit from './components/Edit'
 import FrontEndIndex from './components/FrontEnd/FrontEndIndex'
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';
-import Admin from './components/Admin'
 
 
 

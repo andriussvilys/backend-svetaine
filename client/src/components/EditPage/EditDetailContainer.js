@@ -1,13 +1,10 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import axios from 'axios';
-import {BrowserRouter, Link} from 'react-router-dom'
+import { Link} from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-import Accordion from 'react-bootstrap/Accordion';
 
 import DropDownList from '../DropDownList'
-import EditDetail from './EditDetail'
 import FilePreview from '../FilePreview'
 
 export default class FileUpdate extends React.Component{
@@ -62,7 +59,6 @@ export default class FileUpdate extends React.Component{
                             <Link to={`/admin/edit/${file.fileName}`}>
                                 <Button
                                     onClick={(e) => {
-                                        console.log("EIT DETAIL CONTAINER EDIT ONCLICK")
                                         this.props.context.fileDataMethods.serverFileToState(file)
                                     }}
                                 >
@@ -111,7 +107,6 @@ export default class FileUpdate extends React.Component{
     })
 
     filterByFamily = (value) => {
-        const artworkFamily = value
         let newRenderList = []
         this.state.fileList.forEach(obj => {
             if(obj.artworkFamily === value){

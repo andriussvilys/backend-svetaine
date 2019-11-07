@@ -1,5 +1,4 @@
-import React, { Fragment } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -20,18 +19,12 @@ export default class SeeAlsoSelector extends React.Component{
      */
     //returns an array of files to be rendered
     renderAllFiles = (fileList) => {
-        console.log(' seeAlsoSelector -FILE UPLOAD- ')
-        console.log(this.state)
         if(!fileList){
             return
         }
-        console.log(fileList)
         let domNodes =  fileList.map(fileObj => {
-
-            console.log(fileObj)
             return fileObj.file
         })
-        console.log('domNodes', domNodes)
        return domNodes
     }
     //for dropdown
@@ -150,15 +143,10 @@ export default class SeeAlsoSelector extends React.Component{
     }
 
     componentDidMount(){
-        console.log('FILE UPLOAD PROPS')
-        console.log(this.props)
-        console.log(this.props.fileName)
         //initial data = this.context.state.artworkInfoData
         const dataArray = Object.keys(this.props.initialData)
 
          let fileList =  this.createPreviews(dataArray)
-        console.log('fileList')
-        console.log(fileList)
         this.setState({fileList: fileList, constFileNames: dataArray, fileNames: dataArray}, console.log('fileUpload state', this.state))
     }
 
@@ -200,10 +188,7 @@ export default class SeeAlsoSelector extends React.Component{
                             </div>
 
                             <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center"}}>
-                                {this.state.fileNames ? console.log(this.state) : null}
                                 {this.state.fileNames ? this.createPreviews(this.state.fileNames).map(fileObj => {return fileObj.file}) : null}
-                                {/* {this.state.renderList ? this.renderAllFiles(this.state.renderList) : null} */}
-                                {/* {this.state.fileNames ?  this.createPreviews(this.state.fileNames).this.renderAllFiles(this.state.renderList) : null} */}
                             </div>
 
                             </Card.Body>

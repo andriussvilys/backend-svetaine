@@ -11,11 +11,6 @@ class ExtendedList extends React.Component{
 
 static contextType = Context;
 
-// componentDidMount(){
-//     console.log('component did mount')
-//     this.context.loadData("themes")
-// }
-
 render(){
     return(
         <Context.Consumer>

@@ -4,8 +4,6 @@ import Button from 'react-bootstrap/Button'
 import FilePreview from '../FilePreview'
 
 const EditDetail = (props) => {
-    console.log('EDIT DETAIL PROPS')
-    console.log(props)
     return(
         <BrowserRouter>
                 <div 

@@ -57,13 +57,9 @@ export class Provider extends React.Component{
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
         e.preventDefault();
         const newAddition = document.getElementById(id).value;
-        console.log('ITEM TO ADD')
-        console.log(newAddition)
         axios.put(router, {[requestKey]: newAddition})
         .then( res => {
           let addition = res.data[requestKey]
-          console.log("JSON obj")
-          console.log(addition)
           return addition
         })
         .then(res => {
@@ -167,9 +163,8 @@ export class Provider extends React.Component{
                 categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
             }
             this.setState({categoriesDataUpdate},
-                () => {console.log(objToUpdate);
-                axios.put('/api/categories/update', objToUpdate)
-                })
+                () => {axios.put('/api/categories/update', objToUpdate)}
+                )
         },
         autoCheckCategories: (category, subcategory, listitem, fileName) => {
 
@@ -270,17 +265,13 @@ export class Provider extends React.Component{
                             }
                         }
                     }
-    
-                    console.log(newState)
                     return newState
             }
     
             const categoryPath = (newCategory, fileName) => {
-                console.log('category path runs')
                 let newState = {}
     
                     if(fileName){
-                        console.log("*********FILENAME IN CATEGORYPATH")
                         newState = { 
                                 ...this.state,
                                 fileData:{
@@ -310,14 +301,10 @@ export class Provider extends React.Component{
                                 }
                             }
                     }
-    
-                    console.log('state with new category')
-                    console.log(newState)
                     return newState
             }
     
             const subcategoryPath = (newCategory, newSubcategory, fileName) => {
-                console.log('SUBCATEGORY PATH RUNS')
                 let newState = {}
     
                 if(fileName){
@@ -357,9 +344,6 @@ export class Provider extends React.Component{
                         }
                     }
                 }
-    
-                console.log('state with new SUBcategory')
-                console.log(newState)
                 return newState
             }
     
@@ -375,8 +359,6 @@ export class Provider extends React.Component{
     
                 if(classname === "listitem"){
                     subcategory = e.target.parentNode.parentNode.id
-                    console.log('clicked listitem')
-                    console.log(subcategory)
                     category = e.target.parentNode.parentNode.parentNode.id
                     listItemNest = statePath.category[category][subcategory]
                     newListitems = listItemNest.filter(item => item !== checkboxId)
@@ -425,7 +407,7 @@ export class Provider extends React.Component{
     
                 //if we only need to set a category
                 if(!subcategory){
-                    this.setState(categoryPath(checkbox.value, fileName), console.log('just created a category'))
+                    this.setState(categoryPath(checkbox.value, fileName))
                 }
                 else{
                     this.setState(categoryPath(checkbox.value, fileName), 
@@ -488,15 +470,6 @@ export class Provider extends React.Component{
          * @returns updated context state
          */
         onChange: (value, string, fileName) => {
-
-            console.log('on change')
-            console.log(value)
-
-            console.log('STRING')
-            console.log(string)
-
-            console.log('fileName')
-            console.log(fileName)
 
             let nestType = () => {
                 if(string === "themes" || string ==="seeAlso"){
@@ -604,8 +577,6 @@ export class Provider extends React.Component{
                     newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
                     newState.fileData.files[file.fileName].relatedArtwork = res
                     newState.fileData.files[file.fileName].useFamilySetup = true
-                    console.log("********************************************NEW STATE")
-                    console.log(newState)
                     this.setState(newState, this.setState({showModal: false})
                     )
                 })
@@ -669,9 +640,6 @@ export class Provider extends React.Component{
                 },
                 columnOrder: ['column-1']
             }
-
-            console.log('FILE INPUT')
-
             let newState = {...this.state}
             let objCounter = 0;
 
@@ -700,12 +668,8 @@ export class Provider extends React.Component{
                             }
             
                             if(file.type.match("application/pdf")){
-                                // const previewInfo = "data:application/pdf;base64,"
-                                // const previewSlice = obj.files[file.name].preview.slice(previewInfo.length)
-                                // console.log(previewSlice)
-                                // obj.files[file.name].preview = atob(previewSlice)
-                                // console.log( obj.files[file.name])
-
+                                alert('pdf not supported yet')
+                                return
                             }
 
                             newState = {
@@ -728,9 +692,7 @@ export class Provider extends React.Component{
                 })
             })
         
-            objPromise.then(res => {console.log('objPromise RESOLVED'); this.setState(newState, 
-                console.log(filename)
-                )})
+            objPromise.then(res => {this.setState(newState)})
         },
         //THIS UPLOADS FILE TO SERVER
 
@@ -774,8 +736,6 @@ export class Provider extends React.Component{
         },
         //change display index by dragging file preview
         onDragEnd: (result) => {
-            console.log('ondragend result')
-            console.log(result)
 
             const {destination, source, draggableId} = result;
         
@@ -814,11 +774,6 @@ export class Provider extends React.Component{
             const fileName = result.destination.droppableId
             const artworkFamily = fileName.slice(0, fileName.match("-relatedArtworks").index)
 
-            console.log('RESULT AND FAMILY NAME*****************')
-            console.log(result)
-            console.log(fileName)
-            console.log(artworkFamily)
-
             const column = this.state.relatedArtwork[artworkFamily].column[source.droppableId];
         
             let newFileIds = this.state.relatedArtwork[artworkFamily].column.fileIds
@@ -843,8 +798,6 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
         postArtworkInfo: (file) => {
-            console.log('POST ARTWORK INFO FILE*****************//////////////')
-            console.log(file)
             if(!Object.keys(file.category).length > 0){
                 alert(`please select categories for file ${file.fileName}`)
                 return
@@ -855,8 +808,6 @@ export class Provider extends React.Component{
                 if(!file.artworkFamily){
 
                     const fileData = file
-                    console.log("fileData")
-                    console.log(fileData)
         
                     let fileDataObject = {                          
                     category: fileData.category ?  fileData.category : null,
@@ -879,12 +830,8 @@ export class Provider extends React.Component{
         
                     // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
                     fileDataObject.familyDisplayIndex = null
-                    
-                    console.log("fileDataObject")
-                    console.log(fileDataObject)
                     axios.post('/api/artworkInfo/create', fileDataObject)
                         .then( res => { 
-                            console.log(res.data); 
                             this.fileDataMethods.uploadFile(file.fileName)
                             resolve()
                         })
@@ -901,10 +848,6 @@ export class Provider extends React.Component{
                             const obj = this.state.relatedArtwork[artworkFamily].files[objName]
                             const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
                             let fileData = null
-
-                            console.log('obj.fileName')
-                            console.log(obj.fileName)
-                            console.log(this.state.serverFileDir.includes(obj.fileName))
                             
                             //check if the file is uploaded to server
                             if(this.state.serverFileDir.includes(obj.fileName)){
@@ -985,7 +928,6 @@ export class Provider extends React.Component{
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
         filterByFamily: (value, fileName) => {
-            console.log(`filterByFmaily ${value}`)
             let newRenderList = {}
             Object.keys(this.state.seeAlsoData.fileList).forEach(fileName => {
                 const file = this.state.seeAlsoData.fileList[fileName]
@@ -1023,9 +965,6 @@ export class Provider extends React.Component{
                                 serverFileNames.forEach(fileName => {
                                     res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
                                 })
-
-                                console.log("databaseFiles**************************************")
-                                console.log(databaseFiles)
         
                                 let fileList = []
         
@@ -1162,11 +1101,6 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
         onChange: (value, string, e) => {
-
-            console.log(`value ${value}`)
-            console.log(`string ${string}`)
-            
-
             const addNewValue = (newValue) => {
                 let newState = {}
                 //if state nest is a String, eg artworkFamily
@@ -1229,13 +1163,10 @@ export class Provider extends React.Component{
             }
         },
         isChecked: (string, value) => {
-            console.log(`check if ${value} is included in ${string}`)
             if(this.state.familySetupData[string].includes(value)){
-                console.log(`includes ${value}`)
                 return true
             } 
             else{
-                console.log(`doesnt include ${value}`)
                 return false
             } 
         },
@@ -1266,8 +1197,6 @@ export class Provider extends React.Component{
                             }
                         }
                     }
-                    console.log('if FILE NAME state')
-                    console.log(newState)
                 }
 
                 else if(!fileName){
@@ -1279,26 +1208,18 @@ export class Provider extends React.Component{
                     })
                     
                     newState = {...this.state, familySetupData: newFamilySetup}
-                    console.log(newState)
                 }
 
                 const withRelatedArtwork = this.familySetupMethods.getRelatedArtwork(value, newState)
     
                 withRelatedArtwork
                     .then(  res => {
-                        console.log('   with related artwork  ')
-                        console.log(res)
 
                         newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
                         let fileIds = Object.keys(res)
 
                         this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res =>{ 
-                            
-                            console.log('promise res')
-                            console.log(res)
                             newState.seeAlsoData = res
-                            console.log("newState")
-                            console.log(newState)
                             this.setState(newState)
                         })
 
@@ -1364,7 +1285,7 @@ export class Provider extends React.Component{
                 return
             }
             axios.post('/api/familySetup/create', requestBody)
-                .then( res => {console.log(res); alert('success')})
+                .then( res => {alert('success')})
                 .catch(err => {console.log(err); alert(err)})
         },
         updateFamilySetup: (familyName) => {
@@ -1388,24 +1309,19 @@ export class Provider extends React.Component{
                 year: year
             }
 
-            console.log(requestBody)
-            console.log(`/api/familySetup/update/${this.state.familySetupData.artworkFamily}`)
-
             if(!this.state.familySetupData.artworkFamily){
                 alert('select or add new Family Name')
                 return
             }
 
             axios.put(`/api/familySetup/update/${familyName}`, requestBody)
-                .then( res => {console.log(res); alert('success')})
+                .then( res => { alert('success')})
                 .catch(err => {console.log(err); alert(err)})
 
         },
         getRelatedArtwork: (artworkFamily, newState) => {
 
             let relatedArtwork = {}
-
-            console.log('AXIOS RUNS')
             //get all records from the selected family from database
             return new Promise((resolve, reject) => {
                 // if(this.state.relatedArtwork[value]){
@@ -1434,7 +1350,6 @@ export class Provider extends React.Component{
                                 if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
             
                                     Object.keys(newState.fileData.files[fileName]).forEach(property => {
-                                        console.log(`file ${fileName} with familyName in state`)
                                         relatedArtwork = {
                                             ...relatedArtwork,
                                                 [fileName]: {
@@ -1445,8 +1360,6 @@ export class Provider extends React.Component{
                                     })
                                 }
                             })
-                            console.log('relatedArtwork from state')
-                            console.log(relatedArtwork)
                         }
                         
 
@@ -1461,8 +1374,6 @@ export class Provider extends React.Component{
                                 },
                                 columnOrder: [`${artworkFamily}-relatedArtworks`]
                         };
-                            console.log("finalRelatedArtwork")
-                            console.log(finalRelatedArtwork)
                             resolve(finalRelatedArtwork)
                     })
             }) 
@@ -1482,13 +1393,11 @@ export class Provider extends React.Component{
 
             axios.get('/api/themes')
             .then( res => {
-                console.log('got themes')
             newState.themesData = res.data.list
             })
             .then( res => {
                 axios.get('/api/familySetup')
                 .then(res => {
-                    console.log('got family setup')
                     let familyList = Object.keys(res.data).map(obj => {
                         return res.data[obj].artworkFamily
                     })
@@ -1498,39 +1407,22 @@ export class Provider extends React.Component{
             .then(resolved => {
                 axios.get('/api/categories')
                 .then(res => {
-                    console.log('got categories')
                     newState.categoriesData = res.data
 
                     newState.artworkFamilyList.forEach(familyName => {
-                        console.log(familyName)
                         this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 
                             newState.relatedArtwork[familyName] = res
 
                         )
-                        console.log(newState.relatedArtwork)
                     })
                 })
             })
-            // .then(res => this.readImageDir())
-            // .then(res => {
-            //         let counter = 0;
-            //         newState.artworkFamilyList.forEach(familyName => {
-            //             console.log(familyName)
-            //             this.getRelatedArtwork(familyName, newState).then(res => 
-            //                 newState.relatedArtwork[familyName] = res
-            //             )
-            //             console.log(newState.relatedArtwork)
-            //         })
-            //         return res
-            //     })
             .then(res => {this.familySetupMethods.getArtworkInfo()
                 .then(res => {
                     newState.artworkInfoData = res
                         this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
                             .then(res => {
                                 newState.seeAlsoData = res
-                                console.log('newSTATE after context MOUNT')
-                                console.log(newState)
                                 newState.showModal = false
                                 this.setState(newState)
                             })
@@ -1540,16 +1432,7 @@ export class Provider extends React.Component{
                     if(!this.state.artworkInfoData){
                         document.location.reload(true)
                     }
-                },2000);
-            // .then(res => {
-            //     this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso).then(res => {
-            //         newState.seeAlsoData = res
-            //         console.log('newSTATE after context MOUNT')
-            //         console.log(newState)
-            //         newState.showModal = false
-            //         this.setState(newState)
-            //     })
-            // })
+                },10000);
     }
 
     render(){

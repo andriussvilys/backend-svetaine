@@ -72,12 +72,7 @@ export default class DragAndDropContext extends Component{
 
             let cascadeStartIndex = this.state.columnOrder.indexOf(finishColumn.id)
             let cascadeEndIndex = cascadeStartIndex + 1
-
-            // console.log(this.state.columns[finishColumnId].fileIds)
-
             let dummyColumns = this.state.columns
-            console.log('DUMMY COLUMNS')
-            console.log(dummyColumns)
 
 
             //check if element goes up or down
@@ -87,10 +82,6 @@ export default class DragAndDropContext extends Component{
                 this.state.columnOrder.indexOf(finishColumn.id) === 0){
 
                 for(var i = 0; i < columnOrder.length; i++  ){
-                    console.log(`start counter is ${cascadeStartIndex}`)
-                    console.log(`finish counter is ${cascadeEndIndex}`)
-                    console.log(`columnorder[currentCounter]`)
-                    console.log(columnOrder[cascadeStartIndex])
 
                     //first duplicate the last element on source array
                     if(cascadeEndIndex > columnOrder.length - 1 ){
@@ -105,24 +96,18 @@ export default class DragAndDropContext extends Component{
                     let cascadeFinishArray = dummyColumns[columnOrder[cascadeEndIndex]].fileIds
                     
                     //put the last element of finish column to first position in start column
-                    console.log(`FINISH ARRAY B4 MUTATION ${cascadeFinishArray}`)
                     cascadeFinishArray.unshift(cascadeStartArray[cascadeStartArray.length -1])
-                    console.log(`FINISH ARRAY after MUTATION ${cascadeFinishArray}`)
                     const startStateTarget = columnOrder[cascadeStartIndex]
-                    console.log(`startStateTarget ${columnOrder[cascadeStartIndex]}`)
                     cascadeStartIndex += 1;
 
                     //THEN POP THE LAST ELEMENT FROM THE SOURCE ARRAY
 
-                    console.log(`Start ARRAY before mutation ${cascadeStartArray}`)
                     cascadeStartArray.pop()
-                    console.log(`Start ARRAY after mutation ${cascadeStartArray}`)
                     const finishStateTarget = columnOrder[cascadeEndIndex]
                     cascadeEndIndex += 1;
 
                     newState.columns[startStateTarget].fileIds = cascadeStartArray
                     newState.columns[finishStateTarget].fileIds = cascadeFinishArray
-                    console.log(`END OF CYCLE ${i + 1}`)
                     }
                     
                 }
@@ -139,8 +124,6 @@ export default class DragAndDropContext extends Component{
                 newState.columns[source.droppableId].fileIds = sourceArray
                 newState.columns[destination.droppableId].fileIds = finishArray
             }
-                console.log("new STATE")
-                console.log(newState)
                 this.setState(newState)
             }
 

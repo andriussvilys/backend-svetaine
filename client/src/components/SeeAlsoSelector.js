@@ -1,12 +1,10 @@
-import React, { Fragment } from 'react';
-import axios from 'axios';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Accordion from 'react-bootstrap/Accordion';
 
 import { Context } from './Provider';
-import FilePreview from './FilePreview';
 import DropDownList from './DropDownList'
 
 export default class SeeAlsoSelector extends React.Component{

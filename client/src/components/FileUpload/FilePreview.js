@@ -10,15 +10,9 @@ export default class FilePreview extends React.Component{
 
         //files in server dont have 'preview' property, and files in state dont have filePath
         const previewSource = file.filePath ? file.filePath : file.preview
-        // console.log('previewSource')
-        // console.log(previewSource)
-
-        // console.log('previewSource')
-        // console.log(previewSource)
 
         if(fileType.match('image')){
             let image = <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
-            // console.log(image)
             return(
                     image
             )

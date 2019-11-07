@@ -13,8 +13,6 @@ export default class Column extends React.Component{
                     <Droppable droppableId={this.props.column.id}
                     direction="horizontal">
                         {provided =>{
-                            console.log('RENDERING COLUMNS');
-                            console.log(this.props.files);
                             return(
                                 <div 
                                 ref={provided.innerRef}

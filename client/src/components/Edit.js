@@ -20,8 +20,6 @@ export default class Edit extends Component{
 
         let fileByFamily = {}
         let familyNames = []
-        console.log('ARTWORKinFO DATA -------------------')
-        console.log(this.context.state.artworkInfoData)
             this.filesData(this.context.state.artworkInfoData).forEach(file => {
             if(!file.artworkFamily){
                 if(!fileByFamily.none){

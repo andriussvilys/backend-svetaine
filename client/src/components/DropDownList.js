@@ -23,10 +23,6 @@ export default class DropDownList extends React.Component{
  *@param {fileName} string targets a particular file record in state
  */
     createDropDownList = (array, string, state, fileName) => {
-
-        // console.log('state in dropdrownlist')
-        // console.log(state)
-
         let statePath = state.familySetupData
 
         if(fileName){

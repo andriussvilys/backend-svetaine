@@ -13,7 +13,6 @@ export default class ImagesPreview extends React.Component{
         if(this.props.data){
             let images = Object.keys(this.props.data).map(objName => {
                 const currentFile = this.props.data[objName]
-                console.log(currentFile)
                 return(
                     <div className="ImagesPreview--container">
                         <div>
