@@ -901,42 +901,29 @@ export class Provider extends React.Component{
                             const obj = this.state.relatedArtwork[artworkFamily].files[objName]
                             const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
                             let fileData = null
-            
-                            console.log('const OBJ')
-                            console.log(obj)
-                            console.log("familyIndex")
-                            console.log(familyIndex)
+
+                            console.log('obj.fileName')
+                            console.log(obj.fileName)
+                            console.log(this.state.serverFileDir.includes(obj.fileName))
                             
-            
                             //check if the file is uploaded to server
                             if(this.state.serverFileDir.includes(obj.fileName)){
                                 alert('update')
                                 fileData = obj
                                 fileData.familyDisplayIndex = familyIndex
             
-                                console.log("fileData")
-                                console.log(fileData)
-            
                                 axios.put(`api/artworkInfo/update/${obj.fileName}`, fileData)
                                     .then(res => {
                                         progressCount += 1
-                                        console.log("updateLength")
-                                        console.log(updateLength)
-                                        console.log("progressCount")
-                                        console.log(progressCount)
                                         if(progressCount === updateLength){
                                             resolve()
                                         }
                                     })
-        
                             }
                 
                             else{
                                 // fileData = this.state.fileData.files[obj.fileName]
                                 fileData = this.state.relatedArtwork[artworkFamily].files[obj.fileName]
-            
-                                console.log("fileData")
-                                console.log(fileData)
                     
                                 let fileDataObject = {                                                 
                                 category: fileData.category ?  fileData.category : null,
@@ -959,19 +946,11 @@ export class Provider extends React.Component{
                     
                                 // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
                                 fileDataObject.familyDisplayIndex = familyIndex
-
-                                alert(`displaIndex ${familyIndex}`)
                                 
-                                console.log("fileDataObject")
-                                console.log(fileDataObject)
                                 axios.post('/api/artworkInfo/create', fileDataObject)
                                     .then( res => { console.log(res.data);                                    
                                         this.fileDataMethods.uploadFile(file.fileName)
                                         progressCount += 1
-                                        console.log("updateLength")
-                                        console.log(updateLength)
-                                        console.log("progressCount")
-                                        console.log(progressCount)
                                         if(progressCount === updateLength){
                                             resolve()
                                             return
@@ -1311,6 +1290,7 @@ export class Provider extends React.Component{
                         console.log(res)
 
                         newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
+                        let fileIds = Object.keys(res)
 
                         this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res =>{ 
                             
@@ -1525,6 +1505,7 @@ export class Provider extends React.Component{
                         console.log(familyName)
                         this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 
                             newState.relatedArtwork[familyName] = res
+
                         )
                         console.log(newState.relatedArtwork)
                     })

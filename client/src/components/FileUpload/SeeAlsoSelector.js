@@ -85,7 +85,7 @@ export default class SeeAlsoSelector extends React.Component{
                 checked: highlighter(file.fileName),
                 file: 
                     <div key={`fileLibrary-${file.fileName}`} 
-                    style={{maxWidth: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
+                    style={{width: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
                     className={`${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
                     >
                         <div 
@@ -199,7 +199,7 @@ export default class SeeAlsoSelector extends React.Component{
                                 </Button>
                             </div>
 
-                            <div style={{display: "flex", flexWrap: "wrap"}}>
+                            <div style={{display: "flex", flexWrap: "wrap", justifyContent:"center"}}>
                                 {this.state.fileNames ? console.log(this.state) : null}
                                 {this.state.fileNames ? this.createPreviews(this.state.fileNames).map(fileObj => {return fileObj.file}) : null}
                                 {/* {this.state.renderList ? this.renderAllFiles(this.state.renderList) : null} */}
