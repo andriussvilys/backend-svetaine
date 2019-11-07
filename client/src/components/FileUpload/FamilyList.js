@@ -173,7 +173,7 @@ const FamilyList = (props) => {
     }
 
     return (
-        <div className="ImagesPreview--container FamilyList--main">
+        <div className="FamilyList--main">
             <div className="FamilyList--familyName">
                 <h5 className="FamilyList--familyName__text">{props.familyName ? props.familyName : "none"}</h5>
             </div>

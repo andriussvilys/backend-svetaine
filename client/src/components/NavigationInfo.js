@@ -135,54 +135,58 @@ export default class NavigationInfo extends Component{
                     <h3>categories</h3>
 
                     <div className="list--container">
-                            {this.makeCategories()}
-                    </div>
+                        {this.makeCategories()}
 
-                    <div className="imageInfo--section" style={{backgroundColor: "#a8b4b9"}} >
-                        <h5>add new category</h5>
-                        <div className="imageInfo--box">
-                            <input type="text" 
-                                list="datalist-add-categories"
-                                name="add-category" 
-                                id="add-category" 
-                                placeholder="category"
-                                style={{marginRight: "30px"}}
-                                onFocus={this.context.categoryMethods.getCategoryNames}
-                            />
-                            <datalist id="datalist-add-categories">
-                                {this.context.state.categoryDatalist}
-                            </datalist>
+                        <div className="categories--addNew_container" >
+                            <h5 className="navigation--addNew_title">add new category</h5>
+                            <div className="navigation--addNew">
+                                <input 
+                                    className="categories-input"
+                                    type="text" 
+                                    list="datalist-add-categories"
+                                    name="add-category" 
+                                    id="add-category" 
+                                    placeholder="category"
+                                    onFocus={this.context.categoryMethods.getCategoryNames}
+                                />
+                                <datalist id="datalist-add-categories">
+                                    {this.context.state.categoryDatalist}
+                                </datalist>
 
-                            <input type="text" 
-                                list="datalist-add-subcategories"
-                                name="add-subcategory" 
-                                id="add-subcategory" 
-                                placeholder="subcategory"
-                                style={{marginRight: "30px"}}
-                                onFocus={this.context.categoryMethods.getSubcategoryNames}
-                            />
-                            <datalist id="datalist-add-subcategories">
-                                {this.context.state.subcategoryDatalist}
-                            </datalist>
+                                <input 
+                                    className="categories-input"
+                                    type="text" 
+                                    list="datalist-add-subcategories"
+                                    name="add-subcategory" 
+                                    id="add-subcategory" 
+                                    placeholder="subcategory"
+                                    onFocus={this.context.categoryMethods.getSubcategoryNames}
+                                />
+                                <datalist id="datalist-add-subcategories">
+                                    {this.context.state.subcategoryDatalist}
+                                </datalist>
 
-                            <input type="text" 
-                                name="add-listitem" 
-                                id="add-listitem" 
-                                placeholder="listitem"
-                                style={{marginRight: "30px"}}
-                            />
-                            <Button
-                                style={{marginRight: "30px"}}
-                                variant="success" 
-                                size="sm"
-                                onClick={
-                                    this.context.categoryMethods.updateCategory
-                                }
-                            >
-                                SUBMIT
-                            </Button>
+                                <input 
+                                    className="categories-input"
+                                    type="text" 
+                                    name="add-listitem" 
+                                    id="add-listitem" 
+                                    placeholder="listitem"
+                                />
+                                <Button
+                                    className="custom-button"
+                                    variant="success" 
+                                    size="sm"
+                                    onClick={
+                                        this.context.categoryMethods.updateCategory
+                                    }
+                                >
+                                    SUBMIT
+                                </Button>
+                            </div>
                         </div>
                     </div>
+
                 </div>
             )}
             }

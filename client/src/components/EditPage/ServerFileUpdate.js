@@ -25,7 +25,7 @@ import BootstrapModal from '../BootstrapModal'
 const ServerFileUpdate = (props) => {
 
     return(
-    <div className="FamilyList--detail">
+    <div className="FamilyList--detail_update">
 
         <div className="FamilyList--detail__image">
             <FilePreview 

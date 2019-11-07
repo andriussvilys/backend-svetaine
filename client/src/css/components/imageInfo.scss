@@ -68,7 +68,6 @@
 }
 .familyInfo-child{
     flex: 1;
-    max-width: 915px;
     display: flex;
     flex-direction: column;
     // justify-content: space-between;
@@ -76,5 +75,11 @@
 .familyInfo-container{
     display: flex;
     flex-wrap: wrap;
+    flex-direction: column;
 }
+
+
+
+
+
 

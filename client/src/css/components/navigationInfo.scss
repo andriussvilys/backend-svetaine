@@ -1,5 +1,4 @@
 .list--category{
-    // background-color: #808e95;
     text-transform: uppercase;
     font-size: 24px;
     font-weight: bold;
@@ -9,46 +8,77 @@
     font-size: 14px;
     display: flex;
 }
+.navigation-input{
+    margin-right: 20px;
+}
+.list--container{
+    left: 0;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 15px 0 0 0;
+}
+.list-group{
+    flex: 1;
+    border: 1px solid rgb(226, 226, 226);
+    max-width: 300px;
+    background-color: #f1f1f1;
+    margin: 5px;;
+}
+.list--subcategory{
+    background-color: #e6e6e6;
+}
+//subcategory LABEL
 .list--subcategory > div{
     border: 1px solid rgba(0,0,0,.2);
     height: 40px;
     display: flex;
     align-items: center;
     padding-left: 10px;
+    background-color: rgb(179, 179, 179);
 }
-
 .list--listitem{
-    background-color: #e2f1f8;
+    background-color: #d3d3d3;
     font-size: 12px;
     width: 95%;
     align-self: center;
     // white-space: nowrap;
 }
-.navigation-input{
-    margin-right: 20px;
-}
-.list--container{
-    // width: 300px;
-    // position: absolute;
-    left: 0;
-    top: 0;
-    margin: 0;
-    padding: 0;
-    // height: 400px;
-    // height: 100vh;
-    // overflow-y: scroll;
-    grid-column-start: 1;
-    grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #a8b4b9;
-}
-.list-group{
-    flex: 1;
-    border: 1px solid rgb(226, 226, 226);
-}
 .list-group-item{
     display: flex;
+}
+.categories-input{
+    width: 200px;
+    margin-bottom: 12px;
+}
+.categories-input:last-child{
+    margin-bottom: 24px !important;
+}
+
+.navigation--addNew{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.categories--addNew_container{
+    flex: 1;
+    margin: 5px;
+    border: 1px solid black;
+    max-width: 235px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.navigation--addNew_title{
+    margin: 0 0 12px 20px !important;
+    padding: 10px 0 !important; 
+    text-transform: uppercase;
 }
