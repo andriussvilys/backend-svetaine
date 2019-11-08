@@ -55,6 +55,12 @@ export class Provider extends React.Component{
 
     //adds new family name/theme
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
+        console.log(id)
+        console.log(router)
+        console.log(requestKey)
+        console.log(stateKey)
+        console.log(callback)
+
         e.preventDefault();
         const newAddition = document.getElementById(id).value;
         axios.put(router, {[requestKey]: newAddition})

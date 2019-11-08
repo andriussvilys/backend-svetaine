@@ -28,7 +28,7 @@ export default class FamilyInfo extends Component {
                                     onChange={this.context.getFamilySetup}
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     id="List-of-artwork-families"
-                                    router={'api/artworkFamilyList/update'}
+                                    router={'/api/familySetup/create'}
                                     addNewTarget={'artworkFamilyList'}
                                     displayAddNew="initial"
                                 />

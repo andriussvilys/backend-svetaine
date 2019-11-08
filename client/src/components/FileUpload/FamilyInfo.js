@@ -19,7 +19,7 @@ const FamilyInfo = (props) => {
                         onChange={props.familyDropDown.context.getFamilySetup}
                         isChecked={props.familyDropDown.context.familySetupMethods.isChecked}
                         id="List-of-artwork-families"
-                        router={'api/artworkFamilyList/update'}
+                        router={'/api/artworkFamilyList/update'}
                         addNewTarget={'artworkFamilyList'}
                         displayAddNew="initial"
                     />

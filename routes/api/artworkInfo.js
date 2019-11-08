@@ -26,6 +26,16 @@ router.get('/', (req, res) => {
         .then(artworks => res.json(artworks))
 })
 
+router.delete('/delete/:id', (req, res) => {
+    ArtworkInfo.deleteOne({ fileName: req.params.id }, function (err) {
+        console.log(req.params.id)
+        if (err) return handleError(err);
+        if (res) return res
+        // deleted at most one tank document
+      })
+      .then(res => console.log(res))
+})
+
 //filter records by artworkFamily
 router.get('/:artworkFamily', (req, res) => {
     ArtworkInfo.find( {"artworkFamily": req.params.artworkFamily} )
