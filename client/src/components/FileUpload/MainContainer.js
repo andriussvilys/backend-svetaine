@@ -49,6 +49,7 @@ export default class MainContainer extends React.Component{
         let list = this.sortByFamily().familyNames.map(familyName => {
             return (
                 <FamilyList 
+                key={`FamilyList-familyName`}
                 familyDropDown={{
                     state:this.context.state,
                     familyList: this.context.state.artworkFamilyList,
@@ -88,7 +89,7 @@ export default class MainContainer extends React.Component{
             <Context.Consumer>
                 {() => {
                     return(
-                        <div>
+                        <div key={'main_container'}>
                             {/* <h5>{Object.keys(this.props.data.files).length > 0 ? "family Names:" : null}</h5> */}
                             {this.renderNames(this.props.data.files)}
                         </div>

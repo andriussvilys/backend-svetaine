@@ -26,10 +26,15 @@ router.get('/', (req, res) => {
         .then(artworks => res.json(artworks))
 })
 
+//filter records by artworkFamily
 router.get('/:artworkFamily', (req, res) => {
-    console.log('REQ PARMS')
-    console.log(req.params.artworkFamily)
     ArtworkInfo.find( {"artworkFamily": req.params.artworkFamily} )
+        .then(artworks => res.json(artworks))
+        .catch(err => console.log(err))
+}
+)
+router.get('/fileName/:fileName', (req, res) => {
+    ArtworkInfo.find( {"fileName": req.params.fileName} )
         .then(artworks => res.json(artworks))
         .catch(err => console.log(err))
 })
@@ -89,15 +94,19 @@ router.delete('/delete/:id', (req, res) => {
 })
 
 router.put("/update/:fileName", (req, res, next) => {
-    console.log(Object.keys(req.body))
+
     const obj = {}
     Object.keys(req.body).forEach(key => {
+        if(key === "_id"){
+            return
+        }
         obj[key] = req.body[key]
     })
-    console.log(obj)
+    console.log('req.params')
+    console.log(req.params.fileName)
 
     ArtworkInfo.findOneAndUpdate(
-      { fileName: req.params.id },  // <-- find stage
+      { fileName: req.params.fileName },  // <-- find stage
       { $set: obj },
       {new: true}
     )

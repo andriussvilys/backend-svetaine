@@ -35,7 +35,8 @@ export default class ImageInfo extends Component{
                     <span>Upload file(-s):</span> 
                     <input type="file" multiple className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
                   </div>
-                  
+
+                    {/* from FileUpload folder */}
                     <MainContainer
                      data={this.context.state.fileData}
                      />
@@ -48,6 +49,7 @@ export default class ImageInfo extends Component{
                 <FamilyInfo/>
               </div>
 
+              {/* modal displayed before page is loaded */}
               <Modal show={this.context.state.showModal} onHide={this.handleClose}>
                 <Modal.Body>
                   <Spinner animation="grow" variant="primary" />

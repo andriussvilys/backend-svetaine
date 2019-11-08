@@ -22,144 +22,162 @@ import BootstrapModal from '../BootstrapModal'
     onChange: this.context.fileDataMethods.onChange, 
         }
  */
-const ServerFileUpdate = (props) => {
+export default class ServerFileUpdate extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {showModal: false, modalMessage: null}
+    }
 
-    return(
-    <div className="FamilyList--detail_update">
-
-        <div className="FamilyList--detail__image">
-            <FilePreview 
-                file={props.file}
-            >
-            </FilePreview>
-            <div className="FamilyList--detail__image__text">
-                <p className="title">fileName:</p> 
-                <p>{props.file.fileName}</p>
+    onClose = () => {
+        this.setState({showModal: false})
+    }
+    render(){
+        return(
+        <div className="FamilyList--detail_update">
+    
+            <div className="FamilyList--detail__image">
+                <FilePreview 
+                    file={this.props.file}
+                >
+                </FilePreview>
+                <div className="FamilyList--detail__image__text">
+                    <p className="title">fileName:</p> 
+                    <p>{this.props.file.fileName}</p>
+                </div>
+                <div className="ImageInfo--transferState" style={{display: 'flex'}}>
+                    <p>use global family setup</p>
+    
+                    <p className="subtitle"
+                    style={
+                        this.props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
+                    }
+                    >
+                    please select global artwork family 
+                    </p>
+        {/* 
+                    {this.props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
+                    <form className="ImageInfo--transferState__radios">
+                        <div className="container-radio">
+                            <input type="radio" 
+                            name="familyDisplaySetup" 
+                            id="familyDisplaySetup__radio-yes" 
+                            value="yes" 
+                            disabled={this.props.context.state.familySetupData.artworkFamily === null ? true : false}
+                            onChange={() => {this.props.context.fileDataMethods.transferState(this.props.file, true)}}
+                            checked={this.props.context.state.fileData.files[this.props.file.fileName].useFamilySetup}
+                            />
+                            <label 
+                            htmlFor="familyDisplaySetup_yes"
+                            id="familyDisplaySetup_yes"
+                            >yes</label>
+                        </div>
+                        <div className="container-radio">
+                            <input type="radio" 
+                            name="familyDisplaySetup" 
+                            id="familyDisplaySetup__radio-no" 
+                            value="no" 
+                            disabled={this.props.context.state.familySetupData.artworkFamily === null ? true : false}
+                            onChange={() => this.props.context.fileDataMethods.transferState(this.props.file)}
+                            checked={!this.props.context.state.fileData.files[this.props.file.fileName].useFamilySetup}
+                            
+                            />
+                            <label htmlFor="familyDisplaySetup_no">no</label>
+                        </div>
+                    </form>
+                </div>  
             </div>
-            <div className="ImageInfo--transferState" style={{display: 'flex'}}>
-                <p>use global family setup</p>
-
-                <p className="subtitle"
-                style={
-                    props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
-                }
+    
+            <div className="FamilyList--detail__info">
+    
+            {/* ARTWORK DATA */}
+            <Accordion
+            className={`UploadFile-${this.props.file.fileName}`}
+            title={'Edit Artwork Info'}
+            >
+                <ArtworkInfo 
+                    file={this.props.file}
+                    fileName={this.props.file.fileName}
+                    onChange={this.props.controls.fileDataMethods.onChange}
+                />
+            </Accordion>
+    
+            {/* FAMILY DATA */}
+            <Accordion
+            className={`UploadFile-${this.props.file.fileName}`}
+            title={'Edit Family Info'}
+            >
+                <FamilyInfo 
+                familyDropDown={{...this.props.familyDropDown, fileName: this.props.file.fileName}}
+                themesDropDown={{...this.props.themesDropDown, fileName: this.props.file.fileName}}
+                seeAlso={{...this.props.seeAlso, 
+                    fileName: this.props.file.fileName, 
+                    highlightReference: this.props.seeAlso.state.fileData.files[this.props.file.fileName].seeAlso
+                }}
                 >
-                please select global artwork family 
-                </p>
-    {/* 
-                {props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
-                <form className="ImageInfo--transferState__radios">
-                    <div className="container-radio">
-                        <input type="radio" 
-                        name="familyDisplaySetup" 
-                        id="familyDisplaySetup__radio-yes" 
-                        value="yes" 
-                        disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                        onChange={() => {props.context.fileDataMethods.transferState(props.file, true)}}
-                        checked={props.context.state.fileData.files[props.file.fileName].useFamilySetup}
+    
+                    <Accordion
+                        title={'Arrange Indexes'}
+                    >
+                        <ChangeIndex 
+                            data={this.props.relatedArtwork}
+                            fileName={this.props.file.fileName}
+                            artworkFamily={this.props.file.artworkFamily}
                         />
-                        <label 
-                        htmlFor="familyDisplaySetup_yes"
-                        id="familyDisplaySetup_yes"
-                        >yes</label>
-                    </div>
-                    <div className="container-radio">
-                        <input type="radio" 
-                        name="familyDisplaySetup" 
-                        id="familyDisplaySetup__radio-no" 
-                        value="no" 
-                        disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                        onChange={() => props.context.fileDataMethods.transferState(props.file)}
-                        checked={!props.context.state.fileData.files[props.file.fileName].useFamilySetup}
-                        
+    
+                    </Accordion>
+    
+                    <Accordion
+                        title={'Adjust tags'}
+                    >
+                        <NavigationInfo
+                            fileName={this.props.file.fileName}
                         />
-                        <label htmlFor="familyDisplaySetup_no">no</label>
-                    </div>
-                </form>
-            </div>  
-        </div>
-
-        <div className="FamilyList--detail__info">
-
-        {/* ARTWORK DATA */}
-        <Accordion
-        className={`UploadFile-${props.file.fileName}`}
-        title={'Edit Artwork Info'}
-        >
-            <ArtworkInfo 
-                file={props.file}
-                fileName={props.file.fileName}
-                onChange={props.controls.fileDataMethods.onChange}
-            />
-        </Accordion>
-
-        {/* FAMILY DATA */}
-        <Accordion
-        className={`UploadFile-${props.file.fileName}`}
-        title={'Edit Family Info'}
-        >
-            <FamilyInfo 
-            familyDropDown={{...props.familyDropDown, fileName: props.file.fileName}}
-            themesDropDown={{...props.themesDropDown, fileName: props.file.fileName}}
-            seeAlso={{...props.seeAlso, 
-                fileName: props.file.fileName, 
-                highlightReference: props.seeAlso.state.fileData.files[props.file.fileName].seeAlso
-            }}
-            >
-
-                <Accordion
-                    title={'Arrange Indexes'}
+                    </Accordion>
+    
+    
+                </FamilyInfo>
+    
+            </Accordion>
+    
+            <div className="FamilyList--submit-delete-container">  
+                <Button
+                    variant="danger"
+                    className="custom-button"
+                    onClick={ () => this.props.controls.removeFile(this.props.file.fileName)}
                 >
-                    <ChangeIndex 
-                        data={props.relatedArtwork}
-                        fileName={props.file.fileName}
-                        artworkFamily={props.file.artworkFamily}
-                    />
-
-                </Accordion>
-
-                <Accordion
-                    title={'Adjust tags'}
+                    Cancel
+                </Button>   
+                <Button
+                    variant="success"
+                    className="custom-button"
+                    // onClick={() => {
+                    //     this.props.controls.postArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
+                    // }
+                    // }
+                    onClick={() => {
+                        this.setState({showModal: true, modalMessage: "loading..."})
+                        const postRes = this.props.controls.postArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
+                        postRes.then( res => {
+                            this.setState({modalMessage: res})
+                        })
+                    }
+                    }
                 >
-                    <NavigationInfo
-                        fileName={props.file.fileName}
-                    />
-                </Accordion>
-
-
-            </FamilyInfo>
-
-        </Accordion>
-
-        <div className="FamilyList--submit-delete-container">  
-            <Button
-                variant="danger"
-                className="custom-button"
-                onClick={ () => props.controls.removeFile(props.file.fileName)}
-            >
-                Remove
-            </Button>   
-            <Button
-                variant="success"
-                className="custom-button"
-                onClick={() => props.controls.postArtworkInfo(props.file)}
-            >
-                Submit to server
-            </Button>
-
+                    Submit to server
+                </Button>
+    
+            </div>
+    
+    
+                <BootstrapModal 
+                    showModal={this.state.showModal}
+                    message={this.state.modalMessage}
+                    onClose={this.onClose}
+                />
+            </div>    
+    
         </div>
-
-            <BootstrapModal 
-                showModal={props.context.state.showModal}
-                message={"Save file to databse?"}
-            />
-            {/* <LoaderModal
-                showModal={props.showModal}
-            /> */}
-        </div>    
-
-    </div>
-    )
+        )
+    }
 }
 
-export default ServerFileUpdate

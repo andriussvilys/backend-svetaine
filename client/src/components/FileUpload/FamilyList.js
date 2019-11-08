@@ -11,17 +11,25 @@ import BootstrapModal from '../BootstrapModal'
 
 
 //this component returns a div with a family name and FilePreviews of each child in the family
+export default class FamilyList extends React.Component{
+// const FamilyList = (props) => {
 
-const FamilyList = (props) => {
+    constructor(props){
+        super(props);
+        this.state = {showModal: false, modalMessage: null}
+    }
 
+    onClose = () => {
+        this.setState({showModal: false})
+    }
     /**
      * 
      * @param {*} data = takes an array of files data
      */
-    const renderList = (files, props) => {
+    renderList = (files, props) => {
         let list = files.map(file => {
             return (
-                <div className="FamilyList--detail">
+                <div key={`FileInfo_${file.fileName}`} className="FamilyList--detail">
 
                     <div className="FamilyList--detail__image">
                         <FilePreview 
@@ -37,22 +45,22 @@ const FamilyList = (props) => {
 
                             <p className="subtitle"
                             style={
-                                props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
+                                this.props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
                             }
                             >
                             please select global artwork family 
                             </p>
 {/* 
-                            {props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
+                            {this.props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
                             <form className="ImageInfo--transferState__radios">
                                 <div className="container-radio">
                                     <input type="radio" 
                                     name="familyDisplaySetup" 
                                     id="familyDisplaySetup__radio-yes" 
                                     value="yes" 
-                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                                    onChange={() => {props.context.fileDataMethods.transferState(file, true)}}
-                                    checked={!props.context.state.fileData.files[file.fileName].useFamilySetup ? false : props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    disabled={this.props.context.state.familySetupData.artworkFamily === null ? true : false}
+                                    onChange={() => {this.props.context.fileDataMethods.transferState(file, true)}}
+                                    checked={!this.props.context.state.fileData.files[file.fileName].useFamilySetup ? false : this.props.context.state.fileData.files[file.fileName].useFamilySetup}
                                     />
                                     <label 
                                     htmlFor="familyDisplaySetup_yes"
@@ -64,9 +72,9 @@ const FamilyList = (props) => {
                                     name="familyDisplaySetup" 
                                     id="familyDisplaySetup__radio-no" 
                                     value="no" 
-                                    disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                                    onChange={() => props.context.fileDataMethods.transferState(file)}
-                                    checked={!props.context.state.fileData.files[file.fileName].useFamilySetup}
+                                    disabled={this.props.context.state.familySetupData.artworkFamily === null ? true : false}
+                                    onChange={() => this.props.context.fileDataMethods.transferState(file)}
+                                    checked={!this.props.context.state.fileData.files[file.fileName].useFamilySetup}
                                     
                                     />
                                     <label htmlFor="familyDisplaySetup_no">no</label>
@@ -85,7 +93,7 @@ const FamilyList = (props) => {
                         <ArtworkInfo 
                             file={file}
                             fileName={file.fileName}
-                            onChange={props.controls.fileDataMethods.onChange}
+                            onChange={this.props.controls.fileDataMethods.onChange}
                         />
                     </Accordion>
 
@@ -95,11 +103,11 @@ const FamilyList = (props) => {
                     title={'Edit Family Info'}
                     >
                         <FamilyInfo 
-                        familyDropDown={{...props.familyDropDown, fileName: file.fileName}}
-                        themesDropDown={{...props.themesDropDown, fileName: file.fileName}}
-                        seeAlso={{...props.seeAlso, 
+                        familyDropDown={{...this.props.familyDropDown, fileName: file.fileName}}
+                        themesDropDown={{...this.props.themesDropDown, fileName: file.fileName}}
+                        seeAlso={{...this.props.seeAlso, 
                             fileName: file.fileName, 
-                            highlightReference: props.seeAlso.state.fileData.files[file.fileName].seeAlso
+                            highlightReference: this.props.seeAlso.state.fileData.files[file.fileName].seeAlso
                         }}
                         >
 
@@ -107,7 +115,7 @@ const FamilyList = (props) => {
                                 title={'Arrange Indexes'}
                             >
                                 <ChangeIndex 
-                                    data={props.relatedArtwork}
+                                    data={this.props.relatedArtwork}
                                     fileName={file.fileName}
                                     artworkFamily={file.artworkFamily}
                                 />
@@ -130,14 +138,21 @@ const FamilyList = (props) => {
                         <Button
                             variant="danger"
                             className="custom-button"
-                            onClick={ () => props.controls.removeFile(file.fileName)}
+                            onClick={ () => this.props.controls.removeFile(file.fileName)}
                         >
                             Remove
                         </Button>   
                         <Button
                             variant="success"
                             className="custom-button"
-                            onClick={() => props.controls.postArtworkInfo(file)}
+                            onClick={() => {
+                                this.setState({showModal: true, modalMessage: "loading..."})
+                                const postRes = this.props.controls.postArtworkInfo(file)
+                                postRes.then( res => {
+                                    this.setState({modalMessage: res})
+                                })
+                            }
+                            }
                         >
                             Submit to server
                         </Button>
@@ -145,12 +160,11 @@ const FamilyList = (props) => {
                     </div>
 
                         <BootstrapModal 
-                            showModal={props.context.state.showModal}
-                            message={"Save file to databse?"}
+                            showModal={this.state.showModal}
+                            message={this.state.modalMessage}
+                            onClose={this.onClose}
                         />
-                        {/* <LoaderModal
-                            showModal={props.showModal}
-                        /> */}
+
                     </div>    
 
                 </div>
@@ -160,14 +174,18 @@ const FamilyList = (props) => {
         return list
     }
 
-    return (
-        <div className="FamilyList--main">
-            <div className="FamilyList--familyName">
-                <h5 className="FamilyList--familyName__text">{props.familyName ? props.familyName : "none"}</h5>
+
+    render(){
+        return (
+            <div className="FamilyList--main">
+                <div className="FamilyList--familyName">
+                    <h5 className="FamilyList--familyName__text">{this.props.familyName ? this.props.familyName : "none"}</h5>
+                </div>
+                {this.renderList(this.props.files, this.props)}
             </div>
-            {renderList(props.files, props)}
-        </div>
-    ) 
+        ) 
+    }
+
 }
 
-export default FamilyList
+// export default FamilyList

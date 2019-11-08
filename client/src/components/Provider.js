@@ -75,7 +75,10 @@ export class Provider extends React.Component{
     //creates an array of all files in the server uploads folder
     this.readImageDir = () => {
         axios.get('/fetchImages')
-        .then(res => this.setState({serverFileDir: res.data}))
+        .then(res => 
+            {return res}
+            // this.setState({serverFileDir: res.data})
+            )
     }
 
     //this takes care of CATEGORIES used for navigation
@@ -218,6 +221,7 @@ export class Provider extends React.Component{
             let statePath = this.state.familySetupData
             
             if(fileName){
+                console.log('checked NOT in global setup')
                 statePath = this.state.fileData.files[fileName]
                 if(!this.state.fileData.files[fileName].category){
                     this.state.fileData.files[fileName].category = {}
@@ -356,8 +360,13 @@ export class Provider extends React.Component{
                 let listItemNest = null
                 let newListitems = null
                 let stateCopy = {...statePath}
+                let newState = {...this.state}
     
                 if(classname === "listitem"){
+                    console.log(fileName)
+                    console.log("listItem")
+                    console.log("stateCopy")
+                    console.log(stateCopy)
                     subcategory = e.target.parentNode.parentNode.id
                     category = e.target.parentNode.parentNode.parentNode.id
                     listItemNest = statePath.category[category][subcategory]
@@ -367,12 +376,38 @@ export class Provider extends React.Component{
                     return                
                 }
                 else if (classname === "subcategory"){
+                    console.log(fileName)
+                    console.log("subCategory")
+                    console.log("stateCopy")
+                    console.log(stateCopy)
                     category = e.target.parentNode.parentNode.parentNode.id
     
                     delete stateCopy.category[category][checkboxId]
                     Array.from(document.getElementById(checkboxId).getElementsByTagName('input'))
                         .forEach(item => item.checked = false)
-                    this.setState(stateCopy)
+                        if(fileName){
+                            newState = {
+                                fileData: {
+                                    ...this.state.fileData,
+                                    files: {
+                                        ...this.state.fileData.files,
+                                        [fileName]: {
+                                            ...this.state.fileData.files[fileName],
+                                            category: stateCopy.category
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            newState = {
+                                familySetupData: {
+                                    ...this.state.familySetupData,
+                                    category: stateCopy.category
+                                }
+                            }
+                        }
+                        this.setState(newState)
                     return
                 }
                 else if (classname === "category"){
@@ -380,7 +415,29 @@ export class Provider extends React.Component{
                     delete stateCopy.category[category]
                     Array.from(document.getElementById(category).getElementsByTagName('input'))
                         .forEach(item => item.checked = false)
-                    this.setState(stateCopy)
+                        if(fileName){
+                            newState = {
+                                fileData: {
+                                    ...this.state.fileData,
+                                    files: {
+                                        ...this.state.fileData.files,
+                                        [fileName]: {
+                                            ...this.state.fileData.files[fileName],
+                                            category: stateCopy.category
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            newState = {
+                                familySetupData: {
+                                    ...this.state.familySetupData,
+                                    category: stateCopy.category
+                                }
+                            }
+                        }
+                        this.setState(newState)
                     // e.target.parentNode.classList.toggle('themes-list--selected')
                     return
                 }
@@ -714,8 +771,6 @@ export class Provider extends React.Component{
         },
         //Removes selected file from state and thus DOM
         removeFile: (fileName) => {
-
-            alert('REMOVE FILE')
         
             let newFiles = {...this.state.fileData.files}
         
@@ -797,15 +852,60 @@ export class Provider extends React.Component{
 
             this.setState(newState)
         },
-        postArtworkInfo: (file) => {
-            if(!Object.keys(file.category).length > 0){
-                alert(`please select categories for file ${file.fileName}`)
-                return
-            }
-            this.setState({showModal: true})
+        updateArtworkInfo: (file) => {
+            console.log('UPDATE FILE DATA')
+            console.log(file)
+            return new Promise((resolve, reject) => {
+                if(!file.category || !Object.keys(file.category).length > 0 ){
+                    resolve('To submit, select categories for this file')
+                }
 
-            const postPromise = new Promise((resolve, rej) => {
+                else{
+                    if(file.artworkFamily){
+                        const artworkFamily = file.artworkFamily
+                        const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length 
+                        let progressCount = 0
+        
+                        Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
+
+                            
+                            let obj = this.state.relatedArtwork[artworkFamily].files[objName]
+                            if(objName === file.fileName){
+                                obj = this.state.fileData.files[file.fileName]
+                            }
+                            const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
+                            let fileData =  obj
+                                fileData.familyDisplayIndex = familyIndex
+                                console.log("update with fileData")
+                                console.log(fileData)
+                                axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
+
+                                    .then(res => {
+                                        progressCount += 1
+                                        console.log(progressCount)
+                                        if(progressCount === updateLength){
+                                            resolve('file updated')
+                                        }
+                                    })
+                            })
+                    }
+                }
+        })
+    },
+
+        postArtworkInfo: (file) => {
+            
+            return new Promise((resolve, rej) => {
+                if(this.state.serverFileDir.includes(file.fileName)){
+                    resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
+                }
+
+                if(!file.category || !Object.keys(file.category).length > 0 ){
+                    resolve('To submit, select categories for this file')
+                }
+
                 if(!file.artworkFamily){
+                    console.log('file has no family')
 
                     const fileData = file
         
@@ -833,11 +933,18 @@ export class Provider extends React.Component{
                     axios.post('/api/artworkInfo/create', fileDataObject)
                         .then( res => { 
                             this.fileDataMethods.uploadFile(file.fileName)
-                            resolve()
+                            let newState = this.state
+                            this.familySetupMethods.getArtworkInfo()
+                                .then(res => {
+                                    newState.artworkInfoData = res
+                                    this.setState(newState, resolve('new file registered without family'))
+                                })
                         })
                         .catch(err => console.error(err))
                     }
                 else{
+                        console.log(`registering to ${file.artworkFamily}`)
+
                         const artworkFamily = file.artworkFamily
                         const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length 
      
@@ -851,15 +958,22 @@ export class Provider extends React.Component{
                             
                             //check if the file is uploaded to server
                             if(this.state.serverFileDir.includes(obj.fileName)){
-                                alert('update')
                                 fileData = obj
                                 fileData.familyDisplayIndex = familyIndex
             
-                                axios.put(`api/artworkInfo/update/${obj.fileName}`, fileData)
+                                axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
                                     .then(res => {
                                         progressCount += 1
+                                        // if(progressCount === updateLength){
+                                        //     resolve(`new file registered in "${file.artworkFamily}" family`)
+                                        // }
                                         if(progressCount === updateLength){
-                                            resolve()
+                                            let newState = this.state
+                                            this.familySetupMethods.getArtworkInfo()
+                                                .then(res => {
+                                                    newState.artworkInfoData = res
+                                                    this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                })
                                         }
                                     })
                             }
@@ -891,12 +1005,24 @@ export class Provider extends React.Component{
                                 fileDataObject.familyDisplayIndex = familyIndex
                                 
                                 axios.post('/api/artworkInfo/create', fileDataObject)
-                                    .then( res => { console.log(res.data);                                    
+                                    // .then( res => { console.log(res.data);                                    
+                                    //     this.fileDataMethods.uploadFile(file.fileName)
+                                    //     progressCount += 1
+                                    //     if(progressCount === updateLength){
+                                    //         resolve(`new file registered in ${file.artworkFamily} family`)
+                                    //         return
+                                    //     }
+                                    // })
+                                    .then( res => { 
                                         this.fileDataMethods.uploadFile(file.fileName)
                                         progressCount += 1
                                         if(progressCount === updateLength){
-                                            resolve()
-                                            return
+                                            let newState = this.state
+                                            this.familySetupMethods.getArtworkInfo()
+                                                .then(res => {
+                                                    newState.artworkInfoData = res
+                                                    this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                })
                                         }
                                     })
                             }
@@ -905,9 +1031,10 @@ export class Provider extends React.Component{
                 }
             })
 
-            postPromise.then(res => {
-                this.setState({showModal: false})
-            })
+            // postPromise.then(res => {
+            //     console.log(res)
+            //     return res
+            // })
 
         },
 
@@ -1423,16 +1550,27 @@ export class Provider extends React.Component{
                         this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
                             .then(res => {
                                 newState.seeAlsoData = res
-                                newState.showModal = false
-                                this.setState(newState)
-                            })
+                                axios.get('/fetchImages')
+                                    .then(res => 
+                                        {
+                                        newState.serverFileDir = res.data
+                                        newState.showModal = false
+                                        this.setState(newState)
+                                    // .then(res => {
+                                    //     newState.serverFileDir = res
+                                    //     newState.showModal = false
+                                    //     this.setState(newState)
+                                    // })
+                                        })
                 })
             })
-                setTimeout(() => {
-                    if(!this.state.artworkInfoData){
-                        document.location.reload(true)
-                    }
-                },10000);
+        })
+        .catch(err => {console.log(err); document.location.reload(true)})
+                // setTimeout(() => {
+                //     if(!this.state.serverFileDir){
+                //         document.location.reload(true)
+                //     }
+                // },5000);
     }
 
     render(){

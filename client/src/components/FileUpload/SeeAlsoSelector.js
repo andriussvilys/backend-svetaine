@@ -69,7 +69,6 @@ export default class SeeAlsoSelector extends React.Component{
 
             const highlighter = (objName) => {
                 return this.props.highlightReference ? this.props.highlightReference.includes(objName) : false
-                // return this.props.highlightReference.includes(objName)
             }
 
             let newFile = {
@@ -147,7 +146,7 @@ export default class SeeAlsoSelector extends React.Component{
         const dataArray = Object.keys(this.props.initialData)
 
          let fileList =  this.createPreviews(dataArray)
-        this.setState({fileList: fileList, constFileNames: dataArray, fileNames: dataArray}, console.log('fileUpload state', this.state))
+        this.setState({fileList: fileList, constFileNames: dataArray, fileNames: dataArray})
     }
 
     
