@@ -897,11 +897,11 @@ export class Provider extends React.Component{
             
             return new Promise((resolve, rej) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
-                    resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
+                    return resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
                 }
 
                 if(!file.category || !Object.keys(file.category).length > 0 ){
-                    resolve('To submit, select categories for this file')
+                    return resolve('To submit, select categories for this file')
                 }
 
                 if(!file.artworkFamily){
