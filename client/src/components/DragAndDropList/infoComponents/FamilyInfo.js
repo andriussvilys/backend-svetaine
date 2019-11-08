@@ -88,9 +88,10 @@ export default class FamilyInfo extends Component {
                                 onChange={this.context.getFamilySetup}
                                 isChecked={this.context.fileDataMethods.isChecked}
                                 id="List-of-artwork-families"
-                                router={'/api/artworkFamilyList/update'}
+                                router={'/api/familySetup/create'}
                                 addNewTarget={'artworkFamilyList'}
                                 displayAddNew="initial"
+                                requestKey={"artworkFamily"}
                             />
 
                             {/* <FamilyListDnDContainer 
@@ -171,6 +172,7 @@ export default class FamilyInfo extends Component {
                                 router={'/api/themes/update'}
                                 addNewTarget={'themesData'}
                                 displayAddNew="initial"
+                                requestKey={"list"}
                             />
                         </div>
                     )

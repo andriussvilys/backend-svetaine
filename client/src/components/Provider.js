@@ -972,6 +972,7 @@ export class Provider extends React.Component{
                             
                             //check if the file is uploaded to server
                             if(this.state.serverFileDir.includes(obj.fileName)){
+                                console.log('server includes files already')
                                 fileData = obj
                                 fileData.familyDisplayIndex = familyIndex
             
@@ -994,7 +995,10 @@ export class Provider extends React.Component{
                 
                             else{
                                 // fileData = this.state.fileData.files[obj.fileName]
-                                fileData = this.state.relatedArtwork[artworkFamily].files[obj.fileName]
+
+                                // fileData = this.state.relatedArtwork[artworkFamily].files[obj.fileName]
+
+                                fileData = this.state.fileData.files[file.fileName]
                     
                                 let fileDataObject = {                                                 
                                 category: fileData.category ?  fileData.category : null,
@@ -1018,7 +1022,10 @@ export class Provider extends React.Component{
                                 // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
                                 fileDataObject.familyDisplayIndex = familyIndex
                                 
+                                console.log(fileData)
+
                                 axios.post('/api/artworkInfo/create', fileDataObject)
+
                                     // .then( res => { console.log(res.data);                                    
                                     //     this.fileDataMethods.uploadFile(file.fileName)
                                     //     progressCount += 1

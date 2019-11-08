@@ -19,9 +19,10 @@ const FamilyInfo = (props) => {
                         onChange={props.familyDropDown.context.getFamilySetup}
                         isChecked={props.familyDropDown.context.familySetupMethods.isChecked}
                         id="List-of-artwork-families"
-                        router={'/api/artworkFamilyList/update'}
+                        router={'/api/familySetup/create'}
                         addNewTarget={'artworkFamilyList'}
                         displayAddNew="initial"
+                        requestKey={"artworkFamily"}
                     />
 
                     <DropDownList 
@@ -36,6 +37,7 @@ const FamilyInfo = (props) => {
                         router={'/api/themes/update'}
                         addNewTarget={'themesData'}
                         displayAddNew="initial"
+                        requestKey={"list"}
                     />
 
                     <SeeAlsoSelector 
