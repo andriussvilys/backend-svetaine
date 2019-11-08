@@ -31,6 +31,7 @@ export default class FamilyInfo extends Component {
                                     router={'/api/familySetup/create'}
                                     addNewTarget={'artworkFamilyList'}
                                     displayAddNew="initial"
+                                    requestKey={"artworkFamily"}
                                 />
 
                                 <DropDownList 
@@ -44,6 +45,7 @@ export default class FamilyInfo extends Component {
                                     router={'/api/themes/update'}
                                     addNewTarget={'themesData'}
                                     displayAddNew="initial"
+                                    requestKey={"list"}
                                 />
 
                                 <SeeAlsoSelector 

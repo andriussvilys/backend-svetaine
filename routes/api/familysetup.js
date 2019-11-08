@@ -16,8 +16,9 @@ router.get('/', (req, res) => {
 })
 
 router.post('/create', (req, res) => {
+  console.log(req.body)
     FamilySetup.create(req.body)
-      .then((category)=>{res.send(category)})
+      .then((familySetup)=>{res.send(familySetup)})
   })
 
 router.put('/update/:artworkFamily', (req, res, next) => {

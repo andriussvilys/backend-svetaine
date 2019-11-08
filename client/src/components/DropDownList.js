@@ -122,7 +122,7 @@ export default class DropDownList extends React.Component{
                                     displayAddNew={this.props.displayAddNew}
                                     router={this.props.router}
                                     stateKey={this.props.addNewTarget}
-                                    requestKey="list"
+                                    requestKey={this.props.requestKey}
                                 />
                         </Card.Body>
                         </Accordion.Collapse>

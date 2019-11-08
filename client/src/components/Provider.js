@@ -63,7 +63,15 @@ export class Provider extends React.Component{
 
         e.preventDefault();
         const newAddition = document.getElementById(id).value;
-        axios.put(router, {[requestKey]: newAddition})
+        console.log(newAddition)
+        let promise = null
+        if(requestKey === "artworkFamily"){
+            promise = axios.post(router, {[requestKey]: newAddition})
+        }
+        else{
+            promise = axios.put(router, {[requestKey]: newAddition})
+        }
+        promise
         .then( res => {
           let addition = res.data[requestKey]
           return addition
