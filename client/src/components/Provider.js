@@ -97,68 +97,102 @@ export class Provider extends React.Component{
 
     //this takes care of CATEGORIES used for navigation
     this.categoryMethods = {
+
         getCategoryNames: () => {
-            if(this.state.categoryNames.length < 1){
-                if(this.state.categoriesData){
-                    let categoryNames =  this.state.categoriesData.map(obj => obj.category)
-                    this.setState({categoryNames: categoryNames}, ()=>{
-                        let categoryOptionList = this.state.categoryNames.map(name => {
-                            return <option key={`add-category-${name}`} value={name}>{name}</option>
-                        })
-                        return this.setState({categoryDatalist: categoryOptionList})
-                    })
-                }
-            }
-            else{return}
+
+            let categoryDomList = Object.keys(this.state.categoriesOptionList.data).map(name => {
+                {return <option key={`add-category-${name}`} value={name}>{name}</option>}
+            })
+
+            let newState = {...this.state}
+            newState.categoriesOptionList.DOM = {}
+            newState.categoriesOptionList.DOM.categories = categoryDomList
+            this.setState(newState)
         },
+
         getSubcategoryNames: () => {
+            let newState = {...this.state}
+
+            if(!newState.categoriesOptionList.DOM){
+                newState.categoriesOptionList.DOM = {}
+            }
+
+            let subCategoryDomList = []
+            let optGroups = null
+        
             if(document.getElementById("add-category").value){
-                let selectedCategory = document.getElementById("add-category").value;
-                let subcategories = this.state.categoriesData.find(item => item.category === selectedCategory)
-                if(subcategories && subcategories.subcategory){
-                    let subcategoriesDatalist = Object.keys(subcategories.subcategory).map(subcategory => {
-                        let option = <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option> 
-                        return option
+                if(Object.keys(this.state.categoriesOptionList.data).includes(document.getElementById("add-category").value)){
+                    console.log('input has value')
+                    let selectedCategory = document.getElementById("add-category").value;
+    
+                    subCategoryDomList = this.state.categoriesOptionList.data[selectedCategory].map(subcategory => {
+                        {return <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option>}
                     })
-                    this.setState({subcategoryDatalist: subcategoriesDatalist})
                 }
             }
-    
+            else{
+                optGroups = []
+                optGroups = Object.keys(this.state.categoriesOptionList.data).map(cat => {
+                    return <optgroup key={cat} label={cat}>
+                        {this.state.categoriesOptionList.data[cat].map(subCat => {
+                            return <option key={`add-subcategory-${subCat}`} value={subCat}>{subCat}</option>
+                        })}
+                    </optgroup>
+                })
+            }
+            console.log(optGroups)
+            newState.categoriesOptionList.DOM.subCategories = subCategoryDomList
+            if(optGroups){
+                newState.categoriesOptionList.DOM.subCategories = optGroups
+            }
+            this.setState(newState)
+            
         },
+
         submitNewCategory: () => {
+            console.log("submitNew")
 
             const categoryInput = document.getElementById("add-category")
             const subcategoryInput = document.getElementById("add-subcategory")
             const listitemInput = document.getElementById("add-listitem")
+
+            const allCats = Object.values(this.state.categoriesData)
     
             let reqBody = {category: null, subcategory: {}}
+            console.log('all cats')
+            console.log(allCats)
             //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
-            if(this.state.categoryNames.indexOf(categoryInput.value) < 0){
                 reqBody = {category: categoryInput.value}
                 if(subcategoryInput.value){
                     reqBody.subcategory = {[subcategoryInput.value]: []}
                 }
+                else{reqBody.subcategory = []}
                 if(listitemInput.value){
                     reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
                 }
+                console.log(reqBody)
                 axios.post('/api/categories/create', reqBody)
                 .then(res => {
-                    this.setState({
-                        categoriesData: [...this.state.categoriesData, res.data], 
-                        categoryNames: [...this.state.categoryNames, res.data.category]
-                    })
+                    let newState = {...this.state}
+                    newState.categoriesData = [...newState.categoriesData, res.data]
+                    newState.categoriesOptionList.data = {...newState.categoriesOptionList.data, [categoryInput.value]:[]}
+                    this.setState(newState)
                 })
                 .catch(err => console.log(err))
-            }
+            
         },
         updateCategory: () => {
             const categoryInput = document.getElementById("add-category")
             const subcategoryInput = document.getElementById("add-subcategory")
             const listitemInput = document.getElementById("add-listitem")
 
+            const allCats = Object.values(this.state.categoriesData).map(obj => obj.category)
+            console.log('updatecategory')
+            console.log(allCats)
+
             //check if the CATGORY input value is already recorded in the database
             //if it is run submitNewCategory method instead and exit this function
-            if(this.state.categoryNames.indexOf(categoryInput.value) < 0){
+            if(!allCats.includes(categoryInput.value)){
                 this.categoryMethods.submitNewCategory()
                 return
             }
@@ -179,9 +213,16 @@ export class Provider extends React.Component{
             if(listitemInput.value){
                 categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
             }
-            this.setState({categoriesDataUpdate},
-                () => {axios.put('/api/categories/update', objToUpdate)}
-                )
+
+            console.log("objToUpdate")
+            console.log(objToUpdate)
+             let newState = {...this.state}
+             newState.categoriesData[objIndex] = objToUpdate
+            axios.put('/api/categories/update', objToUpdate)
+                .then(res => this.setState(newState))
+            // this.setState({categoriesDataUpdate},
+            //     () => {axios.put('/api/categories/update', objToUpdate)}
+            //     )
         },
         autoCheckCategories: (category, subcategory, listitem, fileName) => {
 
@@ -1555,7 +1596,17 @@ export class Provider extends React.Component{
             .then(resolved => {
                 axios.get('/api/categories')
                 .then(res => {
+
+                        let categoryNames = Object.values(res.data).map(obj => obj.category)
+                        let categoryObj = {}
+                        categoryNames.forEach(categoryName => {
+                            const currentObj = res.data.find(item => item.category === categoryName)
+                            return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
+                        })
+
                     newState.categoriesData = res.data
+                    newState.categoriesOptionList = {}
+                    newState.categoriesOptionList.data = categoryObj
 
                     newState.artworkFamilyList.forEach(familyName => {
                         this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 

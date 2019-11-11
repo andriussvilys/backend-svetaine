@@ -25,33 +25,33 @@ export default class App extends Component{
             <div className="data-container">
               {/* <FrontEndIndex /> */}
               <ul style={{
-                    display:'flex',
-                    listStyleType: "none",
-                    margin: 0,
-                    padding: 0
-                    }}>
-                    <li>
-                      <Link to='/home' >
-                        <Button>
-                            Front-End
-                        </Button>
-                    </Link>
-                    </li>
-                    <li>
-                      <Link to='/admin/create' >
-                          <Button>
-                              CREATE
-                          </Button>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to='/admin/edit' >
-                          <Button>
-                              EDIT
-                          </Button>
-                      </Link>
-                    </li>
-                    <li>
+                display:'flex',
+                listStyleType: "none",
+                margin: 0,
+                padding: 0
+                }}>
+                <li>
+                  <Link to='/home' >
+                    <Button>
+                        Front-End
+                    </Button>
+                </Link>
+                </li>
+                <li>
+                  <Link to='/admin/create' >
+                      <Button>
+                          CREATE
+                      </Button>
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/admin/edit' >
+                      <Button>
+                          EDIT
+                      </Button>
+                  </Link>
+                </li>
+                <li>
                       <Link to='/admin/delete' >
                           <Button
                             variant="danger"
@@ -60,7 +60,7 @@ export default class App extends Component{
                           </Button>
                       </Link>
                     </li>
-                </ul>
+              </ul>
 
               <Route path="/home" component={FrontEndIndex} />
               <Route path="/admin/create" component={ImageInfo} />

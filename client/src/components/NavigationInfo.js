@@ -127,6 +127,16 @@ export default class NavigationInfo extends Component{
         return result
     }
 
+    checkOptionList = (nest) => {
+        if(this.context.state.categoriesOptionList){
+            if(this.context.state.categoriesOptionList.DOM){
+                return this.context.state.categoriesOptionList.DOM[nest]
+            }
+            else{ return null}
+        }
+        else{return null}
+    }
+
   render(){
     return(
         <Context.Consumer>
@@ -150,7 +160,9 @@ export default class NavigationInfo extends Component{
                                     onFocus={this.context.categoryMethods.getCategoryNames}
                                 />
                                 <datalist id="datalist-add-categories">
-                                    {this.context.state.categoryDatalist}
+                                    {/* {this.context.state.categoryDatalist} */}
+                                    {/* {this.context.state.categoriesOptionList.DOM ? this.context.state.categoriesOptionList.DOM.categories : null} */}
+                                    {this.checkOptionList("categories")}
                                 </datalist>
 
                                 <input 
@@ -162,8 +174,11 @@ export default class NavigationInfo extends Component{
                                     placeholder="subcategory"
                                     onFocus={this.context.categoryMethods.getSubcategoryNames}
                                 />
+
                                 <datalist id="datalist-add-subcategories">
-                                    {this.context.state.subcategoryDatalist}
+                                    {/* {this.context.state.subcategoryDatalist} */}
+                                    {/* {this.context.state.categoriesOptionList.DOM ? this.context.state.categoriesOptionList.DOM.subCategories : null} */}
+                                    {this.checkOptionList("subCategories")}
                                 </datalist>
 
                                 <input 
