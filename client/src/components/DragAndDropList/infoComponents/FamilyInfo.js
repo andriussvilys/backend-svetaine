@@ -92,6 +92,7 @@ export default class FamilyInfo extends Component {
                                 addNewTarget={'artworkFamilyList'}
                                 displayAddNew="initial"
                                 requestKey={"artworkFamily"}
+                                displayAddNew={"none"}
                             />
 
                             {/* <FamilyListDnDContainer 
@@ -173,6 +174,7 @@ export default class FamilyInfo extends Component {
                                 addNewTarget={'themesData'}
                                 displayAddNew="initial"
                                 requestKey={"list"}
+                                displayAddNew={"none"}
                             />
                         </div>
                     )

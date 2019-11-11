@@ -27,8 +27,9 @@ ul {
 }
 
 .data-container {
-  overflow-y: scroll;
+  overflow: hidden;
   height: 100vh;
+  width: 100vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -36,6 +37,12 @@ ul {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+}
+
+.overflow-yes {
+  overflow-x: hidden;
+  overflow-y: auto;
+  width: 100%;
 }
 
 h3 {
