@@ -31,7 +31,7 @@ const Login = (props) => {
                                     .then(res => {
                                         console.log(res.data)
                                         if(res.data.password && res.data.password === password){
-                                            auth.login( () => props.history.push('/admin'))
+                                            auth.login( () => props.history.push('/admin/create'))
                                         }
                                         else{
                                             if(!res.data.username){
@@ -50,7 +50,7 @@ const Login = (props) => {
                         Log In
                     </Button>
 
-                    <Button
+                    {/* <Button
                         onClick={
                             () => {
                                 auth.login( () => {
@@ -58,8 +58,9 @@ const Login = (props) => {
                                 })
                             }
                         }
-                    type="submit">Force Login
-                    </Button>
+                    >
+                        Force Login
+                    </Button> */}
                 </form>
             </div>
         )

@@ -11,7 +11,7 @@ class Auth {
         this.authenticated = false
         cb()
     }
-    isAuthenticated(cb){
+    isAuthenticated(){
         console.log(this.authenticated)
         return this.authenticated
     }

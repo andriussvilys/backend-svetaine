@@ -27,12 +27,12 @@ export default class App extends Component{
 
             <Switch>
               <Route  path="/" exact component={FrontEndIndex} />
-              <PrivateRoute  path="/admin" exact component={Admin} />
               <Route  path="/admin/login" exact component={Login} />
-              <PrivateRoute  path="/admin/create" exact component={ImageInfo} />
-              <PrivateRoute  path="/admin/edit" exact component={Edit} />
-              <PrivateRoute  path="/admin/delete" exact component={Delete} />
-              <Route path="*" component={FrontEndIndex} />
+              <PrivateRoute  path="/admin"  component={Admin} />
+              <PrivateRoute  path="/admin/create" component={ImageInfo} />
+              <PrivateRoute  path="/admin/edit" component={Edit} />
+              <PrivateRoute  path="/admin/delete" component={Delete} />
+              <Route to="/*" exact component={FrontEndIndex} />
             </Switch>
 
              </div>

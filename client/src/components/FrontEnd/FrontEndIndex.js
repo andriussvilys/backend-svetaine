@@ -11,9 +11,11 @@ const FrontEndIndex = (props) => {
                 onClick={
                     () => {
                         if(auth.isAuthenticated()){
+                            console.log('logged in')
                             props.history.push('/admin')
                         }
                         else{
+                            console.log('needs logged in')
                             props.history.push('/admin/login')
                         }
                     }
