@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 
+import Accordion from './Accordion'
 import FamilyInfo from './FamilyInfo';
 import DnDListContainer from './DragAndDropList/DnDListContainer'
 import FamilyContainer from './FamilyContainer'
@@ -43,11 +44,12 @@ export default class ImageInfo extends Component{
                   
               </div>
 
-              <h3>set up global family data:</h3>
-              <div className="imageInfo--section">
-                <h5>family info:</h5>
-                <FamilyInfo/>
-              </div>
+              <Accordion
+                title="set up global family template:">
+                  <FamilyInfo/>
+          
+              </Accordion>
+              {/* <h3>set up global family data:</h3> */}
 
               {/* modal displayed before page is loaded */}
               <Modal show={this.context.state.showModal} onHide={this.handleClose}>

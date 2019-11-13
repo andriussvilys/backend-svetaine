@@ -6,7 +6,13 @@ const Accordion = (props) => {
         <BootstrapAccordion>
             <Card>
                 <Card.Header>
-                <BootstrapAccordion.Toggle as={Button} variant="link" eventKey="0" className={props.className}>
+                <BootstrapAccordion.Toggle 
+                    style={{fontWeight: "600"}}
+                    as={Button} 
+                    variant="link" 
+                    eventKey="0" 
+                    className={props.className}
+                >
                     {props.title}
                 </BootstrapAccordion.Toggle>
                 </Card.Header>

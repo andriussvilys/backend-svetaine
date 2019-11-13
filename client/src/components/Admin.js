@@ -38,7 +38,7 @@ const Admin = (props) => {
                             </Link>
                         </li>
                         <li>
-                            <Link to="/home">
+                            <Link to="/">
                                 <Button variant="success">
                                     Home
                                 </Button>
@@ -46,8 +46,6 @@ const Admin = (props) => {
                         </li>
                     </ul>
                 </nav>
-                {/* <ImageInfo/> */}
-                {/* <Route path="/home" exact component={FrontEndIndex} /> */}
                 <Route path="/admin/create" component={ImageInfo} />
                 <Route path="/admin/edit" component={Edit} />
                 <Route path="/admin/delete" component={Delete} />

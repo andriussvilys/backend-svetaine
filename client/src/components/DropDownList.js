@@ -1,6 +1,7 @@
 import React from 'react';
 import '../css/main.css';
-import Accordion from 'react-bootstrap/Accordion';
+// import Accordion from 'react-bootstrap/Accordion';
+import Accordion from './Accordion'
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import AddNew from './AddNew';
@@ -106,7 +107,21 @@ export default class DropDownList extends React.Component{
                 <p>{this.props.listName}</p>
                 {/* {this.context.makeDataList(this.props.array, this.props.string, this.props.id)} */}
 
-                <Accordion >
+                <Accordion
+                    title={this.props.title}
+                >
+                    <div style={{display: "flex", flexWrap: "wrap"}}>
+                        {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
+                    </div>
+                    <AddNew 
+                        displayAddNew={this.props.displayAddNew}
+                        router={this.props.router}
+                        stateKey={this.props.addNewTarget}
+                        requestKey={this.props.requestKey}
+                    />
+                </Accordion>
+
+                {/* <Accordion >
                     <Card>
                         <Card.Header>
                         <Accordion.Toggle as={Button} variant="link" eventKey="0">
@@ -127,7 +142,7 @@ export default class DropDownList extends React.Component{
                         </Card.Body>
                         </Accordion.Collapse>
                     </Card>
-                </Accordion>  
+                </Accordion>   */}
             </div>
             </div>
 
