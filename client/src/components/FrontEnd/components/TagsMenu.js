@@ -16,19 +16,20 @@ export default class TagsMenu extends React.Component{
         let block = listitemData.map(listitem => {
         return <li key={listitem}><div>{listitem}</div></li>
         })
-        
+
         let list = <ul>{block}</ul>
         return list
     }
 
     /**
-     * @params : takes an array of subcategory names
+     * @params : takes an object with listItem names as properties
      */ 
     subcategoryBlock = (subData) => {
         const subcategoriesList = Object.keys(subData)
         let subCategories = subcategoriesList.map(subName => {
+            const toggle = subData[subName].length > 0 
             return(
-                <Accordion title={subName}>
+                <Accordion title={subName} toggle={toggle} className="TagsMenu-Accordion-label">
                     {this.listItemBlock(subData[subName])}
                 </Accordion>
             ) 
@@ -41,8 +42,9 @@ export default class TagsMenu extends React.Component{
      */
     categoryBlock = (data) => {
         let categories = data.map(obj => {
+            const toggle = Object.keys(obj.subcategory).length > 0
         return (
-            <Accordion title={obj.category}>
+            <Accordion title={obj.category} toggle={toggle} className="TagsMenu-Accordion-label">
                 {this.subcategoryBlock(obj.subcategory)}
             </Accordion>
         )

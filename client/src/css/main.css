@@ -366,4 +366,13 @@ label {
 .imageSelect-FilePreview {
   height: 30vh;
 }
+
+.TagsMenu-Accordion-label {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
 /*# sourceMappingURL=main.css.map */

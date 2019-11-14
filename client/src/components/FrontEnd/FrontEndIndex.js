@@ -52,7 +52,11 @@ import ImageSelect from './components/ImageSelect/ImageSelect'
 //                 </div>
 //             </Accordion>
 //     )
-// }        
+// }     
+
+Array.from(document.getElementsByTagName("h4")).forEach(item => {
+    item.style.whiteSpace = "normal"
+})
 export default class FrontEndIndex extends React.Component{
     static contextType = Context;
     constructor(props){
@@ -114,7 +118,7 @@ export default class FrontEndIndex extends React.Component{
                         <TagsMenu>
                                 {this.adminButtons(this.props)}
                         </TagsMenu>
-                        <ImageSelect data={this.context.state.artworkInfoData} />
+                        <ImageSelect data={this.context.state.artworkOnDisplay} />
                     </div>
                 }}
             </Context.Consumer>

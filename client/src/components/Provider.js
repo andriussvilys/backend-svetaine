@@ -1619,6 +1619,7 @@ export class Provider extends React.Component{
             .then(res => {this.familySetupMethods.getArtworkInfo()
                 .then(res => {
                     newState.artworkInfoData = res
+                    newState.artworkOnDisplay = res
                         this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
                             .then(res => {
                                 newState.seeAlsoData = res
