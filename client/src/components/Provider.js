@@ -1563,70 +1563,77 @@ export class Provider extends React.Component{
 
             this.setState({showModal: true})
 
-            axios.get('/api/themes')
-            .then( res => {
-            newState.themesData = res.data.list
-            })
-            .then( res => {
+            let Themes = new Promise((resolve, rej) => {
+                axios.get('/api/themes')
+                    .then( res => {
+                    newState.themesData = res.data.list
+                    resolve()
+                    })
+            }) 
+            
+            let FamilyList = new Promise ((resolve, rej) => {
                 axios.get('/api/familySetup')
-                .then(res => {
-                    let familyList = Object.keys(res.data).map(obj => {
-                        return res.data[obj].artworkFamily
-                    })
-                    newState.artworkFamilyList = familyList
-                })
-            })
-            .then(resolved => {
-                axios.get('/api/categories')
-                .then(res => {
-
-                        let categoryNames = Object.values(res.data).map(obj => obj.category)
-                        let categoryObj = {}
-                        categoryNames.forEach(categoryName => {
-                            const currentObj = res.data.find(item => item.category === categoryName)
-                            return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
+                    .then(res => {
+                        let familyList = Object.keys(res.data).map(obj => {
+                            return res.data[obj].artworkFamily
                         })
-
-                    newState.categoriesData = res.data
-                    newState.categoriesOptionList = {}
-                    newState.categoriesOptionList.data = categoryObj
-
-                    newState.artworkFamilyList.forEach(familyName => {
-                        this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 
-                            newState.relatedArtwork[familyName] = res
-
-                        )
+                        newState.artworkFamilyList = familyList
+                        resolve()
                     })
+            })    
+
+            let Categories = new Promise ((resolve, rej) => {
+                FamilyList.then(res => {
+                    axios.get('/api/categories')
+                        .then(res => {
+
+                                let categoryNames = Object.values(res.data).map(obj => obj.category)
+                                let categoryObj = {}
+                                categoryNames.forEach(categoryName => {
+                                    const currentObj = res.data.find(item => item.category === categoryName)
+                                    return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
+                                })
+
+                            newState.categoriesData = res.data
+                            newState.categoriesOptionList = {}
+                            newState.categoriesOptionList.data = categoryObj
+
+                            newState.artworkFamilyList.forEach(familyName => {
+                                this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 
+                                    newState.relatedArtwork[familyName] = res
+
+                                )
+                            })
+                            resolve()
+                        })
                 })
             })
-            .then(res => {this.familySetupMethods.getArtworkInfo()
+                
+            let ArtworkInfo = new Promise((resolve, rej) => {
+                this.familySetupMethods.getArtworkInfo()
+                    .then(res => {
+                        newState.artworkInfoData = res
+                        newState.artworkOnDisplay = res
+                        resolve()
+                    })
+            }) 
+
+            let ServerFiles = new Promise((resolve, rej) => {
+                axios.get('/fetchImages')
+                    .then(res => {
+                        newState.serverFileDir = res.data; 
+                        resolve()
+                    })
+            }) 
+
+            // let RenderAllFiles = this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
+
+            Promise.all([Categories, ArtworkInfo, Themes, ServerFiles])
                 .then(res => {
-                    newState.artworkInfoData = res
-                    newState.artworkOnDisplay = res
-                        this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
-                            .then(res => {
-                                newState.seeAlsoData = res
-                                axios.get('/fetchImages')
-                                    .then(res => 
-                                        {
-                                        newState.serverFileDir = res.data
-                                        newState.showModal = false
-                                        this.setState(newState)
-                                    // .then(res => {
-                                    //     newState.serverFileDir = res
-                                    //     newState.showModal = false
-                                    //     this.setState(newState)
-                                    // })
-                                        })
+                    newState.showModal = false
+                    this.setState(newState)
                 })
-            })
-        })
-        .catch(err => {console.log(err); document.location.reload(true)})
-                // setTimeout(() => {
-                //     if(!this.state.serverFileDir){
-                //         document.location.reload(true)
-                //     }
-                // },5000);
+                .catch(err => {console.log(err); document.location.reload(true)})
     }
 
     render(){
