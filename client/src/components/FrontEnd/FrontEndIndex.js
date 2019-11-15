@@ -2,6 +2,8 @@ import React from 'react'
 import Button from 'react-bootstrap/Button'
 import { Context } from './FrontEndProvider';
 import { BrowserRouter,  Link } from 'react-router-dom';
+import Modal from 'react-bootstrap/Modal'
+import Spinner from 'react-bootstrap/Spinner'
 // import {Context} from '../Provider'
 
 import auth from '../Auth'
@@ -82,9 +84,38 @@ export default class FrontEndIndex extends React.Component{
                                     {/* {this.adminButtons(this.props)} */}
                             </TagsMenu>
                             <ImageSelect data={this.context.state.artworkOnDisplay} />
+
+
+                            {/* <div
+                                style={{
+                                    position: "absolute",
+                                    top: 0,
+                                    left: 0,
+                                    height: "100vh",
+                                    width: "100vw",
+                                    backgroundColor: "black",
+                                    opacity: 1,
+                                    // // opacity: `${this.context.state.showModal ? "0.5" : "0"}`,
+                                    // display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    transition: "all 0.6s"
+                                }}
+                                className={`${this.context.state.showModal ? "" : "modalOff"}`}
+                            >
+                                <Spinner animation="border" variant="primary" />
+                            </div> */}
+                            <Modal show={this.context.state.showModal} onHide={this.handleClose}>
+                                <Modal.Body>
+                                <Spinner animation="grow" variant="primary" />
+                                <Spinner animation="grow" variant="primary" />
+                                <Spinner animation="grow" variant="primary" />
+                                </Modal.Body>
+                            </Modal>
                         </div>
                     }}
                 </Context.Consumer>
+
             </BrowserRouter>
         )
     }

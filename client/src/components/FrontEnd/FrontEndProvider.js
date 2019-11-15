@@ -598,65 +598,88 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
-            console.log('FE PRovider mounted')
             let newState = {...this.state}
 
             this.setState({showModal: true})
 
-            axios.get('/api/themes')
-            .then( res => {
-            newState.themesData = res.data.list
+            let Themes = new Promise ((resolve,rej) => {
+                axios.get('/api/themes')
+                .then( res => {
+                newState.themesData = res.data.list
+                resolve()
+                })
+                .catch(err => {
+                    console.log(err); 
+                    document.location.reload(true)
+                })
             })
-            .then( res => {
+
+            let FamilyList = new Promise ((resolve, rej) => {
                 axios.get('/api/familySetup')
                 .then(res => {
                     let familyList = Object.keys(res.data).map(obj => {
                         return res.data[obj].artworkFamily
                     })
                     newState.artworkFamilyList = familyList
-                    axios.get('/api/categories')
-                    .then(res => {
-    
-                            let categoryNames = Object.values(res.data).map(obj => obj.category)
-                            let categoryObj = {}
-                            categoryNames.forEach(categoryName => {
-                                const currentObj = res.data.find(item => item.category === categoryName)
-                                return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
-                            })
-    
-                        newState.categoriesData = res.data
-                        newState.categoriesOptionList = {}
-                        newState.categoriesOptionList.data = categoryObj
-    
-                        newState.artworkFamilyList.forEach(familyName => {
-                            this.getRelatedArtwork(familyName, newState).then(res => 
-                                newState.relatedArtwork[familyName] = res
-    
-                            )
-                        })
-                    })
-                    .then(res => {this.getArtworkInfo()
-                        .then(res => {
-                            newState.artworkInfoData = res
-                            newState.artworkOnDisplay = res
-                            axios.get('/fetchImages')
-                            .then(res => 
-                                {
-                                console.log('NEW STATE PROVIDER')
-                                console.log(newState)
-                                newState.serverFileDir = res.data
-                                newState.mounter = true
-                                newState.showModal = false
-                                this.setState(newState)
-                                })
-                    })
+                    resolve()
                 })
+                .catch(err => {
+                    console.log(err); 
+                    document.location.reload(true)
                 })
             })
-        .catch(err => {
-            console.log(err); 
-            document.location.reload(true)
-        })
+
+            let Categories = new Promise ((resolve, rej) => {
+                FamilyList.then(res => {
+    
+                    console.log("FamilList resovled")
+                        axios.get('/api/categories')
+                        .then(res => {
+            
+                                let categoryNames = Object.values(res.data).map(obj => obj.category)
+                                let categoryObj = {}
+                                categoryNames.forEach(categoryName => {
+                                    const currentObj = res.data.find(item => item.category === categoryName)
+                                    return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
+                                })
+            
+                            newState.categoriesData = res.data
+                            newState.categoriesOptionList = {}
+                            newState.categoriesOptionList.data = categoryObj
+            
+                            newState.artworkFamilyList.forEach(familyName => {
+                                this.getRelatedArtwork(familyName, newState).then(res => 
+                                    newState.relatedArtwork[familyName] = res
+            
+                                )
+                            })
+                            resolve()
+                        })
+                        .catch(err => {
+                            console.log(err); 
+                            document.location.reload(true)
+                        })
+                })
+            }) 
+
+            let ArtworkInfo = new Promise ((resolve, rej) => {
+                this.getArtworkInfo()
+                    .then(res => {
+                        newState.artworkInfoData = res
+                        newState.artworkOnDisplay = res
+                        resolve()
+                    })
+            })
+
+            Promise.all([Categories, ArtworkInfo, Themes])
+                .then(res => {
+                    newState.showModal = false
+                    this.setState(newState)
+                })
+                .catch(err => {
+                    console.log(err); 
+                    document.location.reload(true)
+                })
     }
 
     render(){
