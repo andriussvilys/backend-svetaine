@@ -142,7 +142,7 @@ export class Provider extends React.Component{
     }
 
     this.categoryChecked = (category) => {
-        let onDisplay = null
+        let onDisplay = false
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
             const file = this.state.artworkOnDisplay[fileName]
             if(Object.keys(file.category).includes(category)){
@@ -186,8 +186,11 @@ export class Provider extends React.Component{
                 const file = this.state.artworkOnDisplay[fileName]
                 if(file.category[category]){
                     if(!Object.keys(file.category[category]).includes(subcategory)){
-                        newDisplay = {...newDisplay, [fileName]: file}
+                        return newDisplay = {...newDisplay, [fileName]: file}
                     }
+                }
+                else{
+                    return newDisplay = {...newDisplay, [fileName]: file}
                 }
             })
             return this.setState({artworkOnDisplay: newDisplay})
@@ -196,15 +199,9 @@ export class Provider extends React.Component{
         else{
             newDisplay={...this.state.artworkOnDisplay}
             Object.keys(this.state.artworkInfoData).forEach(fileName => {
-                // console.log(Object.values(file.category[category]).includes(subcategory))
                 const file = this.state.artworkInfoData[fileName]
-                console.log(file.fileName)
-                console.log(category, subcategory)
                 if(file.category[category]){
-                    console.log(file.category[category])
-                    console.log(Object.keys(file.category[category]).includes(subcategory))
                     if(Object.keys(file.category[category]).includes(subcategory)){
-                        console.log(Object.keys(file.category[category]).includes(subcategory))
                         newDisplay = {...newDisplay, [fileName]: file}
                     }
                 }
@@ -214,14 +211,12 @@ export class Provider extends React.Component{
 
     }
     this.subcategoryChecked = (category, subcategory) => {
-        let onDisplay = null
+        let onDisplay = false
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
             const file = this.state.artworkOnDisplay[fileName]
             if(file.category[category]){
-                if(Object.keys(file.category[category]).length > 0){
-                    if(Object.keys(file.category[category]).includes(subcategory)){
-                        onDisplay = true
-                    }
+                if(Object.keys(file.category[category]).includes(subcategory)){
+                    onDisplay = true
                 }
             }
         })
@@ -256,7 +251,6 @@ export class Provider extends React.Component{
         
             if(document.getElementById("add-category").value){
                 if(Object.keys(this.state.categoriesOptionList.data).includes(document.getElementById("add-category").value)){
-                    console.log('input has value')
                     let selectedCategory = document.getElementById("add-category").value;
     
                     subCategoryDomList = this.state.categoriesOptionList.data[selectedCategory].map(subcategory => {
@@ -274,7 +268,6 @@ export class Provider extends React.Component{
                     </optgroup>
                 })
             }
-            console.log(optGroups)
             newState.categoriesOptionList.DOM.subCategories = subCategoryDomList
             if(optGroups){
                 newState.categoriesOptionList.DOM.subCategories = optGroups
@@ -284,7 +277,6 @@ export class Provider extends React.Component{
         },
 
         submitNewCategory: () => {
-            console.log("submitNew")
 
             const categoryInput = document.getElementById("add-category")
             const subcategoryInput = document.getElementById("add-subcategory")
@@ -293,8 +285,6 @@ export class Provider extends React.Component{
             const allCats = Object.values(this.state.categoriesData)
     
             let reqBody = {category: null, subcategory: {}}
-            console.log('all cats')
-            console.log(allCats)
             //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
                 reqBody = {category: categoryInput.value}
                 if(subcategoryInput.value){
@@ -304,7 +294,6 @@ export class Provider extends React.Component{
                 if(listitemInput.value){
                     reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
                 }
-                console.log(reqBody)
                 axios.post('/api/categories/create', reqBody)
                 .then(res => {
                     let newState = {...this.state}
@@ -321,8 +310,6 @@ export class Provider extends React.Component{
             const listitemInput = document.getElementById("add-listitem")
 
             const allCats = Object.values(this.state.categoriesData).map(obj => obj.category)
-            console.log('updatecategory')
-            console.log(allCats)
 
             //check if the CATGORY input value is already recorded in the database
             //if it is run submitNewCategory method instead and exit this function
@@ -347,9 +334,6 @@ export class Provider extends React.Component{
             if(listitemInput.value){
                 categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
             }
-
-            console.log("objToUpdate")
-            console.log(objToUpdate)
              let newState = {...this.state}
              newState.categoriesData[objIndex] = objToUpdate
             axios.put('/api/categories/update', objToUpdate)
@@ -410,7 +394,6 @@ export class Provider extends React.Component{
             let statePath = this.state.familySetupData
             
             if(fileName){
-                console.log('checked NOT in global setup')
                 statePath = this.state.fileData.files[fileName]
                 if(!this.state.fileData.files[fileName].category){
                     this.state.fileData.files[fileName].category = {}
@@ -552,10 +535,6 @@ export class Provider extends React.Component{
                 let newState = {...this.state}
     
                 if(classname === "listitem"){
-                    console.log(fileName)
-                    console.log("listItem")
-                    console.log("stateCopy")
-                    console.log(stateCopy)
                     subcategory = e.target.parentNode.parentNode.id
                     category = e.target.parentNode.parentNode.parentNode.id
                     listItemNest = statePath.category[category][subcategory]
@@ -565,10 +544,6 @@ export class Provider extends React.Component{
                     return                
                 }
                 else if (classname === "subcategory"){
-                    console.log(fileName)
-                    console.log("subCategory")
-                    console.log("stateCopy")
-                    console.log(stateCopy)
                     category = e.target.parentNode.parentNode.parentNode.id
     
                     delete stateCopy.category[category][checkboxId]
@@ -719,8 +694,6 @@ export class Provider extends React.Component{
 
             let Categories = new Promise ((resolve, rej) => {
                 FamilyList.then(res => {
-    
-                    console.log("FamilList resovled")
                         axios.get('/api/categories')
                         .then(res => {
             
