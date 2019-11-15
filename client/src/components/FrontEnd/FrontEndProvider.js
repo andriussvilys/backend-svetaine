@@ -141,6 +141,94 @@ export class Provider extends React.Component{
         })
     }
 
+    this.categoryChecked = (category) => {
+        let onDisplay = null
+        Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+            const file = this.state.artworkOnDisplay[fileName]
+            if(Object.keys(file.category).includes(category)){
+                onDisplay = true
+            }
+        })
+        return onDisplay
+    }
+    this.filterByCategory = (e, category) => {
+        let newDisplay = {}
+
+        //ON UN-CHECK
+        if(!e.target.checked){
+            Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+                const file = this.state.artworkOnDisplay[fileName]
+                if(!Object.keys(file.category).includes(category)){
+                    newDisplay = {...newDisplay, [fileName]: file}
+                }
+            })
+            return this.setState({artworkOnDisplay: newDisplay})
+        }
+        //ON CHECK
+        else{
+            newDisplay={...this.state.artworkOnDisplay}
+            Object.keys(this.state.artworkInfoData).forEach(fileName => {
+                const file = this.state.artworkInfoData[fileName]
+                if(Object.keys(file.category).includes(category)){
+                    newDisplay = {...newDisplay, [fileName]: file}
+                }
+            })
+            return this.setState({artworkOnDisplay: newDisplay})
+        }
+
+    }
+    this.filterBySubcategory = (e, category, subcategory) => {
+        let newDisplay = {}
+
+        //ON UN-CHECK
+        if(!e.target.checked){
+            Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+                const file = this.state.artworkOnDisplay[fileName]
+                if(file.category[category]){
+                    if(!Object.keys(file.category[category]).includes(subcategory)){
+                        newDisplay = {...newDisplay, [fileName]: file}
+                    }
+                }
+            })
+            return this.setState({artworkOnDisplay: newDisplay})
+        }
+        //ON CHECK
+        else{
+            newDisplay={...this.state.artworkOnDisplay}
+            Object.keys(this.state.artworkInfoData).forEach(fileName => {
+                // console.log(Object.values(file.category[category]).includes(subcategory))
+                const file = this.state.artworkInfoData[fileName]
+                console.log(file.fileName)
+                console.log(category, subcategory)
+                if(file.category[category]){
+                    console.log(file.category[category])
+                    console.log(Object.keys(file.category[category]).includes(subcategory))
+                    if(Object.keys(file.category[category]).includes(subcategory)){
+                        console.log(Object.keys(file.category[category]).includes(subcategory))
+                        newDisplay = {...newDisplay, [fileName]: file}
+                    }
+                }
+            })
+            return this.setState({artworkOnDisplay: newDisplay})
+        }
+
+    }
+    this.subcategoryChecked = (category, subcategory) => {
+        let onDisplay = null
+        Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+            const file = this.state.artworkOnDisplay[fileName]
+            if(file.category[category]){
+                if(Object.keys(file.category[category]).length > 0){
+                    if(Object.keys(file.category[category]).includes(subcategory)){
+                        onDisplay = true
+                    }
+                }
+            }
+        })
+        return onDisplay
+    }
+
+
     //this takes care of CATEGORIES used for navigation
     this.categoryMethods = {
 
@@ -610,7 +698,7 @@ export class Provider extends React.Component{
                 })
                 .catch(err => {
                     console.log(err); 
-                    document.location.reload(true)
+                    // document.location.reload(true)
                 })
             })
 
@@ -657,7 +745,7 @@ export class Provider extends React.Component{
                         })
                         .catch(err => {
                             console.log(err); 
-                            document.location.reload(true)
+                            // document.location.reload(true)
                         })
                 })
             }) 
@@ -678,7 +766,7 @@ export class Provider extends React.Component{
                 })
                 .catch(err => {
                     console.log(err); 
-                    document.location.reload(true)
+                    // document.location.reload(true)
                 })
     }
 
@@ -689,6 +777,10 @@ export class Provider extends React.Component{
             
             categoryMethods: this.categoryMethods,
             onCheck: this.categoryMethods.onCheck, 
+            filterByCategory: this.filterByCategory,
+            filterBySubcategory: this.filterBySubcategory,
+            categoryChecked: this.categoryChecked,
+            subcategoryChecked: this.subcategoryChecked,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

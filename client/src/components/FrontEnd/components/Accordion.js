@@ -13,7 +13,8 @@ const Accordion = (props) => {
             className={props.className}
         >
             {props.title}
-            <input type="checkbox"/>
+            {props.checkbox}
+            {/* <input type="checkbox"/> */}
         </BootstrapAccordion.Toggle>
         }
         else{
@@ -26,7 +27,8 @@ const Accordion = (props) => {
                 className={props.className}
             >
                 {props.title}
-                <input type="checkbox"/>
+                {props.checkbox}
+                {/* <input type="checkbox"/> */}
             </BootstrapAccordion>
             )
         }
