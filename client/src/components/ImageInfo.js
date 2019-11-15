@@ -1,17 +1,11 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
 import Modal from 'react-bootstrap/Modal'
-import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
 
 import Accordion from './Accordion'
 import FamilyInfo from './FamilyInfo';
-import DnDListContainer from './DragAndDropList/DnDListContainer'
-import FamilyContainer from './FamilyContainer'
-
-import FileUpdate from './FileUpdate';
 import MainContainer from './FileUpload/MainContainer';
-import BootstrapModal from './BootstrapModal';
 
 export default class ImageInfo extends Component{
 

@@ -53,17 +53,11 @@ export default class TagsMenu extends React.Component{
     }
 
     render(){
-        return(
-            <Context.Consumer>
-                {() => {
-                    return <div
-                        style={{height: "100vh", width: "250px", border: "2px solid black"}}
-                    >
-                        {this.categoryBlock(this.context.state.categoriesData)}
-                        {this.props.children}
-                    </div>
-                }}
-            </Context.Consumer>
-        )
+        return <div
+            style={{height: "100vh", width: "250px", border: "2px solid black"}}
+        >
+            {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
+            {this.props.children}
+        </div>
     }
 }

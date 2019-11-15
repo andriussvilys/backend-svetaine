@@ -101,7 +101,7 @@ export class Provider extends React.Component{
         getCategoryNames: () => {
 
             let categoryDomList = Object.keys(this.state.categoriesOptionList.data).map(name => {
-                {return <option key={`add-category-${name}`} value={name}>{name}</option>}
+                return <option key={`add-category-${name}`} value={name}>{name}</option>
             })
 
             let newState = {...this.state}
@@ -126,7 +126,7 @@ export class Provider extends React.Component{
                     let selectedCategory = document.getElementById("add-category").value;
     
                     subCategoryDomList = this.state.categoriesOptionList.data[selectedCategory].map(subcategory => {
-                        {return <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option>}
+                        return <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option>
                     })
                 }
             }
@@ -511,23 +511,6 @@ export class Provider extends React.Component{
                     return e.target.parentNode.classList.contains(name)    
                 }
                 return e.target.parentNode.parentNode.classList.contains(name)
-            }
-            
-    
-            //creates nests in category obj
-            const checkboxCheck = (checkbox, subcategory, callback) => {
-    
-                //if we only need to set a category
-                if(!subcategory){
-                    this.setState(categoryPath(checkbox.value, fileName))
-                }
-                else{
-                    this.setState(categoryPath(checkbox.value, fileName), 
-                        this.setState(subcategoryPath(checkbox.value, subcategory.value),
-                            callback()
-                        )
-                    )
-                }
             }
     
             let category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
@@ -1283,7 +1266,7 @@ export class Provider extends React.Component{
                                 })
                         })   
                 })
-            },
+        },
         resetRenderFiles: () => {
             let newState = this.state
             newState.seeAlsoData.renderFiles = {...newState.seeAlsoData.fileList, fileNames: newState.seeAlsoData.renderFiles.fileNames, }
@@ -1575,7 +1558,7 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
-
+            console.log('backend provider mount')
             let newState = {...this.state}
 
             this.setState({showModal: true})

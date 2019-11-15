@@ -2,11 +2,7 @@ import React from 'react';
 import '../css/main.css';
 // import Accordion from 'react-bootstrap/Accordion';
 import Accordion from './Accordion'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import AddNew from './AddNew';
-import '../css/components/extendedList.css';
-import '../css/components/imageInfo.css';
 
 export default class DropDownList extends React.Component{
 

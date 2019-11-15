@@ -1,16 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Button from 'react-bootstrap/Button'
 import { Provider } from './Provider';
-import { BrowserRouter, Route, Link } from 'react-router-dom';
+import { BrowserRouter,  Link } from 'react-router-dom';
 import ImageInfo from './ImageInfo';
 import Edit from './Edit'
 import Delete from './Delete/Delete'
-import FrontEndIndex from './FrontEnd/FrontEndIndex';
 import {PrivateRoute} from './PrivateRoute'
 
 import auth from './Auth'
 
 const Admin = (props) => {
+    console.log('ADMIN load')
     return(    
         <BrowserRouter>
             <Provider>
@@ -71,11 +71,6 @@ const Admin = (props) => {
                 </div>
                 </Provider>
         </BrowserRouter>
-
-
-
-
-        
       )
 }
 

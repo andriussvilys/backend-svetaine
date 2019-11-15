@@ -1,58 +1,13 @@
 import React from 'react'
 import Button from 'react-bootstrap/Button'
-import { Link, Route, Redirect } from 'react-router-dom'
-import { Context } from '../Provider';
+import { Context } from './FrontEndProvider';
+import { BrowserRouter,  Link } from 'react-router-dom';
+// import {Context} from '../Provider'
 
 import auth from '../Auth'
 import TagsMenu from './components/TagsMenu'
 import Accordion from '../Accordion'
 import ImageSelect from './components/ImageSelect/ImageSelect'
-
-// const adminButtons = (props) => {
-//     return(
-
-//             <Accordion
-//                 title="ADMIN"
-//             >
-//                 <div style={{display:"flex", flexDirection:"column"}}>
-//                     <Button
-//                         onClick={
-//                             () => {
-//                                 if(auth.isAuthenticated()){
-//                                     console.log('logged in')
-//                                     props.history.push('/admin/create')
-//                                 }
-//                                 else{
-//                                     console.log('needs logged in')
-//                                     props.history.push('/admin/login')
-//                                 }
-//                             }
-//                         }
-//                     >
-//                         Admin
-//                     </Button>
-//                     <Button
-//                         onClick={() => {
-//                             auth.logout( () => {
-//                                 console.log(auth.authenticated)
-//                                 props.history.push('/')
-//                             })
-//                         }}
-//                     >
-//                         Log Out
-//                     </Button>
-//                     <Button
-//                         onClick={() => {
-//                             auth.login( () => {
-//                             })
-//                         }}
-//                     >
-//                         Log IN
-//                     </Button>
-//                 </div>
-//             </Accordion>
-//     )
-// }     
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -65,6 +20,8 @@ export default class FrontEndIndex extends React.Component{
     }
 
     adminButtons = (props) => {
+        console.log('FE INDEX PROPS')
+        console.log(this.props.props)
         return(
     
                 <Accordion
@@ -76,11 +33,11 @@ export default class FrontEndIndex extends React.Component{
                                 () => {
                                     if(auth.isAuthenticated()){
                                         console.log('logged in')
-                                        props.history.push('/admin/create')
+                                        this.props.props.history.push('/admin/create')
                                     }
                                     else{
                                         console.log('needs logged in')
-                                        props.history.push('/admin/login')
+                                        this.props.props.history.push('/admin/login')
                                     }
                                 }
                             }
@@ -91,7 +48,7 @@ export default class FrontEndIndex extends React.Component{
                             onClick={() => {
                                 auth.logout( () => {
                                     console.log(auth.authenticated)
-                                    props.history.push('/')
+                                    this.props.props.history.push('/')
                                 })
                             }}
                         >
@@ -111,17 +68,24 @@ export default class FrontEndIndex extends React.Component{
     }  
 
     render(){
+        console.log('FE INDEX load')
+        console.log("props")
+        console.log(this.props)
         return(
-            <Context.Consumer>
-                {() => {
-                    return <div className="frontEndIndex-container">
-                        <TagsMenu>
-                                {this.adminButtons(this.props)}
-                        </TagsMenu>
-                        <ImageSelect data={this.context.state.artworkOnDisplay} />
-                    </div>
-                }}
-            </Context.Consumer>
+            <BrowserRouter>
+                <Context.Consumer>
+                    {() => {
+                        console.log(this.context)
+                        return <div className="frontEndIndex-container">
+                            <TagsMenu context={this.context}>
+                                {this.props ? this.adminButtons(this.props) : null}
+                                    {/* {this.adminButtons(this.props)} */}
+                            </TagsMenu>
+                            <ImageSelect data={this.context.state.artworkOnDisplay} />
+                        </div>
+                    }}
+                </Context.Consumer>
+            </BrowserRouter>
         )
     }
 }

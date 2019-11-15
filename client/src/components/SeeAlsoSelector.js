@@ -26,7 +26,7 @@ export default class SeeAlsoSelector extends React.Component{
         
        let domNodes =  Object.keys(fileList).map(fileName => {
         if(fileName === "fileNames"){
-            return
+            return null
         }
         return fileList[fileName].file})
        return domNodes
