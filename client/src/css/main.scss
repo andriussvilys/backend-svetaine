@@ -238,8 +238,9 @@ label{
     height: 100vh;
     width: 100vw;
     display: grid;
-    grid-template-columns: auto auto;
-    border: 2px solid blue;
+    grid-template-columns: max-content 1fr;
+    border: 4vw solid blue;
+    border-left: 0;
 }
 .imageSelect-container{
     display: flex;

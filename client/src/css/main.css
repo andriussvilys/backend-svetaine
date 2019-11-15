@@ -348,9 +348,11 @@ label {
   width: 100vw;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: auto auto;
-      grid-template-columns: auto auto;
-  border: 2px solid blue;
+  -ms-grid-columns: max-content 1fr;
+      grid-template-columns: -webkit-max-content 1fr;
+      grid-template-columns: max-content 1fr;
+  border: 4vw solid blue;
+  border-left: 0;
 }
 
 .imageSelect-container {
