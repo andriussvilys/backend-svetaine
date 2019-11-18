@@ -234,6 +234,32 @@ label{
 }
 
 //FRONT END
+//------------
+//TAGS MENU
+//------------
+
+.TagsMenu-container{
+    width: 250px;
+    background-color: blue;
+}
+.TagsMenu-Card{
+    background-color: blue !important;
+}
+.tagsMenu-Button_category{
+    padding: 0 !important;
+    margin: 0 !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    color: black !important;
+}
+.tagsMenu-Button_subcategory{
+    padding: 0 !important;
+    margin: 0 !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    color: white !important;
+}
+
 .frontEndIndex-container{
     height: 100vh;
     width: 100vw;
@@ -305,10 +331,11 @@ label{
     animation-fill-mode: forwards;
     animation-direction: forwards;
 }
-.tagsMenu-Button_category{
-    padding: 0 !important;
-    margin: 0 !important;
-    text-transform: uppercase !important;
-    font-weight: 600 !important;
-    color: black !important;
+
+
+.FamilyNext{
+  background : #4FDA0A;
+  background : rgba(79, 218, 10, 1);
+  width : 21px;
+  height : 30px;
 }

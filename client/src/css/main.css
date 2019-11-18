@@ -343,6 +343,31 @@ label {
   border: 1px solid #afafaf;
 }
 
+.TagsMenu-container {
+  width: 250px;
+  background-color: blue;
+}
+
+.TagsMenu-Card {
+  background-color: blue !important;
+}
+
+.tagsMenu-Button_category {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  color: black !important;
+}
+
+.tagsMenu-Button_subcategory {
+  padding: 0 !important;
+  margin: 0 !important;
+  text-transform: uppercase !important;
+  font-weight: 600 !important;
+  color: white !important;
+}
+
 .frontEndIndex-container {
   height: 100vh;
   width: 100vw;
@@ -476,11 +501,10 @@ label {
           animation-direction: forwards;
 }
 
-.tagsMenu-Button_category {
-  padding: 0 !important;
-  margin: 0 !important;
-  text-transform: uppercase !important;
-  font-weight: 600 !important;
-  color: black !important;
+.FamilyNext {
+  background: #4FDA0A;
+  background: #4fda0a;
+  width: 21px;
+  height: 30px;
 }
 /*# sourceMappingURL=main.css.map */

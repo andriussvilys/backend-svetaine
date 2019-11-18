@@ -577,6 +577,39 @@ export class Provider extends React.Component{
         }, 200);
     }
 
+    this.viewNext = () => {
+        const familyName = this.state.enlarge.artworkFamily
+        console.log('familyName', familyName)
+        if(!familyName){
+            alert('no family name')
+            return
+        }
+        const currentIndex = this.state.enlarge.familyDisplayIndex
+        const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
+        let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
+        console.log(familyLength, currentIndex, nextIndex)
+        const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
+        console.log(nextPicName)
+        const nextPic = this.state.artworkInfoData[nextPicName]
+        console.log(nextPic)
+        this.setState({enlarge: nextPic})
+    }
+    this.viewPrev = () => {
+        const familyName = this.state.enlarge.artworkFamily
+        console.log('familyName', familyName)
+        if(!familyName){
+            alert('no family name')
+            return
+        }
+        const currentIndex = this.state.enlarge.familyDisplayIndex
+        const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
+        let nextIndex = currentIndex === 0 ? familyLength -1 : currentIndex -1
+        console.log(familyLength, nextIndex)
+        const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
+        const nextPic = this.state.artworkInfoData[nextPicName]
+        this.setState({enlarge: nextPic})
+    }
+
 
     //this takes care of CATEGORIES used for navigation
     this.categoryMethods = {
@@ -1111,6 +1144,9 @@ export class Provider extends React.Component{
 
             enlarge: this.enlarge,
             closeEnlarge: this.closeEnlarge,
+
+            viewNext: this.viewNext,
+            viewPrev: this.viewPrev,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

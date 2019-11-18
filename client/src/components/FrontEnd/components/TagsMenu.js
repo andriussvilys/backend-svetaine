@@ -73,7 +73,7 @@ export default class TagsMenu extends React.Component{
 
     render(){
         return <div
-            style={{ width: "250px", border: "2px solid black"}}
+        className="TagsMenu-container"
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
             {this.props.children}

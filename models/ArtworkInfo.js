@@ -12,7 +12,8 @@ let ArtworkInfoSchema = new Schema({
     },
     fileName: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     artworkFamily: {
         type: String,

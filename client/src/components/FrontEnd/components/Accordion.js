@@ -33,12 +33,10 @@ const Accordion = (props) => {
             )
         }
     }
-
-    console.log(props.title)
-    console.log(props.level)
+    
     return(
         <BootstrapAccordion>
-            <Card>
+            <Card className="TagsMenu-Card">
                 <div
                     style={{
                         display: "flex",
@@ -50,7 +48,6 @@ const Accordion = (props) => {
                     as={Button} 
                     variant="link" 
                     eventKey="0" 
-                    className="tagsMenu-Button"
                     className={props.level === "category" ? "tagsMenu-Button_category" : "tagsMenu-Button_subcategory"}
                     >
                         {props.title}

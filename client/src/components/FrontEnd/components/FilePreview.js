@@ -57,8 +57,6 @@ export default class FilePreview extends React.Component{
     }
 
     render(){
-        console.log('file preview props')
-        console.log(this.props)
         return(
 
         <div className="ImagesPreview--imageContainer" >

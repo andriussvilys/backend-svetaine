@@ -71,7 +71,6 @@ export default class FrontEndIndex extends React.Component{
     }  
 
     render(){
-        console.log(this.context.state.artworkInfoData)
         return(
             <BrowserRouter>
                 <Context.Consumer>
@@ -101,6 +100,32 @@ export default class FrontEndIndex extends React.Component{
                                     right: 0
                                 }}
                             >
+                                <button
+                                    style={{
+                                        position: "absolute",
+                                        top: "8vw",
+                                        left: '0',
+                                        width: "4vw",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => this.context.viewNext()}
+                                    disabled={this.context.state.enlarge ? false : true}
+                                >
+                                    <img alt="view next" src="/icons/point-right.png" />
+                                </button>
+                                <button
+                                    style={{
+                                        position: "absolute",
+                                        top: "12vw",
+                                        left: '0',
+                                        width: "4vw",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => this.context.viewPrev()}
+                                    disabled={this.context.state.enlarge ? false : true}
+                                >
+                                    <img alt="view previous" src="/icons/point-left.png"/>
+                                </button>
                             </div>
 
 
