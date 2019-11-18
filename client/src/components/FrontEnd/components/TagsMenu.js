@@ -31,6 +31,7 @@ export default class TagsMenu extends React.Component{
             return(
                 <Accordion 
                 title={subName} 
+                level="subcategory"
                 checkbox={<input 
                     type="checkbox" 
                     onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
@@ -55,6 +56,7 @@ export default class TagsMenu extends React.Component{
             <Accordion 
             title={obj.category} 
             checkbox={<input 
+                level="category"
                 type="checkbox" 
                 onChange={(e) => this.props.context.filterByCategory(e, obj.category)} 
                 checked={this.props.context.categoryChecked(obj.category)}
@@ -71,7 +73,7 @@ export default class TagsMenu extends React.Component{
 
     render(){
         return <div
-            style={{height: "100vh", width: "250px", border: "2px solid black"}}
+            style={{ width: "250px", border: "2px solid black"}}
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
             {this.props.children}

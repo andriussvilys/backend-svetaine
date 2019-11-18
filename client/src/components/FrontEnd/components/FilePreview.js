@@ -12,7 +12,13 @@ export default class FilePreview extends React.Component{
         const previewSource = file.filePath ? file.filePath : file.preview
 
         if(fileType.match('image')){
-            let image = <img className="imageSelect-FilePreview" alt={file.fileName} src={previewSource} />
+            let image = <img 
+            className={this.props.className}
+            alt={file.fileName} 
+            src={previewSource} 
+            id={this.props.file.fileName}
+            onClick={(e) => {this.props.onClick(e.target.id)}}
+            />
             return(
                     image
             )
@@ -20,8 +26,10 @@ export default class FilePreview extends React.Component{
         if(fileType.match('video')){
             return(
                 <video 
-                className="imageSelect-FilePreview" 
+                className={this.props.className}
                 controls
+                id={this.props.file.fileName}
+                onClick={(e) => {this.props.onClick(e.target.id)}}
                 >
                     <source src={previewSource} type={fileType} />
                     Your browser does not support the video tag.
@@ -31,8 +39,10 @@ export default class FilePreview extends React.Component{
         if(fileType.match('audio')){
             return(
                 <audio 
-                className="imageSelect-FilePreview" 
+                className={this.props.className}
                 controls
+                id={this.props.file.fileName}
+                onClick={(e) => {this.props.onClick(e.target.id)}}
                 >
                     <source src={previewSource} type={fileType} />
                     Your browser does not support the audio tag.
@@ -47,16 +57,12 @@ export default class FilePreview extends React.Component{
     }
 
     render(){
+        console.log('file preview props')
+        console.log(this.props)
         return(
 
-        <div className="ImagesPreview--imageContainer">
+        <div className="ImagesPreview--imageContainer" >
             {this.fileContainer(this.props.file.fileType, this.props.file)}
-            {/* <input
-            type="text" 
-            className="ImagesPreview--fileName"
-            placeholder={this.props.file.fileName}
-            >
-            </input> */}
         </div>
 
         )

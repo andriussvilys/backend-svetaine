@@ -10,6 +10,8 @@ import auth from '../Auth'
 import TagsMenu from './components/TagsMenu'
 import Accordion from '../Accordion'
 import ImageSelect from './components/ImageSelect/ImageSelect'
+import Enlarge from './components/Enlarge/Enlarge'
+import FilePreview from '../FilePreview';
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -18,7 +20,8 @@ export default class FrontEndIndex extends React.Component{
     static contextType = Context;
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {
+        }
     }
 
     adminButtons = (props) => {
@@ -68,6 +71,7 @@ export default class FrontEndIndex extends React.Component{
     }  
 
     render(){
+        console.log(this.context.state.artworkInfoData)
         return(
             <BrowserRouter>
                 <Context.Consumer>
@@ -76,7 +80,32 @@ export default class FrontEndIndex extends React.Component{
                             <TagsMenu context={this.context}>
                                 {this.props ? this.adminButtons(this.props) : null}
                             </TagsMenu>
-                            <ImageSelect data={this.context.state.artworkOnDisplay} />
+                            <ImageSelect 
+                                data={this.context.state.artworkOnDisplay} 
+                                methods={{
+                                    enlarge: this.context.enlarge
+                                }}
+                            />
+                            <Enlarge 
+                                file={this.context.state.enlarge}
+                                closeEnlarge={this.context.closeEnlarge}
+                                onClick={this.context.closeEnlarge}
+                            />
+                            <div
+                                style={{
+                                    width: "4vw",
+                                    height: "100vh",
+                                    backgroundColor: "blue",
+                                    position: "absolute",
+                                    top: 0,
+                                    right: 0
+                                }}
+                            >
+                            </div>
+
+
+
+
                             <Modal show={this.context.state.showModal} onHide={this.handleClose}>
                                 <Modal.Body>
                                 <Spinner animation="grow" variant="primary" />

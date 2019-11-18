@@ -17,23 +17,358 @@ export class Provider extends React.Component{
             },
             columnOrder: ['column-1']
         },
-        // familySetupData: {
-        //     useFamilySetup: false,
-        //     artworkFamily: null,
-        //     familyDescription: null,
-        //     location: null,
-        //     year: null,
-        //     seeAlso: [],
-        //     themes: [],
-        //     category: {}
-        // },
         relatedArtwork: {},
-        // categoriesData: [],
-        // seeAlsoData: {renderFiles: {fileNames: []}},
-        // themesData: [],
-        // artworkFamilyList: [],
-        // serverFileDir: [],
-        // showModal: false,
+        relatedArtworkDUMMY: {
+            "201910030953812_BGFC2LL5.jpg": {
+              "artworkFamily": null,
+              "displayMain": null,
+              "themes": [],
+              "seeAlso": [],
+              "location": null,
+              "year": null,
+              "_id": "5dcecac32ac31c16c490ea59",
+              "category": {
+                "medium": {
+                  "graphics": [],
+                  "photo": []
+                }
+              },
+              "filePath": "/uploads/201910030953812_BGFC2LL5.jpg",
+              "fileName": "201910030953812_BGFC2LL5.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": null,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_article-hero_pc_920x518.jpg": {
+              "artworkFamily": "note10",
+              "displayMain": null,
+              "themes": [
+                "Zamzung",
+                "social",
+                "selfie",
+                "note10"
+              ],
+              "seeAlso": [
+                "im0049_explore_social-media-videos_feature-item1_mo_720x680.jpg",
+                "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg",
+                "im0049_explore_social-media-videos_feature-item3_pc_330x440.jpg"
+              ],
+              "location": null,
+              "year": null,
+              "_id": "5dc956d3cf0c7e5c841ec175",
+              "category": {
+                "medium": {
+                  "graphics": [
+                    "cg"
+                  ]
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_article-hero_pc_920x518.jpg",
+              "fileName": "im0049_explore_social-media-videos_article-hero_pc_920x518.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 0,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_content-embed1_mo_720x405.jpg": {
+              "artworkFamily": "8xplour",
+              "displayMain": null,
+              "themes": [
+                "crescent"
+              ],
+              "seeAlso": [
+                "im0049_explore_social-media-videos_content-embed4_mo_720x405.jpg",
+                "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg"
+              ],
+              "location": null,
+              "year": null,
+              "_id": "5dc59e8dae2633255c80c0a0",
+              "category": {
+                "medium": {
+                  "graphics": [
+                    "print material"
+                  ]
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_content-embed1_mo_720x405.jpg",
+              "fileName": "im0049_explore_social-media-videos_content-embed1_mo_720x405.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 0,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_content-embed2_mo_720x405.jpg": {
+              "artworkFamily": "EXPLORE",
+              "displayMain": null,
+              "themes": [
+                "Kamil",
+                "crescent"
+              ],
+              "seeAlso": [
+                "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg",
+                "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg",
+                "im0049_explore_social-media-videos_content-embed4_mo_720x405.jpg",
+                "im0049_explore_social-media-videos_content-embed1_mo_720x405.jpg"
+              ],
+              "location": null,
+              "year": null,
+              "_id": "5dc9544be639c226c8f7657c",
+              "category": {
+                "public": {}
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_content-embed2_mo_720x405.jpg",
+              "fileName": "im0049_explore_social-media-videos_content-embed2_mo_720x405.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 1,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_content-embed4_mo_720x405.jpg": {
+              "artworkFamily": "EXPLORE",
+              "displayMain": null,
+              "themes": [
+                "Kamil",
+                "crescent"
+              ],
+              "seeAlso": [
+                "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg",
+                "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg"
+              ],
+              "location": "",
+              "year": "",
+              "_id": "5dc59c4d2456105b34cecff1",
+              "category": {
+                "medium": {
+                  "graphics": []
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_content-embed4_mo_720x405.jpg",
+              "fileName": "im0049_explore_social-media-videos_content-embed4_mo_720x405.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": "",
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 3,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg": {
+              "artworkFamily": "3ksplore",
+              "displayMain": null,
+              "themes": [],
+              "seeAlso": [],
+              "location": null,
+              "year": null,
+              "_id": "5dc59d7a2456105b34cecff4",
+              "category": {
+                "studio": {
+                  "wip": [
+                    "progress"
+                  ]
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg",
+              "fileName": "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 0,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_content-embed6_pc_920x518.jpg": {
+              "artworkFamily": "EXPLORE",
+              "displayMain": null,
+              "themes": [
+                "Kamil",
+                "crescent"
+              ],
+              "seeAlso": [
+                "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg",
+                "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg"
+              ],
+              "location": null,
+              "year": null,
+              "_id": "5dc95478e639c226c8f7657e",
+              "category": {
+                "medium": {
+                  "graphics": []
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_content-embed6_pc_920x518.jpg",
+              "fileName": "im0049_explore_social-media-videos_content-embed6_pc_920x518.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 3,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg": {
+              "artworkFamily": "note10",
+              "displayMain": null,
+              "themes": [
+                "Zamzung",
+                "social",
+                "selfie",
+                "note10"
+              ],
+              "seeAlso": [],
+              "location": "",
+              "year": "",
+              "_id": "5dc58b3232c7244c586efe0b",
+              "category": {
+                "medium": {
+                  "graphics": [
+                    "cg"
+                  ]
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg",
+              "fileName": "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": "",
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 0,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_feature-item1_mo_720x680.jpg": {
+              "artworkFamily": "note10",
+              "displayMain": null,
+              "themes": [
+                "Zamzung",
+                "social",
+                "selfie",
+                "note10"
+              ],
+              "seeAlso": [],
+              "location": null,
+              "year": null,
+              "_id": "5dc59a86373fb5607084df42",
+              "category": {
+                "medium": {
+                  "graphics": [
+                    "cg"
+                  ]
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_feature-item1_mo_720x680.jpg",
+              "fileName": "im0049_explore_social-media-videos_feature-item1_mo_720x680.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 1,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_feature-item2_mo_720x680.jpg": {
+              "artworkFamily": "note10",
+              "displayMain": null,
+              "themes": [
+                "Zamzung",
+                "social",
+                "selfie",
+                "note10"
+              ],
+              "seeAlso": [],
+              "location": null,
+              "year": null,
+              "_id": "5dc59a86373fb5607084df43",
+              "category": {
+                "medium": {
+                  "graphics": [
+                    "cg"
+                  ]
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_feature-item2_mo_720x680.jpg",
+              "fileName": "im0049_explore_social-media-videos_feature-item2_mo_720x680.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 2,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "im0049_explore_social-media-videos_feature-item3_pc_330x440.jpg": {
+              "artworkFamily": "EXPLORE",
+              "displayMain": null,
+              "themes": [
+                "Kamil",
+                "crescent"
+              ],
+              "seeAlso": [
+                "im0049_explore_social-media-videos_content-embed5_mo_720x405.jpg",
+                "im0049_explore_social-media-videos_content-tip-item1_mo_408x538.jpg"
+              ],
+              "location": null,
+              "year": null,
+              "_id": "5dc95660db47da39b0040c67",
+              "category": {
+                "medium": {
+                  "sculpture": []
+                }
+              },
+              "filePath": "/uploads/im0049_explore_social-media-videos_feature-item3_pc_330x440.jpg",
+              "fileName": "im0049_explore_social-media-videos_feature-item3_pc_330x440.jpg",
+              "fileType": "image/jpeg",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 0,
+              "__v": 0,
+              "useFamilySetup": false
+            },
+            "lt-galaxy-buds-r170-sm-r170nzkaseb-frontblack-146371849.png": {
+              "artworkFamily": "note10",
+              "displayMain": null,
+              "themes": [
+                "Zamzung",
+                "social",
+                "selfie",
+                "note10"
+              ],
+              "seeAlso": [],
+              "location": null,
+              "year": null,
+              "_id": "5dc95703cf0c7e5c841ec177",
+              "category": {
+                "medium": {
+                  "graphics": [
+                    "cg"
+                  ]
+                }
+              },
+              "filePath": "/uploads/lt-galaxy-buds-r170-sm-r170nzkaseb-frontblack-146371849.png",
+              "fileName": "lt-galaxy-buds-r170-sm-r170nzkaseb-frontblack-146371849.png",
+              "fileType": "image/png",
+              "familyDescription": null,
+              "artworkTitle": null,
+              "artworkDescription": null,
+              "familyDisplayIndex": 3,
+              "__v": 0,
+              "useFamilySetup": false
+            }
+          }
     }
 
     //creates an array of all files in the server uploads folder
@@ -153,6 +488,7 @@ export class Provider extends React.Component{
     }
     this.filterByCategory = (e, category) => {
         let newDisplay = {}
+        let zeroDisplay = {}
 
         //ON UN-CHECK
         if(!e.target.checked){
@@ -161,8 +497,12 @@ export class Provider extends React.Component{
                 if(!Object.keys(file.category).includes(category)){
                     newDisplay = {...newDisplay, [fileName]: file}
                 }
+                else{zeroDisplay = {...zeroDisplay, [fileName]: file}}
             })
             return this.setState({artworkOnDisplay: newDisplay})
+            // Object.keys(zeroDisplay).forEach(id => {
+            //     document.getElementById(id).classList.add('zero-width')
+            // })
         }
         //ON CHECK
         else{
@@ -221,6 +561,20 @@ export class Provider extends React.Component{
             }
         })
         return onDisplay
+    }
+
+    this.enlarge = (id) => {
+        document.getElementById('enlargeContainer').style.width = "auto"
+        document.getElementById('enlargeContainer').style.transform = "translateX(0)"
+        const file = this.state.artworkOnDisplay[id]
+        this.setState({enlarge: file})
+    }
+    this.closeEnlarge = () => {
+        // 
+        document.getElementById('enlargeContainer').style.transform = "translateX(100%)"
+        setTimeout(() => {
+            document.getElementById('enlargeContainer').style.width = 0
+        }, 200);
     }
 
 
@@ -754,6 +1108,9 @@ export class Provider extends React.Component{
             filterBySubcategory: this.filterBySubcategory,
             categoryChecked: this.categoryChecked,
             subcategoryChecked: this.subcategoryChecked,
+
+            enlarge: this.enlarge,
+            closeEnlarge: this.closeEnlarge,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

@@ -1,5 +1,5 @@
 import React from 'react'
-import FilePreview from './FilePreview'
+import FilePreview from '../FilePreview'
 
 export default class ImageSelect extends React.Component{
     constructor(props){
@@ -14,10 +14,16 @@ export default class ImageSelect extends React.Component{
     render(){
         if(this.props.data){
             let previews = Object.keys(this.props.data).map(objName => {
-                return <FilePreview file={this.props.data[objName]} />
+                return <FilePreview 
+                className="imageSelect-FilePreview" 
+                onClick={this.props.methods.enlarge}
+                file={this.props.data[objName]} 
+                />
             })
             return(
-                <div className="imageSelect-container">
+                <div 
+                className="imageSelect-container"
+                >
                     {previews}
                 </div>
             )
