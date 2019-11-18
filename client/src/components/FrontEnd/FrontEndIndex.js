@@ -91,10 +91,10 @@ export default class FrontEndIndex extends React.Component{
                                 onClick={this.context.closeEnlarge}
                             />
                             <div
+                                className="Navbar"
                                 style={{
                                     width: "4vw",
                                     height: "100vh",
-                                    backgroundColor: "blue",
                                     position: "absolute",
                                     top: 0,
                                     right: 0

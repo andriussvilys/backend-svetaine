@@ -345,11 +345,11 @@ label {
 
 .TagsMenu-container {
   width: 250px;
-  background-color: blue;
+  background-color: black;
 }
 
 .TagsMenu-Card {
-  background-color: blue !important;
+  background-color: black !important;
 }
 
 .tagsMenu-Button_category {
@@ -368,6 +368,10 @@ label {
   color: white !important;
 }
 
+.NavBar {
+  background-color: black;
+}
+
 .frontEndIndex-container {
   height: 100vh;
   width: 100vw;
@@ -376,7 +380,7 @@ label {
   -ms-grid-columns: max-content minmax(100px, 1fr) minmax(auto, max-content);
       grid-template-columns: -webkit-max-content minmax(100px, 1fr) minmax(auto, -webkit-max-content);
       grid-template-columns: max-content minmax(100px, 1fr) minmax(auto, max-content);
-  border: 4vw solid blue;
+  border: 4vw solid black;
   border-left: 0;
 }
 
