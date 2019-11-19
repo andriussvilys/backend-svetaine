@@ -1,10 +1,34 @@
 import React from 'react'
 import FilePreview from '../FilePreview'
+import { Context } from '../../FrontEndProvider';
 
 export default class ImageSelect extends React.Component{
+    static contextType = Context;
     constructor(props){
         super(props)
         this.state = { artworkOnDisplay: null}
+    }
+
+    createPreviews = (data) => {
+        if(data){
+            let previews = Object.keys(data).map(objName => {
+                return <FilePreview 
+                containerClassName="ImagesPreview--imageContainer"
+                className="imageSelect-FilePreview" 
+                onClick={this.props.methods.enlarge}
+                file={data[objName]} 
+                />
+            })
+            return(
+                <div 
+                id="imageSelect"
+                className="imageSelect-container"
+                >
+                    {previews}
+                </div>
+            )
+        }
+        else{return null} 
     }
 
     componentDidMount(){
@@ -12,22 +36,13 @@ export default class ImageSelect extends React.Component{
     }
     
     render(){
-        if(this.props.data){
-            let previews = Object.keys(this.props.data).map(objName => {
-                return <FilePreview 
-                className="imageSelect-FilePreview" 
-                onClick={this.props.methods.enlarge}
-                file={this.props.data[objName]} 
-                />
-            })
-            return(
-                <div 
-                className="imageSelect-container"
-                >
-                    {previews}
-                </div>
-            )
-        }
-        else{return null}
+        return(
+            <Context.Consumer>
+                {() => {
+                    return this.createPreviews(this.props.data)
+                }}
+            </Context.Consumer>
+        )
+
     }
 }

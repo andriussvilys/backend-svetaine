@@ -80,17 +80,12 @@ export default class FrontEndIndex extends React.Component{
                                 {this.props ? this.adminButtons(this.props) : null}
                             </TagsMenu>
                             <ImageSelect 
-                                data={this.context.state.artworkOnDisplay} 
+                                data={this.context.state.artworkInfoData} 
                                 methods={{
                                     enlarge: this.context.enlarge
                                 }}
                             />
-                            <Enlarge 
-                                file={this.context.state.enlarge}
-                                closeEnlarge={this.context.closeEnlarge}
-                                onClick={this.context.closeEnlarge}
-                            />
-                            <div
+                                                        <div
                                 className="Navbar"
                                 style={{
                                     width: "4vw",
@@ -109,7 +104,7 @@ export default class FrontEndIndex extends React.Component{
                                         cursor: "pointer"
                                     }}
                                     onClick={() => this.context.viewNext()}
-                                    disabled={this.context.state.enlarge ? false : true}
+                                    className={this.context.state.enlarge? null : "display-no"}
                                 >
                                     <img alt="view next" src="/icons/point-right.png" />
                                 </button>
@@ -122,11 +117,18 @@ export default class FrontEndIndex extends React.Component{
                                         cursor: "pointer"
                                     }}
                                     onClick={() => this.context.viewPrev()}
-                                    disabled={this.context.state.enlarge ? false : true}
+                                    className={this.context.state.enlarge? null : "display-no"}
                                 >
                                     <img alt="view previous" src="/icons/point-left.png"/>
                                 </button>
                             </div>
+                            <Enlarge 
+                                nextEnlarge={this.context.state.nextEnlarge}
+                                file={this.context.state.enlarge}
+                                closeEnlarge={this.context.closeEnlarge}
+                                onClick={this.context.closeEnlarge}
+                            />
+
 
 
 

@@ -1538,10 +1538,15 @@ export class Provider extends React.Component{
                         //add additional properties: 
                         //column (with id and array of files in order)
                         //id
+                        let fileIds = Object.keys(relatedArtwork).map(obj => null)
+                        Object.keys(relatedArtwork).forEach(fileName => {
+                            fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                        })
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,
                                 column: {
-                                    fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                    // fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                    fileIds,
                                     id: `${artworkFamily}-relatedArtworks`
                                 },
                                 columnOrder: [`${artworkFamily}-relatedArtworks`]

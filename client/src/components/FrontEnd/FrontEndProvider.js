@@ -427,10 +427,17 @@ export class Provider extends React.Component{
                     //add additional properties: 
                     //column (with id and array of files in order)
                     //id
+                    let fileIds = Object.keys(relatedArtwork).map(obj => null)
+                    console.log("fileIds", fileIds)
+
+                    Object.keys(relatedArtwork).forEach(fileName => {
+                        fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                    })
                     let finalRelatedArtwork = {
                             files: relatedArtwork,
                             column: {
-                                fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                // fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                fileIds,
                                 id: `${artworkFamily}-relatedArtworks`
                             },
                             columnOrder: [`${artworkFamily}-relatedArtworks`]
@@ -486,6 +493,7 @@ export class Provider extends React.Component{
         })
         return onDisplay
     }
+
     this.filterByCategory = (e, category) => {
         let newDisplay = {}
         let zeroDisplay = {}
@@ -499,10 +507,10 @@ export class Provider extends React.Component{
                 }
                 else{zeroDisplay = {...zeroDisplay, [fileName]: file}}
             })
+            Object.keys(zeroDisplay).forEach(id => {
+                document.getElementById(id).classList.add('image-hide')
+            })
             return this.setState({artworkOnDisplay: newDisplay})
-            // Object.keys(zeroDisplay).forEach(id => {
-            //     document.getElementById(id).classList.add('zero-width')
-            // })
         }
         //ON CHECK
         else{
@@ -513,12 +521,16 @@ export class Provider extends React.Component{
                     newDisplay = {...newDisplay, [fileName]: file}
                 }
             })
+            Object.keys(newDisplay).forEach(id => {
+                document.getElementById(id).classList.remove('image-hide')
+            })
             return this.setState({artworkOnDisplay: newDisplay})
         }
 
     }
     this.filterBySubcategory = (e, category, subcategory) => {
         let newDisplay = {}
+        let zeroDisplay = {}
 
         //ON UN-CHECK
         if(!e.target.checked){
@@ -528,10 +540,17 @@ export class Provider extends React.Component{
                     if(!Object.keys(file.category[category]).includes(subcategory)){
                         return newDisplay = {...newDisplay, [fileName]: file}
                     }
+                    else{
+                        zeroDisplay ={...zeroDisplay, [fileName]: file}
+                    }
                 }
                 else{
                     return newDisplay = {...newDisplay, [fileName]: file}
                 }
+            })
+            console.log(zeroDisplay)
+            Object.keys(zeroDisplay).forEach(id => {
+                document.getElementById(id).classList.add('image-hide')
             })
             return this.setState({artworkOnDisplay: newDisplay})
         }
@@ -545,6 +564,9 @@ export class Provider extends React.Component{
                         newDisplay = {...newDisplay, [fileName]: file}
                     }
                 }
+            })
+            Object.keys(newDisplay).forEach(id => {
+                document.getElementById(id).classList.remove('image-hide')
             })
             return this.setState({artworkOnDisplay: newDisplay})
         }
@@ -563,51 +585,90 @@ export class Provider extends React.Component{
         return onDisplay
     }
 
+    this.shrinkImageSelect = () => {
+        Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
+            preview.classList.add("low-opacity")
+        })
+        const imageSelect = document.getElementById('imageSelect')
+        imageSelect.style.width = "50%"
+        setTimeout(() => {
+            imageSelect.style.width = "25%"
+        }, 100);
+        setTimeout(() => {
+            imageSelect.style.width = "150px"
+
+        }, 200);
+    }
+    this.extendImageSelect = () => {
+        Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
+            preview.classList.remove("low-opacity")
+        })
+        const imageSelect = document.getElementById('imageSelect')
+        imageSelect.style.width = "25%"
+        setTimeout(() => {
+            imageSelect.style.width = "50%"
+        }, 100);
+        setTimeout(() => {
+            imageSelect.style.width = "100%"
+
+        }, 200);
+    }
+
     this.enlarge = (id) => {
-        document.getElementById('enlargeContainer').style.width = "auto"
-        document.getElementById('enlargeContainer').style.transform = "translateX(0)"
-        const file = this.state.artworkOnDisplay[id]
-        this.setState({enlarge: file})
+            const file = this.state.artworkOnDisplay[id]
+            const imageSelect = document.getElementById('imageSelect')
+            this.setState({enlarge: file}, () => {
+                if(!imageSelect.classList.contains('minimized')){
+                    imageSelect.classList.add('minimized')
+                    this.shrinkImageSelect()
+                }
+                document.getElementById('enlargeContainer').style.zIndex = "-1"
+                document.getElementById('enlargeContainer').style.transform = "translateX(0)"
+                document.getElementById('enlargeContainer').style.zIndex = 0
+            })
     }
     this.closeEnlarge = () => {
-        // 
-        document.getElementById('enlargeContainer').style.transform = "translateX(100%)"
+        document.getElementById('enlargeContainer').style.zIndex = "-1"
+        document.getElementById('imageSelect').classList.remove("minimized")
+        this.extendImageSelect()
         setTimeout(() => {
-            document.getElementById('enlargeContainer').style.width = 0
-        }, 200);
+            let newState = {...this.state}
+            newState.enlarge = null
+            newState.nextEnlarge = null
+            this.setState(newState)
+        }, 150);
     }
 
     this.viewNext = () => {
         const familyName = this.state.enlarge.artworkFamily
-        console.log('familyName', familyName)
         if(!familyName){
-            alert('no family name')
             return
         }
         const currentIndex = this.state.enlarge.familyDisplayIndex
         const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
         let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
-        console.log(familyLength, currentIndex, nextIndex)
         const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
-        console.log(nextPicName)
         const nextPic = this.state.artworkInfoData[nextPicName]
-        console.log(nextPic)
+        if(!nextPic){
+            return
+        }
         this.setState({enlarge: nextPic})
     }
     this.viewPrev = () => {
         const familyName = this.state.enlarge.artworkFamily
-        console.log('familyName', familyName)
         if(!familyName){
-            alert('no family name')
             return
         }
         const currentIndex = this.state.enlarge.familyDisplayIndex
         const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
         let nextIndex = currentIndex === 0 ? familyLength -1 : currentIndex -1
-        console.log(familyLength, nextIndex)
         const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
         const nextPic = this.state.artworkInfoData[nextPicName]
+        if(!nextPic){
+            return
+        }
         this.setState({enlarge: nextPic})
+        
     }
 
 

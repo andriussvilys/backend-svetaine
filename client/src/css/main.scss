@@ -238,6 +238,7 @@ label{
 //TAGS MENU
 //------------
 $frame-color: black;
+$background-color: white;
 
 .TagsMenu-container{
     width: 250px;
@@ -268,9 +269,10 @@ $frame-color: black;
     height: 100vh;
     width: 100vw;
     display: grid;
-    grid-template-columns: max-content minmax(100px, 1fr) minmax(auto, max-content);
+    grid-template-columns: max-content minmax(100px, auto) minmax(auto, 5fr);
     border: 4vw solid $frame-color;
     border-left: 0;
+    background-color: $background-color;
 }
 .imageSelect-container{
     display: flex;
@@ -278,14 +280,18 @@ $frame-color: black;
     overflow-y: auto;
     grid-template-columns: repeat( auto-fit, minmax(0, 300px) );
     overflow-x: hidden;
+    background-color: $background-color;
 }
 .enlargeContainer{
-    transition: 0.2s all;
+    width: 100%;
+    transition: 0.4s all;
     justify-self: end;
     display: flex;
     align-items: center;
     overflow: hidden;
     transform: translateX(100%);
+    background-color: $background-color;
+    cursor: pointer;
 }
 .ImagesPreview--imageContainer{
     display: flex;
@@ -293,21 +299,31 @@ $frame-color: black;
     justify-content: center;
     align-items: center;
     transition: 0.4s all;
+    transition: 0 opacity;
     z-index: 2;
     max-width: 100%;
+    overflow: hidden;
+    max-height: 25vh;
+    cursor: pointer;
 }
 .imageSelect-Enlarge{
     transition: 0.4s all;
     z-index: -1;
     max-width: 100%;
     object-fit: contain;
+    width: 100%;
+    height: 100%;
 }
 .imageSelect-FilePreview{
-    max-height: 25vh;
+
     transition: 0.4s all;
     z-index: -1;
     max-width: 100%;
     object-fit: contain;
+    align-self: flex-end;
+    transform-origin: bottom;
+    transform: translateY(0);
+    transition: 0.2s all;
 }
 .zero-width{
     height: 0;
@@ -342,4 +358,28 @@ $frame-color: black;
   background : rgba(79, 218, 10, 1);
   width : 21px;
   height : 30px;
+}
+
+.image-hide{
+    transform: translateY(100%);
+}
+
+.low-opacity{
+    opacity: 0.2;
+}
+
+.ImagesPreview--imageContainer:hover{
+    opacity: 1;
+}
+
+.display-no{
+    display: none;
+}
+
+.tagsMenu-Button{
+    display: flex !important;
+    justify-content: space-between ;
+    width: 100%;
+    font-weight: 800 !important;
+    font-size: 24px !important;
 }

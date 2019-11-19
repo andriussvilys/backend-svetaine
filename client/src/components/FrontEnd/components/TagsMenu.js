@@ -30,7 +30,8 @@ export default class TagsMenu extends React.Component{
             const toggle = subData[subName].length > 0 
             return(
                 <Accordion 
-                title={subName} 
+                title={this.spreadLetters(subName)}
+                // title={subName} 
                 level="subcategory"
                 checkbox={<input 
                     type="checkbox" 
@@ -45,16 +46,29 @@ export default class TagsMenu extends React.Component{
         })
         return subCategories
     }
+    /**
+     * @param title: takes a string and spreads it into separate divs
+     */
+    spreadLetters = (title) => {
+        let letters = Array.from(title).map(letter => {
+            return <div>{letter}</div>
+        })
+        console.log(letters)
+
+        return letters
+    }
 
     /**
      * @params : takes an Array which is a collection of Objects contain category data
      */
     categoryBlock = (data) => {
+        
         let categories = data.map(obj => {
             const toggle = Object.keys(obj.subcategory).length > 0
         return (
             <Accordion 
-            title={obj.category} 
+            // title={obj.category} 
+            title={this.spreadLetters(obj.category)}
             checkbox={<input 
                 level="category"
                 type="checkbox" 

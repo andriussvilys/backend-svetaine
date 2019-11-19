@@ -21,7 +21,7 @@ const Accordion = (props) => {
             as={Button} 
             variant="link" 
             eventKey="0" 
-            className={props.level === "category" ? "tagsMenu-Button_category" : "tagsMenu-Button_subcategory"}
+            className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
             >
                 {props.title}
             </BootstrapAccordion.Toggle>
