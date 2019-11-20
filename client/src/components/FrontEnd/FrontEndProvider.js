@@ -2003,49 +2003,149 @@ export class Provider extends React.Component{
         })
         return onDisplay
     }
-    this.shrinkImageSelect = () => {
-        Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
-            preview.classList.add("low-opacity")
+    this.listitemChecked = (category, subcategory, listitem) => {
+        let onDisplay = false
+        Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+            const file = this.state.artworkOnDisplay[fileName]
+            if(file.category[category]){
+              if(file.category[category][subcategory]){
+                if(file.category[category][subcategory].includes(listitem)){
+                  return onDisplay = true
+                }
+              }
+            }
         })
+        return onDisplay
+    }
+    this.filterByListitem = (e, category, subcategory, listitem) => {
+      let newDisplay = {}
+      let zeroDisplay = {}
+
+      //ON UN-CHECK
+      if(!e.target.checked){
+          Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+              const file = this.state.artworkOnDisplay[fileName]
+              if(file.category[category]){
+                if(file.category[category][subcategory]){
+                  if(!file.category[category][subcategory].includes(listitem)){
+                    newDisplay = {...newDisplay, [fileName]: file}
+                  }
+                  else{
+                    zeroDisplay ={...zeroDisplay, [fileName]: file}
+                  }
+                }
+                else{newDisplay = {...newDisplay, [fileName]: file}}
+              }
+              else{newDisplay = {...newDisplay, [fileName]: file}}
+          })
+          Object.keys(zeroDisplay).forEach(id => {
+              document.getElementById(id).classList.add('image-hide')
+          })
+          return this.setState({artworkOnDisplay: newDisplay})
+      }
+      //ON CHECK
+      else{
+          newDisplay={...this.state.artworkOnDisplay}
+          Object.keys(this.state.artworkInfoData).forEach(fileName => {
+              const file = this.state.artworkInfoData[fileName]
+              if(file.category[category]){
+                if(file.category[category][subcategory]){
+                  if(file.category[category][subcategory].includes(listitem)){
+                    newDisplay = {...newDisplay, [fileName]: file}
+                  }
+                }
+              }
+          })
+          Object.keys(newDisplay).forEach(id => {
+              document.getElementById(id).classList.remove('image-hide')
+          })
+          return this.setState({artworkOnDisplay: newDisplay})
+      }
+
+  }
+
+    this.shrinkImageSelect = () => {
+
         const imageSelect = document.getElementById('imageSelect')
-        imageSelect.style.width = "50%"
+        imageSelect.style.width = "70%"
         setTimeout(() => {
-            imageSelect.style.width = "25%"
+            imageSelect.style.width = "35%"
         }, 100);
         setTimeout(() => {
             imageSelect.style.width = "150px"
-
         }, 200);
+        setTimeout(() => {
+          Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
+            preview.classList.add("low-opacity")
+          })
+        }, 300);
     }
     this.extendImageSelect = () => {
-        Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
-            preview.classList.remove("low-opacity")
-        })
+      Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
+        preview.classList.remove("low-opacity")
+      })
         const imageSelect = document.getElementById('imageSelect')
         imageSelect.style.width = "25%"
+        // setTimeout(() => {          
+        // }, 00);
         setTimeout(() => {
             imageSelect.style.width = "50%"
         }, 100);
         setTimeout(() => {
             imageSelect.style.width = "100%"
-
         }, 200);
     }
     this.enlarge = (id) => {
             const file = this.state.artworkOnDisplay[id]
             const imageSelect = document.getElementById('imageSelect')
-            this.setState({enlarge: file}, () => {
-                if(!imageSelect.classList.contains('minimized')){
-                    imageSelect.classList.add('minimized')
-                    this.shrinkImageSelect()
-                }
-                document.getElementById('enlargeContainer').style.zIndex = "-1"
-                document.getElementById('enlargeContainer').style.transform = "translateX(0)"
-                document.getElementById('enlargeContainer').style.zIndex = 0
+            if(!this.state.enlarge){
+
+              let enlarge = {}
+              enlarge.foreground = file
+              enlarge.background = file
+
+              this.setState({enlarge}, () => {
+                  if(!imageSelect.classList.contains('minimized')){
+                      imageSelect.classList.add('minimized')
+                      this.shrinkImageSelect()
+                  }
+                  document.getElementById('enlargeContainer').style.zIndex = "-1"
+                  // document.getElementById('enlargeContainer').style.transform = "translateX(0)"
+                  document.getElementById('enlargeContainer').style.zIndex = 0
+              })
+            }
+            else{
+              const file = this.state.artworkOnDisplay[id]
+              const imageSelect = document.getElementById('imageSelect')
+              const foreground = document.getElementById('foreground')
+              // foreground.style.opacity = 1
+              const foregroundHeight = document.getElementById('foreground').clientHeight
+              const foregroundWidth = document.getElementById('foreground').clientWidth
+
+              const background = document.getElementById('background')
+              let enlarge = this.state.enlarge
+              enlarge.background = file
+              this.setState({enlarge}, () => {
+                foreground.style.opacity = 0
+                setTimeout(() => {
+                  enlarge.foreground = file
+                  this.setState(enlarge, () => {
+                    foreground.style.opacity = 1
+                  })
+                }, 400);
+                // if(!imageSelect.classList.contains('minimized')){
+                //     imageSelect.classList.add('minimized')
+                //     this.shrinkImageSelect()
+                // }
+                // document.getElementById('enlargeContainer').style.zIndex = "-1"
+                // document.getElementById('enlargeContainer').style.transform = "translateX(0)"
+                // document.getElementById('enlargeContainer').style.zIndex = 0
             })
+
+            }
     }
     this.closeEnlarge = () => {
-        document.getElementById('enlargeContainer').style.zIndex = "-1"
+        // document.getElementById('enlargeContainer').style.zIndex = "-1"
         document.getElementById('imageSelect').classList.remove("minimized")
         this.extendImageSelect()
         setTimeout(() => {
@@ -2053,14 +2153,16 @@ export class Provider extends React.Component{
             newState.enlarge = null
             newState.nextEnlarge = null
             this.setState(newState)
-        }, 150);
+        }, 400);
     }
+
     this.viewNext = () => {
-        const familyName = this.state.enlarge.artworkFamily
+      document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
+        const familyName = this.state.enlarge.foreground.artworkFamily
         if(!familyName){
             return
         }
-        const currentIndex = this.state.enlarge.familyDisplayIndex
+        const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
         const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
         let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
         const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
@@ -2068,14 +2170,27 @@ export class Provider extends React.Component{
         if(!nextPic){
             return
         }
-        this.setState({enlarge: nextPic})
+        let enlarge = this.state.enlarge
+        // document.getElementById("background").style.right = "100%"
+        enlarge.background = nextPic
+        document.getElementById("background").classList.add('move-right')
+        document.getElementsByClassName("foreground-image")[0].classList.add("foreground-shrink")
+        setTimeout(() => {
+          document.getElementById("background").classList.remove('move-right')
+          // document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
+        }, 400);
+        // enlarge.foreground = nextPic
+        this.setState(enlarge, () => {
+          enlarge.foreground = nextPic
+          // document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
+        })
     }
     this.viewPrev = () => {
-        const familyName = this.state.enlarge.artworkFamily
+        const familyName = this.state.enlarge.foreground.artworkFamily
         if(!familyName){
             return
         }
-        const currentIndex = this.state.enlarge.familyDisplayIndex
+        const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
         const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
         let nextIndex = currentIndex === 0 ? familyLength -1 : currentIndex -1
         const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
@@ -2083,8 +2198,20 @@ export class Provider extends React.Component{
         if(!nextPic){
             return
         }
-        this.setState({enlarge: nextPic})
-        
+        let enlarge = this.state.enlarge
+        // document.getElementById("background").style.right = "100%"
+        enlarge.background = nextPic
+        document.getElementById("background").classList.add('move-left')
+        setTimeout(() => {
+          document.getElementById("background").classList.remove('move-left')
+        }, 400);
+        // enlarge.foreground = nextPic
+        this.setState(enlarge, () => {
+          enlarge.foreground = nextPic
+        })
+        // let enlarge = this.state.enlarge
+        // enlarge.foreground = nextPic
+        // this.setState(enlarge)
     }
 
 
@@ -2622,8 +2749,10 @@ export class Provider extends React.Component{
             onCheck: this.categoryMethods.onCheck, 
             filterByCategory: this.filterByCategory,
             filterBySubcategory: this.filterBySubcategory,
+            filterByListitem: this.filterByListitem,
             categoryChecked: this.categoryChecked,
             subcategoryChecked: this.subcategoryChecked,
+            listitemChecked: this.listitemChecked,
 
             enlarge: this.enlarge,
             closeEnlarge: this.closeEnlarge,

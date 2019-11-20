@@ -59,7 +59,7 @@ export default class FilePreview extends React.Component{
     render(){
         return(
 
-        <div className={this.props.containerClassName} >
+        <div className={this.props.containerClassName} id={this.props.id} >
             {this.fileContainer(this.props.file.fileType, this.props.file)}
             {this.props.children}
         </div>

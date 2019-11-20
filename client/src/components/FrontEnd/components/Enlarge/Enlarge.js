@@ -22,23 +22,33 @@ export default class Enlarge extends React.Component{
                 <div id="nextEnlarge" style={{position: "absolute", height: "100%", width: "100%", backgroundColor: "yellow", left: "-100%", transition: "0.2s all"}}>
                     {this.renderNext()}
                 </div>
+
                 <FilePreview 
-                file={this.props.file} 
-                containerClassName="imageSelect-Enlarge" 
-                className="imageSelect-Enlarge" 
+                id="foreground"
+                file={this.props.file.foreground} 
+                containerClassName="enlarge-container" 
+                className="enlarge-preview foreground-image" 
                 onClick={this.props.onClick}
-                >
-                    <span>
-                        {this.props.file.familyDisplayIndex}
-                    </span>
-                </FilePreview>
+                />
+
+                {this.props.file.background ?
+                    <FilePreview 
+                    id="background"
+                    file={this.props.file.background} 
+                    containerClassName="enlarge-container" 
+                    className="enlarge-preview" 
+                    onClick={this.props.onClick}
+                    />
+                    :
+                    null
+                }
             </Fragment>
-
         )
-
     }
 
     render(){
+        console.log('ENLARGE PROPS')
+        console.log(this.props)
         return(
             <div 
             onClick={() => this.props.closeEnlarge()}

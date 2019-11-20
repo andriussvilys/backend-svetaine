@@ -18,12 +18,21 @@ export default class TagsMenu extends React.Component{
         })
         return letters
     }
-    listItemBlock = (listitemData) => {
+    listItemBlock = (category, subcategory, listitemData) => {
         if(listitemData <= 0){
             return null
         }
         let block = listitemData.map(listitem => {
-        return <li key={listitem}><div>{listitem}</div></li>
+        return <li key={listitem}>
+            <div>
+                <span>{listitem}</span>
+                <input 
+                    type="checkbox" 
+                    onChange={(e) => this.props.context.filterByListitem(e, category, subcategory, listitem)} 
+                    checked={this.props.context.listitemChecked(category, subcategory, listitem)}
+                />
+            </div>
+            </li>
         })
 
         let list = <ul>{block}</ul>
@@ -49,7 +58,7 @@ export default class TagsMenu extends React.Component{
                     />}
                 toggle={toggle} 
                 className="TagsMenu-Accordion-label">
-                    {this.listItemBlock(subData[subName])}
+                    {this.listItemBlock(category, subName, subData[subName])}
                 </Accordion>
             ) 
         })
