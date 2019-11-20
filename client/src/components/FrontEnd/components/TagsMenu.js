@@ -9,6 +9,15 @@ export default class TagsMenu extends React.Component{
         super(props)
         this.state = {}
     }
+    /**
+     * @param title: takes a string and spreads it into separate divs
+     */
+    spreadLetters = (title) => {
+        let letters = Array.from(title).map(letter => {
+            return <div className="title-letter">{letter}</div>
+        })
+        return letters
+    }
     listItemBlock = (listitemData) => {
         if(listitemData <= 0){
             return null
@@ -46,17 +55,7 @@ export default class TagsMenu extends React.Component{
         })
         return subCategories
     }
-    /**
-     * @param title: takes a string and spreads it into separate divs
-     */
-    spreadLetters = (title) => {
-        let letters = Array.from(title).map(letter => {
-            return <div>{letter}</div>
-        })
-        console.log(letters)
 
-        return letters
-    }
 
     /**
      * @params : takes an Array which is a collection of Objects contain category data

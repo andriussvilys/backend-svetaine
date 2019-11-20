@@ -556,7 +556,15 @@ label {
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100%;
-  font-weight: 800 !important;
+  font-weight: 400 !important;
   font-size: 24px !important;
+  font-family: 'Courier', Courier, monospace;
+  -webkit-transform: scale(0.8, 0.7);
+          transform: scale(0.8, 0.7);
+}
+
+.title-letter {
+  -webkit-transform: scale(1.65, 2.5);
+          transform: scale(1.65, 2.5);
 }
 /*# sourceMappingURL=main.css.map */

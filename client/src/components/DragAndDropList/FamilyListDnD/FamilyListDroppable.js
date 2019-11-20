@@ -8,6 +8,8 @@ export default class DndListDroppable extends React.Component{
     static contextType = Context;
 
     render(){
+        console.log('DROPPABLE PROPS')
+        console.log(this.props)
         return(
             <Context.Consumer>
                 {() => {
@@ -16,13 +18,15 @@ export default class DndListDroppable extends React.Component{
                         droppableId={`${this.props.artworkFamily}-relatedArtworks`}
                         >
                         {provided =>{
+                            let orderData = this.props.column.fileIds 
+                            // ? this.props.column.fileIds : Object.keys(this.props.files)
                                         return(
                                             <div 
                                             ref={provided.innerRef}
                                             {...provided.droppableProps}
                                             className="DnDfilesList"
                                             >
-                                                {this.props.column.fileIds.map((fileId, index) => {
+                                                {orderData.map((fileId, index) => {
                                                     return (
 
                                                     <FamilyListDraggable

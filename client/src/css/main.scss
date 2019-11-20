@@ -380,6 +380,12 @@ $background-color: white;
     display: flex !important;
     justify-content: space-between ;
     width: 100%;
-    font-weight: 800 !important;
+    font-weight: 400 !important;
     font-size: 24px !important;
+    font-family: 'Courier', Courier, monospace;
+    transform: scale(0.8, 0.7);
+}
+.title-letter{
+    // font-size: 60px;
+    transform: scale(1.65, 2.5);
 }
