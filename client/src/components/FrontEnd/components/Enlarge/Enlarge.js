@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
+import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
 
 
 export default class Enlarge extends React.Component{
@@ -56,6 +57,13 @@ export default class Enlarge extends React.Component{
                 {this.props.file 
                 ? this.pushNew()
                 : null}
+                {this.props.file
+                ? <ArtworkInfo 
+                    file={this.props.file} 
+                    artworkInfoData={this.props.artworkInfoData}
+                    />
+                : null
+                }
             </div>
         )
     }

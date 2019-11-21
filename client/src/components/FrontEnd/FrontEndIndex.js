@@ -121,12 +121,52 @@ export default class FrontEndIndex extends React.Component{
                                 >
                                     <img alt="view previous" src="/icons/point-left.png"/>
                                 </button>
+
+                                {/* <button
+                                    style={{
+                                        position: "absolute",
+                                        top: "16vw",
+                                        left: '0',
+                                        width: "4vw",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => this.context.viewPrev()}
+                                    className={this.context.state.enlarge? null : "display-no"}
+                                >
+                                    <img alt="view previous" src="/icons/up.png"/>
+                                </button>
+                                <button
+                                    style={{
+                                        position: "absolute",
+                                        top: "20vw",
+                                        left: '0',
+                                        width: "4vw",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => this.context.viewPrev()}
+                                    className={this.context.state.enlarge? null : "display-no"}
+                                >
+                                    <img alt="view previous" src="/icons/down.png"/>
+                                </button> */}
+                                    <div 
+                                    style={{
+                                        position: "absolute",
+                                        top: "16vw",
+                                        left: '0',
+                                        width: "4vw",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => this.context.showInfo()}
+                                >
+                                    <h1>i</h1>
+                                </div>
                             </div>
                             <Enlarge 
                                 nextEnlarge={this.context.state.nextEnlarge}
                                 file={this.context.state.enlarge}
                                 closeEnlarge={this.context.closeEnlarge}
                                 onClick={this.context.closeEnlarge}
+                                artworkInfoData={this.context.state.artworkInfoData}
                             />
 
 

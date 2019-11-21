@@ -2199,20 +2199,29 @@ export class Provider extends React.Component{
             return
         }
         let enlarge = this.state.enlarge
-        // document.getElementById("background").style.right = "100%"
         enlarge.background = nextPic
         document.getElementById("background").classList.add('move-left')
         setTimeout(() => {
           document.getElementById("background").classList.remove('move-left')
         }, 400);
-        // enlarge.foreground = nextPic
         this.setState(enlarge, () => {
           enlarge.foreground = nextPic
         })
-        // let enlarge = this.state.enlarge
-        // enlarge.foreground = nextPic
-        // this.setState(enlarge)
     }
+
+    this.showInfo = () => {
+      const info = document.getElementById("ArtworkInfo")
+      if(!info.classList.includes('up')){
+        info.classList.add('info-up')
+      }
+      else{
+        info.classList.add('info-down')
+      }
+    }
+
+    // viewNextSeeAlso = () => {
+    //   const currentFile = this.state.enlarge.foreground.fileName
+    // }
 
 
     //this takes care of CATEGORIES used for navigation
@@ -2759,6 +2768,8 @@ export class Provider extends React.Component{
 
             viewNext: this.viewNext,
             viewPrev: this.viewPrev,
+
+            showInfo: this.showInfo,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,
