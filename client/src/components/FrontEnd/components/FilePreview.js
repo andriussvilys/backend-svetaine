@@ -17,6 +17,7 @@ export default class FilePreview extends React.Component{
             alt={file.fileName} 
             src={previewSource} 
             id={this.props.file.fileName}
+            name={this.props.previewName}
             onClick={(e) => {this.props.onClick(e.target.id)}}
             />
             return(
@@ -29,6 +30,7 @@ export default class FilePreview extends React.Component{
                 className={this.props.className}
                 controls
                 id={this.props.file.fileName}
+                name={this.props.previewName}
                 onClick={(e) => {this.props.onClick(e.target.id)}}
                 >
                     <source src={previewSource} type={fileType} />
@@ -42,6 +44,7 @@ export default class FilePreview extends React.Component{
                 className={this.props.className}
                 controls
                 id={this.props.file.fileName}
+                name={this.props.previewName}
                 onClick={(e) => {this.props.onClick(e.target.id)}}
                 >
                     <source src={previewSource} type={fileType} />

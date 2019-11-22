@@ -2157,35 +2157,42 @@ export class Provider extends React.Component{
     }
 
     this.viewNext = () => {
-      document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
-        const familyName = this.state.enlarge.foreground.artworkFamily
-        if(!familyName){
-            return
-        }
-        const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
-        const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
-        let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
-        const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
-        const nextPic = this.state.artworkInfoData[nextPicName]
-        if(!nextPic){
-            return
-        }
-        let enlarge = this.state.enlarge
-        // document.getElementById("background").style.right = "100%"
-        enlarge.background = nextPic
-        document.getElementById("background").classList.add('move-right')
-        document.getElementsByClassName("foreground-image")[0].classList.add("foreground-shrink")
-        setTimeout(() => {
-          document.getElementById("background").classList.remove('move-right')
-          // document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
-        }, 400);
-        // enlarge.foreground = nextPic
-        this.setState(enlarge, () => {
-          enlarge.foreground = nextPic
-          // document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
-        })
+      const info = document.getElementById("ArtworkInfo")
+      let timeOut = null
+      if(info.classList.contains("info-up")){
+        info.classList.remove("info-up")
+        timeOut = 260
+      }
+      else{timeOut = 1}
+      setTimeout(() => {        
+        document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
+          const familyName = this.state.enlarge.foreground.artworkFamily
+          if(!familyName){
+              return
+          }
+          const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
+          const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
+          let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
+          const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
+          const nextPic = this.state.artworkInfoData[nextPicName]
+          if(!nextPic){
+              return
+          }
+          let enlarge = this.state.enlarge
+          enlarge.background = nextPic
+          document.getElementById("background").classList.add('move-right')
+          document.getElementsByClassName("foreground-image")[0].classList.add("foreground-shrink")
+          setTimeout(() => {
+            document.getElementById("background").classList.remove('move-right')
+          }, 400);
+          this.setState(enlarge, () => {
+            enlarge.foreground = nextPic
+          })
+      }, timeOut);
     }
     this.viewPrev = () => {
+      const info = document.getElementById("ArtworkInfo")
+      info.classList.remove("info-up")
         const familyName = this.state.enlarge.foreground.artworkFamily
         if(!familyName){
             return
@@ -2211,11 +2218,11 @@ export class Provider extends React.Component{
 
     this.showInfo = () => {
       const info = document.getElementById("ArtworkInfo")
-      if(!info.classList.includes('up')){
+      if(!info.classList.contains('info-up')){
         info.classList.add('info-up')
       }
       else{
-        info.classList.add('info-down')
+        info.classList.remove('info-down')
       }
     }
 

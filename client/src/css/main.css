@@ -377,29 +377,24 @@ label {
   width: 100vw;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: max-content minmax(100px, auto) minmax(auto, 5fr);
-      grid-template-columns: -webkit-max-content minmax(100px, auto) minmax(auto, 5fr);
-      grid-template-columns: max-content minmax(100px, auto) minmax(auto, 5fr);
-  border: 4vw solid #ff8dff;
+  -ms-grid-columns: max-content minmax(100px, auto) minmax(auto, 5fr) 50px;
+      grid-template-columns: -webkit-max-content minmax(100px, auto) minmax(auto, 5fr) 50px;
+      grid-template-columns: max-content minmax(100px, auto) minmax(auto, 5fr) 50px;
+  border: 8px solid #ff8dff;
   border-left: 0;
   background-color: #4d2a0d;
+  position: relative;
 }
 
 .imageSelect-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
   overflow-y: auto;
-  -ms-grid-columns: (minmax(0, 300px))[auto-fit];
-      grid-template-columns: repeat(auto-fit, minmax(0, 300px));
   overflow-x: hidden;
   background-color: #4d2a0d;
 }
 
 .enlargeContainer {
-  position: relative;
+  position: absolute;
+  height: 100%;
   width: 100%;
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
@@ -413,6 +408,9 @@ label {
   overflow: hidden;
   background-color: #4d2a0d;
   cursor: pointer;
+  -ms-grid-column: 3;
+      grid-column-start: 3;
+  grid-column-end: 4;
 }
 
 .ImagesPreview--imageContainer {
@@ -434,10 +432,13 @@ label {
   -webkit-transition: 0 opacity;
   transition: 0 opacity;
   z-index: 2;
-  max-width: 100%;
   overflow: hidden;
-  max-height: 25vh;
+  max-height: 200px;
   cursor: pointer;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  bottom: 0;
 }
 
 .enlarge-container {
@@ -475,12 +476,12 @@ label {
       -ms-flex-align: center;
           align-items: center;
   height: 100%;
+  max-width: 100%;
 }
 
 .imageSelect-FilePreview {
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
-  z-index: -1;
   max-width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
@@ -621,10 +622,10 @@ label {
 .move-right {
   -webkit-animation-name: move-right;
           animation-name: move-right;
-  -webkit-animation-duration: 0.2s;
-          animation-duration: 0.2s;
-  -webkit-animation-timing-function: steps(3, end);
-          animation-timing-function: steps(3, end);
+  -webkit-animation-duration: 2s;
+          animation-duration: 2s;
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
 }
 
 @-webkit-keyframes move-left {
@@ -650,8 +651,8 @@ label {
           animation-name: move-left;
   -webkit-animation-duration: 0.2s;
           animation-duration: 0.2s;
-  -webkit-animation-timing-function: steps(3, end);
-          animation-timing-function: steps(3, end);
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
 }
 
 @-webkit-keyframes foreground-shrink {
@@ -677,12 +678,10 @@ label {
 }
 
 .foreground-shrink {
-  -webkit-animation-name: foreground-shrink;
-          animation-name: foreground-shrink;
   -webkit-animation-duration: 0.2s;
           animation-duration: 0.2s;
-  -webkit-animation-timing-function: steps(3, end);
-          animation-timing-function: steps(3, end);
+  -webkit-animation-timing-function: ease-out;
+          animation-timing-function: ease-out;
   -webkit-animation-fill-mode: forwards;
           animation-fill-mode: forwards;
 }
@@ -695,9 +694,9 @@ label {
   height: 80%;
   width: 100%;
   z-index: 2;
-  bottom: 0;
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
+  opacity: 0;
 }
 
 .ArtworkInfo-preview-container {
@@ -719,10 +718,11 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  widows: 100%;
+  width: 100%;
 }
 
 .info-up {
+  opacity: 1;
   bottom: 0;
 }
 

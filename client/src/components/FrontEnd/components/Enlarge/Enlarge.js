@@ -29,6 +29,7 @@ export default class Enlarge extends React.Component{
                 file={this.props.file.foreground} 
                 containerClassName="enlarge-container" 
                 className="enlarge-preview foreground-image" 
+                previewName="foreground-preview"
                 onClick={this.props.onClick}
                 />
 
@@ -38,6 +39,7 @@ export default class Enlarge extends React.Component{
                     file={this.props.file.background} 
                     containerClassName="enlarge-container" 
                     className="enlarge-preview" 
+                    previewName="background-preview"
                     onClick={this.props.onClick}
                     />
                     :
@@ -52,6 +54,7 @@ export default class Enlarge extends React.Component{
         console.log(this.props)
         return(
             <div 
+            id="ArtworkInfo" 
             onClick={() => this.props.closeEnlarge()}
             className="enlargeContainer" id="enlargeContainer">
                 {this.props.file 

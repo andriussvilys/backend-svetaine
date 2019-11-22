@@ -20,7 +20,7 @@ const ArtworkInfo = (props) => {
     }
 
     return(
-        <div className="ArtworkInfo-container">
+        <div className="ArtworkInfo-container" id="ArtworkInfo">
             <div>
                 <h5>INFO:</h5>
                 <div>{props.file.foreground.artworkTitle}</div>

@@ -12,6 +12,7 @@ import Accordion from '../Accordion'
 import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
 import FilePreview from '../FilePreview';
+import Nav from './components/Nav/Nav'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -85,82 +86,9 @@ export default class FrontEndIndex extends React.Component{
                                     enlarge: this.context.enlarge
                                 }}
                             />
-                                                        <div
-                                className="Navbar"
-                                style={{
-                                    width: "4vw",
-                                    height: "100vh",
-                                    position: "absolute",
-                                    top: 0,
-                                    right: 0
-                                }}
-                            >
-                                <button
-                                    style={{
-                                        position: "absolute",
-                                        top: "8vw",
-                                        left: '0',
-                                        width: "4vw",
-                                        cursor: "pointer"
-                                    }}
-                                    onClick={() => this.context.viewNext()}
-                                    className={this.context.state.enlarge? null : "display-no"}
-                                >
-                                    <img alt="view next" src="/icons/point-right.png" />
-                                </button>
-                                <button
-                                    style={{
-                                        position: "absolute",
-                                        top: "12vw",
-                                        left: '0',
-                                        width: "4vw",
-                                        cursor: "pointer"
-                                    }}
-                                    onClick={() => this.context.viewPrev()}
-                                    className={this.context.state.enlarge? null : "display-no"}
-                                >
-                                    <img alt="view previous" src="/icons/point-left.png"/>
-                                </button>
-
-                                {/* <button
-                                    style={{
-                                        position: "absolute",
-                                        top: "16vw",
-                                        left: '0',
-                                        width: "4vw",
-                                        cursor: "pointer"
-                                    }}
-                                    onClick={() => this.context.viewPrev()}
-                                    className={this.context.state.enlarge? null : "display-no"}
-                                >
-                                    <img alt="view previous" src="/icons/up.png"/>
-                                </button>
-                                <button
-                                    style={{
-                                        position: "absolute",
-                                        top: "20vw",
-                                        left: '0',
-                                        width: "4vw",
-                                        cursor: "pointer"
-                                    }}
-                                    onClick={() => this.context.viewPrev()}
-                                    className={this.context.state.enlarge? null : "display-no"}
-                                >
-                                    <img alt="view previous" src="/icons/down.png"/>
-                                </button> */}
-                                    <div 
-                                    style={{
-                                        position: "absolute",
-                                        top: "16vw",
-                                        left: '0',
-                                        width: "4vw",
-                                        cursor: "pointer"
-                                    }}
-                                    onClick={() => this.context.showInfo()}
-                                >
-                                    <h1>i</h1>
-                                </div>
-                            </div>
+                            <Nav
+                                context={this.context}
+                            />
                             <Enlarge 
                                 nextEnlarge={this.context.state.nextEnlarge}
                                 file={this.context.state.enlarge}
