@@ -294,6 +294,9 @@ $background-color: rgb(77, 42, 13);
     cursor: pointer;
     grid-column-start: 3;
     grid-column-end: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .ImagesPreview--imageContainer{
     display: flex;
@@ -327,10 +330,9 @@ $background-color: rgb(77, 42, 13);
     position: absolute;
     transition: 0.4s all;
     z-index: -1;
-    object-fit: contain;
+    // object-fit: contain;
     display: flex;
     align-items: center;
-    height: 100%;
     max-width: 100%;
 }
 .imageSelect-FilePreview{
@@ -411,6 +413,8 @@ $background-color: rgb(77, 42, 13);
 
 #foreground{
     transition: 0.4s all;
+    z-index: 2;
+    opacity: 0.5;
     // z-index: 9999;
     // mix-blend-mode: screen;
 }
@@ -418,6 +422,16 @@ $background-color: rgb(77, 42, 13);
     // background-color: limegreen;
     z-index: 1;
     // right: 100%;
+    border: 2px solid white;
+    box-sizing: border-box;
+    z-index: 1;
+}
+.background-image{
+    object-fit: none;
+    border: 2px solid yellow;
+}
+.foreground-iamge{
+    border: 2px solid blue;
 }
 @keyframes move-right{
     0% {
@@ -479,14 +493,14 @@ $background-color: rgb(77, 42, 13);
     max-height: 100%;
     border: 1px solid;
     height: 100%;
-    flex: 1;
+    flex: 0 0 50px;
 }
 .ArtworkInfo-preview{
     border: 1px solid;
     height: 100%;
 }
 .ArtworkInfo-seeAlso-container{
-    height: 50%;
+    height: 150px;
     display: flex;
     width: 100%;
 }

@@ -2158,14 +2158,18 @@ export class Provider extends React.Component{
 
     this.viewNext = () => {
       const info = document.getElementById("ArtworkInfo")
-      let timeOut = null
-      if(info.classList.contains("info-up")){
-        info.classList.remove("info-up")
-        timeOut = 260
-      }
-      else{timeOut = 1}
-      setTimeout(() => {        
-        document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
+      const enlarge = this.state.enlarge
+      const background = document.getElementById("background").childNodes[0]
+      const foreground = document.getElementById("foreground").childNodes[0]
+      const backgroundContainer = document.getElementById("background")
+      const foregroundContainer = document.getElementById("foreground")
+
+      // let timeOut = null
+      // if(info.classList.contains("info-up")){
+      //   info.classList.remove("info-up")
+      //   timeOut = 260
+      // }
+      // else{timeOut = 1}
           const familyName = this.state.enlarge.foreground.artworkFamily
           if(!familyName){
               return
@@ -2178,18 +2182,82 @@ export class Provider extends React.Component{
           if(!nextPic){
               return
           }
-          let enlarge = this.state.enlarge
+          // foreground.style.opacity = 0
+
+
+
+          const fgHeight = foreground.clientHeight
+          const fgWidth = foreground.clientWidth
+
+
+
+          // background.style.height = `${fgHeight}px`
+          // background.style.width = `${fgWidth}px`
+
           enlarge.background = nextPic
-          document.getElementById("background").classList.add('move-right')
-          document.getElementsByClassName("foreground-image")[0].classList.add("foreground-shrink")
-          setTimeout(() => {
-            document.getElementById("background").classList.remove('move-right')
-          }, 400);
-          this.setState(enlarge, () => {
+          
+          background.onload = () => {
+            console.log("IMAGE LOADED")
+            const bgHeight = background.clientHeight
+            const bgWidth = background.clientWidth
+            console.log("image size")
+            console.log(`${bgWidth} x ${bgHeight}`)
+
+            foreground.style.height = `${bgHeight}px`
+            foreground.style.width = `${bgWidth}px`
+
+            background.style.height = `${fgHeight}px`
+            background.style.width = `${fgWidth}px`
+
+
+
+
+          }
+
+          // console.log(enlarge.background.clientHeight)
+          // console.log(enlarge.background.clientHeight)
+          this.setState({enlarge}, () => {
             enlarge.foreground = nextPic
+            this.setState({enlarge})
           })
-      }, timeOut);
     }
+    // this.viewNext = () => {
+    //   const info = document.getElementById("ArtworkInfo")
+    //   let timeOut = null
+    //   if(info.classList.contains("info-up")){
+    //     info.classList.remove("info-up")
+    //     timeOut = 260
+    //   }
+    //   else{timeOut = 1}
+    //   setTimeout(() => {        
+    //     document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
+    //       const familyName = this.state.enlarge.foreground.artworkFamily
+    //       if(!familyName){
+    //           return
+    //       }
+    //       const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
+    //       const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
+    //       let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
+    //       const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
+    //       const nextPic = this.state.artworkInfoData[nextPicName]
+    //       if(!nextPic){
+    //           return
+    //       }
+    //       let enlarge = this.state.enlarge
+    //       enlarge.background = nextPic
+    //       document.getElementById("background").classList.add('move-right')
+    //       document.getElementsByClassName("foreground-image")[0].classList.add("foreground-shrink")
+    //       setTimeout(() => {
+    //         document.getElementById("background").classList.remove('move-right')
+    //       }, 400);
+    //       this.setState(enlarge, () => {
+    //         enlarge.foreground = nextPic
+    //       })
+    //   }, timeOut);
+    // }
+
+
+
     this.viewPrev = () => {
       const info = document.getElementById("ArtworkInfo")
       info.classList.remove("info-up")

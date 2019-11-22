@@ -38,7 +38,7 @@ export default class Enlarge extends React.Component{
                     id="background"
                     file={this.props.file.background} 
                     containerClassName="enlarge-container" 
-                    className="enlarge-preview" 
+                    className="enlarge-preview background-image" 
                     previewName="background-preview"
                     onClick={this.props.onClick}
                     />
