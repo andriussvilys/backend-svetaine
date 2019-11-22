@@ -2206,8 +2206,8 @@ export class Provider extends React.Component{
             foreground.style.height = `${bgHeight}px`
             foreground.style.width = `${bgWidth}px`
 
-            background.style.height = `${fgHeight}px`
-            background.style.width = `${fgWidth}px`
+            // background.style.height = `${fgHeight}px`
+            // background.style.width = `${fgWidth}px`
 
 
 
