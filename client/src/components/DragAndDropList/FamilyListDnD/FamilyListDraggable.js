@@ -17,8 +17,6 @@ export default class DnDListDraggable extends React.Component{
     }
 
     render(){
-        console.log("DRAGGABLE PROPS")
-        console.log(this.props)
         return(
             <Context.Consumer>
                 {() => {

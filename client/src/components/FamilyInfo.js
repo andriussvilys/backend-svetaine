@@ -59,7 +59,9 @@ export default class FamilyInfo extends Component {
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     serverFileDir={this.context.state.serverFileDir}
                                 />
+                                {this.props.children}
                             </div>
+
 
                             <div className="imageInfo--box" style={{display: "block"}}>
                                 <div>
@@ -78,6 +80,14 @@ export default class FamilyInfo extends Component {
                             </div>
 
                             {/* <ThemeSelector/> */}
+
+    
+
+                            </div>
+
+                            <div className="familyInfo-child">
+                                <NavigationInfo />
+                            </div>
 
                             <div className="imageInfo--box">
                                 <span>record new family setup:</span>
@@ -102,13 +112,19 @@ export default class FamilyInfo extends Component {
                                 >
                                     SEND
                                 </Button>
-                            </div>      
-
-                            </div>
-
-                            <div className="familyInfo-child">
-                                <NavigationInfo />
-                            </div>
+                            </div>  
+                            <div className="imageInfo--box">
+                                <span>update files in the family:</span>
+                                <Button
+                                 variant="primary" 
+                                 size="sm"
+                                 onClick={
+                                    () => this.context.fileDataMethods.updateArtworkByFamily(this.context.state.familySetupData.artworkFamily)
+                                 }
+                                >
+                                    SEND
+                                </Button>
+                            </div>  
 
 
                         </div>

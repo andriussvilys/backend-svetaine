@@ -7,6 +7,12 @@ import DnDListContainer from './DragAndDropList/DnDListContainer'
 import FilePreview from './FileUpload/FilePreview';
 import FamilyList from './FileUpload/FamilyList';
 import ServerFileUpdate from './EditPage/ServerFileUpdate';
+import FamilyEditor from './EditPage/FamilyEditor/FamilyEditor';
+import Accordion from './Accordion';
+import DropDownList from './DropDownList'
+import FamilyInfo from './FamilyInfo';
+import ChangeIndex from './DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
+import BootstrapModal from './BootstrapModal';
 
 export default class Edit extends Component{
     static contextType = Context;
@@ -46,11 +52,30 @@ export default class Edit extends Component{
                         return(
                                 <Switch>
                                     <Route exact path="/admin/edit">
-                                        <EditDetailContainer 
-                                            context={this.context}
-                                            state={this.context.state}
-                                            familySetupMethods={this.context.familySetupMethods}
-                                        />
+                                        <Accordion
+                                            title="Edit by artwork"
+                                        >
+                                            <EditDetailContainer 
+                                                context={this.context}
+                                                state={this.context.state}
+                                                familySetupMethods={this.context.familySetupMethods}
+                                            />
+                                        </Accordion>
+                                        {/* <FamilyEditor
+                                             context={this.context}
+                                        >
+                                        </FamilyEditor> */}
+                                        <FamilyInfo>
+                                            <Accordion
+                                                title="Change display indexes"
+                                            >
+                                                <ChangeIndex 
+                                                    data={this.context.state.relatedArtwork[this.context.state.familySetupData.artworkFamily]}
+                                                    fileName="n/a"
+                                                    artworkFamily={this.context.state.familySetupData.artworkFamily}
+                                                />
+                                            </Accordion>
+                                        </FamilyInfo>
                                     </Route>
                                     <Route 
                                         path="/admin/edit/:fileName"
@@ -89,6 +114,11 @@ export default class Edit extends Component{
                                             }
                                         }
                                     /> 
+                                    <BootstrapModal 
+                                        showModal={this.context.state.showModal}
+                                        message="updating database"
+                                        onClose={this.context.onClose}
+                                    />
                                 </Switch>
                         )
                     }

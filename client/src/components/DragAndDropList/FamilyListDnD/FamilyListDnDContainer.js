@@ -28,15 +28,6 @@ export default class FamilyListDnDContainer extends React.Component{
         )
     }
 
-    // familyListData = () => {
-    //     if(!this.props.file.artworkFamily){
-    //        return null
-    //     }
-    //     else{
-    //         return this.context.state.relatedArtwork[this.props.artworkFamily]
-    //     }
-    // } 
-
     render(){
         return(
             <Context.Consumer>

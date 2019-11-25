@@ -8,8 +8,6 @@ export default class DndListDroppable extends React.Component{
     static contextType = Context;
 
     render(){
-        console.log('DROPPABLE PROPS')
-        console.log(this.props)
         return(
             <Context.Consumer>
                 {() => {

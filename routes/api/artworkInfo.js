@@ -104,6 +104,9 @@ router.delete('/delete/:id', (req, res) => {
 })
 
 router.put("/update/:fileName", (req, res, next) => {
+    console.log('udate file runs')
+    console.log(req.params.fileName)
+    console.log(req.body.familyDisplayIndex)
 
     const obj = {}
     Object.keys(req.body).forEach(key => {
@@ -112,13 +115,13 @@ router.put("/update/:fileName", (req, res, next) => {
         }
         obj[key] = req.body[key]
     })
-    console.log('req.params')
-    console.log(req.params.fileName)
+    // console.log('req.params')
+
 
     ArtworkInfo.findOneAndUpdate(
       { fileName: req.params.fileName },  // <-- find stage
       { $set: obj },
-      {new: true}
+      {new: true, overwrite: true, upsert: false}
     )
 
     .then(newObj => {

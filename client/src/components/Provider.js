@@ -931,6 +931,37 @@ export class Provider extends React.Component{
         })
     },
 
+        updateArtworkByFamily: (familyName) => {
+
+            this.familySetupMethods.updateFamilySetup(this.state.familySetupData.artworkFamily)
+
+            const fileNamesInFamily = Object.keys(this.state.relatedArtwork[familyName].files)
+            const updateLength = fileNamesInFamily.length
+            let progress = 0
+            if(updateLength > 0){
+                this.state.relatedArtwork[familyName].column.fileIds.forEach((fileName, index) => {
+                    const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
+
+                    let fileData = this.state.familySetupData
+                    delete fileData.__v
+                    delete fileData._id
+                    delete fileData.relatedArtwork
+                    fileData = {...fileData, familyDisplayIndex}
+                    console.log(fileData)
+                    axios.put(`/api/artworkInfo/update/${fileName}`, fileData)
+                        .then(res => {
+                            console.log(fileData)
+                            progress += 1
+                            console.log(`progress: ${progress}/${updateLength}`)
+                            if(progress === updateLength){
+                                axios.get(`/api/artworkInfo/${familyName}`)
+                                    .then(res => console.log(res))
+                            }
+                        })
+                })
+            }
+        },
+
         postArtworkInfo: (file) => {
             
             return new Promise((resolve, rej) => {
@@ -1538,13 +1569,22 @@ export class Provider extends React.Component{
                         let fileIds = []
 
                         Object.keys(relatedArtwork).forEach(fileName => {
-                            if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex > 0){
-                                fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                            }
-                            else{
-                                return fileIds.push(fileName)
-                            }
+                            fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                            // if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex >= 0){
+                            //     if(!fileIds[relatedArtwork[fileName].familyDisplayIndex]){
+                            //         fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                            //     }
+                            //     else{
+                            //         fileIds.push(fileName)
+                            //     }
+                            // }
+                            // else{
+                            //     fileIds.push(fileName)
+                            // }
                         })
+                        //     console.log('fileIDs before filter', fileIds)
+                        //     fileIds = fileIds.filter(item => item !== undefined)
+                        //     console.log('fileIDs AFTER filter', fileIds)
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,
                                 column: {
