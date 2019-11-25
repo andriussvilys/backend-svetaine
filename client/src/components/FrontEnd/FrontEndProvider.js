@@ -2095,6 +2095,7 @@ export class Provider extends React.Component{
             imageSelect.style.width = "100%"
         }, 200);
     }
+
     this.enlarge = (id) => {
             const file = this.state.artworkOnDisplay[id]
             const imageSelect = document.getElementById('imageSelect')
@@ -2221,41 +2222,42 @@ export class Provider extends React.Component{
             this.setState({enlarge})
           })
     }
-    // this.viewNext = () => {
-    //   const info = document.getElementById("ArtworkInfo")
-    //   let timeOut = null
-    //   if(info.classList.contains("info-up")){
-    //     info.classList.remove("info-up")
-    //     timeOut = 260
-    //   }
-    //   else{timeOut = 1}
-    //   setTimeout(() => {        
-    //     document.getElementsByClassName("foreground-image")[0].classList.remove("foreground-shrink")
-    //       const familyName = this.state.enlarge.foreground.artworkFamily
-    //       if(!familyName){
-    //           return
-    //       }
-    //       const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
-    //       const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
-    //       let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
-    //       const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
-    //       const nextPic = this.state.artworkInfoData[nextPicName]
-    //       if(!nextPic){
-    //           return
-    //       }
-    //       let enlarge = this.state.enlarge
-    //       enlarge.background = nextPic
-    //       document.getElementById("background").classList.add('move-right')
-    //       document.getElementsByClassName("foreground-image")[0].classList.add("foreground-shrink")
-    //       setTimeout(() => {
-    //         document.getElementById("background").classList.remove('move-right')
-    //       }, 400);
-    //       this.setState(enlarge, () => {
-    //         enlarge.foreground = nextPic
-    //       })
-    //   }, timeOut);
-    // }
 
+    const loadEnlarge = (id) => {
+      const file = this.state.artworkOnDisplay[id]
+      if(enlargeCounter === 0){
+          const background = document.getElementById("background") 
+          background.style.opacity = 0
+          background.style.left = 0
+          background.style.width = "auto"
+
+          let newState = {...this.state}
+          let enlarge = {}
+          enlarge.background = file
+          this.setState({enlarge})
+  
+          const enlargeWidth = `${background.clientWidth}px`;
+          $('#enlarge2').css('width', enlargeWidth);
+  
+          $('#enlarge2').animate({opacity: 1}, 500);    
+          $('#storecontainer').animate({width: `${$('#enlarge2').width()}px`}, 350, 'easeInQuad');
+          
+  
+          clickRetract();
+          enlargeCounter = 1;
+  
+          setTimeout(() => {
+              $('#enlarge1').attr('src', `${e.target.src}`);
+          }, 400);
+      }        
+  
+      else{
+  
+          let x = e.target.src
+          containerEnlarge(x);
+          // containerEnlarge(e);
+      }
+  }
 
 
     this.viewPrev = () => {
