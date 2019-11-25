@@ -83,7 +83,8 @@ export default class FrontEndIndex extends React.Component{
                             <ImageSelect 
                                 data={this.context.state.artworkInfoData} 
                                 methods={{
-                                    enlarge: this.context.enlarge
+                                    enlarge: this.context.enlarge,
+                                    loadEnlarge: this.context.loadEnlarge
                                 }}
                             />
                             <Nav

@@ -599,6 +599,7 @@ label {
   transition: 0.4s all;
   z-index: 2;
   opacity: 0.5;
+  width: auto !important;
 }
 
 #background {

@@ -2223,40 +2223,48 @@ export class Provider extends React.Component{
           })
     }
 
-    const loadEnlarge = (id) => {
+    this.loadEnlarge = (id) => {
       const file = this.state.artworkOnDisplay[id]
-      if(enlargeCounter === 0){
+      console.log(file)
+      let enlarge = {}
+      enlarge.foreground = file
+      enlarge.background = file
+      // if(enlargeCounter === 0){
+        this.setState({enlarge}, () => {
+          console.log('enlarge')
+          console.log(this.state.enlarge)
           const background = document.getElementById("background") 
+          const container = document.getElementById("enlargeContainer") 
           background.style.opacity = 0
           background.style.left = 0
           background.style.width = "auto"
-
-          let newState = {...this.state}
-          let enlarge = {}
-          enlarge.background = file
-          this.setState({enlarge})
-  
-          const enlargeWidth = `${background.clientWidth}px`;
-          $('#enlarge2').css('width', enlargeWidth);
-  
-          $('#enlarge2').animate({opacity: 1}, 500);    
-          $('#storecontainer').animate({width: `${$('#enlarge2').width()}px`}, 350, 'easeInQuad');
           
-  
-          clickRetract();
-          enlargeCounter = 1;
+
+          let enlargeWidth = `${background.clientWidth}px`;
+          if(background.clientWidth <= 0){
+            enlargeWidth = "200px"
+          }
+          background.style.width = enlargeWidth
+          background.style.opacity = 1 
+          container.style.width = enlargeWidth
+          
+          // clickRetract();
+          // enlargeCounter = 1;
   
           setTimeout(() => {
-              $('#enlarge1').attr('src', `${e.target.src}`);
+            enlarge.background = file
+            this.setState({enlarge})
           }, 400);
-      }        
+        })
+
+      // }        
   
-      else{
+      // else{
   
-          let x = e.target.src
-          containerEnlarge(x);
-          // containerEnlarge(e);
-      }
+      //     let x = e.target.src
+      //     containerEnlarge(x);
+      //     // containerEnlarge(e);
+      // }
   }
 
 
@@ -2841,6 +2849,7 @@ export class Provider extends React.Component{
             listitemChecked: this.listitemChecked,
 
             enlarge: this.enlarge,
+            loadEnlarge: this.loadEnlarge,
             closeEnlarge: this.closeEnlarge,
 
             viewNext: this.viewNext,
