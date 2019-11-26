@@ -2245,7 +2245,7 @@ export class Provider extends React.Component{
             const foreground = document.getElementById("foreground") 
             const container = document.getElementById("enlargeContainer") 
 
-            background.style.opacity = 0
+            // background.style.opacity = 0
             // const enlargeWidth = `${backgroundImage.naturalWidth}px`;
             const enlargeWidth = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
             background.style.width = "100%"
@@ -2832,7 +2832,15 @@ export class Provider extends React.Component{
                     })
             })
 
-            Promise.all([Categories, ArtworkInfo, Themes])
+            let serverFiles = new Promise ((resolve, rej) => {
+              axios.get('/fetchimages')
+                .then(res => {
+                  newState.serverData = res
+                  resolve()
+                })
+            })
+
+            Promise.all([Categories, ArtworkInfo, Themes, serverFiles])
                 .then(res => {
                     newState.showModal = false
                     this.setState(newState)

@@ -750,6 +750,10 @@ export class Provider extends React.Component{
 
                         reader.onload = () => {
 
+                            console.log('upload file')
+                            console.log(file)
+                            console.log(reader)
+
                             obj.files[file.name] = {                    
                                 preview: reader.result,
                                 file: fileInput[index],
