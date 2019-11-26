@@ -31,6 +31,7 @@ export default class Enlarge extends React.Component{
                 className="enlarge-preview foreground-image" 
                 previewName="foreground-preview"
                 onClick={this.props.onClick}
+                noWrapper={true}
                 />
 
                 {this.props.file.background ?
@@ -41,12 +42,26 @@ export default class Enlarge extends React.Component{
                     className="enlarge-preview background-image" 
                     previewName="background-preview"
                     onClick={this.props.onClick}
+                    noWrapper={true}
                     />
                     :
                     null
                 }
             </Fragment>
         )
+    }
+    createPreview = (source) => {
+        console.log("createpreview")
+        console.log(this.props)
+        return                 <FilePreview 
+        id="foreground"
+        file={this.props.file.foreground} 
+        containerClassName="enlarge-container" 
+        className="enlarge-preview foreground-image" 
+        previewName="foreground-preview"
+        onClick={this.props.onClick}
+        noWrapper={true}
+        />
     }
 
     render(){
@@ -57,16 +72,37 @@ export default class Enlarge extends React.Component{
             id="ArtworkInfo" 
             onClick={() => this.props.closeEnlarge()}
             className="enlargeContainer" id="enlargeContainer">
-                {this.props.file 
+                <Fragment>
+                    <div id="foreground">
+                        {this.props.file ? this.createPreview(this.props.file.foreground) : null}
+                    </div>
+
+                    <div id="background">
+                        {this.props.file ? this.createPreview(this.props.file.background) : null}
+                    </div>
+
+                    {() => {
+                        if(this.props.file){
+                            return <ArtworkInfo 
+                                file={this.props.file} 
+                                artworkInfoData={this.props.artworkInfoData}
+                            />
+                        }
+                        else{return null}
+                    }}
+
+                </Fragment>
+
+                {/* {this.props.file 
                 ? this.pushNew()
-                : null}
-                {this.props.file
+                : null} */}
+                {/* {this.props.file
                 ? <ArtworkInfo 
                     file={this.props.file} 
                     artworkInfoData={this.props.artworkInfoData}
                     />
                 : null
-                }
+                } */}
             </div>
         )
     }

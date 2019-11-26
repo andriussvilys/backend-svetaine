@@ -12,10 +12,8 @@ export default class FilePreview extends React.Component{
         const previewSource = file.filePath ? file.filePath : file.preview
 
         if(fileType.match('image')){
-            let image = <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
-            return(
-                    image
-            )
+            return <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
+          
         }
         if(fileType.match('video')){
             return(
@@ -47,19 +45,23 @@ export default class FilePreview extends React.Component{
     }
 
     render(){
-        return(
+        if(this.props.noWrapper){
+            return this.fileContainer(this.props.file.fileType, this.props.file)
+        }
+        else{
+            return(
+            <div className="ImagesPreview--imageContainer">
+                {this.fileContainer(this.props.file.fileType, this.props.file)}
+                {/* <input
+                type="text" 
+                className="ImagesPreview--fileName"
+                placeholder={this.props.file.fileName}
+                >
+                </input> */}
+            </div>
+            )
+        }
 
-        <div className="ImagesPreview--imageContainer">
-            {this.fileContainer(this.props.file.fileType, this.props.file)}
-            {/* <input
-            type="text" 
-            className="ImagesPreview--fileName"
-            placeholder={this.props.file.fileName}
-            >
-            </input> */}
-        </div>
-
-        )
     }
 }
 

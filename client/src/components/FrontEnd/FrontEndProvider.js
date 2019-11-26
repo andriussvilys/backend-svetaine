@@ -2224,38 +2224,42 @@ export class Provider extends React.Component{
     }
 
     this.loadEnlarge = (id) => {
-      const file = this.state.artworkOnDisplay[id]
-      console.log(file)
-      let enlarge = {}
-      enlarge.foreground = file
-      enlarge.background = file
-      // if(enlargeCounter === 0){
-        this.setState({enlarge}, () => {
-          console.log('enlarge')
-          console.log(this.state.enlarge)
-          const background = document.getElementById("background") 
-          const container = document.getElementById("enlargeContainer") 
-          background.style.opacity = 0
-          background.style.left = 0
-          background.style.width = "auto"
-          
+      if(!this.state.enlarge || !this.state.enlarge.open){
+        const file = this.state.artworkOnDisplay[id]
+        let enlarge = {}
+        enlarge.foreground = file
+        enlarge.background = file
 
-          let enlargeWidth = `${background.clientWidth}px`;
-          if(background.clientWidth <= 0){
-            enlargeWidth = "200px"
-          }
-          background.style.width = enlargeWidth
-          background.style.opacity = 1 
-          container.style.width = enlargeWidth
-          
-          // clickRetract();
-          // enlargeCounter = 1;
-  
-          setTimeout(() => {
-            enlarge.background = file
-            this.setState({enlarge})
-          }, 400);
-        })
+          this.setState({enlarge}, () => {
+            const background = document.getElementById("background") 
+            const foreground = document.getElementById("foreground") 
+            const container = document.getElementById("enlargeContainer") 
+
+            background.style.opacity = 0
+            background.style.width = "auto"
+            
+            let enlargeWidth = `${background.clientWidth}px`;
+            background.style.width = "100%"
+            console.log('enlargeWidth', enlargeWidth)
+            // if(background.clientWidth <= 0){
+            //   enlargeWidth = "200px"
+            // }
+            // background.style.width = enlargeWidth
+            background.style.opacity = 1 
+            container.style.width = enlargeWidth
+            background.style.left = 0
+            
+            // clickRetract();
+            // enlargeCounter = 1;
+    
+            setTimeout(() => {
+              let newState = {...this.state}
+              newState.enlarge.foreground = file
+              newState.enlarge.open = true
+              this.setState(newState, () => {foreground.style.opacity = 1})
+            }, 2000);
+          })
+      }
 
       // }        
   
