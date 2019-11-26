@@ -2223,44 +2223,55 @@ export class Provider extends React.Component{
           })
     }
 
+    this.countWidth = (containerHeight, naturalHeight, naturalWidth) => {
+      console.log('CountWidht')
+      console.log(containerHeight)
+      console.log(naturalWidth)
+      const sizeRatio = naturalHeight / containerHeight
+      return Math.round(naturalWidth / sizeRatio)
+    }
+
     this.loadEnlarge = (id) => {
-      if(!this.state.enlarge || !this.state.enlarge.open){
+      // if(!this.state.enlarge || !this.state.enlarge.open){
         const file = this.state.artworkOnDisplay[id]
-        let enlarge = {}
-        enlarge.foreground = file
+        let enlarge = {...this.state.enlarge}
+        // enlarge.foreground = file
         enlarge.background = file
 
           this.setState({enlarge}, () => {
+            // const background = document.getElementById("background") 
+            const backgroundImage = document.getElementById(id) 
             const background = document.getElementById("background") 
             const foreground = document.getElementById("foreground") 
             const container = document.getElementById("enlargeContainer") 
 
             background.style.opacity = 0
-            background.style.width = "auto"
-            
-            let enlargeWidth = `${background.clientWidth}px`;
+            // const enlargeWidth = `${backgroundImage.naturalWidth}px`;
+            const enlargeWidth = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
             background.style.width = "100%"
             console.log('enlargeWidth', enlargeWidth)
+            container.style.width = `${enlargeWidth}px`
+
             // if(background.clientWidth <= 0){
             //   enlargeWidth = "200px"
             // }
             // background.style.width = enlargeWidth
             background.style.opacity = 1 
             container.style.width = enlargeWidth
-            background.style.left = 0
+            // background.style.left = 0
+            foreground.style.opacity = 0
             
             // clickRetract();
             // enlargeCounter = 1;
     
             setTimeout(() => {
+              console.log('enlargeWidth', enlargeWidth)
               let newState = {...this.state}
               newState.enlarge.foreground = file
               newState.enlarge.open = true
               this.setState(newState, () => {foreground.style.opacity = 1})
-            }, 2000);
+            }, 400);
           })
-      }
-
       // }        
   
       // else{

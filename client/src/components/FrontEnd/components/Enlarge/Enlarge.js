@@ -50,14 +50,12 @@ export default class Enlarge extends React.Component{
             </Fragment>
         )
     }
-    createPreview = (source) => {
-        console.log("createpreview")
-        console.log(this.props)
+    createPreview = (source, imageName) => {
         return                 <FilePreview 
         id="foreground"
-        file={this.props.file.foreground} 
+        file={source} 
         containerClassName="enlarge-container" 
-        className="enlarge-preview foreground-image" 
+        className={`enlarge-preview ${imageName}`}
         previewName="foreground-preview"
         onClick={this.props.onClick}
         noWrapper={true}
@@ -65,8 +63,6 @@ export default class Enlarge extends React.Component{
     }
 
     render(){
-        console.log('ENLARGE PROPS')
-        console.log(this.props)
         return(
             <div 
             id="ArtworkInfo" 
@@ -74,11 +70,11 @@ export default class Enlarge extends React.Component{
             className="enlargeContainer" id="enlargeContainer">
                 <Fragment>
                     <div id="foreground">
-                        {this.props.file ? this.createPreview(this.props.file.foreground) : null}
+                        {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image') : null}
                     </div>
 
                     <div id="background">
-                        {this.props.file ? this.createPreview(this.props.file.background) : null}
+                        {this.props.file ? this.createPreview(this.props.file.background, 'background-image') : null}
                     </div>
 
                     {() => {
