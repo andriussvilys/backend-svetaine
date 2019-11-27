@@ -345,11 +345,11 @@ label {
 
 .TagsMenu-container {
   width: 250px;
-  background-color: #ff8dff;
+  background-color: #351908;
 }
 
 .TagsMenu-Card {
-  background-color: #ff8dff !important;
+  background-color: #351908 !important;
 }
 
 .tagsMenu-Button_category {
@@ -368,8 +368,16 @@ label {
   color: white !important;
 }
 
-.NavBar {
-  background-color: #ff8dff;
+.Navbar {
+  background-color: #351908;
+  width: 4vw;
+  height: 100%;
+  position: relative;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  -ms-grid-column: 3;
+      grid-column-start: 3;
 }
 
 .frontEndIndex-container {
@@ -377,31 +385,55 @@ label {
   width: 100vw;
   display: -ms-grid;
   display: grid;
-  -ms-grid-columns: min-content minmax(120px, 1fr) minmax(0, min-content) 75px;
-      grid-template-columns: -webkit-min-content minmax(120px, 1fr) minmax(0, -webkit-min-content) 75px;
-      grid-template-columns: min-content minmax(120px, 1fr) minmax(0, min-content) 75px;
-  border: 8px solid #ff8dff;
+  -ms-grid-columns: min-content 1fr max-content;
+      grid-template-columns: -webkit-min-content 1fr -webkit-max-content;
+      grid-template-columns: min-content 1fr max-content;
+  border: 8px solid #351908;
   border-left: 0;
-  background-color: #4d2a0d;
+  background-color: white;
   position: relative;
 }
 
 .imageSelect-container {
   overflow-y: auto;
   overflow-x: hidden;
-  background-color: #4d2a0d;
+  background-color: white;
+  overflow-y: auto;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 2;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+#images {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: minmax(120px, 1fr) max-content;
+      grid-template-columns: minmax(120px, 1fr) -webkit-max-content;
+      grid-template-columns: minmax(120px, 1fr) max-content;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
+  position: absolute;
+  width: 100%;
+  height: 100%;
 }
 
 .enlargeContainer {
-  -ms-grid-column: 3;
-      grid-column-start: 3;
-  grid-column-end: 4;
+  -ms-grid-column: 2;
+      grid-column-start: 2;
+  grid-column-end: 3;
   -ms-grid-row: 1;
       grid-row-start: 1;
   height: 100%;
+  width: 100%;
   max-height: calc(100vh - 10px);
   width: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   position: relative;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -439,35 +471,54 @@ label {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  bottom: 0;
 }
 
 #foreground {
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
-  width: auto;
   position: absolute;
   z-index: 2;
   width: 100%;
   mix-blend-mode: luminosity;
+  max-height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 #background {
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
   z-index: 1;
-  width: auto;
+  width: 100%;
   position: absolute;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .background-image {
   height: 100%;
   width: 100%;
+  max-height: 100%;
 }
 
 .foreground-image {
   width: 100%;
   height: 100%;
+  max-height: 100%;
 }
 
 .imageSelect-FilePreview {

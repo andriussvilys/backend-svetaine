@@ -80,22 +80,26 @@ export default class FrontEndIndex extends React.Component{
                             <TagsMenu context={this.context}>
                                 {this.props ? this.adminButtons(this.props) : null}
                             </TagsMenu>
-                            <ImageSelect 
-                                data={this.context.state.artworkInfoData} 
-                                methods={{
-                                    enlarge: this.context.enlarge,
-                                    loadEnlarge: this.context.loadEnlarge
-                                }}
-                            />
+
+                            <div id="images">
+                                <ImageSelect 
+                                    data={this.context.state.artworkInfoData} 
+                                    methods={{
+                                        enlarge: this.context.enlarge,
+                                        loadEnlarge: this.context.loadEnlarge
+                                    }}
+                                />
+                                <Enlarge 
+                                    nextEnlarge={this.context.state.nextEnlarge}
+                                    file={this.context.state.enlarge}
+                                    closeEnlarge={this.context.closeEnlarge}
+                                    onClick={this.context.closeEnlarge}
+                                    artworkInfoData={this.context.state.artworkInfoData}
+                                />
+                            </div>
+
                             <Nav
                                 context={this.context}
-                            />
-                            <Enlarge 
-                                nextEnlarge={this.context.state.nextEnlarge}
-                                file={this.context.state.enlarge}
-                                closeEnlarge={this.context.closeEnlarge}
-                                onClick={this.context.closeEnlarge}
-                                artworkInfoData={this.context.state.artworkInfoData}
                             />
 
 

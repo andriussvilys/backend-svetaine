@@ -5,14 +5,6 @@ const Nav = (props) => {
         <div
 className="Navbar"
 style={{
-    width: "4vw",
-    height: "100vh",
-    position: "relative",
-    top: 0,
-    right: 0,
-    zIndex: 2,
-    backgroundColor: "lime",
-    gridColumnStart: 4,
 }}
 >
 <button

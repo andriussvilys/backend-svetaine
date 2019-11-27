@@ -77,15 +77,8 @@ export default class Enlarge extends React.Component{
                         {this.props.file ? this.createPreview(this.props.file.background, 'background-image') : null}
                     </div>
 
-                    {() => {
-                        if(this.props.file){
-                            return <ArtworkInfo 
-                                file={this.props.file} 
-                                artworkInfoData={this.props.artworkInfoData}
-                            />
-                        }
-                        else{return null}
-                    }}
+                    <div id="ArtworkInfo"></div>
+                    {/* {this.props.file.foreground ? <ArtworkInfo file={this.props.file.foreground} artworkInfoData={this.props.artworkInfoData}/> : null} */}
 
                 </Fragment>
 
