@@ -2146,28 +2146,24 @@ export class Provider extends React.Component{
             }
     }
     this.closeEnlarge = () => {
-        // document.getElementById('enlargeContainer').style.zIndex = "-1"
-        // document.getElementById('imageSelect').classList.remove("minimized")
-        // this.extendImageSelect()
-        // setTimeout(() => {
-        //     let newState = {...this.state}
-        //     newState.enlarge = null
-        //     newState.nextEnlarge = null
-        //     this.setState(newState)
-        // }, 400);
-        const foreground = document.getElementById('foreground')
-        const background = document.getElementById('background')
+      console.log("run close Enlarge")
+        // const foreground = document.getElementById('foreground')
+        // const background = document.getElementById('background')
 
-        const height = `${foreground.clientHeight}px`
-        const width = `${foreground.clientWidth}px`
+        // const height = `${foreground.clientHeight}px`
+        // const width = `${foreground.clientWidth}px`
 
-        foreground.style.width = width
-        foreground.style.height = height
+        // foreground.style.width = width
+        // foreground.style.height = height
 
-        background.style.width = width
-        background.style.height = height
+        // background.style.width = width
+        // background.style.height = height
+        const enlargeContainer = document.getElementById('enlargeContainer')
+        const imagesWidth = document.getElementById('images').clientWidth
+        const scale = document.getElementById('enlargeContainer').clientWidth
+        enlargeContainer.style.transform = `scaleX(${scale}) translateX(100%)`
+        document.getElementById('imageSelect').style.width = `${imagesWidth}px`
 
-        document.getElementById('enlargeContainer').style.width = 0
         const enlarge = {...this.state.enlarge}
         enlarge.open = false
         this.setState({enlarge})
@@ -2253,6 +2249,8 @@ export class Provider extends React.Component{
       const background = document.getElementById("background") 
       const foreground = document.getElementById("foreground") 
       const container = document.getElementById("enlargeContainer") 
+      const imageSelect = document.getElementById("imageSelect")
+      const images = document.getElementById("images")
 
       foreground.classList.remove("foreground-transition")
 
@@ -2262,27 +2260,38 @@ export class Provider extends React.Component{
       foreground.classList.add("foreground-transition")
 
       this.setState({enlarge}, () => {
+        imageSelect.classList.remove("foreground-transition")
         const backgroundImage = document.getElementById(file.fileName) 
         const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
         const foregroundHeight = foreground.clientHeight
         console.log('futureSize', futureSize)
-        // container.style.width = `${futureSize.width}px`
-        
-        // background.style.width = `${futureSize.width}px`
+
+        imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+
+        if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width){
+          imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+        }
+        else{
+          imageSelect.style.transition = "0.4s all"
+          setTimeout(() => {
+            // imageSelect.classList.add("foreground-transition")
+            imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+          }, 300);
+        }
         
         if(this.state.enlarge.foreground){
           const scaleY =  foreground.clientHeight / futureSize.height 
           console.log('scaleY', scaleY)
           // foreground.style.transform = `scaleY(${scaleY})`
         }
-        
+
         background.style.transform = `scaleY(${futureSize.height})`
         foreground.style.transform = `scaleY(${futureSize.height})`
         // background.style.transform = `scale(${futureSize.width}, ${futureSize.height})`
         // foreground.style.transform = `scale(${futureSize.width}, ${futureSize.height})`
         
         container.style.transform = `scaleX(${futureSize.width})`
-        container.style.right = `${Math.round(futureSize.width / 2)}px`
+        // container.style.right = `${Math.round(futureSize.width / 2)}px`
 
         console.log(`scale(${futureSize.width}, ${futureSize.height})`)
         
@@ -2293,16 +2302,19 @@ export class Provider extends React.Component{
         foreground.style.opacity = 0
 
         setTimeout(() => {
+          imageSelect.style.transition = "none"
           console.log('futureSize', futureSize)
           let newState = {...this.state}
           newState.enlarge.foreground = file
+          newState.enlarge.currentWidth = futureSize.width
           newState.enlarge.open = true
           // foreground.style.transform = "scaleY(1)"
           // background.style.transform = "scaleY(1)"
           this.setState(newState, () => {
             foreground.style.opacity = 1
+
           })
-        }, 450);
+        }, 410);
       })
     }
 
