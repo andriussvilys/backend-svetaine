@@ -98,6 +98,7 @@ export default class ServerFileUpdate extends React.Component {
                     file={this.props.file}
                     fileName={this.props.file.fileName}
                     onChange={this.props.controls.fileDataMethods.onChange}
+                    state={this.props.context.state}
                 />
             </Accordion>
     

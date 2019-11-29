@@ -39,7 +39,8 @@ export default class ImageInfo extends Component{
                           <label htmlFor="mainDisplayIndex_yes">yes</label>
                           <input 
                             type="radio" 
-                            defaultChecked 
+                            // defaultChecked 
+                            checked={this.props.state.fileData.files[this.props.fileName].displayMain}
                             name="mainDisplayIndex" 
                             id="mainDisplayIndex__yes" 
                             value="yes" 
@@ -49,6 +50,7 @@ export default class ImageInfo extends Component{
                       <div className="container-radio">
                           <label htmlFor="mainDisplayIndex_no">no</label>
                           <input 
+                            checked={!this.props.state.fileData.files[this.props.fileName].displayMain}
                             type="radio" 
                             name="mainDisplayIndex" 
                             id="mainDisplayIndex__no" 

@@ -1933,9 +1933,9 @@ export class Provider extends React.Component{
         }
         //ON CHECK
         else{
-            newDisplay={...this.state.artworkOnDisplay}
-            Object.keys(this.state.artworkInfoData).forEach(fileName => {
-                const file = this.state.artworkInfoData[fileName]
+            newDisplay={...this.state.visibleArtwork}
+            Object.keys(this.state.visibleArtwork).forEach(fileName => {
+                const file = this.state.visibleArtwork[fileName]
                 if(Object.keys(file.category).includes(category)){
                     newDisplay = {...newDisplay, [fileName]: file}
                 }
@@ -2153,7 +2153,6 @@ export class Provider extends React.Component{
         const enlarge = {...this.state.enlarge}
         enlarge.open = false
         this.setState({enlarge})
-
     }
 
     this.viewNext = () => {
@@ -2176,11 +2175,24 @@ export class Provider extends React.Component{
       const maxWidth = document.getElementById("images").clientWidth - 120
       const sizeRatio = naturalHeight / containerHeight
       const naturalRation = naturalWidth / naturalHeight
+      // const naturalRation = naturalWidth / naturalHeight
       let futureWidth = Math.round(naturalWidth / sizeRatio)
+      console.log('natural W / H')
+      console.log(naturalWidth, naturalHeight)
+      console.log("naturalRation", naturalRation)
+      console.log('futurewidth BEFORE max width')
+      console.log(futureWidth)
+      let futureHeight = Math.round(futureWidth / naturalRation)
+      console.log('futureHeight', futureHeight)
       if(futureWidth > maxWidth){
         futureWidth = maxWidth
+        futureHeight = Math.round(maxWidth / naturalRation)
       }
-      let futureHeight = Math.round(futureWidth / naturalRation)
+      console.log('futurewidth After max width')
+      console.log(futureWidth)
+      console.log('futureHeight', futureHeight)
+
+      // let futureHeight = Math.round(futureWidth / naturalRation)
       futureHeight = futureHeight > containerHeight ? containerHeight : futureHeight
 
       return {width: futureWidth, height: futureHeight}
@@ -2200,39 +2212,66 @@ export class Provider extends React.Component{
 
       foreground.classList.add("foreground-transition")
 
+      const backgroundImage = new Promise((res, rej) => {
+        if(document.getElementById(file.fileName)){
+          console.log(document.getElementById(file.fileName))
+          if(document.getElementById(file.fileName).complete){
+            console.log('compelte')
+            res()
+          }
+        }
+      })
+        
+
       this.setState({enlarge}, () => {
         imageSelect.classList.remove("foreground-transition")
-        const backgroundImage = document.getElementById(file.fileName) 
-        const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
-
-        imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-
-        if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width){
-          imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-        }
-        else{
-          imageSelect.style.transition = "0.4s all"
-          setTimeout(() => {
-            imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-          }, 300);
-        }
-
-        background.style.transform = `scaleY(${futureSize.height})`
-        foreground.style.transform = `scaleY(${futureSize.height})`
-        container.style.transform = `scaleX(${futureSize.width})`
-        foreground.style.opacity = 0
-
-        setTimeout(() => {
-          imageSelect.style.transition = "none"
-          let newState = {...this.state}
-          newState.enlarge.foreground = file
-          newState.enlarge.currentWidth = futureSize.width
-          newState.enlarge.open = true
-          this.setState(newState, () => {
-            foreground.style.opacity = 1
+        backgroundImage.then(res => {
+              console.log('complete')
+              console.log(backgroundImage.naturalHeight)
+              console.log(backgroundImage.naturalWidth)
+              console.log("image loads")
+              console.log(backgroundImage.src)
+              console.log("W / H ON LOAD")
+              console.log(backgroundImage.clientWidth)
+              console.log(backgroundImage.clientHeight)
+      
+              const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
+      
+              imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+              
+              if(this.state.enlarge){
+                if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
+                  imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                }
+              }
+              else{
+                imageSelect.style.transition = "0.4s all"
+                setTimeout(() => {
+                  imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                }, 300);
+              }
+      
+              background.style.transform = `scaleY(${futureSize.height})`
+              foreground.style.transform = `scaleY(${futureSize.height})`
+              container.style.transform = `scaleX(${futureSize.width})`
+              foreground.style.opacity = 0
+      
+              console.log("futureSize", futureSize)
+      
+              setTimeout(() => {
+                imageSelect.style.transition = "none"
+                let newState = {...this.state}
+                newState.enlarge.foreground = file
+                newState.enlarge.currentWidth = futureSize.width
+                newState.enlarge.open = true
+                this.setState(newState, () => {
+                  foreground.style.opacity = 1
+                })
+              }, 410);
           })
-        }, 410);
       })
+      
+
     }
 
     this.loadEnlarge = (id) => {
@@ -2785,6 +2824,7 @@ export class Provider extends React.Component{
                         console.log('onDisplay')
                         console.log(onDisplay)
                         newState.artworkOnDisplay = onDisplay
+                        newState.visibleArtwork = onDisplay
                         resolve()
                     })
             })
@@ -2814,7 +2854,6 @@ export class Provider extends React.Component{
         }
 
     render(){
-        console.log(this.state)
     return(
         <Context.Provider value={ {
             state: this.state, 
