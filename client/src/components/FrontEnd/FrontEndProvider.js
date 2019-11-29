@@ -2254,28 +2254,43 @@ export class Provider extends React.Component{
       const foreground = document.getElementById("foreground") 
       const container = document.getElementById("enlargeContainer") 
 
+      foreground.classList.remove("foreground-transition")
+
       let enlarge = {...this.state.enlarge}
       enlarge.background = file
+
+      foreground.classList.add("foreground-transition")
+
       this.setState({enlarge}, () => {
         const backgroundImage = document.getElementById(file.fileName) 
         const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
         const foregroundHeight = foreground.clientHeight
-        // background.style.width = "100%"
         console.log('futureSize', futureSize)
-        container.style.width = `${futureSize.width}px`
-        background.style.height = `${futureSize.height}px`
-
+        // container.style.width = `${futureSize.width}px`
+        
+        // background.style.width = `${futureSize.width}px`
+        
         if(this.state.enlarge.foreground){
           const scaleY =  foreground.clientHeight / futureSize.height 
           console.log('scaleY', scaleY)
-  
-          background.style.transform = `scaleY(${scaleY})`
-          foreground.style.transform = `scaleY(${scaleY})`
+          // foreground.style.transform = `scaleY(${scaleY})`
         }
+        
+        background.style.transform = `scaleY(${futureSize.height})`
+        foreground.style.transform = `scaleY(${futureSize.height})`
+        // background.style.transform = `scale(${futureSize.width}, ${futureSize.height})`
+        // foreground.style.transform = `scale(${futureSize.width}, ${futureSize.height})`
+        
+        container.style.transform = `scaleX(${futureSize.width})`
+        container.style.right = `${Math.round(futureSize.width / 2)}px`
 
+        console.log(`scale(${futureSize.width}, ${futureSize.height})`)
+        
+        // background.style.transform = `scaleY(${futureSize.height})`
+        // foreground.style.transform = `scaleY(${futureSize.height})`
 
         // background.style.height = `${foregroundHeight}px`
-        // foreground.style.opacity = 0
+        foreground.style.opacity = 0
 
         setTimeout(() => {
           console.log('futureSize', futureSize)
@@ -2287,7 +2302,7 @@ export class Provider extends React.Component{
           this.setState(newState, () => {
             foreground.style.opacity = 1
           })
-        }, 2200);
+        }, 450);
       })
     }
 
@@ -2307,18 +2322,18 @@ export class Provider extends React.Component{
       let enlarge = {...this.state.enlarge}
       enlarge.background = file
 
-      if(!this.state.enlarge || !this.state.enlarge.open){
-        background.style.width = "100%" 
-        foreground.style.width = "100%" 
-        background.style.height = "auto"  
-        foreground.style.height = "auto"  
-      }
-      else{
-        background.style.width = "100%" 
-        background.style.height = "auto"  
-        foreground.style.width = "100%" 
-        foreground.style.height = "auto"  
-      }
+      // if(!this.state.enlarge || !this.state.enlarge.open){
+      //   background.style.width = "100%" 
+      //   foreground.style.width = "100%" 
+      //   background.style.height = "auto"  
+      //   foreground.style.height = "auto"  
+      // }
+      // else{
+      //   background.style.width = "100%" 
+      //   background.style.height = "auto"  
+      //   foreground.style.width = "100%" 
+      //   foreground.style.height = "auto"  
+      // }
 
       this.animateEnlarge(file)
   }
