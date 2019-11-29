@@ -2086,8 +2086,6 @@ export class Provider extends React.Component{
       })
         const imageSelect = document.getElementById('imageSelect')
         imageSelect.style.width = "25%"
-        // setTimeout(() => {          
-        // }, 00);
         setTimeout(() => {
             imageSelect.style.width = "50%"
         }, 100);
@@ -2146,18 +2144,6 @@ export class Provider extends React.Component{
             }
     }
     this.closeEnlarge = () => {
-      console.log("run close Enlarge")
-        // const foreground = document.getElementById('foreground')
-        // const background = document.getElementById('background')
-
-        // const height = `${foreground.clientHeight}px`
-        // const width = `${foreground.clientWidth}px`
-
-        // foreground.style.width = width
-        // foreground.style.height = height
-
-        // background.style.width = width
-        // background.style.height = height
         const enlargeContainer = document.getElementById('enlargeContainer')
         const imagesWidth = document.getElementById('images').clientWidth
         const scale = document.getElementById('enlargeContainer').clientWidth
@@ -2171,12 +2157,6 @@ export class Provider extends React.Component{
     }
 
     this.viewNext = () => {
-      const info = document.getElementById("ArtworkInfo")
-      const enlarge = this.state.enlarge
-      const background = document.getElementById("background").childNodes[0]
-      const foreground = document.getElementById("foreground").childNodes[0]
-      const backgroundContainer = document.getElementById("background")
-      const foregroundContainer = document.getElementById("foreground")
           const familyName = this.state.enlarge.foreground.artworkFamily
           if(!familyName){
               return
@@ -2189,58 +2169,19 @@ export class Provider extends React.Component{
           if(!nextPic){
               return
           }
-          // const fgHeight = foreground.clientHeight
-          // const fgWidth = foreground.clientWidth
-
-          // enlarge.background = nextPic
-          
-          // background.onload = () => {
-          //   console.log("IMAGE LOADED")
-          //   const bgHeight = background.clientHeight
-          //   const bgWidth = background.clientWidth
-          //   console.log("image size")
-          //   console.log(`${bgWidth} x ${bgHeight}`)
-
-          //   foreground.style.height = `${bgHeight}px`
-          //   foreground.style.width = `${bgWidth}px`
-          // }
-          // this.setState({enlarge}, () => {
-          //   enlarge.foreground = nextPic
-          //   this.setState({enlarge})
-          // })
           this.animateEnlarge(nextPic)
     }
 
     this.countWidth = (containerHeight, naturalHeight, naturalWidth) => {
-      console.log('CountWidht')
       const maxWidth = document.getElementById("images").clientWidth - 120
-      const foreground = document.getElementById("foreground")
-      const background = document.getElementById("background")
-      const foregroundHeight = foreground.clientHeight
       const sizeRatio = naturalHeight / containerHeight
       const naturalRation = naturalWidth / naturalHeight
-  
-
       let futureWidth = Math.round(naturalWidth / sizeRatio)
-
-      
       if(futureWidth > maxWidth){
         futureWidth = maxWidth
       }
       let futureHeight = Math.round(futureWidth / naturalRation)
       futureHeight = futureHeight > containerHeight ? containerHeight : futureHeight
-      const foregroundScale = futureHeight / foregroundHeight
-
-        let scale = futureHeight / foregroundHeight
-        // foreground.style.transform = `scaleY(${scale})`
-        // background.style.transform = `scaleY(${scale})`
-        
-        // foreground.style.transform = `scaleY(${foregroundScale})`
-        console.log("containerHeight", containerHeight)
-        console.log("naturalWidth", naturalWidth)
-        console.log("naturalHeight", naturalHeight)
-        console.log("futureHeight", futureHeight)
-        console.log("foregroundHeight", foregroundHeight)
 
       return {width: futureWidth, height: futureHeight}
     }
@@ -2263,8 +2204,6 @@ export class Provider extends React.Component{
         imageSelect.classList.remove("foreground-transition")
         const backgroundImage = document.getElementById(file.fileName) 
         const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
-        const foregroundHeight = foreground.clientHeight
-        console.log('futureSize', futureSize)
 
         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
 
@@ -2274,45 +2213,23 @@ export class Provider extends React.Component{
         else{
           imageSelect.style.transition = "0.4s all"
           setTimeout(() => {
-            // imageSelect.classList.add("foreground-transition")
             imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
           }, 300);
-        }
-        
-        if(this.state.enlarge.foreground){
-          const scaleY =  foreground.clientHeight / futureSize.height 
-          console.log('scaleY', scaleY)
-          // foreground.style.transform = `scaleY(${scaleY})`
         }
 
         background.style.transform = `scaleY(${futureSize.height})`
         foreground.style.transform = `scaleY(${futureSize.height})`
-        // background.style.transform = `scale(${futureSize.width}, ${futureSize.height})`
-        // foreground.style.transform = `scale(${futureSize.width}, ${futureSize.height})`
-        
         container.style.transform = `scaleX(${futureSize.width})`
-        // container.style.right = `${Math.round(futureSize.width / 2)}px`
-
-        console.log(`scale(${futureSize.width}, ${futureSize.height})`)
-        
-        // background.style.transform = `scaleY(${futureSize.height})`
-        // foreground.style.transform = `scaleY(${futureSize.height})`
-
-        // background.style.height = `${foregroundHeight}px`
         foreground.style.opacity = 0
 
         setTimeout(() => {
           imageSelect.style.transition = "none"
-          console.log('futureSize', futureSize)
           let newState = {...this.state}
           newState.enlarge.foreground = file
           newState.enlarge.currentWidth = futureSize.width
           newState.enlarge.open = true
-          // foreground.style.transform = "scaleY(1)"
-          // background.style.transform = "scaleY(1)"
           this.setState(newState, () => {
             foreground.style.opacity = 1
-
           })
         }, 410);
       })
@@ -2320,32 +2237,9 @@ export class Provider extends React.Component{
 
     this.loadEnlarge = (id) => {
 
-      const background = document.getElementById("background") 
-      const foreground = document.getElementById("foreground") 
-      const container = document.getElementById("enlargeContainer") 
-
-      // foreground.style.width = "100%" 
-      // foreground.style.height = "auto"  
-
-      // background.style.width = "100%" 
-      // background.style.height = "100%"  
-
       const file = this.state.artworkOnDisplay[id]
       let enlarge = {...this.state.enlarge}
       enlarge.background = file
-
-      // if(!this.state.enlarge || !this.state.enlarge.open){
-      //   background.style.width = "100%" 
-      //   foreground.style.width = "100%" 
-      //   background.style.height = "auto"  
-      //   foreground.style.height = "auto"  
-      // }
-      // else{
-      //   background.style.width = "100%" 
-      //   background.style.height = "auto"  
-      //   foreground.style.width = "100%" 
-      //   foreground.style.height = "auto"  
-      // }
 
       this.animateEnlarge(file)
   }
@@ -2367,15 +2261,6 @@ export class Provider extends React.Component{
             return
         }
         this.animateEnlarge(nextPic)
-        // let enlarge = this.state.enlarge
-        // enlarge.background = nextPic
-        // document.getElementById("background").classList.add('move-left')
-        // setTimeout(() => {
-        //   document.getElementById("background").classList.remove('move-left')
-        // }, 400);
-        // this.setState(enlarge, () => {
-        //   enlarge.foreground = nextPic
-        // })
     }
 
     this.showInfo = () => {
@@ -2387,11 +2272,6 @@ export class Provider extends React.Component{
         info.classList.remove('info-down')
       }
     }
-
-    // viewNextSeeAlso = () => {
-    //   const currentFile = this.state.enlarge.foreground.fileName
-    // }
-
 
     //this takes care of CATEGORIES used for navigation
     this.categoryMethods = {
@@ -2896,7 +2776,15 @@ export class Provider extends React.Component{
                 this.getArtworkInfo()
                     .then(res => {
                         newState.artworkInfoData = res
-                        newState.artworkOnDisplay = res
+                        let onDisplay = {}
+                        Object.keys(res).forEach(fileName => {
+                          if(res[fileName].displayMain){
+                            onDisplay = {...onDisplay, [fileName]: res[fileName]}
+                          }
+                        })
+                        console.log('onDisplay')
+                        console.log(onDisplay)
+                        newState.artworkOnDisplay = onDisplay
                         resolve()
                     })
             })

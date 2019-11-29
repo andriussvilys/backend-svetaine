@@ -10,6 +10,9 @@ export default class ImageSelect extends React.Component{
     }
 
     createPreviews = (data) => {
+        console.log("CREATE PREVIEWS")
+        console.log(data)
+        console.log(this.context.state.artworkOnDisplay)
         if(data){
             let previews = Object.keys(data).map(objName => {
                 return <FilePreview 
