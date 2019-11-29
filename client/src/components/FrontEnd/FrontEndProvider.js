@@ -2231,7 +2231,8 @@ export class Provider extends React.Component{
       if(futureWidth > maxWidth){
         futureWidth = maxWidth
       }
-      const futureHeight = Math.round(futureWidth / naturalRation)
+      let futureHeight = Math.round(futureWidth / naturalRation)
+      futureHeight = futureHeight > containerHeight ? containerHeight : futureHeight
       const foregroundScale = futureHeight / foregroundHeight
 
         let scale = futureHeight / foregroundHeight
@@ -2239,13 +2240,13 @@ export class Provider extends React.Component{
         // background.style.transform = `scaleY(${scale})`
         
         // foreground.style.transform = `scaleY(${foregroundScale})`
-      
+        console.log("containerHeight", containerHeight)
         console.log("naturalWidth", naturalWidth)
         console.log("naturalHeight", naturalHeight)
         console.log("futureHeight", futureHeight)
         console.log("foregroundHeight", foregroundHeight)
 
-      return futureWidth
+      return {width: futureWidth, height: futureHeight}
     }
 
     this.animateEnlarge = (file) => {
@@ -2257,17 +2258,27 @@ export class Provider extends React.Component{
       enlarge.background = file
       this.setState({enlarge}, () => {
         const backgroundImage = document.getElementById(file.fileName) 
-        const enlargeWidth = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
+        const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
         const foregroundHeight = foreground.clientHeight
         // background.style.width = "100%"
-        console.log('enlargeWidth', enlargeWidth)
-        container.style.width = `${enlargeWidth}px`
+        console.log('futureSize', futureSize)
+        container.style.width = `${futureSize.width}px`
+        background.style.height = `${futureSize.height}px`
+
+        if(this.state.enlarge.foreground){
+          const scaleY =  foreground.clientHeight / futureSize.height 
+          console.log('scaleY', scaleY)
+  
+          background.style.transform = `scaleY(${scaleY})`
+          foreground.style.transform = `scaleY(${scaleY})`
+        }
+
 
         // background.style.height = `${foregroundHeight}px`
-        foreground.style.opacity = 0
+        // foreground.style.opacity = 0
 
         setTimeout(() => {
-          console.log('enlargeWidth', enlargeWidth)
+          console.log('futureSize', futureSize)
           let newState = {...this.state}
           newState.enlarge.foreground = file
           newState.enlarge.open = true
@@ -2276,7 +2287,7 @@ export class Provider extends React.Component{
           this.setState(newState, () => {
             foreground.style.opacity = 1
           })
-        }, 400);
+        }, 2200);
       })
     }
 

@@ -758,7 +758,7 @@ export class Provider extends React.Component{
                                 preview: reader.result,
                                 file: fileInput[index],
                                 fileName: file.name, 
-                                fileType: file.type,
+                                fileTypen: file.type,
                                 familyDisplayIndex: null,
                                 src: `/uploads/${file.name}`,
                                 themes: [],
