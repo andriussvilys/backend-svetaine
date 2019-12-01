@@ -27,8 +27,11 @@ export default class ImageInfo extends Component{
               <div className="imageInfo--section">
                   <h5>file upload:</h5>
                   <div className="imageInfo--box">
-                    <span>Upload file(-s):</span> 
-                    <input type="file" multiple className="imageInfo--fileUpload" onChange={this.context.addFileToState} /><br/>
+                    <div>
+                      <span>Upload file(-s):</span> 
+                      <input type="file" multiple className="imageInfo--fileUpload" onChange={this.context.addFileToState} />
+                    </div>
+                    <p className="subtitle">The name of uploaded file cannot contain spaces or special characters except "-"</p>
                   </div>
 
                     {/* from FileUpload folder */}

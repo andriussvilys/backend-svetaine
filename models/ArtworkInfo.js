@@ -64,6 +64,9 @@ let ArtworkInfoSchema = new Schema({
         type: String,
         required: false,
         default: ""
+    },
+    naturalSize: {
+        type:Schema.Types.Mixed,
     }
 }, {minimize: false});
 

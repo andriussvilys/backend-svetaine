@@ -12,7 +12,7 @@ export default class FilePreview extends React.Component{
         const previewSource = file.filePath ? file.filePath : file.preview
 
         if(fileType.match('image')){
-            let image = <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
+            let image = <img id={`${this.props.file.fileName}-upload`} className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
             return(
                     image
             )
@@ -49,7 +49,7 @@ export default class FilePreview extends React.Component{
     render(){
         return(
 
-        <div className="ImagesPreview--imageContainer">
+        <div className="ImagesPreview--imageContainer" >
             {this.fileContainer(this.props.file.fileType, this.props.file)}
             {this.props.children}
         </div>

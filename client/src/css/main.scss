@@ -313,7 +313,7 @@ $background-color: white;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: 0.4s all;
+    transition: 4s all;
     transition: 0 opacity;
     z-index: 2;
     // max-width: 100%;
@@ -339,7 +339,7 @@ $background-color: white;
     display: flex;
     align-items: center;
     max-width: 100%;
-    transition: 0.4s all;
+    transition: 4s all;
     transform-origin: right;
 }
 #foreground{
@@ -360,10 +360,10 @@ $background-color: white;
 }
 .foreground-transition{
     // opacity: 1 !important;
-    transition: 0.4s all;
+    transition: 4s all;
 }
 #background{
-    transition: 0.4s transform;
+    transition: 4s transform;
     z-index: 1;
     position: absolute;
     // height: 100%;
@@ -397,6 +397,7 @@ $background-color: white;
     transform-origin: bottom;
     transform: translateY(0);
     transition: 0.2s all;
+    height: 100%;
 }
 .zero-width{
     height: 0;

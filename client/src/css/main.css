@@ -439,8 +439,8 @@ label {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
+  -webkit-transition: 4s all;
+  transition: 4s all;
   -webkit-transition: 0 opacity;
   transition: 0 opacity;
   z-index: 2;
@@ -470,8 +470,8 @@ label {
       -ms-flex-align: center;
           align-items: center;
   max-width: 100%;
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
+  -webkit-transition: 4s all;
+  transition: 4s all;
   -webkit-transform-origin: right;
           transform-origin: right;
 }
@@ -496,15 +496,15 @@ label {
 }
 
 .foreground-transition {
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
+  -webkit-transition: 4s all;
+  transition: 4s all;
 }
 
 #background {
-  -webkit-transition: 0.4s -webkit-transform;
-  transition: 0.4s -webkit-transform;
-  transition: 0.4s transform;
-  transition: 0.4s transform, 0.4s -webkit-transform;
+  -webkit-transition: 4s -webkit-transform;
+  transition: 4s -webkit-transform;
+  transition: 4s transform;
+  transition: 4s transform, 4s -webkit-transform;
   z-index: 1;
   position: absolute;
   display: -webkit-box;
@@ -546,6 +546,7 @@ label {
           transform: translateY(0);
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
+  height: 100%;
 }
 
 .zero-width {

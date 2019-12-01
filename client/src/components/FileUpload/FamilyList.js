@@ -27,6 +27,8 @@ export default class FamilyList extends React.Component{
      * @param {*} data = takes an array of files data
      */
     renderList = (files, props) => {
+        console.log('files')
+        console.log(files)
         let list = files.map(file => {
             return (
                 <div key={`FileInfo_${file.fileName}`} className="FamilyList--detail">
@@ -94,6 +96,7 @@ export default class FamilyList extends React.Component{
                             file={file}
                             fileName={file.fileName}
                             onChange={this.props.controls.fileDataMethods.onChange}
+                            state={this.props.context.state}
                         />
                     </Accordion>
 

@@ -1827,22 +1827,22 @@ export class Provider extends React.Component{
                         })
                     })        
                     
-                    if(newState.fileData.files){
-                        Object.keys(newState.fileData.files).forEach(fileName => {
-                            if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
+                    // if(newState.fileData.files){
+                    //     Object.keys(newState.fileData.files).forEach(fileName => {
+                    //         if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
         
-                                Object.keys(newState.fileData.files[fileName]).forEach(property => {
-                                    relatedArtwork = {
-                                        ...relatedArtwork,
-                                            [fileName]: {
-                                                ...relatedArtwork[fileName],
-                                                [property]: newState.fileData.files[fileName][property]
-                                            }
-                                        }
-                                })
-                            }
-                        })
-                    }
+                    //             Object.keys(newState.fileData.files[fileName]).forEach(property => {
+                    //                 relatedArtwork = {
+                    //                     ...relatedArtwork,
+                    //                         [fileName]: {
+                    //                             ...relatedArtwork[fileName],
+                    //                             [property]: newState.fileData.files[fileName][property]
+                    //                         }
+                    //                     }
+                    //             })
+                    //         }
+                    //     })
+                    // }
                     
 
                     //add additional properties: 
@@ -1850,8 +1850,14 @@ export class Provider extends React.Component{
                     //id
                     let fileIds = Object.keys(relatedArtwork).map(obj => null)
                     Object.keys(relatedArtwork).forEach(fileName => {
-                        fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                        if(relatedArtwork[fileName].familyDisplayIndex < 0){
+                          fileIds.push(fileName)
+                        }
+                        else{
+                          fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                        }
                     })
+                    fileIds = fileIds.filter(fileName => fileName !== null || false)
                     let finalRelatedArtwork = {
                             files: relatedArtwork,
                             column: {
@@ -1861,7 +1867,9 @@ export class Provider extends React.Component{
                             },
                             columnOrder: [`${artworkFamily}-relatedArtworks`]
                     };
-                        resolve(finalRelatedArtwork)
+                    console.log(finalRelatedArtwork)
+                    console.log("finalRelatedArtwork")
+                    resolve(finalRelatedArtwork)
                 })
         }) 
     }
@@ -2213,42 +2221,42 @@ export class Provider extends React.Component{
       foreground.classList.add("foreground-transition")
 
       const backgroundImage = new Promise((res, rej) => {
-        if(document.getElementById(file.fileName)){
-          console.log(document.getElementById(file.fileName))
           if(document.getElementById(file.fileName).complete){
             console.log('compelte')
-            res()
+            console.log()
+            res(document.getElementById(file.fileName))
           }
-        }
       })
         
 
       this.setState({enlarge}, () => {
         imageSelect.classList.remove("foreground-transition")
         backgroundImage.then(res => {
-              console.log('complete')
-              console.log(backgroundImage.naturalHeight)
-              console.log(backgroundImage.naturalWidth)
-              console.log("image loads")
-              console.log(backgroundImage.src)
-              console.log("W / H ON LOAD")
-              console.log(backgroundImage.clientWidth)
-              console.log(backgroundImage.clientHeight)
+              console.log("BACKGROUND IMAGE LOADED")
+              console.log(res)
+              console.log(res.naturalHeight)
+              console.log(res.naturalWidth)
       
-              const futureSize = this.countWidth(container.clientHeight, backgroundImage.naturalHeight, backgroundImage.naturalWidth)
+              const futureSize = this.countWidth(container.clientHeight, res.naturalHeight, res.naturalWidth)
       
-              imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+              // imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
               
               if(this.state.enlarge){
                 if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
                   imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                 }
+                else{
+                  // imageSelect.style.transition = "4s all"
+                  setTimeout(() => {
+                    imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                  }, 3000);
+                }
               }
               else{
-                imageSelect.style.transition = "0.4s all"
+                // imageSelect.style.transition = "4s all"
                 setTimeout(() => {
                   imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                }, 300);
+                }, 3000);
               }
       
               background.style.transform = `scaleY(${futureSize.height})`
@@ -2267,7 +2275,7 @@ export class Provider extends React.Component{
                 this.setState(newState, () => {
                   foreground.style.opacity = 1
                 })
-              }, 410);
+              }, 4100);
           })
       })
       

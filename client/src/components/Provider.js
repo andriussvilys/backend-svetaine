@@ -751,14 +751,14 @@ export class Provider extends React.Component{
                         reader.onload = () => {
 
                             console.log('upload file')
-                            console.log(file)
+                            console.log(file.name)
                             console.log(reader)
 
                             obj.files[file.name] = {                    
                                 preview: reader.result,
                                 file: fileInput[index],
                                 fileName: file.name, 
-                                fileTypen: file.type,
+                                fileType: file.type,
                                 familyDisplayIndex: null,
                                 src: `/uploads/${file.name}`,
                                 themes: [],
@@ -799,7 +799,7 @@ export class Provider extends React.Component{
                 const fileData = this.state.fileData.files
     
                 const fd = new FormData();
-                fd.append('artworkImage', fileData[fileName].file, fileData[fileName].fileName)
+                fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
     
                 axios.post('/api/artworkInfo/imageUpload', fd)
                     .then(res => { this.readImageDir()
@@ -976,9 +976,15 @@ export class Provider extends React.Component{
                 if(!file.category || !Object.keys(file.category).length > 0 ){
                     return resolve('To submit, select categories for this file')
                 }
-
+                const image = document.getElementById(`${file.fileName}-upload`)
+                let naturalSize = {}
+                if(image){
+                    naturalSize = {naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight}
+                }
+                else{naturalSize = null}
+                console.log(image)
+                console.log(naturalSize)
                 if(!file.artworkFamily){
-                    console.log('file has no family')
 
                     const fileData = file
         
@@ -997,7 +1003,7 @@ export class Provider extends React.Component{
                     seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
                     location: fileData.location ?  fileData.location : null,
                     year: fileData.year ? fileData.year : null,
-        
+                    naturalSize,
                     displayMain: fileData.displayMain ? fileData.displayMain : null 
                     }
         
@@ -1074,7 +1080,7 @@ export class Provider extends React.Component{
                                 seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
                                 location: fileData.location ?  fileData.location : null,
                                 year: fileData.year ? fileData.year : null,
-                    
+                                naturalSize, 
                                 displayMain: fileData.displayMain ? fileData.displayMain : null 
                                 }
                     
@@ -1566,40 +1572,38 @@ export class Provider extends React.Component{
                         //add additional properties: 
                         //column (with id and array of files in order)
                         //id
-                        console.log("RELATED ARTOWRK B4 FILEIDS")
-                        console.log(relatedArtwork)
-
-                        // let fileIds = Object.keys(relatedArtwork).map(obj => null)
                         let fileIds = []
 
                         Object.keys(relatedArtwork).forEach(fileName => {
-                            fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                            // if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex >= 0){
-                            //     if(!fileIds[relatedArtwork[fileName].familyDisplayIndex]){
-                            //         fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                            //     }
-                            //     else{
-                            //         fileIds.push(fileName)
-                            //     }
-                            // }
-                            // else{
+                            // if(relatedArtwork[fileName].familyDisplayIndex < 0){
                             //     fileIds.push(fileName)
                             // }
+                            // else{
+                            //     fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                            // }
+                            if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex >= 0){
+                                if(!fileIds[relatedArtwork[fileName].familyDisplayIndex]){
+                                    fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                                }
+                                else{
+                                    fileIds.push(fileName)
+                                }
+                            }
+                            else{
+                                fileIds.push(fileName)
+                            }
                         })
                         //     console.log('fileIDs before filter', fileIds)
-                        //     fileIds = fileIds.filter(item => item !== undefined)
-                        //     console.log('fileIDs AFTER filter', fileIds)
+                            fileIds = fileIds.filter(item => item !== undefined)
+                            console.log('fileIDs AFTER filter', fileIds)
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,
                                 column: {
-                                    // fileIds: Object.keys(relatedArtwork).map(objName => objName),
                                     fileIds,
                                     id: `${artworkFamily}-relatedArtworks`
                                 },
                                 columnOrder: [`${artworkFamily}-relatedArtworks`]
                         };
-                        console.log("RELATED ARTOWRK B4 RSOLVE")
-                        console.log(finalRelatedArtwork)
                             resolve(finalRelatedArtwork)
                     })
             }) 
