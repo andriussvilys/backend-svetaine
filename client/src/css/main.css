@@ -439,8 +439,8 @@ label {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-transition: 4s all;
-  transition: 4s all;
+  -webkit-transition: 0.4s all;
+  transition: 0.4s all;
   -webkit-transition: 0 opacity;
   transition: 0 opacity;
   z-index: 2;
@@ -450,6 +450,9 @@ label {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 150px;
+          flex: 1 1 150px;
 }
 
 .enlargeContainer {
@@ -474,6 +477,8 @@ label {
   transition: 0.4s all;
   -webkit-transform-origin: right;
           transform-origin: right;
+  -webkit-transform: translateX(100%);
+          transform: translateX(100%);
 }
 
 #foreground {
@@ -531,7 +536,7 @@ label {
 .imageSelect-FilePreview {
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
-  max-width: 100%;
+  width: 100%;
   -o-object-fit: contain;
      object-fit: contain;
   -ms-flex-item-align: end;
@@ -540,9 +545,8 @@ label {
           transform-origin: bottom;
   -webkit-transform: translateY(0);
           transform: translateY(0);
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
-  height: 100%;
+  transition: 0.4s all;
+  max-height: 200px;
 }
 
 .zero-width {

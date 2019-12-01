@@ -1983,9 +1983,9 @@ export class Provider extends React.Component{
         }
         //ON CHECK
         else{
-            newDisplay={...this.state.artworkOnDisplay}
-            Object.keys(this.state.artworkInfoData).forEach(fileName => {
-                const file = this.state.artworkInfoData[fileName]
+            newDisplay={...this.state.visibleArtwork}
+            Object.keys(this.state.visibleArtwork).forEach(fileName => {
+                const file = this.state.visibleArtwork[fileName]
                 if(file.category[category]){
                     if(Object.keys(file.category[category]).includes(subcategory)){
                         newDisplay = {...newDisplay, [fileName]: file}
@@ -2154,9 +2154,7 @@ export class Provider extends React.Component{
     this.closeEnlarge = () => {
         const enlargeContainer = document.getElementById('enlargeContainer')
         const imagesWidth = document.getElementById('images').clientWidth
-        const scale = document.getElementById('enlargeContainer').clientWidth
-        // enlargeContainer.style.transform = `scaleX(${scale}) translateX(100%)`
-        enlargeContainer.style.width = 0
+        enlargeContainer.style.transform = `translateX(100%)`
         document.getElementById('imageSelect').style.width = `${imagesWidth}px`
 
         const enlarge = {...this.state.enlarge}
@@ -2184,24 +2182,15 @@ export class Provider extends React.Component{
       const maxWidth = document.getElementById("images").clientWidth - 120
       const sizeRatio = naturalHeight / containerHeight
       const naturalRation = naturalWidth / naturalHeight
-      // const naturalRation = naturalWidth / naturalHeight
+
       let futureWidth = Math.round(naturalWidth / sizeRatio)
-      console.log('natural W / H')
-      console.log(naturalWidth, naturalHeight)
-      console.log("naturalRation", naturalRation)
-      console.log('futurewidth BEFORE max width')
-      console.log(futureWidth)
       let futureHeight = Math.round(futureWidth / naturalRation)
-      console.log('futureHeight', futureHeight)
+
       if(futureWidth > maxWidth){
         futureWidth = maxWidth
         futureHeight = Math.round(maxWidth / naturalRation)
       }
-      console.log('futurewidth After max width')
-      console.log(futureWidth)
-      console.log('futureHeight', futureHeight)
 
-      // let futureHeight = Math.round(futureWidth / naturalRation)
       futureHeight = futureHeight > containerHeight ? containerHeight : futureHeight
 
       return {width: futureWidth, height: futureHeight}
@@ -2216,7 +2205,6 @@ export class Provider extends React.Component{
 
       // foreground.classList.remove("foreground-transition")
       // background.classList.remove("foreground-transition")
-
 
       let enlarge = {...this.state.enlarge}
       enlarge.background = file
@@ -2233,11 +2221,11 @@ export class Provider extends React.Component{
           }
       })
         
-
       this.setState({enlarge}, () => {
         // background.classList.add("foreground-transition")
-        imageSelect.classList.remove("foreground-transition")
-        backgroundImage.then(res => {
+        // imageSelect.classList.remove("foreground-transition")
+        backgroundImage
+          .then(res => {
               console.log("BACKGROUND IMAGE LOADED")
               console.log(res)
               console.log(res.naturalHeight)
@@ -2248,21 +2236,22 @@ export class Provider extends React.Component{
               // imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
               
               if(this.state.enlarge){
+                //if enlargeContainer will shrink
                 if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
                   imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                 }
                 else{
-                  // imageSelect.style.transition = "4s all"
+                  // imageSelect.style.transition = "0.4s all"
                   setTimeout(() => {
                     imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                  }, 300);
+                  }, 360);
                 }
               }
               else{
-                // imageSelect.style.transition = "4s all"
+                // imageSelect.style.transition = "0.4s all"
                 setTimeout(() => {
                   imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                }, 300);
+                }, 360);
               }
       
               // background.style.transform = `scaleY(${futureSize.height})`
@@ -2270,23 +2259,29 @@ export class Provider extends React.Component{
               // container.style.transform = `scaleX(${futureSize.width})`
               background.style.height = `${futureSize.height}px`
               foreground.style.height = `${futureSize.height}px`
-              container.style.width = `${futureSize.width}px`
+
+                container.style.width = `${futureSize.width}px`
               // background.style.opacity = 1
 
               foreground.style.opacity = 0
       
               console.log("futureSize", futureSize)
+              if(!this.state.enlarge || !this.state.enlarge.open){
+                // container.style.transform = 'translateX(0)'
+                container.style.transform = 'translateX(0)'
+              }
       
               setTimeout(() => {
-                imageSelect.style.transition = "none"
                 let newState = {...this.state}
                 newState.enlarge.foreground = file
                 newState.enlarge.currentWidth = futureSize.width
                 newState.enlarge.open = true
                 this.setState(newState, () => {
+
                   foreground.classList.remove("foreground-transition")
                   background.classList.remove("foreground-transition")
                   foreground.style.opacity = 1
+                  imageSelect.style.transition = "none"
                   // background.style.opacity = 0
                 })
               }, 410);
