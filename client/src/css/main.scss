@@ -349,7 +349,6 @@ $background-color: white;
     position: absolute;
     z-index: 2;
     width: 100%;
-    // mix-blend-mode: luminosity;
     opacity: 1;
     max-height: 100%;
     display: flex;
@@ -357,8 +356,8 @@ $background-color: white;
     align-items: center;
     height: 100%;
     width: 100%;
-    // left: 50%;
-    // display: none;
+    // height: 1px;
+    // width: 1px;
 }
 .foreground-transition{
     // opacity: 1 !important;
@@ -366,16 +365,15 @@ $background-color: white;
 }
 
 #background{
-    // transition: 4s height;
     z-index: 1;
     position: absolute;
-    // height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
     width: 100%;
-    // left: 50%;
+    // height: 1px;
+    // width: 1px;
 }
 .background-image{
     // object-fit: none;

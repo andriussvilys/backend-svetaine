@@ -2053,9 +2053,9 @@ export class Provider extends React.Component{
       }
       //ON CHECK
       else{
-          newDisplay={...this.state.artworkOnDisplay}
-          Object.keys(this.state.artworkInfoData).forEach(fileName => {
-              const file = this.state.artworkInfoData[fileName]
+          newDisplay={...this.state.visibleArtwork}
+          Object.keys(this.state.visibleArtwork).forEach(fileName => {
+              const file = this.state.visibleArtwork[fileName]
               if(file.category[category]){
                 if(file.category[category][subcategory]){
                   if(file.category[category][subcategory].includes(listitem)){
@@ -2213,21 +2213,36 @@ export class Provider extends React.Component{
       background.classList.add("foreground-transition")
 
       const backgroundImage = new Promise((res, rej) => {
+        console.log('backgroundImage load runs')
         const image = document.getElementById(file.fileName)
+        // if(image){
+        //   image.onload = () => {
+        //     res(image)
+        //   }
+        // }
           if(image && image.complete){
             console.log('compelte')
             console.log()
             res(document.getElementById(file.fileName))
           }
       })
+
+      const imageLoad = (image) => {
+        image.onload = () => {
+          console.log('onload height / width')
+          console.log(image.naturalHeight, image.naturalWidth)
+        }
+      }
         
       this.setState({enlarge}, () => {
+
+        // imageLoad(document.getElementById(file.fileName))
         // background.classList.add("foreground-transition")
         // imageSelect.classList.remove("foreground-transition")
+
         backgroundImage
           .then(res => {
               console.log("BACKGROUND IMAGE LOADED")
-              console.log(res)
               console.log(res.naturalHeight)
               console.log(res.naturalWidth)
       
@@ -2244,23 +2259,25 @@ export class Provider extends React.Component{
                   // imageSelect.style.transition = "0.4s all"
                   setTimeout(() => {
                     imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                  }, 360);
+                  }, 410);
                 }
               }
               else{
                 // imageSelect.style.transition = "0.4s all"
                 setTimeout(() => {
                   imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                }, 360);
+                }, 410);
               }
+
       
+              // container.style.transform = `scaleX(${futureSize.width})`
               // background.style.transform = `scaleY(${futureSize.height})`
               // foreground.style.transform = `scaleY(${futureSize.height})`
-              // container.style.transform = `scaleX(${futureSize.width})`
+
               background.style.height = `${futureSize.height}px`
               foreground.style.height = `${futureSize.height}px`
+              container.style.width = `${futureSize.width}px`
 
-                container.style.width = `${futureSize.width}px`
               // background.style.opacity = 1
 
               foreground.style.opacity = 0
@@ -2286,6 +2303,7 @@ export class Provider extends React.Component{
                 })
               }, 410);
           })
+          .catch(err => console.log(err))
       })
       
 
