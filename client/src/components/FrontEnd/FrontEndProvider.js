@@ -2155,7 +2155,8 @@ export class Provider extends React.Component{
         const enlargeContainer = document.getElementById('enlargeContainer')
         const imagesWidth = document.getElementById('images').clientWidth
         const scale = document.getElementById('enlargeContainer').clientWidth
-        enlargeContainer.style.transform = `scaleX(${scale}) translateX(100%)`
+        // enlargeContainer.style.transform = `scaleX(${scale}) translateX(100%)`
+        enlargeContainer.style.width = 0
         document.getElementById('imageSelect').style.width = `${imagesWidth}px`
 
         const enlarge = {...this.state.enlarge}
@@ -2213,15 +2214,19 @@ export class Provider extends React.Component{
       const imageSelect = document.getElementById("imageSelect")
       const images = document.getElementById("images")
 
-      foreground.classList.remove("foreground-transition")
+      // foreground.classList.remove("foreground-transition")
+      // background.classList.remove("foreground-transition")
+
 
       let enlarge = {...this.state.enlarge}
       enlarge.background = file
 
       foreground.classList.add("foreground-transition")
+      background.classList.add("foreground-transition")
 
       const backgroundImage = new Promise((res, rej) => {
-          if(document.getElementById(file.fileName).complete){
+        const image = document.getElementById(file.fileName)
+          if(image && image.complete){
             console.log('compelte')
             console.log()
             res(document.getElementById(file.fileName))
@@ -2230,6 +2235,7 @@ export class Provider extends React.Component{
         
 
       this.setState({enlarge}, () => {
+        // background.classList.add("foreground-transition")
         imageSelect.classList.remove("foreground-transition")
         backgroundImage.then(res => {
               console.log("BACKGROUND IMAGE LOADED")
@@ -2249,19 +2255,24 @@ export class Provider extends React.Component{
                   // imageSelect.style.transition = "4s all"
                   setTimeout(() => {
                     imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                  }, 3000);
+                  }, 300);
                 }
               }
               else{
                 // imageSelect.style.transition = "4s all"
                 setTimeout(() => {
                   imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                }, 3000);
+                }, 300);
               }
       
-              background.style.transform = `scaleY(${futureSize.height})`
-              foreground.style.transform = `scaleY(${futureSize.height})`
-              container.style.transform = `scaleX(${futureSize.width})`
+              // background.style.transform = `scaleY(${futureSize.height})`
+              // foreground.style.transform = `scaleY(${futureSize.height})`
+              // container.style.transform = `scaleX(${futureSize.width})`
+              background.style.height = `${futureSize.height}px`
+              foreground.style.height = `${futureSize.height}px`
+              container.style.width = `${futureSize.width}px`
+              // background.style.opacity = 1
+
               foreground.style.opacity = 0
       
               console.log("futureSize", futureSize)
@@ -2273,9 +2284,12 @@ export class Provider extends React.Component{
                 newState.enlarge.currentWidth = futureSize.width
                 newState.enlarge.open = true
                 this.setState(newState, () => {
+                  foreground.classList.remove("foreground-transition")
+                  background.classList.remove("foreground-transition")
                   foreground.style.opacity = 1
+                  // background.style.opacity = 0
                 })
-              }, 4100);
+              }, 410);
           })
       })
       

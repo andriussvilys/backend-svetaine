@@ -339,7 +339,7 @@ $background-color: white;
     display: flex;
     align-items: center;
     max-width: 100%;
-    transition: 4s all;
+    transition: 0.4s all;
     transform-origin: right;
 }
 #foreground{
@@ -348,30 +348,31 @@ $background-color: white;
     z-index: 2;
     width: 100%;
     // mix-blend-mode: luminosity;
-    opacity: 0.5;
+    opacity: 1;
     max-height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1px;
-    width: 1px;
+    height: 100%;
+    width: 100%;
     // left: 50%;
     // display: none;
 }
 .foreground-transition{
     // opacity: 1 !important;
-    transition: 4s all;
+    transition: 0.4s all !important;
 }
+
 #background{
-    transition: 4s transform;
+    // transition: 4s height;
     z-index: 1;
     position: absolute;
     // height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 1px;
-    width: 1px;
+    height: 100%;
+    width: 100%;
     // left: 50%;
 }
 .background-image{
