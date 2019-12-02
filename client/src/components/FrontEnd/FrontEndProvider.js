@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import FilePreview from '../FilePreview'
 
 export const Context = React.createContext();
 
@@ -2123,13 +2122,9 @@ export class Provider extends React.Component{
             }
             else{
               const file = this.state.artworkOnDisplay[id]
-              const imageSelect = document.getElementById('imageSelect')
               const foreground = document.getElementById('foreground')
               // foreground.style.opacity = 1
-              const foregroundHeight = document.getElementById('foreground').clientHeight
-              const foregroundWidth = document.getElementById('foreground').clientWidth
 
-              const background = document.getElementById('background')
               let enlarge = this.state.enlarge
               enlarge.background = file
               this.setState({enlarge}, () => {
@@ -2151,7 +2146,19 @@ export class Provider extends React.Component{
 
             }
     }
+
+    this.hideArtworkInfo = (e) => {
+      if(e){
+        console.log(e)
+        e.stopPropagation()
+      }
+      if(document.getElementById('ArtworkInfo')){
+        document.getElementById('ArtworkInfo').classList.remove('info-up')
+      }
+    }
+ 
     this.closeEnlarge = () => {
+        this.hideArtworkInfo()
         const enlargeContainer = document.getElementById('enlargeContainer')
         const imagesWidth = document.getElementById('images').clientWidth
         enlargeContainer.style.transform = `translateX(100%)`
@@ -2197,6 +2204,8 @@ export class Provider extends React.Component{
     }
 
     this.animateEnlarge = (file) => {
+      console.log('anmate enlarge runs')
+      this.hideArtworkInfo()
       const background = document.getElementById("background") 
       const foreground = document.getElementById("foreground") 
       const container = document.getElementById("enlargeContainer") 
@@ -2226,13 +2235,6 @@ export class Provider extends React.Component{
             res(document.getElementById(file.fileName))
           }
       })
-
-      const imageLoad = (image) => {
-        image.onload = () => {
-          console.log('onload height / width')
-          console.log(image.naturalHeight, image.naturalWidth)
-        }
-      }
         
       this.setState({enlarge}, () => {
 
@@ -2309,13 +2311,16 @@ export class Provider extends React.Component{
 
     }
 
-    this.loadEnlarge = (id) => {
-
-      const file = this.state.artworkOnDisplay[id]
-      let enlarge = {...this.state.enlarge}
-      enlarge.background = file
-
-      this.animateEnlarge(file)
+    this.loadEnlarge = (e, id) => {
+      console.log(id)
+      console.log(this.state.artworkInfoData[id])
+      e.stopPropagation()
+        const file = this.state.artworkInfoData[id]
+        console.log(file)
+        let enlarge = {...this.state.enlarge}
+        enlarge.background = file
+  
+        this.animateEnlarge(file)
   }
 
 
@@ -2343,7 +2348,7 @@ export class Provider extends React.Component{
         info.classList.add('info-up')
       }
       else{
-        info.classList.remove('info-down')
+        info.classList.remove('info-up')
       }
     }
 
@@ -2404,8 +2409,6 @@ export class Provider extends React.Component{
             const categoryInput = document.getElementById("add-category")
             const subcategoryInput = document.getElementById("add-subcategory")
             const listitemInput = document.getElementById("add-listitem")
-
-            const allCats = Object.values(this.state.categoriesData)
     
             let reqBody = {category: null, subcategory: {}}
             //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
@@ -2905,6 +2908,7 @@ export class Provider extends React.Component{
             enlarge: this.enlarge,
             loadEnlarge: this.loadEnlarge,
             closeEnlarge: this.closeEnlarge,
+            hideArtworkInfo: this.hideArtworkInfo,
 
             viewNext: this.viewNext,
             viewPrev: this.viewPrev,

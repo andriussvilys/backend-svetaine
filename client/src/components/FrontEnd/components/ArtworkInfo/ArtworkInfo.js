@@ -12,6 +12,7 @@ const ArtworkInfo = (props) => {
                     className="ArtworkInfo-preview"
                     containerClassName="ArtworkInfo-preview-container"
                     file={props.artworkInfoData[fileName]}
+                    onClick={(e) => props.loadEnlarge(e, fileName)}
                 />
             })
             return seeAlsos
@@ -20,7 +21,7 @@ const ArtworkInfo = (props) => {
     }
 
     return(
-        <div className="ArtworkInfo-container" id="ArtworkInfo">
+        <div className="ArtworkInfo-container" id="ArtworkInfo" onClick={(e) => props.hideArtworkInfo(e)}>
             <div>
                 <h5>INFO:</h5>
                 <div>{props.file.foreground.artworkTitle}</div>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Provider } from './components/Provider';
 import { BrowserRouter, Route, Switch, } from 'react-router-dom';
 
 import {PrivateRoute} from './components/PrivateRoute'

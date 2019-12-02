@@ -18,7 +18,7 @@ export default class FilePreview extends React.Component{
             src={previewSource} 
             id={this.props.file.fileName}
             name={this.props.previewName}
-            onClick={(e) => {this.props.onClick(e.target.id)}}
+            onClick={(e) => {this.props.onClick(e)}}
             />
             return(
                     image
@@ -31,7 +31,7 @@ export default class FilePreview extends React.Component{
                 controls
                 id={this.props.file.fileName}
                 name={this.props.previewName}
-                onClick={(e) => {this.props.onClick(e.target.id)}}
+                onClick={(e) => {this.props.onClick(e)}}
                 >
                     <source src={previewSource} type={fileType} />
                     Your browser does not support the video tag.
@@ -45,7 +45,7 @@ export default class FilePreview extends React.Component{
                 controls
                 id={this.props.file.fileName}
                 name={this.props.previewName}
-                onClick={(e) => {this.props.onClick(e.target.id)}}
+                onClick={(e) => {this.props.onClick(e)}}
                 >
                     <source src={previewSource} type={fileType} />
                     Your browser does not support the audio tag.

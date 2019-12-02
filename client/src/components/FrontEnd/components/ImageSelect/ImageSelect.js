@@ -18,7 +18,8 @@ export default class ImageSelect extends React.Component{
                 return <FilePreview 
                 containerClassName="ImagesPreview--imageContainer"
                 className="imageSelect-FilePreview" 
-                onClick={this.props.methods.loadEnlarge}
+                // onClick={(e) => this.props.methods.loadEnlarge(e)}
+                onClick={e => this.props.methods.loadEnlarge(e, objName)}
                 file={data[objName]} 
                 />
             })
