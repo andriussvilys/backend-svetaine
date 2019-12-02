@@ -99,6 +99,7 @@ export default class FrontEndIndex extends React.Component{
                                     loadEnlarge={this.context.loadEnlarge}
                                     closeEnlarge={this.context.closeEnlarge}
                                     hideArtworkInfo={this.context.hideArtworkInfo}
+                                    context={this.context}
                                 />
                             </div>
 

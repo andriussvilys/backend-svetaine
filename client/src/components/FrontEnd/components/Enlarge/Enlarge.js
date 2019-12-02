@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
+import Nav from '../Nav/Nav'
 
 
 export default class Enlarge extends React.Component{
@@ -50,10 +51,10 @@ export default class Enlarge extends React.Component{
             </Fragment>
         )
     }
-    createPreview = (source, imageName) => {
-        console.log("rendering new file preview")
-        return                 <FilePreview 
-        id="foreground"
+    createPreview = (source, imageName, fgId) => {
+        
+        return <FilePreview 
+        id={fgId}
         file={source} 
         containerClassName="enlarge-container" 
         className={`enlarge-preview ${imageName}`}
@@ -64,8 +65,7 @@ export default class Enlarge extends React.Component{
     }
 
     render(){
-        console.log('artworkINFO props')
-        console.log(this.props)
+        
         return(
             <div 
             id="ArtworkInfo" 
@@ -73,7 +73,7 @@ export default class Enlarge extends React.Component{
             className="enlargeContainer" id="enlargeContainer">
                 <Fragment>
                     <div id="foreground">
-                        {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image') : null}
+                        {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}
                     </div>
 
                     <div id="background">
@@ -90,17 +90,9 @@ export default class Enlarge extends React.Component{
                     </Fragment>
 
                 </Fragment>
-
-                {/* {this.props.file 
-                ? this.pushNew()
-                : null} */}
-                {/* {this.props.file
-                ? <ArtworkInfo 
-                    file={this.props.file} 
-                    artworkInfoData={this.props.artworkInfoData}
-                    />
-                : null
-                } */}
+                <Nav
+                    context={this.props.context}
+                />
             </div>
         )
     }

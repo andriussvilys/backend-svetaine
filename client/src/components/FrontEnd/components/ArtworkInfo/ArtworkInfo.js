@@ -2,8 +2,8 @@ import React from 'react'
 import FilePreview from '../FilePreview'
 
 const ArtworkInfo = (props) => {
-    console.log("ArtowkrInfo PROPS")
-    console.log(props)
+    
+    
 
     const seeAlso = () => {
         if(props.file.foreground.seeAlso.length > 0){

@@ -16,7 +16,7 @@ export default class FilePreview extends React.Component{
             className={this.props.className}
             alt={file.fileName} 
             src={previewSource} 
-            id={this.props.file.fileName}
+            id={this.props.id || this.props.file.fileName}
             name={this.props.previewName}
             onClick={(e) => {this.props.onClick(e)}}
             />
@@ -29,7 +29,7 @@ export default class FilePreview extends React.Component{
                 <video 
                 className={this.props.className}
                 controls
-                id={this.props.file.fileName}
+                id={this.props.id || this.props.file.fileName}
                 name={this.props.previewName}
                 onClick={(e) => {this.props.onClick(e)}}
                 >
@@ -43,7 +43,7 @@ export default class FilePreview extends React.Component{
                 <audio 
                 className={this.props.className}
                 controls
-                id={this.props.file.fileName}
+                id={this.props.id || this.props.file.fileName}
                 name={this.props.previewName}
                 onClick={(e) => {this.props.onClick(e)}}
                 >

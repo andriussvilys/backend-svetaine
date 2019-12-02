@@ -1866,8 +1866,8 @@ export class Provider extends React.Component{
                             },
                             columnOrder: [`${artworkFamily}-relatedArtworks`]
                     };
-                    console.log(finalRelatedArtwork)
-                    console.log("finalRelatedArtwork")
+                    
+                    
                     resolve(finalRelatedArtwork)
                 })
         }) 
@@ -1974,7 +1974,7 @@ export class Provider extends React.Component{
                     return newDisplay = {...newDisplay, [fileName]: file}
                 }
             })
-            console.log(zeroDisplay)
+            
             Object.keys(zeroDisplay).forEach(id => {
                 document.getElementById(id).classList.add('image-hide')
             })
@@ -2149,7 +2149,7 @@ export class Provider extends React.Component{
 
     this.hideArtworkInfo = (e) => {
       if(e){
-        console.log(e)
+        
         e.stopPropagation()
       }
       if(document.getElementById('ArtworkInfo')){
@@ -2204,7 +2204,7 @@ export class Provider extends React.Component{
     }
 
     this.animateEnlarge = (file) => {
-      console.log('anmate enlarge runs')
+      
       this.hideArtworkInfo()
       const background = document.getElementById("background") 
       const foreground = document.getElementById("foreground") 
@@ -2221,20 +2221,51 @@ export class Provider extends React.Component{
       foreground.classList.add("foreground-transition")
       background.classList.add("foreground-transition")
 
-      const backgroundImage = new Promise((res, rej) => {
-        console.log('backgroundImage load runs')
-        const image = document.getElementById(file.fileName)
-        // if(image){
-        //   image.onload = () => {
-        //     res(image)
-        //   }
-        // }
-          if(image && image.complete){
-            console.log('compelte')
-            console.log()
-            res(document.getElementById(file.fileName))
+      // const backgroundImage = new Promise((res, rej) => {
+        
+      //   const image = document.getElementById(file.fileName)
+      //   res(!image === false)
+      //     // if(image){
+      //     //   console.log('image loaded')
+      //     //   res(document.getElementById(file.fileName))
+      //     // }
+      //     rej(!image === true)
+      // })
+
+      function backgroundImage(tries, willFail) {
+        return new Promise((resolve, reject) => {
+          console.log(tries + ' remaining');
+          if (--tries > 0) {
+            setTimeout(function() {
+              if(document.getElementById(file.fileName)){
+                resolve(document.getElementById(file.fileName))
+              }
+            }, 1);
+          } 
+          else {
+            if (willFail) {
+              reject('Failure');
+            } else {
+              if(document.getElementById(file.fileName)){
+                resolve(document.getElementById(file.fileName))
+              }
+            }
           }
-      })
+        });
+      }
+
+
+
+      // function keepTrying() {
+      //   if(findNewId(file.fileName)) {
+      //     promise.resolve(document.getElementById(fileName));
+      //   } else {
+      //     setTimeout(function() {
+      //       console.log("retry promise")
+      //       findNewId(file.fileName);
+      //     }, 10);
+      //   }
+      // }
         
       this.setState({enlarge}, () => {
 
@@ -2242,13 +2273,13 @@ export class Provider extends React.Component{
         // background.classList.add("foreground-transition")
         // imageSelect.classList.remove("foreground-transition")
 
-        backgroundImage
+        backgroundImage(5, true)
           .then(res => {
-              console.log("BACKGROUND IMAGE LOADED")
-              console.log(res.naturalHeight)
-              console.log(res.naturalWidth)
-      
+              console.log(res)
               const futureSize = this.countWidth(container.clientHeight, res.naturalHeight, res.naturalWidth)
+              console.log(`Height: ${res.naturalHeight}, Width: ${res.naturalWidth}`)
+              console.log(file.fileName)
+              console.log(futureSize)
       
               // imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
               
@@ -2284,7 +2315,7 @@ export class Provider extends React.Component{
 
               foreground.style.opacity = 0
       
-              console.log("futureSize", futureSize)
+              
               if(!this.state.enlarge || !this.state.enlarge.open){
                 // container.style.transform = 'translateX(0)'
                 container.style.transform = 'translateX(0)'
@@ -2305,22 +2336,24 @@ export class Provider extends React.Component{
                 })
               }, 410);
           })
-          .catch(err => console.log(err))
-      })
-      
-
-    }
+          .catch(err => {
+            console.log(err)
+            return backgroundImage(5, true)
+          })
+    })
+  }
 
     this.loadEnlarge = (e, id) => {
-      console.log(id)
-      console.log(this.state.artworkInfoData[id])
       e.stopPropagation()
         const file = this.state.artworkInfoData[id]
-        console.log(file)
+        
         let enlarge = {...this.state.enlarge}
         enlarge.background = file
+
+        this.setState({enlarge}, () => {
+          this.animateEnlarge(file)
+        })
   
-        this.animateEnlarge(file)
   }
 
 
@@ -2427,7 +2460,9 @@ export class Provider extends React.Component{
                     newState.categoriesOptionList.data = {...newState.categoriesOptionList.data, [categoryInput.value]:[]}
                     this.setState(newState)
                 })
-                .catch(err => console.log(err))
+                .catch(err => {
+                  console.log(err)
+                })
             
         },
         updateCategory: () => {
@@ -2798,7 +2833,7 @@ export class Provider extends React.Component{
                 resolve()
                 })
                 .catch(err => {
-                    console.log(err); 
+                     
                     // document.location.reload(true)
                 })
             })
@@ -2813,7 +2848,7 @@ export class Provider extends React.Component{
                     resolve()
                 })
                 .catch(err => {
-                    console.log(err); 
+                     
                     document.location.reload(true)
                 })
             })
@@ -2843,7 +2878,7 @@ export class Provider extends React.Component{
                             resolve()
                         })
                         .catch(err => {
-                            console.log(err); 
+                             
                             // document.location.reload(true)
                         })
                 })
@@ -2859,8 +2894,8 @@ export class Provider extends React.Component{
                             onDisplay = {...onDisplay, [fileName]: res[fileName]}
                           }
                         })
-                        console.log('onDisplay')
-                        console.log(onDisplay)
+                        
+                        
                         newState.artworkOnDisplay = onDisplay
                         newState.visibleArtwork = onDisplay
                         resolve()
@@ -2881,7 +2916,7 @@ export class Provider extends React.Component{
                     this.setState(newState)
                 })
                 .catch(err => {
-                    console.log(err); 
+                     
                 })
             // let newState = {...this.state}
             // newState.categoriesData = newState.categoriesDUMMY
