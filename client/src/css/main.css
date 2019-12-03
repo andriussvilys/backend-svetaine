@@ -457,8 +457,10 @@ label {
       -ms-flex-align: center;
           align-items: center;
   max-width: 100%;
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
+  -webkit-transition: 0.4s -webkit-transform;
+  transition: 0.4s -webkit-transform;
+  transition: 0.4s transform;
+  transition: 0.4s transform, 0.4s -webkit-transform;
   -webkit-transform-origin: right;
           transform-origin: right;
   -webkit-transform: translateX(100%);

@@ -7,7 +7,13 @@ import '../css/ImagesPreview.css';
 export default class DndListDroppable extends React.Component{
     static contextType = Context;
 
+    createFileIds = () => {
+
+    }
+
     render(){
+        console.log("PROPS IN DROPPABLE")
+        console.log(this.props)
         return(
             <Context.Consumer>
                 {() => {

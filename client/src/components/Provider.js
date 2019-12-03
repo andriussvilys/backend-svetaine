@@ -668,7 +668,8 @@ export class Provider extends React.Component{
                 const relatedArtworkPromise = this.familySetupMethods.getRelatedArtwork(newState.fileData.files[file.fileName].artworkFamily, newState)
 
                 relatedArtworkPromise.then(res => {
-
+                    console.log("related artwork RESOLVED")
+                    console.log(res)
                     newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
                     newState.fileData.files[file.fileName].relatedArtwork = res
                     newState.fileData.files[file.fileName].useFamilySetup = true
@@ -812,7 +813,7 @@ export class Provider extends React.Component{
             // })
         },
         //Removes selected file from state and thus DOM
-        removeFile: (fileName) => {
+        removeFile: (fileName, familyName) => {
         
             let newFiles = {...this.state.fileData.files}
         
@@ -829,6 +830,10 @@ export class Provider extends React.Component{
                     files: newFiles
                 }}
             
+            if(familyName){
+                delete newState.relatedArtwork[familyName].files[fileName]
+                newState.relatedArtwork[familyName].column.fileIds = newState.relatedArtwork[familyName].column.fileIds.filter(file => file !== fileName)
+            }
             this.setState(newState)
         },
         //change display index by dragging file preview
@@ -982,8 +987,10 @@ export class Provider extends React.Component{
                     naturalSize = {naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight}
                 }
                 else{naturalSize = null}
+
                 console.log(image)
                 console.log(naturalSize)
+
                 if(!file.artworkFamily){
 
                     const fileData = file
@@ -1029,14 +1036,14 @@ export class Provider extends React.Component{
      
                         let progressCount = 0
         
-                        Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
-                            
-                            const obj = this.state.relatedArtwork[artworkFamily].files[objName]
-                            const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
+                        // Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
+
+                            const obj = this.state.relatedArtwork[artworkFamily].files[file.fileName]
+                            const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
                             let fileData = null
                             
                             //check if the file is uploaded to server
-                            if(this.state.serverFileDir.includes(obj.fileName)){
+                            if(this.state.serverFileDir.includes(file.fileName)){
                                 console.log('server includes files already')
                                 fileData = obj
                                 fileData.familyDisplayIndex = familyIndex
@@ -1064,6 +1071,7 @@ export class Provider extends React.Component{
                                 // fileData = this.state.relatedArtwork[artworkFamily].files[obj.fileName]
 
                                 fileData = this.state.fileData.files[file.fileName]
+                                // fileData = this.state.fileData.files[file.fileName]
                     
                                 let fileDataObject = {                                                 
                                 category: fileData.category ?  fileData.category : null,
@@ -1087,7 +1095,7 @@ export class Provider extends React.Component{
                                 // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
                                 fileDataObject.familyDisplayIndex = familyIndex
                                 
-                                console.log(fileData)
+                                console.log(fileDataObject)
 
                                 axios.post('/api/artworkInfo/create', fileDataObject)
 
@@ -1100,19 +1108,30 @@ export class Provider extends React.Component{
                                     //     }
                                     // })
                                     .then( res => { 
+                                        console.log('new record craeted')
+                                        console.log(res)
                                         this.fileDataMethods.uploadFile(file.fileName)
                                         progressCount += 1
                                         if(progressCount === updateLength){
-                                            let newState = this.state
+                                            let newState = {...this.state}
                                             this.familySetupMethods.getArtworkInfo()
                                                 .then(res => {
+                                                    console.log("getArtworkInfo")
                                                     newState.artworkInfoData = res
-                                                    this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                    axios.get('/fetchImages')
+                                                        .then(res => {
+                                                            newState.serverFileDir = res.data
+                                                            console.log('fetch images')
+                                                            console.log(newState)
+                                                            console.log(res)
+                                                            this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                        })
                                                 })
                                         }
                                     })
+                                    .catch(err => console.log(err))
                             }
-                        })
+                        // }) END of FOREACH method
 
                 }
             })
@@ -1596,7 +1615,10 @@ export class Provider extends React.Component{
                             // else{
                             //     fileIds.push(fileName)
                             // }
-                            fileIds[familyDisplayIndex] = fileName
+                            if(!familyDisplayIndex || familyDisplayIndex < 0){
+                                fileIds.push(fileName)
+                            }
+                            else{fileIds[familyDisplayIndex] = fileName}
                         })
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,

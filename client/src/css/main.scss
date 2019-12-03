@@ -325,7 +325,7 @@ $background-color: white;
     display: flex;
     align-items: center;
     max-width: 100%;
-    transition: 0.4s all;
+    transition: 0.4s transform;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;

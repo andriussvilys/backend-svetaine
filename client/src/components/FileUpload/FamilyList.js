@@ -27,8 +27,8 @@ export default class FamilyList extends React.Component{
      * @param {*} data = takes an array of files data
      */
     renderList = (files, props) => {
-        console.log('files')
-        console.log(files)
+        console.log('FAMILY LIST-- relatedArtwork')
+        console.log(this.props.relatedArtwork)
         let list = files.map(file => {
             return (
                 <div key={`FileInfo_${file.fileName}`} className="FamilyList--detail">
@@ -141,7 +141,7 @@ export default class FamilyList extends React.Component{
                         <Button
                             variant="danger"
                             className="custom-button"
-                            onClick={ () => this.props.controls.removeFile(file.fileName)}
+                            onClick={ () => this.props.controls.removeFile(file.fileName, file.artworkFamily)}
                         >
                             Remove
                         </Button>   

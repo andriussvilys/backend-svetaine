@@ -2148,9 +2148,7 @@ export class Provider extends React.Component{
     }
 
     this.hideArtworkInfo = (e) => {
-      console.log('hideartwork runs')
       if(e){
-        console.log(e)
         e.stopPropagation()
       }
       if(document.getElementById('ArtworkInfo') && document.getElementById('ArtworkInfo').classList.contains("info-up")){
@@ -2162,10 +2160,8 @@ export class Provider extends React.Component{
  
     this.closeEnlarge = (e) => {
       e.stopPropagation()
-      console.log(e)
         const delay = this.hideArtworkInfo()
         setTimeout(() => {      
-          console.log('settimeout runs')    
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
           enlargeContainer.style.transform = `translateX(100%)`
@@ -2220,25 +2216,8 @@ export class Provider extends React.Component{
       const imageSelect = document.getElementById("imageSelect")
       const images = document.getElementById("images")
 
-      // foreground.classList.remove("foreground-transition")
-      // background.classList.remove("foreground-transition")
-
       let enlarge = {...this.state.enlarge}
       enlarge.background = file
-
-      foreground.classList.add("foreground-transition")
-      background.classList.add("foreground-transition")
-
-      // const backgroundImage = new Promise((res, rej) => {
-        
-      //   const image = document.getElementById(file.fileName)
-      //   res(!image === false)
-      //     // if(image){
-      //     //   
-      //     //   res(document.getElementById(file.fileName))
-      //     // }
-      //     rej(!image === true)
-      // })
 
       function backgroundImage(tries, willFail) {
         return new Promise((resolve, reject) => {
@@ -2261,25 +2240,8 @@ export class Provider extends React.Component{
           }
         });
       }
-
-
-
-      // function keepTrying() {
-      //   if(findNewId(file.fileName)) {
-      //     promise.resolve(document.getElementById(fileName));
-      //   } else {
-      //     setTimeout(function() {
-      //       
-      //       findNewId(file.fileName);
-      //     }, 10);
-      //   }
-      // }
         
       this.setState({enlarge}, () => {
-
-        // imageLoad(document.getElementById(file.fileName))
-        // background.classList.add("foreground-transition")
-        // imageSelect.classList.remove("foreground-transition")
 
         backgroundImage(5, true)
           .then(res => {
@@ -2340,8 +2302,8 @@ export class Provider extends React.Component{
                 newState.enlarge.open = true
                 this.setState(newState, () => {
 
-                  foreground.classList.remove("foreground-transition")
-                  background.classList.remove("foreground-transition")
+                  // foreground.classList.remove("foreground-transition")
+                  // background.classList.remove("foreground-transition")
                   foreground.style.opacity = 1
                   imageSelect.style.transition = "none"
                   // background.style.opacity = 0
@@ -2349,7 +2311,6 @@ export class Provider extends React.Component{
               }, 410);
           })
           .catch(err => {
-            
             return backgroundImage(5, true)
           })
     })
