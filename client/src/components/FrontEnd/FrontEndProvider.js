@@ -1982,7 +1982,7 @@ export class Provider extends React.Component{
         }
         //ON CHECK
         else{
-            newDisplay={...this.state.visibleArtwork}
+            newDisplay={...this.state.artworkOnDisplay}
             Object.keys(this.state.visibleArtwork).forEach(fileName => {
                 const file = this.state.visibleArtwork[fileName]
                 if(file.category[category]){
@@ -2052,7 +2052,7 @@ export class Provider extends React.Component{
       }
       //ON CHECK
       else{
-          newDisplay={...this.state.visibleArtwork}
+          newDisplay={...this.state.artworkOnDisplay}
           Object.keys(this.state.visibleArtwork).forEach(fileName => {
               const file = this.state.visibleArtwork[fileName]
               if(file.category[category]){
