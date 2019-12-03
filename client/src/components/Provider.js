@@ -754,6 +754,10 @@ export class Provider extends React.Component{
                             console.log('upload file')
                             console.log(file.name)
                             console.log(reader)
+                            if(file.name.includes(" ") || file.name.includes("/")){
+                                alert("File name cannot contain spaces or '/'")
+                                return
+                            }
 
                             obj.files[file.name] = {                    
                                 preview: reader.result,
@@ -972,6 +976,8 @@ export class Provider extends React.Component{
         },
 
         postArtworkInfo: (file) => {
+
+            
             
             return new Promise((resolve, rej) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
@@ -981,12 +987,20 @@ export class Provider extends React.Component{
                 if(!file.category || !Object.keys(file.category).length > 0 ){
                     return resolve('To submit, select categories for this file')
                 }
+
                 const image = document.getElementById(`${file.fileName}-upload`)
                 let naturalSize = {}
                 if(image){
                     naturalSize = {naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight}
                 }
                 else{naturalSize = null}
+
+                const artworkFamily = file.artworkFamily || "none"
+
+                axios.get(`/api/artworkInfo/${artworkFamily}`).then(res => {
+                    console.log('RECORDED RES***********')
+                    console.log(res)
+                })
 
                 console.log(image)
                 console.log(naturalSize)
@@ -1001,7 +1015,7 @@ export class Provider extends React.Component{
                     fileName: fileData.fileName,
                     fileType: fileData.fileType,
         
-                    artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
+                    artworkFamily: "none",
                     familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
                     artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
                     artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
@@ -1023,11 +1037,14 @@ export class Provider extends React.Component{
                             this.familySetupMethods.getArtworkInfo()
                                 .then(res => {
                                     newState.artworkInfoData = res
+                                    newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
                                     this.setState(newState, resolve('new file registered without family'))
                                 })
                         })
                         .catch(err => console.error(err))
                     }
+
+
                 else{
                         console.log(`registering to ${file.artworkFamily}`)
 
@@ -1066,12 +1083,7 @@ export class Provider extends React.Component{
                             }
                 
                             else{
-                                // fileData = this.state.fileData.files[obj.fileName]
-
-                                // fileData = this.state.relatedArtwork[artworkFamily].files[obj.fileName]
-
                                 fileData = this.state.fileData.files[file.fileName]
-                                // fileData = this.state.fileData.files[file.fileName]
                     
                                 let fileDataObject = {                                                 
                                 category: fileData.category ?  fileData.category : null,
@@ -1083,7 +1095,6 @@ export class Provider extends React.Component{
                                 familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
                                 artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
                                 artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-                                // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
                                 themes: fileData.themes ?  fileData.themes : null,
                                 seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
                                 location: fileData.location ?  fileData.location : null,
@@ -1092,42 +1103,36 @@ export class Provider extends React.Component{
                                 displayMain: fileData.displayMain ? fileData.displayMain : null 
                                 }
                     
-                                // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
                                 fileDataObject.familyDisplayIndex = familyIndex
                                 
                                 console.log(fileDataObject)
 
                                 axios.post('/api/artworkInfo/create', fileDataObject)
 
-                                    // .then( res => { console.log(res.data);                                    
-                                    //     this.fileDataMethods.uploadFile(file.fileName)
-                                    //     progressCount += 1
-                                    //     if(progressCount === updateLength){
-                                    //         resolve(`new file registered in ${file.artworkFamily} family`)
-                                    //         return
-                                    //     }
-                                    // })
                                     .then( res => { 
                                         console.log('new record craeted')
                                         console.log(res)
                                         this.fileDataMethods.uploadFile(file.fileName)
                                         progressCount += 1
-                                        if(progressCount === updateLength){
+                                        // if(progressCount === updateLength){
                                             let newState = {...this.state}
                                             this.familySetupMethods.getArtworkInfo()
                                                 .then(res => {
                                                     console.log("getArtworkInfo")
                                                     newState.artworkInfoData = res
-                                                    axios.get('/fetchImages')
-                                                        .then(res => {
-                                                            newState.serverFileDir = res.data
-                                                            console.log('fetch images')
-                                                            console.log(newState)
-                                                            console.log(res)
-                                                            this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
-                                                        })
+                                                    // axios.get('/fetchImages')
+                                                    //     .then(res => {
+                                                    //         newState.serverFileDir = res.data
+                                                    //         console.log('fetch images')
+                                                    //         console.log(newState)
+                                                    //         console.log(res)
+                                                    //         this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                    //     })
+                                                    newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
+                                                    this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                    
                                                 })
-                                        }
+                                        // }
                                     })
                                     .catch(err => console.log(err))
                             }
@@ -1460,7 +1465,11 @@ export class Provider extends React.Component{
             })
             .catch(err => 
                 {
+                let newState = {...this.state}
+                newState.familySetupData.artworkFamily = value
+                console.log("no record")
                 console.error(err)
+                this.setState(newState)
                 }
             )
     
@@ -1592,6 +1601,7 @@ export class Provider extends React.Component{
                         //column (with id and array of files in order)
                         //id
                         let fileIds = []
+                        let noIndex = []
                         console.log('related ARTWORK BEFORE FILE IDS')
                         console.log(relatedArtwork)
                         Object.keys(relatedArtwork).forEach((fileName, index) => {
@@ -1616,10 +1626,12 @@ export class Provider extends React.Component{
                             //     fileIds.push(fileName)
                             // }
                             if(!familyDisplayIndex || familyDisplayIndex < 0){
-                                fileIds.push(fileName)
+                                noIndex.push(fileName)
                             }
                             else{fileIds[familyDisplayIndex] = fileName}
                         })
+                        noIndex.forEach(fileName => fileIds.push(fileName))
+                        fileIds = fileIds.filter(fileName => fileName !== null || undefined)
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,
                                 column: {
@@ -1657,6 +1669,7 @@ export class Provider extends React.Component{
             let FamilyList = new Promise ((resolve, rej) => {
                 axios.get('/api/familySetup')
                     .then(res => {
+                        console.log()
                         let familyList = Object.keys(res.data).map(obj => {
                             return res.data[obj].artworkFamily
                         })
