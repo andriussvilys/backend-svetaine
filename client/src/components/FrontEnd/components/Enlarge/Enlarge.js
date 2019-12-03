@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
-import Nav from '../Nav/Nav'
 
 
 export default class Enlarge extends React.Component{
@@ -69,7 +68,7 @@ export default class Enlarge extends React.Component{
         return(
             <div 
             id="ArtworkInfo" 
-            onClick={() => this.props.closeEnlarge()}
+            onClick={(e) => this.props.closeEnlarge(e)}
             className="enlargeContainer" id="enlargeContainer">
                 <Fragment>
                     <div id="foreground">
@@ -90,9 +89,6 @@ export default class Enlarge extends React.Component{
                     </Fragment>
 
                 </Fragment>
-                <Nav
-                    context={this.props.context}
-                />
             </div>
         )
     }

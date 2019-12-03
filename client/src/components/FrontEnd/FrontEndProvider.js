@@ -2148,25 +2148,33 @@ export class Provider extends React.Component{
     }
 
     this.hideArtworkInfo = (e) => {
+      console.log('hideartwork runs')
       if(e){
-        
+        console.log(e)
         e.stopPropagation()
       }
-      if(document.getElementById('ArtworkInfo')){
+      if(document.getElementById('ArtworkInfo') && document.getElementById('ArtworkInfo').classList.contains("info-up")){
         document.getElementById('ArtworkInfo').classList.remove('info-up')
+        return 200
       }
+      else { return 1}
     }
  
-    this.closeEnlarge = () => {
-        this.hideArtworkInfo()
-        const enlargeContainer = document.getElementById('enlargeContainer')
-        const imagesWidth = document.getElementById('images').clientWidth
-        enlargeContainer.style.transform = `translateX(100%)`
-        document.getElementById('imageSelect').style.width = `${imagesWidth}px`
-
-        const enlarge = {...this.state.enlarge}
-        enlarge.open = false
-        this.setState({enlarge})
+    this.closeEnlarge = (e) => {
+      e.stopPropagation()
+      console.log(e)
+        const delay = this.hideArtworkInfo()
+        setTimeout(() => {      
+          console.log('settimeout runs')    
+          const enlargeContainer = document.getElementById('enlargeContainer')
+          const imagesWidth = document.getElementById('images').clientWidth
+          enlargeContainer.style.transform = `translateX(100%)`
+          document.getElementById('imageSelect').style.width = `${imagesWidth}px`
+  
+          const enlarge = {...this.state.enlarge}
+          enlarge.open = false
+          this.setState({enlarge})
+        }, delay);
     }
 
     this.viewNext = () => {
@@ -2205,7 +2213,7 @@ export class Provider extends React.Component{
 
     this.animateEnlarge = (file) => {
       
-      this.hideArtworkInfo()
+      // this.hideArtworkInfo()
       const background = document.getElementById("background") 
       const foreground = document.getElementById("foreground") 
       const container = document.getElementById("enlargeContainer") 
@@ -2226,7 +2234,7 @@ export class Provider extends React.Component{
       //   const image = document.getElementById(file.fileName)
       //   res(!image === false)
       //     // if(image){
-      //     //   console.log('image loaded')
+      //     //   
       //     //   res(document.getElementById(file.fileName))
       //     // }
       //     rej(!image === true)
@@ -2234,7 +2242,7 @@ export class Provider extends React.Component{
 
       function backgroundImage(tries, willFail) {
         return new Promise((resolve, reject) => {
-          console.log(tries + ' remaining');
+          
           if (--tries > 0) {
             setTimeout(function() {
               if(document.getElementById(file.fileName)){
@@ -2261,7 +2269,7 @@ export class Provider extends React.Component{
       //     promise.resolve(document.getElementById(fileName));
       //   } else {
       //     setTimeout(function() {
-      //       console.log("retry promise")
+      //       
       //       findNewId(file.fileName);
       //     }, 10);
       //   }
@@ -2275,11 +2283,15 @@ export class Provider extends React.Component{
 
         backgroundImage(5, true)
           .then(res => {
-              console.log(res)
-              const futureSize = this.countWidth(container.clientHeight, res.naturalHeight, res.naturalWidth)
-              console.log(`Height: ${res.naturalHeight}, Width: ${res.naturalWidth}`)
-              console.log(file.fileName)
-              console.log(futureSize)
+              
+              const futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
+              
+              console.log("enlarge.naturalSize")
+              console.log(enlarge.background.naturalSize)
+
+              console.log("file naturalSize")
+              console.log(file.naturalSize)
+              
       
               // imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
               
@@ -2337,7 +2349,7 @@ export class Provider extends React.Component{
               }, 410);
           })
           .catch(err => {
-            console.log(err)
+            
             return backgroundImage(5, true)
           })
     })
@@ -2461,7 +2473,7 @@ export class Provider extends React.Component{
                     this.setState(newState)
                 })
                 .catch(err => {
-                  console.log(err)
+                  
                 })
             
         },

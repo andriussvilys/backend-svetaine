@@ -1573,29 +1573,31 @@ export class Provider extends React.Component{
                         //column (with id and array of files in order)
                         //id
                         let fileIds = []
-
-                        Object.keys(relatedArtwork).forEach(fileName => {
+                        console.log('related ARTWORK BEFORE FILE IDS')
+                        console.log(relatedArtwork)
+                        Object.keys(relatedArtwork).forEach((fileName, index) => {
+                            console.log(fileName)
+                            console.log(`family index ${relatedArtwork[fileName].familyDisplayIndex}`)
+                            const familyDisplayIndex = relatedArtwork[fileName].familyDisplayIndex
                             // if(relatedArtwork[fileName].familyDisplayIndex < 0){
                             //     fileIds.push(fileName)
                             // }
                             // else{
                             //     fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
                             // }
-                            if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex >= 0){
-                                if(!fileIds[relatedArtwork[fileName].familyDisplayIndex]){
-                                    fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                                }
-                                else{
-                                    fileIds.push(fileName)
-                                }
-                            }
-                            else{
-                                fileIds.push(fileName)
-                            }
+                            // if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex >= 0){
+                            //     if(!fileIds[relatedArtwork[fileName].familyDisplayIndex]){
+                            //         fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                            //     }
+                            //     else{
+                            //         fileIds.push(fileName)
+                            //     }
+                            // }
+                            // else{
+                            //     fileIds.push(fileName)
+                            // }
+                            fileIds[familyDisplayIndex] = fileName
                         })
-                        //     console.log('fileIDs before filter', fileIds)
-                            fileIds = fileIds.filter(item => item !== undefined)
-                            console.log('fileIDs AFTER filter', fileIds)
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,
                                 column: {

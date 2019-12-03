@@ -21,7 +21,11 @@ const ArtworkInfo = (props) => {
     }
 
     return(
-        <div className="ArtworkInfo-container" id="ArtworkInfo" onClick={(e) => props.hideArtworkInfo(e)}>
+        <div 
+            className="ArtworkInfo-container" 
+            id="ArtworkInfo" 
+            onClick={(e) => props.hideArtworkInfo(e)}
+        >
             <div>
                 <h5>INFO:</h5>
                 <div>{props.file.foreground.artworkTitle}</div>

@@ -17,6 +17,8 @@ export default class DndListDroppable extends React.Component{
                         >
                         {provided =>{
                             let orderData = this.props.column.fileIds 
+                            console.log('ordered array in DnD list')
+                            console.log(orderData)
                             // ? this.props.column.fileIds : Object.keys(this.props.files)
                                         return(
                                             <div 
