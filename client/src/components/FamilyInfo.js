@@ -94,8 +94,13 @@ export default class FamilyInfo extends Component {
                                 <Button
                                  variant="success" 
                                  size="sm"
+                                 disabled={
+                                    document.getElementById("add-artworkFamilyList-item")
+                                    ? this.context.state.artworkFamilyList.includes(document.getElementById("add-artworkFamilyList-item").value) 
+                                    : false
+                                    }
                                  onClick={
-                                     this.context.createFamilySetup
+                                    () => this.context.familySetupMethods.createFamilySetup()
                                  }
                                 >
                                     SEND

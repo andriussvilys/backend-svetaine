@@ -185,6 +185,7 @@ export default class FamilyList extends React.Component{
                     <h5 className="FamilyList--familyName__text">{this.props.familyName ? this.props.familyName : "none"}</h5>
                 </div>
                 {this.renderList(this.props.files, this.props)}
+                <div>send all to server</div>
             </div>
         ) 
     }

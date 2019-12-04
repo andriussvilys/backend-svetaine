@@ -947,6 +947,11 @@ export class Provider extends React.Component{
 
         updateArtworkByFamily: (familyName) => {
 
+            if(Object.keys(this.state.familySetupData.category).length <= 0){
+                alert('select categories')
+                return
+                }
+
             this.familySetupMethods.updateFamilySetup(this.state.familySetupData.artworkFamily)
 
             const fileNamesInFamily = Object.keys(this.state.relatedArtwork[familyName].files)
@@ -956,11 +961,13 @@ export class Provider extends React.Component{
                 this.state.relatedArtwork[familyName].column.fileIds.forEach((fileName, index) => {
                     const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
 
+                    const familyData = this.state.familySetupData
+                    const {category, themes, seeAlso, familyDescription, year, location} = familyData
                     let fileData = this.state.relatedArtwork[familyName].files[fileName]
                     delete fileData.__v
                     delete fileData._id
                     delete fileData.relatedArtwork
-                    fileData = {...fileData, familyDisplayIndex}
+                    fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location}
                     console.log(fileData)
                     axios.put(`/api/artworkInfo/update/${fileName}`, fileData)
                         .then(res => {
@@ -969,6 +976,7 @@ export class Provider extends React.Component{
                             if(progress === updateLength){
                                 axios.get(`/api/artworkInfo/${familyName}`)
                                     .then(res => {console.log(res)})
+                                    alert('success')
                             }
                         })
                 })
@@ -1321,6 +1329,15 @@ export class Provider extends React.Component{
             }
         },
         isChecked: (string, value) => {
+            console.log("is Checked trigerred")
+            if(string === "artworkFamily"){
+                console.log(`string = ${value}`)
+                console.log(value)
+                if(this.state.familySetupData.artworkFamily === value){
+                    return true
+                }
+                else{ return false}
+            }
             if(this.state.familySetupData[string].includes(value)){
                 return true
             } 
@@ -1423,6 +1440,13 @@ export class Provider extends React.Component{
         },
         createFamilySetup: () => {
 
+            console.log('create family setup runs')
+
+            if(!this.state.familySetupData.artworkFamily){
+                alert('select or add new Family Name')
+                return
+            }
+
             const artworkFamily = this.state.familySetupData.artworkFamily;
             const category = this.state.familySetupData.category ? this.state.familySetupData.category : {};
             const familyDescription = this.state.familySetupData.familyDescription ? this.state.familySetupData.familyDescription : "";
@@ -1442,13 +1466,9 @@ export class Provider extends React.Component{
                 location: location,
                 year: year
             }
-            if(!this.state.familySetupData.artworkFamily){
-                alert('select or add new Family Name')
-                return
-            }
             axios.post('/api/familySetup/create', requestBody)
                 .then( res => {alert('success')})
-                .catch(err => {console.log(err); alert(err)})
+                .catch(err => {alert('error')})
         },
         updateFamilySetup: (familyName) => {
             const artworkFamily = this.state.familySetupData.artworkFamily;

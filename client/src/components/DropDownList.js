@@ -31,7 +31,10 @@ export default class DropDownList extends React.Component{
                 return false
             }
             if(statePath[string]){
-                if( typeof statePath[string] === 'string'|| Array.isArray(statePath[string]) ){
+                if(typeof statePath[string] === 'string'){
+                    return statePath[string] === listItem
+                }
+                else if( Array.isArray(statePath[string]) ){
                         return statePath[string].includes(listItem)
                     }
             }
