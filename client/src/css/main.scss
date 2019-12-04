@@ -343,7 +343,6 @@ $background-color: white;
     // max-width: 100%;
     overflow: hidden;
     max-height: 200px;
-    cursor: pointer;
     position: sticky;
     top: 0;
     flex: 1 1 150px;
@@ -428,6 +427,7 @@ $background-color: white;
     transform: translateY(0);
     transition: 0.4s all;
     max-height: 200px;
+    cursor: pointer;
 }
 .zero-width{
     height: 0;
@@ -466,6 +466,7 @@ $background-color: white;
 
 .image-hide{
     transform: translateY(200%);
+    cursor: default;
 }
 
 .low-opacity{
@@ -577,4 +578,5 @@ $background-color: white;
 }
 .info-down{
     bottom: -100%;
+    cursor: default;
 }
