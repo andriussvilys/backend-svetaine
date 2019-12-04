@@ -9,15 +9,16 @@ const Login = (props) => {
         let passwordBgColor = null
 
         return(
-            <div>
-                <form id="logIn" style={{display:'flex', flexWrap: 'wrap', width: '300px'}}>
+            <div className="Login-container">
+                <form id="logIn" className="Login-form">
                     <label htmlFor="uname">Username</label>
-                    <input onSubmit={e => e.preventDefault()} style={{backgroundColor: userBgColor}} type="text" placeholder="Enter Username" name="uname" id="uname" required />
+                    <input className="Login-input" onSubmit={e => e.preventDefault()} style={{backgroundColor: userBgColor}} type="text" placeholder="Enter Username" name="uname" id="uname" required />
 
                     <label htmlFor="psw">Password</label>
-                    <input onSubmit={e => e.preventDefault()} style={{backgroundColor: passwordBgColor}} type="password" placeholder="Enter Password" name="psw" id="psw" required />
+                    <input className="Login-input" onSubmit={e => e.preventDefault()} style={{backgroundColor: passwordBgColor}} type="password" placeholder="Enter Password" name="psw" id="psw" required />
 
                     <Button
+                        className="Login-button"
                         form="logIn"
                         type="submit"
                         value="submit"

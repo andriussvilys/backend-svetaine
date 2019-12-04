@@ -229,6 +229,27 @@ label{
     margin: 15px 0 0 0 ;
     border: 1px solid #afafaf;
 }
+.Login-container{
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: start;
+    padding-top: 7%;
+}
+.Login-form{
+    display:'flex';
+    flex-wrap: 'wrap';
+    flex-direction: column;
+    width: '300px';
+}
+.Login-input{
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+.Login-button{
+    margin-top: 15px;
+}
 
 //FRONT END
 //------------
@@ -261,6 +282,7 @@ $background-color: white;
     color: white !important;
 }
 .Navbar{
+    overflow: hidden;
     background-color: $frame-color;
     width: 4vw;
     height: 100%;
@@ -269,6 +291,16 @@ $background-color: white;
     right: 0;
     z-index: 2;
     grid-column-start: 3;
+}
+#button-next, #button-prev{
+    transition: 0.2s all;
+}
+
+.move-left{
+    transform: translateX(100%);
+}
+.move-right{
+    transform: translateX(-100%);
 }
 
 .frontEndIndex-container{
@@ -317,6 +349,16 @@ $background-color: white;
     flex: 1 1 150px;
     // bottom: 0;
 }
+.ImagesPreview--imageContainer__empty{
+    border: 2px solid red;
+    transition: 0.4s all;
+    transition: 0 opacity;
+    overflow: hidden;
+    max-height: 200px;
+    position: sticky;
+    top: 0;
+    flex: 1 1 150px;
+}
 .enlargeContainer{
     height: 100%;
     width: 1px;
@@ -326,7 +368,7 @@ $background-color: white;
     display: flex;
     align-items: center;
     max-width: 100%;
-    transition: 0.4s transform;
+    transition: 0.4s all;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
@@ -507,6 +549,9 @@ $background-color: white;
     transition: 0.4s all;
     bottom: -100%;
     opacity: 0;
+    background-color: $frame-color;
+    color: white;
+    padding-left: 20px;
 }
 .ArtworkInfo-preview-container{
     max-height: 100%;
