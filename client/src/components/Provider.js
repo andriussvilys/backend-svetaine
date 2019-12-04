@@ -968,7 +968,7 @@ export class Provider extends React.Component{
                             console.log(`progress: ${progress}/${updateLength}`)
                             if(progress === updateLength){
                                 axios.get(`/api/artworkInfo/${familyName}`)
-                                    .then(res => console.log(res))
+                                    .then(res => {console.log(res)})
                             }
                         })
                 })
@@ -997,154 +997,77 @@ export class Provider extends React.Component{
 
                 const artworkFamily = file.artworkFamily || "none"
 
-                axios.get(`/api/artworkInfo/${artworkFamily}`).then(res => {
+                const recorded = axios.get(`/api/artworkInfo/${artworkFamily}`).then(res => {
                     console.log('RECORDED RES***********')
                     console.log(res)
                 })
+                    console.log(`registering to ${artworkFamily}`)
 
-                console.log(image)
-                console.log(naturalSize)
-
-                if(!file.artworkFamily){
-
-                    const fileData = file
+                        const obj = this.state.relatedArtwork[artworkFamily].files[file.fileName]
+                        const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
+                        let fileData = null
+                        
+                        //check if the file is uploaded to server
+                        if(this.state.serverFileDir.includes(file.fileName)){
+                            console.log('server includes files already')
+                            fileData = obj
+                            fileData.familyDisplayIndex = familyIndex
         
-                    let fileDataObject = {                          
-                    category: fileData.category ?  fileData.category : null,
-                    filePath: `/uploads/${fileData.fileName}`,
-                    fileName: fileData.fileName,
-                    fileType: fileData.fileType,
-        
-                    artworkFamily: "none",
-                    familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
-                    artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
-                    artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-                    // familyDisplayIndex: fileData.familyDisplayIndex ?  fileData.familyDisplayIndex : null,
-                    themes: fileData.themes ?  fileData.themes : null,
-                    seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
-                    location: fileData.location ?  fileData.location : null,
-                    year: fileData.year ? fileData.year : null,
-                    naturalSize,
-                    displayMain: fileData.displayMain ? fileData.displayMain : null 
-                    }
-        
-                    // fileData.familyDisplayIndex = this.state.fileData.column.fileIds.indexOf(fileName)
-                    fileDataObject.familyDisplayIndex = null
-                    axios.post('/api/artworkInfo/create', fileDataObject)
-                        .then( res => { 
-                            this.fileDataMethods.uploadFile(file.fileName)
-                            let newState = this.state
-                            this.familySetupMethods.getArtworkInfo()
+                            axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
                                 .then(res => {
-                                    newState.artworkInfoData = res
-                                    newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
-                                    this.setState(newState, resolve('new file registered without family'))
+                                    let newState = this.state
+                                    this.familySetupMethods.getArtworkInfo()
+                                        .then(res => {
+                                            newState.artworkInfoData = res
+                                            this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                        })
                                 })
-                        })
-                        .catch(err => console.error(err))
-                    }
-
-
-                else{
-                        console.log(`registering to ${file.artworkFamily}`)
-
-                        const artworkFamily = file.artworkFamily
-                        const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length 
-     
-                        let progressCount = 0
-        
-                        // Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
-
-                            const obj = this.state.relatedArtwork[artworkFamily].files[file.fileName]
-                            const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
-                            let fileData = null
-                            
-                            //check if the file is uploaded to server
-                            if(this.state.serverFileDir.includes(file.fileName)){
-                                console.log('server includes files already')
-                                fileData = obj
-                                fileData.familyDisplayIndex = familyIndex
+                        }
             
-                                axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
-                                    .then(res => {
-                                        progressCount += 1
-                                        // if(progressCount === updateLength){
-                                        //     resolve(`new file registered in "${file.artworkFamily}" family`)
-                                        // }
-                                        if(progressCount === updateLength){
-                                            let newState = this.state
-                                            this.familySetupMethods.getArtworkInfo()
-                                                .then(res => {
-                                                    newState.artworkInfoData = res
-                                                    this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
-                                                })
-                                        }
-                                    })
+                        else{
+                            fileData = this.state.fileData.files[file.fileName]
+                
+                            let fileDataObject = {                                                 
+                            category: fileData.category ? fileData.category : null,
+                            filePath: `/uploads/${fileData.fileName}`,
+                            fileName: fileData.fileName,
+                            fileType: fileData.fileType,
+                
+                            artworkFamily: artworkFamily ?  artworkFamily : null,
+                            familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
+                            artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
+                            artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
+                            themes: fileData.themes ?  fileData.themes : null,
+                            seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
+                            location: fileData.location ?  fileData.location : null,
+                            year: fileData.year ? fileData.year : null,
+                            naturalSize, 
+                            displayMain: fileData.displayMain ? fileData.displayMain : null 
                             }
                 
-                            else{
-                                fileData = this.state.fileData.files[file.fileName]
-                    
-                                let fileDataObject = {                                                 
-                                category: fileData.category ?  fileData.category : null,
-                                filePath: `/uploads/${fileData.fileName}`,
-                                fileName: fileData.fileName,
-                                fileType: fileData.fileType,
-                    
-                                artworkFamily: fileData.artworkFamily ?  fileData.artworkFamily : null,
-                                familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
-                                artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
-                                artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-                                themes: fileData.themes ?  fileData.themes : null,
-                                seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
-                                location: fileData.location ?  fileData.location : null,
-                                year: fileData.year ? fileData.year : null,
-                                naturalSize, 
-                                displayMain: fileData.displayMain ? fileData.displayMain : null 
-                                }
-                    
-                                fileDataObject.familyDisplayIndex = familyIndex
-                                
-                                console.log(fileDataObject)
+                            fileDataObject.familyDisplayIndex = familyIndex
+                            
+                            console.log(fileDataObject)
 
-                                axios.post('/api/artworkInfo/create', fileDataObject)
-
-                                    .then( res => { 
-                                        console.log('new record craeted')
-                                        console.log(res)
-                                        this.fileDataMethods.uploadFile(file.fileName)
-                                        progressCount += 1
-                                        // if(progressCount === updateLength){
-                                            let newState = {...this.state}
-                                            this.familySetupMethods.getArtworkInfo()
-                                                .then(res => {
-                                                    console.log("getArtworkInfo")
-                                                    newState.artworkInfoData = res
-                                                    // axios.get('/fetchImages')
-                                                    //     .then(res => {
-                                                    //         newState.serverFileDir = res.data
-                                                    //         console.log('fetch images')
-                                                    //         console.log(newState)
-                                                    //         console.log(res)
-                                                    //         this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
-                                                    //     })
-                                                    newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
-                                                    this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
-                                                    
-                                                })
-                                        // }
-                                    })
-                                    .catch(err => console.log(err))
-                            }
-                        // }) END of FOREACH method
-
-                }
+                            axios.post('/api/artworkInfo/create', fileDataObject)
+                            this.fileDataMethods.updateArtworkByFamily(artworkFamily)
+                                .then( res => { 
+                                    console.log('new record craeted')
+                                    console.log(res)
+                                    this.fileDataMethods.uploadFile(file.fileName)
+                                        let newState = {...this.state}
+                                        this.familySetupMethods.getArtworkInfo()
+                                            .then(res => {
+                                                console.log("getArtworkInfo")
+                                                newState.artworkInfoData = res
+                                                newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
+                                                this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                
+                                            })
+                                })
+                                .catch(err => console.log(err))
+                        }
             })
-
-            // postPromise.then(res => {
-            //     console.log(res)
-            //     return res
-            // })
 
         },
 
