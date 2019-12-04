@@ -512,7 +512,6 @@ label {
 }
 
 .ImagesPreview--imageContainer__empty {
-  border: 2px solid red;
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
   -webkit-transition: 0 opacity;

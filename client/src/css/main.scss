@@ -266,9 +266,8 @@ label{
 //TAGS MENU
 //------------
 $frame-color: rgb(53, 25, 8);
-// $frame-color: rgb(255, 141, 255);
+// $frame-color: rgb(200, 200, 200);
 $background-color: white;
-// $background-color: rgb(77, 42, 13);
 
 .TagsMenu-container{
     width: 250px;
@@ -358,7 +357,7 @@ $background-color: white;
     flex: 1 1 150px;
 }
 .ImagesPreview--imageContainer__empty{
-    border: 2px solid red;
+    // border: 2px solid red;
     transition: 0.4s all;
     transition: 0 opacity;
     overflow: hidden;

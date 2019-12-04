@@ -29,8 +29,8 @@ export default class ImageInfo extends Component{
                   <div className="imageInfo--box">
                     <div>
                       <p>Upload file(-s):</p> 
-                      <p className="subtitle">The name of uploaded file cannot contain spaces or special characters except "-"</p>
                       <input type="file" multiple onChange={this.context.addFileToState} />
+                      <p className="subtitle">The name of uploaded file cannot contain spaces or special characters except "-"</p>
                     </div>
                   </div>
 

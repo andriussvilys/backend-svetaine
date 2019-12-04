@@ -8,29 +8,6 @@ export default class ImageSelect extends React.Component{
         super(props)
         this.state = { artworkOnDisplay: null}
     }
-
-    // createPreviews = (data) => {
-    //     if(data){
-    //         let previews = Object.keys(data).map(objName => {
-    //             return <FilePreview 
-    //             containerClassName="ImagesPreview--imageContainer"
-    //             className="imageSelect-FilePreview" 
-    //             // onClick={(e) => this.props.methods.loadEnlarge(e)}
-    //             onClick={e => this.props.methods.loadEnlarge(e, objName)}
-    //             file={data[objName]} 
-    //             />
-    //         })
-    //         return(
-    //             <div 
-    //             id="imageSelect"
-    //             className="imageSelect-container"
-    //             >
-    //                 {previews}
-    //             </div>
-    //         )
-    //     }
-    //     else{return null} 
-    // }
     createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map(objName => {
@@ -44,7 +21,7 @@ export default class ImageSelect extends React.Component{
                     />
                 }
                 else{
-                return <div className="ImagesPreview--imageContainer__empty">{data[objName].artworkFamily}</div>
+                return <div className="ImagesPreview--imageContainer__empty"></div>
                 }
             })
             return(
