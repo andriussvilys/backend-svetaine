@@ -63,6 +63,16 @@ form{
     margin: 0;
 }
 
+.EditDetail-container{
+    width: 150px;
+    display: flex;
+    flex-direction:column;
+    justify-content:space-between;
+    border: 1px solid black;
+    margin: 2px 1px 0 1px;
+}
+
+
 p{
     margin: 0 !important;
     word-wrap:break-word;

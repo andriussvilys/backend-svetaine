@@ -11,22 +11,10 @@ const EditDetail = (props) => {
                     className="EditDetail-container"
                     key={`fileLibrary-${props.file.fileName}`} 
                     style={{
-                        maxWidth: "200px", 
-                        display:"flex", 
-                        flexDirection:"column", 
-                        justifyContent:"space-between", 
-                        border: "1px solid black", 
-                        margin: "2px 1px 0 1px"
+
                     }}
                 >
                     <div 
-                        style={{
-                        display:"flex", 
-                        flexDirection:"column", 
-                        height: "100%", 
-                        justifyContent:"space-between", 
-                        marginBottom: "1px"
-                        }}
                     >
                         <div>
                             <p className="subtitle">file name:</p>

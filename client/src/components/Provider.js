@@ -976,9 +976,6 @@ export class Provider extends React.Component{
         },
 
         postArtworkInfo: (file) => {
-
-            
-            
             return new Promise((resolve, rej) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
                     return resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
@@ -997,10 +994,10 @@ export class Provider extends React.Component{
 
                 const artworkFamily = file.artworkFamily || "none"
 
-                const recorded = axios.get(`/api/artworkInfo/${artworkFamily}`).then(res => {
-                    console.log('RECORDED RES***********')
-                    console.log(res)
-                })
+                // const recorded = axios.get(`/api/artworkInfo/${artworkFamily}`).then(res => {
+                //     console.log('RECORDED RES***********')
+                //     console.log(res)
+                // })
                     console.log(`registering to ${artworkFamily}`)
 
                         const obj = this.state.relatedArtwork[artworkFamily].files[file.fileName]
@@ -1064,6 +1061,7 @@ export class Provider extends React.Component{
                                                 this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
                                                 
                                             })
+                                            .catch(err=>console.log(err))
                                 })
                                 .catch(err => console.log(err))
                         }

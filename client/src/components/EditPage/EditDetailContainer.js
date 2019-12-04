@@ -25,24 +25,11 @@ export default class FileUpdate extends React.Component{
                 artworkFamily: file.artworkFamily,
                 file: 
                     <div 
+                        className="EditDetail-container"
                         key={`fileLibrary-${file.fileName}`} 
-                        style={{
-                            width: "200px", 
-                            display:"flex", 
-                            flexDirection:"column", 
-                            justifyContent:"space-between", 
-                            border: "1px solid black", 
-                            margin: "2px 1px 0 1px"
-                        }}
                     >
                         <div 
-                            style={{
-                            display:"flex", 
-                            flexDirection:"column", 
-                            height: "100%", 
-                            justifyContent:"space-between", 
-                            marginBottom: "1px"
-                            }}
+                        style={{display: "flex", flexDirection:"column", justifyContent:"space-between", height: "100%"}}
                         >
                             <div>
                                 <p className="subtitle">file name:</p>
@@ -54,17 +41,17 @@ export default class FileUpdate extends React.Component{
                                 key={`fileUpload-${file.fileName}-EditDetail-FilePreview`}
                                 file={file}
                             />
-                        </div>
-                        <div style={{border: "1px solid grey", padding: "2px"}}>
-                            <Link to={`/admin/edit/${file.fileName}`}>
-                                <Button
-                                    onClick={(e) => {
-                                        this.props.context.fileDataMethods.serverFileToState(file)
-                                    }}
-                                >
-                                    Edit
-                                </Button>
-                            </Link>
+                            <div style={{border: "1px solid grey", padding: "2px"}}>
+                                <Link to={`/admin/edit/${file.fileName}`}>
+                                    <Button
+                                        onClick={(e) => {
+                                            this.props.context.fileDataMethods.serverFileToState(file)
+                                        }}
+                                    >
+                                        Edit
+                                    </Button>
+                                </Link>
+                            </div>
                         </div>
             
                     </div>
