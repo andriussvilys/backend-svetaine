@@ -345,18 +345,17 @@ $background-color: white;
 .ImagesPreview--imageContainer{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    // justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     transition: 0.4s all;
     transition: 0 opacity;
     z-index: 2;
-    // max-width: 100%;
     overflow: hidden;
     max-height: 200px;
     position: sticky;
     top: 0;
     flex: 1 1 150px;
-    // bottom: 0;
 }
 .ImagesPreview--imageContainer__empty{
     border: 2px solid red;
