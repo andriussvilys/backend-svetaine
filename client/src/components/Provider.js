@@ -559,17 +559,45 @@ export class Provider extends React.Component{
             })
         },
 
-        deleteDBrecord: (fileName) => {
+        deleteDBrecord: (fileName, artworkFamily) => {
             // const id = this.state.relatedArtwork[familyName].files[fileName]._id
             // console.log(id)
             axios.delete(`/api/artworkInfo/delete/${fileName}`)
                 .then(res => {
-                    console.log("record deleted")
-                    console.log(res)
-                    axios.delete(`/deleteImage`, fileName)
+                    axios.delete(`/deleteImage/delete/${fileName}`)
                     .then(res => {
-                        alert("succes")
+                        console.log(`file deleted:`)
+                        console.log(res)
+                        let relatedArtwork = {...this.state.relatedArtwork}
+                        delete relatedArtwork[artworkFamily].files[fileName]
+                        const fileIds = relatedArtwork[artworkFamily].column.fileIds
+                        console.log("fileIds")
+                        console.log(fileIds)
+                        let newFileIds = fileIds.filter(name => name !== fileName)
+                        console.log("fileIds")
+                        console.log(newFileIds)
+                        relatedArtwork[artworkFamily].column.fileIds = newFileIds
+                        console.log("********** NEW relatedArtwork")
+                        console.log(relatedArtwork)
+                        let artworkOnDisplay = this.state.artworkOnDisplay
+                        delete artworkOnDisplay[fileName]
+                        let artworkInfoData = this.state.artworkInfoData
+                        delete artworkInfoData[fileName]
+                        this.setState({relatedArtwork, artworkInfoData, artworkOnDisplay}
+                            // , () => {alert("operation complete")}
+                            ) 
+
+                        // this.familySetupMethods.getRelatedArtwork(artworkFamily, this.state)
+                        //     .then(res => {
+                        //         console.log('related artwork res')
+                        //         console.log(res)
+                        //         const relatedArtwork = {...this.state.relatedArtwork, [artworkFamily]: res}
+                        //         console.log('related artwork to be insert')
+                        //         console.log(relatedArtwork)
+                        //         this.setState({relatedArtwork}, () => {alert("operation complete")}) 
+                        //     })
                     })
+                    .catch(err => console.log(err))
                 })
                 .catch(err => console.log(err))
         },
@@ -791,7 +819,7 @@ export class Provider extends React.Component{
                                 src: `/uploads/${file.name}`,
                                 themes: [],
                                 seeAlso: [],
-                                categories: {},
+                                category: {"studio": {"misc": []}},
                                 artworkFamily: "none"
                             }
             

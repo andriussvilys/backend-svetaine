@@ -41,7 +41,7 @@ export default class FileUpdate extends React.Component{
                                 key={`fileUpload-${file.fileName}-EditDetail-FilePreview`}
                                 file={file}
                             />
-                            <div style={{border: "1px solid grey", padding: "2px"}}>
+                            <div className="EditDetailContainer--button-wrapper">
                                 <Link to={`/admin/edit/${file.fileName}`}>
                                     <Button
                                         onClick={(e) => {
@@ -54,7 +54,7 @@ export default class FileUpdate extends React.Component{
                                 <Button
                                         variant="danger"
                                         onClick={() => {
-                                            this.props.context.fileDataMethods.deleteDBrecord(file.fileName)
+                                            this.props.context.fileDataMethods.deleteDBrecord(file.fileName, file.artworkFamily)
                                         }}
                                     >
                                         Delete

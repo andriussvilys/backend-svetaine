@@ -260,6 +260,12 @@ label{
 .Login-button{
     margin-top: 15px;
 }
+.EditDetailContainer--button-wrapper{
+    border: 1px solid grey;
+    padding: 2px;
+    display: flex;
+    justify-content: space-between;
+}
 
 //FRONT END
 //------------
@@ -566,7 +572,7 @@ $background-color: white;
     justify-content: flex-end;
 }
 .ArtworkInfo-wrapper{
-    min-width: 50%;
+    width: 100%;
     max-width: 600px;
     padding: 1vw 0;
 }

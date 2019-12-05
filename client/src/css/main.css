@@ -394,6 +394,17 @@ label {
   margin-top: 15px;
 }
 
+.EditDetailContainer--button-wrapper {
+  border: 1px solid grey;
+  padding: 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 .TagsMenu-container {
   width: 250px;
   background-color: #351908;
@@ -824,7 +835,7 @@ label {
 }
 
 .ArtworkInfo-wrapper {
-  min-width: 50%;
+  width: 100%;
   max-width: 600px;
   padding: 1vw 0;
 }

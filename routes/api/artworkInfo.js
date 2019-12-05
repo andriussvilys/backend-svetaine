@@ -27,7 +27,6 @@ router.get('/', (req, res) => {
 })
 
 router.delete('/delete/:fileName', (req, res) => {
-    res.send(req)
     ArtworkInfo.deleteOne({ "fileName": req.params.fileName }
     //     , function (err) {
     //     console.log(req.params.id)
@@ -36,8 +35,8 @@ router.delete('/delete/:fileName', (req, res) => {
     //     // deleted at most one tank document
     //   }
       )
-      .then(result => {res.send(result); console.log(res)})
-      .catch(err => {res.send(err); console.log(err)})
+      .then(result => {res.json(result); console.log(res)})
+      .catch(err => {res.json(err); console.log(err)})
 })
 
 //filter records by artworkFamily
