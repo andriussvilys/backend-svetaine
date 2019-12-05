@@ -79,6 +79,24 @@ export default class FamilyInfo extends Component {
                                 ></textarea>
                             </div>
 
+                            <div className="imageInfo--box" style={{display: "block"}}>
+                                <div>
+                                    <span>location:</span>
+                                        <input 
+                                        type="text" 
+                                        onChange={(e) => this.context.onChange(e, "location") } 
+                                        />
+                                </div>
+                                <div>
+                                    <span>year:</span>
+                                        <input 
+                                        type="number" 
+                                        min="1992" 
+                                        onChange={(e) => this.context.onChange(e, "year") } 
+                                        />
+                                </div>
+                            </div>
+
                             {/* <ThemeSelector/> */}
 
     

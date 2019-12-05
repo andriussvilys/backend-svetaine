@@ -1940,7 +1940,7 @@ export class Provider extends React.Component{
         }
         //ON CHECK
         else{
-            newDisplay={...this.state.visibleArtwork}
+            newDisplay={...this.state.artworkOnDisplay}
             Object.keys(this.state.visibleArtwork).forEach(fileName => {
                 const file = this.state.visibleArtwork[fileName]
                 if(Object.keys(file.category).includes(category)){
@@ -2331,8 +2331,8 @@ export class Provider extends React.Component{
 
 
     this.viewPrev = () => {
-      const info = document.getElementById("ArtworkInfo")
-      info.classList.remove("info-up")
+      // const info = document.getElementById("ArtworkInfo")
+      // info.classList.remove("info-up")
         const familyName = this.state.enlarge.foreground.artworkFamily
         if(!familyName){
             return

@@ -27,10 +27,6 @@ export default class FrontEndIndex extends React.Component{
 
     adminButtons = (props) => {
         return(
-    
-                <Accordion
-                    title="ADMIN"
-                >
                     <div style={{display:"flex", flexDirection:"column"}}>
                         <Button
                             onClick={
@@ -48,7 +44,7 @@ export default class FrontEndIndex extends React.Component{
                         >
                             Admin
                         </Button>
-                        <Button
+                        {/* <Button
                             onClick={() => {
                                 auth.logout( () => {
                                     console.log(auth.authenticated)
@@ -65,9 +61,8 @@ export default class FrontEndIndex extends React.Component{
                             }}
                         >
                             Log IN
-                        </Button>
+                        </Button> */}
                     </div>
-                </Accordion>
         )
     }  
 

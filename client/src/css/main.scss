@@ -561,6 +561,14 @@ $background-color: white;
     background-color: $frame-color;
     color: white;
     padding-left: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.ArtworkInfo-wrapper{
+    min-width: 50%;
+    max-width: 600px;
+    padding: 1vw 0;
 }
 .ArtworkInfo-preview-container{
     max-height: 100%;
@@ -580,13 +588,47 @@ $background-color: white;
     transition: 0.4s all;
 }
 .ArtworkInfo-preview:hover{
+    transition: none;
     opacity: 1;
 }
 .ArtworkInfo-seeAlso-container{
     height: 75px;
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    overflow-y: auto;
+}
+.ArtworkInfo-container_seealso{
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.ArtworkInfo--descriptions{
+    margin: 1vw 2vw;
+    font-size: 14px;    
+}
+.ArtworkInfo--descriptions_instance{
+    text-indent: 15px;
+    margin-top: 10px;
+}
+.ArtworkInfo--familyDescription{
+    // margin: 1vw 2vw;
+    // font-size: 14px;
+}
+.ArtworkInfo--artworkDescription{
+    // margin: 1vw 2vw;
+    // font-size: 14px;
+}
+.ArtworkInfo_artworkFamily{
+    font-size: 14px;
+    line-height: 16px;
+}
+.ArtworkInfo_artworkTitle{
+    font-size: 18px;
+    font-weight: 600;
+}
+.ArtworkInfo_locationYear{
+    font-size: 12px;
+    margin-top: 10px;
 }
 
 .info-up{

@@ -177,6 +177,34 @@ export default class FamilyList extends React.Component{
         return list
     }
 
+    postAll = (familyName) => {
+        const fileData = this.props.context.state.fileData
+        const allNewFiles = fileData.column.fileIds
+        const allInFamily = allNewFiles.filter(fileName => {
+            return fileData.files[fileName].artworkFamily === familyName
+        })
+        console.log(allInFamily)
+
+        const postAll = new Promise((resolve, rej) => {
+            const promiseLength = allInFamily.length
+            let progress = 0
+            allInFamily.forEach(fileName => {
+                const fileRecord = fileData.files[fileName]
+                this.props.context.fileDataMethods.postArtworkInfo(fileRecord)
+                    .then(res => {
+                        progress += 1
+                        if(progress === promiseLength){
+                            resolve(res)
+                        }
+                    })
+                    .catch(err => rej(err))
+            })
+        }) 
+        postAll
+            .then(res => alert(res))
+            .catch(err => alert(err))
+    }
+ 
 
     render(){
         return (
@@ -185,7 +213,22 @@ export default class FamilyList extends React.Component{
                     <h5 className="FamilyList--familyName__text">{this.props.familyName ? this.props.familyName : "none"}</h5>
                 </div>
                 {this.renderList(this.props.files, this.props)}
-                <div>send all to server</div>
+                <div style={{display: "flex", justifyContent: "flex-end"}}>  
+                <Button
+                            variant="success"
+                            className="custom-button"
+                            onClick={() => {
+                                this.postAll(this.props.familyName)
+                            }}
+                        >
+                            Submit ALL to server
+                </Button>
+                </div>
+                <BootstrapModal 
+                    showModal={this.props.context.state.showModal}
+                    message="updating database"
+                    onClose={this.props.context.onClose}
+                />
             </div>
         ) 
     }

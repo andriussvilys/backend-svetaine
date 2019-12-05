@@ -77,6 +77,7 @@ export default class MainContainer extends React.Component{
                     fileDataMethods: this.context.fileDataMethods,
                     onChange: this.context.onChange
                 }}
+                contxt={this.context}
 
                 />
             ) 

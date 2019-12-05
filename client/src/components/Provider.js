@@ -573,38 +573,37 @@ export class Provider extends React.Component{
                 else{ return "string"}
             }
 
+            let newState = {}
+
             if(nestType() === "array"){
                 if(!this.state.fileData.files[fileName][string]){
                     this.state.fileData.files[fileName][string] = []
                 }
-            }
-
-            if(!!this.state.fileData.files[fileName][string]){
-                if(this.state.fileData.files[fileName][string].includes(value)){
-                    let newState = []    
-                    if(Array.isArray(this.state.fileData.files[fileName][string])){
-                            let newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
-            
-                            newState = {
-                                ...this.state,
-                                fileData: {
-                                    ...this.state.fileData,
-                                    files: {
-                                        ...this.state.fileData.files,
-                                        [fileName]: {
-                                            ...this.state.fileData.files[fileName],
-                                            [string]: newList
+                if(!!this.state.fileData.files[fileName][string]){
+                    if(this.state.fileData.files[fileName][string].includes(value)){
+                        let newState = []    
+                        if(Array.isArray(this.state.fileData.files[fileName][string])){
+                                let newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
+                
+                                newState = {
+                                    ...this.state,
+                                    fileData: {
+                                        ...this.state.fileData,
+                                        files: {
+                                            ...this.state.fileData.files,
+                                            [fileName]: {
+                                                ...this.state.fileData.files[fileName],
+                                                [string]: newList
+                                            }
                                         }
                                     }
                                 }
-                            }
-                        }    
-                    this.setState(newState)
-                    return
+                            }    
+                        this.setState(newState)
+                        return
+                    }
                 }
             }
-
-            let newState = {}
 
             if(nestType() === "string"){              
                 newState = {
@@ -673,6 +672,8 @@ export class Provider extends React.Component{
                     newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
                     newState.fileData.files[file.fileName].relatedArtwork = res
                     newState.fileData.files[file.fileName].useFamilySetup = true
+                    delete newState.fileData.files[file.fileName]._id
+                    delete newState.fileData.files[file.fileName].__v
                     this.setState(newState, this.setState({showModal: false})
                     )
                 })
@@ -905,11 +906,9 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
         updateArtworkInfo: (file) => {
-            console.log('UPDATE FILE DATA')
-            console.log(file)
             return new Promise((resolve, reject) => {
                 if(!file.category || !Object.keys(file.category).length > 0 ){
-                    resolve('To submit, select categories for this file')
+                    resolve(`To submit, select categories for file ${file.fileName}`)
                 }
 
                 else{
@@ -928,10 +927,7 @@ export class Provider extends React.Component{
                             const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
                             let fileData =  obj
                                 fileData.familyDisplayIndex = familyIndex
-                                console.log("update with fileData")
-                                console.log(fileData)
                                 axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
-
                                     .then(res => {
                                         progressCount += 1
                                         console.log(progressCount)
@@ -984,6 +980,8 @@ export class Provider extends React.Component{
         },
 
         postArtworkInfo: (file) => {
+            console.log('post artwork info RUNS with')
+            console.log(file)
             return new Promise((resolve, rej) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
                     return resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
@@ -1014,19 +1012,20 @@ export class Provider extends React.Component{
                         
                         //check if the file is uploaded to server
                         if(this.state.serverFileDir.includes(file.fileName)){
-                            console.log('server includes files already')
-                            fileData = obj
-                            fileData.familyDisplayIndex = familyIndex
+                            // console.log('server includes files already')
+                            // fileData = obj
+                            // fileData.familyDisplayIndex = familyIndex
         
-                            axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
-                                .then(res => {
-                                    let newState = this.state
-                                    this.familySetupMethods.getArtworkInfo()
-                                        .then(res => {
-                                            newState.artworkInfoData = res
-                                            this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
-                                        })
-                                })
+                            // axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
+                            //     .then(res => {
+                            //         let newState = this.state
+                            //         this.familySetupMethods.getArtworkInfo()
+                            //             .then(res => {
+                            //                 newState.artworkInfoData = res
+                            //                 this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                            //             })
+                            //     })
+                            return resolve(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
                         }
             
                         else{
@@ -1066,7 +1065,7 @@ export class Provider extends React.Component{
                                                 console.log("getArtworkInfo")
                                                 newState.artworkInfoData = res
                                                 newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
-                                                this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
+                                                this.setState(newState, () => {return resolve(`new file registered in "${file.artworkFamily}" family`)})
                                                 
                                             })
                                             .catch(err=>console.log(err))
