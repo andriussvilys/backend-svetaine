@@ -9,6 +9,7 @@ const artworkFamilyList = require('./routes/api/artworkFamilyList');
 const categories = require('./routes/api/categories');
 const users = require('./routes/api/users');
 const fetchImages = require('./fetchImages');
+const deleteImage = require('./deleteImage');
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use('/api/artworkFamilyList', artworkFamilyList);
 app.use('/api/categories', categories);
 app.use('/api/users', users);
 app.use('/fetchImages', fetchImages);
+app.use('/deleteImage', deleteImage);
 // this uses a folder inside the server
 // app.use(express.static('files'))
 

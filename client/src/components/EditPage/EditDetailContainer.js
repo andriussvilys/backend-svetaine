@@ -51,7 +51,16 @@ export default class FileUpdate extends React.Component{
                                         Edit
                                     </Button>
                                 </Link>
+                                <Button
+                                        variant="danger"
+                                        onClick={() => {
+                                            this.props.context.fileDataMethods.deleteDBrecord(file.fileName)
+                                        }}
+                                    >
+                                        Delete
+                                </Button>
                             </div>
+
                         </div>
             
                     </div>

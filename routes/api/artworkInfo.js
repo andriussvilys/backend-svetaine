@@ -26,14 +26,18 @@ router.get('/', (req, res) => {
         .then(artworks => res.json(artworks))
 })
 
-router.delete('/delete/:id', (req, res) => {
-    ArtworkInfo.deleteOne({ fileName: req.params.id }, function (err) {
-        console.log(req.params.id)
-        if (err) return handleError(err);
-        if (res) return res
-        // deleted at most one tank document
-      })
-      .then(res => console.log(res))
+router.delete('/delete/:fileName', (req, res) => {
+    res.send(req)
+    ArtworkInfo.deleteOne({ "fileName": req.params.fileName }
+    //     , function (err) {
+    //     console.log(req.params.id)
+    //     if (err) return handleError(err);
+    //     if (res) return res
+    //     // deleted at most one tank document
+    //   }
+      )
+      .then(result => {res.send(result); console.log(res)})
+      .catch(err => {res.send(err); console.log(err)})
 })
 
 //filter records by artworkFamily
@@ -93,15 +97,18 @@ router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
 //@description delete an artwork
 //@access Public
 
-router.delete('/delete/:id', (req, res) => {
-    ArtworkInfo.findById(req.params.id)
-        .then(artwork => {
-            artwork.remove()
-                .then(() => res.json({success: true}))
-                .catch(err => res.status(404).json({success: "404: not found"}))
-            }
-        )
-})
+// router.delete('/delete/:id', (req, res) => {
+//     ArtworkInfo.findById(req.params.id)
+//         .then(artwork => {
+//             console.log("DB ARTWORK")
+//             console.log(artwork)
+//             artwork.remove()
+//                 // .then(() => res.json({success: true}))
+//                 .then(() => {res.json("success")})
+//                 .catch(err => res.status(404).json({success: "404: not found"}))
+//             }
+//         )
+// })
 
 router.put("/update/:fileName", (req, res, next) => {
     console.log('udate file runs')

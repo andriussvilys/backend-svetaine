@@ -552,6 +552,28 @@ export class Provider extends React.Component{
     //this deal with file input uploads and uploads to server
     this.fileDataMethods = {
 
+        deleteImage: (fileName) => {
+            axios.delete(`/deleteImage`, fileName)
+            .then(res => {
+                alert(res)
+            })
+        },
+
+        deleteDBrecord: (fileName) => {
+            // const id = this.state.relatedArtwork[familyName].files[fileName]._id
+            // console.log(id)
+            axios.delete(`/api/artworkInfo/delete/${fileName}`)
+                .then(res => {
+                    console.log("record deleted")
+                    console.log(res)
+                    axios.delete(`/deleteImage`, fileName)
+                    .then(res => {
+                        alert("succes")
+                    })
+                })
+                .catch(err => console.log(err))
+        },
+
         serverFileToState: (file) => {
             let newState = {...this.state}
             newState.fileData.files = {...newState.fileData.files, [file.fileName]: file}
