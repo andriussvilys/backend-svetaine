@@ -58,6 +58,7 @@ export default class FamilyInfo extends Component {
                                     onChange={this.context.familySetupMethods.onChange}
                                     isChecked={this.context.familySetupMethods.isChecked}
                                     serverFileDir={this.context.state.serverFileDir}
+                                    callBack={this.context.fileDataMethods.relateSeeAlso}
                                 />
                                 {this.props.children}
                             </div>

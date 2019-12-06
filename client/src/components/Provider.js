@@ -1120,16 +1120,25 @@ export class Provider extends React.Component{
         },
         /**
          * @param: fileName = file to be updated
-         * @param: newItem = item to be added to seeAlso
+         * @param: newItem = an array of items to be added to seeAlso
          * @param: boolean = if true - add, if false = remove
          */
         relateSeeAlso: (fileName, newItem, boolean) => {
+            console.log("RELATE SEE ALSO RUNS")
+            console.log(fileName)
+            console.log(newItem)
             if(boolean){
                 console.log('RELATE SEE ALSO === TRUE')
                 return new Promise ((res, rej) => {
                     let record = this.state.artworkInfoData[fileName]
                     let seeAlso = [...record.seeAlso]
-                    let newSeeAlso = [...seeAlso, newItem]
+                    let newSeeAlso = [...seeAlso]
+                    if(Array.isArray(newItem)){
+                        newSeeAlso = newItem.map(name => {
+                            return name
+                        })
+                    }
+                    else{newSeeAlso = [...seeAlso, newItem]}
                     newSeeAlso = new Set(newSeeAlso)
                     newSeeAlso = Array.from(newSeeAlso)
                     record.seeAlso = newSeeAlso
@@ -1147,16 +1156,26 @@ export class Provider extends React.Component{
                 return new Promise ((res, rej) => {
                     let record = this.state.relatedArtwork[fileName]
                     let seeAlso = [...this.state.artworkInfoData.seeAlso]
-                    let newSeeAlso = seeAlso.filter(name => name !== newItem)
+                    let newSeeAlso = []
+                    if(Array.isArray(newItem)){
+                        newSeeAlso = seeAlso.filter(name => !newItem.includes(name))
+                    }
+                    else{newSeeAlso = seeAlso.filter(name => name !== newItem)}
                     newSeeAlso = new Set(newSeeAlso)
                     newSeeAlso = Array.from(newSeeAlso)
                     record.seeAlso = newSeeAlso
+
+                    console.log(newSeeAlso)
+                    console.log(fileName)
+                    console.log(newItem)
+                    console.log(record)
+
                     axios.put(`/api/artworkInfo/update/${fileName}`, record)
                         .then(resolve => res())
                         .catch(reject => rej())
                 })
             }
-        }
+        },
     
     }//END OF file data methods
 
@@ -1241,7 +1260,8 @@ export class Provider extends React.Component{
                                                             name="useAsSeeAlso" 
                                                             id="useAsSeeAlso__radio-yes" 
                                                             value="yes" 
-                                                            onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso")}}
+                                                            onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso", null, 
+                                                            () => this.fileDataMethods.relateSeeAlso(file.fileName, this.state.relatedArtwork[this.state.familySetupData.artworkFamily].column.fileIds, true))}}
                                                             checked={highlighter(file.fileName)}
                                                             />
                                                             <label 
@@ -1254,7 +1274,8 @@ export class Provider extends React.Component{
                                                             name="useAsSeeAlso" 
                                                             id="useAsSeeAlso__radio-no" 
                                                             value="no" 
-                                                            onChange={() => {this.familySetupMethods.onChange(file.fileName, "seeAlso")}}
+                                                            onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso", null, 
+                                                            () => this.fileDataMethods.relateSeeAlso(file.fileName, this.state.relatedArtwork[this.state.familySetupData.artworkFamily].column.fileIds))}}
                                                             checked={!highlighter(file.fileName)}
                                                             />
                                                             <label htmlFor="useAsSeeAlso_no">no</label>
@@ -1335,7 +1356,12 @@ export class Provider extends React.Component{
             newState.seeAlsoData.renderFiles = {...newState.seeAlsoData.fileList, fileNames: newState.seeAlsoData.renderFiles.fileNames, }
             this.setState(newState)
         },
-        onChange: (value, string, e) => {
+        onChange: (value, string, e, cb) => {
+            console.log("FAMILY METHODS ON CHANGE")
+            console.log("e")
+            console.log(e)
+            console.log("cb")
+            console.log(cb)
             const addNewValue = (newValue) => {
                 let newState = {}
                 //if state nest is a String, eg artworkFamily
@@ -1386,14 +1412,14 @@ export class Provider extends React.Component{
                 this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res => {
                     let seeAlsoData = {}
                     newState = {...newState, seeAlsoData: res}
-                    this.setState(newState)
+                    this.setState(newState, () => {if(cb){cb()}})
                 })
             }
             else{
                 let newState = addNewValue(value)
                 this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res => {
                     newState = {...newState, seeAlsoData: res}
-                    this.setState(newState)
+                    this.setState(newState, () => {if(cb){cb()}})
                 })
             }
         },
