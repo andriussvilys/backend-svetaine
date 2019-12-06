@@ -26,8 +26,11 @@ const ArtworkInfo = (props) => {
     }
 
     const locationAndYear = () => {
+        console.log("location and year")
         let location = props.file.foreground.location ? props.file.foreground.location : null
         let year = props.file.foreground.year ? props.file.foreground.year: null
+        console.log(location)
+        console.log(year)
         if(location && year){
             return <div className="ArtworkInfo_locationYear">({location}. {year})</div>
         }
@@ -64,7 +67,7 @@ const ArtworkInfo = (props) => {
                 else{return null}
             }
 
-            if(props.file.foreground.artworkTitle){
+            // if(props.file.foreground.artworkTitle){
                 return (
                     <div className="ArtworkInfo-Title">
                         {artworkTitle()}
@@ -72,9 +75,16 @@ const ArtworkInfo = (props) => {
                         {locationAndYear()}
                     </div>
                 )
-            }
+            // }
 
-            else{return artworkFamily()}
+            // else{
+            //     return (
+            //         <div className="ArtworkInfo-Title">
+            //             {artworkTitle()}
+            //             {artworkFamily()}
+            //             {locationAndYear()}
+            //         </div>
+            // )}
         }
 
     const descriptions = () => {

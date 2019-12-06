@@ -2139,6 +2139,10 @@ export class Provider extends React.Component{
  
     this.closeEnlarge = (e) => {
       e.stopPropagation()
+        if(document.getElementsByClassName("info-up").length > 0){
+          document.getElementsByClassName("info-up")[0].classList.remove("info-up")
+          return
+        }
         const delay = this.hideArtworkInfo()
         setTimeout(() => {      
           const enlargeContainer = document.getElementById('enlargeContainer')
