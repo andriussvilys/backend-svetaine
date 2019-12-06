@@ -8,6 +8,7 @@ import ArtworkInfo from '../ArtworkInfo'
 import ChangeIndex from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
 import NavigationInfo from '../DragAndDropList/infoComponents/NavigationInfo'
 import BootstrapModal from '../BootstrapModal'
+import ProgressBar from 'react-bootstrap/ProgressBar'
 
 
 //this component returns a div with a family name and FilePreviews of each child in the family
@@ -16,7 +17,11 @@ export default class FamilyList extends React.Component{
 
     constructor(props){
         super(props);
-        this.state = {showModal: false, modalMessage: null}
+        this.state = {
+            showModal: false, 
+            modalMessage: null,
+            progressBar: 0
+        }
     }
 
     onClose = () => {
@@ -189,20 +194,28 @@ export default class FamilyList extends React.Component{
             const promiseLength = allInFamily.length
             let progress = 0
             allInFamily.forEach(fileName => {
+                this.setState({modalMessage: `sending to ${this.props.familyName}`})
                 const fileRecord = fileData.files[fileName]
                 this.props.context.fileDataMethods.postArtworkInfo(fileRecord)
                     .then(res => {
                         progress += 1
+                        let progressBar = Math.round(progress * 100 / promiseLength)
+                        console.log('****************progressbar', progressBar)
+                        this.setState({progressBar: progressBar}, console.log(this.state))
                         if(progress === promiseLength){
-                            resolve(res)
+                            resolve("operation complete")
                         }
                     })
                     .catch(err => rej(err))
             })
         }) 
         postAll
-            .then(res => alert(res))
-            .catch(err => alert(err))
+            .then(res => {
+                console.log("POST ALL res")
+                console.log(res)
+                this.setState({modalMessage: res})
+            })
+            .catch(err => console.log(err))
     }
  
 
@@ -218,17 +231,25 @@ export default class FamilyList extends React.Component{
                             variant="success"
                             className="custom-button"
                             onClick={() => {
+                                this.setState({showModal: true})
                                 this.postAll(this.props.familyName)
                             }}
                         >
                             Submit ALL to server
                 </Button>
                 </div>
-                <BootstrapModal 
+                {/* <BootstrapModal 
                     showModal={this.props.context.state.showModal}
                     message="updating database"
                     onClose={this.props.context.onClose}
-                />
+                /> */}
+                <BootstrapModal 
+                    showModal={this.state.showModal}
+                    message={this.state.modalMessage}
+                    onClose={() => {this.setState({showModal: false})}}
+                >
+                    <ProgressBar now={this.state.progressBar} />
+                </BootstrapModal>
             </div>
         ) 
     }

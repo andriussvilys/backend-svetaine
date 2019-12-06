@@ -266,6 +266,16 @@ label{
     display: flex;
     justify-content: space-between;
 }
+.delete-button{
+    background-color: white !important;
+    opacity: 0.5;
+    border: none !important;
+    color: black !important;
+}
+.delete-button:hover{
+    background-color: rgb(255, 102, 102) !important;
+    opacity: 1 !important;
+}
 
 //FRONT END
 //------------

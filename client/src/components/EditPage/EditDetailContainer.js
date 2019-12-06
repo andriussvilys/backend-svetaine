@@ -6,24 +6,29 @@ import Button from 'react-bootstrap/Button';
 
 import DropDownList from '../DropDownList'
 import FilePreview from '../FilePreview'
+import BootstrapModal from '../BootstrapModal';
 
 export default class FileUpdate extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
-            fileList: [], 
-            renderList: [],
-            showPopUp: false
+            showModal: false,
+            modalMessage: null,
+            modalConfirm: true
         }
+    }
+
+    onClose = () => {
+        this.setState({showModal: false})
     }
 
     EditDetail = (file) => {
         return(
-            {
-                fileName: file.fileName,
-                artworkFamily: file.artworkFamily,
-                file: 
+            // {
+            //     fileName: file.fileName,
+            //     artworkFamily: file.artworkFamily,
+            //     file: 
                     <div 
                         className="EditDetail-container"
                         key={`fileLibrary-${file.fileName}`} 
@@ -52,9 +57,15 @@ export default class FileUpdate extends React.Component{
                                     </Button>
                                 </Link>
                                 <Button
-                                        variant="danger"
+                                        className="delete-button"
                                         onClick={() => {
-                                            this.props.context.fileDataMethods.deleteDBrecord(file.fileName, file.artworkFamily)
+                                            this.setState({
+                                                modalConfirm: true,
+                                                showModal: true, 
+                                                fileToDelete: this.props.state.artworkInfoData[file.fileName],
+                                                modalMessage: `delete ${file.fileName}?`,
+                                            })
+                                            // this.props.context.fileDataMethods.deleteDBrecord(file.fileName, file.artworkFamily)
                                         }}
                                     >
                                         Delete
@@ -64,71 +75,26 @@ export default class FileUpdate extends React.Component{
                         </div>
             
                     </div>
-            }
+            // }
         )
     }
 
-    renderAllFiles = new Promise((resolve, rej) => {
-
-            let serverFileNames = null;
-
-            axios.get('/fetchImages')
-                .then(res => {
-                    serverFileNames = res.data
-
-                    axios.get('/api/artworkInfo')
-                        .then(res => {
-                            let databaseFiles = []
-                            let usedNames = []
-
-                            serverFileNames.forEach(fileName => {
-                                res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
-                            })
-
-                            let fileList = []
-
-                            databaseFiles.forEach((file, index) => {
-                                if(usedNames.includes(file.fileName)){
-                                    return
-                                }
-                                usedNames = [...usedNames, file.fileName]
-                                let newFile = this.EditDetail(file)
-                                fileList = [...fileList, newFile] 
-
-                            })
-
-                            resolve(fileList)
-                        })
-                })   
-    })
-
-    filterByFamily = (value) => {
-        let newRenderList = []
-        this.state.fileList.forEach(obj => {
-            if(obj.artworkFamily === value){
-                newRenderList = [...newRenderList, obj]
-            }
-        })
-        this.setState({renderList: newRenderList})
-    }
-
-    resetRenderFiles = () => {
-        this.setState({renderList: this.state.fileList})
-    }
-
-    createFileList = () => {
-        let allPreviews = []
-        this.renderAllFiles.then(res => allPreviews = res.map(filePreview => {return filePreview.file}))
-        return allPreviews
-    }
-
-    componentDidMount(){
-        this.renderAllFiles
+    deletePromise = (fileName, artworkFamily) => {
+        this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
             .then(res => {
-                this.setState({fileList: res, renderList: res})
+                console.log(res)
+                let newState = {...this.state}
+                const noFile = {...this.state.fileToDelete} 
+                noFile.fileName = null
+                newState.modalMessage = res
+                newState.modalConfirm = false
+                newState.fileToDelete = noFile
+                console.log("no File")
+                console.log(noFile)
+                this.setState(newState, console.log(this.state))
             })
-    }
 
+    }
 
     render(){
 
@@ -158,11 +124,30 @@ export default class FileUpdate extends React.Component{
                     </div>
 
                     <div style={{display: "flex", flexWrap: "wrap"}}>
-                        {this.state.renderList.map(preview => {
-                            return preview.file
+                        {
+                            Object.keys(this.props.state.artworkInfoData).map(fileName => {
+                                return this.EditDetail(this.props.state.artworkInfoData[fileName])
                             })
                         }
                     </div>
+                    {this.state.showModal ?                     
+                        <BootstrapModal 
+                            confirm={this.state.modalConfirm}
+                            showModal={this.state.showModal}
+                            // message={this.state.modalMessage}
+                            onClose={this.onClose}
+                            confirmedAction={() => this.deletePromise(this.state.fileToDelete.fileName, this.state.fileToDelete.artworkFamily)}
+                        >
+                            <div>
+                                <p>{this.state.modalMessage}</p>
+                                {this.state.fileToDelete.fileName ? 
+                                <img style={{height: "150px"}} alt={`delete-${this.state.fileToDelete.fileName}`} src={`/uploads/${this.state.fileToDelete.fileName}`} /> :
+                                null 
+                                }
+                            </div>
+                        </BootstrapModal> :
+                        null
+                    }
                 </div>
         )
     }

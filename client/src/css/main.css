@@ -405,6 +405,18 @@ label {
           justify-content: space-between;
 }
 
+.delete-button {
+  background-color: white !important;
+  opacity: 0.5;
+  border: none !important;
+  color: black !important;
+}
+
+.delete-button:hover {
+  background-color: #ff6666 !important;
+  opacity: 1 !important;
+}
+
 .TagsMenu-container {
   width: 250px;
   background-color: #351908;

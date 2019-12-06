@@ -30,11 +30,21 @@ export default class BootstrapModal extends Component {
 
                 <Modal.Body>
                 {this.props.message}
+                {this.props.children}
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="success" onClick={ () => {this.props.onClose()}}>
-                        Okay
+                    {this.props.confirm ?
+                    <Button 
+                        variant="success"
+                        onClick={() => this.props.confirmedAction()}   
+                        >
+                            Confirm
+                    </Button> :
+                    null  
+                    }
+                    <Button variant={this.props.confirm ? "danger" : "success"} onClick={ () => {this.props.onClose()}}>
+                        {this.props.confirm ? "Cancel" : "Okay"}
                     </Button>
                 </Modal.Footer>
 
