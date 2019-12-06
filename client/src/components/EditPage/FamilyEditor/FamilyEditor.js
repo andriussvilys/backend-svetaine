@@ -38,6 +38,7 @@ export default class FamilyEditor extends React.Component{
                     />
                     
                     <SeeAlsoSelector 
+                        checkProps="Family Editor PROPS"
                         renderFiles={this.context.state.seeAlsoData.renderFiles}
                         renderAllFiles={this.context.familySetupMethods.renderAllFiles}
                         state={this.context.state}

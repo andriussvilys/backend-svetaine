@@ -106,7 +106,7 @@ export default class Edit extends Component{
                                                     relatedArtwork={this.context.state.relatedArtwork[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
                                                     controls={{
                                                         removeFile: this.context.fileDataMethods.removeFile,
-                                                        postArtworkInfo: this.context.fileDataMethods.updateArtworkInfo,
+                                                        updateArtworkInfo: this.context.fileDataMethods.updateArtworkInfo,
                                                         fileDataMethods: this.context.fileDataMethods,
                                                         onChange: this.context.onChange
                                                     }}

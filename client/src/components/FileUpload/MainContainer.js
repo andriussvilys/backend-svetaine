@@ -61,6 +61,7 @@ export default class MainContainer extends React.Component{
                     context: this.context
                 }}
                 seeAlso={{
+                    checkProps: "maincontainer props",
                     state: this.context.state,
                     context: this.context,
                     initialData: this.context.state.artworkInfoData,

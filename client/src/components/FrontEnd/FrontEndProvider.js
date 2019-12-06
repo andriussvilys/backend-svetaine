@@ -1825,28 +1825,6 @@ export class Provider extends React.Component{
                                 }
                         })
                     })        
-                    
-                    // if(newState.fileData.files){
-                    //     Object.keys(newState.fileData.files).forEach(fileName => {
-                    //         if(newState.fileData.files[fileName].artworkFamily === artworkFamily){
-        
-                    //             Object.keys(newState.fileData.files[fileName]).forEach(property => {
-                    //                 relatedArtwork = {
-                    //                     ...relatedArtwork,
-                    //                         [fileName]: {
-                    //                             ...relatedArtwork[fileName],
-                    //                             [property]: newState.fileData.files[fileName][property]
-                    //                         }
-                    //                     }
-                    //             })
-                    //         }
-                    //     })
-                    // }
-                    
-
-                    //add additional properties: 
-                    //column (with id and array of files in order)
-                    //id
                     let fileIds = Object.keys(relatedArtwork).map(obj => null)
                     Object.keys(relatedArtwork).forEach(fileName => {
                         if(relatedArtwork[fileName].familyDisplayIndex < 0){
@@ -2102,6 +2080,7 @@ export class Provider extends React.Component{
     }
 
     this.enlarge = (id) => {
+        console.log('ENLARGE RUNS')
             const file = this.state.artworkOnDisplay[id]
             const imageSelect = document.getElementById('imageSelect')
             if(!this.state.enlarge){
@@ -2178,7 +2157,14 @@ export class Provider extends React.Component{
           if(!familyName){
               return
           }
-          const currentIndex = this.state.enlarge.foreground.familyDisplayIndex
+          // let currentIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf
+          let currentIndex = this.state.enlarge.foreground.familyDisplayIndex
+          // if(!currentIndex || currentIndex < 0){
+          //   currentIndex = 0
+          //   let newEnlarge = {...this.state.enlarge}
+          //   newEnlarge.backupIndex
+          //   this.setState.enlarge.backupIndex
+          // }
           const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
           let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
           const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]

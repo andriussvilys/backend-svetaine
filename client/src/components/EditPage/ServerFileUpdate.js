@@ -111,8 +111,10 @@ export default class ServerFileUpdate extends React.Component {
                 familyDropDown={{...this.props.familyDropDown, fileName: this.props.file.fileName}}
                 themesDropDown={{...this.props.themesDropDown, fileName: this.props.file.fileName}}
                 seeAlso={{...this.props.seeAlso, 
+                    propsCheck: "SERVER FILE UPDATE",
                     fileName: this.props.file.fileName, 
-                    highlightReference: this.props.seeAlso.state.fileData.files[this.props.file.fileName].seeAlso
+                    highlightReference: this.props.seeAlso.state.fileData.files[this.props.file.fileName].seeAlso,
+                    callBack: this.props.context.fileDataMethods.relateSeeAlso
                 }}
                 >
     
@@ -157,7 +159,7 @@ export default class ServerFileUpdate extends React.Component {
                     // }
                     onClick={() => {
                         this.setState({showModal: true, modalMessage: "loading..."})
-                        const postRes = this.props.controls.postArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
+                        const postRes = this.props.controls.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
                         postRes.then( res => {
                             this.setState({modalMessage: res})
                         })

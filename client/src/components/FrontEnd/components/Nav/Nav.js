@@ -1,18 +1,15 @@
 import React, { Fragment } from 'react'
 
 const Nav = (props) => {
-    if(props.context.state.enlarge){
-
-        const showButtons = () => {
-            if(!props.context.state.enlarge.open){
-                return false
-            }
-            if(props.context.state.enlarge.background.artworkFamily){
-                return props.context.state.relatedArtwork[props.context.state.enlarge.background.artworkFamily].column.fileIds.length > 1
-            }
-            else{return false}
+    const showButtons = () => {
+        if(!props.context.state.enlarge.open){
+            return false
         }
-
+        if(props.context.state.enlarge.background.artworkFamily){
+            return props.context.state.relatedArtwork[props.context.state.enlarge.background.artworkFamily].column.fileIds.length > 1
+        }
+        else{return false}
+    }
         return(
             <div
                 className="Navbar"
@@ -70,8 +67,6 @@ const Nav = (props) => {
                     }
             </div>
         )
-    }
-    else{return null}
 }
 
 export default Nav

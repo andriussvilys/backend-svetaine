@@ -32,8 +32,8 @@ export default class FamilyList extends React.Component{
      * @param {*} data = takes an array of files data
      */
     renderList = (files, props) => {
-        console.log('FAMILY LIST-- relatedArtwork')
-        console.log(this.props.relatedArtwork)
+        console.log('FAMILY LIST-- PROPS')
+        console.log(this.props)
         let list = files.map(file => {
             return (
                 <div key={`FileInfo_${file.fileName}`} className="FamilyList--detail">
@@ -114,8 +114,10 @@ export default class FamilyList extends React.Component{
                         familyDropDown={{...this.props.familyDropDown, fileName: file.fileName}}
                         themesDropDown={{...this.props.themesDropDown, fileName: file.fileName}}
                         seeAlso={{...this.props.seeAlso, 
+                            checkProps: "FAMILY LIST COMPONENT PROPS",
                             fileName: file.fileName, 
-                            highlightReference: this.props.seeAlso.state.fileData.files[file.fileName].seeAlso
+                            highlightReference: this.props.seeAlso.state.fileData.files[file.fileName].seeAlso,
+                            callBack: this.props.context.fileDataMethods.relateSeeAlso
                         }}
                         >
 

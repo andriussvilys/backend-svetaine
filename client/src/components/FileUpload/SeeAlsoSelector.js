@@ -105,7 +105,10 @@ export default class SeeAlsoSelector extends React.Component{
                                     id="useAsSeeAlso__radio-yes" 
                                     value="yes" 
                                     onChange={() => {
-                                        this.props.onChange( file.fileName, "seeAlso", this.props.fileName)
+
+                                        this.props.onChange( file.fileName, "seeAlso", this.props.fileName, 
+                                            this.props.callBack(file.fileName, this.props.fileName, true)
+                                        )
                                         this.setState({renderList: this.state.renderList})
                                     }}
                                     checked={highlighter(file.fileName)}

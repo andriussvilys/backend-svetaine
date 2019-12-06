@@ -4,7 +4,8 @@ import DropDownList from '../DropDownList'
 import SeeAlsoSelector from './SeeAlsoSelector'
 
 const FamilyInfo = (props) => {
-
+    console.log('FAMILY INFO-- PROPS')
+    console.log(props)
         return(
             <div className="familyInfo-container">
 
@@ -49,6 +50,8 @@ const FamilyInfo = (props) => {
                         array={props.seeAlso.state.familySetupData.seeAlso}
                         stateNest={props.seeAlso.state.familySetupData.seeAlso}
                         onChange={props.seeAlso.context.fileDataMethods.onChange}
+                        // onChange={props.seeAlso.context.fileDataMethods.onChange}
+                        callBack={props.seeAlso.callBack}
                         isChecked={props.seeAlso.context.fileDataMethods.isChecked}
                         serverFileDir={props.seeAlso.state.serverFileDir}
                     />

@@ -606,7 +606,7 @@ export class Provider extends React.Component{
          * @param fileName optional: decided which file to update with new value
          * @returns updated context state
          */
-        onChange: (value, string, fileName) => {
+        onChange: (value, string, fileName, cb) => {
 
             let nestType = () => {
                 if(string === "themes" || string ==="seeAlso"){
@@ -641,7 +641,11 @@ export class Provider extends React.Component{
                                     }
                                 }
                             }    
-                        this.setState(newState)
+                        this.setState(newState, () => {
+                            if(cb){
+                                cb()
+                            }
+                        })
                         return
                     }
                 }
@@ -962,10 +966,12 @@ export class Provider extends React.Component{
                         Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
 
                             
-                            let obj = this.state.relatedArtwork[artworkFamily].files[objName]
+                            let obj = this.state.artworkInfoData[objName]
+                            // let obj = this.state.relatedArtwork[artworkFamily].files[objName]
                             if(objName === file.fileName){
                                 obj = this.state.fileData.files[file.fileName]
                             }
+                            // const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
                             const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
                             let fileData =  obj
                                 fileData.familyDisplayIndex = familyIndex
@@ -1054,19 +1060,6 @@ export class Provider extends React.Component{
                         
                         //check if the file is uploaded to server
                         if(this.state.serverFileDir.includes(file.fileName)){
-                            // console.log('server includes files already')
-                            // fileData = obj
-                            // fileData.familyDisplayIndex = familyIndex
-        
-                            // axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
-                            //     .then(res => {
-                            //         let newState = this.state
-                            //         this.familySetupMethods.getArtworkInfo()
-                            //             .then(res => {
-                            //                 newState.artworkInfoData = res
-                            //                 this.setState(newState, resolve(`new file registered in "${file.artworkFamily}" family`))
-                            //             })
-                            //     })
                             return resolve(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
                         }
             
@@ -1126,11 +1119,46 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
         /**
-         * @param artworkFamily - query key to find appropriate database records
-         * @param fileName - which file data obj receives res.data
+         * @param: fileName = file to be updated
+         * @param: newItem = item to be added to seeAlso
+         * @param: boolean = if true - add, if false = remove
          */
+        relateSeeAlso: (fileName, newItem, boolean) => {
+            if(boolean){
+                console.log('RELATE SEE ALSO === TRUE')
+                return new Promise ((res, rej) => {
+                    let record = this.state.artworkInfoData[fileName]
+                    let seeAlso = [...record.seeAlso]
+                    let newSeeAlso = [...seeAlso, newItem]
+                    newSeeAlso = new Set(newSeeAlso)
+                    newSeeAlso = Array.from(newSeeAlso)
+                    record.seeAlso = newSeeAlso
+                    console.log(newSeeAlso)
+                    console.log(fileName)
+                    console.log(newItem)
+                    console.log(record)
+
+                    axios.put(`/api/artworkInfo/update/${fileName}`, record)
+                        .then(resolve => {console.log("file upadted");res()})
+                        .catch(reject => rej())
+                })
+            }
+            else{
+                return new Promise ((res, rej) => {
+                    let record = this.state.relatedArtwork[fileName]
+                    let seeAlso = [...this.state.artworkInfoData.seeAlso]
+                    let newSeeAlso = seeAlso.filter(name => name !== newItem)
+                    newSeeAlso = new Set(newSeeAlso)
+                    newSeeAlso = Array.from(newSeeAlso)
+                    record.seeAlso = newSeeAlso
+                    axios.put(`/api/artworkInfo/update/${fileName}`, record)
+                        .then(resolve => res())
+                        .catch(reject => rej())
+                })
+            }
+        }
     
-    }
+    }//END OF file data methods
 
     //this deals with creating and pulling artwork family data and attaching it to files
     this.familySetupMethods = {
@@ -1446,8 +1474,6 @@ export class Provider extends React.Component{
                 {
                 let newState = {...this.state}
                 newState.familySetupData.artworkFamily = value
-                console.log("no record")
-                console.error(err)
                 this.setState(newState)
                 }
             )
@@ -1578,48 +1604,18 @@ export class Provider extends React.Component{
                                 }
                             })
                         }
-                        
-                        //add additional properties: 
-                        //column (with id and array of files in order)
-                        //id
                         let fileIds = []
                         let noIndex = []
 
-                        console.log(relatedArtwork)
                         Object.keys(relatedArtwork).forEach((fileName, index) => {
                             const familyDisplayIndex = relatedArtwork[fileName].familyDisplayIndex
-                            // if(relatedArtwork[fileName].familyDisplayIndex < 0){
-                            //     fileIds.push(fileName)
-                            // }
-                            // else{
-                            //     fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                            // }
-                            // if(relatedArtwork[fileName].familyDisplayIndex && relatedArtwork[fileName].familyDisplayIndex >= 0){
-                            //     if(!fileIds[relatedArtwork[fileName].familyDisplayIndex]){
-                            //         fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                            //     }
-                            //     else{
-                            //         fileIds.push(fileName)
-                            //     }
-                            // }
-                            // else{
-                            //     fileIds.push(fileName)
-                            // }
                             if(familyDisplayIndex < 0 || familyDisplayIndex === null || undefined){
-                                console.log('***************IRREGULAR INDEX')
-                                console.log(fileName)
-                                console.log(familyDisplayIndex)
                                 noIndex.push(fileName)
                             }
                             else{fileIds[familyDisplayIndex] = fileName}
                         })
-                        console.log('related ARTWORK fileIds after forEach')
-                        console.log(fileIds)
                         noIndex.forEach(fileName => fileIds.push(fileName))
-                        console.log(`noIndex, ${noIndex}`)
                         fileIds = fileIds.filter(fileName => fileName !== null || undefined)
-                        console.log('fileIds final')
-                        console.log(fileIds)
                         let finalRelatedArtwork = {
                                 files: relatedArtwork,
                                 column: {
