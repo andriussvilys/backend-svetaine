@@ -61,7 +61,7 @@ export default class FrontEndIndex extends React.Component{
                                 />
                             </TagsMenu>
 
-                            <div id="images">
+                            <div id="images" className="images-container">
                                 <ImageSelect 
                                     data={this.context.state.artworkInfoData} 
                                     // data={this.context.state.visibleArtwork}

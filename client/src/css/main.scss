@@ -22,13 +22,6 @@ ul{
     grid-template-columns: 1fr 300px;
     grid-template-rows: auto 1fr;
 }
-.data-container{
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-}
 .overflow-yes{
     overflow-x: hidden;
     overflow-y: auto;
@@ -282,12 +275,45 @@ label{
 //TAGS MENU
 //------------
 $frame-color: rgb(53, 25, 8);
-// $frame-color: rgb(200, 200, 200);
+$frame-color: white;
+$font-color-main: black;
 $background-color: white;
+//3d effect
+// $border-dark: 3px solid #8b8b8b;
+// $border-light: 3px solid rgb(233, 233, 233);
+// $border-main:  4px solid #bbb;
+// $border-gutter: 4px solid #bbb;
+// $border-main-color: #bbb;
+
+//2d
+$border-dark: 1px solid black;
+$border-light: 1px solid black;
+$border-main:  4px solid white;
+$border-gutter: none;
+$border-main-color: #bbb;
+
+
+
+.app-container{
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    border: $border-main;
+}
+
+*{
+    color: black !important;
+}
 
 .TagsMenu-container{
     width: 250px;
     background-color: $frame-color;
+    border-top: $border-dark;
+    border-left: $border-dark;
+    border-right: $border-light;
+    border-bottom: $border-light;
 }
 .TagsMenu-Card{
     background-color: $frame-color !important;
@@ -316,6 +342,11 @@ $background-color: white;
     right: 0;
     z-index: 2;
     grid-column-start: 3;
+
+    border-right: $border-light;
+    border-top: $border-dark;
+    border-left: $border-dark;
+    border-bottom: $border-light;
 }
 #button-next, #button-prev{
     transition: 0.2s all;
@@ -329,14 +360,15 @@ $background-color: white;
 }
 
 .frontEndIndex-container{
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    width: 100%;
     display: grid;
     grid-template-columns: min-content 1fr max-content;
-    // border: 4vw solid $frame-color;
-    border: 8px solid $frame-color;
-    border-right: 0;
-    border-left: 0;
+    // border: 8px solid $frame-color;
+    // border-top: $border-dark;
+    // border-left: $border-dark;
+    // border-right: $border-light;
+    // border-bottom: $border-light;
     background-color: $background-color;
     position: relative;
 }
@@ -349,12 +381,20 @@ $background-color: white;
     display: flex;
     flex-wrap: wrap;
     position: absolute;
-    // transition: all 0.4s;
+    // padding: 4px;
+    // border-left: $border-dark;
+    // border-right: $border-light;
+    border-bottom: $border-light;
+    border-top: $border-dark;
 }
-#images{
+.images-container{
     position: relative;
     width: 100%;
     height: 100%;
+    border-left: $border-gutter;
+    border-right: $border-gutter;
+    // border-top: $border-dark;
+    // border-bottom: $border-light;
 }
 
 .ImagesPreview--imageContainer{
@@ -385,8 +425,7 @@ $background-color: white;
 .enlargeContainer{
     height: 100%;
     width: 1px;
-    max-height: calc(100vh - 10px);
-    overflow: hidden;
+    // overflow: hidden;
     position: absolute;
     display: flex;
     align-items: center;
@@ -395,6 +434,22 @@ $background-color: white;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
+    // border-left: $border-main;
+    border-left: $border-dark;
+    border-top: $border-dark;
+
+    // border-right: $border-light;
+    border-bottom: $border-light;
+}
+.enlarge-border{
+    position: absolute;
+    height: 100vh;
+    width: 10px;
+    background-color: $border-main-color;
+    left: -10px;
+    border-right: $border-dark;
+    border-left: $border-light;
+    display: none;
 }
 #foreground{
     // transition: transform 2s, opacity 2s;
@@ -580,6 +635,10 @@ $background-color: white;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
+
+    border-top: $border-main;
+    border-left: $border-main;
+    border-top: $border-dark;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
@@ -614,6 +673,7 @@ $background-color: white;
     overflow-y: auto;
 }
 .ArtworkInfo-container_seealso{
+    padding-right: 2vw;
     display: flex;
     justify-content: flex-end;
     width: 100%;

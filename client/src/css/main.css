@@ -26,19 +26,6 @@ ul {
       grid-template-rows: auto 1fr;
 }
 
-.data-container {
-  overflow: hidden;
-  height: 100vh;
-  width: 100vw;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
 .overflow-yes {
   overflow-x: hidden;
   overflow-y: auto;
@@ -417,13 +404,35 @@ label {
   opacity: 1 !important;
 }
 
+.app-container {
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  border: 4px solid white;
+}
+
+* {
+  color: black !important;
+}
+
 .TagsMenu-container {
   width: 250px;
-  background-color: #351908;
+  background-color: white;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .TagsMenu-Card {
-  background-color: #351908 !important;
+  background-color: white !important;
 }
 
 .tagsMenu-Button_category {
@@ -444,7 +453,7 @@ label {
 
 .Navbar {
   overflow: hidden;
-  background-color: #351908;
+  background-color: white;
   width: 4vw;
   height: 100%;
   position: relative;
@@ -453,6 +462,10 @@ label {
   z-index: 2;
   -ms-grid-column: 3;
       grid-column-start: 3;
+  border-right: 1px solid black;
+  border-top: 1px solid black;
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 #button-next, #button-prev {
@@ -471,16 +484,13 @@ label {
 }
 
 .frontEndIndex-container {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   display: -ms-grid;
   display: grid;
   -ms-grid-columns: min-content 1fr max-content;
       grid-template-columns: -webkit-min-content 1fr -webkit-max-content;
       grid-template-columns: min-content 1fr max-content;
-  border: 8px solid #351908;
-  border-right: 0;
-  border-left: 0;
   background-color: white;
   position: relative;
 }
@@ -497,12 +507,16 @@ label {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   position: absolute;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
 }
 
-#images {
+.images-container {
   position: relative;
   width: 100%;
   height: 100%;
+  border-left: none;
+  border-right: none;
 }
 
 .ImagesPreview--imageContainer {
@@ -552,8 +566,6 @@ label {
 .enlargeContainer {
   height: 100%;
   width: 1px;
-  max-height: calc(100vh - 10px);
-  overflow: hidden;
   position: absolute;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -569,6 +581,20 @@ label {
   -webkit-transform: translateX(100%);
           transform: translateX(100%);
   right: 0;
+  border-left: 1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.enlarge-border {
+  position: absolute;
+  height: 100vh;
+  width: 10px;
+  background-color: #bbb;
+  left: -10px;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+  display: none;
 }
 
 #foreground {
@@ -833,7 +859,7 @@ label {
   transition: 0.4s all;
   bottom: -100%;
   opacity: 0;
-  background-color: #351908;
+  background-color: white;
   color: white;
   padding-left: 20px;
   display: -webkit-box;
@@ -844,6 +870,9 @@ label {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  border-top: 4px solid white;
+  border-left: 4px solid white;
+  border-top: 1px solid black;
 }
 
 .ArtworkInfo-wrapper {
@@ -894,6 +923,7 @@ label {
 }
 
 .ArtworkInfo-container_seealso {
+  padding-right: 2vw;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

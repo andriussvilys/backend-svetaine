@@ -17,7 +17,7 @@ export default class App extends Component{
   render(){
     return(
         <BrowserRouter>
-              <div className="data-container" >
+              <div className="app-container" >
 
               <Switch>
                 <Route  path="/" exact component={FrontEndContext} />

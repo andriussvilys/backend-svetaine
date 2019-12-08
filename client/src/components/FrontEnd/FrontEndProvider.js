@@ -2198,7 +2198,9 @@ export class Provider extends React.Component{
     }
 
     this.animateEnlarge = (file) => {
+
       
+
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 
       const foreground = document.getElementById("foreground") 
@@ -2267,11 +2269,6 @@ export class Provider extends React.Component{
                 }, 410);
               }
 
-      
-              // container.style.transform = `scaleX(${futureSize.width})`
-              // background.style.transform = `scaleY(${futureSize.height})`
-              // foreground.style.transform = `scaleY(${futureSize.height})`
-
               background.style.height = `${futureSize.height}px`
               foreground.style.height = `${futureSize.height}px`
               container.style.width = `${futureSize.width}px`
@@ -2292,12 +2289,8 @@ export class Provider extends React.Component{
                 newState.enlarge.currentWidth = futureSize.width
                 newState.enlarge.open = true
                 this.setState(newState, () => {
-
-                  // foreground.classList.remove("foreground-transition")
-                  // background.classList.remove("foreground-transition")
                   foreground.style.opacity = 1
                   imageSelect.style.transition = "none"
-                  // background.style.opacity = 0
                 })
               }, 410);
           })

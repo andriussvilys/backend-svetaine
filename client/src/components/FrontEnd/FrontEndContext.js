@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Provider } from './FrontEndProvider';
 
 import FrontEndIndex from './FrontEndIndex'
@@ -8,9 +8,9 @@ export default class FrontEndContext extends React.Component{
         const props = {...this.props}
         return(    
             <Provider>
-                <div>
+                <Fragment>
                     <FrontEndIndex props={props}/>
-                </div>
+                </Fragment>
             </Provider>
         )
     }

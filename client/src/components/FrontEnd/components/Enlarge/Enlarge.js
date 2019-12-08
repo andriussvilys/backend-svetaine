@@ -70,6 +70,7 @@ export default class Enlarge extends React.Component{
             id="ArtworkInfo" 
             onClick={(e) => this.props.closeEnlarge(e)}
             className="enlargeContainer" id="enlargeContainer">
+                <div className="enlarge-border"></div>
                 <Fragment>
                     <div id="foreground" className="foreground-transition">
                         {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}
