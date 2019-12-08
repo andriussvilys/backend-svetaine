@@ -15,6 +15,17 @@ const ArtworkInfo = (props) => {
                     onClick={(e) => props.loadEnlarge(e, fileName)}
                 />
             })
+            if(props.file.previous.fileName !== props.file.foreground.fileName){
+                if(!props.file.foreground.seeAlso.includes(props.file.previous.fileName)){
+                    const previous = <FilePreview 
+                            className="ArtworkInfo-preview"
+                            containerClassName="ArtworkInfo-preview-container"
+                            file={props.file.previous}
+                            onClick={(e) => props.loadEnlarge(e, props.file.previous.fileName)}
+                            />
+                    seeAlsos = [previous, ...seeAlsos]
+                }
+            }
             return <div>
                 {/* <p>related:</p> */}
                 <div className="ArtworkInfo-seeAlso-container">
@@ -95,6 +106,9 @@ const ArtworkInfo = (props) => {
             </div>
         )
     }
+
+    console.log("artwork info PROPS")
+    console.log(props)
 
     return(
         <div 

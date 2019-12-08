@@ -2206,7 +2206,8 @@ export class Provider extends React.Component{
       const imageSelect = document.getElementById("imageSelect")
       const images = document.getElementById("images")
 
-      let enlarge = {...this.state.enlarge}
+      let enlarge = this.state.enlarge ? {...this.state.enlarge} : {}
+      enlarge.previous = !enlarge.background ? file : enlarge.background
       enlarge.background = file
 
       function backgroundImage(tries, willFail) {
@@ -2310,12 +2311,14 @@ export class Provider extends React.Component{
       e.stopPropagation()
         const file = this.state.artworkInfoData[id]
         
-        let enlarge = {...this.state.enlarge}
-        enlarge.background = file
+        // let enlarge = {...this.state.enlarge}
+        // enlarge.background = file
 
-        this.setState({enlarge}, () => {
-          this.animateEnlarge(file)
-        })
+        this.animateEnlarge(file)
+
+        // this.setState({enlarge}, () => {
+        //   this.animateEnlarge(file)
+        // })
   
   }
 
@@ -2493,14 +2496,9 @@ export class Provider extends React.Component{
                             }
                           })
                         })
-                        
-                        newState.themes = {}
                         newState.artworkOnDisplay = onDisplay
                         newState.visibleArtwork = onDisplay
-                        newState.themes.themesOnDisplay = artworkByTheme
-                        newState.themes.visibleThemes = artworkByTheme
                         newState.themesOnDisplay = artworkByTheme
-                        newState.visibleThemes = artworkByTheme
                         resolve()
                     })
             })
