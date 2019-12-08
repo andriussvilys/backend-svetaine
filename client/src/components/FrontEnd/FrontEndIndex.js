@@ -8,11 +8,10 @@ import Spinner from 'react-bootstrap/Spinner'
 
 import auth from '../Auth'
 import TagsMenu from './components/TagsMenu'
-import Accordion from '../Accordion'
 import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
-import FilePreview from '../FilePreview';
 import Nav from './components/Nav/Nav'
+import Themes from './components/Themes/Themes'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -44,24 +43,6 @@ export default class FrontEndIndex extends React.Component{
                         >
                             Admin
                         </Button>
-                        {/* <Button
-                            onClick={() => {
-                                auth.logout( () => {
-                                    console.log(auth.authenticated)
-                                    this.props.props.history.push('/')
-                                })
-                            }}
-                        >
-                            Log Out
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                auth.login( () => {
-                                })
-                            }}
-                        >
-                            Log IN
-                        </Button> */}
                     </div>
         )
     }  
@@ -74,6 +55,10 @@ export default class FrontEndIndex extends React.Component{
                         return <div className="frontEndIndex-container">
                             <TagsMenu context={this.context}>
                                 {this.props ? this.adminButtons(this.props) : null}
+                                <Themes
+                                    state={this.context.state}
+                                    context={this.context}
+                                />
                             </TagsMenu>
 
                             <div id="images">

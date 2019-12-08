@@ -2319,7 +2319,6 @@ export class Provider extends React.Component{
   
   }
 
-
     this.viewPrev = () => {
       // const info = document.getElementById("ArtworkInfo")
       // info.classList.remove("info-up")
@@ -2347,444 +2346,59 @@ export class Provider extends React.Component{
         info.classList.remove('info-up')
       }
     }
+      /**
+       * @param: e
+       * @param: theme
+       */
+    this.filterByTheme = (e, theme) => {
+      //ON UN-CHECK
+      const newState = {...this.state}
+      const toggleArtwork = [...newState.themesOnDisplay[theme]]
+      let artworkOnDisplay = {...newState.artworkOnDisplay}
 
-    //this takes care of CATEGORIES used for navigation
-    this.categoryMethods = {
+      let visibleThemesList = []
+      Object.keys(artworkOnDisplay).forEach(fileName => {
+           visibleThemesList = artworkOnDisplay[fileName].themes.map(theme => theme)
+        }, () => visibleThemesList = Array.from(new Set(visibleThemesList)))
+     
 
-        getCategoryNames: () => {
+      if(!e.target.checked){
+        toggleArtwork.forEach(item => {
+          document.getElementById(item).classList.add("image-hide")
+        })
 
-            let categoryDomList = Object.keys(this.state.categoriesOptionList.data).map(name => {
-                return <option key={`add-category-${name}`} value={name}>{name}</option>
-            })
+        toggleArtwork.forEach(fileName => {
+          delete artworkOnDisplay[fileName]
+        })
 
-            let newState = {...this.state}
-            newState.categoriesOptionList.DOM = {}
-            newState.categoriesOptionList.DOM.categories = categoryDomList
-            this.setState(newState)
-        },
+        return this.setState({artworkOnDisplay})
+      }
 
-        getSubcategoryNames: () => {
-            let newState = {...this.state}
+      else{
+        this.state.themesOnDisplay[theme].forEach(item => {
+          document.getElementById(item).classList.remove("image-hide")
+        })
 
-            if(!newState.categoriesOptionList.DOM){
-                newState.categoriesOptionList.DOM = {}
-            }
+        toggleArtwork.forEach(fileName => {
+          artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
+        })
 
-            let subCategoryDomList = []
-            let optGroups = null
-        
-            if(document.getElementById("add-category").value){
-                if(Object.keys(this.state.categoriesOptionList.data).includes(document.getElementById("add-category").value)){
-                    let selectedCategory = document.getElementById("add-category").value;
-    
-                    subCategoryDomList = this.state.categoriesOptionList.data[selectedCategory].map(subcategory => {
-                        return <option key={`add-subcategory-${subcategory}`} value={subcategory}>{subcategory}</option>
-                    })
-                }
-            }
-            else{
-                optGroups = []
-                optGroups = Object.keys(this.state.categoriesOptionList.data).map(cat => {
-                    return <optgroup key={cat} label={cat}>
-                        {this.state.categoriesOptionList.data[cat].map(subCat => {
-                            return <option key={`add-subcategory-${subCat}`} value={subCat}>{subCat}</option>
-                        })}
-                    </optgroup>
-                })
-            }
-            newState.categoriesOptionList.DOM.subCategories = subCategoryDomList
-            if(optGroups){
-                newState.categoriesOptionList.DOM.subCategories = optGroups
-            }
-            this.setState(newState)
-            
-        },
+        return this.setState({artworkOnDisplay})
+      }
+    }
 
-        submitNewCategory: () => {
-
-            const categoryInput = document.getElementById("add-category")
-            const subcategoryInput = document.getElementById("add-subcategory")
-            const listitemInput = document.getElementById("add-listitem")
-    
-            let reqBody = {category: null, subcategory: {}}
-            //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
-                reqBody = {category: categoryInput.value}
-                if(subcategoryInput.value){
-                    reqBody.subcategory = {[subcategoryInput.value]: []}
-                }
-                else{reqBody.subcategory = []}
-                if(listitemInput.value){
-                    reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
-                }
-                axios.post('/api/categories/create', reqBody)
-                .then(res => {
-                    let newState = {...this.state}
-                    newState.categoriesData = [...newState.categoriesData, res.data]
-                    newState.categoriesOptionList.data = {...newState.categoriesOptionList.data, [categoryInput.value]:[]}
-                    this.setState(newState)
-                })
-                .catch(err => {
-                  
-                })
-            
-        },
-        updateCategory: () => {
-            const categoryInput = document.getElementById("add-category")
-            const subcategoryInput = document.getElementById("add-subcategory")
-            const listitemInput = document.getElementById("add-listitem")
-
-            const allCats = Object.values(this.state.categoriesData).map(obj => obj.category)
-
-            //check if the CATGORY input value is already recorded in the database
-            //if it is run submitNewCategory method instead and exit this function
-            if(!allCats.includes(categoryInput.value)){
-                this.categoryMethods.submitNewCategory()
-                return
-            }
-
-            //if category name already exists
-            let objToUpdate = this.state.categoriesData.find(obj => obj.category === categoryInput.value)
-            let objIndex = this.state.categoriesData.indexOf(objToUpdate)
-
-
-            let categoriesDataUpdate = this.state.categoriesData
-            let subcategoryArray = categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value]
-            //if subcategory doesnt exist, initiate it
-            if(!subcategoryArray){
-                subcategoryArray = []
-                categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = subcategoryArray
-            }
-            //if new listitem has been entered
-            if(listitemInput.value){
-                categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
-            }
-             let newState = {...this.state}
-             newState.categoriesData[objIndex] = objToUpdate
-            axios.put('/api/categories/update', objToUpdate)
-                .then(res => this.setState(newState))
-            // this.setState({categoriesDataUpdate},
-            //     () => {axios.put('/api/categories/update', objToUpdate)}
-            //     )
-        },
-        autoCheckCategories: (category, subcategory, listitem, fileName) => {
-
-            let statePath = this.state.familySetupData.category
-
-            if(fileName){
-                statePath = this.state.fileData.files[fileName].category
-            }
-
-            if(listitem){
-                if(!statePath){return}
-                if(statePath[category]){
-                    if(statePath[category][subcategory]){
-                        if(statePath[category][subcategory].includes(listitem)){
-                            return true
-                        } 
-                        else{
-                            return false
-                        }
-                    }
-                    return false
-                }
-                return false
-            }
-
-            if(subcategory){
-                if(!statePath){return}
-                if(statePath[category]){
-                    if(statePath[category][subcategory]){
-                        return true
-                    }
-                    else{
-                        return false
-                    }
-                }
-                return false
-            }
-
-            if(category){
-                if(!statePath){return}
-                if(statePath[category]){
-                        return true
-                    }
-                    else{
-                        return false
-                    }
-            }    
-        },
-        onCheck: (e, fileName) => {
-
-            let statePath = this.state.familySetupData
-            
-            if(fileName){
-                statePath = this.state.fileData.files[fileName]
-                if(!this.state.fileData.files[fileName].category){
-                    this.state.fileData.files[fileName].category = {}
-                }
-            }
-    
-            const listItemPath = (category, subcategory, newListitems, fileName) => {
-                let newState = {}
-    
-                if(fileName){
-                    newState = {
-                        ...this.state,
-                       fileData: {
-                           ...this.state.fileData,
-                           files: {
-                               ...this.state.fileData.files,
-                               [fileName]: {
-                                    ...this.state.fileData.files[fileName],
-                                    category: {
-                                        ...this.state.fileData.files[fileName].category,
-                                            [category]: {
-                                                ...this.state.fileData.files[fileName].category[category],
-                                                [subcategory]: newListitems
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }                        
-                    }
-    
-                    else{
-    
-                        newState = {
-                            ...this.state,
-                            familySetupData: {
-                                ...this.state.familySetupData,
-                                category: {
-                                    ...this.state.familySetupData.category,
-                                    [category]: {
-                                        ...this.state.familySetupData.category[category],
-                                        [subcategory]: newListitems
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return newState
-            }
-    
-            const categoryPath = (newCategory, fileName) => {
-                let newState = {}
-    
-                    if(fileName){
-                        newState = { 
-                                ...this.state,
-                                fileData:{
-                                    ...this.state.fileData,
-                                    files: {
-                                        ...this.state.fileData.files,
-                                        [fileName]: {
-                                            ...this.state.fileData.files[fileName],
-                                            category: {
-                                                ...this.state.fileData.files[fileName].category,
-                                                [newCategory]:{}
-                                            }
-                                        }
-                                    }
-                                } 
-                            }
-                        }
-    
-                    else{
-                        newState = { 
-                            ...this.state,
-                            familySetupData:{
-                                ...this.state.familySetupData,
-                                category: {
-                                    ...this.state.familySetupData.category, [newCategory]:{}
-                                    } 
-                                }
-                            }
-                    }
-                    return newState
-            }
-    
-            const subcategoryPath = (newCategory, newSubcategory, fileName) => {
-                let newState = {}
-    
-                if(fileName){
-                    newState = { 
-                            ...this.state,
-                            fileData:{
-                                ...this.state.fileData,
-                                files: {
-                                    ...this.state.fileData.files,
-                                    [fileName]: {
-                                        ...this.state.fileData.files[fileName],
-                                        category: {
-                                            ...this.state.fileData.files[fileName].category,
-                                            [newCategory]:{ 
-                                                ...this.state.fileData.files[fileName].category[newCategory],
-                                                [newSubcategory]: []
-                                            }
-                                        }
-                                    }
-                                }
-                            } 
-                        }
-                    }
-    
-                else{
-                    newState = { 
-                        ...this.state,
-                        familySetupData:{
-                            ...this.state.familySetupData,
-                            category: {
-                                ...this.state.familySetupData.category, 
-                                [newCategory]:{
-                                    ...this.state.familySetupData.category[newCategory],
-                                    [newSubcategory]: []
-                                }
-                            } 
-                        }
-                    }
-                }
-                return newState
-            }
-    
-            //this is handled if a checkbox is UNCHECKED
-            if(!e.target.checked){
-                let classname = e.target.classList[1]
-                let checkboxId = e.target.value
-                let subcategory = null
-                let category = null
-                let listItemNest = null
-                let newListitems = null
-                let stateCopy = {...statePath}
-                let newState = {...this.state}
-    
-                if(classname === "listitem"){
-                    subcategory = e.target.parentNode.parentNode.id
-                    category = e.target.parentNode.parentNode.parentNode.id
-                    listItemNest = statePath.category[category][subcategory]
-                    newListitems = listItemNest.filter(item => item !== checkboxId)
-    
-                    this.setState(listItemPath(category, subcategory, newListitems, fileName))
-                    return                
-                }
-                else if (classname === "subcategory"){
-                    category = e.target.parentNode.parentNode.parentNode.id
-    
-                    delete stateCopy.category[category][checkboxId]
-                    Array.from(document.getElementById(checkboxId).getElementsByTagName('input'))
-                        .forEach(item => item.checked = false)
-                        if(fileName){
-                            newState = {
-                                fileData: {
-                                    ...this.state.fileData,
-                                    files: {
-                                        ...this.state.fileData.files,
-                                        [fileName]: {
-                                            ...this.state.fileData.files[fileName],
-                                            category: stateCopy.category
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else{
-                            newState = {
-                                familySetupData: {
-                                    ...this.state.familySetupData,
-                                    category: stateCopy.category
-                                }
-                            }
-                        }
-                        this.setState(newState)
-                    return
-                }
-                else if (classname === "category"){
-                    category = e.target.parentNode.parentNode.id
-                    delete stateCopy.category[category]
-                    Array.from(document.getElementById(category).getElementsByTagName('input'))
-                        .forEach(item => item.checked = false)
-                        if(fileName){
-                            newState = {
-                                fileData: {
-                                    ...this.state.fileData,
-                                    files: {
-                                        ...this.state.fileData.files,
-                                        [fileName]: {
-                                            ...this.state.fileData.files[fileName],
-                                            category: stateCopy.category
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        else{
-                            newState = {
-                                familySetupData: {
-                                    ...this.state.familySetupData,
-                                    category: stateCopy.category
-                                }
-                            }
-                        }
-                        this.setState(newState)
-                    // e.target.parentNode.classList.toggle('themes-list--selected')
-                    return
-                }
-            };
-    
-            //This creates checkbox trees and and values to it
-            const parentCheckbox = (target) => {
-                return Array.from(target.getElementsByTagName('input'))[0]; 
-            };
-        
-            //returns a boolean for SWITCH statement
-            //checks for className of input parent 
-            const classNameCheck = (name) => {
-    
-                if(name === "list--listitem"){
-                    return e.target.parentNode.classList.contains(name)    
-                }
-                return e.target.parentNode.parentNode.classList.contains(name)
-            }
-    
-            let category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
-            let subcategory = parentCheckbox(e.target.parentNode.parentNode)
-        
-            switch (true) {
-        
-            case classNameCheck('list--category'):
-                this.setState(categoryPath(category.value, fileName))
-            break;
-    
-            case classNameCheck('list--listitem'):
-                category = parentCheckbox(e.target.parentNode.parentNode.parentNode)
-                subcategory = parentCheckbox(e.target.parentNode.parentNode)
-    
-                const newListItem = e.target.value;
-                let newList = [newListItem]
-    
-                if(statePath.category){
-                    if(statePath.category[category.value]){
-                        if(statePath.category[category.value][subcategory.value]){
-                            if(statePath.category[category.value][subcategory.value].length > 0){
-                                newList = [...statePath.category[category.value][subcategory.value], newListItem]
-                            }
-                        }
-                    }
-                }
-                this.setState(listItemPath(category.value, subcategory.value, newList, fileName))
-            break;
-            
-            case classNameCheck('list--subcategory'):
-                this.setState(subcategoryPath(category.value, subcategory.value, fileName))
-            break;
-            default:
-                return
-            }
-        }
+    this.themeChecked = (theme) => {
+      let onDisplay = []
+      const artworkOnDisplay = {...this.state.artworkOnDisplay}
+      onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
+        return artworkOnDisplay[fileName].themes.includes(theme) === true
+      })
+      return onDisplay.length > 0
     }
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
+        console.log("frontendindex did mount")
             let newState = {...this.state}
 
             this.setState({showModal: true})
@@ -2858,9 +2472,35 @@ export class Provider extends React.Component{
                           }
                         })
                         
+                        let allThemes = []
+                        Object.keys(onDisplay).forEach(objName => {
+                            allThemes = [...allThemes, ...onDisplay[objName].themes]
+                        })
+                        let allThemesSet = new Set(allThemes)
+                        allThemesSet = Array.from(allThemesSet)
+
+                        let artworkByTheme = {}
+
+                        let arr = Object.keys(onDisplay).map(name => onDisplay[name])
+
+                        allThemesSet.forEach(theme => {
+                          arr.forEach(obj => {
+                            if(obj.themes.includes(theme)){
+                              if(!artworkByTheme[theme]){
+                                artworkByTheme[theme] = []
+                              }
+                              artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
+                            }
+                          })
+                        })
                         
+                        newState.themes = {}
                         newState.artworkOnDisplay = onDisplay
                         newState.visibleArtwork = onDisplay
+                        newState.themes.themesOnDisplay = artworkByTheme
+                        newState.themes.visibleThemes = artworkByTheme
+                        newState.themesOnDisplay = artworkByTheme
+                        newState.visibleThemes = artworkByTheme
                         resolve()
                     })
             })
@@ -2894,8 +2534,7 @@ export class Provider extends React.Component{
         <Context.Provider value={ {
             state: this.state, 
             
-            categoryMethods: this.categoryMethods,
-            onCheck: this.categoryMethods.onCheck, 
+
             filterByCategory: this.filterByCategory,
             filterBySubcategory: this.filterBySubcategory,
             filterByListitem: this.filterByListitem,
@@ -2912,6 +2551,9 @@ export class Provider extends React.Component{
             viewPrev: this.viewPrev,
 
             showInfo: this.showInfo,
+
+            filterByTheme: this.filterByTheme,
+            themeChecked: this.themeChecked,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,
