@@ -24,9 +24,10 @@ export default class TagsMenu extends React.Component{
         }
         let block = listitemData.map(listitem => {
         return <li key={listitem}>
-            <div>
+            <div className="tagsMenu-listItem">
                 <span>{listitem}</span>
                 <input 
+                    className="TagsMenu-checkbox_listItem"
                     type="checkbox" 
                     onChange={(e) => this.props.context.filterByListitem(e, category, subcategory, listitem)} 
                     checked={this.props.context.listitemChecked(category, subcategory, listitem)}
@@ -35,7 +36,7 @@ export default class TagsMenu extends React.Component{
             </li>
         })
 
-        let list = <ul>{block}</ul>
+        let list = <ul className="tagsMenu-list">{block}</ul>
         return list
     }
 
@@ -44,14 +45,33 @@ export default class TagsMenu extends React.Component{
      */ 
     subcategoryBlock = (category, subData) => {
         const subcategoriesList = Object.keys(subData)
-        let subCategories = subcategoriesList.map(subName => {
+        let subCategories = subcategoriesList.map((subName, index) => {
             const toggle = subData[subName].length > 0 
+            if(index === subcategoriesList.length - 1){
+                return(
+                    <Accordion 
+                    title={this.spreadLetters(subName)}
+                    // title={subName} 
+                    level="subcategory-last"
+                    checkbox={<input 
+                        className="TagsMenu-checkbox"
+                        type="checkbox" 
+                        onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
+                        checked={this.props.context.subcategoryChecked(category, subName)}
+                        />}
+                    toggle={toggle} 
+                    className="TagsMenu-Accordion-label">
+                        {this.listItemBlock(category, subName, subData[subName])}
+                    </Accordion>
+                )                 
+            }
             return(
                 <Accordion 
                 title={this.spreadLetters(subName)}
                 // title={subName} 
                 level="subcategory"
                 checkbox={<input 
+                    className="TagsMenu-checkbox"
                     type="checkbox" 
                     onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
                     checked={this.props.context.subcategoryChecked(category, subName)}
@@ -78,6 +98,7 @@ export default class TagsMenu extends React.Component{
             // title={obj.category} 
             title={this.spreadLetters(obj.category)}
             checkbox={<input 
+                className="TagsMenu-checkbox"
                 level="category"
                 type="checkbox" 
                 onChange={(e) => this.props.context.filterByCategory(e, obj.category)} 

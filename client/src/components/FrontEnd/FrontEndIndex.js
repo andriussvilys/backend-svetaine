@@ -54,11 +54,11 @@ export default class FrontEndIndex extends React.Component{
                     {() => {
                         return <div className="frontEndIndex-container">
                             <TagsMenu context={this.context}>
-                                {this.props ? this.adminButtons(this.props) : null}
                                 <Themes
                                     state={this.context.state}
                                     context={this.context}
                                 />
+                                {this.props ? this.adminButtons(this.props) : null}
                             </TagsMenu>
 
                             <div id="images" className="images-container">

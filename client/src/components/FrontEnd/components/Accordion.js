@@ -5,18 +5,6 @@ const Accordion = (props) => {
 
     const toggle = (toggle) => {
         if(toggle){
-        //     return <BootstrapAccordion as={Card.Header} eventKey="null"
-        //     style={{fontWeight: "600"}}
-        //     as={Button} 
-        //     variant="link" 
-        //     eventKey="0" 
-        //     className={props.className}
-        // >
-        //     <BootstrapAccordion.Toggle as={Button} variant="link" eventKey="0" >
-        //         {props.title}
-        //     </BootstrapAccordion.Toggle>
-        //     {props.checkbox}
-        // </BootstrapAccordion>
            return  <BootstrapAccordion.Toggle 
             as={Button} 
             variant="link" 
@@ -28,16 +16,6 @@ const Accordion = (props) => {
         }
         else{
             return(
-            // <BootstrapAccordion as={Card.Header} eventKey="null"
-            //     style={{fontWeight: "600"}}
-            //     as={Button} 
-            //     variant="link" 
-            //     eventKey="0" 
-            //     className={props.className}
-            // >
-            //     {props.title}
-            //     {props.checkbox}
-            // </BootstrapAccordion>
             <BootstrapAccordion 
             as={Button} 
             variant="link" 
@@ -53,29 +31,17 @@ const Accordion = (props) => {
     
     return(
         <BootstrapAccordion>
-            <Card className="TagsMenu-Card">
+            <Card className={`TagsMenu-Card`}>
                 <div
-                    style={{
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "space-between",
-                    }}
+                    className={`TagsMenu-Card-Title ${props.level}`}
                 >
-                    {/* <BootstrapAccordion.Toggle 
-                    as={Button} 
-                    variant="link" 
-                    eventKey="0" 
-                    className={props.level === "category" ? "tagsMenu-Button_category" : "tagsMenu-Button_subcategory"}
-                    >
-                        {props.title}
-                    </BootstrapAccordion.Toggle> */}
                     {toggle(props.toggle)}
                         {props.checkbox}
                 </div>
                 
 
                 <BootstrapAccordion.Collapse eventKey="0">
-                <Card.Body>
+                <Card.Body className={`${props.level}-collapse`}>
                     {props.children}
                 </Card.Body>
                 </BootstrapAccordion.Collapse>

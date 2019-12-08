@@ -21,6 +21,7 @@ ul{
     // display: grid;
     grid-template-columns: 1fr 300px;
     grid-template-rows: auto 1fr;
+    overflow-y: auto;
 }
 .overflow-yes{
     overflow-x: hidden;
@@ -110,6 +111,28 @@ Button{
 }
 .card-header{
     margin-bottom: 0 !important;
+}
+.card{
+    border: none !important;
+}
+.accordion{
+    // border-right: 1px solid;
+    // border-left: 1px solid;
+}
+.btn{
+    border: none !important;
+}
+.card-body{
+    padding: 0 10px !important;
+    background-color: white !important;
+    border-bottom: 1px solid;
+}
+.TagsMenu-Card{
+
+}
+.TagsMenu-Card-Title{
+    display: flex;
+    border-bottom: 1px solid black !important;
 }
 textarea{
     font-size: 13px;
@@ -314,6 +337,12 @@ $border-main-color: #bbb;
     border-left: $border-dark;
     border-right: $border-light;
     border-bottom: $border-light;
+    overflow-y: auto;
+}
+.TagsMenu-checkbox{
+    position: absolute;
+    right: -1px;
+    top: 6px;
 }
 .TagsMenu-Card{
     background-color: $frame-color !important;
@@ -330,7 +359,43 @@ $border-main-color: #bbb;
     margin: 0 !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
-    color: white !important;
+    border-right: 1px solid;
+    border-left: 1px solid;
+}
+.tagsMenu-list{
+    font-family: 'Courier', Courier, monospace;
+    text-transform: uppercase;
+    list-style-type: none;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    margin: 0;
+}
+.tagsMenu-listItem{
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0,0,0,0);
+    line-height: 12px;
+    margin-bottom: 2px;
+    position: relative;
+}
+.tagsMenu-listItem:hover{
+    border-bottom: 1px solid black;
+}
+.subcategory{
+    border-left: 1px solid;
+    border-right: 1px solid;
+}
+.subcategory-last{
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-bottom: 0 !important;
+}
+.subcategory-collapse{
+    border-bottom: 1px solid;
+}
+.subcategory-last-collapse{
+    border-top: 1px solid;
+    border-bottom: 0 !important;
 }
 .Navbar{
     overflow: hidden;
@@ -342,10 +407,11 @@ $border-main-color: #bbb;
     right: 0;
     z-index: 2;
     grid-column-start: 3;
+    min-width: 45px;
 
     border-right: $border-light;
     border-top: $border-dark;
-    border-left: $border-dark;
+    // border-left: $border-dark;
     border-bottom: $border-light;
 }
 #button-next, #button-prev{
@@ -386,6 +452,21 @@ $border-main-color: #bbb;
     // border-right: $border-light;
     border-bottom: $border-light;
     border-top: $border-dark;
+    border-right: $border-dark;
+}
+.Nav-button{
+    // position: absolute;
+    width: 4vw;
+    min-width: 45px;
+    cursor: pointer;
+}
+.Nav-button_next{
+    top: 8vw;
+    left: 0;
+}
+.Nav-button_prev{
+    top: 12vw;
+    left: 0;
 }
 .images-container{
     position: relative;
@@ -435,7 +516,7 @@ $border-main-color: #bbb;
     transform: translateX(100%);
     right: 0;
     // border-left: $border-main;
-    border-left: $border-dark;
+    border-right: $border-dark;
     border-top: $border-dark;
 
     // border-right: $border-light;
@@ -562,16 +643,16 @@ $border-main-color: #bbb;
 
 .tagsMenu-Button{
     display: flex !important;
-    justify-content: space-between ;
+    // justify-content: space-between ;
     width: 100%;
     font-weight: 400 !important;
-    font-size: 24px !important;
+    font-size: 16px !important;
     font-family: 'Courier', Courier, monospace;
-    transform: scale(0.8, 0.7);
+    // transform: scale(0.8, 0.7);
 }
 .title-letter{
     // font-size: 60px;
-    transform: scale(1.65, 2.5);
+    // transform: scale(1.65, 2.5);
 }
 
 
@@ -646,8 +727,7 @@ $border-main-color: #bbb;
     padding: 1vw 0;
 }
 .ArtworkInfo-preview-container{
-    max-height: 100%;
-    height: 100%;
+    height: 75px;
     z-index: 11;
     cursor: pointer;
     align-content: center;
@@ -667,10 +747,10 @@ $border-main-color: #bbb;
     opacity: 1;
 }
 .ArtworkInfo-seeAlso-container{
-    height: 75px;
     display: flex;
     flex-wrap: wrap;
     overflow-y: auto;
+    justify-content: flex-end;
 }
 .ArtworkInfo-container_seealso{
     padding-right: 2vw;

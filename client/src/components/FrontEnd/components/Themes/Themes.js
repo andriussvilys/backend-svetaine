@@ -20,7 +20,7 @@ const Themes = (props) => {
         // const allThemes = themesOnDisplay()
         let renderList = allThemes.map(theme => {
             return <li key={theme}>
-            <div>
+            <div className="tagsMenu-listItem">
                 <span>{theme}</span>
                 <input 
                     id={`theme-${theme}`}
@@ -33,7 +33,7 @@ const Themes = (props) => {
             </div>
             </li>
         })
-        return <ul>{renderList}</ul>
+        return <ul className="tagsMenu-list">{renderList}</ul>
     }
 
     return(

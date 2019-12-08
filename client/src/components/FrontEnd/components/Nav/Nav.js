@@ -21,29 +21,15 @@ const Nav = (props) => {
                                     <Fragment>
                                     <button
                                         id="button-next"
-                                        style={{
-                                            position: "absolute",
-                                            top: "8vw",
-                                            left: '0',
-                                            width: "4vw",
-                                            cursor: "pointer"
-                                        }}
                                         onClick={() => props.context.viewNext()}
-                                        className={showButtons() ? null : "move-right"}
+                                        className={showButtons() ? "Nav-button Nav-button_next" : "Nav-button Nav-button_next move-right"}
                                     >
                                         <img alt="view next" src="/icons/point-right.png" />
                                     </button>
                                     <button
                                         id="button-prev"
-                                        style={{
-                                            position: "absolute",
-                                            top: "12vw",
-                                            left: '0',
-                                            width: "4vw",
-                                            cursor: "pointer"
-                                        }}
                                         onClick={() => props.context.viewPrev()}
-                                        className={showButtons() ? null : "move-left"}
+                                        className={showButtons() ? "Nav-button Nav-button_prev" : "Nav-button Nav-button_prev move-left"}
                                     >
                                         <img alt="view previous" src="/icons/point-left.png"/>
                                     </button>
