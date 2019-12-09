@@ -2,13 +2,24 @@ import React, { Fragment } from 'react'
 
 const Nav = (props) => {
     const showButtons = () => {
-        if(!props.context.state.enlarge.open){
+        if(props.context.state.enlarge){
+            if(!props.context.state.enlarge.open){
+                return false
+            }
+            if(props.context.state.enlarge.background.artworkFamily){
+                return props.context.state.relatedArtwork[props.context.state.enlarge.background.artworkFamily].column.fileIds.length > 1
+            }
+            else{return false}
+        }
+    }
+    const showInfo = () => {
+        if(props.context.state.enlarge){
+            if(props.context.state.enlarge.open){
+                return true
+            }
             return false
         }
-        if(props.context.state.enlarge.background.artworkFamily){
-            return props.context.state.relatedArtwork[props.context.state.enlarge.background.artworkFamily].column.fileIds.length > 1
-        }
-        else{return false}
+        return false
     }
         return(
             <div
@@ -16,8 +27,7 @@ const Nav = (props) => {
                 style={{
                 }}
                 >
-                    {
-                        props.context.state.enlarge ? 
+                    {/* {props.context.state.enlarge ?  */}
                                     <Fragment>
                                     <button
                                         id="button-next"
@@ -33,24 +43,28 @@ const Nav = (props) => {
                                     >
                                         <img alt="view previous" src="/icons/point-left.png"/>
                                     </button>
+                                    {/* {props.context.toggleMobile() ?                                     
+                                        :
+                                        null
+                                    } */}
                                         <div 
-                                        style={{
-                                            position: "absolute",
-                                            top: "16vw",
-                                            left: '0',
-                                            width: "4vw",
-                                            cursor: "pointer",
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                        onClick={() => props.context.showInfo()}
-                                    >
-                                        <h1>i</h1>
-                                    </div>
+                                            className="Nav-button text-sideways" 
+                                            onClick={() => props.context.showMenu()}
+                                        >
+                                            <h3 className="nav-menuButton">menu</h3>
+                                        </div>
+                                    {showInfo() ?                                    
+                                        <div 
+                                            className="Nav-button Nav-infoButton"
+                                            onClick={() => props.context.showInfo()}
+                                        >
+                                            <h1>i</h1>
+                                        </div>
+                                        : 
+                                        null
+                                    }
                                     </Fragment>
-                                    : null
-                    }
+                    {/* } */}
             </div>
         )
 }
