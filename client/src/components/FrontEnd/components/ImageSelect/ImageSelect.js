@@ -28,6 +28,7 @@ export default class ImageSelect extends React.Component{
                 <div 
                 id="imageSelect"
                 className="imageSelect-container"
+                className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
                 >
                     {previews}
                 </div>

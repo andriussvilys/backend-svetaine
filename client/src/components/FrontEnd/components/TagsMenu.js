@@ -1,6 +1,7 @@
 import React from 'react'
 import { Context } from '../../Provider';
 import Accordion from './Accordion';
+import { Button } from 'react-bootstrap';
 
 
 export default class TagsMenu extends React.Component{
@@ -116,10 +117,17 @@ export default class TagsMenu extends React.Component{
 
     render(){
         return <div
+        id="TagsMenu"
         className="TagsMenu-container"
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
             {this.props.children}
+            <Button 
+            onClick={() => this.props.context.toggleMobile()}
+            >
+                toggle mobile
+            </Button>
+
         </div>
     }
 }

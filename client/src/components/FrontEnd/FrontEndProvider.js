@@ -2078,7 +2078,20 @@ export class Provider extends React.Component{
             imageSelect.style.width = "100%"
         }, 200);
     }
-
+    this.showMenu = () => {
+      if(this.toggleMobile()){
+        document.getElementById("TagsMenu").classList.toggle("show-menu")
+      }
+      else{
+        document.getElementById("TagsMenu").classList.toggle("show-menu-desktop")
+        if(this.state.enlarge){
+          if(this.state.enlarge.open){
+            this.animateEnlarge(this.state.enlarge.foreground)
+          }
+          else{document.getElementById("imageSelect").style.width = "100%"}
+        }
+      }
+    }
     this.enlarge = (id) => {
         console.log('ENLARGE RUNS')
             const file = this.state.artworkOnDisplay[id]
@@ -2148,7 +2161,16 @@ export class Provider extends React.Component{
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
           enlargeContainer.style.transform = `translateX(100%)`
-          document.getElementById('imageSelect').style.width = `${imagesWidth}px`
+
+          if(this.toggleMobile() === true){
+            document.getElementById('imageSelect').classList.remove("side-scroll")
+            document.getElementById('imageSelect').style.height = "100%"
+            enlargeContainer.style.height = 0
+
+          }
+          else{
+            document.getElementById('imageSelect').style.width = `${imagesWidth}px`
+          }
   
           const enlarge = {...this.state.enlarge}
           enlarge.open = false
@@ -2199,7 +2221,12 @@ export class Provider extends React.Component{
 
     this.animateEnlarge = (file) => {
 
-      
+      if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+        document.getElementById("TagsMenu").classList.toggle("show-menu")
+      }
+
+
+      if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
 
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 
@@ -2240,13 +2267,8 @@ export class Provider extends React.Component{
 
         backgroundImage(5, true)
           .then(res => {
-              
 
-      
-              // imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-              
-              
-              if(!this.state.mobile){
+              if(document.getElementById("root").clientWidth > 720){
                 futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
               
                 console.log("enlarge.naturalSize")
@@ -2254,6 +2276,8 @@ export class Provider extends React.Component{
   
                 console.log("file naturalSize")
                 console.log(file.naturalSize)
+
+                container.style.height = "100%"
                 
                 if(this.state.enlarge){
                   //if enlargeContainer will shrink
@@ -2273,12 +2297,12 @@ export class Provider extends React.Component{
                     imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                   }, 410);
                 }
-                background.style.height = `${futureSize.height}px`
-                foreground.style.height = `${futureSize.height}px`
+                // background.style.height = `${futureSize.height}px`
+                // foreground.style.height = `${futureSize.height}px`
                 container.style.width = `${futureSize.width}px`
               }
 
-              //IF MOBILES
+              //IF MOBILES**************************************************************************************
               else{
 
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
@@ -2291,12 +2315,13 @@ export class Provider extends React.Component{
 
                   // imageSelect.style.transition = "0.4s all"
                   setTimeout(() => {
-                    imageSelect.style.height = `${images.clientHeight - futureSize.height}px`
+                    // imageSelect.style.height = `${150}px`
+                    imageSelect.classList.add("side-scroll")
                   }, 410);
                 
                 // background.style.height = `${futureSize.height}px`
                 // foreground.style.height = `${futureSize.height}px`
-                container.style.height = `${futureSize.height}px`
+                container.style.height = `${images.clientHeight - 150}px`
               }
 
               // background.style.opacity = 1
@@ -2305,8 +2330,10 @@ export class Provider extends React.Component{
       
               
               if(!this.state.enlarge || !this.state.enlarge.open){
-                // container.style.transform = 'translateX(0)'
-                container.style.transform = 'translateX(0)'
+                if(document.getElementById("root").clientWidth > 720){
+                  container.style.transform = 'translateX(0)'
+                }
+                else{container.style.transform = 'translateY(0)'}
               }
       
               setTimeout(() => {
@@ -2329,15 +2356,8 @@ export class Provider extends React.Component{
     this.loadEnlarge = (e, id) => {
       e.stopPropagation()
         const file = this.state.artworkInfoData[id]
-        
-        // let enlarge = {...this.state.enlarge}
-        // enlarge.background = file
 
         this.animateEnlarge(file)
-
-        // this.setState({enlarge}, () => {
-        //   this.animateEnlarge(file)
-        // })
   
   }
 
@@ -2417,6 +2437,15 @@ export class Provider extends React.Component{
       })
       return onDisplay.length > 0
     }
+    this.toggleMobile = () => {
+      if(document.documentElement.clientWidth < 721){
+        return true
+      }
+      else{
+        return false
+      }
+    }
+
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
@@ -2533,27 +2562,19 @@ export class Provider extends React.Component{
             Promise.all([Categories, ArtworkInfo, Themes, serverFiles])
                 .then(res => {
                     newState.showModal = false
-                    if(document.documentElement.clientWidth < 721){
-                      newState.mobile = true
-                    }
+                    newState.mobile = this.toggleMobile()
+                    
                     this.setState(newState)
                 })
                 .catch(err => {
                      
                 })
-            // let newState = {...this.state}
-            // newState.categoriesData = newState.categoriesDUMMY
-            // newState.relatedArtwork = newState.relatedArtworkDUMMY
-            // newState.artworkInfoData = newState.relatedArtworkDUMMY
-            // newState.artworkOnDisplay = newState.relatedArtworkDUMMY
-            // this.setState(newState)
         }
 
     render(){
     return(
         <Context.Provider value={ {
             state: this.state, 
-            
 
             filterByCategory: this.filterByCategory,
             filterBySubcategory: this.filterBySubcategory,
@@ -2574,6 +2595,9 @@ export class Provider extends React.Component{
 
             filterByTheme: this.filterByTheme,
             themeChecked: this.themeChecked,
+
+            showMenu: this.showMenu,
+            toggleMobile: this.toggleMobile,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

@@ -52,7 +52,7 @@ export default class FrontEndIndex extends React.Component{
             <BrowserRouter>
                 <Context.Consumer>
                     {() => {
-                        return <div className="frontEndIndex-container">
+                        return <div className="frontEndIndex-container" onresize={() => this.context.toggleMobile()}>
                             <TagsMenu context={this.context}>
                                 <Themes
                                     state={this.context.state}
@@ -67,7 +67,8 @@ export default class FrontEndIndex extends React.Component{
                                     // data={this.context.state.visibleArtwork}
                                     methods={{
                                         enlarge: this.context.enlarge,
-                                        loadEnlarge: this.context.loadEnlarge
+                                        loadEnlarge: this.context.loadEnlarge,
+                                        toggleMobile: this.context.toggleMobile
                                     }}
                                 />
                                 <Enlarge 
