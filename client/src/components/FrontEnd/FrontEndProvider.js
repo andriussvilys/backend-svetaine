@@ -2236,24 +2236,36 @@ export class Provider extends React.Component{
         
       this.setState({enlarge}, () => {
 
+        let futureSize = null
+
         backgroundImage(5, true)
           .then(res => {
               
-              const futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
-              
-              console.log("enlarge.naturalSize")
-              console.log(enlarge.background.naturalSize)
 
-              console.log("file naturalSize")
-              console.log(file.naturalSize)
-              
       
               // imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
               
-              if(this.state.enlarge){
-                //if enlargeContainer will shrink
-                if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
-                  imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+              
+              if(!this.state.mobile){
+                futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
+              
+                console.log("enlarge.naturalSize")
+                console.log(enlarge.background.naturalSize)
+  
+                console.log("file naturalSize")
+                console.log(file.naturalSize)
+                
+                if(this.state.enlarge){
+                  //if enlargeContainer will shrink
+                  if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
+                    imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                  }
+                  else{
+                    // imageSelect.style.transition = "0.4s all"
+                    setTimeout(() => {
+                      imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                    }, 410);
+                  }
                 }
                 else{
                   // imageSelect.style.transition = "0.4s all"
@@ -2261,17 +2273,31 @@ export class Provider extends React.Component{
                     imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                   }, 410);
                 }
-              }
-              else{
-                // imageSelect.style.transition = "0.4s all"
-                setTimeout(() => {
-                  imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                }, 410);
+                background.style.height = `${futureSize.height}px`
+                foreground.style.height = `${futureSize.height}px`
+                container.style.width = `${futureSize.width}px`
               }
 
-              background.style.height = `${futureSize.height}px`
-              foreground.style.height = `${futureSize.height}px`
-              container.style.width = `${futureSize.width}px`
+              //IF MOBILES
+              else{
+
+                futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
+              
+                console.log("enlarge.naturalSize")
+                console.log(enlarge.background.naturalSize)
+  
+                console.log("file naturalSize")
+                console.log(file.naturalSize)
+
+                  // imageSelect.style.transition = "0.4s all"
+                  setTimeout(() => {
+                    imageSelect.style.height = `${images.clientHeight - futureSize.height}px`
+                  }, 410);
+                
+                // background.style.height = `${futureSize.height}px`
+                // foreground.style.height = `${futureSize.height}px`
+                container.style.height = `${futureSize.height}px`
+              }
 
               // background.style.opacity = 1
 
@@ -2507,6 +2533,9 @@ export class Provider extends React.Component{
             Promise.all([Categories, ArtworkInfo, Themes, serverFiles])
                 .then(res => {
                     newState.showModal = false
+                    if(document.documentElement.clientWidth < 721){
+                      newState.mobile = true
+                    }
                     this.setState(newState)
                 })
                 .catch(err => {

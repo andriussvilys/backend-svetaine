@@ -33,17 +33,8 @@ const Nav = (props) => {
                                     >
                                         <img alt="view previous" src="/icons/point-left.png"/>
                                     </button>
-                                        <div 
-                                        style={{
-                                            position: "absolute",
-                                            top: "16vw",
-                                            left: '0',
-                                            width: "4vw",
-                                            cursor: "pointer",
-                                            display: "flex",
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
+                                    <div 
+                                        className="Nav-button Nav-infoButton"
                                         onClick={() => props.context.showInfo()}
                                     >
                                         <h1>i</h1>
