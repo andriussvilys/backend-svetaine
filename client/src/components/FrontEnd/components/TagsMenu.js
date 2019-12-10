@@ -55,7 +55,7 @@ export default class TagsMenu extends React.Component{
                     // title={subName} 
                     level="subcategory-last"
                     checkbox={<input 
-                        className="TagsMenu-checkbox"
+                        className="TagsMenu-checkbox_subcategory"
                         type="checkbox" 
                         onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
                         checked={this.props.context.subcategoryChecked(category, subName)}
@@ -72,7 +72,7 @@ export default class TagsMenu extends React.Component{
                 // title={subName} 
                 level="subcategory"
                 checkbox={<input 
-                    className="TagsMenu-checkbox"
+                    className="TagsMenu-checkbox_subcategory"
                     type="checkbox" 
                     onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
                     checked={this.props.context.subcategoryChecked(category, subName)}
@@ -122,11 +122,6 @@ export default class TagsMenu extends React.Component{
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
             {this.props.children}
-            <Button 
-            onClick={() => this.props.context.toggleMobile()}
-            >
-                toggle mobile
-            </Button>
 
         </div>
     }

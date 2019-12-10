@@ -39,12 +39,6 @@ const Themes = (props) => {
     return(
         <Accordion
             title="Themes"
-            // checkbox={<input 
-            //     level="category"
-            //     type="checkbox" 
-            //     onChange={(e) => this.props.context.filterByCategory(e, obj.category)} 
-            //     checked={this.props.context.categoryChecked(obj.category)}
-            // //     />}
             toggle="0" 
             className="TagsMenu-Accordion-label"
         >

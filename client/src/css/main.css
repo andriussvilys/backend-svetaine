@@ -451,11 +451,19 @@ label {
   border-left: 1px solid black;
   border-bottom: 1px solid black;
   overflow-y: auto;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 }
 
 .TagsMenu-checkbox {
   position: absolute;
   right: -1px;
+  top: 6px;
+}
+
+.TagsMenu-checkbox_subcategory {
+  position: absolute;
+  right: 0;
   top: 6px;
 }
 
@@ -539,6 +547,7 @@ label {
       grid-column-start: 3;
   min-width: 45px;
   border-right: 1px solid black;
+  border-left: 1px solid black;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
@@ -595,8 +604,13 @@ label {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   position: absolute;
-  border-right: 1px solid black;
   border-left: 1px solid black;
+  -webkit-transition: 0.2s -webkit-transform;
+  transition: 0.2s -webkit-transform;
+  transition: 0.2s transform;
+  transition: 0.2s transform, 0.2s -webkit-transform;
+  -webkit-transform: translateX(0);
+          transform: translateX(0);
 }
 
 .Nav-button {
@@ -648,6 +662,8 @@ label {
   border-right: none;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 }
 
 .ImagesPreview--imageContainer {
@@ -713,7 +729,7 @@ label {
   -webkit-transform: translateX(100%);
           transform: translateX(100%);
   right: 0;
-  border-right: 1px solid black;
+  background-color: white;
 }
 
 .enlarge-border {
@@ -959,8 +975,6 @@ label {
 
 .ArtworkInfo-container {
   position: absolute;
-  left: -1px;
-  background-color: white;
   width: 100%;
   max-height: 100%;
   z-index: 2;
@@ -981,9 +995,8 @@ label {
           justify-content: flex-end;
   padding-bottom: 10px;
   overflow-y: auto;
-  border-top: 4px solid white;
-  border-left: 4px solid white;
   border-top: 1px solid black;
+  border-left: 1px solid black;
 }
 
 .ArtworkInfo-wrapper {
@@ -1129,6 +1142,8 @@ label {
         grid-template-rows: max-content 1fr;
     overflow: hidden;
     border-left: 1px solid;
+    border-right: 1px solid;
+    border-top: none;
   }
   .imageSelect-container {
     -ms-grid-column: 1;
@@ -1143,6 +1158,20 @@ label {
     z-index: 999;
     width: 100% !important;
     height: 100%;
+    -webkit-transition: 0.2s -webkit-transform;
+    transition: 0.2s -webkit-transform;
+    transition: 0.2s transform;
+    transition: 0.2s transform, 0.2s -webkit-transform;
+    z-index: 999;
+    -webkit-transform: translateX(0);
+            transform: translateX(0);
+    border-right: none;
+    border-left: none;
+    border-top: 1px solid;
+  }
+  .imageSelect-slide {
+    -webkit-transform: translateX(250px);
+            transform: translateX(250px);
   }
   .side-scroll {
     -webkit-box-orient: vertical;
@@ -1174,6 +1203,9 @@ label {
             justify-content: center;
     -webkit-transform: translateY(-100%);
             transform: translateY(-100%);
+    z-index: 999;
+    background-color: white;
+    border-top: none;
   }
   .enlargeContainer > div {
     height: auto;
@@ -1186,6 +1218,7 @@ label {
   .enlargeContainer {
     border-top: none;
     border-bottom: none;
+    z-index: 1;
   }
   .enlarge-preview {
     -o-object-fit: contain;
@@ -1233,6 +1266,7 @@ label {
     padding-bottom: 10px;
     max-height: 100%;
     overflow-y: auto;
+    border-left: none;
   }
   .imageSelect-FilePreview {
     height: 100%;

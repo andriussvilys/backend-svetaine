@@ -338,10 +338,16 @@ $border-main-color: #bbb;
     // border-right: $border-light;
     border-bottom: $border-light;
     overflow-y: auto;
+    transition: 0.2s all;
 }
 .TagsMenu-checkbox{
     position: absolute;
     right: -1px;
+    top: 6px;
+}
+.TagsMenu-checkbox_subcategory{
+    position: absolute;
+    right: 0;
     top: 6px;
 }
 .TagsMenu-Card{
@@ -410,6 +416,7 @@ $border-main-color: #bbb;
     min-width: 45px;
 
     border-right: $border-light;
+    border-left: $border-dark;
     border-top: $border-dark;
     // border-left: $border-dark;
     border-bottom: $border-light;
@@ -462,9 +469,14 @@ $border-main-color: #bbb;
     // border-right: $border-light;
     // border-bottom: $border-light;
     // border-top: $border-dark;
-    border-right: $border-dark;
+    // border-right: $border-dark;
     border-left: $border-dark;
+    transition: 0.2s transform;
+    transform: translateX(0);
 }
+// .imageSelect-slide{
+// transform: translateX(250px);
+// }
 .Nav-button{
     // position: absolute;
     width: 4vw;
@@ -502,6 +514,7 @@ $border-main-color: #bbb;
     border-right: $border-gutter;
     border-top: $border-dark;
     border-bottom: $border-light;
+    transition: 0.2s all;
 }
 
 .ImagesPreview--imageContainer{
@@ -542,8 +555,9 @@ $border-main-color: #bbb;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
+    background-color: white;
     // border-left: $border-main;
-    border-right: $border-dark;
+    // border-right: $border-dark;
     // border-top: $border-dark;
 
     // // border-right: $border-light;
@@ -728,8 +742,7 @@ $border-main-color: #bbb;
 }
 .ArtworkInfo-container{
     position: absolute;
-    left: -1px;
-    background-color: white;
+    // left: -1px;
     width: 100%;
     max-height: 100%;
     z-index: 2;
@@ -745,9 +758,8 @@ $border-main-color: #bbb;
     padding-bottom: 10px;
     overflow-y: auto;
 
-    border-top: $border-main;
-    border-left: $border-main;
     border-top: $border-dark;
+    border-left: $border-dark;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
@@ -860,6 +872,8 @@ $border-main-color: #bbb;
         grid-template-rows: max-content 1fr;
         overflow: hidden;
         border-left: 1px solid;
+        border-right: 1px solid;
+        border-top: none;
     }
     .imageSelect-container{
         grid-column-start: 1;
@@ -872,6 +886,15 @@ $border-main-color: #bbb;
         z-index: 999;
         width: 100% !important;
         height: 100%;
+        transition: 0.2s transform;
+        z-index: 999;
+        transform: translateX(0);
+        border-right: none;
+        border-left: none;
+        border-top: 1px solid;
+    }
+    .imageSelect-slide{
+        transform: translateX(250px);
     }
     .side-scroll{
         flex-direction: column;
@@ -891,6 +914,9 @@ $border-main-color: #bbb;
         display: flex;
         justify-content: center;
         transform: translateY(-100%);
+        z-index: 999;
+        background-color: white;
+        border-top: none;
     }
     .enlargeContainer > div {
         height: auto;
@@ -904,6 +930,7 @@ $border-main-color: #bbb;
     .enlargeContainer{
         border-top: none;
         border-bottom: none;
+        z-index:1;
     }
     .enlarge-preview{
         object-fit: contain;
@@ -940,6 +967,7 @@ $border-main-color: #bbb;
         padding-bottom: 10px;
         max-height: 100%;
         overflow-y: auto;
+        border-left: none;
     }
     .imageSelect-FilePreview{
         height: 100%;

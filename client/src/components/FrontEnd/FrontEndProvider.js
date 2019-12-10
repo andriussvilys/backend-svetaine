@@ -2085,23 +2085,30 @@ export class Provider extends React.Component{
       //DESKTOP
       else{
         if(this.state.enlarge){
+          //if menu closed
           if(document.getElementById("TagsMenu").classList.contains("show-menu-desktop")){
             document.getElementById("TagsMenu").classList.remove("show-menu-desktop")
             if(this.state.enlarge && this.state.enlarge.open){
-              this.animateEnlarge(this.state.enlarge.foreground)
+              this.animateEnlarge(this.state.enlarge.background)
+            }
+            else{
+              document.getElementById("imageSelect").style.width = "100%"
             }
             return
           }
+          //if menu open
           else{
             document.getElementById("TagsMenu").classList.add("show-menu-desktop")
-            if(this.state.enlarge){
+            document.getElementById("imageSelect").classList.remove("imageSelect-slide")
               if(this.state.enlarge.open){
                 // this.animateEnlarge(this.state.enlarge.foreground)
+                const imageSelectWidth = document.getElementById("imageSelect").offsetWidth
+                const imagesContainerWidth = document.getElementById("images").clientWidth
+                document.getElementById("enlargeContainer").style.width = `${imagesContainerWidth - imageSelectWidth}px`
               }
               else{
                 document.getElementById("imageSelect").style.width = "100%"
               }
-            }
           }
         }
         else document.getElementById("TagsMenu").classList.toggle("show-menu-desktop")
