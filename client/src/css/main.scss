@@ -872,7 +872,7 @@ $border-main-color: #bbb;
         overflow: hidden;
         border-left: 1px solid;
         border-right: 1px solid;
-        border-top: none;
+        border-top: 1px solid;
     }
     .imageSelect-container{
         grid-column-start: 1;
@@ -890,8 +890,14 @@ $border-main-color: #bbb;
         transform: translateX(0);
         border-right: none;
         border-left: none;
-        border-top: 1px solid;
+        border-top: none;
+        grid-row-start: 2;
+        grid-row-end: 3;
     }
+    // .side-scroll{
+    //     border-top: 1px solid;
+    // }
+
     .imageSelect-slide{
         transform: translateX(250px);
     }
@@ -916,6 +922,13 @@ $border-main-color: #bbb;
         z-index: 999;
         background-color: white;
         border-top: none;
+        border-bottom: none;
+        z-index:1;
+        position: relative;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        border-left: none;
+        border-bottom: 1px solid;
     }
     .enlargeContainer > div {
         height: auto;
@@ -925,11 +938,6 @@ $border-main-color: #bbb;
         // height: auto;
         max-height: 100%;
         height: auto;
-    }
-    .enlargeContainer{
-        border-top:1px solid;
-        border-bottom: none;
-        z-index:1;
     }
     .enlarge-preview{
         // object-fit: contain;
@@ -977,15 +985,6 @@ $border-main-color: #bbb;
     .images-container{
         display: grid;
         grid-template-rows: max-content 1fr;
-    }
-    .imageSelect-container{
-        grid-row-start: 2;
-        grid-row-end: 3;
-    }
-    .enlargeContainer{
-        position: relative;
-        grid-row-start: 1;
-        grid-row-end: 2;
     }
   }
 

@@ -2183,16 +2183,16 @@ export class Provider extends React.Component{
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
 
-            enlargeContainer.style.transform = `translateX(100%)`
-          
-
           if(this.toggleMobile() === true){
+            enlargeContainer.style.transform = `translateY(-100%)`
+
             document.getElementById('imageSelect').classList.remove("side-scroll")
-            document.getElementById('imageSelect').style.height = "100%"
             enlargeContainer.style.height = 0
+
 
           }
           else{
+            enlargeContainer.style.transform = `translateX(100%)`
             document.getElementById('imageSelect').style.width = `${imagesWidth}px`
           }
   
