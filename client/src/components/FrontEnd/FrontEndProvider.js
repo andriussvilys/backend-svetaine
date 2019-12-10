@@ -2182,7 +2182,9 @@ export class Provider extends React.Component{
         setTimeout(() => {      
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
-          enlargeContainer.style.transform = `translateX(100%)`
+
+            enlargeContainer.style.transform = `translateX(100%)`
+          
 
           if(this.toggleMobile() === true){
             document.getElementById('imageSelect').classList.remove("side-scroll")
@@ -2373,7 +2375,7 @@ export class Provider extends React.Component{
               
               if(!this.state.enlarge || !this.state.enlarge.open){
                 if(document.getElementById("root").clientWidth > 720){
-                  container.style.transform = 'translateX(0)'
+                  container.style.transform = 'translateY(0)'
                 }
                 else{container.style.transform = 'translateY(0)'}
               }

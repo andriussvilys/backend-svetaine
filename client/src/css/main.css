@@ -645,12 +645,12 @@ label {
 }
 
 .Nav-button_next {
-  top: 8vw;
+  top: 0;
   left: 0;
 }
 
 .Nav-button_prev {
-  top: 12vw;
+  top: 36px;
   left: 0;
 }
 
@@ -730,6 +730,7 @@ label {
           transform: translateX(100%);
   right: 0;
   background-color: white;
+  border-left: 1px solid black;
 }
 
 .enlarge-border {
@@ -975,13 +976,11 @@ label {
 
 .ArtworkInfo-container {
   position: absolute;
-  width: 100%;
   max-height: 100%;
   z-index: 2;
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
   bottom: -100%;
-  opacity: 0;
   background-color: white;
   color: white;
   padding-left: 20px;
@@ -995,6 +994,7 @@ label {
           justify-content: flex-end;
   padding-bottom: 10px;
   overflow-y: auto;
+  right: 0;
   border-top: 1px solid black;
   border-left: 1px solid black;
 }
@@ -1259,6 +1259,9 @@ label {
     max-height: 100%;
     overflow-y: auto;
     border-left: none;
+    z-index: 999;
+    -webkit-transition: 0.4s all;
+    transition: 0.4s all;
   }
   .imageSelect-FilePreview {
     height: 100%;

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Button from 'react-bootstrap/Button'
 import { Context } from './FrontEndProvider';
 import { BrowserRouter,  Link } from 'react-router-dom';
@@ -12,6 +12,7 @@ import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
 import Nav from './components/Nav/Nav'
 import Themes from './components/Themes/Themes'
+import ArtworkInfo from './components/ArtworkInfo/ArtworkInfo'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -82,6 +83,14 @@ export default class FrontEndIndex extends React.Component{
                                     hideArtworkInfo={this.context.hideArtworkInfo}
                                     context={this.context}
                                 />
+                                    <Fragment>
+                                        {this.context.state.enlarge ? 
+                                            this.context.state.enlarge.foreground ?
+                                                <ArtworkInfo file={this.context.state.enlarge} artworkInfoData={this.context.state.artworkInfoData} loadEnlarge={this.context.loadEnlarge} hideArtworkInfo={this.context.hideArtworkInfo}/> 
+                                            :null    
+                                        : null
+                                        }
+                                    </Fragment>
                             </div>
 
                             <Nav
