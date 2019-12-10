@@ -2232,7 +2232,7 @@ export class Provider extends React.Component{
       if(mobile){
         console.log("mobile == true")
         maxWidth = document.getElementById("images").clientWidth
-        const maxHeight = document.getElementById("images").clientHeight
+        const maxHeight = document.getElementById("images").clientHeight - 150
 
         let futureWidth = maxWidth
         let futureHeight = Math.round(futureWidth / naturalRatio)
@@ -2241,8 +2241,9 @@ export class Provider extends React.Component{
         console.log(`futureWidth: ${futureWidth}, futureHeight: ${futureHeight}`)
   
         if(futureHeight > maxHeight){
+          console.log("futureHeight too much")
           futureHeight = maxHeight
-          futureWidth = Math.round(futureWidth * naturalRatio)
+          futureWidth = Math.round(futureHeight * naturalRatio)
         }
         console.log(`containerHeight${containerHeight}`)
         console.log(`futureWidth: ${futureWidth}, futureHeight: ${futureHeight}`)
@@ -2366,6 +2367,8 @@ export class Provider extends React.Component{
                 container.style.height = `${images.clientHeight - 150}px`
                 background.style.height = `${futureSize.height}px`
                 foreground.style.height = `${futureSize.height}px`
+                background.style.width = `${futureSize.width}px`
+                foreground.style.width = `${futureSize.width}px`
               }
 
               // background.style.opacity = 1
