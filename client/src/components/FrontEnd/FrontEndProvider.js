@@ -2223,17 +2223,40 @@ export class Provider extends React.Component{
           this.animateEnlarge(nextPic)
     }
 
-    this.countWidth = (containerHeight, naturalHeight, naturalWidth) => {
-      const maxWidth = document.getElementById("images").clientWidth - 120
+    this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile) => {
+      let maxWidth = document.getElementById("images").clientWidth - 120
+      const naturalRatio = naturalWidth / naturalHeight
+
+      if(mobile){
+        console.log("mobile == true")
+        maxWidth = document.getElementById("images").clientWidth
+        const maxHeight = document.getElementById("images").clientHeight
+
+        let futureWidth = maxWidth
+        let futureHeight = Math.round(futureWidth / naturalRatio)
+
+        console.log("before max out")
+        console.log(`futureWidth: ${futureWidth}, futureHeight: ${futureHeight}`)
+  
+        if(futureHeight > maxHeight){
+          futureHeight = maxHeight
+          futureWidth = Math.round(futureWidth * naturalRatio)
+        }
+        console.log(`containerHeight${containerHeight}`)
+        console.log(`futureWidth: ${futureWidth}, futureHeight: ${futureHeight}`)
+        console.log(`naturalHeight:${naturalHeight}, naturalWidth: ${naturalWidth}`)
+  
+        return {width: futureWidth, height: futureHeight}
+
+      }
       const sizeRatio = naturalHeight / containerHeight
-      const naturalRation = naturalWidth / naturalHeight
 
       let futureWidth = Math.round(naturalWidth / sizeRatio)
-      let futureHeight = Math.round(futureWidth / naturalRation)
+      let futureHeight = Math.round(futureWidth / naturalRatio)
 
       if(futureWidth > maxWidth){
         futureWidth = maxWidth
-        futureHeight = Math.round(maxWidth / naturalRation)
+        futureHeight = Math.round(maxWidth / naturalRatio)
       }
 
       futureHeight = futureHeight > containerHeight ? containerHeight : futureHeight
@@ -2319,23 +2342,18 @@ export class Provider extends React.Component{
                     imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                   }, 410);
                 }
-                // background.style.height = `${futureSize.height}px`
-                // foreground.style.height = `${futureSize.height}px`
+                background.style.height = `${futureSize.height}px`
+                foreground.style.height = `${futureSize.height}px`
+                // container.style.height = `${futureSize.height}px`
                 container.style.width = `${futureSize.width}px`
               }
 
               //IF MOBILES**************************************************************************************
               else{
+                futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
-                futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
-              
-                console.log("enlarge.naturalSize")
-                console.log(enlarge.background.naturalSize)
-  
-                console.log("file naturalSize")
-                console.log(file.naturalSize)
-
-                  // imageSelect.style.transition = "0.4s all"
+                console.log("future size")
+                console.log(futureSize)
                   setTimeout(() => {
                     // imageSelect.style.height = `${150}px`
                     imageSelect.classList.add("side-scroll")
@@ -2344,6 +2362,8 @@ export class Provider extends React.Component{
                 // background.style.height = `${futureSize.height}px`
                 // foreground.style.height = `${futureSize.height}px`
                 container.style.height = `${images.clientHeight - 150}px`
+                background.style.height = `${futureSize.height}px`
+                foreground.style.height = `${futureSize.height}px`
               }
 
               // background.style.opacity = 1

@@ -844,7 +844,7 @@ $border-main-color: #bbb;
     width: 0;
 }
 .enlarge-preview{
-    object-fit: contain;
+    // object-fit: contain;
     height: 100%;
     width: 100%;
 }
@@ -863,6 +863,7 @@ $border-main-color: #bbb;
         z-index: 9999;
         transform: translateY(-100%);
         transition: 0.3s all;
+        border-right: 1px solid;
     }
     .images-container{
         grid-row-start: 2;
@@ -921,22 +922,22 @@ $border-main-color: #bbb;
     .enlargeContainer > div {
         height: auto;
         max-width: 100%;
-        border-top: 1px solid;
     }
     #foreground, #background{
         // height: auto;
         max-height: 100%;
+        height: auto;
     }
     .enlargeContainer{
-        border-top: none;
+        border-top:1px solid;
         border-bottom: none;
         z-index:1;
     }
     .enlarge-preview{
-        object-fit: contain;
-        height: auto;
-        width: 100%;
-        max-height: 100%;
+        // object-fit: contain;
+        // height: auto;
+        // width: 100%;
+        // max-height: 100%;
     }
     .Navbar{
         position: relative;
