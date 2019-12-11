@@ -22,7 +22,7 @@
   "bugs": {
     "url": "https://github.com/andriussvilys/backend-svetaine/issues"
   },
-  "homepage": "https://github.com/andriussvilys/backend-svetaine#readme",
+  "homepage": "https://git.heroku.com/serene-shelf-07146.git",
   "dependencies": {
     "body-parser": "^1.19.0",
     "chokidar": "^3.3.0",
