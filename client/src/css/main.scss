@@ -588,11 +588,6 @@ $border-main-color: #bbb;
     // height: 1px;
     // width: 1px;
 }
-.foreground-transition{
-    // opacity: 1 !important;
-    transition: 0.4s all;
-}
-
 #background{
     z-index: 1;
     position: absolute;
@@ -604,6 +599,12 @@ $border-main-color: #bbb;
     // height: 1px;
     // width: 1px;
 }
+.foreground-transition{
+    // opacity: 1 !important;
+    transition: 0.4s all;
+}
+
+
 .background-image{
     // height: 100%;
     // width: 100%;

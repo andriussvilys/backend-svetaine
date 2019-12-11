@@ -17,6 +17,7 @@ export class Provider extends React.Component{
             columnOrder: ['column-1']
         },
         relatedArtwork: {},
+        mobile: document.documentElement.clientWidth < 721,
         DUMMYstate: {
             "fileData": {
               "files": {},
@@ -2316,7 +2317,11 @@ export class Provider extends React.Component{
         backgroundImage(5, true)
           .then(res => {
 
-              if(document.getElementById("root").clientWidth > 720){
+              if(!this.toggleMobile()){
+                if(document.getElementById('background').style.width !== "100%"){
+                  document.getElementById('background').style.width = "100%"
+                  document.getElementById('foreground').style.width = "100%"
+                }
                 futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
               
                 console.log("enlarge.naturalSize")
@@ -2610,6 +2615,7 @@ export class Provider extends React.Component{
                 .then(res => {
                     newState.showModal = false
                     newState.mobile = this.toggleMobile()
+                    window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
                     
                     this.setState(newState)
                 })

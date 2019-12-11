@@ -118,7 +118,7 @@ export default class TagsMenu extends React.Component{
     render(){
         return <div
         id="TagsMenu"
-        className="TagsMenu-container"
+        className={!this.props.context.state.mobile ? `TagsMenu-container show-menu-desktop` : `TagsMenu-container`}
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
             {this.props.children}
