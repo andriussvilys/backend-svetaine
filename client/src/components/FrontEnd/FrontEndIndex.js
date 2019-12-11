@@ -86,7 +86,13 @@ export default class FrontEndIndex extends React.Component{
                                     <Fragment>
                                         {this.context.state.enlarge ? 
                                             this.context.state.enlarge.foreground ?
-                                                <ArtworkInfo file={this.context.state.enlarge} artworkInfoData={this.context.state.artworkInfoData} loadEnlarge={this.context.loadEnlarge} hideArtworkInfo={this.context.hideArtworkInfo}/> 
+                                                <ArtworkInfo 
+                                                file={this.context.state.enlarge} 
+                                                artworkInfoData={this.context.state.artworkInfoData} 
+                                                loadEnlarge={this.context.loadEnlarge} 
+                                                hideArtworkInfo={this.context.hideArtworkInfo}
+                                                mobile={this.context.state.mobile}
+                                                /> 
                                             :null    
                                         : null
                                         }

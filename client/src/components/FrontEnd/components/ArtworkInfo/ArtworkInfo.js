@@ -115,7 +115,7 @@ const ArtworkInfo = (props) => {
             className="ArtworkInfo-container" 
             id="ArtworkInfo" 
             onClick={(e) => props.hideArtworkInfo(e)}
-            style={{width: `${props.file.currentWidth}px`}}
+            style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
         >
             <div className="ArtworkInfo-wrapper">
                 <div className="ArtworkInfo-container_text" >

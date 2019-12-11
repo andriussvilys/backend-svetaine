@@ -763,11 +763,6 @@ label {
   width: 100%;
 }
 
-.foreground-transition {
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
-}
-
 #background {
   z-index: 1;
   position: absolute;
@@ -782,6 +777,11 @@ label {
           align-items: center;
   height: 100%;
   width: 100%;
+}
+
+.foreground-transition {
+  -webkit-transition: 0.4s all;
+  transition: 0.4s all;
 }
 
 .imageSelect-FilePreview {
@@ -1214,6 +1214,7 @@ label {
     grid-row-end: 2;
     border-left: none;
     border-bottom: 1px solid;
+    height: 0px;
   }
   .enlargeContainer > div {
     height: auto;
