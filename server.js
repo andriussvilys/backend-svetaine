@@ -36,7 +36,7 @@ client.connect(err => {
 
 //Use routes
 app.use('/api/artworkInfo', artworkInfo);
-app.use('/api/familySetup', familySetup);
+app.use('/api/familysetup', familySetup);
 app.use('/api/themes', themes);
 app.use('/api/artworkFamilyList', artworkFamilyList);
 app.use('/api/categories', categories);
@@ -56,5 +56,3 @@ if(process.env.NODE_ENV === "production"){
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => {console.log(`server started on port ${port}`)});
-
-
