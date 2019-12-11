@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const artworkInfo = require('./routes/api/artworkInfo');
-const familySetup = require('./routes/api/familySetup');
+const familySetup = require('./routes/api/familysetup');
 const themes = require('./routes/api/themes');
 const artworkFamilyList = require('./routes/api/artworkFamilyList');
 const categories = require('./routes/api/categories');
