@@ -835,6 +835,9 @@ export class Provider extends React.Component{
                         newState.artworkOnDisplay = onDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
+
+                        let notInServer = Object.keys
+
                         resolve()
                     })
             })
