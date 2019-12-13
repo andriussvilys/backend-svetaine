@@ -72,9 +72,6 @@ export default class FrontEndIndex extends React.Component{
                                     collapseId="about-image"
                                 />
                                 <Contact />
-                                <Button className="TagsMenu-close" 
-                                    onClick={()=>this.context.showMenu()}
-                                />
                             </TagsMenu>
 
                             <div id="images" className="images-container">
