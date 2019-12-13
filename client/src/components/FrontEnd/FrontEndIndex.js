@@ -15,6 +15,7 @@ import Themes from './components/Themes/Themes'
 import ArtworkInfo from './components/ArtworkInfo/ArtworkInfo'
 import About from './components/About/About'
 import Contact from './components/About/Contact';
+import { useSwipeable } from "react-swipeable"
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -49,13 +50,18 @@ export default class FrontEndIndex extends React.Component{
                     </div>
         )
     }  
-
+    handlers = () =>  useSwipeable({
+        onSwipedLeft: () => {console.log("swiped left MAIN CONTAINER"); this.context.viewNext()},
+        onSwipedRight: () => {console.log("swiped right MAIN CONTAINER");this.context.viewPrev()},
+        // preventDefaultTouchmoveEvent: true,
+        trackMouse: true
+      });
     render(){
         return(
             <BrowserRouter>
                 <Context.Consumer>
                     {() => {
-                        return <div className="frontEndIndex-container" onresize={() => this.context.toggleMobile()}>
+                        return <div {...this.handlers} className="frontEndIndex-container" >
                             <TagsMenu context={this.context}>
                                 <Themes
                                     state={this.context.state}

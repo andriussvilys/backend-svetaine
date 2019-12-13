@@ -9,6 +9,7 @@ const ArtworkInfo = (props) => {
         if(props.file.foreground.seeAlso.length > 0){
             let seeAlsos = props.file.foreground.seeAlso.map(fileName => {
                 return <FilePreview 
+                    key={`ArtworkInfo-${fileName}`}
                     className="ArtworkInfo-preview"
                     containerClassName="ArtworkInfo-preview-container"
                     file={props.artworkInfoData[fileName]}
@@ -18,6 +19,7 @@ const ArtworkInfo = (props) => {
             if(props.file.previous.fileName !== props.file.foreground.fileName){
                 if(!props.file.foreground.seeAlso.includes(props.file.previous.fileName)){
                     const previous = <FilePreview 
+                            key={`ArtworkInfo-${props.file.previous.fileName}`}
                             className="ArtworkInfo-preview"
                             containerClassName="ArtworkInfo-preview-container"
                             file={props.file.previous}
@@ -77,8 +79,6 @@ const ArtworkInfo = (props) => {
                 }
                 else{return null}
             }
-
-            // if(props.file.foreground.artworkTitle){
                 return (
                     <div className="ArtworkInfo-Title">
                         {artworkTitle()}
@@ -86,16 +86,6 @@ const ArtworkInfo = (props) => {
                         {locationAndYear()}
                     </div>
                 )
-            // }
-
-            // else{
-            //     return (
-            //         <div className="ArtworkInfo-Title">
-            //             {artworkTitle()}
-            //             {artworkFamily()}
-            //             {locationAndYear()}
-            //         </div>
-            // )}
         }
 
     const descriptions = () => {

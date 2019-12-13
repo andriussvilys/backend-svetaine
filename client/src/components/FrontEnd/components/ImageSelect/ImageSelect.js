@@ -10,9 +10,10 @@ export default class ImageSelect extends React.Component{
     }
     createPreviewsALL = (data) => {
         if(data){
-            let previews = Object.keys(data).map(objName => {
+            let previews = Object.keys(data).map((objName, index) => {
                 if(data[objName].displayMain){
                     return <FilePreview 
+                    key={`imageSelect-${objName}`}
                     containerClassName="ImagesPreview--imageContainer"
                     className="imageSelect-FilePreview" 
                     // onClick={(e) => this.props.methods.loadEnlarge(e)}
@@ -21,7 +22,7 @@ export default class ImageSelect extends React.Component{
                     />
                 }
                 else{
-                return <div className="ImagesPreview--imageContainer__empty"></div>
+                return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty"></div>
                 }
             })
             return(

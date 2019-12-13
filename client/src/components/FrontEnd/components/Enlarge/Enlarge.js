@@ -1,47 +1,47 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
+import { useSwipeable } from "react-swipeable"
 
 
-export default class Enlarge extends React.Component{
+const Enlarge = (props) => {
 
-    renderNext = () => {
-        if(this.props.nextEnlarge){
+    const renderNext = () => {
+        if(props.nextEnlarge){
             return <FilePreview 
-            file={this.props.nextEnlarge} 
+            file={props.nextEnlarge} 
             containerClassName="imageSelect-Enlarge" 
             className="imageSelect-Enlarge" 
-            onClick={this.props.onClick}
+            onClick={props.onClick}
             />
         }
         else{ return null}
     }
-
-    pushNew = () => {
+    const pushNew = () => {
         return(
             <Fragment>
                 <div id="nextEnlarge" style={{position: "absolute", height: "100%", width: "100%", backgroundColor: "yellow", left: "-100%", transition: "0.2s all"}}>
-                    {this.renderNext()}
+                    {renderNext()}
                 </div>
 
                 <FilePreview 
                 id="foreground"
-                file={this.props.file.foreground} 
+                file={props.file.foreground} 
                 containerClassName="enlarge-container" 
                 className="enlarge-preview foreground-image" 
                 previewName="foreground-preview"
-                onClick={this.props.onClick}
+                onClick={props.onClick}
                 noWrapper={true}
                 />
 
-                {this.props.file.background ?
+                {props.file.background ?
                     <FilePreview 
                     id="background"
-                    file={this.props.file.background} 
+                    file={props.file.background} 
                     containerClassName="enlarge-container" 
                     className="enlarge-preview background-image" 
                     previewName="background-preview"
-                    onClick={this.props.onClick}
+                    onClick={props.onClick}
                     noWrapper={true}
                     />
                     :
@@ -50,7 +50,7 @@ export default class Enlarge extends React.Component{
             </Fragment>
         )
     }
-    createPreview = (source, imageName, fgId) => {
+    const createPreview = (source, imageName, fgId) => {
         
         return <FilePreview 
         id={fgId}
@@ -58,29 +58,37 @@ export default class Enlarge extends React.Component{
         containerClassName="enlarge-container" 
         className={`enlarge-preview ${imageName}`}
         previewName="foreground-preview"
-        onClick={this.props.closeEnlarge}
+        onClick={props.closeEnlarge}
         noWrapper={true}
         />
     }
 
-    render(){
+
+    const handlers = useSwipeable({
+        onSwipedLeft: () => {console.log("swiped left ENLARGE"); props.context.viewNext()},
+        onSwipedRight: () => {console.log("swiped right ENLARGE"); props.context.viewPrev()},
+        preventDefaultTouchmoveEvent: true,
+        trackMouse: true
+      });
         
         return(
             <div 
+            {...handlers}
             id="ArtworkInfo" 
-            onClick={(e) => this.props.closeEnlarge(e)}
+            onClick={(e) => props.closeEnlarge(e)}
             className="enlargeContainer" id="enlargeContainer">
                 <div className="enlarge-border"></div>
                 <Fragment>
                     <div id="foreground" className="foreground-transition">
-                        {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}
+                        {props.file ? createPreview(props.file.foreground, 'foreground-image', 'FG') : null}
                     </div>
 
                     <div id="background" className="foreground-transition">
-                        {this.props.file ? this.createPreview(this.props.file.background, 'background-image') : null}
+                        {props.file ? createPreview(props.file.background, 'background-image') : null}
                     </div>
                 </Fragment>
             </div>
         )
     }
-}
+
+export default Enlarge

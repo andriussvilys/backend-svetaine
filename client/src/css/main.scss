@@ -777,12 +777,11 @@ $border-main-color: #bbb;
     margin-bottom: 5px;
 }
 .ArtworkInfo-preview{
-    // border: 1px solid;
-    width: 100%;
     height: 100%;
     object-fit: cover;
     opacity: 0.4;
     transition: 0.4s all;
+    opacity: 1;
 }
 .ArtworkInfo-preview:hover{
     transition: none;
