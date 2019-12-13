@@ -1,47 +1,53 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
-import { useSwipeable } from "react-swipeable"
+import { Swipeable, useSwipeable } from "react-swipeable"
 
 
-const Enlarge = (props) => {
+export default class Enlarge extends React.Component{
 
-    const renderNext = () => {
-        if(props.nextEnlarge){
+    constructor(props){
+        super(props)
+        this.state = {
+        }
+    }
+
+    renderNext = () => {
+        if(this.props.nextEnlarge){
             return <FilePreview 
-            file={props.nextEnlarge} 
+            file={this.props.nextEnlarge} 
             containerClassName="imageSelect-Enlarge" 
             className="imageSelect-Enlarge" 
-            onClick={props.onClick}
+            onClick={this.props.onClick}
             />
         }
         else{ return null}
     }
-    const pushNew = () => {
+    pushNew = () => {
         return(
             <Fragment>
                 <div id="nextEnlarge" style={{position: "absolute", height: "100%", width: "100%", backgroundColor: "yellow", left: "-100%", transition: "0.2s all"}}>
-                    {renderNext()}
+                    {this.renderNext()}
                 </div>
 
                 <FilePreview 
                 id="foreground"
-                file={props.file.foreground} 
+                file={this.props.file.foreground} 
                 containerClassName="enlarge-container" 
                 className="enlarge-preview foreground-image" 
                 previewName="foreground-preview"
-                onClick={props.onClick}
+                onClick={this.props.onClick}
                 noWrapper={true}
                 />
 
-                {props.file.background ?
+                {this.props.file.background ?
                     <FilePreview 
                     id="background"
-                    file={props.file.background} 
+                    file={this.props.file.background} 
                     containerClassName="enlarge-container" 
                     className="enlarge-preview background-image" 
                     previewName="background-preview"
-                    onClick={props.onClick}
+                    onClick={this.props.onClick}
                     noWrapper={true}
                     />
                     :
@@ -50,7 +56,7 @@ const Enlarge = (props) => {
             </Fragment>
         )
     }
-    const createPreview = (source, imageName, fgId) => {
+    createPreview = (source, imageName, fgId) => {
         
         return <FilePreview 
         id={fgId}
@@ -58,37 +64,62 @@ const Enlarge = (props) => {
         containerClassName="enlarge-container" 
         className={`enlarge-preview ${imageName}`}
         previewName="foreground-preview"
-        onClick={props.closeEnlarge}
+        onClick={this.props.closeEnlarge}
         noWrapper={true}
         />
     }
-
-
-    const handlers = useSwipeable({
-        onSwipedLeft: () => {console.log("swiped left ENLARGE"); props.context.viewNext()},
-        onSwipedRight: () => {console.log("swiped right ENLARGE"); props.context.viewPrev()},
-        preventDefaultTouchmoveEvent: true,
-        trackMouse: true
-      });
-        
+    
+    render(){
         return(
-            <div 
-            {...handlers}
-            id="ArtworkInfo" 
-            onClick={(e) => props.closeEnlarge(e)}
-            className="enlargeContainer" id="enlargeContainer">
-                <div className="enlarge-border"></div>
-                <Fragment>
-                    <div id="foreground" className="foreground-transition">
-                        {props.file ? createPreview(props.file.foreground, 'foreground-image', 'FG') : null}
-                    </div>
+                <div 
+                onClick={(e) => this.props.closeEnlarge(e)}
+                onTouchStart={(e) => {
+                    const touches = e.touches
+                    const touch = {"x": touches[0].clientX, "y": touches[0].clientY}
+                    this.setState({touch})
+                }}
+                onTouchEnd={(e) => {
+                    console.log(this.state.touch)
+                    console.log(e.touches[0])
+                
+                    if(Math.abs(this.state.touch.x - e.touches[0].clientX) > 30){
+                        if(this.state.touch.x > e.touches[0].clientX){
+                            this.props.context.viewPrev()
+                        }
+                        else{this.props.context.viewNext()}
+                        return
+                    }
 
-                    <div id="background" className="foreground-transition">
-                        {props.file ? createPreview(props.file.background, 'background-image') : null}
-                    </div>
-                </Fragment>
-            </div>
+                    if(Math.abs(this.state.touch.y - e.touches[0].clientY) > 30){
+                        if(this.state.touch.y < e.touches[0].clientY){
+                            console.log("SWIPE DOWN")
+                            if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
+                                 return document.getElementById("ArtworkInfo").classList.remove("info-up")
+                            }
+                            if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+                                return
+                            }
+                            else{
+                                document.getElementById("TagsMenu").classList.add("show-menu")
+                            }
+                        }
+                        else{
+                            document.getElementById("ArtworkInfo").classList.add("info-up")
+                        }
+                    }
+                }
+                }
+                className="enlargeContainer" id="enlargeContainer">
+                    <Fragment>
+                        <div id="foreground" className="foreground-transition">
+                            {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}
+                        </div>
+
+                        <div id="background" className="foreground-transition">
+                            {this.props.file ? this.createPreview(this.props.file.background, 'background-image') : null}
+                        </div>
+                    </Fragment>
+                </div>
         )
     }
-
-export default Enlarge
+    }

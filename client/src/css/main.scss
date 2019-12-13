@@ -859,6 +859,11 @@ $border-main-color: #bbb;
 .about-image{
     width: 50%;
 }
+.TagsMenu-close{
+    width: 100%;
+    position: sticky;
+    bottom: 0;
+}
 
 
 @media only screen and (max-width: 720px) {

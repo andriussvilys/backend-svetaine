@@ -128,6 +128,22 @@ export default class TagsMenu extends React.Component{
                 `TagsMenu-container TagsMenu-max` : 
             `TagsMenu-container`
         }
+        onTouchStart={(e) => {
+            const touches = e.touches
+            const touch = {"y": touches[0].clientY}
+            this.setState({touch})
+        }}
+        onTouchEnd={(e) => {
+            console.log(this.state.touch)
+            console.log(e.touches[0])
+
+            if(Math.abs(this.state.touch.y - e.touches[0].clientY) > 30){
+                if(this.state.touch.y > e.touches[0].clientY){
+                    document.getElementById("TagsMenu").classList.remove("show-menu")
+                }
+            }
+        }
+        }
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
             {this.props.children}

@@ -467,24 +467,16 @@ export class Provider extends React.Component{
       const naturalRatio = naturalWidth / naturalHeight
 
       if(mobile){
-        console.log("mobile == true")
         maxWidth = document.getElementById("images").clientWidth
         const maxHeight = document.getElementById("images").clientHeight - 150
 
         let futureWidth = maxWidth
         let futureHeight = Math.round(futureWidth / naturalRatio)
-
-        console.log("before max out")
-        console.log(`futureWidth: ${futureWidth}, futureHeight: ${futureHeight}`)
   
         if(futureHeight > maxHeight){
-          console.log("futureHeight too much")
           futureHeight = maxHeight
           futureWidth = Math.round(futureHeight * naturalRatio)
         }
-        console.log(`containerHeight${containerHeight}`)
-        console.log(`futureWidth: ${futureWidth}, futureHeight: ${futureHeight}`)
-        console.log(`naturalHeight:${naturalHeight}, naturalWidth: ${naturalWidth}`)
   
         return {width: futureWidth, height: futureHeight}
 
@@ -559,12 +551,6 @@ export class Provider extends React.Component{
                   document.getElementById('foreground').style.width = "100%"
                 }
                 futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
-              
-                console.log("enlarge.naturalSize")
-                console.log(enlarge.background.naturalSize)
-  
-                console.log("file naturalSize")
-                console.log(file.naturalSize)
 
                 container.style.height = "100%"
                 
@@ -596,8 +582,6 @@ export class Provider extends React.Component{
               else{
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
-                console.log("future size")
-                console.log(futureSize)
                   setTimeout(() => {
                     // imageSelect.style.height = `${150}px`
                     imageSelect.classList.add("side-scroll")
@@ -733,6 +717,11 @@ export class Provider extends React.Component{
         return false
       }
     }
+    this.onTouchStart= (e) => {
+      const touches = e.touches
+      const touch = {"x": touches[0].clientX, "y": touches[0].clientY}
+      this.setState({touch})
+  }
 
 }//END OF CONTSTRUCTOR
 
@@ -887,6 +876,7 @@ export class Provider extends React.Component{
 
             showMenu: this.showMenu,
             toggleMobile: this.toggleMobile,
+            onTouchStart: this.onTouchStart,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

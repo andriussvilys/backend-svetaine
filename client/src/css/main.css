@@ -1127,6 +1127,13 @@ label {
   width: 50%;
 }
 
+.TagsMenu-close {
+  width: 100%;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
+}
+
 @media only screen and (max-width: 720px) {
   .frontEndIndex-container {
     -ms-grid-columns: 100%;
