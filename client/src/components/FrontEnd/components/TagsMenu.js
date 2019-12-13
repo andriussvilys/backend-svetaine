@@ -14,8 +14,8 @@ export default class TagsMenu extends React.Component{
      * @param title: takes a string and spreads it into separate divs
      */
     spreadLetters = (title) => {
-        let letters = Array.from(title).map(letter => {
-            return <div className="title-letter">{letter}</div>
+        let letters = Array.from(title).map((letter, index) => {
+            return <div key={`${title}-leter-${index}`} className="title-letter">{letter}</div>
         })
         return letters
     }
@@ -51,6 +51,7 @@ export default class TagsMenu extends React.Component{
             if(index === subcategoriesList.length - 1){
                 return(
                     <Accordion 
+                    key={`TagsMenu-${index}`}
                     title={this.spreadLetters(subName)}
                     // title={subName} 
                     level="subcategory-last"
@@ -68,6 +69,7 @@ export default class TagsMenu extends React.Component{
             }
             return(
                 <Accordion 
+                key={`TagsMenu-${index}`}
                 title={this.spreadLetters(subName)}
                 // title={subName} 
                 level="subcategory"
@@ -92,10 +94,11 @@ export default class TagsMenu extends React.Component{
      */
     categoryBlock = (data) => {
         
-        let categories = data.map(obj => {
+        let categories = data.map((obj, index) => {
             const toggle = Object.keys(obj.subcategory).length > 0
         return (
-            <Accordion 
+            <Accordion
+            key={`TagsMenu-category-${index}`} 
             // title={obj.category} 
             title={this.spreadLetters(obj.category)}
             checkbox={<input 
@@ -124,6 +127,22 @@ export default class TagsMenu extends React.Component{
                 this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
                 `TagsMenu-container TagsMenu-max` : 
             `TagsMenu-container`
+        }
+        onTouchStart={(e) => {
+            const touches = e.touches
+            const touch = {"y": touches[0].clientY}
+            this.setState({touch})
+        }}
+        onTouchEnd={(e) => {
+            console.log(this.state.touch)
+            console.log(e.touches[0])
+
+            if(Math.abs(this.state.touch.y - e.touches[0].clientY) > 30){
+                if(this.state.touch.y > e.touches[0].clientY){
+                    document.getElementById("TagsMenu").classList.remove("show-menu")
+                }
+            }
+        }
         }
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
