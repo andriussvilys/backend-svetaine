@@ -57,7 +57,7 @@ const ArtworkInfo = (props) => {
     const artworkTitle = () => {
 
             const artworkFamily = () => {
-                if(props.file.foreground.artworkFamily === "none"){
+                if(props.file.foreground.artworkFamily === "none" || "about"){
                     return null
                 }
                 return <div 

@@ -13,6 +13,8 @@ import Enlarge from './components/Enlarge/Enlarge'
 import Nav from './components/Nav/Nav'
 import Themes from './components/Themes/Themes'
 import ArtworkInfo from './components/ArtworkInfo/ArtworkInfo'
+import About from './components/About/About'
+import Contact from './components/About/Contact';
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -59,6 +61,11 @@ export default class FrontEndIndex extends React.Component{
                                     state={this.context.state}
                                     context={this.context}
                                 />
+                                <About 
+                                    loadEnlarge={this.context.loadEnlarge}
+                                    collapseId="about-image"
+                                />
+                                <Contact />
                                 {this.props ? this.adminButtons(this.props) : null}
                             </TagsMenu>
 

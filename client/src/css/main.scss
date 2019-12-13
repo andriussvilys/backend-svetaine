@@ -480,13 +480,14 @@ $border-main-color: #bbb;
 .Nav-button{
     // position: absolute;
     width: 4vw;
+    height: 45px;
     min-width: 45px;
     cursor: pointer;
     position: absolute;
+    bottom: 50px;
 }
 .text-sideways{
     writing-mode: vertical-lr;
-    bottom: 0;
 }
 .Nav-infoButton{
     position: absolute;
@@ -503,7 +504,7 @@ $border-main-color: #bbb;
     left: 0;
 }
 .Nav-button_prev{
-    top: 36px;
+    top: 45px;
     left: 0;
 }
 .images-container{
@@ -772,6 +773,8 @@ $border-main-color: #bbb;
     align-content: center;
     align-items: center;
     display: flex;
+    margin-left: 10px;
+    margin-bottom: 5px;
 }
 .ArtworkInfo-preview{
     // border: 1px solid;
@@ -847,6 +850,16 @@ $border-main-color: #bbb;
     height: 100%;
     width: 100%;
 }
+.about-container{
+    width: 250;
+    position: relative;
+    left: -10px;
+    display: flex;
+    justify-content: center;
+}
+.about-image{
+    width: 50%;
+}
 
 
 @media only screen and (max-width: 720px) {
@@ -863,6 +876,22 @@ $border-main-color: #bbb;
         transform: translateY(-100%);
         transition: 0.3s all;
         border-right: 1px solid;
+        max-height: calc(100vh - 7px);
+    }
+    .TagsMenu-max{
+        height: calc(100vh - 150px - 50px);
+    }
+    .TagsMenu-Card-Title{
+        height: 50px;
+        align-items: center;
+    }
+    .TagsMenu-checkbox_subcategory, .TagsMenu-checkbox {
+        top: 17px;
+    }
+    .tagsMenu-listItem{
+        display: flex;
+        align-items: center;
+        height: 50px;
     }
     .images-container{
         grid-row-start: 2;
@@ -974,6 +1003,7 @@ $border-main-color: #bbb;
     }
     .ArtworkInfo-container{
         padding-bottom: 10px;
+        min-height: 151px;
         max-height: 100%;
         overflow-y: auto;
         border-left: none;
@@ -987,6 +1017,16 @@ $border-main-color: #bbb;
     .images-container{
         display: grid;
         grid-template-rows: max-content 1fr;
+    }
+    .about-container{
+        width: 100%;
+        position: relative;
+        left: -10px;
+        display: flex;
+        justify-content: center;
+    }
+    .about-image{
+        width: 150px;
     }
   }
 

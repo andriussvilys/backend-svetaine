@@ -16,7 +16,7 @@ const Accordion = (props) => {
                     {props.title}
                 </BootstrapAccordion.Toggle>
                 </Card.Header>
-                <BootstrapAccordion.Collapse eventKey="0">
+                <BootstrapAccordion.Collapse id={props.collapseId} eventKey="0">
                 <Card.Body>
                     {props.children}
                 </Card.Body>
