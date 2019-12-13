@@ -1,6 +1,5 @@
 import React from 'react'
 import Accordion from '../Accordion'
-import Button from 'react-bootstrap/Button'
 
 const Themes = (props) => {
 
@@ -16,6 +15,7 @@ const Themes = (props) => {
     // }
 
     const renderList = () => {
+        
         const allThemes = Object.keys(props.state.themesOnDisplay)
         // const allThemes = themesOnDisplay()
         let renderList = allThemes.map(theme => {

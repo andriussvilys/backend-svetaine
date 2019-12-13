@@ -40,7 +40,7 @@ const Accordion = (props) => {
                 </div>
                 
 
-                <BootstrapAccordion.Collapse eventKey="0">
+                <BootstrapAccordion.Collapse id={props.collapseId} eventKey="0">
                 <Card.Body className={`${props.level}-collapse`}>
                     {props.children}
                 </Card.Body>

@@ -615,16 +615,17 @@ label {
 
 .Nav-button {
   width: 4vw;
+  height: 45px;
   min-width: 45px;
   cursor: pointer;
   position: absolute;
+  bottom: 50px;
 }
 
 .text-sideways {
   -webkit-writing-mode: vertical-lr;
       -ms-writing-mode: tb-lr;
           writing-mode: vertical-lr;
-  bottom: 0;
 }
 
 .Nav-infoButton {
@@ -650,7 +651,7 @@ label {
 }
 
 .Nav-button_prev {
-  top: 36px;
+  top: 45px;
   left: 0;
 }
 
@@ -1017,6 +1018,8 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin-left: 10px;
+  margin-bottom: 5px;
 }
 
 .ArtworkInfo-preview {
@@ -1108,6 +1111,22 @@ label {
   width: 100%;
 }
 
+.about-container {
+  width: 250;
+  position: relative;
+  left: -10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.about-image {
+  width: 50%;
+}
+
 @media only screen and (max-width: 720px) {
   .frontEndIndex-container {
     -ms-grid-columns: 100%;
@@ -1127,6 +1146,28 @@ label {
     -webkit-transition: 0.3s all;
     transition: 0.3s all;
     border-right: 1px solid;
+    max-height: calc(100vh - 7px);
+  }
+  .TagsMenu-max {
+    height: calc(100vh - 150px - 50px);
+  }
+  .TagsMenu-Card-Title {
+    height: 50px;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .TagsMenu-checkbox_subcategory, .TagsMenu-checkbox {
+    top: 17px;
+  }
+  .tagsMenu-listItem {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    height: 50px;
   }
   .images-container {
     -ms-grid-row: 2;
@@ -1261,6 +1302,7 @@ label {
   }
   .ArtworkInfo-container {
     padding-bottom: 10px;
+    min-height: 151px;
     max-height: 100%;
     overflow-y: auto;
     border-left: none;
@@ -1277,6 +1319,20 @@ label {
     -ms-grid-rows: max-content 1fr;
         grid-template-rows: -webkit-max-content 1fr;
         grid-template-rows: max-content 1fr;
+  }
+  .about-container {
+    width: 100%;
+    position: relative;
+    left: -10px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .about-image {
+    width: 150px;
   }
 }
 /*# sourceMappingURL=main.css.map */

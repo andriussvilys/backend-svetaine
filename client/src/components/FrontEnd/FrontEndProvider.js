@@ -644,7 +644,7 @@ export class Provider extends React.Component{
     this.loadEnlarge = (e, id) => {
       e.stopPropagation()
         const file = this.state.artworkInfoData[id]
-
+        
         this.animateEnlarge(file)
   
   }
