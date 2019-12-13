@@ -133,12 +133,12 @@ export default class TagsMenu extends React.Component{
             const touch = {"y": touches[0].clientY}
             this.setState({touch})
         }}
+        onTouchMove={(e) => {
+            this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
+        }}
         onTouchEnd={(e) => {
-            console.log(this.state.touch)
-            console.log(e.touches[0])
-
-            if(Math.abs(this.state.touch.y - e.touches[0].clientY) > 30){
-                if(this.state.touch.y > e.touches[0].clientY){
+            if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
+                if(this.state.touch.y > this.state.touch.endY){
                     document.getElementById("TagsMenu").classList.remove("show-menu")
                 }
             }

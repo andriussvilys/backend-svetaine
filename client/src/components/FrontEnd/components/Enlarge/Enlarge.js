@@ -78,21 +78,21 @@ export default class Enlarge extends React.Component{
                     const touch = {"x": touches[0].clientX, "y": touches[0].clientY}
                     this.setState({touch})
                 }}
-                onTouchEnd={(e) => {
-                    console.log(this.state.touch)
-                    console.log(e.touches[0])
-                
-                    if(Math.abs(this.state.touch.x - e.touches[0].clientX) > 30){
-                        if(this.state.touch.x > e.touches[0].clientX){
+                onTouchMove={(e) => {
+                    this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
+                }}
+                onTouchEnd={() => {
+                    console.log(Math.abs(this.state.touch.x - this.state.touch.endX))
+                    if(Math.abs(this.state.touch.x - this.state.touch.endX) > 30){
+                        if(this.state.touch.x > this.state.touch.endX){
                             this.props.context.viewPrev()
                         }
                         else{this.props.context.viewNext()}
                         return
                     }
 
-                    if(Math.abs(this.state.touch.y - e.touches[0].clientY) > 30){
-                        if(this.state.touch.y < e.touches[0].clientY){
-                            console.log("SWIPE DOWN")
+                    if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
+                        if(this.state.touch.y < this.state.touch.endY){
                             if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
                                  return document.getElementById("ArtworkInfo").classList.remove("info-up")
                             }
