@@ -563,12 +563,6 @@ label {
   opacity: 0;
 }
 
-.move-right {
-  -webkit-transform: translateX(-100%);
-          transform: translateX(-100%);
-  opacity: 0;
-}
-
 .show-menu {
   -webkit-transform: translateY(0) !important;
           transform: translateY(0) !important;

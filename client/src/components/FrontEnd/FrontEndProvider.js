@@ -442,22 +442,32 @@ export class Provider extends React.Component{
     this.viewNext = () => {
           const familyName = this.state.enlarge.foreground.artworkFamily
           if(!familyName){
+            console.log("no famil")
               return
           }
-          // let currentIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf
           let currentIndex = this.state.enlarge.foreground.familyDisplayIndex
-          // if(!currentIndex || currentIndex < 0){
-          //   currentIndex = 0
-          //   let newEnlarge = {...this.state.enlarge}
-          //   newEnlarge.backupIndex
-          //   this.setState.enlarge.backupIndex
-          // }
           const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
-          let nextIndex = currentIndex +1 > familyLength -1 ? 0 : currentIndex+1
-          const nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
-          const nextPic = this.state.artworkInfoData[nextPicName]
-          if(!nextPic){
-              return
+          let nextIndex = currentIndex+1 > familyLength-1 ? 0 : currentIndex+1
+          console.log(`nextIndex before filter ${nextIndex}`)
+          let nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
+          let nextPic = this.state.artworkInfoData[nextPicName]
+          if(!nextPic || familyLength <= 1 || familyName === "none" || currentIndex === familyLength - 1){
+            if( currentIndex === familyLength - 1){
+              console.log(nextIndex)
+              console.log('next index would be 0')
+            }
+            const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
+            let onDisplay = Object.keys(this.state.artworkOnDisplay)
+            let indexes = allVisible.filter(id => onDisplay.includes(id))
+            console.log(indexes)
+            currentIndex = indexes.indexOf(this.state.enlarge.background.fileName)
+            nextIndex = currentIndex+1 > indexes.length-1 ? 0 : currentIndex+1
+            nextPicName = indexes[nextIndex]
+            console.log(`currentIndex: ${currentIndex}`)
+            console.log(indexes.length-1)
+            console.log(`nextIndex: ${nextIndex}`)
+            console.log(nextPicName)
+            nextPic = this.state.artworkInfoData[nextPicName]
           }
           this.animateEnlarge(nextPic)
     }

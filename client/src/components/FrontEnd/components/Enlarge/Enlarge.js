@@ -82,7 +82,6 @@ export default class Enlarge extends React.Component{
                     this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
                 }}
                 onTouchEnd={() => {
-                    console.log(Math.abs(this.state.touch.x - this.state.touch.endX))
                     if(Math.abs(this.state.touch.x - this.state.touch.endX) > 30){
                         if(this.state.touch.x > this.state.touch.endX){
                             this.props.context.viewPrev()
