@@ -867,6 +867,9 @@ $border-main-color: #bbb;
 
 
 @media only screen and (max-width: 720px) {
+    body{
+        overscroll-behavior: contain;
+    }
     .frontEndIndex-container{
         grid-template-columns: 100%;
         grid-template-rows: auto 1fr 45px;

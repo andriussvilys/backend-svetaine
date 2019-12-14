@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
-import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
-import { Swipeable, useSwipeable } from "react-swipeable"
 
 
 export default class Enlarge extends React.Component{
