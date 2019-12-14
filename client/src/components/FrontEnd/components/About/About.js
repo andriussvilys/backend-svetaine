@@ -1,24 +1,20 @@
 import React from 'react'
-import Accordion from '../Accordion'
 
 const About = (props) => {
     return(
-        <Accordion
-        title="About"
-        toggle="0" 
-        className="TagsMenu-Accordion-label"
-        collapseId="about-collapse"
-    >
-        <div className="about-container">
-            <img 
-                className="about-image"
-                src="/uploads/portrait.jpg" 
-                alt="self portrai" 
-                id="portrait.jpg"
-                onClick={(e) => props.loadEnlarge(e, "portrait.jpg")}
-            />
+        <div 
+            className="tagsMenu-Button tagsMenu-Button_subcategory btn btn-link about-container"
+            onClick={(e) => {
+                props.loadEnlarge(e, "portrait.jpg");
+                setTimeout(() => {
+                    if(document.getElementById("ArtworkInfo")){
+                        document.getElementById("ArtworkInfo").classList.add("info-up")
+                    }
+                }, 600)
+            }}
+        >
+            <span>ABOUT</span>
         </div>
-        </Accordion>
     )
 }
 

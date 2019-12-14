@@ -146,8 +146,11 @@ export default class TagsMenu extends React.Component{
             this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
         }}
         onTouchEnd={(e) => {
+            //check if any accordions are open
+            const collapseShow = Array.from(document.getElementsByClassName("collapse")).filter(collapse => collapse.classList.contains("show"))
+
             if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
-                if(this.state.touch.y > this.state.touch.endY){
+                if(this.state.touch.y > this.state.touch.endY && collapseShow.length > 0){
                     document.getElementById("TagsMenu").classList.remove("show-menu")
                 }
             }
