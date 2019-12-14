@@ -1133,6 +1133,8 @@ label {
     overscroll-behavior: contain;
     overflow: hidden;
     height: 100%;
+    position: absolute;
+    bottom: 0;
   }
   #root {
     height: 100%;
