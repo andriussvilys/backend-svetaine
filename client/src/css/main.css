@@ -1132,6 +1132,13 @@ label {
   body {
     overscroll-behavior: contain;
     overflow: hidden;
+    height: 100%;
+  }
+  #root {
+    height: 100%;
+  }
+  .app-container {
+    height: 100%;
   }
   .frontEndIndex-container {
     -ms-grid-columns: 100%;

@@ -870,6 +870,13 @@ $border-main-color: #bbb;
     body{
         overscroll-behavior: contain;
         overflow: hidden;
+        height: 100%;
+    }
+    #root{
+        height: 100%;
+    }
+    .app-container{
+        height: 100%;
     }
     .frontEndIndex-container{
         grid-template-columns: 100%;
