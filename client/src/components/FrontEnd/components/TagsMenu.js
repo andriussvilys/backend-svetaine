@@ -150,7 +150,7 @@ export default class TagsMenu extends React.Component{
             const collapseShow = Array.from(document.getElementsByClassName("collapse")).filter(collapse => collapse.classList.contains("show"))
 
             if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
-                if(this.state.touch.y > this.state.touch.endY && collapseShow.length > 0){
+                if(this.state.touch.y > this.state.touch.endY && collapseShow.length === 0){
                     document.getElementById("TagsMenu").classList.remove("show-menu")
                 }
             }
