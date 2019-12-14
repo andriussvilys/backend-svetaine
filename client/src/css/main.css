@@ -614,6 +614,7 @@ label {
   cursor: pointer;
   position: absolute;
   bottom: 50px;
+  margin: 0 !important;
 }
 
 .text-sideways {
@@ -1303,11 +1304,23 @@ label {
     height: 100%;
     width: 55px;
     position: initial;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .Nav-button_next {
     -webkit-box-ordinal-group: 4;
         -ms-flex-order: 3;
             order: 3;
+  }
+  .nav-menuButton {
+    padding: 0;
   }
   .text-sideways {
     -webkit-writing-mode: initial;
@@ -1316,7 +1329,7 @@ label {
   }
   .ArtworkInfo-container {
     padding-bottom: 10px;
-    min-height: 151px;
+    min-height: 121px;
     max-height: 100%;
     overflow-y: auto;
     border-left: none;
@@ -1347,6 +1360,9 @@ label {
   }
   .about-image {
     width: 150px;
+  }
+  .image-hide {
+    display: none;
   }
 }
 /*# sourceMappingURL=main.css.map */

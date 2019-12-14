@@ -4,11 +4,6 @@ import Button from 'react-bootstrap/Button';
 
 export default class FamilyPreview extends React.Component{
 
-    constructor(props){
-        super(props);
-        this.state = {familyList: []}
-    }
-
     /**
      * @param fileType
      * @param file
@@ -49,7 +44,7 @@ export default class FamilyPreview extends React.Component{
         }
         if(fileType.match("application/pdf")){
             return(
-                    <iframe title={key} key={key} src={previewSource} style={{width: "100%"}}></iframe>
+                    <iframe title={`iframe-${key}`} key={key} src={previewSource} style={{width: "100%"}}></iframe>
             )
         }
     }

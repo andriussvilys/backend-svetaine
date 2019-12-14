@@ -314,7 +314,6 @@ export class Provider extends React.Component{
       //DESKTOP
       else{
         let mainContainer = document.getElementById("images")
-        const currentWidth = mainContainer.clientWidth
         if(this.state.enlarge){
           //if menu closed
           if(document.getElementById("TagsMenu").classList.contains("show-menu-desktop")){
@@ -478,7 +477,7 @@ export class Provider extends React.Component{
 
       if(mobile){
         maxWidth = document.getElementById("images").clientWidth
-        const maxHeight = document.getElementById("images").clientHeight - 150
+        const maxHeight = document.getElementById("images").clientHeight - 120
 
         let futureWidth = maxWidth
         let futureHeight = Math.round(futureWidth / naturalRatio)
@@ -593,13 +592,12 @@ export class Provider extends React.Component{
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
                   setTimeout(() => {
-                    // imageSelect.style.height = `${150}px`
                     imageSelect.classList.add("side-scroll")
                   }, 410);
                 
                 // background.style.height = `${futureSize.height}px`
                 // foreground.style.height = `${futureSize.height}px`
-                container.style.height = `${images.clientHeight - 150}px`
+                container.style.height = `${images.clientHeight - 120}px`
                 background.style.height = `${futureSize.height}px`
                 foreground.style.height = `${futureSize.height}px`
                 background.style.width = `${futureSize.width}px`
@@ -622,6 +620,7 @@ export class Provider extends React.Component{
                 let newState = {...this.state}
                 newState.enlarge.foreground = file
                 newState.enlarge.currentWidth = futureSize.width
+                newState.enlarge.currentHeight = images.clientHeight - 120
                 newState.enlarge.open = true
                 this.setState(newState, () => {
                   foreground.style.opacity = 1
@@ -834,9 +833,6 @@ export class Provider extends React.Component{
                         newState.artworkOnDisplay = onDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
-
-                        let notInServer = Object.keys
-
                         resolve()
                     })
             })

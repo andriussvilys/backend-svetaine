@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import Button from 'react-bootstrap/Button'
 import { Context } from './FrontEndProvider';
-import { BrowserRouter,  Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import Modal from 'react-bootstrap/Modal'
 import Spinner from 'react-bootstrap/Spinner'
 // import {Context} from '../Provider'
@@ -81,7 +81,6 @@ export default class FrontEndIndex extends React.Component{
                                 <Enlarge 
                                     nextEnlarge={this.context.state.nextEnlarge}
                                     file={this.context.state.enlarge}
-                                    closeEnlarge={this.context.closeEnlarge}
                                     onClick={this.context.closeEnlarge}
                                     artworkInfoData={this.context.state.artworkInfoData}
                                     loadEnlarge={this.context.loadEnlarge}

@@ -1,7 +1,6 @@
 import React from 'react'
 import { Context } from '../../Provider';
 import Accordion from './Accordion';
-import { Button } from 'react-bootstrap';
 
 
 export default class TagsMenu extends React.Component{
@@ -37,7 +36,10 @@ export default class TagsMenu extends React.Component{
             </li>
         })
 
-        let list = <ul className="tagsMenu-list">{block}</ul>
+        let list = <ul 
+            className="tagsMenu-list"
+            onTouchEnd={(e) => {e.stopPropagation()}}
+            >{block}</ul>
         return list
     }
 
@@ -128,6 +130,13 @@ export default class TagsMenu extends React.Component{
                 `TagsMenu-container TagsMenu-max` : 
             `TagsMenu-container`
         }
+        style={{height: `${
+            this.props.context.state.mobile ?
+                this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
+                `${this.props.context.state.enlarge.currentHeight + 1}px`:
+                `auto`:
+            `auto`
+        }`}}
         onTouchStart={(e) => {
             const touches = e.touches
             const touch = {"y": touches[0].clientY}

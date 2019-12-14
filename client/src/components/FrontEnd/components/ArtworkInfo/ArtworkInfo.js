@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import FilePreview from '../FilePreview'
 
 const ArtworkInfo = (props) => {

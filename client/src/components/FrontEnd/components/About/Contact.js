@@ -1,6 +1,5 @@
 import React from 'react'
 import Accordion from '../Accordion'
-import Button from 'react-bootstrap/Button'
 
 const Contact = (props) => {
     return(
@@ -11,7 +10,7 @@ const Contact = (props) => {
         collapseId="about-collapse"
     >
         <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
-        <a href="https://www.instagram.com/istmblr/" target="_blank">instagram</a>
+        <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
         </Accordion>
     )
 }

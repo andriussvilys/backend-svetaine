@@ -1,15 +1,9 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Context } from './Provider';
-import FileUpdate from './FileUpdate'
-import EditDetailContainer from './EditPage/EditDetailContainer'
-import DnDListContainer from './DragAndDropList/DnDListContainer'
-import FilePreview from './FileUpload/FilePreview';
-import FamilyList from './FileUpload/FamilyList';
+import EditDetailContainer from './EditPage/EditDetailContainer';
 import ServerFileUpdate from './EditPage/ServerFileUpdate';
-import FamilyEditor from './EditPage/FamilyEditor/FamilyEditor';
 import Accordion from './Accordion';
-import DropDownList from './DropDownList'
 import FamilyInfo from './FamilyInfo';
 import ChangeIndex from './DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
 import BootstrapModal from './BootstrapModal';

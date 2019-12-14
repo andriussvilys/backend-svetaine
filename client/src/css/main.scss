@@ -485,6 +485,7 @@ $border-main-color: #bbb;
     cursor: pointer;
     position: absolute;
     bottom: 50px;
+    margin: 0 !important;
 }
 .text-sideways{
     writing-mode: vertical-lr;
@@ -1011,16 +1012,22 @@ $border-main-color: #bbb;
         height: 100%;
         width: 55px;
         position: initial;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .Nav-button_next{
         order: 3;
+    }
+    .nav-menuButton{
+        padding: 0;
     }
     .text-sideways{
         writing-mode: initial;
     }
     .ArtworkInfo-container{
         padding-bottom: 10px;
-        min-height: 151px;
+        min-height: 121px;
         max-height: 100%;
         overflow-y: auto;
         border-left: none;
@@ -1044,6 +1051,9 @@ $border-main-color: #bbb;
     }
     .about-image{
         width: 150px;
+    }
+    .image-hide{
+        display: none;
     }
   }
 

@@ -1,6 +1,5 @@
 import React from 'react'
 import Accordion from '../Accordion'
-import Button from 'react-bootstrap/Button'
 
 const About = (props) => {
     return(

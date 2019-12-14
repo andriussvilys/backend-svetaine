@@ -1,8 +1,5 @@
 import React from 'react';
-// import Accordion from 'react-bootstrap/Accordion';
-import Accordion from '../Accordion'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import Accordion from '../Accordion';
 import AddNew from '../AddNew';
 
 export default class DropDownList extends React.Component{
