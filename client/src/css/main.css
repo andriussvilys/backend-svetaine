@@ -1131,6 +1131,7 @@ label {
 @media only screen and (max-width: 720px) {
   body {
     overscroll-behavior: contain;
+    overflow: hidden;
   }
   .frontEndIndex-container {
     -ms-grid-columns: 100%;
