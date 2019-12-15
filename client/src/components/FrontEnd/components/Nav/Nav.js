@@ -6,11 +6,12 @@ const Nav = (props) => {
             if(!props.context.state.enlarge.open){
                 return false
             }
-            if(props.context.state.enlarge.background.artworkFamily){
-                return props.context.state.relatedArtwork[props.context.state.enlarge.background.artworkFamily].column.fileIds.length > 1
-            }
-            else{return false}
+            // if(props.context.state.enlarge.background.artworkFamily){
+            //     // return props.context.state.relatedArtwork[props.context.state.enlarge.background.artworkFamily].column.fileIds.length > 1
+            // }
+            else{return true}
         }
+        else{return false}
     }
     const showInfo = () => {
         if(props.context.state.enlarge){
@@ -43,10 +44,6 @@ const Nav = (props) => {
                                     >
                                         <img alt="view previous" src="/icons/point-left.png"/>
                                     </button>
-                                    {/* {props.context.toggleMobile() ?                                     
-                                        :
-                                        null
-                                    } */}
                                         <div 
                                             className="Nav-button text-sideways" 
                                             onClick={() => props.context.showMenu()}
