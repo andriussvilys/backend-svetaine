@@ -1019,8 +1019,6 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-left: 10px;
-  margin-bottom: 5px;
 }
 
 .ArtworkInfo-preview {
@@ -1046,9 +1044,10 @@ label {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   overflow-y: auto;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 100%;
 }
 
 .ArtworkInfo-container_seealso {
@@ -1060,6 +1059,20 @@ label {
       -ms-flex-pack: end;
           justify-content: flex-end;
   width: 100%;
+}
+
+.SeeAlso-related_images {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.subtitle_seeAlso {
+  margin-bottom: 3px;
+  border-bottom: 1px solid;
+  opacity: 0.5;
 }
 
 .ArtworkInfo--descriptions {

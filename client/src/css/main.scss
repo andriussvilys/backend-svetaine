@@ -774,8 +774,6 @@ $border-main-color: #bbb;
     align-content: center;
     align-items: center;
     display: flex;
-    margin-left: 10px;
-    margin-bottom: 5px;
 }
 .ArtworkInfo-preview{
     height: 100%;
@@ -792,13 +790,23 @@ $border-main-color: #bbb;
     display: flex;
     flex-wrap: wrap;
     overflow-y: auto;
-    justify-content: flex-end;
+    justify-content: space-between;
+    width: 100%;
 }
 .ArtworkInfo-container_seealso{
     padding-right: 2vw;
     display: flex;
     justify-content: flex-end;
     width: 100%;
+}
+.SeeAlso-related_images{
+    display: flex;
+    flex-wrap: wrap;
+}
+.subtitle_seeAlso{
+    margin-bottom: 3px;
+    border-bottom: 1px solid;
+    opacity: 0.5;
 }
 .ArtworkInfo--descriptions{
     margin: 1vw 2vw;

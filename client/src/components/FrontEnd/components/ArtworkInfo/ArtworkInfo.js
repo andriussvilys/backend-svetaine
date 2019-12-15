@@ -6,8 +6,9 @@ const ArtworkInfo = (props) => {
     
 
     const seeAlso = () => {
+        let seeAlsos = []
         if(props.file.foreground.seeAlso.length > 0){
-            let seeAlsos = props.file.foreground.seeAlso.map(fileName => {
+            seeAlsos = props.file.foreground.seeAlso.map(fileName => {
                 return <FilePreview 
                     key={`ArtworkInfo-${fileName}`}
                     className="ArtworkInfo-preview"
@@ -16,26 +17,31 @@ const ArtworkInfo = (props) => {
                     onClick={(e) => props.loadEnlarge(e, fileName)}
                 />
             })
-            if(props.file.previous.fileName !== props.file.foreground.fileName){
-                if(!props.file.foreground.seeAlso.includes(props.file.previous.fileName)){
-                    const previous = <FilePreview 
-                            key={`ArtworkInfo-${props.file.previous.fileName}`}
-                            className="ArtworkInfo-preview"
-                            containerClassName="ArtworkInfo-preview-container"
-                            file={props.file.previous}
-                            onClick={(e) => props.loadEnlarge(e, props.file.previous.fileName)}
-                            />
-                    seeAlsos = [previous, ...seeAlsos]
-                }
-            }
-            return <div>
-                {/* <p>related:</p> */}
-                <div className="ArtworkInfo-seeAlso-container">
-                    {seeAlsos}
-                </div>
-            </div>
+            seeAlsos =  <div className="SeeAlso-related">
+                            <div className="subtitle subtitle_seeAlso">related:</div>
+                            <div className="SeeAlso-related_images">
+                                {seeAlsos}
+                            </div>
+                        </div>
         }
-        else{return null}
+        let previous = null;
+        if(props.file.previous.fileName !== props.file.foreground.fileName){
+        previous = <div className="SeeAlso-previous">
+                            <div className="subtitle subtitle_seeAlso">previous:</div>
+                            <FilePreview 
+                                key={`ArtworkInfo-${props.file.previous.fileName}`}
+                                className="ArtworkInfo-preview"
+                                containerClassName="ArtworkInfo-preview-container"
+                                file={props.file.previous}
+                                onClick={(e) => props.loadEnlarge(e, props.file.previous.fileName)}
+                            />
+                        </div>
+        }
+        let combined = [previous]
+        combined = [...combined, seeAlsos]
+        return <div className="ArtworkInfo-seeAlso-container">
+                {combined}
+            </div>
     }
 
     const locationAndYear = () => {
