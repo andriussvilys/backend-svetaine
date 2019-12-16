@@ -3,16 +3,19 @@ import React from 'react'
 const Tags = (props) => {
     const tags = (file) => {
         
-        let themes = file.themes
-        themes = themes.map(theme => {return {"type": "theme", "title": theme, "onClick": props.context.filterByTheme}})
-        const DOMthemes = themes.map(tag => {
-            return <div 
-            className="Tags-item_container"
-            onClick={(e) => {e.stopPropagation(); tag.onClick(tag.title, true)}}
-            >
-                <p className="Tags-item_text">{tag.title}</p>
-            </div> 
-        })
+        let DOMthemes = null
+        if(file.themes){
+            let themes = file.themes
+            themes = themes.map(theme => {return {"type": "theme", "title": theme, "onClick": props.context.filterByTheme}})
+            DOMthemes = themes.map(tag => {
+                return <div 
+                className="Tags-item_container"
+                onClick={(e) => {e.stopPropagation(); tag.onClick(tag.title, true)}}
+                >
+                    <p className="Tags-item_text">{tag.title}</p>
+                </div> 
+            })
+        }
 
         let categories = Object.keys(file.category) 
         categories = categories.map(category => {
