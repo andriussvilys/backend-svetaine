@@ -82,9 +82,9 @@ export default class Enlarge extends React.Component{
                 onTouchEnd={() => {
                     if(Math.abs(this.state.touch.x - this.state.touch.endX) > 30){
                         if(this.state.touch.x > this.state.touch.endX){
-                            this.props.context.viewPrev()
+                            this.props.context.viewNext()
                         }
-                        else{this.props.context.viewNext()}
+                        else{this.props.context.viewPrev()}
                         return
                     }
 
