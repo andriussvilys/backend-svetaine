@@ -586,40 +586,67 @@ export class Provider extends React.Component{
         }, delay);
     }
     this.viewNext = () => {
+        let newState = {...this.state}
         const familyName = this.state.enlarge.foreground.artworkFamily
         const currentImage = this.state.enlarge.background.fileName
-        let currentIndex = this.state.enlarge.foreground.familyDisplayIndex
         const familyLength = this.state.relatedArtwork[familyName].column.fileIds.length
-        let nextIndex = currentIndex+1 > familyLength-1 ? 0 : currentIndex+1
-        console.log(`nextIndex before filter ${nextIndex}`)
-        let nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
-        let nextPic = this.state.artworkInfoData[nextPicName]
+        // let nextIndex = currentIndex+1 > familyLength-1 ? 0 : currentIndex+1
+        // let nextPicName = this.state.relatedArtwork[familyName].column.fileIds[nextIndex]
+        // let nextPic = this.state.artworkInfoData[nextPicName]
+        let nextPic = null
+        let nextPicName = null
+        let nextIndex = null
         /**
          @returns current index in common sequence or the last one recorded in state
          */
-        // const familySequence = () => {
-        //   if(!this.state.enlarge.familySequence || this.state.enlarge.familySequence.length <= 0){
-        //     const recordedSequence = this.state.relatedArtwork[familyName].column.fileIds
-        //     const startIndex = this.state.relatedArtwork[familyName].column.fileIds[currentImage]
-        //     const start = recordedSequence.slice(startIndex, recordedSequence.length)
-        //     const end = recordedSequence.slice(0, startIndex)
-        //     const newSequence = [...start, ...end]
-        //     const familySequence = {startIndex, "currentIndex": startIndex, "familySequence": newSequence }
-        //     this.setState({enlarge: {...this.state.enlarge, familySequence}})
-        //   }
-        //   nextIndex = this.state.enlarge.currentIndex + 1
-        //   if(nextIndex === this.state.enlarge.familySequence.length){nextIndex = 0}
-        //   if(nextIndex < 0){nextIndex = this.state.enlarge.familySequence.length-1}
-        //   if(nextIndex === this.state.enlarge.commonIndex)
-        // }
+        const familySequence = () => {
+          if(familyName === "none"){
+            return nextPic = null
+          }
+          let sequence = null
+          const createSequence = () => {
+            const recordedSequence = this.state.relatedArtwork[familyName].column.fileIds
+            const startIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(currentImage)
+            console.log("startIndex")
+            console.log(startIndex)
+            const start = recordedSequence.slice(startIndex, recordedSequence.length)
+            const end = recordedSequence.slice(0, startIndex)
+            const newSequence = [...start, ...end]
+            const familySequence = {"startIndex": startIndex, "currentIndex": startIndex, "familySequence": newSequence }
+            newState.enlarge.familySequence = familySequence
+            this.setState(newState)
+            return familySequence
+          }
+          if(!this.state.enlarge.familySequence){
+            sequence = createSequence()
+          }
+          else{sequence = this.state.enlarge.familySequence}
+          console.log(sequence)
+          nextIndex = sequence.currentIndex+1 > sequence.familySequence.length-1 ? 0 : sequence.currentIndex+1
+          console.log("nextIndex")
+          console.log(nextIndex)
+          if(nextIndex === sequence.startIndex){
+            delete newState.enlarge.familySequence
+            this.setState(newState)
+            return nextPic = null
+          }
+          else{
+            nextPicName = sequence.familySequence[nextIndex]
+            newState.enlarge.familySequence.currentIndex = nextIndex
+            this.setState(newState)
+            return nextPic = this.state.artworkInfoData[nextPicName]
+          }
+        }
 
         const commonIndex = () => {
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
           let indexes = allVisible.filter(id => onDisplay.includes(id))
-          currentIndex = indexes.indexOf(this.state.enlarge.background.fileName)
+          let currentIndex = indexes.indexOf(this.state.enlarge.background.fileName)
           return currentIndex < 0 ? this.state.enlarge.commonIndex : currentIndex
         }
+        familySequence()
+
         if(!nextPic || familyLength <= 1 || familyName === "none" || nextIndex === 0){
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
@@ -697,8 +724,6 @@ export class Provider extends React.Component{
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.toggle("show-menu")
       }
-
-
       if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
 
       // this.hideArtworkInfo()
@@ -842,6 +867,9 @@ export class Provider extends React.Component{
       let indexes = allVisible.filter(id => onDisplay.includes(id))
       let currentIndex = indexes.indexOf(id)
       let newState = {...this.state}
+      if(newState.enlarge && newState.enlarge.familySequence){
+        delete newState.enlarge.familySequence
+      }
       if(!newState.enlarge){
         newState.enlarge = {}
       }
