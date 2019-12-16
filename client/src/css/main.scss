@@ -135,6 +135,7 @@ Button{
     display: flex;
     border-bottom: 1px solid black !important;
 }
+
 textarea{
     font-size: 13px;
     padding: 15px;
@@ -836,6 +837,26 @@ $border-main-color: #bbb;
 .ArtworkInfo_locationYear{
     font-size: 12px;
     margin-top: 10px;
+}
+.Tags-item_wrapper{
+    display: flex;
+    margin: 1vw 2vw;
+    margin-top: 0;
+    justify-content: flex-end;
+    
+}
+.Tags-item_container{
+    border: 1px solid black;
+    padding: 3px;
+    margin: 2px 3px;
+    padding-top: 1px;
+    cursor: pointer;
+}
+.Tags-item_container:hover{
+    transform: scale(1.1);
+}
+.Tags-item_text{
+    font-size: 10px;
 }
 
 .info-up{

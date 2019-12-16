@@ -92,6 +92,7 @@ export default class FrontEndIndex extends React.Component{
                                         {this.context.state.enlarge ? 
                                             this.context.state.enlarge.foreground ?
                                                 <ArtworkInfo 
+                                                context={this.context}
                                                 file={this.context.state.enlarge} 
                                                 artworkInfoData={this.context.state.artworkInfoData} 
                                                 loadEnlarge={this.context.loadEnlarge} 

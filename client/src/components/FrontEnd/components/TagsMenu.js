@@ -27,9 +27,10 @@ export default class TagsMenu extends React.Component{
             <div className="tagsMenu-listItem">
                 <span>{listitem}</span>
                 <input 
+                    id={`listItem-${listitem}`}
                     className="TagsMenu-checkbox_listItem"
                     type="checkbox" 
-                    onChange={(e) => this.props.context.filterByListitem(e, category, subcategory, listitem)} 
+                    onChange={() => this.props.context.filterByListitem(category, subcategory, listitem)} 
                     checked={this.props.context.listitemChecked(category, subcategory, listitem)}
                 />
             </div>
@@ -58,9 +59,10 @@ export default class TagsMenu extends React.Component{
                     // title={subName} 
                     level="subcategory-last"
                     checkbox={<input 
+                        id={`subcategory-${subName}`}
                         className="TagsMenu-checkbox_subcategory"
                         type="checkbox" 
-                        onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
+                        onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                         checked={this.props.context.subcategoryChecked(category, subName)}
                         />}
                     toggle={toggle} 
@@ -76,9 +78,10 @@ export default class TagsMenu extends React.Component{
                 // title={subName} 
                 level="subcategory"
                 checkbox={<input 
+                    id={`subcategory-${subName}`}
                     className="TagsMenu-checkbox_subcategory"
                     type="checkbox" 
-                    onChange={(e) => this.props.context.filterBySubcategory(e, category, subName)} 
+                    onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                     checked={this.props.context.subcategoryChecked(category, subName)}
                     />}
                 toggle={toggle} 
@@ -104,10 +107,11 @@ export default class TagsMenu extends React.Component{
             // title={obj.category} 
             title={this.spreadLetters(obj.category)}
             checkbox={<input 
+                id={`category-${obj.category}`}
                 className="TagsMenu-checkbox"
                 level="category"
                 type="checkbox" 
-                onChange={(e) => this.props.context.filterByCategory(e, obj.category)} 
+                onChange={() => this.props.context.filterByCategory(obj.category)} 
                 checked={this.props.context.categoryChecked(obj.category)}
                 />}
             toggle={toggle} 

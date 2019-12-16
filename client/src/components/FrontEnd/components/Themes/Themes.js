@@ -26,7 +26,7 @@ const Themes = (props) => {
                     id={`theme-${theme}`}
                     type="checkbox" 
                     
-                    onChange={(e) => { props.context.filterByTheme(e, theme)}} 
+                    onChange={() => { props.context.filterByTheme(theme)}} 
                     // checked={props.state.visibleThemes[theme].length > 0}
                     checked={props.context.themeChecked(theme)}
                 />

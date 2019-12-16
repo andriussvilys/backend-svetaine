@@ -1101,6 +1101,34 @@ label {
   margin-top: 10px;
 }
 
+.Tags-item_wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 1vw 2vw;
+  margin-top: 0;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.Tags-item_container {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 2px 3px;
+  padding-top: 1px;
+  cursor: pointer;
+}
+
+.Tags-item_container:hover {
+  -webkit-transform: scale(1.1);
+          transform: scale(1.1);
+}
+
+.Tags-item_text {
+  font-size: 10px;
+}
+
 .info-up {
   opacity: 1;
   bottom: 0;

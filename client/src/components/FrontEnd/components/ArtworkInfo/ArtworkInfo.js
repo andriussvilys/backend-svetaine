@@ -1,5 +1,6 @@
 import React from 'react'
 import FilePreview from '../FilePreview'
+import Tags from './Tags'
 
 const ArtworkInfo = (props) => {
     
@@ -112,6 +113,10 @@ const ArtworkInfo = (props) => {
                     {artworkTitle()}
                     {descriptions()}
                 </div>
+                {<Tags 
+                    file={props.file.background}
+                    context={props.context}
+                />}
                 <div className="ArtworkInfo-container_seealso">
                     {seeAlso()}
                 </div>
