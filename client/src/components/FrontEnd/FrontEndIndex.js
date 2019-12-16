@@ -88,7 +88,7 @@ export default class FrontEndIndex extends React.Component{
                                     hideArtworkInfo={this.context.hideArtworkInfo}
                                     context={this.context}
                                 />
-                                    <Fragment>
+                                    {/* <Fragment>
                                         {this.context.state.enlarge ? 
                                             this.context.state.enlarge.foreground ?
                                                 <ArtworkInfo 
@@ -102,7 +102,7 @@ export default class FrontEndIndex extends React.Component{
                                             :null    
                                         : null
                                         }
-                                    </Fragment>
+                                    </Fragment> */}
                             </div>
 
                             <Nav

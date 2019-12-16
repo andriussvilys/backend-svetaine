@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
+import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
 
 
 export default class Enlarge extends React.Component{
@@ -115,6 +116,21 @@ export default class Enlarge extends React.Component{
                         <div id="background" className="foreground-transition">
                             {this.props.file ? this.createPreview(this.props.file.background, 'background-image') : null}
                         </div>
+                        <Fragment>
+                            {this.props.file ? 
+                                this.props.file.foreground ?
+                                    <ArtworkInfo 
+                                    context={this.props.context}
+                                    file={this.props.context.state.enlarge} 
+                                    artworkInfoData={this.props.context.state.artworkInfoData} 
+                                    loadEnlarge={this.props.context.loadEnlarge} 
+                                    hideArtworkInfo={this.props.context.hideArtworkInfo}
+                                    mobile={this.props.context.state.mobile}
+                                    /> 
+                                :null    
+                            : null
+                            }
+                        </Fragment>
                     </Fragment>
                 </div>
         )

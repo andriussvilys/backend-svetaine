@@ -1287,12 +1287,6 @@ label {
     overflow-x: auto;
     height: 70px;
   }
-  .side-scroll > div {
-    max-width: 120px;
-    -webkit-box-pack: center;
-        -ms-flex-pack: center;
-            justify-content: center;
-  }
   .enlargeContainer {
     -ms-grid-column: 1;
         grid-column-start: 1;
@@ -1392,6 +1386,7 @@ label {
   }
   .side-scroll .imageSelect-FilePreview {
     width: auto !important;
+    max-height: 70px;
   }
   .images-container {
     display: -ms-grid;

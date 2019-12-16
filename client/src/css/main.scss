@@ -982,10 +982,10 @@ $border-main-color: #bbb;
         overflow-x: auto;
         height: 70px;
     }
-    .side-scroll > div {
-        max-width: 120px;
-        justify-content: center;
-    }
+    // .side-scroll > div {
+    //     max-width: 120px;
+    //     justify-content: center;
+    // }
     .enlargeContainer{
         grid-column-start: 1;
         grid-column-end: 2;
@@ -1061,6 +1061,7 @@ $border-main-color: #bbb;
     }
     .side-scroll .imageSelect-FilePreview{
         width: auto !important;
+        max-height: 70px;
     }
 
     .images-container{
