@@ -1105,6 +1105,8 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   margin: 1vw 2vw;
   margin-top: 0;
   -webkit-box-pack: end;
@@ -1127,6 +1129,7 @@ label {
 
 .Tags-item_text {
   font-size: 10px;
+  white-space: nowrap;
 }
 
 .info-up {
@@ -1282,6 +1285,7 @@ label {
         -ms-flex-direction: column;
             flex-direction: column;
     overflow-x: auto;
+    height: 70px;
   }
   .side-scroll > div {
     max-width: 120px;
@@ -1385,6 +1389,9 @@ label {
   }
   .imageSelect-FilePreview {
     height: 100%;
+  }
+  .side-scroll .imageSelect-FilePreview {
+    width: auto !important;
   }
   .images-container {
     display: -ms-grid;

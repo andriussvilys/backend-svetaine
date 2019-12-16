@@ -546,7 +546,6 @@ export class Provider extends React.Component{
 
             }
     }
-
     this.hideArtworkInfo = (e) => {
       if(e){
         e.stopPropagation()
@@ -557,7 +556,6 @@ export class Provider extends React.Component{
       }
       else { return 1}
     }
- 
     this.closeEnlarge = (e) => {
       e.stopPropagation()
         if(document.getElementsByClassName("info-up").length > 0){
@@ -587,7 +585,6 @@ export class Provider extends React.Component{
           this.setState({enlarge})
         }, delay);
     }
-
     this.viewNext = () => {
         const familyName = this.state.enlarge.foreground.artworkFamily
         const currentImage = this.state.enlarge.background.fileName
@@ -645,7 +642,6 @@ export class Provider extends React.Component{
         this.animateEnlarge(nextPic)
           
     }
-
     this.viewPrev = () => {
       const familyName = this.state.enlarge.foreground.artworkFamily
 
@@ -688,14 +684,13 @@ export class Provider extends React.Component{
 
       this.animateEnlarge(nextPic)
     }
-
     this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile) => {
       let maxWidth = document.getElementById("images").clientWidth - 120
       const naturalRatio = naturalWidth / naturalHeight
 
       if(mobile){
         maxWidth = document.getElementById("images").clientWidth
-        const maxHeight = document.getElementById("images").clientHeight - 120
+        const maxHeight = document.getElementById("images").clientHeight - 70
 
         let futureWidth = maxWidth
         let futureHeight = Math.round(futureWidth / naturalRatio)
@@ -722,7 +717,6 @@ export class Provider extends React.Component{
 
       return {width: futureWidth, height: futureHeight}
     }
-
     this.animateEnlarge = (file) => {
 
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
@@ -815,7 +809,7 @@ export class Provider extends React.Component{
                 
                 // background.style.height = `${futureSize.height}px`
                 // foreground.style.height = `${futureSize.height}px`
-                container.style.height = `${images.clientHeight - 120}px`
+                container.style.height = `${images.clientHeight - 70}px`
                 background.style.height = `${futureSize.height}px`
                 foreground.style.height = `${futureSize.height}px`
                 background.style.width = `${futureSize.width}px`
@@ -838,7 +832,7 @@ export class Provider extends React.Component{
                 let newState = {...this.state}
                 newState.enlarge.foreground = file
                 newState.enlarge.currentWidth = futureSize.width
-                newState.enlarge.currentHeight = images.clientHeight - 120
+                newState.enlarge.currentHeight = images.clientHeight - 70
                 newState.enlarge.open = true
                 this.setState(newState, () => {
                   foreground.style.opacity = 1

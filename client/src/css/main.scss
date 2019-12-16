@@ -840,6 +840,7 @@ $border-main-color: #bbb;
 }
 .Tags-item_wrapper{
     display: flex;
+    flex-wrap: wrap;
     margin: 1vw 2vw;
     margin-top: 0;
     justify-content: flex-end;
@@ -857,6 +858,7 @@ $border-main-color: #bbb;
 }
 .Tags-item_text{
     font-size: 10px;
+    white-space: nowrap;
 }
 
 .info-up{
@@ -896,7 +898,7 @@ $border-main-color: #bbb;
     bottom: 0;
 }
 
-
+//MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     body{
         overscroll-behavior: contain;
@@ -978,6 +980,7 @@ $border-main-color: #bbb;
     .side-scroll{
         flex-direction: column;
         overflow-x: auto;
+        height: 70px;
     }
     .side-scroll > div {
         max-width: 120px;
@@ -1055,6 +1058,9 @@ $border-main-color: #bbb;
     }
     .imageSelect-FilePreview{
         height: 100%;
+    }
+    .side-scroll .imageSelect-FilePreview{
+        width: auto !important;
     }
 
     .images-container{
