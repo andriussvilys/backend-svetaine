@@ -75,7 +75,8 @@ export default class FrontEndIndex extends React.Component{
                                     methods={{
                                         enlarge: this.context.enlarge,
                                         loadEnlarge: this.context.loadEnlarge,
-                                        toggleMobile: this.context.toggleMobile
+                                        toggleMobile: this.context.toggleMobile,
+                                        lazyLoad: this.context.lazyLoadImages
                                     }}
                                 />
                                 <Enlarge 

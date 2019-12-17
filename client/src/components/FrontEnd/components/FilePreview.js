@@ -13,12 +13,15 @@ export default class FilePreview extends React.Component{
 
         if(fileType.match('image')){
             let image = <img 
+            loading="lazy"
             className={this.props.className}
             alt={file.fileName} 
-            src={previewSource} 
+            data-src={previewSource}
+            src={""} 
             id={this.props.id || this.props.file.fileName}
             name={this.props.previewName}
             onClick={(e) => {this.props.onClick(e)}}
+            ref={this.props.ref}
             />
             return(
                     image

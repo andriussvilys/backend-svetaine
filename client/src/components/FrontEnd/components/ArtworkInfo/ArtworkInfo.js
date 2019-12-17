@@ -49,13 +49,13 @@ const ArtworkInfo = (props) => {
         let location = props.file.foreground.location ? props.file.foreground.location : null
         let year = props.file.foreground.year ? props.file.foreground.year: null
         if(location && year){
-            return <div className="ArtworkInfo_locationYear">({location}. {year})</div>
+            return <div key={"location/year"} className="ArtworkInfo_locationYear">({location}. {year})</div>
         }
         if(!year && location){
-            return <div className="ArtworkInfo_locationYear">({location})</div>
+            return <div key={"location"} className="ArtworkInfo_locationYear">({location})</div>
         }
         if(year){
-            return <div className="ArtworkInfo_locationYear">({year})</div>
+            return <div key={"year"} className="ArtworkInfo_locationYear">({year})</div>
         }
         else{ return null}
     }
@@ -108,8 +108,8 @@ const ArtworkInfo = (props) => {
             onClick={(e) => props.hideArtworkInfo(e)}
             style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
         >
-            <div className="ArtworkInfo-wrapper">
-                <div className="ArtworkInfo-container_text" >
+            <div key={"ArtworkInfo-wrapper"} className="ArtworkInfo-wrapper">
+                <div ke={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >
                     {artworkTitle()}
                     {descriptions()}
                 </div>
@@ -117,7 +117,7 @@ const ArtworkInfo = (props) => {
                     file={props.file.background}
                     context={props.context}
                 />}
-                <div className="ArtworkInfo-container_seealso">
+                <div key={"ArtworkInfo-container_seealso"} className="ArtworkInfo-container_seealso">
                     {seeAlso()}
                 </div>
             </div>

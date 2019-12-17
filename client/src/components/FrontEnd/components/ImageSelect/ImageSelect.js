@@ -25,29 +25,64 @@ export default class ImageSelect extends React.Component{
                 return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty"></div>
                 }
             })
-            return(
-                <div 
+            return <div 
+                onScroll={() => {
+                    if(!this.state.scrolled){
+                        this.setState({"scrolled": true})
+                        this.lazyLoadImages()
+                    }
+                }}
                 id="imageSelect"
                 className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : ''}`}
                 >
                     {previews}
                 </div>
-            )
         }
-        else{return null} 
+        else{return null}  
     }
 
-
-
-    componentDidMount(){
-        this.setState({artworkOnDisplay: this.props.data})
-    }
+    lazyLoadImages = () => {
+        console.log("lazy load called")
+        const images = document.querySelectorAll(".imageSelect-FilePreview")
+    
+        const preloadImage = (img) => {
+          const src = img.getAttribute("data-src")
+          if(!src){
+            return
+          }
+          img.src=src
+        }
+    
+        const imgOptions = {
+          threshold: 0,
+          root: null,
+          rootMargin: "0px 0px 300px 0px"
+        }
+    
+        const imgObserver = new IntersectionObserver((entries, imgObserver) => {
+          entries.forEach(entry => {
+            if(!entry.isIntersecting){
+              return
+            }
+            else{
+              preloadImage(entry.target);
+              imgObserver.unobserve(entry.target)
+            }
+          }, imgOptions)
+        })
+    
+        images.forEach(image => {
+          imgObserver.observe(image)
+        })
+      }
     
     render(){
+        // if(document.querySelectorAll(".imageSelect-FilePreview")){
+        //     this.lazyLoadImages()
+        // }
         return(
             <Context.Consumer>
                 {() => {
-                    // return this.createPreviews(this.props.data)
                     return this.createPreviewsALL(this.props.data)
                 }}
             </Context.Consumer>

@@ -765,7 +765,7 @@ export class Provider extends React.Component{
 
         backgroundImage(5, true)
           .then(res => {
-
+              console.log("background img loaded")
               if(!this.toggleMobile()){
                 if(document.getElementById('background').style.width !== "100%"){
                   document.getElementById('background').style.width = "100%"
@@ -904,6 +904,44 @@ export class Provider extends React.Component{
       const touch = {"x": touches[0].clientX, "y": touches[0].clientY}
       this.setState({touch})
   }
+  this.lazyLoadImages = () => {
+    console.log("lazy load called")
+    const images = document.querySelectorAll(".imageSelect-FilePreview")
+    console.log(images)
+
+    const preloadImage = (img) => {
+      const src = img.getAttribute("data-src")
+      if(!src){
+        return
+      }
+      img.src=src
+    }
+
+    const imgOptions = {
+      threshold: 0,
+      margin: "0px 0px 300px 0px"
+    }
+
+    const imgObserver = new IntersectionObserver((entries, imgObserver) => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting){
+          return
+        }
+        else{
+          console.log("entry.target")
+          console.log(entry.target)
+          preloadImage(entry.target);
+          imgObserver.unobserve(entry.target)
+        }
+      }, imgOptions)
+    })
+
+    images.forEach(image => {
+      console.log("image")
+      console.log(image)
+      imgObserver.observe(image)
+    })
+  }
 
 }//END OF CONTSTRUCTOR
 
@@ -913,17 +951,17 @@ export class Provider extends React.Component{
 
             this.setState({showModal: true})
 
-            let Themes = new Promise ((resolve,rej) => {
-                axios.get('/api/themes')
-                .then( res => {
-                newState.themesData = res.data.list
-                resolve()
-                })
-                .catch(err => {
+            // let Themes = new Promise ((resolve,rej) => {
+            //     axios.get('/api/themes')
+            //     .then( res => {
+            //     newState.themesData = res.data.list
+            //     resolve()
+            //     })
+            //     .catch(err => {
                      
-                    // document.location.reload(true)
-                })
-            })
+            //         // document.location.reload(true)
+            //     })
+            // })
 
             let FamilyList = new Promise ((resolve, rej) => {
                 axios.get('/api/familySetup')
@@ -1018,12 +1056,16 @@ export class Provider extends React.Component{
                 })
             })
 
-            Promise.all([Categories, ArtworkInfo, Themes, serverFiles])
+            Promise.all([
+              Categories, 
+              ArtworkInfo, 
+              // Themes, 
+              serverFiles
+            ])
                 .then(res => {
                     newState.showModal = false
                     newState.mobile = this.toggleMobile()
                     window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-                    
                     this.setState(newState)
                 })
                 .catch(err => {
@@ -1059,6 +1101,8 @@ export class Provider extends React.Component{
             showMenu: this.showMenu,
             toggleMobile: this.toggleMobile,
             onTouchStart: this.onTouchStart,
+
+            lazyLoadImages: this.lazyLoadImages,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

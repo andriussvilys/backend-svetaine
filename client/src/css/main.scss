@@ -534,7 +534,7 @@ $border-main-color: #bbb;
     max-height: 200px;
     position: sticky;
     top: 0;
-    flex: 1 1 150px;
+    flex: 1 1 20vw;
 }
 .ImagesPreview--imageContainer__empty{
     // border: 2px solid red;
@@ -1082,6 +1082,9 @@ $border-main-color: #bbb;
     }
     .image-hide{
         display: none;
+    }
+    .ImagesPreview--imageContainer{
+        height: 200px;
     }
   }
 

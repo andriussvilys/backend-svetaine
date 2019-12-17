@@ -56,16 +56,17 @@ export default class Enlarge extends React.Component{
         )
     }
     createPreview = (source, imageName, fgId) => {
+        return <img src={source.filePath} className={`enlarge-preview ${imageName}`} />
         
-        return <FilePreview 
-        id={fgId}
-        file={source} 
-        containerClassName="enlarge-container" 
-        className={`enlarge-preview ${imageName}`}
-        previewName="foreground-preview"
-        onClick={this.props.closeEnlarge}
-        noWrapper={true}
-        />
+        // return <FilePreview 
+        // id={fgId}
+        // file={source} 
+        // containerClassName="enlarge-container" 
+        // className={`enlarge-preview ${imageName}`}
+        // previewName="foreground-preview"
+        // onClick={this.props.closeEnlarge}
+        // noWrapper={true}
+        // />
     }
     
     render(){
@@ -110,11 +111,11 @@ export default class Enlarge extends React.Component{
                 className="enlargeContainer" id="enlargeContainer">
                     <Fragment>
                         <div id="foreground" className="foreground-transition">
-                            {this.props.file ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}
+                            {this.props.file && this.props.file.foreground ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}
                         </div>
 
                         <div id="background" className="foreground-transition">
-                            {this.props.file ? this.createPreview(this.props.file.background, 'background-image') : null}
+                            {this.props.file && this.props.file.background ? this.createPreview(this.props.file.background, 'background-image') : null}
                         </div>
                         <Fragment>
                             {this.props.file ? 
