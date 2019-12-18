@@ -844,6 +844,8 @@ export class Provider extends React.Component{
                     prevSequence = [...this.state.enlarge.prevSequence]
                   }
                   prevSequence = [...prevSequence, file.fileName]
+                  prevSequence = new Set(prevSequence)
+                  prevSequence = Array.from(prevSequence)
                   newState.enlarge.prevSequence = prevSequence
                 }
 
