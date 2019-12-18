@@ -28,18 +28,19 @@ const Accordion = (props) => {
             )
         }
     }
-    
-    return(
-        <BootstrapAccordion>
-            <Card className={`TagsMenu-Card`}>
-                <div
+    const createAcc = () => {
+        return <div
                     className={`TagsMenu-Card-Title ${props.level}`}
                 >
                     {toggle(props.toggle)}
                         {props.checkbox}
                 </div>
-                
-
+    }
+    
+    return(
+        <BootstrapAccordion>
+            <Card className={`TagsMenu-Card`}>
+                {createAcc()}
                 <BootstrapAccordion.Collapse id={props.collapseId} eventKey="0">
                 <Card.Body className={`${props.level}-collapse`}>
                     {props.children}

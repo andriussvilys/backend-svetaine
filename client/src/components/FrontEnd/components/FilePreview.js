@@ -13,7 +13,6 @@ export default class FilePreview extends React.Component{
 
         if(fileType.match('image')){
             let image = <img 
-            loading={this.props.lazyLoad}
             className={this.props.className}
             alt={file.fileName} 
             data-src={previewSource}

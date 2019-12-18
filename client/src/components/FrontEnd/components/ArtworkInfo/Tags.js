@@ -27,6 +27,7 @@ const Tags = (props) => {
         })
         const DOMcategories = categories.map(tag => {
             return <div 
+            key={`category-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); tag.onClick(tag.title, true)}}
             >
@@ -48,6 +49,7 @@ const Tags = (props) => {
         })
         const DOMsubcategories = subcategories.map(tag => {
             return <div 
+            key={`subcategory-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); tag.onClick(tag.category, tag.title, true)}}
             >
@@ -72,6 +74,7 @@ const Tags = (props) => {
         })
         const DOMlistItems = listItems.map(tag => {
             return <div 
+            key={`listitem-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); tag.onClick(tag.category, tag.subcategory, tag.title, true)}}
             >

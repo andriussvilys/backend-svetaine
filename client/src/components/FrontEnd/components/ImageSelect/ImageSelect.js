@@ -3,19 +3,13 @@ import FilePreview from '../FilePreview'
 import { Context } from '../../FrontEndProvider';
 
 const ImageSelect = (props) => {
-    // static contextType = Context;
-    // constructor(props){
-    //     super(props)
-    //     state = { artworkOnDisplay: null}
-    // }
-
-    const imageSelectRef = React.createRef()
+    let imageSelectRef = null
     const createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map((objName, index) => {
                 if(data[objName].displayMain){
                     return <FilePreview 
-                    lazyLoad={true}
+                    lazyLoad={"true"}
                     key={`imageSelect-${objName}`}
                     containerClassName="ImagesPreview--imageContainer"
                     className="imageSelect-FilePreview" 
@@ -28,6 +22,7 @@ const ImageSelect = (props) => {
                 return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty"></div>
                 }
             })
+            imageSelectRef = React.createRef()
             return <div 
                 ref={imageSelectRef}
                 id="imageSelect"
@@ -75,18 +70,12 @@ const ImageSelect = (props) => {
       }
 
     if(imageSelectRef){
+      console.log(document.querySelectorAll(".ImagesPreview--imageContainer"))
       lazyLoadImages()
     }
 
         return(
-            <Context.Consumer>
-                {() => {
-                  return createPreviewsALL(props.data)
-                    // if(imageSelectRef){
-                    // }
-                    // return createPreviewsALL(props.data)
-                }}
-            </Context.Consumer>
+          createPreviewsALL(props.data)
         )
 }
 
