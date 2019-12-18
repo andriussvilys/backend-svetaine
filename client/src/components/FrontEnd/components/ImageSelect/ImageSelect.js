@@ -2,22 +2,25 @@ import React from 'react'
 import FilePreview from '../FilePreview'
 import { Context } from '../../FrontEndProvider';
 
-export default class ImageSelect extends React.Component{
-    static contextType = Context;
-    constructor(props){
-        super(props)
-        this.state = { artworkOnDisplay: null}
-    }
-    createPreviewsALL = (data) => {
+const ImageSelect = (props) => {
+    // static contextType = Context;
+    // constructor(props){
+    //     super(props)
+    //     state = { artworkOnDisplay: null}
+    // }
+
+    const imageSelectRef = React.createRef()
+    const createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map((objName, index) => {
                 if(data[objName].displayMain){
                     return <FilePreview 
+                    lazyLoad={true}
                     key={`imageSelect-${objName}`}
                     containerClassName="ImagesPreview--imageContainer"
                     className="imageSelect-FilePreview" 
-                    // onClick={(e) => this.props.methods.loadEnlarge(e)}
-                    onClick={e => this.props.methods.loadEnlarge(e, objName)}
+                    // onClick={(e) => props.methods.loadEnlarge(e)}
+                    onClick={e => props.methods.loadEnlarge(e, objName)}
                     file={data[objName]} 
                     />
                 }
@@ -26,12 +29,7 @@ export default class ImageSelect extends React.Component{
                 }
             })
             return <div 
-                onScroll={() => {
-                    if(!this.state.scrolled){
-                        this.setState({"scrolled": true})
-                        this.lazyLoadImages()
-                    }
-                }}
+                ref={imageSelectRef}
                 id="imageSelect"
                 className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : ''}`}
                 >
@@ -41,7 +39,7 @@ export default class ImageSelect extends React.Component{
         else{return null}  
     }
 
-    lazyLoadImages = () => {
+    const lazyLoadImages = () => {
         console.log("lazy load called")
         const images = document.querySelectorAll(".imageSelect-FilePreview")
     
@@ -75,18 +73,21 @@ export default class ImageSelect extends React.Component{
           imgObserver.observe(image)
         })
       }
-    
-    render(){
-        // if(document.querySelectorAll(".imageSelect-FilePreview")){
-        //     this.lazyLoadImages()
-        // }
+
+    if(imageSelectRef){
+      lazyLoadImages()
+    }
+
         return(
             <Context.Consumer>
                 {() => {
-                    return this.createPreviewsALL(this.props.data)
+                  return createPreviewsALL(props.data)
+                    // if(imageSelectRef){
+                    // }
+                    // return createPreviewsALL(props.data)
                 }}
             </Context.Consumer>
         )
-
-    }
 }
+
+export default ImageSelect
