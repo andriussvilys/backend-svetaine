@@ -4,16 +4,16 @@ import { Context } from '../../FrontEndProvider';
 
 const ImageSelect = (props) => {
     let imageSelectRef = null
+
     const createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map((objName, index) => {
                 if(data[objName].displayMain){
                     return <FilePreview 
-                    lazyLoad={"true"}
+                    // lazyLoad={"true"}
                     key={`imageSelect-${objName}`}
                     containerClassName="ImagesPreview--imageContainer"
                     className="imageSelect-FilePreview" 
-                    // onClick={(e) => props.methods.loadEnlarge(e)}
                     onClick={e => props.methods.loadEnlarge(e, objName)}
                     file={data[objName]} 
                     />
@@ -29,6 +29,7 @@ const ImageSelect = (props) => {
                 className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : ''}`}
                 >
                     {previews}
+                    {props.mobile ? <div style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
                 </div>
         }
         else{return null}  
@@ -73,10 +74,10 @@ const ImageSelect = (props) => {
       console.log(document.querySelectorAll(".ImagesPreview--imageContainer"))
       lazyLoadImages()
     }
-
-        return(
-          createPreviewsALL(props.data)
-        )
+    console.log("rerender IMAGE SELECT *************************")
+    return(
+      createPreviewsALL(props.data)
+    )
 }
 
 export default ImageSelect

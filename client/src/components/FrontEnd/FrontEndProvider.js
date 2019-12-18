@@ -766,7 +766,6 @@ export class Provider extends React.Component{
           }
         });
       }
-        
       this.setState({enlarge}, () => {
 
         let futureSize = null
@@ -829,6 +828,8 @@ export class Provider extends React.Component{
                 }
                 else{container.style.transform = 'translateY(0)'}
               }
+
+              this.scrollToHorizontal(file.fileName)
       
               setTimeout(() => {
                 console.log("foreground img operation")
@@ -850,18 +851,54 @@ export class Provider extends React.Component{
                 newState.enlarge.currentWidth = futureSize.width
                 newState.enlarge.currentHeight = images.clientHeight - 70
                 newState.enlarge.open = true
+
+                // if(document.getElementById(file.fileName)){
+                //   const scrollTo = document.getElementById(file.fileName).getBoundingClientRect().x
+                //   console.log(file.fileName)
+                //   console.log("scrollTo")
+                //   console.log(scrollTo)
+                //   console.log(document.getElementById(file.fileName).getBoundingClientRect())
+                //   document.getElementById("imageSelect").scrollTo(scrollTo, 0)
+                // }
+
                 this.setState(newState, () => {
                   foreground.style.opacity = 1
                   imageSelect.style.transition = "none"
+
+
+                  // SCROLL TO HORIZONTAL
+                  // let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 50 : 600
+                  // if(this.state.mobile){
+                  //   setTimeout(() => {     
+                  //     let scrollTo = {behavior: 'smooth'}               
+                  //     if(document.getElementById(file.fileName)){
+                  //       scrollTo.left = document.getElementById(file.fileName).getBoundingClientRect().x
+                  //       if(document.getElementById("imageSelect").scrollLeft > 0){
+                  //         scrollTo.left += document.getElementById("imageSelect").scrollLeft
+                  //       }
+                  //       document.getElementById("imageSelect").scrollTo(scrollTo)
+                  //     }
+                  //   }, scrollDelay);
+                  // }
+
                 })
               }, 410);
-          // })
-          // .catch(err => {
-          //   console.log("bg img error")
-          //   console.log(err)
-          //   return backgroundImage(5, true)
-          // })
     })
+  }
+  this.scrollToHorizontal = (fileName) => {
+    let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 50 : 1000
+    if(this.state.mobile){
+      setTimeout(() => {     
+        let scrollTo = {behavior: 'smooth'}               
+        if(document.getElementById(fileName)){
+          scrollTo.left = document.getElementById(fileName).getBoundingClientRect().x
+          if(document.getElementById("imageSelect").scrollLeft > 0){
+            scrollTo.left += document.getElementById("imageSelect").scrollLeft
+          }
+          document.getElementById("imageSelect").scrollTo(scrollTo)
+        }
+      }, scrollDelay);
+    }
   }
 
     this.loadEnlarge = (e, id) => {
@@ -1108,6 +1145,7 @@ export class Provider extends React.Component{
             onTouchStart: this.onTouchStart,
 
             lazyLoadImages: this.lazyLoadImages,
+            scrollToHorizontal: this.scrollToHorizontal,
 
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,

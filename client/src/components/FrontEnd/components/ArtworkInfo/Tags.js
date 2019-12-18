@@ -10,7 +10,7 @@ const Tags = (props) => {
             DOMthemes = themes.map(tag => {
                 return <div 
                 className="Tags-item_container"
-                onClick={(e) => {e.stopPropagation(); tag.onClick(tag.title, true)}}
+                onClick={(e) => {e.stopPropagation(); props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); tag.onClick(tag.title, true)}}
                 >
                     <p className="Tags-item_text">{tag.title}</p>
                 </div> 
@@ -29,7 +29,7 @@ const Tags = (props) => {
             return <div 
             key={`category-${tag.title}`}
             className="Tags-item_container"
-            onClick={(e) => {e.stopPropagation(); tag.onClick(tag.title, true)}}
+            onClick={(e) => {e.stopPropagation(); props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); tag.onClick(tag.title, true)}}
             >
                 <p className="Tags-item_text">{tag.title}</p>
             </div>            
@@ -51,7 +51,7 @@ const Tags = (props) => {
             return <div 
             key={`subcategory-${tag.title}`}
             className="Tags-item_container"
-            onClick={(e) => {e.stopPropagation(); tag.onClick(tag.category, tag.title, true)}}
+            onClick={(e) => {e.stopPropagation(); props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); tag.onClick(tag.category, tag.title, true)}}
             >
                 <p className="Tags-item_text">{tag.title}</p>
             </div>
@@ -76,7 +76,7 @@ const Tags = (props) => {
             return <div 
             key={`listitem-${tag.title}`}
             className="Tags-item_container"
-            onClick={(e) => {e.stopPropagation(); tag.onClick(tag.category, tag.subcategory, tag.title, true)}}
+            onClick={(e) => {e.stopPropagation(); props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); tag.onClick(tag.category, tag.subcategory, tag.title, true)}}
             >
                 <p className="Tags-item_text">{tag.title}</p>
             </div>

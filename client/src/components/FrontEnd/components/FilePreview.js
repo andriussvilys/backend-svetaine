@@ -8,11 +8,14 @@ export default class FilePreview extends React.Component{
 
     fileContainer = (fileType, file) => {
 
+        const imgRef = React.createRef()
+
         //files in server dont have 'preview' property, and files in state dont have filePath
         const previewSource = file.filePath ? file.filePath : file.preview
 
         if(fileType.match('image')){
             let image = <img 
+            ref={this.props.lazyLoad ? imgRef : null }
             className={this.props.className}
             alt={file.fileName} 
             data-src={previewSource}

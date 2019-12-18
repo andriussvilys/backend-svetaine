@@ -71,6 +71,7 @@ export default class FrontEndIndex extends React.Component{
                             <div id="images" className="images-container">
                                 <ImageSelect 
                                     data={this.context.state.artworkInfoData} 
+                                    mobile={this.context.state.mobile}
                                     // data={this.context.state.visibleArtwork}
                                     methods={{
                                         enlarge: this.context.enlarge,
