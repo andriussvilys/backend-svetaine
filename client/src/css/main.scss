@@ -918,6 +918,17 @@ $border-main-color: #bbb;
     position: sticky;
     bottom: 0;
 }
+.dark-bg{
+    background-color: black;
+    height: 20px;
+    display: flex;
+    align-items: center;
+}
+.white-font{
+    color: white !important;
+    font-weight: bold;
+    padding-left: 5px;
+}
 
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {

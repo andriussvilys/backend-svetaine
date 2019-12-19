@@ -16,7 +16,9 @@ const Themes = (props) => {
 
     const renderList = () => {
         
-        const allThemes = Object.keys(props.state.themesOnDisplay)
+        const allThemes = Object.keys(props.state.themesOnDisplay).sort()
+        console.log("renderList sorted")
+        console.log(allThemes)
         // const allThemes = themesOnDisplay()
         let renderList = allThemes.map(theme => {
             return <li key={theme}>
@@ -33,6 +35,24 @@ const Themes = (props) => {
             </div>
             </li>
         })
+        const clearAll = <li>
+                            <div className="tagsMenu-listItem dark-bg">
+                                <span className="white-font">{
+                                    props.context.state.artworkOnDisplay && Object.keys(props.context.state.artworkOnDisplay).length > 0 ?
+                                        "clear all" :
+                                        "view all"
+                                }</span>
+                                <input 
+                                    id={`theme-clearAll`}
+                                    type="checkbox" 
+                                    checked={props.context.state.artworkOnDisplay ? Object.keys(props.context.state.artworkOnDisplay).length > 0 : null}
+                                    onChange={(e) => { props.context.filterAllThemes(e)}
+                                    } 
+                                />
+                            </div>
+                        </li>
+            
+            renderList = [clearAll, ...renderList]
         return <ul className="tagsMenu-list">{renderList}</ul>
     }
 
@@ -41,7 +61,7 @@ const Themes = (props) => {
             title="Themes"
             toggle="0" 
             className="TagsMenu-Accordion-label"
-        >
+        >   
             {props.state.themesOnDisplay ? renderList() : null}
         </Accordion>
     )

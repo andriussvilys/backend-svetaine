@@ -419,6 +419,35 @@ export class Provider extends React.Component{
       }
     }
 
+    this.filterAllThemes = (e) => {
+      let themes = []
+      const checkbox = e.target
+      Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+        const file = this.state.artworkOnDisplay[fileName]
+        themes = [...themes, ...file.themes]
+        })
+      themes = Array.from(new Set(themes))
+      console.log(themes)
+
+      if(!checkbox.checked){
+        Object.keys(this.state.artworkOnDisplay).forEach(id => {
+            document.getElementById(id).classList.add('image-hide')
+        })
+
+        return this.setState({artworkOnDisplay: {}})
+      }
+      else{
+        Object.keys(this.state.visibleArtwork).forEach(id => {
+            document.getElementById(id).classList.remove('image-hide')
+        })
+        return this.setState({artworkOnDisplay: {...this.state.visibleArtwork}})
+      }
+      // themes.forEach(theme => this.filterByTheme(theme, true))
+    }
+
+
+
+
     this.themeChecked = (theme) => {
       let onDisplay = []
       const artworkOnDisplay = {...this.state.artworkOnDisplay}
@@ -1139,6 +1168,7 @@ export class Provider extends React.Component{
 
             showInfo: this.showInfo,
 
+            filterAllThemes: this.filterAllThemes,
             filterByTheme: this.filterByTheme,
             themeChecked: this.themeChecked,
 
