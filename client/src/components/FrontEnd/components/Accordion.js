@@ -8,7 +8,7 @@ const Accordion = (props) => {
            return  <BootstrapAccordion.Toggle 
             as={Button} 
             variant="link" 
-            eventKey="0" 
+            eventKey="0"
             className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
             >
                 {props.title}
@@ -19,7 +19,7 @@ const Accordion = (props) => {
             <BootstrapAccordion 
             as={Button} 
             variant="link" 
-            eventKey="0" 
+            eventKey="0"
             className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
             style={{width: "auto"}}
             >
@@ -36,12 +36,13 @@ const Accordion = (props) => {
                         {props.checkbox}
                 </div>
     }
-    
+    console.log(`props ${props.collapseId}`)
+    console.log(props)
     return(
         <BootstrapAccordion>
             <Card className={`TagsMenu-Card`}>
                 {createAcc()}
-                <BootstrapAccordion.Collapse id={props.collapseId} eventKey="0">
+                <BootstrapAccordion.Collapse className={props.open ? "show" : null} id={props.collapseId} eventKey="0">
                 <Card.Body className={`${props.level}-collapse`}>
                     {props.children}
                 </Card.Body>

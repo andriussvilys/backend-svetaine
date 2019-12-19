@@ -958,7 +958,7 @@ $border-main-color: #bbb;
         transform: translateY(-100%);
         transition: 0.3s all;
         border-right: 1px solid;
-        max-height: calc(100vh - 7px);
+        max-height: calc(100vh - 53px);
     }
     .TagsMenu-max{
         height: calc(100vh - 150px - 50px);
@@ -1117,6 +1117,12 @@ $border-main-color: #bbb;
     }
     .ImagesPreview--imageContainer{
         height: 200px;
+    }
+    .ArtworkInfo--descriptions{
+        font-size: 12px;
+    }
+    .ArtworkInfo_locationYear{
+        font-size: 10px;
     }
   }
 

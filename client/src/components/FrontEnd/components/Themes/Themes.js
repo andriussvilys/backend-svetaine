@@ -61,6 +61,7 @@ const Themes = (props) => {
             title="Themes"
             toggle="0" 
             className="TagsMenu-Accordion-label"
+            open={!props.state.mobile}
         >   
             {props.state.themesOnDisplay ? renderList() : null}
         </Accordion>
