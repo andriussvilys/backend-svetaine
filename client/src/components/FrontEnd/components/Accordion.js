@@ -36,14 +36,12 @@ const Accordion = (props) => {
                         {props.checkbox}
                 </div>
     }
-    console.log(`props ${props.collapseId}`)
-    console.log(props)
     return(
         <BootstrapAccordion>
             <Card className={`TagsMenu-Card`}>
                 {createAcc()}
-                <BootstrapAccordion.Collapse className={props.open ? "show" : null} id={props.collapseId} eventKey="0">
-                <Card.Body className={`${props.level}-collapse`}>
+                <BootstrapAccordion.Collapse id={props.collapseId} eventKey="0">
+                <Card.Body id={props.collapseToggle} className={`${props.level}-collapse`}>
                     {props.children}
                 </Card.Body>
                 </BootstrapAccordion.Collapse>

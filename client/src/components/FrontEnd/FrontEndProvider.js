@@ -915,22 +915,22 @@ export class Provider extends React.Component{
                 })
               }, 410);
     })
-  }
-  this.scrollToHorizontal = (fileName) => {
-    let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 50 : 1000
-    if(this.state.mobile){
-      setTimeout(() => {     
-        let scrollTo = {behavior: 'smooth'}               
-        if(document.getElementById(fileName)){
-          scrollTo.left = document.getElementById(fileName).getBoundingClientRect().x
-          if(document.getElementById("imageSelect").scrollLeft > 0){
-            scrollTo.left += document.getElementById("imageSelect").scrollLeft
-          }
-          document.getElementById("imageSelect").scrollTo(scrollTo)
-        }
-      }, scrollDelay);
     }
-  }
+    this.scrollToHorizontal = (fileName) => {
+      let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 50 : 1000
+      if(this.state.mobile){
+        setTimeout(() => {     
+          let scrollTo = {behavior: 'smooth'}               
+          if(document.getElementById(fileName)){
+            scrollTo.left = document.getElementById(fileName).getBoundingClientRect().x
+            if(document.getElementById("imageSelect").scrollLeft > 0){
+              scrollTo.left += document.getElementById("imageSelect").scrollLeft
+            }
+            document.getElementById("imageSelect").scrollTo(scrollTo)
+          }
+        }, scrollDelay);
+      }
+    }
 
     this.loadEnlarge = (e, id) => {
       e.stopPropagation()
@@ -953,7 +953,7 @@ export class Provider extends React.Component{
         
         this.animateEnlarge(file)
   
-  }
+    }
     this.showInfo = () => {
       const info = document.getElementById("ArtworkInfo")
       if(!info.classList.contains('info-up')){
@@ -976,7 +976,7 @@ export class Provider extends React.Component{
       const touches = e.touches
       const touch = {"x": touches[0].clientX, "y": touches[0].clientY}
       this.setState({touch})
-  }
+    }
   this.lazyLoadImages = () => {
     console.log("lazy load called")
     const images = document.querySelectorAll(".imageSelect-FilePreview")

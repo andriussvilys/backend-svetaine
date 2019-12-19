@@ -61,7 +61,8 @@ const Themes = (props) => {
             title="Themes"
             toggle="0" 
             className="TagsMenu-Accordion-label"
-            open={!props.state.mobile}
+            open={!props.state.mobile ? "1" : "0"}
+            collapseId={"tags-collapse"}
         >   
             {props.state.themesOnDisplay ? renderList() : null}
         </Accordion>

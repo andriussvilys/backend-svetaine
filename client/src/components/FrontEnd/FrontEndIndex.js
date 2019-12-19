@@ -24,6 +24,7 @@ export default class FrontEndIndex extends React.Component{
     constructor(props){
         super(props)
         this.state = {
+            imgSelectLoaded: document.querySelectorAll(".ImagesPreview--imageContainer")
         }
     }
 
@@ -49,7 +50,7 @@ export default class FrontEndIndex extends React.Component{
                     </div>
         )
     }  
-
+    
     render(){
         return(
             <BrowserRouter>

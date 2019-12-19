@@ -3,14 +3,13 @@ import FilePreview from '../FilePreview'
 import { Context } from '../../FrontEndProvider';
 
 const ImageSelect = (props) => {
-    let imageSelectRef = null
 
     const createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map((objName, index) => {
                 if(data[objName].displayMain){
                     return <FilePreview 
-                    // lazyLoad={"true"}
+                    lazyLoad={"true"}
                     key={`imageSelect-${objName}`}
                     containerClassName="ImagesPreview--imageContainer"
                     className="imageSelect-FilePreview" 
@@ -22,15 +21,19 @@ const ImageSelect = (props) => {
                 return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty"></div>
                 }
             })
-            imageSelectRef = React.createRef()
             return <div 
-                ref={imageSelectRef}
-                id="imageSelect"
-                className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : ''}`}
-                >
-                    {previews}
-                    {props.mobile ? <div style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
-                </div>
+                      id="imageSelect"
+                      className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : ''}`}
+                      >
+                          {previews}
+                          {props.mobile ? <div style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
+                          {setTimeout(() => {
+                            lazyLoadImages()
+                            if(!props.mobile){
+                              document.getElementById("tags-collapse").classList.add('show')
+                            }
+                          }, 50)}
+                    </div>
         }
         else{return null}  
     }
@@ -38,42 +41,40 @@ const ImageSelect = (props) => {
     const lazyLoadImages = () => {
         console.log("lazy load called")
         const images = document.querySelectorAll(".imageSelect-FilePreview")
-    
-        const preloadImage = (img) => {
-          const src = img.getAttribute("data-src")
-          if(!src){
-            return
-          }
-          img.src=src
-        }
-    
-        const imgOptions = {
-          threshold: 0,
-          root: null,
-          rootMargin: "0px 0px 300px 0px"
-        }
-    
-        const imgObserver = new IntersectionObserver((entries, imgObserver) => {
-          entries.forEach(entry => {
-            if(!entry.isIntersecting){
+
+        if(images){
+          const preloadImage = (img) => {
+            const src = img.getAttribute("data-src")
+            if(!src){
               return
             }
-            else{
-              preloadImage(entry.target);
-              imgObserver.unobserve(entry.target)
-            }
-          }, imgOptions)
-        })
+            img.src=src
+          }
+      
+          const imgOptions = {
+            threshold: 0,
+            root: null,
+            rootMargin: "0px 0px 300px 0px"
+          }
+      
+          const imgObserver = new IntersectionObserver((entries, imgObserver) => {
+            entries.forEach(entry => {
+              if(!entry.isIntersecting){
+                return
+              }
+              else{
+                preloadImage(entry.target);
+                imgObserver.unobserve(entry.target)
+              }
+            }, imgOptions)
+          })
+      
+          images.forEach(image => {
+            imgObserver.observe(image)
+          })
+        }
     
-        images.forEach(image => {
-          imgObserver.observe(image)
-        })
       }
-
-    if(imageSelectRef){
-      console.log(document.querySelectorAll(".ImagesPreview--imageContainer"))
-      lazyLoadImages()
-    }
     console.log("rerender IMAGE SELECT *************************")
     return(
       createPreviewsALL(props.data)
