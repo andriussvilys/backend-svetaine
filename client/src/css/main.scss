@@ -535,7 +535,8 @@ $border-main-color: #bbb;
     position: sticky;
     top: 0;
     flex: 1 1 20vw;
-
+    text-indent: -100%;
+    overflow: hidden;
 }
 .ImagesPreview--imageContainer__empty{
     // border: 2px solid red;

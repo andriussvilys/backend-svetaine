@@ -11,11 +11,13 @@ const ArtworkInfo = (props) => {
         if(props.file.foreground.seeAlso.length > 0){
             seeAlsos = props.file.foreground.seeAlso.map(fileName => {
                 return <FilePreview 
+                    loadByDefault={"true"}
                     key={`ArtworkInfo-${fileName}`}
                     className="ArtworkInfo-preview"
                     containerClassName="ArtworkInfo-preview-container"
                     file={props.artworkInfoData[fileName]}
                     onClick={(e) => props.loadEnlarge(e, fileName)}
+                    id={`seeAlso-${fileName}`}
                 />
             })
             seeAlsos =  <div className="SeeAlso-related">
@@ -30,11 +32,13 @@ const ArtworkInfo = (props) => {
         previous = <div className="SeeAlso-previous">
                             <div className="subtitle subtitle_seeAlso">previous:</div>
                             <FilePreview 
+                                loadByDefault={"true"}
                                 key={`ArtworkInfo-${props.file.previous.fileName}`}
                                 className="ArtworkInfo-preview"
                                 containerClassName="ArtworkInfo-preview-container"
                                 file={props.file.previous}
                                 onClick={(e) => props.loadEnlarge(e, props.file.previous.fileName)}
+                                id={`previous-${props.file.previous.fileName}`}
                             />
                         </div>
         }
@@ -63,15 +67,6 @@ const ArtworkInfo = (props) => {
     const artworkTitle = () => {
 
             const artworkFamily = () => {
-                console.log("artworkFamily")
-                console.log(props.file.foreground.artworkFamily)
-                console.log("artworkTITLE")
-                console.log(props.file.foreground.artworkTitle)
-                // if(props.file.foreground.artworkFamily === "none" || "about"){
-                //     console.log("return null")
-                //     return null
-                // }
-                // else {
                     return <div 
                             className={
                                 props.file.foreground.artworkTitle ? 

@@ -922,7 +922,7 @@ export class Provider extends React.Component{
         setTimeout(() => {     
           let scrollTo = {behavior: 'smooth'}               
           if(document.getElementById(fileName)){
-            scrollTo.left = document.getElementById(fileName).getBoundingClientRect().x
+            scrollTo.left = document.getElementById(fileName).getBoundingClientRect().x - 5
             if(document.getElementById("imageSelect").scrollLeft > 0){
               scrollTo.left += document.getElementById("imageSelect").scrollLeft
             }
@@ -1114,7 +1114,22 @@ export class Provider extends React.Component{
                             }
                           })
                         })
-                        newState.artworkOnDisplay = onDisplay
+                        let artworkOnDisplay = {}
+                        let displayThemes = ["metal", "social", "tools", "cloud"]
+                        let hideThemes = ["celestial body"]
+                        let artworkNames = Object.keys(onDisplay)
+                        artworkNames.forEach(fileName => {
+                          displayThemes.forEach(theme => {
+                            if(onDisplay[fileName].themes.includes(theme)){
+                              hideThemes.forEach(hideTheme => {
+                                if(!onDisplay[fileName].themes.includes(hideTheme)){
+                                  artworkOnDisplay[fileName] = onDisplay[fileName]
+                                }
+                              })
+                            }
+                          })
+                        })
+                        newState.artworkOnDisplay = artworkOnDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
                         resolve()

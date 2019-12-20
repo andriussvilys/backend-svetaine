@@ -7,19 +7,26 @@ const ImageSelect = (props) => {
     const createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map((objName, index) => {
-                if(data[objName].displayMain){
-                    return <FilePreview 
-                    lazyLoad={"true"}
-                    key={`imageSelect-${objName}`}
-                    containerClassName="ImagesPreview--imageContainer"
-                    className="imageSelect-FilePreview" 
-                    onClick={e => props.methods.loadEnlarge(e, objName)}
-                    file={data[objName]} 
-                    />
-                }
-                else{
-                return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty"></div>
-                }
+              if(props.state.artworkOnDisplay[objName]){
+                return <FilePreview 
+                key={`imageSelect-${objName}`}
+                containerClassName="ImagesPreview--imageContainer"
+                className="imageSelect-FilePreview loadByDefault" 
+                onClick={e => props.methods.loadEnlarge(e, objName)}
+                file={data[objName]} 
+                />
+              }
+              else{
+                return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty">
+                          <FilePreview 
+                        key={`imageSelect-${objName}`}
+                        containerClassName="ImagesPreview--imageContainer"
+                        className="imageSelect-FilePreview" 
+                        onClick={e => props.methods.loadEnlarge(e, objName)}
+                        file={data[objName]} 
+                        />
+                      </div>
+              }
             })
             return <div 
                       id="imageSelect"
@@ -40,11 +47,10 @@ const ImageSelect = (props) => {
 
     const lazyLoadImages = () => {
         console.log("lazy load called")
-        const images = document.querySelectorAll(".imageSelect-FilePreview")
+        const images = document.querySelectorAll(".loadByDefault")
 
         if(images){
           const preloadImage = (img) => {
-            console.log(`load image ${img.fileName}`)
             const src = img.getAttribute("data-src")
             if(!src){
               return
@@ -60,6 +66,8 @@ const ImageSelect = (props) => {
       
           const imgObserver = new IntersectionObserver((entries, imgObserver) => {
             entries.forEach(entry => {
+              console.log("entry")
+              console.log(entry)
               if(!entry.isIntersecting){
                 return
               }
