@@ -1482,5 +1482,8 @@ label {
   .ArtworkInfo_locationYear {
     font-size: 10px;
   }
+  .side-scroll .ImagesPreview--imageContainer__empty {
+    width: 2px;
+  }
 }
 /*# sourceMappingURL=main.css.map */

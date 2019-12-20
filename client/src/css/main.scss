@@ -1126,6 +1126,9 @@ $border-main-color: #bbb;
     .ArtworkInfo_locationYear{
         font-size: 10px;
     }
+    .side-scroll .ImagesPreview--imageContainer__empty{
+        width: 2px;
+    }
   }
 
 //   *{transition: 0s all !important;}
