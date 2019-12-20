@@ -689,7 +689,7 @@ label {
   transition: 0 opacity;
   z-index: 2;
   overflow: hidden;
-  max-height: 200px;
+  height: 200px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -1128,18 +1128,16 @@ label {
 }
 
 .ArtworkInfo_artworkFamily {
-  font-size: 14px;
+  font-size: 12px;
   line-height: 16px;
 }
 
 .ArtworkInfo_artworkTitle {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 14px;
 }
 
 .ArtworkInfo_locationYear {
   font-size: 12px;
-  margin-top: 10px;
 }
 
 .Tags-item_wrapper {
@@ -1473,7 +1471,8 @@ label {
     display: none;
   }
   .ImagesPreview--imageContainer {
-    height: 200px;
+    height: auto;
+    max-height: 200px;
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;

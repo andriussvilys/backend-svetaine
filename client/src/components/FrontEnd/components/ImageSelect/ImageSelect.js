@@ -44,6 +44,7 @@ const ImageSelect = (props) => {
 
         if(images){
           const preloadImage = (img) => {
+            console.log(`load image ${img.fileName}`)
             const src = img.getAttribute("data-src")
             if(!src){
               return
@@ -75,7 +76,6 @@ const ImageSelect = (props) => {
         }
     
       }
-    console.log("rerender IMAGE SELECT *************************")
     return(
       createPreviewsALL(props.data)
     )

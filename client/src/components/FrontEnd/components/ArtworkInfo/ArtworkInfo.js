@@ -63,18 +63,26 @@ const ArtworkInfo = (props) => {
     const artworkTitle = () => {
 
             const artworkFamily = () => {
-                if(props.file.foreground.artworkFamily === "none" || "about"){
-                    return null
-                }
-                return <div 
-                className={
-                    props.file.foreground.artworkTitle ? 
-                    "ArtworkInfo_artworkFamily" :
-                    "ArtworkInfo_artworkTitle"
-                    }
-                    >
-                    part of <em 
-                    className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em></div>
+                console.log("artworkFamily")
+                console.log(props.file.foreground.artworkFamily)
+                console.log("artworkTITLE")
+                console.log(props.file.foreground.artworkTitle)
+                // if(props.file.foreground.artworkFamily === "none" || "about"){
+                //     console.log("return null")
+                //     return null
+                // }
+                // else {
+                    return <div 
+                            className={
+                                props.file.foreground.artworkTitle ? 
+                                "ArtworkInfo_artworkFamily" :
+                                "ArtworkInfo_artworkTitle"
+                                }
+                                >
+                                {!props.file.foreground.artworkTitle ? null : <span>part of </span> }
+                                <em className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em>
+                            </div>
+                // }
             }
 
             const artworkTitle = () => {
