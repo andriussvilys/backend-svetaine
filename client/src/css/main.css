@@ -689,7 +689,7 @@ label {
   transition: 0 opacity;
   z-index: 2;
   overflow: hidden;
-  height: 200px;
+  max-height: 200px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -713,6 +713,11 @@ label {
   -webkit-box-flex: 1;
       -ms-flex: 1 1 150px;
           flex: 1 1 150px;
+}
+
+.ImagesPreview--imageContainer__empty > * {
+  -webkit-transform: translateY(200px) !important;
+          transform: translateY(200px) !important;
 }
 
 .enlargeContainer {
@@ -1234,6 +1239,10 @@ label {
   color: white !important;
   font-weight: bold;
   padding-left: 5px;
+}
+
+.halfSize {
+  max-width: 50%;
 }
 
 @media only screen and (max-width: 720px) {

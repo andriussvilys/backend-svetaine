@@ -531,7 +531,7 @@ $border-main-color: #bbb;
     transition: 0 opacity;
     z-index: 2;
     overflow: hidden;
-    height: 200px;
+    max-height: 200px;
     position: sticky;
     top: 0;
     flex: 1 1 20vw;
@@ -547,6 +547,9 @@ $border-main-color: #bbb;
     position: sticky;
     top: 0;
     flex: 1 1 150px;
+}
+.ImagesPreview--imageContainer__empty > *{
+    transform: translateY(200px) !important;
 }
 .enlargeContainer{
     height: 100%;
@@ -929,6 +932,9 @@ $border-main-color: #bbb;
     color: white !important;
     font-weight: bold;
     padding-left: 5px;
+}
+.halfSize{
+    max-width: 50%;
 }
 
 //MEDIA QUERY MOBILE *************************************************************************************************************

@@ -706,10 +706,7 @@ export class Provider extends React.Component{
     }
     this.viewPrev = () => {
 
-      if(!this.state.enlarge.prevSequence || this.state.enlarge.prevSequence.length < 0){
-        alert('no track')
-        return
-      }
+
       let prevSequence = [...this.state.enlarge.prevSequence]
       let currentIndex = prevSequence.indexOf(this.state.enlarge.background.fileName)
       let nextIndex = currentIndex-1 < 0 ? prevSequence.length-1 : currentIndex-1
@@ -800,8 +797,8 @@ export class Provider extends React.Component{
         let futureSize = null
 
         // backgroundImage(5, true)
-        //   .then(res => {
-              console.log("background img loaded")
+        // //   .then(res => {
+        //       console.log("background img loaded")
               if(!this.toggleMobile()){
                 if(document.getElementById('background').style.width !== "100%"){
                   document.getElementById('background').style.width = "100%"
@@ -858,10 +855,12 @@ export class Provider extends React.Component{
                 else{container.style.transform = 'translateY(0)'}
               }
 
-              this.scrollToHorizontal(file.fileName)
+              if(this.state.artworkOnDisplay[file.fileName]){
+                this.scrollToHorizontal(file.fileName)
+              }
       
               setTimeout(() => {
-                console.log("foreground img operation")
+                // console.log("foreground img operation")
                 let newState = {...this.state}
 
                 if(!viewPrev){
@@ -871,6 +870,9 @@ export class Provider extends React.Component{
                   }
                   else{
                     prevSequence = [...this.state.enlarge.prevSequence]
+                  }
+                  if(prevSequence.includes(file.fileName)){
+                    prevSequence.splice(prevSequence.indexOf(file.fileName), 1)
                   }
                   prevSequence = [...prevSequence, file.fileName]
                   prevSequence = new Set(prevSequence)

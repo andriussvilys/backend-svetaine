@@ -7,25 +7,26 @@ const ImageSelect = (props) => {
     const createPreviewsALL = (data) => {
         if(data){
             let previews = Object.keys(data).map((objName, index) => {
+              //check if width < height 
+              //if true, add half-size class
+              const halfSize = props.state.artworkInfoData[objName].naturalSize.naturalWidth < props.state.artworkInfoData[objName].naturalSize.naturalHeight ? "halfSize" : null
               if(props.state.artworkOnDisplay[objName]){
                 return <FilePreview 
                 key={`imageSelect-${objName}`}
-                containerClassName="ImagesPreview--imageContainer"
+                containerClassName={`ImagesPreview--imageContainer ${halfSize}`}
                 className="imageSelect-FilePreview loadByDefault" 
                 onClick={e => props.methods.loadEnlarge(e, objName)}
                 file={data[objName]} 
                 />
               }
               else{
-                return <div key={`imageSelect-${objName}-${index}`} className="ImagesPreview--imageContainer__empty">
-                          <FilePreview 
+                return <FilePreview 
                         key={`imageSelect-${objName}`}
-                        containerClassName="ImagesPreview--imageContainer"
+                        containerClassName={`ImagesPreview--imageContainer ImagesPreview--imageContainer__empty ${halfSize}`}
                         className="imageSelect-FilePreview" 
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
                         />
-                      </div>
               }
             })
             return <div 
@@ -46,7 +47,6 @@ const ImageSelect = (props) => {
     }
 
     const lazyLoadImages = () => {
-        console.log("lazy load called")
         const images = document.querySelectorAll(".loadByDefault")
 
         if(images){
@@ -66,8 +66,6 @@ const ImageSelect = (props) => {
       
           const imgObserver = new IntersectionObserver((entries, imgObserver) => {
             entries.forEach(entry => {
-              console.log("entry")
-              console.log(entry)
               if(!entry.isIntersecting){
                 return
               }
