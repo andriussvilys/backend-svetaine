@@ -14,7 +14,9 @@ export default class FileUpdate extends React.Component{
         this.state = {
             showModal: false,
             modalMessage: null,
-            modalConfirm: true
+            modalConfirm: true,
+            fileList: this.props.state.artworkInfoData,
+            allFiles: this.props.state.artworkInfoData
         }
     }
 
@@ -78,6 +80,26 @@ export default class FileUpdate extends React.Component{
         )
     }
 
+    filterByFamily = (value) => {
+        console.log('call filterByFamily')
+        console.log(value)
+        const artworkFamily = value
+        let newRenderList = {}
+        const data = this.state.allFiles
+        const list = Object.keys(this.state.allFiles)
+        list.forEach(objName => {
+            if(data[objName].artworkFamily === value){
+                const obj = data[objName]
+                newRenderList = {...newRenderList, [objName]: obj}
+            }
+        })
+        this.setState({fileList: newRenderList}, () => {console.log('filter done'); console.log(this.state)})
+    }
+
+    reloadAll = () => {
+        this.setState({fileList: this.state.allFiles})
+    }
+
     deletePromise = (fileName, artworkFamily) => {
         this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
             .then(res => {
@@ -95,8 +117,13 @@ export default class FileUpdate extends React.Component{
 
     }
 
-    render(){
+    componentDidMount(){
+        this.setState({fileList: this.props.state.artworkInfoData})
+    }
 
+    render(){
+        console.log('edit detail container')
+        console.log(this.state)
         return(
                 <div 
                 id={'familyContainer'}
@@ -116,7 +143,7 @@ export default class FileUpdate extends React.Component{
                         <Button
                             size="sm"
                             variant="primary"
-                            onClick={this.resetRenderFiles}
+                            onClick={this.reloadAll}
                         >
                             reload file list
                         </Button>
@@ -124,7 +151,7 @@ export default class FileUpdate extends React.Component{
 
                     <div style={{display: "flex", flexWrap: "wrap"}}>
                         {
-                            Object.keys(this.props.state.artworkInfoData).map(fileName => {
+                            Object.keys(this.state.fileList).map(fileName => {
                                 return this.EditDetail(this.props.state.artworkInfoData[fileName])
                             })
                         }

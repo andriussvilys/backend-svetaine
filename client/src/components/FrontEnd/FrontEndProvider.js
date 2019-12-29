@@ -360,6 +360,7 @@ export class Provider extends React.Component{
     this.filterByTheme = (theme, hideAll) => {
 
       if(hideAll){
+        console.log("HIDE ALL")
         let newDisplay = {}
         let zeroDisplay = {}
         Object.keys(this.state.visibleArtwork).forEach(fileName => {
@@ -408,7 +409,13 @@ export class Provider extends React.Component{
 
       else{
         this.state.themesOnDisplay[theme].forEach(item => {
-          document.getElementById(item).classList.remove("image-hide")
+          const DOMitem = document.getElementById(item)
+          console.log(DOMitem)
+          if(!DOMitem.src){
+            console.log(DOMitem)
+            DOMitem.src = DOMitem.getAttribute('data-src')
+          }
+          DOMitem.classList.remove("image-hide")
         })
 
         toggleArtwork.forEach(fileName => {
@@ -633,16 +640,21 @@ export class Provider extends React.Component{
           if(familyName === "none"){
             return nextPic = null
           }
+
           let sequence = null
           const createSequence = () => {
             const recordedSequence = this.state.relatedArtwork[familyName].column.fileIds
             const startIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(currentImage)
+            console.log('recordedSequence')
+            console.log(recordedSequence)
             console.log("startIndex")
             console.log(startIndex)
             const start = recordedSequence.slice(startIndex, recordedSequence.length)
             const end = recordedSequence.slice(0, startIndex)
             const newSequence = [...start, ...end]
-            familySequence = {"startIndex": startIndex, "currentIndex": startIndex, "familySequence": newSequence, "familyName": familyName }
+            console.log('newSequence')
+            console.log(newSequence)
+            familySequence = {"startIndex": 0, "currentIndex": 0, "familySequence": newSequence, "familyName": familyName }
             newState.enlarge.familySequence = familySequence
             return familySequence
           }
@@ -676,6 +688,7 @@ export class Provider extends React.Component{
           let currentIndex = indexes.indexOf(this.state.enlarge.background.fileName)
           return currentIndex < 0 ? this.state.enlarge.commonIndex : currentIndex
         }
+
         nextPic = checkFamilySequence()
         console.log("nextPic")
         console.log(nextPic)
@@ -714,6 +727,14 @@ export class Provider extends React.Component{
       let nextPic = this.state.artworkInfoData[nextPicName]
       if(!nextPic){
         return
+      }
+      if(this.state.enlarge.familySequence){
+        const familySequence = this.state.enlarge.familySequence
+        let index = familySequence.currentIndex-1 > familySequence.familySequence.length-1 ? familySequence.length-1 : familySequence.familySequence.currentIndex-1;
+        nextPicName = familySequence.familySequence[index]
+        let newState = {...this.state}
+        newState.enlarge.familySequence.currentIndex -= 1;
+        this.setState(newState, () => {this.animateEnlarge(nextPic, true); return})
       }
       this.animateEnlarge(nextPic, true)
     }

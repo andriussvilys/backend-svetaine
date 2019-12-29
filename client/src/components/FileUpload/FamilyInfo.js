@@ -4,8 +4,6 @@ import DropDownList from '../DropDownList'
 import SeeAlsoSelector from './SeeAlsoSelector'
 
 const FamilyInfo = (props) => {
-    console.log('FAMILY INFO-- PROPS')
-    console.log(props)
         return(
             <div className="familyInfo-container">
 

@@ -95,7 +95,8 @@ export default class Edit extends Component{
                                                     // relatedArtwork={this.context.state.relatedArtwork[familyName]}
                                                     context={this.context}
                                                     familyName={this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily}
-                                                    file={this.context.state.artworkInfoData[props.match.params.fileName]}
+                                                    // file={this.context.state.artworkInfoData[props.match.params.fileName]}
+                                                    file={this.context.state.fileData.files[props.match.params.fileName]}
                                                     files={this.sortByFamily().fileByFamily[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
                                                     relatedArtwork={this.context.state.relatedArtwork[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
                                                     controls={{

@@ -27,6 +27,7 @@ export default class ImageInfo extends Component{
                         <p className="subtitle">(different from family name):</p>
                         </div>
                         <input 
+                        value={this.props.file.artworkTitle}
                         type="text" 
                         onChange={(e) => this.props.onChange(e.target.value, 'artworkTitle', this.props.fileName)} 
                         />
@@ -67,6 +68,7 @@ export default class ImageInfo extends Component{
                             <input 
                             type="number" 
                             min="1992" 
+                            value={this.props.file.year}
                             onChange={(e) => this.props.onChange(e.target.value, "year", this.props.fileName) } 
                             />
                     </div>
@@ -75,6 +77,7 @@ export default class ImageInfo extends Component{
                         <span>location:</span>
                             <input 
                             type="text" 
+                            value={this.props.file.location}
                             onChange={(e) => this.props.onChange(e.target.value, "location", this.props.fileName) } 
                             />
                     </div>
@@ -89,6 +92,7 @@ export default class ImageInfo extends Component{
                             <p className="subtitle">this is describes particulars of a work in a series or exhibit in a show</p>
                         </div>
                         <textarea
+                            value={this.props.file.artworkDescription}
                         onChange={
                             (e) => this.props.onChange(e.target.value, "artworkDescription", this.props.fileName)
                         }

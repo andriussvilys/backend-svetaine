@@ -651,7 +651,12 @@ export class Provider extends React.Component{
                 }
             }
 
-            if(nestType() === "string"){              
+            if(nestType() === "string"){    
+                console.log('value')
+                console.log(value)
+                console.log('string')
+                console.log(string)
+                          
                 newState = {
                     ...this.state,
                     fileData: {

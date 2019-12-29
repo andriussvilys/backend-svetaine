@@ -73,6 +73,8 @@ export default class FileUpdate extends React.Component{
         })
 
     filterByFamily = (value) => {
+        console.log('call filterByFamily')
+        console.log(value)
         const artworkFamily = value
         let newRenderList = []
         this.state.fileList.forEach(obj => {
@@ -80,7 +82,7 @@ export default class FileUpdate extends React.Component{
                 newRenderList = [...newRenderList, obj]
             }
         })
-        this.setState({renderList: newRenderList})
+        this.setState({renderList: newRenderList}, () => {return})
     }
 
     resetRenderFiles = () => {
@@ -101,6 +103,8 @@ export default class FileUpdate extends React.Component{
     }
 
     render(){
+        console.log('FILTER BY FAM')
+        console.log(this.filterByFamily)
         return(
             <div>
                 <div>
