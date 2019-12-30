@@ -588,8 +588,7 @@ font-family: 'Times New Roman', Times, serif;
     overflow: hidden;
     max-height: 200px;
     position: sticky;
-    top: 0;
-    flex: 1 1 20vw;
+    left: 0;
     text-indent: -100%;
     overflow: hidden;
 }
@@ -999,7 +998,7 @@ font-family: 'Times New Roman', Times, serif;
         border-bottom: none;
     }
     .TagsMenu-max{
-        height: calc(100vh - 150px - 50px);
+        max-height: calc(100vh - 143px);
     }
     .TagsMenu-Card-Title{
         height: 37px;
@@ -1052,7 +1051,7 @@ font-family: 'Times New Roman', Times, serif;
     .side-scroll{
         flex-direction: column;
         overflow-x: auto;
-        height: 90px;
+        border-top: 1px solid;
     }
     // .side-scroll > div {
     //     max-width: 120px;
@@ -1077,7 +1076,6 @@ font-family: 'Times New Roman', Times, serif;
         grid-row-start: 1;
         grid-row-end: 2;
         border-left: none;
-        border-bottom: 1px solid;
         height: 0px;
     }
     .enlargeContainer > div {
@@ -1133,7 +1131,7 @@ font-family: 'Times New Roman', Times, serif;
     }
     .side-scroll .imageSelect-FilePreview{
         width: auto !important;
-        max-height: 90px;
+        z-index: 9999;
     }
 
     .images-container{
@@ -1162,8 +1160,7 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ImagesPreview--imageContainer{
         height: auto;
-        max-height: 200px;
-        flex: 1 1 30vw;
+        max-height: 30%;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
@@ -1176,7 +1173,6 @@ font-family: 'Times New Roman', Times, serif;
     }
     .info-up{
         opacity: 1;
-        bottom: 20px;
     }
   }
 

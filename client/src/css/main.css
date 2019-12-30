@@ -768,10 +768,7 @@ label {
   max-height: 200px;
   position: -webkit-sticky;
   position: sticky;
-  top: 0;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 20vw;
-          flex: 1 1 20vw;
+  left: 0;
   text-indent: -100%;
   overflow: hidden;
 }
@@ -1350,7 +1347,7 @@ label {
     border-bottom: none;
   }
   .TagsMenu-max {
-    height: calc(100vh - 150px - 50px);
+    max-height: calc(100vh - 143px);
   }
   .TagsMenu-Card-Title {
     height: 37px;
@@ -1424,7 +1421,7 @@ label {
         -ms-flex-direction: column;
             flex-direction: column;
     overflow-x: auto;
-    height: 90px;
+    border-top: 1px solid;
   }
   .enlargeContainer {
     -ms-grid-column: 1;
@@ -1452,7 +1449,6 @@ label {
     grid-row-start: 1;
     grid-row-end: 2;
     border-left: none;
-    border-bottom: 1px solid;
     height: 0px;
   }
   .enlargeContainer > div {
@@ -1525,7 +1521,7 @@ label {
   }
   .side-scroll .imageSelect-FilePreview {
     width: auto !important;
-    max-height: 90px;
+    z-index: 9999;
   }
   .images-container {
     display: -ms-grid;
@@ -1559,10 +1555,7 @@ label {
   }
   .ImagesPreview--imageContainer {
     height: auto;
-    max-height: 200px;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 30vw;
-            flex: 1 1 30vw;
+    max-height: 30%;
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;
@@ -1575,7 +1568,6 @@ label {
   }
   .info-up {
     opacity: 1;
-    bottom: 20px;
   }
 }
 /*# sourceMappingURL=main.css.map */
