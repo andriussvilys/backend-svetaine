@@ -564,15 +564,15 @@ label {
 }
 
 .tagsMenu-listItem:hover {
-  background-color: #a54b9a;
+  background-color: #ffe0ef;
 }
 
 .TagsMenu-Card-Title:hover {
-  background-color: #a54b9a;
+  background-color: #ffe0ef;
 }
 
 .checkbox-selected {
-  background-color: #c877bf;
+  background-color: #e3e3e3;
 }
 
 .tagsMenu-Button_category * {
@@ -786,6 +786,7 @@ label {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
+  z-index: -9999;
 }
 
 .ImagesPreview--imageContainer__empty > * {
@@ -1293,7 +1294,6 @@ label {
 
 .dark-bg {
   background-color: black;
-  height: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1546,7 +1546,7 @@ label {
     cursor: pointer;
   }
   .about-container:hover {
-    background-color: #a54b9a;
+    background-color: #dddddd;
     border-bottom: 1px solid;
   }
   .about-image {

@@ -420,13 +420,13 @@ $border-main-color: #bbb;
 }
 .tagsMenu-listItem:hover{
     // border-bottom: 1px solid black;
-    background-color: #a54b9a;
+    background-color: #ffe0ef;
 }
 .TagsMenu-Card-Title:hover{
-    background-color: #a54b9a;
+    background-color: #ffe0ef;
 }
 .checkbox-selected{
-    background-color: #c877bf;
+    background-color: #e3e3e3;
 }
 .tagsMenu-Button_category *{
 font-size: 26px !important;
@@ -601,6 +601,7 @@ font-family: 'Times New Roman', Times, serif;
     max-height: 200px;
     position: sticky;
     top: 0;
+    z-index: -9999;
     // flex: 1 1 150px;
 }
 .ImagesPreview--imageContainer__empty > *{
@@ -952,7 +953,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 .dark-bg{
     background-color: black;
-    height: 20px;
     display: flex;
     align-items: center;
 }
@@ -1149,7 +1149,7 @@ font-family: 'Times New Roman', Times, serif;
         cursor: pointer;
     }
     .about-container:hover{
-        background-color: #a54b9a;
+        background-color: #dddddd;
         border-bottom: 1px solid;
     }
     .about-image{
