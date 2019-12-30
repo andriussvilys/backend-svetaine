@@ -9,7 +9,9 @@ const Accordion = (props) => {
             as={Button} 
             variant="link" 
             eventKey="0"
-            className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
+            // className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
+            // className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
+            className={props.level ? `tagsMenu-Button tagsMenu-Button_${props.level}` : "tagsMenu-Button tagsMenu-Button"}
             >
                 {props.title}
             </BootstrapAccordion.Toggle>
@@ -30,7 +32,11 @@ const Accordion = (props) => {
     }
     const createAcc = () => {
         return <div
-                    className={`TagsMenu-Card-Title ${props.level}`}
+                    className={`
+                    TagsMenu-Card-Title 
+                    ${props.level} 
+                    ${props.checked ? 'checkbox-selected' : null}
+                    `}
                 >
                     {toggle(props.toggle)}
                         {props.checkbox}

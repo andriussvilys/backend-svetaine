@@ -21,8 +21,11 @@ const Themes = (props) => {
         console.log(allThemes)
         // const allThemes = themesOnDisplay()
         let renderList = allThemes.map(theme => {
-            return <li key={theme}>
-            <div className="tagsMenu-listItem">
+            return <li key={theme} className="tags-li">
+            <div 
+            className={props.context.themeChecked(theme) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"}
+            // className="tagsMenu-listItem"
+            >
                 <span>{theme}</span>
                 <input 
                     id={`theme-${theme}`}
@@ -35,7 +38,7 @@ const Themes = (props) => {
             </div>
             </li>
         })
-        const clearAll = <li>
+        const clearAll = <li className="tags-li">
                             <div className="tagsMenu-listItem dark-bg">
                                 <span className="white-font">{
                                     props.context.state.artworkOnDisplay && Object.keys(props.context.state.artworkOnDisplay).length > 0 ?
@@ -53,16 +56,17 @@ const Themes = (props) => {
                         </li>
             
             renderList = [clearAll, ...renderList]
-        return <ul className="tagsMenu-list">{renderList}</ul>
+        return <ul className="tagsMenu-list tagsMenu-list-tags">{renderList}</ul>
     }
 
     return(
         <Accordion
-            title="Themes"
+            title={<span>Tags</span>}
             toggle="0" 
             className="TagsMenu-Accordion-label"
             open={!props.state.mobile ? "1" : "0"}
             collapseId={"tags-collapse"}
+            level="category"
         >   
             {props.state.themesOnDisplay ? renderList() : null}
         </Accordion>

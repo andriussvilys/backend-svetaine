@@ -24,7 +24,10 @@ export default class TagsMenu extends React.Component{
         }
         let block = listitemData.map(listitem => {
         return <li key={listitem}>
-            <div className="tagsMenu-listItem">
+            <div 
+            // className="tagsMenu-listItem"
+            className={this.props.context.listitemChecked(category, subcategory, listitem) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"}
+            >
                 <span>{listitem}</span>
                 <input 
                     id={`listItem-${listitem}`}
@@ -65,7 +68,9 @@ export default class TagsMenu extends React.Component{
                         onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                         checked={this.props.context.subcategoryChecked(category, subName)}
                         />}
+                    checked={this.props.context.subcategoryChecked(category, subName)}
                     toggle={toggle} 
+                    // level="subcategory"
                     className="TagsMenu-Accordion-label">
                         {this.listItemBlock(category, subName, subData[subName])}
                     </Accordion>
@@ -84,7 +89,9 @@ export default class TagsMenu extends React.Component{
                     onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                     checked={this.props.context.subcategoryChecked(category, subName)}
                     />}
+                checked={this.props.context.subcategoryChecked(category, subName)}
                 toggle={toggle} 
+                level="subcategory"
                 className="TagsMenu-Accordion-label">
                     {this.listItemBlock(category, subName, subData[subName])}
                 </Accordion>
@@ -115,7 +122,10 @@ export default class TagsMenu extends React.Component{
                 checked={this.props.context.categoryChecked(obj.category)}
                 />}
             toggle={toggle} 
-            className="TagsMenu-Accordion-label"
+            checked={this.props.context.categoryChecked(obj.category)}
+            level="category"
+            // className="TagsMenu-Accordion-label"
+            className={this.props.context.categoryChecked(obj.category) ? "TagsMenu-Accordion-label checkbox-selected" : "TagsMenu-Accordion-label"}
             >
                 {this.subcategoryBlock(obj.category, obj.subcategory)}
             </Accordion>
