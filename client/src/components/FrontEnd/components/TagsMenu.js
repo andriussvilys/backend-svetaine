@@ -144,13 +144,13 @@ export default class TagsMenu extends React.Component{
                 `TagsMenu-container TagsMenu-max` : 
             `TagsMenu-container`
         }
-        style={{height: `${
-            this.props.context.state.mobile ?
-                this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
-                `${this.props.context.state.enlarge.currentHeight + 1}px`:
-                `auto`:
-            `auto`
-        }`}}
+        // style={{height: `${
+        //     this.props.context.state.mobile ?
+        //         this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
+        //         `${this.props.context.state.enlarge.currentHeight + 1}px`:
+        //         `auto`:
+        //     `auto`
+        // }`}}
         onTouchStart={(e) => {
             const touches = e.touches
             const touch = {"y": touches[0].clientY}

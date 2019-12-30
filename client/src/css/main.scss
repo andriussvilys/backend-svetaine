@@ -602,6 +602,7 @@ font-family: 'Times New Roman', Times, serif;
     position: sticky;
     top: 0;
     z-index: -9999;
+    height: 0;
     // flex: 1 1 150px;
 }
 .ImagesPreview--imageContainer__empty > *{
@@ -960,6 +961,7 @@ font-family: 'Times New Roman', Times, serif;
     color: white !important;
     font-weight: bold;
     padding-left: 5px;
+    white-space: nowrap;
 }
 .halfSize{
     max-width: 50%;
@@ -1050,7 +1052,7 @@ font-family: 'Times New Roman', Times, serif;
     .side-scroll{
         flex-direction: column;
         overflow-x: auto;
-        height: 70px;
+        height: 90px;
     }
     // .side-scroll > div {
     //     max-width: 120px;
@@ -1131,7 +1133,7 @@ font-family: 'Times New Roman', Times, serif;
     }
     .side-scroll .imageSelect-FilePreview{
         width: auto !important;
-        max-height: 70px;
+        max-height: 90px;
     }
 
     .images-container{
@@ -1161,6 +1163,7 @@ font-family: 'Times New Roman', Times, serif;
     .ImagesPreview--imageContainer{
         height: auto;
         max-height: 200px;
+        flex: 1 1 30vw;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
@@ -1170,6 +1173,10 @@ font-family: 'Times New Roman', Times, serif;
     }
     .side-scroll .ImagesPreview--imageContainer__empty{
         width: 2px;
+    }
+    .info-up{
+        opacity: 1;
+        bottom: 20px;
     }
   }
 
