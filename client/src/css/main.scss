@@ -588,7 +588,7 @@ font-family: 'Times New Roman', Times, serif;
     overflow: hidden;
     max-height: 200px;
     position: sticky;
-    left: 0;
+    top: 0;
     text-indent: -100%;
     overflow: hidden;
 }
@@ -1161,6 +1161,7 @@ font-family: 'Times New Roman', Times, serif;
     .ImagesPreview--imageContainer{
         height: auto;
         max-height: 30%;
+        left: 0;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;

@@ -768,7 +768,7 @@ label {
   max-height: 200px;
   position: -webkit-sticky;
   position: sticky;
-  left: 0;
+  top: 0;
   text-indent: -100%;
   overflow: hidden;
 }
@@ -1556,6 +1556,7 @@ label {
   .ImagesPreview--imageContainer {
     height: auto;
     max-height: 30%;
+    left: 0;
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;
