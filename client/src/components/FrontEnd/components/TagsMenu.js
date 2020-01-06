@@ -63,7 +63,8 @@ export default class TagsMenu extends React.Component{
                     level="subcategory-last"
                     checkbox={<input 
                         id={`subcategory-${subName}`}
-                        className="TagsMenu-checkbox_subcategory"
+                        // className="TagsMenu-checkbox_subcategory"
+                        className={`TagsMenu-checkbox_subcategory ${!toggle? 'clickable' : null}`}
                         type="checkbox" 
                         onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                         checked={this.props.context.subcategoryChecked(category, subName)}
@@ -84,7 +85,7 @@ export default class TagsMenu extends React.Component{
                 level="subcategory"
                 checkbox={<input 
                     id={`subcategory-${subName}`}
-                    className="TagsMenu-checkbox_subcategory"
+                    className={`TagsMenu-checkbox_subcategory ${!toggle? 'clickable' : null}`}
                     type="checkbox" 
                     onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                     checked={this.props.context.subcategoryChecked(category, subName)}
@@ -165,6 +166,22 @@ export default class TagsMenu extends React.Component{
         }
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
+            <div  className="clear-all">
+                <div className="tagsMenu-listItem dark-bg">
+                    <span className="white-font">{
+                        this.props.context.state.artworkOnDisplay && Object.keys(this.props.context.state.artworkOnDisplay).length > 0 ?
+                            "clear all" :
+                            "view all"
+                    }</span>
+                    <input 
+                        id={`theme-clearAll`}
+                        type="checkbox" 
+                        checked={this.props.context.state.artworkOnDisplay ? Object.keys(this.props.context.state.artworkOnDisplay).length > 0 : null}
+                        onChange={(e) => { this.props.context.filterAllThemes(e)}
+                        } 
+                    />
+                </div>
+            </div>
             {this.props.children}
 
         </div>

@@ -69,6 +69,7 @@ const ArtworkInfo = (props) => {
     const artworkTitle = () => {
 
             const artworkFamily = () => {
+                if(props.file.foreground.artworkFamily !== "none")
                     return <div 
                             className={
                                 props.file.foreground.artworkTitle ? 
@@ -76,6 +77,7 @@ const ArtworkInfo = (props) => {
                                 "ArtworkInfo_artworkTitle"
                                 }
                                 >
+                                    
                                 {!props.file.foreground.artworkTitle ? null : <span>part of </span> }
                                 <em className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em>
                             </div>

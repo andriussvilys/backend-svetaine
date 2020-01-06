@@ -19,10 +19,10 @@ const Accordion = (props) => {
         else{
             return(
             <BootstrapAccordion 
-            as={Button} 
+            // as={Button} 
             variant="link" 
             eventKey="0"
-            className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
+            className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category noClick" : "tagsMenu-Button tagsMenu-Button_subcategory noClick"}
             style={{width: "auto"}}
             >
                 {props.title}

@@ -3,7 +3,7 @@ import React from 'react'
 const About = (props) => {
     return(
         <div 
-            className="tagsMenu-Button tagsMenu-Button_category btn btn-link about-container"
+            className="tagsMenu-Button tagsMenu-Button_category about-container"
             onClick={(e) => {
                 props.loadEnlarge(e, "portrait.jpg");
                 setTimeout(() => {

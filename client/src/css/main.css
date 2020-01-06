@@ -462,7 +462,7 @@ label {
 }
 
 * {
-  color: black !important;
+  color: black;
 }
 
 .TagsMenu-container {
@@ -519,7 +519,8 @@ label {
 }
 
 .tagsMenu-list {
-  font-family: 'Courier', Courier, monospace;
+  font-family: 'Arial', Helvetica, sans-serif;
+  font-size: 12px;
   text-transform: uppercase;
   list-style-type: none;
   border-left: 1px solid;
@@ -560,7 +561,6 @@ label {
   padding: 4px;
   border: 1px solid;
   margin: 4px;
-  cursor: pointer;
 }
 
 .tagsMenu-listItem:hover {
@@ -575,6 +575,10 @@ label {
   background-color: #e3e3e3;
 }
 
+.about-container:hover {
+  background-color: #ffe0ef;
+}
+
 .tagsMenu-Button_category * {
   font-size: 26px !important;
   font-weight: 600;
@@ -584,11 +588,13 @@ label {
 .tagsMenu-Button_subcategory .title-letter {
   font-size: 18px;
   font-weight: 600;
+  color: #5a5a5a;
 }
 
 .tagsMenu-Button_subcategory-last .title-letter {
   font-size: 18px;
   font-weight: 600;
+  color: #5a5a5a;
 }
 
 .subcategory {
@@ -813,6 +819,9 @@ label {
   right: 0;
   background-color: white;
   border-left: 1px solid black;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
 .enlarge-border {
@@ -1003,7 +1012,8 @@ label {
   width: 100%;
   font-weight: 400 !important;
   font-size: 16px !important;
-  font-family: 'Courier', Courier, monospace;
+  font-family: 'Times New Roman', Times, serif;
+  color: #666666 !important;
 }
 
 @-webkit-keyframes move-right {
@@ -1311,6 +1321,47 @@ label {
   max-width: 50%;
 }
 
+.previewBubble {
+  height: 10px;
+  width: 10px;
+  border-radius: 999px;
+  margin: 5px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 15px;
+          flex: 1 1 15px;
+  background-color: silver;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+.previewBubble-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: absolute;
+  bottom: 2px;
+  z-index: 9999;
+  overflow-x: auto;
+}
+
+.previewBubble-filled {
+  background-color: pink;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.noClick {
+  border: 0;
+  cursor: default;
+}
+
+.clear-all {
+  height: 50px;
+  text-transform: uppercase;
+}
+
 @media only screen and (max-width: 720px) {
   body {
     overscroll-behavior: contain;
@@ -1366,7 +1417,7 @@ label {
         -ms-flex-align: center;
             align-items: center;
     height: 33px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Arial', 'Helvetica', sans-serif;
     font-size: 12px;
   }
   .images-container {
