@@ -599,7 +599,8 @@ export class Provider extends React.Component{
           if(this.toggleMobile() === true){
             enlargeContainer.style.transform = `translateY(-100%)`
 
-            document.getElementById('imageSelect').classList.remove("side-scroll-min")
+            document.getElementById('imageSelect').classList.remove("side-scroll")
+            // document.getElementById('imageSelect').classList.remove("side-scroll-min")
             enlargeContainer.style.height = 0
 
 
@@ -852,7 +853,8 @@ export class Provider extends React.Component{
                   // setTimeout(() => {
                   //   imageSelect.classList.add("side-scroll-min")
                   // }, 410);
-                imageSelect.classList.add("side-scroll-min")
+                // imageSelect.classList.add("side-scroll-min")
+                imageSelect.classList.add("side-scroll")
 
                 container.style.height = `${images.clientHeight - 90}px`
                 background.style.height = `${futureSize.height}px`

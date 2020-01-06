@@ -1360,6 +1360,20 @@ label {
 .clear-all {
   height: 50px;
   text-transform: uppercase;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Tags {
+  border-top: 1px solid;
 }
 
 @media only screen and (max-width: 720px) {
@@ -1604,9 +1618,7 @@ label {
     display: none;
   }
   .ImagesPreview--imageContainer {
-    top: initial;
-    left: 0;
-    max-width: 45%;
+    max-width: 50%;
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;
@@ -1621,9 +1633,7 @@ label {
   .info-up {
     opacity: 1;
   }
-  .side-scroll-min img {
-    position: initial;
-    left: initial;
+  .side-scroll img {
     max-height: 90px;
   }
   .side-scroll-min .ImagesPreview--imageContainer {

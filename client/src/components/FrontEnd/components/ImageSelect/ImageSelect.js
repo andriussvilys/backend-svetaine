@@ -31,7 +31,7 @@ const ImageSelect = (props) => {
             })
             return <div 
                       id="imageSelect"
-                      className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : 'side-scroll'}`}
+                      className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
                       >
                           {previews}
                           {props.mobile ? <div style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}

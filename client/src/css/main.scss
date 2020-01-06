@@ -1003,6 +1003,12 @@ font-family: 'Times New Roman', Times, serif;
 .clear-all{
     height: 50px;
     text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.Tags{
+    border-top: 1px solid;
 }
 
 //MEDIA QUERY MOBILE *************************************************************************************************************
@@ -1203,9 +1209,7 @@ font-family: 'Times New Roman', Times, serif;
         display: none;
     }
     .ImagesPreview--imageContainer{
-        top: initial;
-        left: 0;
-        max-width: 45%;
+        max-width: 50%;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
@@ -1220,9 +1224,12 @@ font-family: 'Times New Roman', Times, serif;
     .info-up{
         opacity: 1;
     }
-    .side-scroll-min img{
-        position: initial;
-        left: initial;
+    // .side-scroll-min img{
+    //     position: initial;
+    //     left: initial;
+    //     max-height: 90px;
+    // }
+    .side-scroll img{
         max-height: 90px;
     }
 

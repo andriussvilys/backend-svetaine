@@ -34,6 +34,7 @@ const Accordion = (props) => {
         return <div
                     className={`
                     TagsMenu-Card-Title 
+                    ${props.className}
                     ${props.level} 
                     ${props.checked ? 'checkbox-selected' : null}
                     `}
