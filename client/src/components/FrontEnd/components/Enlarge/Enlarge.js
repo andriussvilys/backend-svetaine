@@ -79,7 +79,11 @@ export default class Enlarge extends React.Component{
                     this.setState({touch})
                 }}
                 onTouchMove={(e) => {
-                    this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
+                    if(e.touches[1]){
+                        this.setState({tocuh: {...this.state.touch, "multiple": true}})
+                        return
+                    }
+                    this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY, "multiple": false}})
                 }}
                 onTouchEnd={() => {
                     if(Math.abs(this.state.touch.x - this.state.touch.endX) > 30){
