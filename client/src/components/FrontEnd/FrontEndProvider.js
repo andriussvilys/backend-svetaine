@@ -480,6 +480,7 @@ export class Provider extends React.Component{
           })
         }, 300);
     }
+
     this.extendImageSelect = () => {
       Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
         preview.classList.remove("low-opacity")
@@ -537,7 +538,6 @@ export class Provider extends React.Component{
       }
     }
     this.enlarge = (id) => {
-        console.log('ENLARGE RUNS')
             const file = this.state.artworkOnDisplay[id]
             const imageSelect = document.getElementById('imageSelect')
             if(!this.state.enlarge){
@@ -571,13 +571,6 @@ export class Provider extends React.Component{
                     foreground.style.opacity = 1
                   })
                 }, 400);
-                // if(!imageSelect.classList.contains('minimized')){
-                //     imageSelect.classList.add('minimized')
-                //     this.shrinkImageSelect()
-                // }
-                // document.getElementById('enlargeContainer').style.zIndex = "-1"
-                // document.getElementById('enlargeContainer').style.transform = "translateX(0)"
-                // document.getElementById('enlargeContainer').style.zIndex = 0
             })
 
             }
@@ -606,7 +599,7 @@ export class Provider extends React.Component{
           if(this.toggleMobile() === true){
             enlargeContainer.style.transform = `translateY(-100%)`
 
-            // document.getElementById('imageSelect').classList.remove("side-scroll")
+            document.getElementById('imageSelect').classList.remove("side-scroll-min")
             enlargeContainer.style.height = 0
 
 
@@ -857,8 +850,10 @@ export class Provider extends React.Component{
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
                   // setTimeout(() => {
-                  //   imageSelect.classList.add("side-scroll")
+                  //   imageSelect.classList.add("side-scroll-min")
                   // }, 410);
+                imageSelect.classList.add("side-scroll-min")
+
                 container.style.height = `${images.clientHeight - 90}px`
                 background.style.height = `${futureSize.height}px`
                 foreground.style.height = `${futureSize.height}px`
@@ -876,8 +871,12 @@ export class Provider extends React.Component{
                 else{container.style.transform = 'translateY(0)'}
               }
 
+
               if(this.state.artworkOnDisplay[file.fileName]){
-                this.scrollToHorizontal(file.fileName)
+                setTimeout(() => {
+                  this.scrollToHorizontal(file.fileName)
+                }, 410);
+                // this.scrollToHorizontal(file.fileName)
               }
       
               setTimeout(() => {
@@ -906,39 +905,15 @@ export class Provider extends React.Component{
                 newState.enlarge.currentHeight = images.clientHeight - 70
                 newState.enlarge.open = true
 
-                // if(document.getElementById(file.fileName)){
-                //   const scrollTo = document.getElementById(file.fileName).getBoundingClientRect().x
-                //   console.log(file.fileName)
-                //   console.log("scrollTo")
-                //   console.log(scrollTo)
-                //   console.log(document.getElementById(file.fileName).getBoundingClientRect())
-                //   document.getElementById("imageSelect").scrollTo(scrollTo, 0)
-                // }
-
                 this.setState(newState, () => {
                   foreground.style.opacity = 1
                   imageSelect.style.transition = "none"
-
-
-                  // SCROLL TO HORIZONTAL
-                  // let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 50 : 600
-                  // if(this.state.mobile){
-                  //   setTimeout(() => {     
-                  //     let scrollTo = {behavior: 'smooth'}               
-                  //     if(document.getElementById(file.fileName)){
-                  //       scrollTo.left = document.getElementById(file.fileName).getBoundingClientRect().x
-                  //       if(document.getElementById("imageSelect").scrollLeft > 0){
-                  //         scrollTo.left += document.getElementById("imageSelect").scrollLeft
-                  //       }
-                  //       document.getElementById("imageSelect").scrollTo(scrollTo)
-                  //     }
-                  //   }, scrollDelay);
-                  // }
 
                 })
               }, 410);
     })
     }
+
     this.scrollToHorizontal = (fileName) => {
       let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 50 : 1000
       if(this.state.mobile){

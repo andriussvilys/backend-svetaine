@@ -1181,6 +1181,18 @@ font-family: 'Times New Roman', Times, serif;
     .info-up{
         opacity: 1;
     }
+    .side-scroll-min img{
+        position: initial;
+        left: initial;
+        max-height: 90px;
+    }
+
+    // .side-scroll-min{
+    //     border: 1px solid red;
+    // }
+    .side-scroll-min .ImagesPreview--imageContainer{
+        left: initial;
+    }
   }
 
 //   *{transition: 0s all !important;}
