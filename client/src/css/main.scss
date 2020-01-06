@@ -1126,11 +1126,16 @@ font-family: 'Times New Roman', Times, serif;
         z-index: 999;
         transition: 0.4s all;
     }
+    // .imageSelect-FilePreview{
+    //     height: 100%;
+    // }
     .imageSelect-FilePreview{
+        align-self: flex-start;
+        object-position: bottom left;
         height: 100%;
     }
     .side-scroll .imageSelect-FilePreview{
-        width: auto !important;
+        width: 100% !important;
         z-index: 9999;
     }
 
@@ -1143,15 +1148,15 @@ font-family: 'Times New Roman', Times, serif;
         position: relative;
         display: flex;
         // height: 50px;
-        background-color: white;
-        border-bottom: 1px solid !important;
+        background-color: lime;
+        // border-bottom: 1px solid !important;
         align-items: center;
         cursor: pointer;
     }
-    .about-container:hover{
-        background-color: #dddddd;
-        border-bottom: 1px solid;
-    }
+    // .about-container:hover{
+    //     background-color: #dddddd;
+    //     border-bottom: 1px solid;
+    // }
     .about-image{
         width: 150px;
     }
@@ -1159,9 +1164,9 @@ font-family: 'Times New Roman', Times, serif;
         display: none;
     }
     .ImagesPreview--imageContainer{
-        height: auto;
-        max-height: 30%;
+        top: initial;
         left: 0;
+        max-width: 45%;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
@@ -1171,6 +1176,7 @@ font-family: 'Times New Roman', Times, serif;
     }
     .side-scroll .ImagesPreview--imageContainer__empty{
         width: 2px;
+        height: 33%;
     }
     .info-up{
         opacity: 1;

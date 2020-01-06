@@ -27,7 +27,9 @@ const ArtworkInfo = (props) => {
                             </div>
                         </div>
         }
-        let previous = null;
+        let previous = <div className="SeeAlso-previous">
+                            <div className="subtitle subtitle_seeAlso"></div>
+                        </div>;
         if(props.file.previous.fileName !== props.file.foreground.fileName){
         previous = <div className="SeeAlso-previous">
                             <div className="subtitle subtitle_seeAlso">previous:</div>

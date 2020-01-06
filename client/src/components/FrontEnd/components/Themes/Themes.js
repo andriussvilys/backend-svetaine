@@ -62,7 +62,7 @@ const Themes = (props) => {
     return(
         <Accordion
             title={<span>Tags</span>}
-            toggle="0" 
+            toggle="1" 
             className="TagsMenu-Accordion-label"
             open={!props.state.mobile ? "1" : "0"}
             collapseId={"tags-collapse"}

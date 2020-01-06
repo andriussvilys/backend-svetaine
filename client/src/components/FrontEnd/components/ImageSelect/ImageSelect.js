@@ -37,9 +37,9 @@ const ImageSelect = (props) => {
                           {props.mobile ? <div style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
                           {setTimeout(() => {
                             lazyLoadImages()
-                            if(!props.mobile){
-                              document.getElementById("tags-collapse").classList.add('show')
-                            }
+                            // if(!props.mobile){
+                            //   document.getElementById("tags-collapse").classList.add('show')
+                            // }
                           }, 50)}
                     </div>
         }

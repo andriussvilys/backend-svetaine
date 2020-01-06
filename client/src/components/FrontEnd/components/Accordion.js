@@ -43,7 +43,7 @@ const Accordion = (props) => {
                 </div>
     }
     return(
-        <BootstrapAccordion>
+        <BootstrapAccordion defaultActiveKey={props.open? "0" : "1"}>
             <Card className={`TagsMenu-Card`}>
                 {createAcc()}
                 <BootstrapAccordion.Collapse id={props.collapseId} eventKey="0">
