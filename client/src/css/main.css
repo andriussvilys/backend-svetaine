@@ -1617,7 +1617,7 @@ label {
     height: 100%;
   }
   .side-scroll .imageSelect-FilePreview {
-    width: 100% !important;
+    width: auto !important;
     z-index: 9999;
   }
   .images-container {
