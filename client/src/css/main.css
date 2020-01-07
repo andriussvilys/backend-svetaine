@@ -867,6 +867,11 @@ label {
   width: 100%;
 }
 
+.foreground-transition {
+  -webkit-transition: height 0.4s, width 0.4s, opacity 0.7s;
+  transition: height 0.4s, width 0.4s, opacity 0.7s;
+}
+
 .imageSelect-FilePreview {
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
