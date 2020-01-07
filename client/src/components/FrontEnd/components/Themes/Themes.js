@@ -17,8 +17,6 @@ const Themes = (props) => {
     const renderList = () => {
         
         const allThemes = Object.keys(props.state.themesOnDisplay).sort()
-        console.log("renderList sorted")
-        console.log(allThemes)
         // const allThemes = themesOnDisplay()
         let renderList = allThemes.map(theme => {
             return <li key={theme} className="tags-li">

@@ -36,11 +36,9 @@ export default class FrontEndIndex extends React.Component{
                             onClick={
                                 () => {
                                     if(auth.isAuthenticated()){
-                                        console.log('logged in')
                                         this.props.props.history.push('/admin/create')
                                     }
                                     else{
-                                        console.log('needs logged in')
                                         this.props.props.history.push('/admin/login')
                                     }
                                 }

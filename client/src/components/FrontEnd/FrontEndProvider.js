@@ -182,9 +182,6 @@ export class Provider extends React.Component{
 
     }
     this.filterBySubcategory = (category, subcategory, hideAll) => {
-      console.log(category)
-      console.log(subcategory)
-      console.log(hideAll)
         let newDisplay = {}
         let zeroDisplay = {}
 
@@ -247,8 +244,6 @@ export class Provider extends React.Component{
             Object.keys(newDisplay).forEach(id => {
                 document.getElementById(id).classList.remove('image-hide')
             })
-            console.log("newDisplay")
-            console.log(newDisplay)
 
             return this.setState({artworkOnDisplay: newDisplay})
         }
@@ -360,7 +355,6 @@ export class Provider extends React.Component{
     this.filterByTheme = (theme, hideAll) => {
 
       if(hideAll){
-        console.log("HIDE ALL")
         let newDisplay = {}
         let zeroDisplay = {}
         Object.keys(this.state.visibleArtwork).forEach(fileName => {
@@ -410,9 +404,7 @@ export class Provider extends React.Component{
       else{
         this.state.themesOnDisplay[theme].forEach(item => {
           const DOMitem = document.getElementById(item)
-          console.log(DOMitem)
           if(!DOMitem.src){
-            console.log(DOMitem)
             DOMitem.src = DOMitem.getAttribute('data-src')
           }
           DOMitem.classList.remove("image-hide")
@@ -434,7 +426,6 @@ export class Provider extends React.Component{
         themes = [...themes, ...file.themes]
         })
       themes = Array.from(new Set(themes))
-      console.log(themes)
 
       if(!checkbox.checked){
         Object.keys(this.state.artworkOnDisplay).forEach(id => {
@@ -608,6 +599,10 @@ export class Provider extends React.Component{
           }, 100);
           return
         }
+        if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+          document.getElementById("TagsMenu").classList.remove("show-menu")
+          return
+        }
         const delay = this.hideArtworkInfo()
         setTimeout(() => {      
           const enlargeContainer = document.getElementById('enlargeContainer')
@@ -618,7 +613,9 @@ export class Provider extends React.Component{
 
             document.getElementById('imageSelect').classList.remove("side-scroll")
             // document.getElementById('imageSelect').classList.remove("side-scroll-min")
-            enlargeContainer.style.height = 0
+            setTimeout(() => {
+              enlargeContainer.style.height = 0
+            }, 200);
 
 
           }
@@ -657,27 +654,23 @@ export class Provider extends React.Component{
           const createSequence = () => {
             const recordedSequence = this.state.relatedArtwork[familyName].column.fileIds
             const startIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(currentImage)
-            console.log('recordedSequence')
-            console.log(recordedSequence)
-            console.log("startIndex")
-            console.log(startIndex)
+
             const start = recordedSequence.slice(startIndex, recordedSequence.length)
             const end = recordedSequence.slice(0, startIndex)
             const newSequence = [...start, ...end]
-            console.log('newSequence')
-            console.log(newSequence)
+
             familySequence = {"startIndex": 0, "currentIndex": 0, "familySequence": newSequence, "familyName": familyName }
             newState.enlarge.familySequence = familySequence
             return familySequence
           }
 
           if(!this.state.enlarge.familySequence || this.state.enlarge.familySequence.familyName !== familyName){
-            console.log(`creating sequence for ${familyName}`)
+
             sequence = createSequence()
           }
 
           else{
-            console.log("sequnce exists")
+
             sequence = {...this.state.enlarge.familySequence}
           }
           nextIndex = sequence.currentIndex+1 > sequence.familySequence.length-1 ? 0 : sequence.currentIndex+1
@@ -702,14 +695,7 @@ export class Provider extends React.Component{
         }
 
         nextPic = checkFamilySequence()
-        console.log("nextPic")
-        console.log(nextPic)
-
-
         if(!nextPic || familyLength <= 1 || familyName === "none" || nextIndex === 0){
-          if(!nextPic){
-            console.log("!nextPic")
-          }
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
           let indexes = allVisible.filter(id => onDisplay.includes(id))
@@ -723,9 +709,6 @@ export class Provider extends React.Component{
           newState.enlarge.commonIndex = commonIndex()
           this.setState(newState)
         }
-
-        console.log("animateEnlarge")
-        console.log(nextPicName)
         this.animateEnlarge(nextPic)
           
     }
@@ -786,8 +769,6 @@ export class Provider extends React.Component{
     }
     this.animateEnlarge = (file, viewPrev) => {
 
-      console.log("this.animateEnlarge runs")
-
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.toggle("show-menu")
       }
@@ -828,10 +809,6 @@ export class Provider extends React.Component{
       this.setState({enlarge}, () => {
 
         let futureSize = null
-
-        // backgroundImage(5, true)
-        // //   .then(res => {
-        //       console.log("background img loaded")
               if(!this.toggleMobile()){
                 if(document.getElementById('background').style.width !== "100%"){
                   document.getElementById('background').style.width = "100%"
@@ -900,7 +877,6 @@ export class Provider extends React.Component{
               }
       
               setTimeout(() => {
-                // console.log("foreground img operation")
                 let newState = {...this.state}
 
                 if(!viewPrev){
@@ -965,7 +941,7 @@ export class Provider extends React.Component{
         newState.enlarge = {}
       }
       newState.enlarge.commonIndex = currentIndex
-      this.setState(newState, () => {console.log('new state on load'); console.log(this.state)})
+      this.setState(newState)
 
         const file = this.state.artworkInfoData[id]
         
@@ -1012,9 +988,7 @@ export class Provider extends React.Component{
       this.setState({touch})
     }
   this.lazyLoadImages = () => {
-    console.log("lazy load called")
     const images = document.querySelectorAll(".imageSelect-FilePreview")
-    console.log(images)
 
     const preloadImage = (img) => {
       const src = img.getAttribute("data-src")
@@ -1035,8 +1009,6 @@ export class Provider extends React.Component{
           return
         }
         else{
-          console.log("entry.target")
-          console.log(entry.target)
           preloadImage(entry.target);
           imgObserver.unobserve(entry.target)
         }
@@ -1044,8 +1016,6 @@ export class Provider extends React.Component{
     })
 
     images.forEach(image => {
-      console.log("image")
-      console.log(image)
       imgObserver.observe(image)
     })
   }
@@ -1053,7 +1023,6 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
-        console.log("frontendindex did mount")
             let newState = {...this.state}
 
             this.setState({showModal: true})

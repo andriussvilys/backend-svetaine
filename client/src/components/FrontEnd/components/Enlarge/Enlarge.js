@@ -101,9 +101,13 @@ export default class Enlarge extends React.Component{
                     if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
                         if(this.state.touch.y < this.state.touch.endY){
                             if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
-                                 return document.getElementById("ArtworkInfo").classList.remove("info-up")
+                                 document.getElementById("ArtworkInfo").classList.remove("info-up")
+                                 setTimeout(() => {document.getElementById("ArtworkInfo").classList.remove("show")
+                                 }, 100);
+                                 return
                             }
                             if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+                                // document.getElementById("TagsMenu").classList.remove("show-menu")
                                 return
                             }
                             else{
@@ -111,7 +115,14 @@ export default class Enlarge extends React.Component{
                             }
                         }
                         else{
-                            document.getElementById("ArtworkInfo").classList.add("info-up")
+                            if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+                                document.getElementById("TagsMenu").classList.remove("show-menu")
+                                return
+                            }
+                            document.getElementById("ArtworkInfo").classList.add("show")
+                            setTimeout(() => {
+                                document.getElementById("ArtworkInfo").classList.add("info-up")
+                            }, 100);
                         }
                     }
                 }

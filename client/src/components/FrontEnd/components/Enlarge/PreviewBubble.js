@@ -1,8 +1,6 @@
 import React from 'react'
 
 const PreviewBubbles = (props) => {
-    console.log("PreviewBubbles")
-    console.log(props.file)
     const countBubbles = (file) => {
         let bubbles = []
         const famName = file.background.artworkFamily
