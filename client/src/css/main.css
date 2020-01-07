@@ -848,6 +848,7 @@ label {
           align-items: center;
   height: 100%;
   width: 100%;
+  mix-blend-mode: luminosity;
 }
 
 #background {
@@ -1605,6 +1606,9 @@ label {
     -webkit-transition: 0.4s all;
     transition: 0.4s all;
   }
+  .show {
+    display: initial;
+  }
   .imageSelect-FilePreview {
     -ms-flex-item-align: start;
         align-self: flex-start;
@@ -1660,7 +1664,6 @@ label {
     height: 100% !important;
   }
   .info-up {
-    display: initial;
     opacity: 1;
   }
   .side-scroll img {

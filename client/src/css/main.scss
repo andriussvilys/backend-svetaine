@@ -661,6 +661,7 @@ font-family: 'Times New Roman', Times, serif;
     align-items: center;
     height: 100%;
     width: 100%;
+    mix-blend-mode: luminosity;
     // height: 1px;
     // width: 1px;
 }
@@ -930,6 +931,7 @@ font-family: 'Times New Roman', Times, serif;
 .info-up{
     opacity: 1;
     bottom: 0;
+
 }
 .info-down{
     bottom: -100%;
@@ -1205,6 +1207,9 @@ font-family: 'Times New Roman', Times, serif;
         z-index: 999;
         transition: 0.4s all;
     }
+    .show{
+        display: initial;
+    }
     // .imageSelect-FilePreview{
     //     height: 100%;
     // }
@@ -1256,9 +1261,9 @@ font-family: 'Times New Roman', Times, serif;
         height: 100% !important;
     }
     .info-up{
-        display: initial;
         opacity: 1;
     }
+
     .side-scroll img{
         max-height: 90px;
     }

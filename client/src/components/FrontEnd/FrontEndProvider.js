@@ -497,6 +497,12 @@ export class Provider extends React.Component{
     this.showMenu = () => {
       if(this.state.mobile){
         let counter = 1
+        if(document.getElementById("ArtworkInfo")){
+          if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
+            document.getElementById("ArtworkInfo").classList.remove("info-up")
+            counter = 200
+          }
+        }
         // if(!this.state.enlarge || !this.state.enlarge.open){
         //   document.getElementById("imageSelect").classList.toggle("side-scroll")
         //   counter = 400
@@ -597,6 +603,9 @@ export class Provider extends React.Component{
       e.stopPropagation()
         if(document.getElementsByClassName("info-up").length > 0){
           document.getElementsByClassName("info-up")[0].classList.remove("info-up")
+          setTimeout(() => {
+            document.getElementById("ArtworkInfo").classList.remove("show")
+          }, 100);
           return
         }
         const delay = this.hideArtworkInfo()
@@ -623,6 +632,7 @@ export class Provider extends React.Component{
           this.setState({enlarge})
         }, delay);
     }
+
     this.viewNext = () => {
         let newState = {...this.state}
         const familyName = this.state.enlarge.foreground.artworkFamily
@@ -965,10 +975,26 @@ export class Provider extends React.Component{
     this.showInfo = () => {
       const info = document.getElementById("ArtworkInfo")
       if(!info.classList.contains('info-up')){
-        info.classList.add('info-up')
+        let counter = 1
+        if(this.state.mobile){
+          if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+            document.getElementById("TagsMenu").classList.remove("show-menu")
+            counter = 100
+          }
+        }
+        setTimeout(() => {
+          setTimeout(() => {
+            info.classList.add('info-up')  
+          }, 100);
+          info.classList.add('show')
+        }, counter);
       }
+
       else{
         info.classList.remove('info-up')
+        setTimeout(() => {
+          info.classList.remove('show')
+        }, 200);
       }
     }
 
