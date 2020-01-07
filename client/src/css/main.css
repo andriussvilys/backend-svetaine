@@ -867,8 +867,8 @@ label {
 }
 
 .foreground-transition {
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
+  -webkit-transition: height 0.4s, width 0.4s, opacity 0.7s;
+  transition: height 0.4s, width 0.4s, opacity 0.7s;
 }
 
 .imageSelect-FilePreview {
@@ -1644,6 +1644,10 @@ label {
   }
   .ImagesPreview--imageContainer {
     width: 50%;
+    min-height: 90px;
+  }
+  .ImagesPreview--imageContainer__empty {
+    min-height: 0 !important;
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;

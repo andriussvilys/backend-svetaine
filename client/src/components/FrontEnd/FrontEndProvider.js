@@ -497,10 +497,10 @@ export class Provider extends React.Component{
     this.showMenu = () => {
       if(this.state.mobile){
         let counter = 1
-        if(!this.state.enlarge || !this.state.enlarge.open){
-          document.getElementById("imageSelect").classList.toggle("side-scroll")
-          counter = 400
-        }
+        // if(!this.state.enlarge || !this.state.enlarge.open){
+        //   document.getElementById("imageSelect").classList.toggle("side-scroll")
+        //   counter = 400
+        // }
         setTimeout(() => {
           
           document.getElementById("TagsMenu").classList.toggle("show-menu")

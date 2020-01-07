@@ -676,8 +676,8 @@ font-family: 'Times New Roman', Times, serif;
     // width: 1px;
 }
 .foreground-transition{
-    // opacity: 1 !important;
-    transition: 0.4s all;
+    // transition: 0.4s all;
+    transition: height 0.4s, width 0.4s, opacity 0.7s;
 }
 
 .imageSelect-FilePreview{
@@ -1239,6 +1239,11 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ImagesPreview--imageContainer{
         width: 50%;
+        min-height: 90px;
+        // border: 1px solid red;
+    }
+    .ImagesPreview--imageContainer__empty{
+        min-height: 0 !important;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
@@ -1254,11 +1259,6 @@ font-family: 'Times New Roman', Times, serif;
         display: initial;
         opacity: 1;
     }
-    // .side-scroll-min img{
-    //     position: initial;
-    //     left: initial;
-    //     max-height: 90px;
-    // }
     .side-scroll img{
         max-height: 90px;
     }
