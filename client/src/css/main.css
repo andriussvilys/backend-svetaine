@@ -608,10 +608,6 @@ label {
   border-bottom: 0 !important;
 }
 
-.subcategory-collapse {
-  border-bottom: 1px solid;
-}
-
 .subcategory-last-collapse {
   border-top: 1px solid;
   border-bottom: 0 !important;
@@ -1286,6 +1282,8 @@ label {
   display: -ms-flexbox;
   display: flex;
   border-bottom: 1px solid !important;
+  background-color: lime;
+  border-top: 1px solid;
   cursor: pointer;
 }
 
@@ -1372,8 +1370,23 @@ label {
           justify-content: center;
 }
 
-.Tags {
-  border-top: 1px solid;
+.show {
+  border-bottom: 0px !important;
+}
+
+.subcateogry_empty {
+  position: relative;
+  text-transform: uppercase;
+}
+
+.menu {
+  width: 100%;
+}
+
+.Nav-button-menu {
+  bottom: 0;
+  height: initial;
+  width: 100%;
 }
 
 @media only screen and (max-width: 720px) {
@@ -1408,7 +1421,7 @@ label {
     -webkit-transition: 0.3s all;
     transition: 0.3s all;
     border-right: 1px solid;
-    max-height: calc(100vh - 124px);
+    max-height: calc(100vh - 144px);
     border-bottom: none;
   }
   .TagsMenu-max {
@@ -1487,6 +1500,7 @@ label {
             flex-direction: column;
     overflow-x: auto;
     border-top: 1px solid;
+    height: 90px;
   }
   .enlargeContainer {
     -ms-grid-column: 1;
@@ -1571,8 +1585,18 @@ label {
         -ms-writing-mode: initial;
             writing-mode: initial;
   }
+  .menu {
+    width: auto;
+    height: 100%;
+    -webkit-transform: rotate(90deg);
+            transform: rotate(90deg);
+  }
+  .Nav-infoButton-icon {
+    height: 75%;
+  }
   .ArtworkInfo-container {
-    padding-bottom: 10px;
+    display: none;
+    padding-bottom: 22px;
     min-height: 121px;
     max-height: 100%;
     overflow-y: auto;
@@ -1605,6 +1629,7 @@ label {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
+    border-top: 1px solid black;
     background-color: lime;
     -webkit-box-align: center;
         -ms-flex-align: center;
@@ -1618,7 +1643,7 @@ label {
     display: none;
   }
   .ImagesPreview--imageContainer {
-    max-width: 50%;
+    width: 50%;
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;
@@ -1627,16 +1652,18 @@ label {
     font-size: 10px;
   }
   .side-scroll .ImagesPreview--imageContainer__empty {
-    width: 2px;
-    height: 33%;
+    width: 0px !important;
+    height: 100% !important;
   }
   .info-up {
+    display: initial;
     opacity: 1;
   }
   .side-scroll img {
     max-height: 90px;
   }
-  .side-scroll-min .ImagesPreview--imageContainer {
+  .side-scroll .ImagesPreview--imageContainer {
+    width: initial;
     left: initial;
   }
 }

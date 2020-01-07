@@ -15,6 +15,7 @@ import Themes from './components/Themes/Themes'
 import ArtworkInfo from './components/ArtworkInfo/ArtworkInfo'
 import About from './components/About/About'
 import Contact from './components/About/Contact';
+import ClearAll from './components/ClearAll';
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -62,11 +63,17 @@ export default class FrontEndIndex extends React.Component{
                                     state={this.context.state}
                                     context={this.context}
                                 />
-                                <About 
-                                    loadEnlarge={this.context.loadEnlarge}
-                                    collapseId="about-image"
+                                <ClearAll 
+                                    context={this.context}
+                                    enlarge={this.context.state.enlarge}
                                 />
-                                <Contact />
+                                <div className="TagsMenu-bottomButtons">
+                                    <About 
+                                        loadEnlarge={this.context.loadEnlarge}
+                                        collapseId="about-image"
+                                    />
+                                    <Contact />
+                                </div>
                             </TagsMenu>
 
                             <div id="images" className="images-container">

@@ -54,6 +54,7 @@ export default class TagsMenu extends React.Component{
         const subcategoriesList = Object.keys(subData)
         let subCategories = subcategoriesList.map((subName, index) => {
             const toggle = subData[subName].length > 0 
+            //CHECK IF LAST IN LIST
             if(index === subcategoriesList.length - 1){
                 return(
                     <Accordion 
@@ -69,6 +70,7 @@ export default class TagsMenu extends React.Component{
                         onChange={() => this.props.context.filterBySubcategory(category, subName)} 
                         checked={this.props.context.subcategoryChecked(category, subName)}
                         />}
+                    open={!this.props.context.state.mobile ? "1" : "0"}
                     checked={this.props.context.subcategoryChecked(category, subName)}
                     toggle={toggle} 
                     // level="subcategory"
@@ -77,26 +79,50 @@ export default class TagsMenu extends React.Component{
                     </Accordion>
                 )                 
             }
-            return(
-                <Accordion 
-                key={`TagsMenu-${index}`}
-                title={this.spreadLetters(subName)}
-                // title={subName} 
-                level="subcategory"
-                checkbox={<input 
-                    id={`subcategory-${subName}`}
-                    className={`TagsMenu-checkbox_subcategory ${!toggle? 'clickable' : null}`}
-                    type="checkbox" 
-                    onChange={() => this.props.context.filterBySubcategory(category, subName)} 
+            if(toggle){
+                return(
+                    <Accordion 
+                    key={`TagsMenu-${index}`}
+                    title={this.spreadLetters(subName)}
+                    // title={subName} 
+                    level="subcategory"
+                    checkbox={<input 
+                        id={`subcategory-${subName}`}
+                        className={`TagsMenu-checkbox_subcategory ${!toggle? 'clickable' : null}`}
+                        type="checkbox" 
+                        onChange={() => this.props.context.filterBySubcategory(category, subName)} 
+                        checked={this.props.context.subcategoryChecked(category, subName)}
+                        />}
+                    toggle
+                    open={!this.props.context.state.mobile ? "1" : "0"}
                     checked={this.props.context.subcategoryChecked(category, subName)}
-                    />}
-                checked={this.props.context.subcategoryChecked(category, subName)}
-                toggle={toggle} 
-                level="subcategory"
-                className="TagsMenu-Accordion-label">
-                    {this.listItemBlock(category, subName, subData[subName])}
-                </Accordion>
-            ) 
+                    level="subcategory"
+                    className="TagsMenu-Accordion-label">
+                        {this.listItemBlock(category, subName, subData[subName])}
+                    </Accordion>
+                ) 
+            }
+            else{
+                return <div
+                            className={`
+                            TagsMenu-Card-Title 
+                            subcategory 
+                            subcateogry_empty
+                            tagsMenu-Button
+                            tagsMenu-Button_subcategory
+                            ${this.props.context.subcategoryChecked(category, subName) ? 'checkbox-selected' : null}
+                            `}
+                        >
+                                {this.spreadLetters(subName)}
+                                <input 
+                                id={`subcategory-${subName}`}
+                                className={`TagsMenu-checkbox_subcategory ${!toggle? 'clickable' : null}`}
+                                type="checkbox" 
+                                onChange={() => this.props.context.filterBySubcategory(category, subName)} 
+                                checked={this.props.context.subcategoryChecked(category, subName)}
+                                />
+                        </div>
+            }
         })
         return subCategories
     }
@@ -166,24 +192,7 @@ export default class TagsMenu extends React.Component{
         }
         >
             {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
-            <div  className="clear-all">
-                <div className="tagsMenu-listItem dark-bg">
-                    <span className="white-font">{
-                        this.props.context.state.artworkOnDisplay && Object.keys(this.props.context.state.artworkOnDisplay).length > 0 ?
-                            "clear all" :
-                            "view all"
-                    }</span>
-                    <input 
-                        id={`theme-clearAll`}
-                        type="checkbox" 
-                        checked={this.props.context.state.artworkOnDisplay ? Object.keys(this.props.context.state.artworkOnDisplay).length > 0 : null}
-                        onChange={(e) => { this.props.context.filterAllThemes(e)}
-                        } 
-                    />
-                </div>
-            </div>
             {this.props.children}
-
         </div>
     }
 }

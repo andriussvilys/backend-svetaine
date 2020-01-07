@@ -45,17 +45,19 @@ const Nav = (props) => {
                                         <img alt="view previous" src="/icons/point-left.png"/>
                                     </button>
                                         <div 
-                                            className="Nav-button text-sideways" 
+                                            className="Nav-button Nav-button-menu" 
                                             onClick={() => props.context.showMenu()}
                                         >
-                                            <h3 className="nav-menuButton">menu</h3>
+                                            <img className="menu" alt="menu button" src='/icons/menu.png'/>
+                                            {/* <h3 className="nav-menuButton">menu</h3> */}
                                         </div>
                                     {showInfo() ?                                    
                                         <div 
                                             className="Nav-button Nav-infoButton"
                                             onClick={() => props.context.showInfo()}
                                         >
-                                            <h1>i</h1>
+                                            <img className="Nav-infoButton-icon" alt="info buton" src="/icons/info.png" />
+                                            {/* <h1>i</h1> */}
                                         </div>
                                         : 
                                         null
