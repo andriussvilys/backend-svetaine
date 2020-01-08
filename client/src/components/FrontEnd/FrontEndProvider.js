@@ -443,6 +443,49 @@ export class Provider extends React.Component{
       // themes.forEach(theme => this.filterByTheme(theme, true))
     }
 
+    this.filterByYear = (year) => {
+            //ON UN-CHECK
+            const newState = {...this.state}
+            const toggleArtwork = [...newState.yearLocation.all.years[year]]
+            let artworkOnDisplay = {...newState.artworkOnDisplay}
+            let visibleByYear = []
+      
+            Object.keys(artworkOnDisplay).forEach(fileName => {
+                  visibleByYear = artworkOnDisplay[fileName].year.map(year => year)
+              }, () => visibleByYear = Array.from(new Set(visibleByYear)))
+            
+              const checkbox = document.getElementById(`year-${year}`)
+            if(!checkbox.checked){
+              toggleArtwork.forEach(item => {
+                document.getElementById(item).classList.add("image-hide")
+              })
+              
+              // toggleArtwork = toggleArtwork.filter
+
+              // toggleArtwork.forEach(fileName => {
+              //   delete artworkOnDisplay[fileName]
+              // })
+      
+                return this.setState({artworkOnDisplay})
+            }
+      
+            // else{
+            //   this.state.themesOnDisplay[theme].forEach(item => {
+            //     const DOMitem = document.getElementById(item)
+            //     if(!DOMitem.src){
+            //       DOMitem.src = DOMitem.getAttribute('data-src')
+            //     }
+            //     DOMitem.classList.remove("image-hide")
+            //   })
+      
+            //   toggleArtwork.forEach(fileName => {
+            //     artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
+            //   })
+      
+            //   return this.setState({artworkOnDisplay})
+            // }
+    }
+
 
 
 
@@ -1132,6 +1175,48 @@ export class Provider extends React.Component{
                             }
                           })
                         })
+
+                        let years = []
+                        let locations = []
+                        let artworkByYear = {}
+                        let artworkByLocation = {}
+                    
+                        const allFiles = Object.keys(res)
+                    
+                        allFiles.forEach(fileName => {
+                            const file = res[fileName]
+                            if(file.year){
+                                years = [...years, file.year]
+                                if(!artworkByYear[file.year]){
+                                  artworkByYear[file.year] = []
+                                }
+                                artworkByYear = {...artworkByYear, [file.year]: [...artworkByYear[file.year], fileName]}
+                            }
+                            if(file.location){
+                                locations = [...locations, file.location]
+                                if(!artworkByLocation[file.location]){
+                                  artworkByLocation[file.location] = []
+                                }
+                                artworkByLocation = {...artworkByLocation, [file.location]: [...artworkByLocation[file.location], fileName]}
+                            }
+                        })
+                    
+                        years = new Set(years)
+                        years = Array.from(years).sort()
+                    
+                        locations = new Set(locations)
+                        locations = Array.from(locations).sort()
+
+                        const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
+                    
+                        // let yearList = years.map(year => {
+                        // return <li key={`year-${year}`}>{year}</li>
+                        // })
+                    
+                        // let locationList = locations.map(loc => {
+                        //     return <li key={`location-${loc}`}>{loc}</li>
+                        // })
+                        newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
                         newState.artworkOnDisplay = artworkOnDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
@@ -1189,6 +1274,8 @@ export class Provider extends React.Component{
             filterAllThemes: this.filterAllThemes,
             filterByTheme: this.filterByTheme,
             themeChecked: this.themeChecked,
+
+            filterByYear: this.filterByYear,
 
             showMenu: this.showMenu,
             toggleMobile: this.toggleMobile,

@@ -8,7 +8,10 @@ const About = (props) => {
                 props.loadEnlarge(e, "portrait.jpg");
                 setTimeout(() => {
                     if(document.getElementById("ArtworkInfo")){
-                        document.getElementById("ArtworkInfo").classList.add("info-up")
+                        document.getElementById("ArtworkInfo").classList.add("show")
+                        setTimeout(() => {
+                            document.getElementById("ArtworkInfo").classList.add("info-up")
+                        }, 200);
                     }
                 }, 600)
             }}

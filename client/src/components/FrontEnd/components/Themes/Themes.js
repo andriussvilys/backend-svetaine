@@ -3,26 +3,13 @@ import Accordion from '../Accordion'
 
 const Themes = (props) => {
 
-    // const themesOnDisplay = () => {
-    //     let allThemes = []
-    //     Object.keys(props.artworkInfoData).forEach(objName => {
-    //         allThemes = [...allThemes, ...props.artworkInfoData[objName].themes]
-    //     })
-    //     let allThemesSet = new Set(allThemes)
-    //     allThemesSet = Array.from(allThemesSet)
-    //     console.log(allThemesSet)
-    //     return allThemesSet
-    // }
-
     const renderList = () => {
         
         const allThemes = Object.keys(props.state.themesOnDisplay).sort()
-        // const allThemes = themesOnDisplay()
         let renderList = allThemes.map(theme => {
             return <li key={theme} className="tags-li">
             <div 
             className={props.context.themeChecked(theme) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"}
-            // className="tagsMenu-listItem"
             >
                 <span>{theme}</span>
                 <input 

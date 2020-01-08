@@ -16,6 +16,7 @@ import ArtworkInfo from './components/ArtworkInfo/ArtworkInfo'
 import About from './components/About/About'
 import Contact from './components/About/Contact';
 import ClearAll from './components/ClearAll';
+import YearLocation from './components/YearLocation/YearLocation';
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -57,6 +58,12 @@ export default class FrontEndIndex extends React.Component{
                     {() => {
                         return <div className="frontEndIndex-container" >
                             <TagsMenu context={this.context}>
+                                <YearLocation 
+                                    yearLocation={this.context.state.yearLocation || {years: [], locations: []}}
+                                    filterByYear={this.context.filterByYear}
+                                    // data={this.context.state.artworkInfoData || {}}
+                                    state={this.context.state}
+                                />
                                 <Themes
                                     state={this.context.state}
                                     context={this.context}
