@@ -637,13 +637,14 @@ export class Provider extends React.Component{
       e.stopPropagation()
         if(document.getElementById("ArtworkInfo") && document.getElementById("ArtworkInfo").classList.contains("info-up")){
           document.getElementById("ArtworkInfo").classList.remove("info-up")
-          // setTimeout(() => {
-          //   document.getElementById("ArtworkInfo").classList.remove("show")
-          // }, 200);
+
+          //set display to none so it doesnt hang in the middle
+          setTimeout(() => {
+            document.getElementById("ArtworkInfo").classList.remove("show")
+          }, 200);
           return
         }
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-          document.getElementById("TagsMenu").classList.remove("show-menu")
           return
         }
         const delay = this.hideArtworkInfo()
@@ -822,8 +823,8 @@ export class Provider extends React.Component{
         document.getElementById("TagsMenu").classList.toggle("show-menu")
       }
       // close ifo
-      if(document.getElementById("ArtworkInfo"))
-      {document.getElementById("ArtworkInfo").classList.remove("info-up")}
+      // if(document.getElementById("ArtworkInfo"))
+      // {document.getElementById("ArtworkInfo").classList.remove("info-up")}
 
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 

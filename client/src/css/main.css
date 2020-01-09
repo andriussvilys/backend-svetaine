@@ -1601,9 +1601,10 @@ label {
     z-index: 999;
     -webkit-transition: 0.4s all;
     transition: 0.4s all;
-  }
-  .show {
-    display: initial;
+    position: absolute;
+    bottom: -90px;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
   }
   .imageSelect-FilePreview {
     -ms-flex-item-align: start;
@@ -1655,12 +1656,24 @@ label {
   .ArtworkInfo_locationYear {
     font-size: 10px;
   }
+  .ArtworkInfo-container_seealso {
+    height: 95px;
+  }
+  .ArtworkInfo-container {
+    border-top: none;
+  }
   .side-scroll .ImagesPreview--imageContainer__empty {
     width: 0px !important;
     height: 100% !important;
   }
   .info-up {
     opacity: 1;
+    -webkit-transform: translateY(1px);
+            transform: translateY(1px);
+    border-top: 1px solid black;
+  }
+  .show {
+    display: initial;
   }
   .side-scroll img {
     max-height: 90px;
@@ -1668,6 +1681,10 @@ label {
   .side-scroll .ImagesPreview--imageContainer {
     width: initial;
     left: initial;
+  }
+  .hide-imageSelect {
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
   }
 }
 /*# sourceMappingURL=main.css.map */
