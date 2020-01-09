@@ -541,6 +541,7 @@ font-family: 'Times New Roman', Times, serif;
     border-left: $border-dark;
     transition: 0.2s transform;
     transform: translateX(0);
+
 }
 // .imageSelect-slide{
 // transform: translateX(250px);
@@ -633,6 +634,7 @@ font-family: 'Times New Roman', Times, serif;
     background-color: white;
     border-left: $border-dark;
     justify-content: center;
+    position: absolute;
     // border-right: $border-dark;
     // border-top: $border-dark;
 
@@ -1045,6 +1047,9 @@ font-family: 'Times New Roman', Times, serif;
         position: absolute;
         bottom: 0;
     }
+    .enlarge-down{
+        transform: translateY(0) !important;
+    }
     #root{
         height: 100%;
     }
@@ -1106,15 +1111,11 @@ font-family: 'Times New Roman', Times, serif;
         background-color: white;
         z-index: 999;
         width: 100% !important;
-        height: 100%;
-        transition: 0.2s transform;
-        z-index: 999;
-        transform: translateX(0);
         border-right: none;
         border-left: none;
         border-top: none;
-        grid-row-start: 2;
-        grid-row-end: 3;
+        height: 100%;
+        z-index: 0;
     }
     .imageSelect-slide{
         transform: translateX(250px);
@@ -1140,15 +1141,16 @@ font-family: 'Times New Roman', Times, serif;
         justify-content: center;
         transform: translateY(-100%);
         z-index: 999;
-        background-color: white;
+        // background-color: white;
+        background-color: rgba(0,0,0,0);
         border-top: none;
         border-bottom: none;
         z-index:1;
-        position: relative;
+        position: absolute;
         grid-row-start: 1;
         grid-row-end: 2;
         border-left: none;
-        height: 0px;
+        // height: 0px;
     }
     .enlargeContainer > div {
         height: auto;

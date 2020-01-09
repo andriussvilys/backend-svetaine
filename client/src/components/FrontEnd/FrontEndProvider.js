@@ -635,11 +635,11 @@ export class Provider extends React.Component{
     }
     this.closeEnlarge = (e) => {
       e.stopPropagation()
-        if(document.getElementsByClassName("info-up").length > 0){
-          document.getElementsByClassName("info-up")[0].classList.remove("info-up")
-          setTimeout(() => {
-            document.getElementById("ArtworkInfo").classList.remove("show")
-          }, 100);
+        if(document.getElementById("ArtworkInfo") && document.getElementById("ArtworkInfo").classList.contains("info-up")){
+          document.getElementById("ArtworkInfo").classList.remove("info-up")
+          // setTimeout(() => {
+          //   document.getElementById("ArtworkInfo").classList.remove("show")
+          // }, 200);
           return
         }
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
@@ -647,17 +647,22 @@ export class Provider extends React.Component{
           return
         }
         const delay = this.hideArtworkInfo()
+        console.log("delay")
+        console.log(delay)
         setTimeout(() => {      
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
 
           if(this.toggleMobile() === true){
-            enlargeContainer.style.transform = `translateY(-100%)`
+            console.log('toggleMobile()')
 
+            
             document.getElementById('imageSelect').classList.remove("side-scroll")
             // document.getElementById('imageSelect').classList.remove("side-scroll-min")
             setTimeout(() => {
-              enlargeContainer.style.height = 0
+              // enlargeContainer.style.transform = `translateY(-100%)`
+              enlargeContainer.classList.remove("enlarge-down")
+              // enlargeContainer.style.height = 0
             }, 200);
 
 
@@ -812,10 +817,13 @@ export class Provider extends React.Component{
     }
     this.animateEnlarge = (file, viewPrev) => {
 
+      //close menu(mobile)
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.toggle("show-menu")
       }
-      if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
+      // close ifo
+      if(document.getElementById("ArtworkInfo"))
+      {document.getElementById("ArtworkInfo").classList.remove("info-up")}
 
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 
@@ -852,6 +860,7 @@ export class Provider extends React.Component{
       this.setState({enlarge}, () => {
 
         let futureSize = null
+              //IF DESKTOP
               if(!this.toggleMobile()){
                 if(document.getElementById('background').style.width !== "100%"){
                   document.getElementById('background').style.width = "100%"
@@ -888,11 +897,9 @@ export class Provider extends React.Component{
               else{
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
-                  // setTimeout(() => {
-                  //   imageSelect.classList.add("side-scroll-min")
-                  // }, 410);
-                // imageSelect.classList.add("side-scroll-min")
-                imageSelect.classList.add("side-scroll")
+                setTimeout(() => {
+                  imageSelect.classList.add("side-scroll")
+                }, 400);
 
                 container.style.height = `${images.clientHeight - 90}px`
                 background.style.height = `${futureSize.height}px`
@@ -906,9 +913,10 @@ export class Provider extends React.Component{
               
               if(!this.state.enlarge || !this.state.enlarge.open){
                 if(this.state.mobile){
-                  container.style.transform = 'translateY(0)'
+                  // container.style.transform = 'translateY(0)'
+                  container.classList.add('enlarge-down')
                 }
-                else{container.style.transform = 'translateY(0)'}
+                else{container.style.transform = 'translateX(0)'}
               }
 
 
@@ -946,7 +954,7 @@ export class Provider extends React.Component{
 
                 this.setState(newState, () => {
                   foreground.style.opacity = 1
-                  imageSelect.style.transition = "none"
+                  // imageSelect.style.transition = "none"
 
                 })
               }, 410);
