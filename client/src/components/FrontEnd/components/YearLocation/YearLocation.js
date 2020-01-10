@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Accordion from '../Accordion'
+import Category from '../TagsMenu/Category'
 
 const YearLocation = (props) => {
 
@@ -31,17 +32,24 @@ const YearLocation = (props) => {
     })
 
         return(
-            <Accordion
-                title={<span>Year/Location</span>}
-                toggle="1" 
-                className="Tags"
-                open={!props.state.mobile ? "1" : "0"}
-                collapseId={"tags-collapse"}
-                level="category"
-            >   
-                <ul>{yearList}</ul>
-                <ul>{locationList}</ul>
-            </Accordion>
+            <Fragment>
+                <Category 
+                    category="year/location"
+                    context={props.context}
+                />
+                {/* <div className="category TagsMenu-Accordion-label">
+                    <span>year/location</span><span/>
+                </div> */}
+                <div className="subcategory">
+                    subcategories
+                </div>
+                <div className="list-items">
+                    <ul>{yearList}</ul>
+                </div>
+                <div className="list-items">
+                    <ul>{locationList}</ul>
+                </div>
+            </Fragment>
         )
 }
 

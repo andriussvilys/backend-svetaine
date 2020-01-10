@@ -1292,6 +1292,26 @@ font-family: 'Times New Roman', Times, serif;
     .hide-imageSelect{
         transform: translateY(100%)
     }
+    .TagsMenu-checkbox{
+        top: initial;
+        position: initial;
+    }
+    .TagsMenu-Accordion-label{
+        border: 1px solid black;
+        padding: 3px;
+        margin: 2px;
+        min-width: 49%;
+        flex: 1;
+    }
+    .TagsMenu-categories{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .title-letter{
+        text-transform: uppercase;
+        font-family: 'Times New Roman', Times, serif;
+        font-weight: 600;
+    }
   }
 
 //   *{transition: 0s all !important;}

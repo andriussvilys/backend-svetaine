@@ -1686,5 +1686,30 @@ label {
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
   }
+  .TagsMenu-checkbox {
+    top: initial;
+    position: initial;
+  }
+  .TagsMenu-Accordion-label {
+    border: 1px solid black;
+    padding: 3px;
+    margin: 2px;
+    min-width: 49%;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .TagsMenu-categories {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+  }
+  .title-letter {
+    text-transform: uppercase;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 600;
+  }
 }
 /*# sourceMappingURL=main.css.map */

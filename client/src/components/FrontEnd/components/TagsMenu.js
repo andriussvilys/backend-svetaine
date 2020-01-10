@@ -1,6 +1,12 @@
 import React from 'react'
 import { Context } from '../../Provider';
 import Accordion from './Accordion';
+import YearLocation from './YearLocation/YearLocation';
+import Themes from './Themes/Themes';
+import ClearAll from './ClearAll';
+import About from './About/About';
+import Contact from './About/Contact'
+import Category from './TagsMenu/Category';
 
 
 export default class TagsMenu extends React.Component{
@@ -136,29 +142,39 @@ export default class TagsMenu extends React.Component{
         let categories = data.map((obj, index) => {
             const toggle = Object.keys(obj.subcategory).length > 0
         return (
-            <Accordion
+            <div
             key={`TagsMenu-category-${index}`} 
-            // title={obj.category} 
-            title={this.spreadLetters(obj.category)}
-            checkbox={<input 
+            className={this.props.context.categoryChecked(obj.category) ? "TagsMenu-Accordion-label checkbox-selected" : "TagsMenu-Accordion-label"}
+            >
+                {this.spreadLetters(obj.category)}
+                <input 
                 id={`category-${obj.category}`}
                 className="TagsMenu-checkbox"
                 level="category"
                 type="checkbox" 
                 onChange={() => this.props.context.filterByCategory(obj.category)} 
                 checked={this.props.context.categoryChecked(obj.category)}
-                />}
-            toggle={toggle} 
-            checked={this.props.context.categoryChecked(obj.category)}
-            level="category"
-            // className="TagsMenu-Accordion-label"
-            className={this.props.context.categoryChecked(obj.category) ? "TagsMenu-Accordion-label checkbox-selected" : "TagsMenu-Accordion-label"}
-            >
-                {this.subcategoryBlock(obj.category, obj.subcategory)}
-            </Accordion>
+                />
+            </div>
         )
         })
         return categories
+    }
+
+    createCategories = (data) => {
+
+        let buttons = data.map(obj => {
+            console.log("tags menu")
+            console.log(obj.category)
+            return <Category 
+            category={obj.category}
+            context={this.props.context}
+            onChange={this.props.context.filterByCategory}
+            isChecked={this.props.context.categoryChecked}
+            />
+        })
+
+        return buttons
     }
 
     render(){
@@ -191,8 +207,36 @@ export default class TagsMenu extends React.Component{
         }
         }
         >
-            {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null}
-            {this.props.children}
+            <div className="TagsMenu-categories">
+                {/* {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null} */}
+                {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
+                {/* 
+                <YearLocation 
+                    yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
+                    filterByYear={this.props.context.filterByYear}
+                    // data={this.context.state.artworkInfoData || {}}
+                    state={this.props.context.state}
+                    context={this.props.context}
+                /> */}
+                <Themes
+                    state={this.props.context.state}
+                    context={this.props.context}
+                />
+                <ClearAll 
+                    context={this.props.context}
+                    enlarge={this.props.context.state.enlarge}
+                />
+                <div className="TagsMenu-bottomButtons">
+                    <About 
+                        loadEnlarge={this.props.context.loadEnlarge}
+                        collapseId="about-image"
+                    />
+                    <Contact />
+                </div>
+                {this.props.children}
+            </div>
+            {/* {this.subcategoryBlock(obj.category, obj.subcategory)} */}
+            <div style={{width: "100%", height: "100px"}}>subcategories</div>
         </div>
     }
 }

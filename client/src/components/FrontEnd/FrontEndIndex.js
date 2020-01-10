@@ -58,7 +58,7 @@ export default class FrontEndIndex extends React.Component{
                     {() => {
                         return <div className="frontEndIndex-container" >
                             <TagsMenu context={this.context}>
-                                <YearLocation 
+                                {/* <YearLocation 
                                     yearLocation={this.context.state.yearLocation || {years: [], locations: []}}
                                     filterByYear={this.context.filterByYear}
                                     // data={this.context.state.artworkInfoData || {}}
@@ -78,7 +78,7 @@ export default class FrontEndIndex extends React.Component{
                                         collapseId="about-image"
                                     />
                                     <Contact />
-                                </div>
+                                </div> */}
                             </TagsMenu>
 
                             <div id="images" className="images-container">
