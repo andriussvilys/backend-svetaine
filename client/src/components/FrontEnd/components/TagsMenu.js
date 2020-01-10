@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { Context } from '../../Provider';
 import Accordion from './Accordion';
 import YearLocation from './YearLocation/YearLocation';
@@ -13,7 +13,7 @@ export default class TagsMenu extends React.Component{
     static contextType = Context;
     constructor(props){
         super(props)
-        this.state = {}
+        this.state = {subcategory: null, listItems: null}
     }
     /**
      * @param title: takes a string and spreads it into separate divs
@@ -161,6 +161,17 @@ export default class TagsMenu extends React.Component{
         return categories
     }
 
+    showContent = (category) => {
+        console.log(`show ${category}`)
+    }
+
+    onCategoriesClick = (category) => {
+        document.getElementById("TagsMenu-subcategory-container").childNodes.forEach(child => {
+            child.classList.remove("scroll-down-category")
+        })
+        document.getElementById(`${category}-subcategories`).classList.toggle("scroll-down-category")
+    }
+
     createCategories = (data) => {
 
         let buttons = data.map(obj => {
@@ -168,13 +179,76 @@ export default class TagsMenu extends React.Component{
             console.log(obj.category)
             return <Category 
             category={obj.category}
+            level="category"
             context={this.props.context}
-            onChange={this.props.context.filterByCategory}
-            isChecked={this.props.context.categoryChecked}
+            onChange={() => this.props.context.filterByCategory(obj.category)}
+            isChecked={this.props.context.categoryChecked(obj.category)}
+            showContent={this.onCategoriesClick}
             />
         })
 
         return buttons
+    }
+
+    createListItems = (data) => {
+        let allLists = []
+        data.forEach(obj => {
+            const subcategories = Object.keys(obj.subcategory)
+            let ul = null
+            subcategories.forEach(subcategory => {
+
+                let listItems = obj.subcategory[subcategory].map(listitem => {
+                    return <li key={listitem}>
+                    <div 
+                    // className="tagsMenu-listItem"
+                    className={this.props.context.listitemChecked(obj.category, subcategory, listitem) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"}
+                    >
+                        <span>{listitem}</span>
+                        <input 
+                            id={`listItem-${listitem}`}
+                            className="TagsMenu-checkbox_listItem"
+                            type="checkbox" 
+                            onChange={() => this.props.context.filterByListitem(obj.category, subcategory, listitem)} 
+                            checked={this.props.context.listitemChecked(obj.category, subcategory, listitem)}
+                        />
+                    </div>
+                    </li>
+                })
+                ul = <ul className="TagsMenu-listitems-ul">
+                    {listItems}
+                </ul>
+
+                allLists = [...allLists, ul]
+                
+            })
+        })
+    }
+
+    createSubcategories = (data) => {
+        let buttons = []
+        let subCatBlocks = []
+        data.forEach(obj => {
+            const subcategories = Object.keys(obj.subcategory)
+            let ul = null
+            let subContainer = subcategories.map(subcategory => {
+                    return <Category 
+                    category={subcategory}
+                    level="subcategory"
+                    context={this.props.context}
+                    onChange={() => this.props.context.filterBySubcategory(obj.category, subcategory)}
+                    isChecked={this.props.context.subcategoryChecked(obj.category, subcategory)}
+                    showContent={this.showContent}
+                    />
+                
+            })
+
+            console.log("subContainer")
+            console.log(subContainer)
+            subContainer = [...subContainer]
+        subCatBlocks = [...subCatBlocks, <div id="" className="TagsMenu-subcategories" id={`${obj.category}-subcategories`}>{subContainer}</div>]
+        })
+
+        return subCatBlocks
     }
 
     render(){
@@ -209,34 +283,40 @@ export default class TagsMenu extends React.Component{
         >
             <div className="TagsMenu-categories">
                 {/* {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null} */}
-                {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
-                {/* 
-                <YearLocation 
-                    yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
-                    filterByYear={this.props.context.filterByYear}
-                    // data={this.context.state.artworkInfoData || {}}
-                    state={this.props.context.state}
-                    context={this.props.context}
-                /> */}
-                <Themes
-                    state={this.props.context.state}
-                    context={this.props.context}
-                />
-                <ClearAll 
-                    context={this.props.context}
-                    enlarge={this.props.context.state.enlarge}
-                />
+                <div className="TagsMenu-category-container">
+                    {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
+                    
+                    <YearLocation 
+                        yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
+                        filterByYear={this.props.context.filterByYear}
+                        isChecked={ this.props.context.yearChecked}
+                        // data={this.context.state.artworkInfoData || {}}
+                        state={this.props.context.state}
+                        context={this.props.context}
+                    />
+                    <Themes
+                        state={this.props.context.state}
+                        context={this.props.context}
+                    />
+                    <ClearAll 
+                        context={this.props.context}
+                        enlarge={this.props.context.state.enlarge}
+                    />
+                </div>
+                <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
+                {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
+                </div>
+                </div>
+                {/* <div className="TagsMenu-listItems-container">{this.state.listItems}</div>
                 <div className="TagsMenu-bottomButtons">
                     <About 
                         loadEnlarge={this.props.context.loadEnlarge}
                         collapseId="about-image"
                     />
                     <Contact />
-                </div>
+                </div> */}
                 {this.props.children}
-            </div>
-            {/* {this.subcategoryBlock(obj.category, obj.subcategory)} */}
-            <div style={{width: "100%", height: "100px"}}>subcategories</div>
+
         </div>
     }
 }

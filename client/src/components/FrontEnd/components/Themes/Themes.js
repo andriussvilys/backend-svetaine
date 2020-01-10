@@ -1,5 +1,6 @@
 import React from 'react'
 import Accordion from '../Accordion'
+import Category from '../TagsMenu/Category'
 
 const Themes = (props) => {
 
@@ -23,38 +24,28 @@ const Themes = (props) => {
             </div>
             </li>
         })
-        // const clearAll = <li className="tags-li">
-        //                     <div className="tagsMenu-listItem dark-bg">
-        //                         <span className="white-font">{
-        //                             props.context.state.artworkOnDisplay && Object.keys(props.context.state.artworkOnDisplay).length > 0 ?
-        //                                 "clear all" :
-        //                                 "view all"
-        //                         }</span>
-        //                         <input 
-        //                             id={`theme-clearAll`}
-        //                             type="checkbox" 
-        //                             checked={props.context.state.artworkOnDisplay ? Object.keys(props.context.state.artworkOnDisplay).length > 0 : null}
-        //                             onChange={(e) => { props.context.filterAllThemes(e)}
-        //                             } 
-        //                         />
-        //                     </div>
-        //                 </li>
-            
-        //     renderList = [clearAll, ...renderList]
         return <ul className="tagsMenu-list tagsMenu-list-tags">{renderList}</ul>
     }
 
     return(
-        <Accordion
-            title={<span>Tags</span>}
-            toggle="1" 
-            className="Tags"
-            open={!props.state.mobile ? "1" : "0"}
-            collapseId={"tags-collapse"}
-            level="category"
-        >   
-            {props.state.themesOnDisplay ? renderList() : null}
-        </Accordion>
+        <Category 
+            category={"tags"}
+            context={props.context}
+            button
+            // onChange={this.props.context.filterByCategory}
+            // isChecked={this.props.context.categoryChecked}
+        />
+
+        // <Accordion
+        //     title={<span>Tags</span>}
+        //     toggle="1" 
+        //     className="Tags"
+        //     open={!props.state.mobile ? "1" : "0"}
+        //     collapseId={"tags-collapse"}
+        //     level="category"
+        // >   
+        //     {props.state.themesOnDisplay ? renderList() : null}
+        // </Accordion>
     )
 }
 

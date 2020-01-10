@@ -448,11 +448,16 @@ export class Provider extends React.Component{
             const newState = {...this.state}
             const toggleArtwork = [...newState.yearLocation.all.years[year]]
             let artworkOnDisplay = {...newState.artworkOnDisplay}
-            let visibleByYear = []
+            let visibleByYear = {}
       
+            // Object.keys(artworkOnDisplay).forEach(fileName => {
+            //       visibleByYear = artworkOnDisplay[fileName].year.map(year => year)
+            //   }, () => visibleByYear = Array.from(new Set(visibleByYear)))
+
             Object.keys(artworkOnDisplay).forEach(fileName => {
-                  visibleByYear = artworkOnDisplay[fileName].year.map(year => year)
-              }, () => visibleByYear = Array.from(new Set(visibleByYear)))
+              if(artworkOnDisplay[fileName].year === year)
+              visibleByYear = null
+            })
             
               const checkbox = document.getElementById(`year-${year}`)
             if(!checkbox.checked){
@@ -486,6 +491,32 @@ export class Provider extends React.Component{
             // }
     }
 
+    this.yearChecked = (year) => {
+      console.log("yearChecke")
+      console.log(`year - ${year}`)
+      
+      let onDisplay = false
+      if(this.state.yearLocation){
+        const visibleYears = Object.keys(this.state.yearLocation.visible.years)
+        console.log("visibleYears")
+        console.log(visibleYears)
+        if(visibleYears.includes(year)){
+          onDisplay = true
+        }
+      }
+      return onDisplay
+      // if(this.state.artworkOnDisplay){
+      //   Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+      //       const file = this.state.artworkOnDisplay[fileName]
+      //       if(file.year){
+      //           if(file.year === year){
+      //               onDisplay = true
+      //           }
+      //       }
+      //   })
+      //   return onDisplay
+      // }
+  }
 
 
 
@@ -635,35 +666,29 @@ export class Provider extends React.Component{
     }
     this.closeEnlarge = (e) => {
       e.stopPropagation()
-        if(document.getElementById("ArtworkInfo") && document.getElementById("ArtworkInfo").classList.contains("info-up")){
-          document.getElementById("ArtworkInfo").classList.remove("info-up")
-
-          //set display to none so it doesnt hang in the middle
+        if(document.getElementsByClassName("info-up").length > 0){
+          document.getElementsByClassName("info-up")[0].classList.remove("info-up")
           setTimeout(() => {
             document.getElementById("ArtworkInfo").classList.remove("show")
-          }, 200);
+          }, 100);
           return
         }
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+          document.getElementById("TagsMenu").classList.remove("show-menu")
           return
         }
         const delay = this.hideArtworkInfo()
-        console.log("delay")
-        console.log(delay)
         setTimeout(() => {      
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
 
           if(this.toggleMobile() === true){
-            console.log('toggleMobile()')
+            enlargeContainer.style.transform = `translateY(-100%)`
 
-            
             document.getElementById('imageSelect').classList.remove("side-scroll")
             // document.getElementById('imageSelect').classList.remove("side-scroll-min")
             setTimeout(() => {
-              // enlargeContainer.style.transform = `translateY(-100%)`
-              enlargeContainer.classList.remove("enlarge-down")
-              // enlargeContainer.style.height = 0
+              enlargeContainer.style.height = 0
             }, 200);
 
 
@@ -818,13 +843,10 @@ export class Provider extends React.Component{
     }
     this.animateEnlarge = (file, viewPrev) => {
 
-      //close menu(mobile)
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.toggle("show-menu")
       }
-      // close ifo
-      // if(document.getElementById("ArtworkInfo"))
-      // {document.getElementById("ArtworkInfo").classList.remove("info-up")}
+      if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
 
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 
@@ -861,7 +883,6 @@ export class Provider extends React.Component{
       this.setState({enlarge}, () => {
 
         let futureSize = null
-              //IF DESKTOP
               if(!this.toggleMobile()){
                 if(document.getElementById('background').style.width !== "100%"){
                   document.getElementById('background').style.width = "100%"
@@ -898,9 +919,11 @@ export class Provider extends React.Component{
               else{
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
-                setTimeout(() => {
-                  imageSelect.classList.add("side-scroll")
-                }, 400);
+                  // setTimeout(() => {
+                  //   imageSelect.classList.add("side-scroll-min")
+                  // }, 410);
+                // imageSelect.classList.add("side-scroll-min")
+                imageSelect.classList.add("side-scroll")
 
                 container.style.height = `${images.clientHeight - 90}px`
                 background.style.height = `${futureSize.height}px`
@@ -914,10 +937,9 @@ export class Provider extends React.Component{
               
               if(!this.state.enlarge || !this.state.enlarge.open){
                 if(this.state.mobile){
-                  // container.style.transform = 'translateY(0)'
-                  container.classList.add('enlarge-down')
+                  container.style.transform = 'translateY(0)'
                 }
-                else{container.style.transform = 'translateX(0)'}
+                else{container.style.transform = 'translateY(0)'}
               }
 
 
@@ -955,7 +977,7 @@ export class Provider extends React.Component{
 
                 this.setState(newState, () => {
                   foreground.style.opacity = 1
-                  // imageSelect.style.transition = "none"
+                  imageSelect.style.transition = "none"
 
                 })
               }, 410);
@@ -1285,6 +1307,7 @@ export class Provider extends React.Component{
             themeChecked: this.themeChecked,
 
             filterByYear: this.filterByYear,
+            yearChecked: this.yearChecked,
 
             showMenu: this.showMenu,
             toggleMobile: this.toggleMobile,

@@ -58,27 +58,6 @@ export default class FrontEndIndex extends React.Component{
                     {() => {
                         return <div className="frontEndIndex-container" >
                             <TagsMenu context={this.context}>
-                                {/* <YearLocation 
-                                    yearLocation={this.context.state.yearLocation || {years: [], locations: []}}
-                                    filterByYear={this.context.filterByYear}
-                                    // data={this.context.state.artworkInfoData || {}}
-                                    state={this.context.state}
-                                />
-                                <Themes
-                                    state={this.context.state}
-                                    context={this.context}
-                                />
-                                <ClearAll 
-                                    context={this.context}
-                                    enlarge={this.context.state.enlarge}
-                                />
-                                <div className="TagsMenu-bottomButtons">
-                                    <About 
-                                        loadEnlarge={this.context.loadEnlarge}
-                                        collapseId="about-image"
-                                    />
-                                    <Contact />
-                                </div> */}
                             </TagsMenu>
 
                             <div id="images" className="images-container">

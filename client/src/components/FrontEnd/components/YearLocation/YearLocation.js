@@ -8,13 +8,9 @@ const YearLocation = (props) => {
     let locations = props.yearLocation.locations
 
     let yearList = years.map(year => {
-    // return <li key={`year-${year}`}>{year}</li>
     return <li key={`year-${year}`} className="tags-li">
             <div 
             className="tagsMenu-listItem"
-            // className={
-            //     props.context.themeChecked(theme) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"
-            // }
             >
                 <span>{year}</span>
                 <input 
@@ -36,6 +32,7 @@ const YearLocation = (props) => {
                 <Category 
                     category="year/location"
                     context={props.context}
+                    button
                 />
                 {/* <div className="category TagsMenu-Accordion-label">
                     <span>year/location</span><span/>
