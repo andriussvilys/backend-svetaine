@@ -28,13 +28,15 @@ const Themes = (props) => {
     }
 
     return(
-        <Category 
-            category={"tags"}
-            context={props.context}
-            button
-            // onChange={this.props.context.filterByCategory}
-            // isChecked={this.props.context.categoryChecked}
-        />
+        // <Category 
+        //     category={"tags"}
+        //     context={props.context}
+        //     button
+        //     // onChange={this.props.context.filterByCategory}
+        //     // isChecked={this.props.context.categoryChecked}
+        // />
+
+        props.state.themesOnDisplay ? renderList() : null
 
         // <Accordion
         //     title={<span>Tags</span>}

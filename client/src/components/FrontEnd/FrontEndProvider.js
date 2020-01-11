@@ -559,7 +559,11 @@ export class Provider extends React.Component{
             imageSelect.style.width = "100%"
         }, 200);
     }
+    
     this.showMenu = () => {
+      if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+        Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
+      }
       if(this.state.mobile){
         let counter = 1
         if(document.getElementById("ArtworkInfo")){
