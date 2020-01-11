@@ -172,6 +172,14 @@ export default class TagsMenu extends React.Component{
         document.getElementById(`${category}-subcategories`).classList.toggle("scroll-down-category")
     }
 
+    onSubcategoriesClick = (subcategory) => {
+        document.getElementById("TagsMenu-subcategory-container").childNodes.forEach(child => {
+            child.classList.remove("scroll-down-category")
+        })
+        document.getElementById(`${subcategory}-listitem`).classList.toggle("scroll-down-category")
+    }
+
+
     createCategories = (data) => {
 
         let buttons = data.map(obj => {
@@ -189,65 +197,64 @@ export default class TagsMenu extends React.Component{
 
         return buttons
     }
-
-    createListItems = (data) => {
-        let allLists = []
-        data.forEach(obj => {
-            const subcategories = Object.keys(obj.subcategory)
-            let ul = null
-            subcategories.forEach(subcategory => {
-
-                let listItems = obj.subcategory[subcategory].map(listitem => {
-                    return <li key={listitem}>
-                    <div 
-                    // className="tagsMenu-listItem"
-                    className={this.props.context.listitemChecked(obj.category, subcategory, listitem) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"}
-                    >
-                        <span>{listitem}</span>
-                        <input 
-                            id={`listItem-${listitem}`}
-                            className="TagsMenu-checkbox_listItem"
-                            type="checkbox" 
-                            onChange={() => this.props.context.filterByListitem(obj.category, subcategory, listitem)} 
-                            checked={this.props.context.listitemChecked(obj.category, subcategory, listitem)}
-                        />
-                    </div>
-                    </li>
-                })
-                ul = <ul className="TagsMenu-listitems-ul">
-                    {listItems}
-                </ul>
-
-                allLists = [...allLists, ul]
-                
-            })
+    /**
+     * return a div with listitems for a subcategory
+     */
+    createListItems = (listItemArray, subcategory, category) => {
+        let listItems = listItemArray.map(listitem => {
+            return <Category 
+                            category={listitem}
+                            level="listitem"
+                            context={this.props.context}
+                            onChange={() => this.props.context.filterBySubcategory(category, subcategory, listitem)}
+                            isChecked={this.props.context.listitemChecked(category, subcategory, listitem)}
+                    />
         })
+        return <div className="TagsMenu-listitems-container" id={`${subcategory}-listitem`}>{listItems}</div>
     }
 
     createSubcategories = (data) => {
         let buttons = []
         let subCatBlocks = []
+        let combined = []
         data.forEach(obj => {
+            let listitemsContainer = []
             const subcategories = Object.keys(obj.subcategory)
-            let ul = null
             let subContainer = subcategories.map(subcategory => {
-                    return <Category 
-                    category={subcategory}
-                    level="subcategory"
-                    context={this.props.context}
-                    onChange={() => this.props.context.filterBySubcategory(obj.category, subcategory)}
-                    isChecked={this.props.context.subcategoryChecked(obj.category, subcategory)}
-                    showContent={this.showContent}
-                    />
+                    if(obj.subcategory[subcategory].length > 0){
+                        listitemsContainer = [...listitemsContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
+                    }
+                    return <Fragment>
+                        <Category 
+                        category={subcategory}
+                        level="subcategory"
+                        context={this.props.context}
+                        onChange={() => this.props.context.filterBySubcategory(obj.category, subcategory)}
+                        isChecked={this.props.context.subcategoryChecked(obj.category, subcategory)}
+                        showContent={this.showContent}
+                        />
+                        {/* { obj.subcategory[subcategory].length > 0 ?
+                            this.createListItems(obj.subcategory[subcategory], subcategory, obj.category) :
+                            null
+                        } */}
+                    </Fragment>
                 
             })
 
-            console.log("subContainer")
-            console.log(subContainer)
-            subContainer = [...subContainer]
-        subCatBlocks = [...subCatBlocks, <div id="" className="TagsMenu-subcategories" id={`${obj.category}-subcategories`}>{subContainer}</div>]
+            // subContainer = [...subContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
+        subCatBlocks = [...subCatBlocks, 
+            <Fragment>
+                <div className="TagsMenu-subcategories" id={`${obj.category}-subcategories`}>
+                    <div id="subcategories">
+                        {subContainer}
+                    </div>
+                    <div className="TagsMenu-listItems-container" >
+                        {listitemsContainer}
+                    </div>
+                </div>
+            </Fragment>
+    ]
         })
-
         return subCatBlocks
     }
 
@@ -284,28 +291,32 @@ export default class TagsMenu extends React.Component{
             <div className="TagsMenu-categories">
                 {/* {this.props.context.state.categoriesData ? this.categoryBlock(this.props.context.state.categoriesData) : null} */}
                 <div className="TagsMenu-category-container">
-                    {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
-                    
-                    <YearLocation 
-                        yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
-                        filterByYear={this.props.context.filterByYear}
-                        isChecked={ this.props.context.yearChecked}
-                        // data={this.context.state.artworkInfoData || {}}
-                        state={this.props.context.state}
-                        context={this.props.context}
-                    />
-                    <Themes
-                        state={this.props.context.state}
-                        context={this.props.context}
-                    />
-                    <ClearAll 
-                        context={this.props.context}
-                        enlarge={this.props.context.state.enlarge}
-                    />
+
+                    <div className="TagsMenu-category-button-container">
+                        {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
+                        
+                        <YearLocation 
+                            yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
+                            filterByYear={this.props.context.filterByYear}
+                            isChecked={ this.props.context.yearChecked}
+                            // data={this.context.state.artworkInfoData || {}}
+                            state={this.props.context.state}
+                            context={this.props.context}
+                        />
+                        <Themes
+                            state={this.props.context.state}
+                            context={this.props.context}
+                        />
+                        <ClearAll 
+                            context={this.props.context}
+                            enlarge={this.props.context.state.enlarge}
+                        />
+                    </div>
                 </div>
-                <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
-                {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
-                </div>
+                    <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
+                        {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
+                        {/* <div className="TagsMenu-about-contact">about contact</div> */}
+                    </div>
                 </div>
                 {/* <div className="TagsMenu-listItems-container">{this.state.listItems}</div>
                 <div className="TagsMenu-bottomButtons">
