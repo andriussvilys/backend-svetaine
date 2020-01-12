@@ -2,6 +2,8 @@ import React, { Fragment } from 'react'
 import { Context } from '../../Provider';
 import Accordion from './Accordion';
 import YearLocation from './YearLocation/YearLocation';
+import Year from './YearLocation/Year';
+import Location from './YearLocation/Location';
 import Themes from './Themes/Themes';
 import ClearAll from './ClearAll';
 import About from './About/About';
@@ -51,8 +53,6 @@ export default class TagsMenu extends React.Component{
     createCategories = (data) => {
 
         let buttons = data.map(obj => {
-            console.log("tags menu")
-            console.log(obj.category)
             return <Category 
             category={obj.category}
             level="category"
@@ -73,8 +73,7 @@ export default class TagsMenu extends React.Component{
             return <Category 
                             category={listitem}
                             level="listitem"
-                            context={this.props.context}
-                            onChange={() => this.props.context.filterBySubcategory(category, subcategory, listitem)}
+                            onChange={() => this.props.context.filterByListitem(category, subcategory, listitem)}
                             isChecked={this.props.context.listitemChecked(category, subcategory, listitem)}
                             showContent={() => {return}}
                     />
@@ -82,16 +81,17 @@ export default class TagsMenu extends React.Component{
         return <div className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>{listItems}</div>
     }
 
+    listitemsContainer = []
+
     createSubcategories = (data) => {
         let buttons = []
         let subCatBlocks = []
         let combined = []
         data.forEach(obj => {
-            let listitemsContainer = []
             const subcategories = Object.keys(obj.subcategory)
             let subContainer = subcategories.map(subcategory => {
                     if(obj.subcategory[subcategory].length > 0){
-                        listitemsContainer = [...listitemsContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
+                        this.listitemsContainer = [...this.listitemsContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
                     }
                     return <Fragment>
                         <Category 
@@ -117,9 +117,6 @@ export default class TagsMenu extends React.Component{
                     <div id="subcategories" className="button-wrapper subcategories">
                         {subContainer}
                     </div>
-                    <div className="TagsMenu-listItems-container" >
-                        {listitemsContainer}
-                    </div>
                 </div>
             </Fragment>
     ]
@@ -132,13 +129,34 @@ export default class TagsMenu extends React.Component{
                 />
             </div>,
             <div class="TagsMenu-subcategories" id="year/location-subcategories">
-                <YearLocation 
-                    yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
-                    filterByYear={this.props.context.filterByYear}
-                    isChecked={ this.props.context.yearChecked}
-                    // data={this.context.state.artworkInfoData || {}}
-                    state={this.props.context.state}
+                <Category 
+                    category="year"
+                    level="subcategory"
                     context={this.props.context}
+                    button
+                    showContent={this.onSubcategoriesClick}
+                />
+                <Category 
+                    category="location"
+                    context={this.props.context}
+                    level="subcategory"
+                    button
+                    showContent={this.onSubcategoriesClick}
+                />
+            </div>
+        ]
+        this.listitemsContainer = [...this.listitemsContainer, 
+            <div className="button-wrapper TagsMenu-listitem" id={`year-listitem`}>
+                <Year 
+                    years={this.props.context.state.yearLocation.years}
+                    filterByYear={this.props.context.filterByYear}
+                    yearChecked={this.props.context.yearChecked}
+                />
+            </div>,
+            <div className="button-wrapper TagsMenu-listitem" id={`location-listitem`}>
+                <Location 
+                    locations={this.props.context.state.yearLocation.locations}
+                    filterByYear={this.props.context.filterByYear}
                 />
             </div>
         ]
@@ -175,9 +193,6 @@ export default class TagsMenu extends React.Component{
         }
         }
         >
-            <div className="button-wrapper TagsMenu-about-contact">
-                {this.props.children}
-            </div>
             <Fragment>
                     <div className="TagsMenu-category-button-container">
                         {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
@@ -194,17 +209,6 @@ export default class TagsMenu extends React.Component{
                             button
                             showContent={this.onCategoriesClick}
                         />
-                        
-
-{/* 
-                        <YearLocation 
-                            yearLocation={this.props.context.state.yearLocation || {years: [], locations: []}}
-                            filterByYear={this.props.context.filterByYear}
-                            isChecked={ this.props.context.yearChecked}
-                            // data={this.context.state.artworkInfoData || {}}
-                            state={this.props.context.state}
-                            context={this.props.context}
-                        /> */}
                         <ClearAll 
                             context={this.props.context}
                             enlarge={this.props.context.state.enlarge}
@@ -213,8 +217,13 @@ export default class TagsMenu extends React.Component{
                     <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
                         {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
                     </div>
+                    <div id="TagsMenu-listitems-container" className="TagsMenu-listitems-container">
+                        {this.listitemsContainer}
+                    </div>
             </Fragment>
-    
+            <div className="button-wrapper TagsMenu-about-contact">
+                {this.props.children}
+            </div>
 
         </div>
     }

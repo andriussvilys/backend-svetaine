@@ -2,15 +2,13 @@ import React from 'react';
 
 const Category = (props) => {
 
-    const spreadLetters = (title) => {
+    const spreadLetters = (title, level) => {
         let letters = Array.from(title).map((letter, index) => {
-            return <div key={`${title}-leter-${index}`} className="title-letter">{letter}</div>
+            return <div key={`${title}-leter-${index}`} className={`title-letter ${level}-title-letter`}>{letter}</div>
         })
         return letters
     }
 
-    console.log("CATEGORY PROPS")
-    console.log(props)
     return(
         <div
         key={`TagsMenu-category-${props.category}`} 
@@ -19,7 +17,7 @@ const Category = (props) => {
             <div 
             onClick={() => {props.showContent(props.category)}}
             className="TagsMenu-category-title">
-                {spreadLetters(props.category)}
+                {spreadLetters(props.category, props.level)}
             </div>
             {!props.button ? 
                 <input 

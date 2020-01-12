@@ -523,9 +523,8 @@ label {
   font-size: 12px;
   text-transform: uppercase;
   list-style-type: none;
-  border-left: 1px solid;
-  border-right: 1px solid;
   margin: 0;
+  padding: 0;
 }
 
 .tagsMenu-list input {
@@ -1391,6 +1390,171 @@ label {
   width: 100%;
 }
 
+.TagsMenu-checkbox {
+  top: initial;
+  position: initial;
+  margin-left: 5px;
+}
+
+.TagsMenu-Accordion-label {
+  border: 1px solid black;
+  padding: 3px;
+  margin: 3px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 48%;
+          flex: 1 1 48%;
+}
+
+.TagsMenu-category-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  z-index: 1;
+}
+
+.TagsMenu-categories {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: relative;
+}
+
+.TagsMenu-listitems-container {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  border-top: 1px solid black;
+  padding: 4px 24px;
+}
+
+.title-letter {
+  text-transform: uppercase;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 600;
+}
+
+.TagsMenu-subcategory-container {
+  width: 100%;
+  border-top: 1px solid black;
+}
+
+.TagsMenu-subcategories {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-transition: 0.2s -webkit-transform;
+  transition: 0.2s -webkit-transform;
+  transition: 0.2s transform;
+  transition: 0.2s transform, 0.2s -webkit-transform;
+  height: 0;
+  overflow: hidden;
+}
+
+.TagsMenu-listItems-container {
+  width: 100%;
+  position: absolute;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+  bottom: 0;
+}
+
+.TagsMenu-listitem {
+  z-index: 7;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
+  height: 0;
+  overflow: hidden;
+}
+
+.TagsMenu-bottomButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.TagsMenu-category-title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  cursor: pointer;
+}
+
+.scroll-down {
+  height: auto;
+  padding: 4px 24px;
+}
+
+.TagsMenu-about-contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  position: relative;
+  z-index: 999;
+}
+
+.TagsMenu-category-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  position: relative;
+  z-index: 9;
+}
+
+.button-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+}
+
+.subcategories {
+  z-index: 8;
+}
+
+.aboutbutton {
+  width: 100%;
+  height: 80px;
+  position: absolute;
+  top: 100%;
+}
+
+.category-title-letter {
+  font-size: 18px;
+}
+
+.subcategory-title-letter {
+  font-size: 14px;
+}
+
+.listitem-title-letter {
+  font-size: 12px;
+}
+
 @media only screen and (max-width: 720px) {
   body {
     overscroll-behavior: contain;
@@ -1429,6 +1593,7 @@ label {
     border-right: 1px solid;
     max-height: calc(100vh - 144px);
     border-bottom: none;
+    overflow-y: scroll;
   }
   .TagsMenu-max {
     max-height: calc(100vh - 143px);
@@ -1687,9 +1852,6 @@ label {
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
   }
-  .TagsMenu-container {
-    overflow: visible;
-  }
   .TagsMenu-checkbox {
     top: initial;
     position: initial;
@@ -1698,11 +1860,10 @@ label {
   .TagsMenu-Accordion-label {
     border: 1px solid black;
     padding: 3px;
-    margin: 2px;
-    max-width: 49%;
+    margin: 3px;
     -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
+        -ms-flex: 1 1 48%;
+            flex: 1 1 48%;
   }
   .TagsMenu-category-container {
     width: 100%;
@@ -1711,7 +1872,6 @@ label {
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    background-color: lime;
     z-index: 1;
   }
   .TagsMenu-categories {
@@ -1721,7 +1881,6 @@ label {
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
     position: relative;
-    background-color: pink;
   }
   .TagsMenu-listitems-container {
     width: 100%;
@@ -1731,9 +1890,8 @@ label {
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    background-color: blueviolet;
-    -webkit-transform: translateY(-100%);
-            transform: translateY(-100%);
+    border-top: 1px solid black;
+    padding: 4px 24px;
   }
   .title-letter {
     text-transform: uppercase;
@@ -1742,10 +1900,7 @@ label {
   }
   .TagsMenu-subcategory-container {
     width: 100%;
-    height: 100%;
     border-top: 1px solid black;
-    position: absolute;
-    bottom: 0;
   }
   .TagsMenu-subcategories {
     width: 100%;
@@ -1754,14 +1909,12 @@ label {
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    border: 1px solid red;
-    position: absolute;
-    bottom: 0;
     -webkit-transition: 0.2s -webkit-transform;
     transition: 0.2s -webkit-transform;
     transition: 0.2s transform;
     transition: 0.2s transform, 0.2s -webkit-transform;
-    background-color: cadetblue;
+    height: 0;
+    overflow: hidden;
   }
   .TagsMenu-listItems-container {
     width: 100%;
@@ -1771,11 +1924,11 @@ label {
     bottom: 0;
   }
   .TagsMenu-listitem {
-    position: absolute;
-    bottom: 0;
     z-index: 7;
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
+    height: 0;
+    overflow: hidden;
   }
   .TagsMenu-bottomButtons {
     display: -webkit-box;
@@ -1795,8 +1948,8 @@ label {
     cursor: pointer;
   }
   .scroll-down {
-    -webkit-transform: translateY(100%);
-            transform: translateY(100%);
+    height: auto;
+    padding: 4px 24px;
   }
   .TagsMenu-about-contact {
     display: -webkit-box;
@@ -1809,7 +1962,6 @@ label {
     z-index: 999;
   }
   .TagsMenu-category-button-container {
-    background-color: yellow;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -1827,15 +1979,22 @@ label {
     width: 100%;
   }
   .subcategories {
-    background-color: lime;
     z-index: 8;
   }
   .aboutbutton {
     width: 100%;
     height: 80px;
-    background-color: pink;
     position: absolute;
     top: 100%;
+  }
+  .category-title-letter {
+    font-size: 18px;
+  }
+  .subcategory-title-letter {
+    font-size: 14px;
+  }
+  .listitem-title-letter {
+    font-size: 12px;
   }
 }
 /*# sourceMappingURL=main.css.map */

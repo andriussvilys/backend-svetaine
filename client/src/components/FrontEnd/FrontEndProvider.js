@@ -279,7 +279,7 @@ export class Provider extends React.Component{
       let newDisplay = {}
       let zeroDisplay = {}
 
-      const checkbox = document.getElementById(`listItem-${listitem}`)
+      const checkbox = document.getElementById(`listitem-${listitem}`)
 
       if(hideAll){
         Object.keys(this.state.visibleArtwork).forEach(fileName => {
@@ -418,16 +418,17 @@ export class Provider extends React.Component{
       }
     }
 
-    this.filterAllThemes = (e) => {
+    this.filterAllThemes = (hide) => {
+      console.log("filterAllthemes hide")
+      console.log(hide)
       let themes = []
-      const checkbox = e.target
       Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
         const file = this.state.artworkOnDisplay[fileName]
         themes = [...themes, ...file.themes]
         })
       themes = Array.from(new Set(themes))
 
-      if(!checkbox.checked){
+      if(hide){
         Object.keys(this.state.artworkOnDisplay).forEach(id => {
             document.getElementById(id).classList.add('image-hide')
         })
@@ -492,30 +493,15 @@ export class Provider extends React.Component{
     }
 
     this.yearChecked = (year) => {
-      console.log("yearChecke")
-      console.log(`year - ${year}`)
       
       let onDisplay = false
       if(this.state.yearLocation){
         const visibleYears = Object.keys(this.state.yearLocation.visible.years)
-        console.log("visibleYears")
-        console.log(visibleYears)
         if(visibleYears.includes(year)){
           onDisplay = true
         }
       }
       return onDisplay
-      // if(this.state.artworkOnDisplay){
-      //   Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
-      //       const file = this.state.artworkOnDisplay[fileName]
-      //       if(file.year){
-      //           if(file.year === year){
-      //               onDisplay = true
-      //           }
-      //       }
-      //   })
-      //   return onDisplay
-      // }
   }
 
 
@@ -561,9 +547,9 @@ export class Provider extends React.Component{
     }
     
     this.showMenu = () => {
-      if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-        Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
-      }
+      // if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+      //   Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
+      // }
       if(this.state.mobile){
         let counter = 1
         if(document.getElementById("ArtworkInfo")){

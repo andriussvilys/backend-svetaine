@@ -61,8 +61,7 @@ export default class FrontEndIndex extends React.Component{
                                 <About
                                     loadEnlarge={this.context.loadEnlarge}
                                 />
-                                {/* <Contact /> */}
-                                <div id="contact">Contact</div>
+                                <Contact />
                             </TagsMenu>
 
                             <div id="images" className="images-container">
