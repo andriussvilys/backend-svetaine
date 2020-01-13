@@ -58,10 +58,6 @@ export default class FrontEndIndex extends React.Component{
                     {() => {
                         return <div className="frontEndIndex-container" >
                             <TagsMenu context={this.context}>
-                                <About
-                                    loadEnlarge={this.context.loadEnlarge}
-                                />
-                                <Contact />
                             </TagsMenu>
 
                             <div id="images" className="images-container">

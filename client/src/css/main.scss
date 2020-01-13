@@ -1358,7 +1358,7 @@ font-family: 'Times New Roman', Times, serif;
         grid-template-rows: max-content 1fr;
     }
     .about-container{
-        width: 100%;
+        width: 50%;
         position: relative;
         display: flex;
         border-top: 1px solid black;
@@ -1545,6 +1545,9 @@ font-family: 'Times New Roman', Times, serif;
     }
     .listitem-title-letter{
         font-size: 12px;
+    }
+    #contact-subcategories *{
+        width: 100%;
     }
   }
 

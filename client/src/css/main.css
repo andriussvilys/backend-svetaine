@@ -1791,7 +1791,7 @@ label {
         grid-template-rows: max-content 1fr;
   }
   .about-container {
-    width: 100%;
+    width: 50%;
     position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1995,6 +1995,9 @@ label {
   }
   .listitem-title-letter {
     font-size: 12px;
+  }
+  #contact-subcategories * {
+    width: 100%;
   }
 }
 /*# sourceMappingURL=main.css.map */

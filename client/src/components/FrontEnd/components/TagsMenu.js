@@ -143,6 +143,10 @@ export default class TagsMenu extends React.Component{
                     button
                     showContent={this.onSubcategoriesClick}
                 />
+            </div>,
+            <div class="TagsMenu-subcategories" id="contact-subcategories">
+                <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
+                <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
             </div>
         ]
         this.listitemsContainer = [...this.listitemsContainer, 
@@ -158,7 +162,7 @@ export default class TagsMenu extends React.Component{
                     locations={this.props.context.state.yearLocation.locations}
                     filterByYear={this.props.context.filterByYear}
                 />
-            </div>
+            </div>,
         ]
         return subCatBlocks
     }
@@ -193,6 +197,25 @@ export default class TagsMenu extends React.Component{
         }
         }
         >
+            <div className="button-wrapper TagsMenu-about-contact">
+                <Category 
+                    category="contact"
+                    context={this.props.context}
+                    level="category"
+                    button
+                    showContent={this.onCategoriesClick}
+                />
+                <About
+                    loadEnlarge={this.props.context.loadEnlarge}
+                />
+            {/* <Category
+                category="about"
+                context={this.props.context}
+                level="category"
+                button
+            /> */}
+                {this.props.children}
+            </div>
             <Fragment>
                     <div className="TagsMenu-category-button-container">
                         {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
@@ -221,9 +244,7 @@ export default class TagsMenu extends React.Component{
                         {this.listitemsContainer}
                     </div>
             </Fragment>
-            <div className="button-wrapper TagsMenu-about-contact">
-                {this.props.children}
-            </div>
+
 
         </div>
     }

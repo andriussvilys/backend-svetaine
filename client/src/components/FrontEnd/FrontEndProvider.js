@@ -710,9 +710,10 @@ export class Provider extends React.Component{
          @returns current index in common sequence or the last one recorded in state
          */
         const checkFamilySequence = () => {
-          if(familyName === "none"){
+          if(familyName === "none" || familyName === "about"){
             return nextPic = null
           }
+          console.log("checkk gamily sequence")
 
           let sequence = null
           const createSequence = () => {
@@ -738,6 +739,8 @@ export class Provider extends React.Component{
             sequence = {...this.state.enlarge.familySequence}
           }
           nextIndex = sequence.currentIndex+1 > sequence.familySequence.length-1 ? 0 : sequence.currentIndex+1
+          console.log("nextIndex")
+          console.log(nextIndex)
           if(nextIndex === sequence.startIndex){
             delete newState.enlarge.familySequence
             return null
@@ -754,8 +757,12 @@ export class Provider extends React.Component{
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
           let indexes = allVisible.filter(id => onDisplay.includes(id))
-          let currentIndex = indexes.indexOf(this.state.enlarge.background.fileName)
-          return currentIndex < 0 ? this.state.enlarge.commonIndex : currentIndex
+          let currentIndex = this.state.enlarge.commonIndex || indexes.indexOf(this.state.enlarge.background.fileName) 
+          currentIndex = currentIndex < 0 ? 0 : currentIndex
+          console.log("currentIndex")
+          console.log(currentIndex)
+          return currentIndex 
+          // < 0 ? this.state.enlarge.commonIndex : currentIndex
         }
 
         nextPic = checkFamilySequence()
@@ -763,7 +770,12 @@ export class Provider extends React.Component{
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
           let indexes = allVisible.filter(id => onDisplay.includes(id))
-          nextIndex = commonIndex()+1 > indexes.length-1 ? 0 : commonIndex()+1
+          console.log("indexes")
+          console.log(indexes)
+          // nextIndex = commonIndex()+1 > indexes.length-1 ? 0 : commonIndex()+1
+          nextIndex = this.state.enlarge.commonIndex ? this.state.enlarge.commonIndex : commonIndex()+1 > indexes.length-1 ? 0 : commonIndex()+1
+          console.log("nextIndex")
+          console.log(nextIndex)
           nextPicName = indexes[nextIndex]
           nextPic = this.state.artworkInfoData[nextPicName]
           newState.enlarge.commonIndex = nextIndex
