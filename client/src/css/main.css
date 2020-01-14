@@ -1406,6 +1406,10 @@ label {
           flex: 1 1 48%;
 }
 
+.TagsMenu-Accordion-label:hover {
+  background-color: lime;
+}
+
 .TagsMenu-category-container {
   width: 100%;
   display: -webkit-box;

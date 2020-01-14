@@ -1051,6 +1051,9 @@ font-family: 'Times New Roman', Times, serif;
     // width: 48%;
     flex: 1 1 48%;
 }
+.TagsMenu-Accordion-label:hover{
+    background-color: lime;
+}
 .TagsMenu-category-container{
     width: 100%;
     display: flex;
