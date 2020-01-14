@@ -480,6 +480,7 @@ label {
   position: absolute;
   right: -1px;
   top: 6px;
+  cursor: pointer;
 }
 
 .TagsMenu-checkbox_subcategory {
@@ -1433,7 +1434,7 @@ label {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   border-top: 1px solid black;
-  padding: 4px 24px;
+  position: absolute;
 }
 
 .title-letter {
@@ -1445,6 +1446,7 @@ label {
 .TagsMenu-subcategory-container {
   width: 100%;
   border-top: 1px solid black;
+  position: relative;
 }
 
 .TagsMenu-subcategories {
@@ -1458,8 +1460,13 @@ label {
   transition: 0.2s -webkit-transform;
   transition: 0.2s transform;
   transition: 0.2s transform, 0.2s -webkit-transform;
-  height: 0;
   overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  overflow: visible;
+  background-color: white;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
 }
 
 .TagsMenu-listItems-container {
@@ -1474,8 +1481,15 @@ label {
   z-index: 7;
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
-  height: 0;
   overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  padding: 4px 40px;
+  border-bottom: 1px solid;
+}
+
+#TagsMenu-listitems-container {
+  display: none;
 }
 
 .TagsMenu-bottomButtons {
@@ -1498,8 +1512,9 @@ label {
 }
 
 .scroll-down {
-  height: auto;
-  padding: 4px 24px;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  border-top: 0;
 }
 
 .TagsMenu-about-contact {
@@ -1521,6 +1536,7 @@ label {
       flex-wrap: wrap;
   position: relative;
   z-index: 9;
+  background-color: white;
 }
 
 .button-wrapper {
@@ -1530,10 +1546,13 @@ label {
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   width: 100%;
+  background-color: white;
 }
 
 .subcategories {
   z-index: 8;
+  background-color: white;
+  padding: 4px 20px;
 }
 
 .aboutbutton {
@@ -1553,6 +1572,23 @@ label {
 
 .listitem-title-letter {
   font-size: 12px;
+}
+
+.shadow {
+  -webkit-box-shadow: inset 0px 24px 26px -19px rgba(0, 0, 0, 0.6);
+          box-shadow: inset 0px 24px 26px -19px rgba(0, 0, 0, 0.6);
+  position: absolute;
+  height: 100%;
+  widows: 100%;
+}
+
+.no-click {
+  cursor: default;
+}
+
+#contact-subcategories * {
+  width: 100%;
+  margin-left: 6vw !important;
 }
 
 @media only screen and (max-width: 720px) {
@@ -1594,6 +1630,7 @@ label {
     max-height: calc(100vh - 144px);
     border-bottom: none;
     overflow-y: scroll;
+    overflow: visible;
   }
   .TagsMenu-max {
     max-height: calc(100vh - 143px);
@@ -1851,153 +1888,6 @@ label {
   .hide-imageSelect {
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
-  }
-  .TagsMenu-checkbox {
-    top: initial;
-    position: initial;
-    margin-left: 5px;
-  }
-  .TagsMenu-Accordion-label {
-    border: 1px solid black;
-    padding: 3px;
-    margin: 3px;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 48%;
-            flex: 1 1 48%;
-  }
-  .TagsMenu-category-container {
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    z-index: 1;
-  }
-  .TagsMenu-categories {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    position: relative;
-  }
-  .TagsMenu-listitems-container {
-    width: 100%;
-    height: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    border-top: 1px solid black;
-    padding: 4px 24px;
-  }
-  .title-letter {
-    text-transform: uppercase;
-    font-family: 'Times New Roman', Times, serif;
-    font-weight: 600;
-  }
-  .TagsMenu-subcategory-container {
-    width: 100%;
-    border-top: 1px solid black;
-  }
-  .TagsMenu-subcategories {
-    width: 100%;
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-transition: 0.2s -webkit-transform;
-    transition: 0.2s -webkit-transform;
-    transition: 0.2s transform;
-    transition: 0.2s transform, 0.2s -webkit-transform;
-    height: 0;
-    overflow: hidden;
-  }
-  .TagsMenu-listItems-container {
-    width: 100%;
-    position: absolute;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
-    bottom: 0;
-  }
-  .TagsMenu-listitem {
-    z-index: 7;
-    -webkit-transition: 0.2s all;
-    transition: 0.2s all;
-    height: 0;
-    overflow: hidden;
-  }
-  .TagsMenu-bottomButtons {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-  .TagsMenu-category-title {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
-    cursor: pointer;
-  }
-  .scroll-down {
-    height: auto;
-    padding: 4px 24px;
-  }
-  .TagsMenu-about-contact {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    width: 100%;
-    position: relative;
-    z-index: 999;
-  }
-  .TagsMenu-category-button-container {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    position: relative;
-    z-index: 9;
-  }
-  .button-wrapper {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    width: 100%;
-  }
-  .subcategories {
-    z-index: 8;
-  }
-  .aboutbutton {
-    width: 100%;
-    height: 80px;
-    position: absolute;
-    top: 100%;
-  }
-  .category-title-letter {
-    font-size: 18px;
-  }
-  .subcategory-title-letter {
-    font-size: 14px;
-  }
-  .listitem-title-letter {
-    font-size: 12px;
-  }
-  #contact-subcategories * {
-    width: 100%;
   }
 }
 /*# sourceMappingURL=main.css.map */

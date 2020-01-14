@@ -20,6 +20,7 @@ const About = (props) => {
 
             {/* <span>ABOUT</span> */}
             <Category 
+                clickable
                 category="about"
                 level="category"
                 button

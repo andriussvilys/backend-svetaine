@@ -54,6 +54,7 @@ export default class TagsMenu extends React.Component{
 
         let buttons = data.map(obj => {
             return <Category 
+            clickable
             category={obj.category}
             level="category"
             context={this.props.context}
@@ -71,6 +72,7 @@ export default class TagsMenu extends React.Component{
     createListItems = (listItemArray, subcategory, category) => {
         let listItems = listItemArray.map(listitem => {
             return <Category 
+                            clickable={false}
                             category={listitem}
                             level="listitem"
                             onChange={() => this.props.context.filterByListitem(category, subcategory, listitem)}
@@ -78,7 +80,10 @@ export default class TagsMenu extends React.Component{
                             showContent={() => {return}}
                     />
         })
-        return <div className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>{listItems}</div>
+        return <div className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>
+                    {/* <div className="shadow"></div> */}
+                    {listItems}
+                </div>
     }
 
     listitemsContainer = []
@@ -87,49 +92,60 @@ export default class TagsMenu extends React.Component{
         let buttons = []
         let subCatBlocks = []
         let combined = []
+        let listItems = []
+
+        //obj === category
         data.forEach(obj => {
             const subcategories = Object.keys(obj.subcategory)
+            
             let subContainer = subcategories.map(subcategory => {
                     if(obj.subcategory[subcategory].length > 0){
                         this.listitemsContainer = [...this.listitemsContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
                     }
-                    return <Fragment>
-                        <Category 
-                        category={subcategory}
-                        level="subcategory"
-                        context={this.props.context}
-                        onChange={() => this.props.context.filterBySubcategory(obj.category, subcategory)}
-                        isChecked={this.props.context.subcategoryChecked(obj.category, subcategory)}
-                        showContent={this.onSubcategoriesClick}
-                        />
-                        {/* { obj.subcategory[subcategory].length > 0 ?
-                            this.createListItems(obj.subcategory[subcategory], subcategory, obj.category) :
-                            null
-                        } */}
-                    </Fragment>
+                    let button = <Category 
+                    clickable={obj.subcategory[subcategory].length > 0}
+                    category={subcategory}
+                    level="subcategory"
+                    context={this.props.context}
+                    onChange={() => this.props.context.filterBySubcategory(obj.category, subcategory)}
+                    isChecked={this.props.context.subcategoryChecked(obj.category, subcategory)}
+                    showContent={this.onSubcategoriesClick}
+                    />
+
+                        { if(obj.subcategory[subcategory].length > 0)
+                            listItems = [...listItems, 
+                                this.createListItems(obj.subcategory[subcategory], subcategory, obj.category) 
+                            ]
+                        }
+                    return button
                 
             })
+
 
             // subContainer = [...subContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
         subCatBlocks = [...subCatBlocks, 
             <Fragment>
                 <div className="TagsMenu-subcategories" id={`${obj.category}-subcategories`}>
-                    <div id="subcategories" className="button-wrapper subcategories">
+                    <div data-title="subcategories" className="button-wrapper subcategories">
                         {subContainer}
+                    </div>
+                    <div data-title="list" className="TagsMenu-listitems-container">
+                        {listItems}
                     </div>
                 </div>
             </Fragment>
     ]
         })
         subCatBlocks = [...subCatBlocks, 
-            <div class="TagsMenu-subcategories" id="themes-subcategories">
+            <div class="TagsMenu-subcategories subcategories" id="themes-subcategories">
                 <Themes
                     state={this.props.context.state}
                     context={this.props.context}
                 />
             </div>,
-            <div class="TagsMenu-subcategories" id="year/location-subcategories">
+            <div class="TagsMenu-subcategories subcategories" id="year/location-subcategories">
                 <Category 
+                    clickable
                     category="year"
                     level="subcategory"
                     context={this.props.context}
@@ -137,6 +153,7 @@ export default class TagsMenu extends React.Component{
                     showContent={this.onSubcategoriesClick}
                 />
                 <Category 
+                    clickable
                     category="location"
                     context={this.props.context}
                     level="subcategory"
@@ -199,6 +216,7 @@ export default class TagsMenu extends React.Component{
         >
             <div className="button-wrapper TagsMenu-about-contact">
                 <Category 
+                    clickable
                     category="contact"
                     context={this.props.context}
                     level="category"
@@ -221,12 +239,14 @@ export default class TagsMenu extends React.Component{
                         {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
                         
                         <Category 
+                            clickable
                             category="year/location"
                             context={this.props.context}
                             button
                             showContent={this.onCategoriesClick}
                         />
                         <Category 
+                            clickable
                             category="themes"
                             context={this.props.context}
                             button

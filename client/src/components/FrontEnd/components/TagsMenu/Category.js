@@ -16,7 +16,7 @@ const Category = (props) => {
         >   
             <div 
             onClick={() => {props.showContent(props.category)}}
-            className="TagsMenu-category-title">
+            className={`TagsMenu-category-title ${props.clickable ? null : "no-click"}`} >
                 {spreadLetters(props.category, props.level)}
             </div>
             {!props.button ? 
