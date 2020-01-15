@@ -479,55 +479,41 @@ export class Provider extends React.Component{
             }
             else{
               console.log("ELSE")
-              toggleArtwork.forEach(item => {
-                console.log(`document.getElementById('${item}').classList.remove("image-hide")`)
-                document.getElementById(item).classList.remove("image-hide")
-              })
+              // toggleArtwork.forEach(item => {
+              //   console.log(`document.getElementById('${item}').classList.remove("image-hide")`)
+              //   document.getElementById(item).classList.remove("image-hide")
+              // })
             
               // toggleArtwork.forEach(fileName => {
               //   artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.visibleArtwork[fileName]}
               // })
-
-              // let newNewState = {...newState, artworkOnDisplay: artworkOnDisplay, 
-              //   yearLocation:{...newState.yearLocation, visible: {
-              //     ...newState.yearLocation.visible, years: {
-              //       ...newState.yearLocation.visible.years, [year]: toggleArtwork
-              //     }
-              //   }}
-              // }
-
-              // console.log("newNewState")
-              // console.log(newNewState)
-
-              // this.setState(newNewState)
-
-              // return this.setState({artworkOnDisplay: artworkOnDisplay, 
-              //   yearLocation:{...newState.yearLocation, visible: {
-              //     ...newState.yearLocation.visible, years: {
-              //       ...newState.yearLocation.visible.years, [year]: toggleArtwork
-              //     }
-              //   }}
-              // })
+              this.state.yearLocation.all.years[year].forEach(item => {
+                const DOMitem = document.getElementById(item)
+                // if(!DOMitem.src){
+                //   DOMitem.src = DOMitem.getAttribute('data-src')
+                // }
+                DOMitem.classList.remove("image-hide")
+              })
+      
+              this.state.yearLocation.all.years[year].forEach(fileName => {
+                artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
+              })
+      
+              return this.setState({artworkOnDisplay})
             }
 
     }
 
     this.yearChecked = (year) => {
+
+      let onDisplay = []
+      const artworkOnDisplay = {...this.state.artworkOnDisplay}
+      onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
+        return artworkOnDisplay[fileName].year === year
+      })
+      return onDisplay.length > 0
       
-      let onDisplay = false
-      if(this.state.yearLocation){
-        const visibleYears = Object.keys(this.state.yearLocation.visible.years)
-        if(this.state.yearLocation.visible.years[year].length > 0 || !this.state.yearLocation.visible.years[year]){
-          onDisplay = true
-        }
-        // if(visibleYears && visibleYears[year].length > 0){
-        //   onDisplay = true
-        // }
-      }
-      return onDisplay
   }
-
-
 
     this.themeChecked = (theme) => {
       let onDisplay = []
