@@ -451,45 +451,65 @@ export class Provider extends React.Component{
             let artworkOnDisplay = {...newState.artworkOnDisplay}
             let visibleByYear = {}
       
-            // Object.keys(artworkOnDisplay).forEach(fileName => {
-            //       visibleByYear = artworkOnDisplay[fileName].year.map(year => year)
-            //   }, () => visibleByYear = Array.from(new Set(visibleByYear)))
+            let checkbox = document.getElementById(`year-${year}`)
 
-            Object.keys(artworkOnDisplay).forEach(fileName => {
-              if(artworkOnDisplay[fileName].year === year)
-              visibleByYear = null
-            })
-            
-              const checkbox = document.getElementById(`year-${year}`)
             if(!checkbox.checked){
+              console.log("!checkbox checked")
+              console.log(toggleArtwork)
+
               toggleArtwork.forEach(item => {
                 document.getElementById(item).classList.add("image-hide")
               })
-              
-              // toggleArtwork = toggleArtwork.filter
+            
+              setTimeout(() => {    
 
-              // toggleArtwork.forEach(fileName => {
-              //   delete artworkOnDisplay[fileName]
-              // })
-      
-                return this.setState({artworkOnDisplay})
+                toggleArtwork.forEach(fileName => {
+                  delete artworkOnDisplay[fileName]
+
+                })
+                return this.setState({artworkOnDisplay: artworkOnDisplay, 
+                  yearLocation:{...newState.yearLocation, visible: {
+                    ...newState.yearLocation.visible, years: {
+                      ...newState.yearLocation.visible.years, [year]: []
+                    }
+                  }}
+                })
+
+              }, 400);
             }
-      
-            // else{
-            //   this.state.themesOnDisplay[theme].forEach(item => {
-            //     const DOMitem = document.getElementById(item)
-            //     if(!DOMitem.src){
-            //       DOMitem.src = DOMitem.getAttribute('data-src')
-            //     }
-            //     DOMitem.classList.remove("image-hide")
-            //   })
-      
-            //   toggleArtwork.forEach(fileName => {
-            //     artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
-            //   })
-      
-            //   return this.setState({artworkOnDisplay})
-            // }
+            else{
+              console.log("ELSE")
+              toggleArtwork.forEach(item => {
+                console.log(`document.getElementById('${item}').classList.remove("image-hide")`)
+                document.getElementById(item).classList.remove("image-hide")
+              })
+            
+              // toggleArtwork.forEach(fileName => {
+              //   artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.visibleArtwork[fileName]}
+              // })
+
+              // let newNewState = {...newState, artworkOnDisplay: artworkOnDisplay, 
+              //   yearLocation:{...newState.yearLocation, visible: {
+              //     ...newState.yearLocation.visible, years: {
+              //       ...newState.yearLocation.visible.years, [year]: toggleArtwork
+              //     }
+              //   }}
+              // }
+
+              // console.log("newNewState")
+              // console.log(newNewState)
+
+              // this.setState(newNewState)
+
+              // return this.setState({artworkOnDisplay: artworkOnDisplay, 
+              //   yearLocation:{...newState.yearLocation, visible: {
+              //     ...newState.yearLocation.visible, years: {
+              //       ...newState.yearLocation.visible.years, [year]: toggleArtwork
+              //     }
+              //   }}
+              // })
+            }
+
     }
 
     this.yearChecked = (year) => {
@@ -497,9 +517,12 @@ export class Provider extends React.Component{
       let onDisplay = false
       if(this.state.yearLocation){
         const visibleYears = Object.keys(this.state.yearLocation.visible.years)
-        if(visibleYears.includes(year)){
+        if(this.state.yearLocation.visible.years[year].length > 0 || !this.state.yearLocation.visible.years[year]){
           onDisplay = true
         }
+        // if(visibleYears && visibleYears[year].length > 0){
+        //   onDisplay = true
+        // }
       }
       return onDisplay
   }

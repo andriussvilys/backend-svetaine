@@ -7,6 +7,7 @@ const Location = (props) => {
 
     let locationList = locations.map(loc => {
         return <Category 
+                    key={loc}
                     category={loc}
                     level="listitem"
                     // onChange={() => this.props.context.filterBySubcategory(category, subcategory, listitem)}
@@ -18,10 +19,9 @@ const Location = (props) => {
     })
 
         return(
-            <div>
+            <Fragment>
                 {locationList}
-                {/* <ul>{locationList}</ul> */}
-            </div>
+            </Fragment>
         )
 }
 

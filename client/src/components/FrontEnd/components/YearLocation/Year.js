@@ -21,9 +21,9 @@ const Year = (props) => {
     })
 
         return(
-            <div>
+            <Fragment>
                 <ul className="tagsMenu-list tagsMenu-list-tags">{yearList}</ul>
-            </div>
+            </Fragment>
         )
 }
 

@@ -1125,9 +1125,11 @@ font-family: 'Times New Roman', Times, serif;
 }
 .TagsMenu-category-title{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     flex: 1;
     cursor: pointer;
+
 }
 // .list-items, .subcategory{
 //     display: none;

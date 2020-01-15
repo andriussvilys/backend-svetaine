@@ -137,31 +137,48 @@ export default class TagsMenu extends React.Component{
     ]
         })
         subCatBlocks = [...subCatBlocks, 
-            <div class="TagsMenu-subcategories subcategories" id="themes-subcategories">
+            <div className="TagsMenu-subcategories subcategories" id="themes-subcategories">
                 <Themes
                     state={this.props.context.state}
                     context={this.props.context}
                 />
             </div>,
-            <div class="TagsMenu-subcategories subcategories" id="year/location-subcategories">
-                <Category 
-                    clickable
-                    category="year"
-                    level="subcategory"
-                    context={this.props.context}
-                    button
-                    showContent={this.onSubcategoriesClick}
-                />
-                <Category 
-                    clickable
-                    category="location"
-                    context={this.props.context}
-                    level="subcategory"
-                    button
-                    showContent={this.onSubcategoriesClick}
-                />
+            <div className="TagsMenu-subcategories" id="year/location-subcategories">
+                <div data-title="subcategories" className="button-wrapper subcategories">
+                    <Category 
+                        clickable
+                        category="year"
+                        level="subcategory"
+                        context={this.props.context}
+                        button
+                        showContent={this.onSubcategoriesClick}
+                    />
+                    <Category 
+                        clickable
+                        category="location"
+                        context={this.props.context}
+                        level="subcategory"
+                        button
+                        showContent={this.onSubcategoriesClick}
+                    />
+                </div>
+                    <div data-title="list" className="TagsMenu-listitems-container">
+                        <div className="button-wrapper TagsMenu-listitem" id={`year-listitem`}>
+                            <Year 
+                                years={this.props.context.state.yearLocation.years}
+                                filterByYear={this.props.context.filterByYear}
+                                yearChecked={this.props.context.yearChecked}
+                            />
+                        </div>
+                        <div className="button-wrapper TagsMenu-listitem" id={`location-listitem`}>
+                            <Location 
+                                locations={this.props.context.state.yearLocation.locations}
+                                filterByYear={this.props.context.filterByYear}
+                            />
+                        </div>
+                    </div>
             </div>,
-            <div class="TagsMenu-subcategories" id="contact-subcategories">
+            <div className="TagsMenu-subcategories" id="contact-subcategories">
                 <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
                 <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
             </div>
@@ -260,9 +277,9 @@ export default class TagsMenu extends React.Component{
                     <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
                         {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
                     </div>
-                    <div id="TagsMenu-listitems-container" className="TagsMenu-listitems-container">
+                    {/* <div id="TagsMenu-listitems-container" className="TagsMenu-listitems-container">
                         {this.listitemsContainer}
-                    </div>
+                    </div> */}
             </Fragment>
 
 

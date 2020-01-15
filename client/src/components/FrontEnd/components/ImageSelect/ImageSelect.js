@@ -23,6 +23,7 @@ const ImageSelect = (props) => {
                 return <FilePreview 
                         key={`imageSelect-${objName}`}
                         containerClassName={`ImagesPreview--imageContainer ImagesPreview--imageContainer__empty ${halfSize}`}
+                        // containerClassName={`ImagesPreview--imageContainer ImagesPreview--imageContainer__empty ${halfSize}`}
                         className="imageSelect-FilePreview" 
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
