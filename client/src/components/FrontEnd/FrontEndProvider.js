@@ -524,6 +524,14 @@ export class Provider extends React.Component{
       return onDisplay.length > 0
     }
 
+    this.filterByLocation = lcoation => {
+
+    }
+
+    this.locationChecked = (location) => {
+
+    }
+
     this.shrinkImageSelect = () => {
 
         const imageSelect = document.getElementById('imageSelect')
@@ -1319,6 +1327,8 @@ export class Provider extends React.Component{
 
             filterByYear: this.filterByYear,
             yearChecked: this.yearChecked,
+            filterByLocation: this.filterByLocation,
+            locationChecked: this.locationChecked,
 
             showMenu: this.showMenu,
             toggleMobile: this.toggleMobile,
