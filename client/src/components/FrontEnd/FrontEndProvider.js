@@ -128,6 +128,7 @@ export class Provider extends React.Component{
     }
 
     this.filterByCategory = (category, hideAll) => {
+      return new Promise((res,rej) => {
         let newDisplay = {}
         let zeroDisplay = {}
 
@@ -149,7 +150,7 @@ export class Provider extends React.Component{
         Object.keys(zeroDisplay).forEach(id => {
             document.getElementById(id).classList.add('image-hide')
         })
-        return this.setState({artworkOnDisplay: newDisplay})
+        return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
         }
         //ON UN-CHECK
         if(!checkbox.checked){
@@ -163,7 +164,7 @@ export class Provider extends React.Component{
             Object.keys(zeroDisplay).forEach(id => {
                 document.getElementById(id).classList.add('image-hide')
             })
-            return this.setState({artworkOnDisplay: newDisplay})
+            return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
         }
         //ON CHECK
         else{
@@ -177,8 +178,9 @@ export class Provider extends React.Component{
             Object.keys(newDisplay).forEach(id => {
                 document.getElementById(id).classList.remove('image-hide')
             })
-            return this.setState({artworkOnDisplay: newDisplay})
+            return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
         }
+      })
 
     }
     this.filterBySubcategory = (category, subcategory, hideAll) => {
@@ -377,7 +379,8 @@ export class Provider extends React.Component{
 
         return this.setState({artworkOnDisplay: newDisplay})
       }
-
+      console.log("filter by theme")
+      console.log(theme)
       //ON UN-CHECK
       const newState = {...this.state}
       const toggleArtwork = [...newState.themesOnDisplay[theme]]
@@ -877,9 +880,11 @@ export class Provider extends React.Component{
     this.animateEnlarge = (file, viewPrev) => {
 
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-        document.getElementById("TagsMenu").classList.toggle("show-menu")
+        // document.getElementById("TagsMenu").classList.toggle("show-menu")
+        this.showMenu()
       }
-      if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
+      // if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
+      if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
 
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 
@@ -1056,6 +1061,7 @@ export class Provider extends React.Component{
   
     }
     this.showInfo = () => {
+      document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
       const info = document.getElementById("ArtworkInfo")
       if(!info.classList.contains('info-up')){
         let counter = 1
@@ -1078,7 +1084,7 @@ export class Provider extends React.Component{
         info.classList.remove('info-up')
         setTimeout(() => {
           info.classList.remove('show')
-        }, 200);
+        }, 350);
       }
     }
 

@@ -840,7 +840,9 @@ font-family: 'Times New Roman', Times, serif;
     right: 0;
 
     border-top: $border-dark;
-    border-left: $border-dark;
+    // border-left: $border-dark;
+    overflow: hidden;
+    width: 100% !important;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
@@ -1382,6 +1384,9 @@ font-family: 'Times New Roman', Times, serif;
         position: absolute;
         bottom: -90px;
         transform: translateY(100%);
+    }
+    .ArtworkInfo-toggleTags{
+        bottom: 1px;
     }
 
     // .imageSelect-FilePreview{

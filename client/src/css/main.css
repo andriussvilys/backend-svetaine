@@ -1121,7 +1121,8 @@ label {
   overflow-y: auto;
   right: 0;
   border-top: 1px solid black;
-  border-left: 1px solid black;
+  overflow: hidden;
+  width: 100% !important;
 }
 
 .ArtworkInfo-wrapper {
@@ -1822,6 +1823,9 @@ label {
     bottom: -90px;
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
+  }
+  .ArtworkInfo-toggleTags {
+    bottom: 1px;
   }
   .imageSelect-FilePreview {
     -ms-flex-item-align: start;
