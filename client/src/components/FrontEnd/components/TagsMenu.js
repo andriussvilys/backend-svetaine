@@ -27,26 +27,51 @@ export default class TagsMenu extends React.Component{
         return letters
     }
     onCategoriesClick = (category) => {
+        let delay = 0
+        //if closing category
         if(document.getElementById(`${category}-subcategories`).classList.contains("scroll-down")){
-            Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
+            //if listitem is open
+            if(Array.from(document.getElementsByClassName("scroll-down-listitem")).length > 0){
+                Array.from(document.getElementsByClassName("scroll-down-listitem")).forEach(item => item.classList.remove("scroll-down-listitem"))
+                delay = 150
+            }
+
+            setTimeout(() => {
+                Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
+            }, delay);
             return
         }
+        
+        //if opening category
+        else{
+            if(Array.from(document.getElementsByClassName("TagsMenu-listitem")).length > 0){
+                Array.from(document.getElementsByClassName("TagsMenu-listitem")).forEach(item => item.classList.remove("scroll-down-listitem"))
+                delay = 150
+            }
 
-        document.getElementById("TagsMenu-subcategory-container").childNodes.forEach(child => {
-            child.classList.remove("scroll-down")
-        })
-        Array.from(document.getElementsByClassName("TagsMenu-listitem")).forEach(item => item.classList.remove("scroll-down"))
-        document.getElementById(`${category}-subcategories`).classList.toggle("scroll-down")
+            if(document.getElementsByClassName("scroll-down").length > 0){
+                setTimeout(() => {                    
+                    document.getElementById("TagsMenu-subcategory-container").childNodes.forEach(child => {
+                        child.classList.remove("scroll-down")
+                    })
+                }, delay);
+                delay += 150
+            }
+
+            setTimeout(() => {
+                document.getElementById(`${category}-subcategories`).classList.toggle("scroll-down")
+            }, delay);
+        }
     }
 
     onSubcategoriesClick = (subcategory) => {
         if(document.getElementById(`${subcategory}-listitem`) && document.getElementById(`${subcategory}-listitem`).classList.contains("scroll-down")){
-            Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
+            Array.from(document.getElementsByClassName("scroll-down-listitem")).forEach(item => item.classList.remove("scroll-down-listitem"))
             return
         }
-        Array.from(document.getElementsByClassName("TagsMenu-listitem")).forEach(item => item.classList.remove("scroll-down"))
+        Array.from(document.getElementsByClassName("TagsMenu-listitem")).forEach(item => item.classList.remove("scroll-down-listitem"))
         if(document.getElementById(`${subcategory}-listitem`))
-        document.getElementById(`${subcategory}-listitem`).classList.toggle("scroll-down")
+        document.getElementById(`${subcategory}-listitem`).classList.toggle("scroll-down-listitem")
     }
 
 
@@ -231,56 +256,52 @@ export default class TagsMenu extends React.Component{
         }
         }
         >
-            <div className="button-wrapper TagsMenu-about-contact">
-                <Category 
-                    clickable
-                    category="contact"
-                    context={this.props.context}
-                    level="category"
-                    button
-                    showContent={this.onCategoriesClick}
-                />
-                <About
-                    loadEnlarge={this.props.context.loadEnlarge}
-                />
-            {/* <Category
-                category="about"
-                context={this.props.context}
-                level="category"
-                button
-            /> */}
-                {this.props.children}
+            <div className="TagsMenu-wrapper">
+                <div className="button-wrapper TagsMenu-about-contact">
+                    <Category 
+                        clickable
+                        category="contact"
+                        context={this.props.context}
+                        level="category"
+                        button
+                        showContent={this.onCategoriesClick}
+                    />
+                    <About
+                        loadEnlarge={this.props.context.loadEnlarge}
+                    />
+                    {this.props.children}
+                </div>
+                <Fragment>
+                        <div className="TagsMenu-category-button-container">
+                            {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
+                            
+                            <Category 
+                                clickable
+                                category="year/location"
+                                context={this.props.context}
+                                button
+                                showContent={this.onCategoriesClick}
+                            />
+                            <Category 
+                                clickable
+                                category="themes"
+                                context={this.props.context}
+                                button
+                                showContent={this.onCategoriesClick}
+                            />
+                            <ClearAll 
+                                context={this.props.context}
+                                enlarge={this.props.context.state.enlarge}
+                            />
+                        </div>
+                        <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
+                            {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
+                        </div>
+                        {/* <div id="TagsMenu-listitems-container" className="TagsMenu-listitems-container">
+                            {this.listitemsContainer}
+                        </div> */}
+                </Fragment>
             </div>
-            <Fragment>
-                    <div className="TagsMenu-category-button-container">
-                        {this.props.context.state.categoriesData ? this.createCategories(this.props.context.state.categoriesData) : null}
-                        
-                        <Category 
-                            clickable
-                            category="year/location"
-                            context={this.props.context}
-                            button
-                            showContent={this.onCategoriesClick}
-                        />
-                        <Category 
-                            clickable
-                            category="themes"
-                            context={this.props.context}
-                            button
-                            showContent={this.onCategoriesClick}
-                        />
-                        <ClearAll 
-                            context={this.props.context}
-                            enlarge={this.props.context.state.enlarge}
-                        />
-                    </div>
-                    <div id="TagsMenu-subcategory-container" className="TagsMenu-subcategory-container">
-                        {this.props.context.state.categoriesData ? this.createSubcategories(this.props.context.state.categoriesData) : null}
-                    </div>
-                    {/* <div id="TagsMenu-listitems-container" className="TagsMenu-listitems-container">
-                        {this.listitemsContainer}
-                    </div> */}
-            </Fragment>
 
 
         </div>

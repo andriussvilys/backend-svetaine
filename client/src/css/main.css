@@ -1460,17 +1460,17 @@ label {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-transition: 0.2s -webkit-transform;
-  transition: 0.2s -webkit-transform;
-  transition: 0.2s transform;
-  transition: 0.2s transform, 0.2s -webkit-transform;
+  -webkit-transition: 0.2s opacity, 0.2s -webkit-transform;
+  transition: 0.2s opacity, 0.2s -webkit-transform;
+  transition: 0.2s transform, 0.2s opacity;
+  transition: 0.2s transform, 0.2s opacity, 0.2s -webkit-transform;
   overflow: hidden;
   position: absolute;
   bottom: 0;
   overflow: visible;
   background-color: white;
-  border-top: 1px solid;
   border-bottom: 1px solid;
+  opacity: 0;
 }
 
 .TagsMenu-listItems-container {
@@ -1490,6 +1490,8 @@ label {
   bottom: 0;
   padding: 4px 40px;
   border-bottom: 1px solid;
+  border-top: 1px solid;
+  opacity: 0;
 }
 
 #TagsMenu-listitems-container {
@@ -1506,6 +1508,8 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
@@ -1518,7 +1522,13 @@ label {
 .scroll-down {
   -webkit-transform: translateY(100%);
           transform: translateY(100%);
-  border-top: 0;
+  opacity: 1 !important;
+}
+
+.scroll-down-listitem {
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  opacity: 1 !important;
 }
 
 .TagsMenu-about-contact {
@@ -1806,8 +1816,8 @@ label {
     overflow-y: auto;
     border-left: none;
     z-index: 999;
-    -webkit-transition: 0.4s all;
-    transition: 0.4s all;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
     position: absolute;
     bottom: -90px;
     -webkit-transform: translateY(100%);

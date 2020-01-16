@@ -1089,14 +1089,15 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    transition: 0.2s transform;
+    transition: 0.2s transform, 0.2s opacity;
     overflow: hidden;
     position: absolute;
     bottom: 0;
     overflow: visible;
     background-color: white;
-    border-top: 1px solid;
+    // border-top: 1px solid;
     border-bottom: 1px solid;
+    opacity: 0;
 }
 .TagsMenu-listItems-container{
     width: 100%;
@@ -1113,6 +1114,8 @@ font-family: 'Times New Roman', Times, serif;
     bottom: 0;
     padding: 4px 40px;  
     border-bottom: 1px solid;
+    border-top: 1px solid;
+    opacity: 0;
 }
 #TagsMenu-listitems-container{
     display: none;
@@ -1135,10 +1138,14 @@ font-family: 'Times New Roman', Times, serif;
 //     display: none;
 // }
 .scroll-down{
+    transform: translateY(100%);
+    opacity: 1 !important;
+}
+.scroll-down-listitem{
     // height: auto;
     // padding: 4px 24px;
     transform: translateY(100%);
-    border-top: 0;
+    opacity: 1 !important;
 }
 .TagsMenu-about-contact{
     // height: 50px;
@@ -1371,7 +1378,7 @@ font-family: 'Times New Roman', Times, serif;
         overflow-y: auto;
         border-left: none;
         z-index: 999;
-        transition: 0.4s all;
+        transition: 0.2s all;
         position: absolute;
         bottom: -90px;
         transform: translateY(100%);

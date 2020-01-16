@@ -564,25 +564,38 @@ export class Provider extends React.Component{
     }
     
     this.showMenu = () => {
-      // if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-      //   Array.from(document.getElementsByClassName("scroll-down")).forEach(item => item.classList.remove("scroll-down"))
-      // }
       if(this.state.mobile){
-        let counter = 1
+        let delay = 1
         if(document.getElementById("ArtworkInfo")){
           if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
-            document.getElementById("ArtworkInfo").classList.remove("info-up")
-            counter = 200
+            this.showInfo()
+
+            delay += 100
           }
         }
-        // if(!this.state.enlarge || !this.state.enlarge.open){
-        //   document.getElementById("imageSelect").classList.toggle("side-scroll")
-        //   counter = 400
-        // }
-        setTimeout(() => {
-          
-          document.getElementById("TagsMenu").classList.toggle("show-menu")
-        }, counter);
+        //if menu is open
+        if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+          //if listitem drawer is open
+          if(document.getElementsByClassName("scroll-down-listitem").length > 0){
+            document.getElementsByClassName("scroll-down-listitem")[0].classList.remove("scroll-down-listitem")
+            delay += 100
+          }
+
+          setTimeout(() => {            
+            if(document.getElementsByClassName("scroll-down").length > 0){
+              document.getElementsByClassName("scroll-down")[0].classList.remove("scroll-down")
+              delay += 50
+            }
+            setTimeout(() => {
+              document.getElementById("TagsMenu").classList.remove("show-menu")
+            }, delay);
+          }, delay);
+
+        }
+        //if menu is closed
+        else{
+          document.getElementById("TagsMenu").classList.add("show-menu")
+        }
       }
       //DESKTOP
       else{
@@ -623,6 +636,7 @@ export class Provider extends React.Component{
         else document.getElementById("TagsMenu").classList.toggle("show-menu-desktop")
       }
     }
+
     this.enlarge = (id) => {
             const file = this.state.artworkOnDisplay[id]
             const imageSelect = document.getElementById('imageSelect')
@@ -1047,8 +1061,9 @@ export class Provider extends React.Component{
         let counter = 1
         if(this.state.mobile){
           if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-            document.getElementById("TagsMenu").classList.remove("show-menu")
-            counter = 100
+            this.showMenu()
+            // document.getElementById("TagsMenu").classList.remove("show-menu")
+            counter = 1
           }
         }
         setTimeout(() => {
