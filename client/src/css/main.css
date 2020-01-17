@@ -1108,16 +1108,14 @@ label {
   bottom: -100%;
   background-color: white;
   color: white;
-  padding-left: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  padding-bottom: 10px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   overflow-y: auto;
   right: 0;
   border-top: 1px solid black;
@@ -1128,7 +1126,7 @@ label {
 .ArtworkInfo-wrapper {
   width: 100%;
   max-width: 600px;
-  padding: 1vw 0;
+  padding: 40px 0px 20px 20px;
 }
 
 .ArtworkInfo-preview-container {
@@ -1228,8 +1226,7 @@ label {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin: 1vw 2vw;
-  margin-top: 0;
+  margin: 20px;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -1323,8 +1320,8 @@ label {
 }
 
 .previewBubble {
-  height: 10px;
-  width: 10px;
+  height: 20px;
+  width: 20px;
   border-radius: 999px;
   margin: 5px;
   -webkit-box-flex: 1;
@@ -1333,16 +1330,28 @@ label {
   background-color: silver;
   opacity: 0.5;
   cursor: pointer;
+  max-width: 20px;
 }
 
 .previewBubble-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   position: absolute;
-  bottom: 2px;
   z-index: 9999;
   overflow-x: auto;
+  margin-top: 9px;
+  width: 100%;
+  overflow-x: auto;
+}
+
+.previewBubble-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .previewBubble-filled {
@@ -1390,6 +1399,37 @@ label {
   bottom: 0;
   height: initial;
   width: 100%;
+}
+
+.controls {
+  position: absolute;
+  bottom: calc(100% + 1px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  right: 0;
+  border-top: 1px solid;
+  border-left: 1px solid;
+}
+
+.controls-button {
+  height: 40px;
+  width: 40px;
+  background-color: white;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.controls-exitButton {
+  border-left: 1px solid;
 }
 
 .TagsMenu-checkbox {
@@ -1811,7 +1851,6 @@ label {
   }
   .ArtworkInfo-container {
     display: none;
-    padding-bottom: 22px;
     min-height: 121px;
     max-height: 100%;
     overflow-y: auto;
@@ -1823,6 +1862,7 @@ label {
     bottom: -90px;
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
+    overflow: visible;
   }
   .ArtworkInfo-toggleTags {
     bottom: 1px;
@@ -1894,7 +1934,9 @@ label {
     border-top: 1px solid black;
   }
   .show {
-    display: initial;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
   }
   .side-scroll img {
     max-height: 90px;

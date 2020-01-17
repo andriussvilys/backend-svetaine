@@ -26,7 +26,9 @@ const PreviewBubbles = (props) => {
     }
     return(
         <div className="previewBubble-container">
-            {props.file ? countBubbles(props.file) : null}
+            <div className="previewBubble-wrapper">
+                {props.file ? countBubbles(props.file) : null}
+            </div>
         </div>
     )
 }

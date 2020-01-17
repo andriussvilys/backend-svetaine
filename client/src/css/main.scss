@@ -831,11 +831,11 @@ font-family: 'Times New Roman', Times, serif;
     bottom: -100%;
     background-color: $frame-color;
     color: white;
-    padding-left: 20px;
+    // padding-left: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
-    padding-bottom: 10px;
+    justify-content: center;
+    // padding-bottom: 10px;
     overflow-y: auto;
     right: 0;
 
@@ -847,7 +847,8 @@ font-family: 'Times New Roman', Times, serif;
 .ArtworkInfo-wrapper{
     width: 100%;
     max-width: 600px;
-    padding: 1vw 0;
+    // padding: 1vw 0;
+    padding: 40px 0px 20px 20px;
 }
 .ArtworkInfo-preview-container{
     height: 75px;
@@ -912,8 +913,9 @@ font-family: 'Times New Roman', Times, serif;
 .Tags-item_wrapper{
     display: flex;
     flex-wrap: wrap;
-    margin: 1vw 2vw;
-    margin-top: 0;
+    // margin: 1vw 2vw;
+    // margin-top: 0;
+    margin: 20px;
     justify-content: flex-end;
     
 }
@@ -986,22 +988,31 @@ font-family: 'Times New Roman', Times, serif;
     max-width: 50%;
 }
 .previewBubble{
-    height: 10px;
-    width: 10px;
-    // border: 2px solid white;
+    height: 20px;
+    width: 20px;
+    // height: 10px;
+    // width: 10px;
     border-radius: 999px;
     margin: 5px;
     flex: 1 1 15px;
     background-color: rgb(192, 192, 192);
     opacity: 0.5;
     cursor: pointer;
+    max-width: 20px;
 }
 .previewBubble-container{
     display: flex;
+    justify-content: center;
     position: absolute;
-    bottom: 2px;
+    // bottom: 2px;
     z-index: 9999;
     overflow-x: auto;
+    margin-top: 9px;
+    width: 100%;
+    overflow-x: auto;
+}
+.previewBubble-wrapper{
+    display: flex;
 }
 .previewBubble-filled{
     background-color: pink;
@@ -1038,6 +1049,31 @@ font-family: 'Times New Roman', Times, serif;
     bottom: 0;
     height: initial;
     width: 100%;
+}
+
+.controls{
+    position: absolute;
+    bottom: calc(100% + 1px);
+    display: flex;
+    right: 0;
+    border-top: 1px solid;
+    border-left: 1px solid;
+}
+.controls-button{
+    height: 40px;
+    width: 40px;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // margin-left: 2px;
+}
+.controls-sildeButton{
+
+}
+.controls-exitButton{
+    border-left: 1px solid;
 }
 
 //*****************************************
@@ -1374,7 +1410,7 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ArtworkInfo-container{
         display: none;
-        padding-bottom: 22px;
+        // padding-bottom: 22px;
         min-height: 121px;
         max-height: 100%;
         overflow-y: auto;
@@ -1384,6 +1420,7 @@ font-family: 'Times New Roman', Times, serif;
         position: absolute;
         bottom: -90px;
         transform: translateY(100%);
+        overflow: visible;
     }
     .ArtworkInfo-toggleTags{
         bottom: 1px;
@@ -1451,7 +1488,7 @@ font-family: 'Times New Roman', Times, serif;
         border-top: 1px solid black;
     }
     .show{
-        display: initial;
+        display: flex;
     }
 
     .side-scroll img{

@@ -690,13 +690,16 @@ export class Provider extends React.Component{
     }
     this.closeEnlarge = (e) => {
       e.stopPropagation()
-        if(document.getElementsByClassName("info-up").length > 0){
-          document.getElementsByClassName("info-up")[0].classList.remove("info-up")
-          setTimeout(() => {
-            document.getElementById("ArtworkInfo").classList.remove("show")
-          }, 100);
-          return
+        if(document.getElementsByClassName("show").length > 0){
+          this.showInfo()
         }
+        // if(document.getElementsByClassName("info-up").length > 0){
+        //   document.getElementsByClassName("info-up")[0].classList.remove("info-up")
+        //   setTimeout(() => {
+        //     document.getElementById("ArtworkInfo").classList.remove("show")
+        //   }, 100);
+        //   return
+        // }
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
           document.getElementById("TagsMenu").classList.remove("show-menu")
           return
@@ -1061,9 +1064,10 @@ export class Provider extends React.Component{
   
     }
     this.showInfo = () => {
+      
       document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
       const info = document.getElementById("ArtworkInfo")
-      if(!info.classList.contains('info-up')){
+      if(!info.classList.contains('show')){
         let counter = 1
         if(this.state.mobile){
           if(document.getElementById("TagsMenu").classList.contains("show-menu")){

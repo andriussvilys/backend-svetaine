@@ -136,11 +136,11 @@ export default class Enlarge extends React.Component{
                         <div id="background" className="foreground-transition">
                             {this.props.file && this.props.file.background ? this.createPreview(this.props.file.background, 'background-image') : null}
                         </div>
-                        <PreviewBubbles 
+                        {/* <PreviewBubbles 
                             file={this.props.file}
                             relatedArtwork={this.props.context.state.relatedArtwork}
                             enlarge={this.props.context.loadEnlarge}
-                        />
+                        /> */}
                         <Fragment>
                             {this.props.file ? 
                                 this.props.file.foreground ?

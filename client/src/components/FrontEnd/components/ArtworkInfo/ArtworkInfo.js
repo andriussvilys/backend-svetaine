@@ -2,6 +2,7 @@ import React from 'react'
 import FilePreview from '../FilePreview'
 import Tags from './Tags'
 import PreviewBubbles from '../Enlarge/PreviewBubble'
+import Controls from './Controls'
 
 const ArtworkInfo = (props) => {
     
@@ -112,15 +113,19 @@ const ArtworkInfo = (props) => {
     return(
         <div 
             className="ArtworkInfo-container" 
+            className={props.file.open ? "ArtworkInfo-container show" : "ArtworkInfo-container"}
             id="ArtworkInfo" 
             onClick={(e) => props.hideArtworkInfo(e)}
             style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
         >   
-            {/* <PreviewBubbles 
+            <PreviewBubbles 
                 file={props.file}
                 relatedArtwork={props.context.state.relatedArtwork}
                 enlarge={props.context.loadEnlarge}
-            /> */}
+            />
+            <Controls
+                showInfo={props.context.showInfo}
+            />
             <div key={"ArtworkInfo-wrapper"} className="ArtworkInfo-wrapper">
                 <div ke={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >
                     {artworkTitle()}

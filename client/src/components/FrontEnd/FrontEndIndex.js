@@ -99,10 +99,8 @@ export default class FrontEndIndex extends React.Component{
                                         }
                                     </Fragment> */}
                             </div>
-
-                            <Nav
-                                context={this.context}
-                            />
+                            {/* {!this.context.state.mobile ? <Nav context={this.context}/> : null} */}
+                            <Nav context={this.context}/>
 
 
 
