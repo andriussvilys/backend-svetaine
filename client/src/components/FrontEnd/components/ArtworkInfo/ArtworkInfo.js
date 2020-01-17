@@ -118,13 +118,14 @@ const ArtworkInfo = (props) => {
             onClick={(e) => props.hideArtworkInfo(e)}
             style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
         >   
-            <PreviewBubbles 
+            {/* <PreviewBubbles 
                 file={props.file}
                 relatedArtwork={props.context.state.relatedArtwork}
                 enlarge={props.context.loadEnlarge}
-            />
+            /> */}
             <Controls
                 showInfo={props.context.showInfo}
+                context={props.context}
             />
             <div key={"ArtworkInfo-wrapper"} className="ArtworkInfo-wrapper">
                 <div ke={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >

@@ -7,15 +7,31 @@ const Controls = (props) => {
             className="controls-button controls-exitButton"
             onClick={(e) => {
                 e.stopPropagation()
-                const artworkInfo = document.getElementById("ArtworkInfo")
                 let delay = 0
-                if(artworkInfo.classList.contains("ArtworkInfo-toggleTags")){
-                    artworkInfo.classList.remove("ArtworkInfo-toggleTags")
-                    delay += 150
+                const artworkInfo = document.getElementById("ArtworkInfo")
+                const menu = document.getElementById("TagsMenu")
+                const enlarge = props.context.state.enlarge
+                if(artworkInfo.classList.contains("info-up")){
+                    console.log("run close info")
+                    // if(artworkInfo.classList.contains("ArtworkInfo-toggleTags")){
+                    //     artworkInfo.classList.remove("ArtworkInfo-toggleTags")
+                    //     delay += 150
+                    // }
+                    // setTimeout(() => {
+                    //     artworkInfo.classList.remove("info-up")
+                    // }, delay);
+                    props.context.showInfo()
+                    return
                 }
-                setTimeout(() => {
-                    artworkInfo.classList.remove("info-up")
-                }, delay);
+                else if(menu.classList.contains("show-menu")){
+                    console.log("run close Menu")
+                    props.context.showMenu()
+                    return
+                }
+                else if(enlarge && enlarge.open){
+                    console.log("run close enlar")
+                    props.context.closeEnlarge(e)
+                }
             }}
             >
                 <span>x</span>
@@ -32,6 +48,9 @@ const Controls = (props) => {
         }
         const toggle = (e) => {
             e.stopPropagation()
+            if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+                props.context.showMenu()
+            }
             const artworkInfo = document.getElementById("ArtworkInfo")
             if(artworkInfo){
                 if(artworkInfo.classList.contains("info-up")){

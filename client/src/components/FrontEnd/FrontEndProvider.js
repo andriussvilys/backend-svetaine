@@ -701,7 +701,8 @@ export class Provider extends React.Component{
         //   return
         // }
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-          document.getElementById("TagsMenu").classList.remove("show-menu")
+          // document.getElementById("TagsMenu").classList.remove("show-menu")
+          this.showMenu()
           return
         }
         const delay = this.hideArtworkInfo()
@@ -887,7 +888,7 @@ export class Provider extends React.Component{
         this.showMenu()
       }
       // if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("info-up")}
-      if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
+      // if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
 
       // this.hideArtworkInfo()
       const background = document.getElementById("background") 
@@ -1065,7 +1066,7 @@ export class Provider extends React.Component{
     }
     this.showInfo = () => {
       
-      document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
+      // document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
       const info = document.getElementById("ArtworkInfo")
       if(!info.classList.contains('show')){
         let counter = 1
@@ -1085,10 +1086,16 @@ export class Provider extends React.Component{
       }
 
       else{
-        info.classList.remove('info-up')
+        let delay = 0
+        if(document.getElementById("ArtworkInfo").classList.contains("ArtworkInfo-toggleTags")){
+            document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
+          delay += 150
+        }
+        // info.classList.remove('info-up')
         setTimeout(() => {
-          info.classList.remove('show')
-        }, 350);
+          info.classList.remove('info-up')
+          // info.classList.remove('show')
+        }, delay);
       }
     }
 

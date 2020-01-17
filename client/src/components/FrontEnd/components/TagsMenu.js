@@ -256,6 +256,10 @@ export default class TagsMenu extends React.Component{
         }
         }
         >
+            {/* <div 
+            className="TagsMenu-hamburger"
+            onClick={() => {this.props.context.showMenu()}}
+            ></div> */}
             <div className="TagsMenu-wrapper">
                 <div className="button-wrapper TagsMenu-about-contact">
                     <Category 

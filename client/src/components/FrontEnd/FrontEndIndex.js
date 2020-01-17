@@ -17,6 +17,7 @@ import About from './components/About/About'
 import Contact from './components/About/Contact';
 import ClearAll from './components/ClearAll';
 import YearLocation from './components/YearLocation/YearLocation';
+import PreviewBubbles from './components/Enlarge/PreviewBubble'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -99,8 +100,30 @@ export default class FrontEndIndex extends React.Component{
                                         }
                                     </Fragment> */}
                             </div>
-                            {/* {!this.context.state.mobile ? <Nav context={this.context}/> : null} */}
-                            <Nav context={this.context}/>
+                            {!this.context.state.mobile ? 
+                            <Nav context={this.context}/> :   
+                            <PreviewBubbles 
+                                file={this.context.state.enlarge}
+                                relatedArtwork={this.context.state.relatedArtwork}
+                                enlarge={this.context.loadEnlarge}
+                                context={this.context}
+                            >
+                                <div 
+                                    className="TagsMenu-hamburger"
+                                    onClick={() => {this.context.showMenu()}}
+                                >
+                                    <span className="white-font">MENU</span>
+                                </div>
+                            </PreviewBubbles>
+                            }
+
+
+                            {/* <PreviewBubbles 
+                                file={this.context.state.enlarge}
+                                relatedArtwork={this.context.state.relatedArtwork}
+                                enlarge={this.context.loadEnlarge}
+                            /> */}
+
 
 
 
