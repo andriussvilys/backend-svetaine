@@ -688,22 +688,19 @@ export class Provider extends React.Component{
       }
       else { return 1}
     }
-    this.closeEnlarge = (e) => {
+    this.closeEnlarge = (e, clearAll) => {
       e.stopPropagation()
-        if(document.getElementsByClassName("show").length > 0){
+        if(document.getElementsByClassName("info-up").length > 0){
           this.showInfo()
-        }
-        // if(document.getElementsByClassName("info-up").length > 0){
-        //   document.getElementsByClassName("info-up")[0].classList.remove("info-up")
-        //   setTimeout(() => {
-        //     document.getElementById("ArtworkInfo").classList.remove("show")
-        //   }, 100);
-        //   return
-        // }
-        if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-          // document.getElementById("TagsMenu").classList.remove("show-menu")
-          this.showMenu()
+          if(!clearAll)
           return
+        }
+        if(this.state.mobile){
+          if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+            this.showMenu()
+            if(!clearAll)
+            return
+          }
         }
         const delay = this.hideArtworkInfo()
         setTimeout(() => {      
@@ -1065,9 +1062,23 @@ export class Provider extends React.Component{
   
     }
     this.showInfo = () => {
+
+      const info = document.getElementById("ArtworkInfo")
+      if(!this.state.mobile && !info.classList.contains("info-up")){
+        if(!info.classList.contains("info-up")){
+          info.classList.add("info-up")
+        }
+        else info.classList.remove("info-up")
+        // if(!info.classList.contains("show")){
+        //   info.classList.add("show")
+        // }
+        // else{
+        //   info.classList.remove("show")
+        // }
+        return
+      }
       
       // document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
-      const info = document.getElementById("ArtworkInfo")
       if(!info.classList.contains('show')){
         let counter = 1
         if(this.state.mobile){

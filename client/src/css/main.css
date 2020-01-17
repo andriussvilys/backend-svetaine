@@ -1113,9 +1113,9 @@ label {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   overflow-y: auto;
   right: 0;
   border-top: 1px solid black;
@@ -1893,6 +1893,10 @@ label {
   }
   .ArtworkInfo-toggleTags {
     bottom: 0px !important;
+  }
+  .show {
+    border-bottom: 0px !important;
+    bottom: -91px;
   }
   .imageSelect-FilePreview {
     -ms-flex-item-align: start;

@@ -834,7 +834,7 @@ font-family: 'Times New Roman', Times, serif;
     // padding-left: 20px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-end;
     // padding-bottom: 10px;
     overflow-y: auto;
     right: 0;
@@ -1038,7 +1038,10 @@ font-family: 'Times New Roman', Times, serif;
     flex-direction: column;
     justify-content: center;
 }
-.show{border-bottom: 0px !important;}
+.show{
+    border-bottom: 0px !important;
+
+}
 // .Tags{
 //     border-top: 1px solid;
 // }
@@ -1445,6 +1448,10 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ArtworkInfo-toggleTags{
         bottom: 0px !important;
+    }
+    .show{
+        border-bottom: 0px !important;
+        bottom: -91px;
     }
 
     // .imageSelect-FilePreview{
