@@ -702,10 +702,10 @@ export class Provider extends React.Component{
 
           //if mobile
           if(this.state.mobile){
-            // enlargeContainer.style.transform = `translateY(-100%)`
             document.getElementById('imageSelect').classList.remove("side-scroll")
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-scroll-down")
+              document.getElementById("ArtworkInfo").classList.remove("show")
             }, 400);
           }
           //if dekstop
@@ -715,10 +715,12 @@ export class Provider extends React.Component{
               enlargeContainer.classList.remove("enlarge-scroll-left")
             }, 200);
           }
-  
-          const enlarge = {...this.state.enlarge}
-          enlarge.open = false
-          this.setState({enlarge})
+          
+          if(!clearAll){
+            const enlarge = {...this.state.enlarge}
+            enlarge.open = false
+            this.setState({enlarge})
+          }
         }, delay);
     }
 
@@ -738,9 +740,9 @@ export class Provider extends React.Component{
          @returns current index in common sequence or the last one recorded in state
          */
         const checkFamilySequence = () => {
-          if(familyName === "none" || familyName === "about"){
-            return nextPic = null
-          }
+          // if(familyName === "none" || familyName === "about"){
+          //   return nextPic = null
+          // }
           console.log("checkk gamily sequence")
 
           let sequence = null
@@ -758,7 +760,6 @@ export class Provider extends React.Component{
           }
 
           if(!this.state.enlarge.familySequence || this.state.enlarge.familySequence.familyName !== familyName){
-
             sequence = createSequence()
           }
 
@@ -766,6 +767,8 @@ export class Provider extends React.Component{
 
             sequence = {...this.state.enlarge.familySequence}
           }
+          console.log("sequence")
+          console.log(sequence)
           nextIndex = sequence.currentIndex+1 > sequence.familySequence.length-1 ? 0 : sequence.currentIndex+1
           console.log("nextIndex")
           console.log(nextIndex)
@@ -794,7 +797,10 @@ export class Provider extends React.Component{
         }
 
         nextPic = checkFamilySequence()
-        if(!nextPic || familyLength <= 1 || familyName === "none" || nextIndex === 0){
+        if(!nextPic || 
+          familyLength <= 1 || 
+          // familyName === "none" || 
+          nextIndex === 0){
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
           let indexes = allVisible.filter(id => onDisplay.includes(id))

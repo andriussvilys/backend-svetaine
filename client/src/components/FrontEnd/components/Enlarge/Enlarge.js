@@ -90,6 +90,7 @@ export default class Enlarge extends React.Component{
                     if(this.state.multiple){
                         return
                     }
+                    //slide right / left
                     if(Math.abs(this.state.touch.x - this.state.touch.endX) > 30){
                         if(this.state.touch.x > this.state.touch.endX){
                             this.props.context.viewNext()
@@ -98,36 +99,46 @@ export default class Enlarge extends React.Component{
                         return
                     }
 
+                    //slide up / down
                     if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
+                        //on swipe down
                         if(this.state.touch.y < this.state.touch.endY){
+                            if(document.getElementById("ArtworkInfo").classList.contains("ArtworkInfo-toggleTags")){
+                                document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
+                                return
+                            }
                             if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
                                  document.getElementById("ArtworkInfo").classList.remove("info-up")
-                                 setTimeout(() => {document.getElementById("ArtworkInfo").classList.remove("show")
-                                 }, 100);
+                                //  setTimeout(() => {document.getElementById("ArtworkInfo").classList.remove("show")
+                                //  }, 100);
                                  return
-                            }
-                            if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-                                // document.getElementById("TagsMenu").classList.remove("show-menu")
-                                return
                             }
                             else{
                                 document.getElementById("TagsMenu").classList.add("show-menu")
                             }
                         }
+
+                        //on swipe up
                         else{
                             if(document.getElementById("TagsMenu").classList.contains("show-menu")){
                                 document.getElementById("TagsMenu").classList.remove("show-menu")
                                 return
                             }
-                            document.getElementById("ArtworkInfo").classList.add("show")
-                            setTimeout(() => {
+                            // document.getElementById("ArtworkInfo").classList.add("show")
+                            // setTimeout(() => {
+                            if(!document.getElementById("ArtworkInfo").classList.contains("info-up")){
                                 document.getElementById("ArtworkInfo").classList.add("info-up")
-                            }, 100);
+                            }
+                            else{
+                                document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
+                            }
+                            // }, 100);
                         }
                     }
                 }
                 }
-                className="enlargeContainer" id="enlargeContainer">
+                className="enlargeContainer" id="enlargeContainer"
+                >
                     <Fragment>
                         <div id="foreground" className="foreground-transition">
                             {this.props.file && this.props.file.foreground ? this.createPreview(this.props.file.foreground, 'foreground-image', 'FG') : null}

@@ -7,10 +7,6 @@ const ClearAll = (props) => {
     const clearImgs = (hide, e) => {
         props.context.filterAllThemes(hide)
             props.context.closeEnlarge(e, true)
-
-        // if(props.enlarge && props.enlarge.open){
-        //     props.context.closeEnlarge(e)
-        // }
     }
 
     const spreadLetters = (title) => {
