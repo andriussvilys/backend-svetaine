@@ -57,11 +57,17 @@ export default class FrontEndIndex extends React.Component{
             <BrowserRouter>
                 <Context.Consumer>
                     {() => {
-                        return <div className="frontEndIndex-container" >
+                        return <div 
+                                    className="frontEndIndex-container" 
+                                >
                             <TagsMenu context={this.context}>
                             </TagsMenu>
 
-                            <div id="images" className="images-container">
+                            <div 
+                            id="images" 
+                            // className="images-container"
+                            className={this.context.state.mobile ? "images-container"  : "images-container images-grid" }
+                            >
                                 <ImageSelect 
                                     data={this.context.state.artworkInfoData} 
                                     mobile={this.context.state.mobile}

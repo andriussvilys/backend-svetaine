@@ -162,7 +162,7 @@ export default class TagsMenu extends React.Component{
     ]
         })
         subCatBlocks = [...subCatBlocks, 
-            <div className="TagsMenu-subcategories subcategories" id="themes-subcategories">
+            <div className="TagsMenu-subcategories subcategories button-wrapper" id="themes-subcategories">
                 <Themes
                     state={this.props.context.state}
                     context={this.props.context}

@@ -112,8 +112,9 @@ const ArtworkInfo = (props) => {
 
     return(
         <div 
-            // className="ArtworkInfo-container" 
+            // className={"ArtworkInfo-container"}
             className={props.file.open && props.context.state.mobile ? "ArtworkInfo-container show" : "ArtworkInfo-container"}
+
             id="ArtworkInfo" 
             onClick={(e) => props.hideArtworkInfo(e)}
             style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}

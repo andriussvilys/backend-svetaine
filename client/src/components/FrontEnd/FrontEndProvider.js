@@ -695,32 +695,25 @@ export class Provider extends React.Component{
           if(!clearAll)
           return
         }
-        if(this.state.mobile){
-          if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-            this.showMenu()
-            if(!clearAll)
-            return
-          }
-        }
         const delay = this.hideArtworkInfo()
         setTimeout(() => {      
           const enlargeContainer = document.getElementById('enlargeContainer')
           const imagesWidth = document.getElementById('images').clientWidth
 
-          if(this.toggleMobile() === true){
-            enlargeContainer.style.transform = `translateY(-100%)`
-
+          //if mobile
+          if(this.state.mobile){
+            // enlargeContainer.style.transform = `translateY(-100%)`
             document.getElementById('imageSelect').classList.remove("side-scroll")
-            // document.getElementById('imageSelect').classList.remove("side-scroll-min")
             setTimeout(() => {
-              enlargeContainer.style.height = 0
-            }, 200);
-
-
+              enlargeContainer.classList.remove("enlarge-scroll-down")
+            }, 400);
           }
+          //if dekstop
           else{
-            enlargeContainer.style.transform = `translateX(100%)`
             document.getElementById('imageSelect').style.width = `${imagesWidth}px`
+            setTimeout(() => {
+              enlargeContainer.classList.remove("enlarge-scroll-left")
+            }, 200);
           }
   
           const enlarge = {...this.state.enlarge}
@@ -898,88 +891,29 @@ export class Provider extends React.Component{
       enlarge.previous = !enlarge.background ? file : enlarge.background
       enlarge.background = file
 
-      function backgroundImage(tries, willFail) {
-        return new Promise((resolve, reject) => {
-          
-          if (--tries > 0) {
-            setTimeout(function() {
-              if(document.getElementById(file.fileName)){
-                resolve(document.getElementById(file.fileName))
-              }
-            }, 1);
-          } 
-          else {
-            if (willFail) {
-              reject('Failure');
-            } else {
-              if(document.getElementById(file.fileName)){
-                resolve(document.getElementById(file.fileName))
-              }
-            }
-          }
-        });
-      }
       this.setState({enlarge}, () => {
 
         let futureSize = null
               if(!this.toggleMobile()){
+                //flip from mobile to desktop reset
                 if(document.getElementById('background').style.width !== "100%"){
                   document.getElementById('background').style.width = "100%"
                   document.getElementById('foreground').style.width = "100%"
+                  container.style.height = "100%"
                 }
                 futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
-
-                container.style.height = "100%"
-                
-                if(this.state.enlarge){
-                  //if enlargeContainer will shrink
-                  if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
-                    imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                  }
-                  else{
-                    // imageSelect.style.transition = "0.4s all"
-                    setTimeout(() => {
-                      imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                    }, 410);
-                  }
-                }
-                else{
-                  // imageSelect.style.transition = "0.4s all"
-                  setTimeout(() => {
-                    imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                  }, 410);
-                }
-                background.style.height = `${futureSize.height}px`
-                foreground.style.height = `${futureSize.height}px`
-                // container.style.height = `${futureSize.height}px`
-                container.style.width = `${futureSize.width}px`
               }
               //IF MOBILES**************************************************************************************
               else{
                 futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
-                  // setTimeout(() => {
-                  //   imageSelect.classList.add("side-scroll-min")
-                  // }, 410);
-                // imageSelect.classList.add("side-scroll-min")
-                imageSelect.classList.add("side-scroll")
-
-                container.style.height = `${images.clientHeight - 90}px`
                 background.style.height = `${futureSize.height}px`
                 foreground.style.height = `${futureSize.height}px`
                 background.style.width = `${futureSize.width}px`
                 foreground.style.width = `${futureSize.width}px`
               }
 
-              foreground.style.opacity = 0
-      
-              
-              if(!this.state.enlarge || !this.state.enlarge.open){
-                if(this.state.mobile){
-                  container.style.transform = 'translateY(0)'
-                }
-                else{container.style.transform = 'translateY(0)'}
-              }
+              foreground.classList.add("fade-out")
 
 
               if(this.state.artworkOnDisplay[file.fileName]){
@@ -989,7 +923,41 @@ export class Provider extends React.Component{
                 // this.scrollToHorizontal(file.fileName)
               }
       
-              setTimeout(() => {
+  
+                //Animate enlargeContainer and ImageSelect
+                if(this.state.mobile){
+                  if(!container.classList.contains("enlarge-scroll-down")){
+                    container.style.height = `${images.clientHeight - 90}px`
+                    container.classList.add("enlarge-scroll-down")
+                    setTimeout(() => {                 
+                        imageSelect.classList.add("side-scroll")
+                        // if(!document.getElementById("ArtworkInfo").classList.contains("show")){
+                        //   document.getElementById("ArtworkInfo").classList.add("show")
+                        // }
+                    }, 400);
+                  }
+                }
+                else{
+                  if(!container.classList.contains("enlarge-scroll-left")){
+                    container.classList.add("enlarge-scroll-left")
+                  }
+                  //if enlargeContainer will shrink
+                  if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
+                    imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                  }
+                  else{
+                    setTimeout(() => {
+                      imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
+                    }, 200);
+                  }
+                  background.style.height = `${futureSize.height}px`
+                  foreground.style.height = `${futureSize.height}px`
+                  container.style.width = `${futureSize.width}px`
+                }
+
+                //set state with foreground image
+                setTimeout(() => {
+
                 let newState = {...this.state}
 
                 if(!viewPrev){
@@ -1008,16 +976,17 @@ export class Provider extends React.Component{
                   prevSequence = Array.from(prevSequence)
                   newState.enlarge.prevSequence = prevSequence
                 }
-
+                
                 newState.enlarge.foreground = file
                 newState.enlarge.currentWidth = futureSize.width
-                newState.enlarge.currentHeight = images.clientHeight - 70
+                newState.enlarge.currentHeight = images.clientHeight - 90
                 newState.enlarge.open = true
 
                 this.setState(newState, () => {
-                  foreground.style.opacity = 1
-                  imageSelect.style.transition = "none"
-
+                  foreground.classList.remove("fade-out")
+                    if(!document.getElementById("ArtworkInfo").classList.contains("show")){
+                      document.getElementById("ArtworkInfo").classList.add("show")
+                    }
                 })
               }, 410);
     })
@@ -1038,7 +1007,6 @@ export class Provider extends React.Component{
         }, scrollDelay);
       }
     }
-
     this.loadEnlarge = (e, id) => {
       e.stopPropagation()
 
@@ -1109,7 +1077,6 @@ export class Provider extends React.Component{
         }, delay);
       }
     }
-
     this.toggleMobile = () => {
       if(document.documentElement.clientWidth < 721){
         return true
@@ -1123,38 +1090,38 @@ export class Provider extends React.Component{
       const touch = {"x": touches[0].clientX, "y": touches[0].clientY}
       this.setState({touch})
     }
-  this.lazyLoadImages = () => {
-    const images = document.querySelectorAll(".imageSelect-FilePreview")
+    this.lazyLoadImages = () => {
+      const images = document.querySelectorAll(".imageSelect-FilePreview")
 
-    const preloadImage = (img) => {
-      const src = img.getAttribute("data-src")
-      if(!src){
-        return
-      }
-      img.src=src
-    }
-
-    const imgOptions = {
-      threshold: 0,
-      margin: "0px 0px 300px 0px"
-    }
-
-    const imgObserver = new IntersectionObserver((entries, imgObserver) => {
-      entries.forEach(entry => {
-        if(!entry.isIntersecting){
+      const preloadImage = (img) => {
+        const src = img.getAttribute("data-src")
+        if(!src){
           return
         }
-        else{
-          preloadImage(entry.target);
-          imgObserver.unobserve(entry.target)
-        }
-      }, imgOptions)
-    })
+        img.src=src
+      }
 
-    images.forEach(image => {
-      imgObserver.observe(image)
-    })
-  }
+      const imgOptions = {
+        threshold: 0,
+        margin: "0px 0px 300px 0px"
+      }
+
+      const imgObserver = new IntersectionObserver((entries, imgObserver) => {
+        entries.forEach(entry => {
+          if(!entry.isIntersecting){
+            return
+          }
+          else{
+            preloadImage(entry.target);
+            imgObserver.unobserve(entry.target)
+          }
+        }, imgOptions)
+      })
+
+      images.forEach(image => {
+        imgObserver.observe(image)
+      })
+    }
 
 }//END OF CONTSTRUCTOR
 
