@@ -9,6 +9,7 @@ const PreviewBubbles = (props) => {
         bubbles = famArray.map(item => {
             if(item === file.background.fileName){
                 return <div 
+                            key={`previewBubble-${item}`}
                             onClick={(e) => {
                                 if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
                                 props.enlarge(e, item)
@@ -17,6 +18,7 @@ const PreviewBubbles = (props) => {
                         ></div>
             }
             return <div 
+                        key={`previewBubble-${item}`}
                         onClick={(e) => {
                             if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
                             props.enlarge(e, item)}} 

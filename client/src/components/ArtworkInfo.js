@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Context } from './Provider';
+// import {DisplayTriggerList as List} from './DisplayTriggerList'
+import DisplayTriggerList from './DisplayTriggerList'
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/components/imageInfo.css";
 
@@ -12,6 +15,34 @@ export default class ImageInfo extends Component{
         this.state = {
         category: {}
         }
+    }
+
+    getSubcategories = (file) => {
+        let categories = Object.keys(this.props.file.category)
+        let subcategories = []
+        categories.forEach(category => {
+            subcategories = [...subcategories, [...Object.keys(file.category[category])]]
+        })
+        return subcategories
+    }
+    getListitems = (file) => {
+        const categories = Object.keys(this.props.file.category)
+        const subcategories = this.getSubcategories(file)
+        let listItems = []
+        categories.forEach(category => {
+            let subcategories = Object.keys(file.category[category])
+            subcategories.forEach(sub => {
+                if(!file.category[category][sub].length > 0){return}
+                listItems = [...listItems, [...file.category[category][sub]]]
+            })
+        })
+        return listItems
+    }
+    getYearLocation = (file) => {
+        let array = []
+        if(file.year){array = [...array, file.year]}
+        if(file.location){array = [...array, file.location]}
+        return array
     }
 
     render(){
@@ -82,7 +113,6 @@ export default class ImageInfo extends Component{
                             />
                     </div>
 
-
                     <div className="imageInfo--box"></div>
 
                     {/* DESCRIPTION */}
@@ -98,6 +128,32 @@ export default class ImageInfo extends Component{
                         }
                         style={{width: "100%"}}
                         ></textarea>
+                    </div>
+                    
+                    <div className="imageInfo--box">
+                        <div>
+                            <p>Display triggers</p>
+                            <DisplayTriggerList 
+                                title={'category'}
+                                data={Object.keys(this.props.file.category)}
+                            />
+                            <DisplayTriggerList 
+                                title={'subcategory'}
+                                data={this.getSubcategories(this.props.file)}
+                            />
+                            <DisplayTriggerList 
+                                title={'List Items'}
+                                data={this.getListitems(this.props.file)}
+                            />
+                            <DisplayTriggerList 
+                                title={'Themes'}
+                                data={this.props.file.themes}
+                            />
+                            <DisplayTriggerList 
+                                title={'Year/Location'}
+                                data={this.getYearLocation(this.props.file)}
+                            />
+                        </div>
                     </div>
 
                 </div>

@@ -6,6 +6,10 @@ let ArtworkInfoSchema = new Schema({
         type:Schema.Types.Mixed,
         required: true
     },
+    displayTriggers: {
+        type:Schema.Types.Mixed,
+        required: true
+    },
     filePath: {
         type: String,
         required: true

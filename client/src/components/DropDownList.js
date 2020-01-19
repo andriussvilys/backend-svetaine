@@ -95,8 +95,6 @@ export default class DropDownList extends React.Component{
     }
 
     render(){
-        console.log('DDLIST props')
-        console.log(this.props)
         return(
 
             <div className="themeSelector ">

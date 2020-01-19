@@ -79,6 +79,7 @@ export default class TagsMenu extends React.Component{
 
         let buttons = data.map(obj => {
             return <Category 
+            key={`TagsMenu-category-${obj.category}`}
             clickable
             category={obj.category}
             level="category"
@@ -97,6 +98,7 @@ export default class TagsMenu extends React.Component{
     createListItems = (listItemArray, subcategory, category) => {
         let listItems = listItemArray.map(listitem => {
             return <Category 
+                            key={`button-${listitem}`}
                             clickable={false}
                             category={listitem}
                             level="listitem"
@@ -128,6 +130,7 @@ export default class TagsMenu extends React.Component{
                         this.listitemsContainer = [...this.listitemsContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
                     }
                     let button = <Category 
+                    key={`button-${subcategory}`}
                     clickable={obj.subcategory[subcategory].length > 0}
                     category={subcategory}
                     level="subcategory"

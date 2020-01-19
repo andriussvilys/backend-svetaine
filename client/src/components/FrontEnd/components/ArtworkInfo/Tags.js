@@ -14,6 +14,7 @@ const Tags = (props) => {
             })
             DOMthemes = themes.map(tag => {
                 return <div 
+                key={`tag-${tag}`}
                 className="Tags-item_container"
                 onClick={(e) => {e.stopPropagation(); 
                     document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")

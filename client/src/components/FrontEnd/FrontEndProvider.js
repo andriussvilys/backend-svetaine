@@ -481,20 +481,8 @@ export class Provider extends React.Component{
               }, 400);
             }
             else{
-              console.log("ELSE")
-              // toggleArtwork.forEach(item => {
-              //   console.log(`document.getElementById('${item}').classList.remove("image-hide")`)
-              //   document.getElementById(item).classList.remove("image-hide")
-              // })
-            
-              // toggleArtwork.forEach(fileName => {
-              //   artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.visibleArtwork[fileName]}
-              // })
               this.state.yearLocation.all.years[year].forEach(item => {
                 const DOMitem = document.getElementById(item)
-                // if(!DOMitem.src){
-                //   DOMitem.src = DOMitem.getAttribute('data-src')
-                // }
                 DOMitem.classList.remove("image-hide")
               })
       
@@ -527,44 +515,92 @@ export class Provider extends React.Component{
       return onDisplay.length > 0
     }
 
-    this.filterByLocation = lcoation => {
-
+    this.filterByLocation = location => {
+                  //ON UN-CHECK
+                  const newState = {...this.state}
+                  const toggleArtwork = [...newState.yearLocation.all.locations[location]]
+                  let artworkOnDisplay = {...newState.artworkOnDisplay}
+                  let visibleByYear = {}
+            
+                  let checkbox = document.getElementById(`year-${location}`)
+      
+                  if(!checkbox.checked){
+                    console.log("!checkbox checked")
+                    console.log(toggleArtwork)
+      
+                    toggleArtwork.forEach(item => {
+                      document.getElementById(item).classList.add("image-hide")
+                    })
+                  
+                    setTimeout(() => {    
+      
+                      toggleArtwork.forEach(fileName => {
+                        delete artworkOnDisplay[fileName]
+      
+                      })
+                      return this.setState({artworkOnDisplay: artworkOnDisplay, 
+                        yearLocation:{...newState.yearLocation, visible: {
+                          ...newState.yearLocation.visible, locations: {
+                            ...newState.yearLocation.visible.locations, [location]: []
+                          }
+                        }}
+                      })
+      
+                    }, 400);
+                  }
+                  else{
+                    this.state.yearLocation.all.locations[location].forEach(item => {
+                      const DOMitem = document.getElementById(item)
+                      DOMitem.classList.remove("image-hide")
+                    })
+            
+                    this.state.yearLocation.all.locations[location].forEach(fileName => {
+                      artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
+                    })
+            
+                    return this.setState({artworkOnDisplay})
+                  }
     }
 
     this.locationChecked = (location) => {
-
-    }
-
-    this.shrinkImageSelect = () => {
-
-        const imageSelect = document.getElementById('imageSelect')
-        imageSelect.style.width = "70%"
-        setTimeout(() => {
-            imageSelect.style.width = "35%"
-        }, 100);
-        setTimeout(() => {
-            imageSelect.style.width = "150px"
-        }, 200);
-        setTimeout(() => {
-          Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
-            preview.classList.add("low-opacity")
-          })
-        }, 300);
-    }
-
-    this.extendImageSelect = () => {
-      Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
-        preview.classList.remove("low-opacity")
+      let onDisplay = []
+      const artworkOnDisplay = {...this.state.artworkOnDisplay}
+      onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
+        return artworkOnDisplay[fileName].location === location
       })
-        const imageSelect = document.getElementById('imageSelect')
-        imageSelect.style.width = "25%"
-        setTimeout(() => {
-            imageSelect.style.width = "50%"
-        }, 100);
-        setTimeout(() => {
-            imageSelect.style.width = "100%"
-        }, 200);
+      return onDisplay.length > 0
     }
+
+    // this.shrinkImageSelect = () => {
+
+    //     const imageSelect = document.getElementById('imageSelect')
+    //     imageSelect.style.width = "70%"
+    //     setTimeout(() => {
+    //         imageSelect.style.width = "35%"
+    //     }, 100);
+    //     setTimeout(() => {
+    //         imageSelect.style.width = "150px"
+    //     }, 200);
+    //     setTimeout(() => {
+    //       Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
+    //         preview.classList.add("low-opacity")
+    //       })
+    //     }, 300);
+    // }
+
+    // this.extendImageSelect = () => {
+    //   Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
+    //     preview.classList.remove("low-opacity")
+    //   })
+    //     const imageSelect = document.getElementById('imageSelect')
+    //     imageSelect.style.width = "25%"
+    //     setTimeout(() => {
+    //         imageSelect.style.width = "50%"
+    //     }, 100);
+    //     setTimeout(() => {
+    //         imageSelect.style.width = "100%"
+    //     }, 200);
+    // }
     
     this.showMenu = () => {
       if(this.state.mobile){
@@ -640,44 +676,44 @@ export class Provider extends React.Component{
       }
     }
 
-    this.enlarge = (id) => {
-            const file = this.state.artworkOnDisplay[id]
-            const imageSelect = document.getElementById('imageSelect')
-            if(!this.state.enlarge){
+    // this.enlarge = (id) => {
+    //         const file = this.state.artworkOnDisplay[id]
+    //         const imageSelect = document.getElementById('imageSelect')
+    //         if(!this.state.enlarge){
 
-              let enlarge = {}
-              enlarge.foreground = file
-              enlarge.background = file
+    //           let enlarge = {}
+    //           enlarge.foreground = file
+    //           enlarge.background = file
 
-              this.setState({enlarge}, () => {
-                  if(!imageSelect.classList.contains('minimized')){
-                      imageSelect.classList.add('minimized')
-                      this.shrinkImageSelect()
-                  }
-                  document.getElementById('enlargeContainer').style.zIndex = "-1"
-                  // document.getElementById('enlargeContainer').style.transform = "translateX(0)"
-                  document.getElementById('enlargeContainer').style.zIndex = 0
-              })
-            }
-            else{
-              const file = this.state.artworkOnDisplay[id]
-              const foreground = document.getElementById('foreground')
-              // foreground.style.opacity = 1
+    //           this.setState({enlarge}, () => {
+    //               if(!imageSelect.classList.contains('minimized')){
+    //                   imageSelect.classList.add('minimized')
+    //                   this.shrinkImageSelect()
+    //               }
+    //               document.getElementById('enlargeContainer').style.zIndex = "-1"
+    //               // document.getElementById('enlargeContainer').style.transform = "translateX(0)"
+    //               document.getElementById('enlargeContainer').style.zIndex = 0
+    //           })
+    //         }
+    //         else{
+    //           const file = this.state.artworkOnDisplay[id]
+    //           const foreground = document.getElementById('foreground')
+    //           // foreground.style.opacity = 1
 
-              let enlarge = this.state.enlarge
-              enlarge.background = file
-              this.setState({enlarge}, () => {
-                foreground.style.opacity = 0
-                setTimeout(() => {
-                  enlarge.foreground = file
-                  this.setState(enlarge, () => {
-                    foreground.style.opacity = 1
-                  })
-                }, 400);
-            })
+    //           let enlarge = this.state.enlarge
+    //           enlarge.background = file
+    //           this.setState({enlarge}, () => {
+    //             foreground.style.opacity = 0
+    //             setTimeout(() => {
+    //               enlarge.foreground = file
+    //               this.setState(enlarge, () => {
+    //                 foreground.style.opacity = 1
+    //               })
+    //             }, 400);
+    //         })
 
-            }
-    }
+    //         }
+    // }
     this.hideArtworkInfo = (e) => {
       if(e){
         e.stopPropagation()

@@ -13,7 +13,7 @@ const ArtworkInfo = (props) => {
         if(props.file.foreground.seeAlso.length > 0){
             seeAlsos = props.file.foreground.seeAlso.map(fileName => {
                 return <FilePreview 
-                    loadByDefault={"true"}
+                    loadbydefault={"true"}
                     key={`ArtworkInfo-${fileName}`}
                     className="ArtworkInfo-preview"
                     containerClassName="ArtworkInfo-preview-container"
@@ -36,7 +36,7 @@ const ArtworkInfo = (props) => {
         previous = <div className="SeeAlso-previous">
                             <div className="subtitle subtitle_seeAlso">previous:</div>
                             <FilePreview 
-                                loadByDefault={"true"}
+                                loadbydefault={"true"}
                                 key={`ArtworkInfo-${props.file.previous.fileName}`}
                                 className="ArtworkInfo-preview"
                                 containerClassName="ArtworkInfo-preview-container"
