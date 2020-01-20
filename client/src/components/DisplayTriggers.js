@@ -61,11 +61,41 @@ const DisplayTriggers = (props) => {
                     file={props.file}
                     onChange={props.context.fileDataMethods.onChangeDisplayTriggers}
                 />
-                <DisplayTriggerList 
+                {/* <DisplayTriggerList 
                     title={'Year/Location'}
                     data={getYearLocation(props.file)}
                     file={props.file}
-                />
+                /> */}
+                <div className="displayTrigger-wrapper">
+                    <p className="displayTrigger-title">Year/Location</p>
+                    <ul>
+                        {
+                            props.file.year ?
+                            <li key={`trigger-year`} className="themes-list">
+                                <span>{props.file.year}</span>
+                                <input 
+                                    type="checkbox"
+                                    checked={props.file.displayTriggers["year"] === props.file.year}
+                                    onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.year, "year", props.file.fileName)}
+                                />
+                            </li>
+                            : null
+                        }
+                        {
+                            props.file.location ?
+                            <li key={`trigger-location`} className="themes-list">
+                                <span>{props.file.location}</span>
+                                <input 
+                                    type="checkbox"
+                                    checked={props.file.displayTriggers["location"] === props.file.location}
+                                    onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.location, "location", props.file.fileName)}
+                                />
+                            </li>
+                            : null
+                        }
+                    </ul>
+                </div>
+
             </div>
         </div>
     )

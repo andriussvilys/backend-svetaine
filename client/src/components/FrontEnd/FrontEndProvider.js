@@ -1180,8 +1180,8 @@ export class Provider extends React.Component{
                         })
                         
                         let allThemes = []
-                        Object.keys(onDisplay).forEach(objName => {
-                            allThemes = [...allThemes, ...onDisplay[objName].themes]
+                        Object.keys(res).forEach(objName => {
+                            allThemes = [...allThemes, ...res[objName].themes]
                         })
                         let allThemesSet = new Set(allThemes)
                         allThemesSet = Array.from(allThemesSet)
