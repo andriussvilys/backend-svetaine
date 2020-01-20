@@ -169,12 +169,21 @@ export class Provider extends React.Component{
         //ON CHECK
         else{
             newDisplay={...this.state.artworkOnDisplay}
-            Object.keys(this.state.visibleArtwork).forEach(fileName => {
-                const file = this.state.visibleArtwork[fileName]
-                if(Object.keys(file.category).includes(category)){
-                    newDisplay = {...newDisplay, [fileName]: file}
+            Object.keys(this.state.artworkInfoData).forEach(fileName => {
+                const file = this.state.artworkInfoData[fileName]
+                if(file.displayTriggers.category.includes(category)){
+                  newDisplay = {...newDisplay, [fileName]: file}
                 }
+                // if(Object.keys(file.category).includes(category)){
+                //     newDisplay = {...newDisplay, [fileName]: file}
+                // }
             })
+            // Object.keys(this.state.visibleArtwork).forEach(fileName => {
+            //     const file = this.state.visibleArtwork[fileName]
+            //     if(Object.keys(file.category).includes(category)){
+            //         newDisplay = {...newDisplay, [fileName]: file}
+            //     }
+            // })
             Object.keys(newDisplay).forEach(id => {
                 document.getElementById(id).classList.remove('image-hide')
             })
@@ -1180,17 +1189,36 @@ export class Provider extends React.Component{
                         let artworkByTheme = {}
 
                         let arr = Object.keys(onDisplay).map(name => onDisplay[name])
+                        let themesArr = Object.keys(res).map(name => res[name])
+
+                        // allThemesSet.forEach(theme => {
+                        //   arr.forEach(obj => {
+                        //     if(obj.themes.includes(theme)){
+                        //       if(!artworkByTheme[theme]){
+                        //         artworkByTheme[theme] = []
+                        //       }
+                        //       artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
+                        //     }
+                        //   })
+                        // })
 
                         allThemesSet.forEach(theme => {
-                          arr.forEach(obj => {
+                          themesArr.forEach(obj => {
+                            console.log(theme)
                             if(obj.themes.includes(theme)){
                               if(!artworkByTheme[theme]){
                                 artworkByTheme[theme] = []
                               }
-                              artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
+                              console.log("obj.displayTriggers.themes")
+                              console.log(obj.displayTriggers.themes)
+                              console.log()
+                              if(obj.displayTriggers.themes.includes(theme)){
+                                artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
+                              }
                             }
                           })
                         })
+
                         let artworkOnDisplay = {}
                         let displayThemes = ["metal", "social", "tools", "cloud"]
                         let hideThemes = ["celestial body"]
@@ -1239,7 +1267,7 @@ export class Provider extends React.Component{
                         locations = Array.from(locations).sort()
 
                         const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
-                        
+
                         newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
                         newState.artworkOnDisplay = artworkOnDisplay
                         newState.visibleArtwork = onDisplay
