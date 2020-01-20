@@ -570,37 +570,6 @@ export class Provider extends React.Component{
       })
       return onDisplay.length > 0
     }
-
-    // this.shrinkImageSelect = () => {
-
-    //     const imageSelect = document.getElementById('imageSelect')
-    //     imageSelect.style.width = "70%"
-    //     setTimeout(() => {
-    //         imageSelect.style.width = "35%"
-    //     }, 100);
-    //     setTimeout(() => {
-    //         imageSelect.style.width = "150px"
-    //     }, 200);
-    //     setTimeout(() => {
-    //       Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
-    //         preview.classList.add("low-opacity")
-    //       })
-    //     }, 300);
-    // }
-
-    // this.extendImageSelect = () => {
-    //   Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).forEach(preview => {
-    //     preview.classList.remove("low-opacity")
-    //   })
-    //     const imageSelect = document.getElementById('imageSelect')
-    //     imageSelect.style.width = "25%"
-    //     setTimeout(() => {
-    //         imageSelect.style.width = "50%"
-    //     }, 100);
-    //     setTimeout(() => {
-    //         imageSelect.style.width = "100%"
-    //     }, 200);
-    // }
     
     this.showMenu = () => {
       if(this.state.mobile){
@@ -675,45 +644,6 @@ export class Provider extends React.Component{
         else document.getElementById("TagsMenu").classList.toggle("show-menu-desktop")
       }
     }
-
-    // this.enlarge = (id) => {
-    //         const file = this.state.artworkOnDisplay[id]
-    //         const imageSelect = document.getElementById('imageSelect')
-    //         if(!this.state.enlarge){
-
-    //           let enlarge = {}
-    //           enlarge.foreground = file
-    //           enlarge.background = file
-
-    //           this.setState({enlarge}, () => {
-    //               if(!imageSelect.classList.contains('minimized')){
-    //                   imageSelect.classList.add('minimized')
-    //                   this.shrinkImageSelect()
-    //               }
-    //               document.getElementById('enlargeContainer').style.zIndex = "-1"
-    //               // document.getElementById('enlargeContainer').style.transform = "translateX(0)"
-    //               document.getElementById('enlargeContainer').style.zIndex = 0
-    //           })
-    //         }
-    //         else{
-    //           const file = this.state.artworkOnDisplay[id]
-    //           const foreground = document.getElementById('foreground')
-    //           // foreground.style.opacity = 1
-
-    //           let enlarge = this.state.enlarge
-    //           enlarge.background = file
-    //           this.setState({enlarge}, () => {
-    //             foreground.style.opacity = 0
-    //             setTimeout(() => {
-    //               enlarge.foreground = file
-    //               this.setState(enlarge, () => {
-    //                 foreground.style.opacity = 1
-    //               })
-    //             }, 400);
-    //         })
-
-    //         }
-    // }
     this.hideArtworkInfo = (e) => {
       if(e){
         e.stopPropagation()
@@ -759,7 +689,6 @@ export class Provider extends React.Component{
           }
         }, delay);
     }
-
     this.viewNext = () => {
         let newState = {...this.state}
         const familyName = this.state.enlarge.foreground.artworkFamily
@@ -1310,14 +1239,7 @@ export class Provider extends React.Component{
                         locations = Array.from(locations).sort()
 
                         const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
-                    
-                        // let yearList = years.map(year => {
-                        // return <li key={`year-${year}`}>{year}</li>
-                        // })
-                    
-                        // let locationList = locations.map(loc => {
-                        //     return <li key={`location-${loc}`}>{loc}</li>
-                        // })
+                        
                         newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
                         newState.artworkOnDisplay = artworkOnDisplay
                         newState.visibleArtwork = onDisplay

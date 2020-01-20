@@ -45,7 +45,7 @@ export default class DropDownList extends React.Component{
         let listItems = sortedArray.map((listItem) => {
             return (
                 <li 
-                className={`dropdown-item themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
+                className={` themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
                 key={`${string}-${listItem}`}
                 >
                     <span className="themes-span">{listItem}</span>

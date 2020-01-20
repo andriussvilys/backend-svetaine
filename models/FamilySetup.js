@@ -6,6 +6,10 @@ let FamilySetupSchema = new Schema({
         type: Schema.Types.Mixed,
         default: {}
     },
+    displayTriggers: {
+        type:Schema.Types.Mixed,
+        default: {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+    },
     artworkFamily: {
         type: String,
         required: true,

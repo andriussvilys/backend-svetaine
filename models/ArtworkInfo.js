@@ -8,7 +8,7 @@ let ArtworkInfoSchema = new Schema({
     },
     displayTriggers: {
         type:Schema.Types.Mixed,
-        required: true
+        default: {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
     },
     filePath: {
         type: String,

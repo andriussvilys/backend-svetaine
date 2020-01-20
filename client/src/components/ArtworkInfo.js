@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Context } from './Provider';
 // import {DisplayTriggerList as List} from './DisplayTriggerList'
 import DisplayTriggerList from './DisplayTriggerList'
+import DisplayTriggers from './DisplayTriggers';
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/components/imageInfo.css";
@@ -15,34 +16,6 @@ export default class ImageInfo extends Component{
         this.state = {
         category: {}
         }
-    }
-
-    getSubcategories = (file) => {
-        let categories = Object.keys(this.props.file.category)
-        let subcategories = []
-        categories.forEach(category => {
-            subcategories = [...subcategories, [...Object.keys(file.category[category])]]
-        })
-        return subcategories
-    }
-    getListitems = (file) => {
-        const categories = Object.keys(this.props.file.category)
-        const subcategories = this.getSubcategories(file)
-        let listItems = []
-        categories.forEach(category => {
-            let subcategories = Object.keys(file.category[category])
-            subcategories.forEach(sub => {
-                if(!file.category[category][sub].length > 0){return}
-                listItems = [...listItems, [...file.category[category][sub]]]
-            })
-        })
-        return listItems
-    }
-    getYearLocation = (file) => {
-        let array = []
-        if(file.year){array = [...array, file.year]}
-        if(file.location){array = [...array, file.location]}
-        return array
     }
 
     render(){
@@ -60,7 +33,7 @@ export default class ImageInfo extends Component{
                         <input 
                         value={this.props.file.artworkTitle}
                         type="text" 
-                        onChange={(e) => this.props.onChange(e.target.value, 'artworkTitle', this.props.fileName)} 
+                        onChange={(e) => this.props.onChange(e.target.value, 'artworkTitle', this.props.file.fileName)} 
                         />
                     </div>
 
@@ -72,22 +45,22 @@ export default class ImageInfo extends Component{
                           <input 
                             type="radio" 
                             // defaultChecked 
-                            checked={this.props.state.fileData.files[this.props.fileName].displayMain}
+                            checked={this.props.state.fileData.files[this.props.file.fileName].displayMain}
                             name="mainDisplayIndex" 
                             id="mainDisplayIndex__yes" 
                             value="yes" 
-                            onChange={(e)=>{this.props.onChange(true, "displayMain", this.props.fileName)}}
+                            onChange={(e)=>{this.props.onChange(true, "displayMain", this.props.file.fileName)}}
                             />
                       </div>
                       <div className="container-radio">
                           <label htmlFor="mainDisplayIndex_no">no</label>
                           <input 
-                            checked={!this.props.state.fileData.files[this.props.fileName].displayMain}
+                            checked={!this.props.state.fileData.files[this.props.file.fileName].displayMain}
                             type="radio" 
                             name="mainDisplayIndex" 
                             id="mainDisplayIndex__no" 
                             value="no" 
-                            onChange={(e)=>{this.props.onChange(false, "displayMain", this.props.fileName)}}
+                            onChange={(e)=>{this.props.onChange(false, "displayMain", this.props.file.fileName)}}
                             />
                       </div>
                     </form>
@@ -100,7 +73,7 @@ export default class ImageInfo extends Component{
                             type="number" 
                             min="1992" 
                             value={this.props.file.year}
-                            onChange={(e) => this.props.onChange(e.target.value, "year", this.props.fileName) } 
+                            onChange={(e) => this.props.onChange(e.target.value, "year", this.props.file.fileName) } 
                             />
                     </div>
 
@@ -109,7 +82,7 @@ export default class ImageInfo extends Component{
                             <input 
                             type="text" 
                             value={this.props.file.location}
-                            onChange={(e) => this.props.onChange(e.target.value, "location", this.props.fileName) } 
+                            onChange={(e) => this.props.onChange(e.target.value, "location", this.props.file.fileName) } 
                             />
                     </div>
 
@@ -124,37 +97,16 @@ export default class ImageInfo extends Component{
                         <textarea
                             value={this.props.file.artworkDescription}
                         onChange={
-                            (e) => this.props.onChange(e.target.value, "artworkDescription", this.props.fileName)
+                            (e) => this.props.onChange(e.target.value, "artworkDescription", this.props.file.fileName)
                         }
                         style={{width: "100%"}}
                         ></textarea>
                     </div>
                     
-                    <div className="imageInfo--box">
-                        <div>
-                            <p>Display triggers</p>
-                            <DisplayTriggerList 
-                                title={'category'}
-                                data={Object.keys(this.props.file.category)}
-                            />
-                            <DisplayTriggerList 
-                                title={'subcategory'}
-                                data={this.getSubcategories(this.props.file)}
-                            />
-                            <DisplayTriggerList 
-                                title={'List Items'}
-                                data={this.getListitems(this.props.file)}
-                            />
-                            <DisplayTriggerList 
-                                title={'Themes'}
-                                data={this.props.file.themes}
-                            />
-                            <DisplayTriggerList 
-                                title={'Year/Location'}
-                                data={this.getYearLocation(this.props.file)}
-                            />
-                        </div>
-                    </div>
+                    <DisplayTriggers 
+                        file={this.props.file}
+                        context={this.context}
+                    />
 
                 </div>
                 )

@@ -28,12 +28,6 @@ router.get('/', (req, res) => {
 
 router.delete('/delete/:fileName', (req, res) => {
     ArtworkInfo.deleteOne({ "fileName": req.params.fileName }
-    //     , function (err) {
-    //     console.log(req.params.id)
-    //     if (err) return handleError(err);
-    //     if (res) return res
-    //     // deleted at most one tank document
-    //   }
       )
       .then(result => {res.json(result); console.log(res)})
       .catch(err => {res.json(err); console.log(err)})
@@ -46,6 +40,7 @@ router.get('/:artworkFamily', (req, res) => {
         .catch(err => console.log(err))
 }
 )
+
 router.get('/fileName/:fileName', (req, res) => {
     ArtworkInfo.find( {"fileName": req.params.fileName} )
         .then(artworks => res.json(artworks))
@@ -55,59 +50,16 @@ router.get('/fileName/:fileName', (req, res) => {
 //@route post api/artworkInfo
 //@description add a new artwork
 //@access Public
-
-
 router.post('/create', 
 upload.single('artworkImage'), 
 (req, res, rej) => {
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
     .catch(err => console.error(err))
-    // const newArtwork = new ArtworkInfo({
-    //     category: req.body.category, 
-    //     uploadURL: req.body.uploadURL, 
-    //     fileName: req.body.fileName, 
-    //     artworkFamily: req.body.artworkFamily, 
-    //     artworkTitle: req.body.artworkTitle, 
-    //     displayMain: req.body.displayMain, 
-    //     familyDisplayIndex: req.body.familyDisplayIndex, 
-    //     fileType: req.body.fileType, 
-    //     themes: req.body.themes, 
-    //     seeAlso: req.body.seeAlso, 
-    //     location: req.body.location, 
-    //     year: req.body.year
-    // })
-
-    // newArtwork.save()
-    //     .then(artwork => res.json(artwork))
 })
 
 router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
 })
-
-// .then(res => {
-//     console.log('REQ')
-//     console.log(req)
-//     console.log('RES')
-//     console.log(res)
-// })
-
-//@route GET api/artworkInfo/:id
-//@description delete an artwork
-//@access Public
-
-// router.delete('/delete/:id', (req, res) => {
-//     ArtworkInfo.findById(req.params.id)
-//         .then(artwork => {
-//             console.log("DB ARTWORK")
-//             console.log(artwork)
-//             artwork.remove()
-//                 // .then(() => res.json({success: true}))
-//                 .then(() => {res.json("success")})
-//                 .catch(err => res.status(404).json({success: "404: not found"}))
-//             }
-//         )
-// })
 
 router.put("/update/:fileName", (req, res, next) => {
     console.log('udate file runs')

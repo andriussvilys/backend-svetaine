@@ -597,6 +597,9 @@ export class Provider extends React.Component{
         serverFileToState: (file) => {
             let newState = {...this.state}
             newState.fileData.files = {...newState.fileData.files, [file.fileName]: file}
+                if(!file.displayTriggers){
+                    newState.fileData.files[file.fileName].displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+                }
             this.setState(newState)
         },
         
@@ -607,40 +610,110 @@ export class Provider extends React.Component{
          * @returns updated context state
          */
         onChange: (value, string, fileName, cb) => {
+            // console.log("onChange")
+            // console.log("value")
+            // console.log(value)
+            console.log("string")
+            console.log(string)
+            // console.log("fileName")
+            // console.log(fileName)
+
+
 
             let nestType = () => {
-                if(string === "themes" || string ==="seeAlso"){
+                if(string === "themes"){
                     return "array"
                 }
-                else{ return "string"}
+                if(string !== "year" && string !== "location"){
+                    return "category"
+                }
+                else{ 
+                    return "string"
+                }
             }
 
-            let newState = {}
+            let nestTypeResult = nestType()
 
-            if(nestType() === "array"){
-                if(!this.state.fileData.files[fileName][string]){
-                    this.state.fileData.files[fileName][string] = []
+            console.log("nestType()")
+            console.log(nestTypeResult)
+
+            let newState = {...this.state}
+
+            if(string === "themes"){
+                let newList = []
+                console.log("array runs")
+                if(!newState.fileData.files[fileName][string]){
+                    newState.fileData.files[fileName][string] = []
                 }
-                if(!!this.state.fileData.files[fileName][string]){
+                if(!newState.fileData.files[fileName].displayTriggers[string]){
+                    newState.fileData.files[fileName].displayTriggers[string] = []
+                }
                     if(this.state.fileData.files[fileName][string].includes(value)){
-                        let newState = []    
-                        if(Array.isArray(this.state.fileData.files[fileName][string])){
-                                let newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
-                
-                                newState = {
-                                    ...this.state,
-                                    fileData: {
-                                        ...this.state.fileData,
-                                        files: {
-                                            ...this.state.fileData.files,
-                                            [fileName]: {
-                                                ...this.state.fileData.files[fileName],
-                                                [string]: newList
-                                            }
+                        newList = this.state.fileData.files[fileName][string].filter(item => item !== value)
+                    }
+                    else{
+                        newList = [...this.state.fileData.files[fileName][string], value]
+                    }
+                        // let newState = []    
+
+        
+                        newState = {
+                            ...this.state,
+                            fileData: {
+                                ...this.state.fileData,
+                                files: {
+                                    ...this.state.fileData.files,
+                                    [fileName]: {
+                                        ...this.state.fileData.files[fileName],
+                                        [string]: newList,
+
+                                        displayTriggers: {
+                                            ...this.state.fileData.files[fileName].displayTriggers, 
+                                            [string]: newList
                                         }
                                     }
                                 }
-                            }    
+                            }
+                        }
+
+                        console.log("newState")
+                        console.log(newState)
+                            
+                        this.setState(newState, () => {
+                            if(cb){
+                                cb()
+                            }
+                        })
+                        return
+                    
+                
+            }
+
+            else if(string !== "year" && string !== "location"){
+                console.log("category runs")
+                if(!newState.fileData.files[fileName].displayTriggers[string]){
+                    newState.fileData.files[fileName].displayTriggers[string] = []
+                }
+                    if(this.state.fileData.files[fileName].displayTriggers[string].includes(value)){
+                        // let newState = []    
+                        let newList = this.state.fileData.files[fileName].displayTriggers[string].filter(item => item !== value)
+        
+                        newState = {
+                            ...this.state,
+                            fileData: {
+                                ...this.state.fileData,
+                                files: {
+                                    ...this.state.fileData.files,
+                                    [fileName]: {
+                                        ...this.state.fileData.files[fileName],
+                                        displayTriggers: {
+                                            ...this.state.fileData.files[fileName].displayTriggers, 
+                                            [string]: newList
+                                        }
+                                    }
+                                }
+                            }
+                        }
                         this.setState(newState, () => {
                             if(cb){
                                 cb()
@@ -649,13 +722,8 @@ export class Provider extends React.Component{
                         return
                     }
                 }
-            }
-
-            if(nestType() === "string"){    
-                console.log('value')
-                console.log(value)
-                console.log('string')
-                console.log(string)
+            else{    
+                console.log("string runs")
                           
                 newState = {
                     ...this.state,
@@ -665,23 +733,8 @@ export class Provider extends React.Component{
                             ...this.state.fileData.files,
                             [fileName]: {
                                 ...this.state.fileData.files[fileName],
-                                [string]: value
-                            }
-                        }
-                    }
-                }
-            }
-
-            else{
-                newState = {
-                    ...this.state,
-                    fileData: {
-                        ...this.state.fileData,
-                        files: {
-                            ...this.state.fileData.files,
-                            [fileName]: {
-                                ...this.state.fileData.files[fileName],
-                                [string]: [...this.state.fileData.files[fileName][string], value]
+                                [string]: value,
+                                displayTriggers: {...this.state.fileData.files[fileName].displayTriggers, [string]: value}
                             }
                         }
                     }
@@ -691,14 +744,148 @@ export class Provider extends React.Component{
             this.setState(newState)
 
         },
+        onChangeDisplayTriggers: (value, string, fileName, cb) => {
+                        // console.log("onChange")
+            // console.log("value")
+            // console.log(value)
+            console.log("string")
+            console.log(string)
+            // console.log("fileName")
+            // console.log(fileName)
 
-        transferState: (file, radioValue) => {
+
+
+            let nestType = () => {
+                if(string !== "year" && string !== "location"){
+                    return "themes"
+                }
+                // if(string === "themes"){
+                //     return "array"
+                // }
+                // if(string !== "year" && string !== "location"){
+                //     return "category"
+                // }
+                else{ 
+                    return "string"
+                }
+            }
+
+            let nestTypeResult = nestType()
+
+            console.log("nestType()")
+            console.log(nestTypeResult)
+
             let newState = {...this.state}
 
+            if(nestTypeResult === "themes"){
+                let newList = []
+                console.log("array runs")
+                if(!newState.fileData.files[fileName].displayTriggers[string]){
+                    newState.fileData.files[fileName].displayTriggers[string] = []
+                }
+                    if(this.state.fileData.files[fileName].displayTriggers[string].includes(value)){
+                        newList = this.state.fileData.files[fileName].displayTriggers[string].filter(item => item !== value)
+                    }
+                    else{
+                        newList = [...this.state.fileData.files[fileName].displayTriggers[string], value]
+                    }
+                        // let newState = []    
+
+        
+                        newState = {
+                            ...this.state,
+                            fileData: {
+                                ...this.state.fileData,
+                                files: {
+                                    ...this.state.fileData.files,
+                                    [fileName]: {
+                                        ...this.state.fileData.files[fileName],
+                                        displayTriggers: {
+                                            ...this.state.fileData.files[fileName].displayTriggers, 
+                                            [string]: newList
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        console.log("newState")
+                        console.log(newState)
+                            
+                        this.setState(newState, () => {
+                            if(cb){
+                                cb()
+                            }
+                        })
+                        return
+                    
+                
+            }
+            else if(string !== "year" && string !== "location"){
+                console.log("category runs")
+                if(!newState.fileData.files[fileName].displayTriggers[string]){
+                    newState.fileData.files[fileName].displayTriggers[string] = []
+                }
+                    if(this.state.fileData.files[fileName].displayTriggers[string].includes(value)){
+                        // let newState = []    
+                        let newList = this.state.fileData.files[fileName].displayTriggers[string].filter(item => item !== value)
+        
+                        newState = {
+                            ...this.state,
+                            fileData: {
+                                ...this.state.fileData,
+                                files: {
+                                    ...this.state.fileData.files,
+                                    [fileName]: {
+                                        ...this.state.fileData.files[fileName],
+                                        displayTriggers: {
+                                            ...this.state.fileData.files[fileName].displayTriggers, 
+                                            [string]: newList
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        this.setState(newState, () => {
+                            if(cb){
+                                cb()
+                            }
+                        })
+                        return
+                    }
+            }
+            //if category, subcategory or listitems
+            else{    
+                console.log("string runs")
+                          
+                newState = {
+                    ...this.state,
+                    fileData: {
+                        ...this.state.fileData,
+                        files: {
+                            ...this.state.fileData.files,
+                            [fileName]: {
+                                ...this.state.fileData.files[fileName],
+                                [string]: value,
+                                displayTriggers: {...this.state.fileData.files[fileName].displayTriggers, [string]: value}
+                            }
+                        }
+                    }
+                }
+            }
+            this.setState(newState)
+        },
+
+        transferState: (file, radioValue) => {
+            console.log("transfer state runs")
+            let newState = {...this.state}
+
+            //on check
             if(radioValue === true){
+                console.log("radio value true")
                 this.setState({showModal: true})
 
-                //pverwrite file data witch each familySetUp property
+                //overwrite file data witch each familySetUp property
                 Object.keys(this.state.familySetupData).forEach(property => {
                     newState = {
                         ...newState,
@@ -715,11 +902,46 @@ export class Provider extends React.Component{
                     }
                 })
 
+                // let displayTriggers = {
+                //     category: Object.keys(this.state.familySetupData.category)
+                // }
+                let newDisplayTriggers = {}
+                newDisplayTriggers.category = Object.keys(this.state.familySetupData.category)
+
+                const getSubcategories = () => {
+                    let categories = Object.keys(this.state.familySetupData.category)
+                    let subcategories = []
+                    categories.forEach(category => {
+                        subcategories = [...subcategories, ...Object.keys(this.state.familySetupData.category[category])]
+                    })
+                    return subcategories
+                }
+                newDisplayTriggers.subcategory = getSubcategories()
+
+                const getListitems = () => {
+                    const categories = Object.keys(this.state.familySetupData.category)
+                    let listItems = []
+                    categories.forEach(category => {
+                        let subcategories = Object.keys(this.state.familySetupData.category[category])
+                        subcategories.forEach(sub => {
+                            if(!this.state.familySetupData.category[category][sub].length > 0){return}
+                            listItems = [...listItems, ...this.state.familySetupData.category[category][sub]]
+                        })
+                    })
+                    return listItems
+                }
+                newDisplayTriggers.listitems = getListitems()
+
+                newDisplayTriggers.themes = this.state.familySetupData.themes
+
+                newDisplayTriggers.year = this.state.familySetupData.year
+                newDisplayTriggers.location = this.state.familySetupData.location    
+
+                newState.fileData.files[file.fileName].displayTriggers = newDisplayTriggers
+
                 const relatedArtworkPromise = this.familySetupMethods.getRelatedArtwork(newState.fileData.files[file.fileName].artworkFamily, newState)
 
                 relatedArtworkPromise.then(res => {
-                    console.log("related artwork RESOLVED")
-                    console.log(res)
                     newState.relatedArtwork = {...newState.relatedArtwork, [newState.fileData.files[file.fileName].artworkFamily]: res}
                     newState.fileData.files[file.fileName].relatedArtwork = res
                     newState.fileData.files[file.fileName].useFamilySetup = true
@@ -731,6 +953,7 @@ export class Provider extends React.Component{
             }
 
             else{
+                console.log("radio value false")
                 const checkType = (elem) => {
                     let elemType = null
                     elemType = typeof elem
@@ -802,10 +1025,6 @@ export class Provider extends React.Component{
                     }
 
                         reader.onload = () => {
-
-                            console.log('upload file')
-                            console.log(file.name)
-                            console.log(reader)
                             if(file.name.includes(" ") || file.name.includes("/")){
                                 alert("File name cannot contain spaces or '/'")
                                 return
@@ -821,6 +1040,7 @@ export class Provider extends React.Component{
                                 themes: [],
                                 seeAlso: [],
                                 category: {"studio": {"misc": []}},
+                                displayTriggers: {"category": ["studio"], "subcategory": ["misc"], "listitems": []},
                                 artworkFamily: "none"
                             }
             
@@ -1073,6 +1293,7 @@ export class Provider extends React.Component{
                 
                             let fileDataObject = {                                                 
                             category: fileData.category ? fileData.category : null,
+                            displayTriggers: fileData.displayTriggers,
                             filePath: `/uploads/${fileData.fileName}`,
                             fileName: fileData.fileName,
                             fileType: fileData.fileType,
@@ -1362,11 +1583,6 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
         onChange: (value, string, e, cb) => {
-            console.log("FAMILY METHODS ON CHANGE")
-            console.log("e")
-            console.log(e)
-            console.log("cb")
-            console.log(cb)
             const addNewValue = (newValue) => {
                 let newState = {}
                 //if state nest is a String, eg artworkFamily
@@ -1429,10 +1645,7 @@ export class Provider extends React.Component{
             }
         },
         isChecked: (string, value) => {
-            console.log("is Checked trigerred")
             if(string === "artworkFamily"){
-                console.log(`string = ${value}`)
-                console.log(value)
                 if(this.state.familySetupData.artworkFamily === value){
                     return true
                 }
@@ -1472,6 +1685,39 @@ export class Provider extends React.Component{
                             }
                         }
                     }
+                    let newDisplayTriggers = {}
+                    newDisplayTriggers.category = Object.keys(res.data.category)
+    
+                    const getSubcategories = () => {
+                        let categories = Object.keys(res.data.category)
+                        let subcategories = []
+                        categories.forEach(category => {
+                            subcategories = [...subcategories, ...Object.keys(res.data.category[category])]
+                        })
+                        return subcategories
+                    }
+                    newDisplayTriggers.subcategory = getSubcategories()
+    
+                    const getListitems = () => {
+                        const categories = Object.keys(res.data.category)
+                        let listItems = []
+                        categories.forEach(category => {
+                            let subcategories = Object.keys(res.data.category[category])
+                            subcategories.forEach(sub => {
+                                if(!res.data.category[category][sub].length > 0){return}
+                                listItems = [...listItems, ...res.data.category[category][sub]]
+                            })
+                        })
+                        return listItems
+                    }
+                    newDisplayTriggers.listitems = getListitems()
+    
+                    newDisplayTriggers.themes = res.data.themes
+    
+                    newDisplayTriggers.year = res.data.year
+                    newDisplayTriggers.location = res.data.location    
+    
+                    newState.fileData.files[fileName].displayTriggers = newDisplayTriggers
                 }
 
                 else if(!fileName){
@@ -1486,7 +1732,7 @@ export class Provider extends React.Component{
                 }
 
                 const withRelatedArtwork = this.familySetupMethods.getRelatedArtwork(value, newState)
-    
+
                 withRelatedArtwork
                     .then(  res => {
 
@@ -1503,6 +1749,8 @@ export class Provider extends React.Component{
             })
             .catch(err => 
                 {
+                console.log("err")
+                console.log(err)
                 let newState = {...this.state}
                 newState.familySetupData.artworkFamily = value
                 this.setState(newState)
