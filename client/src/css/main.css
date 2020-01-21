@@ -790,8 +790,9 @@ label {
   text-indent: -100%;
   overflow: hidden;
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 90px;
-          flex: 1 1 90px;
+      -ms-flex: 1 1 25%;
+          flex: 1 1 25%;
+  min-width: 90px;
 }
 
 .ImagesPreview--imageContainer__empty {
@@ -1329,6 +1330,7 @@ label {
 
 .halfSize {
   max-width: 50%;
+  min-width: 45px;
 }
 
 .previewBubble {

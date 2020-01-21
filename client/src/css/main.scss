@@ -604,7 +604,8 @@ font-family: 'Times New Roman', Times, serif;
     top: 0;
     text-indent: -100%;
     overflow: hidden;
-    flex: 1 1 90px;
+    flex: 1 1 25%;
+    min-width: 90px;
 }
 .ImagesPreview--imageContainer__empty{
     // border: 2px solid red;
@@ -989,6 +990,7 @@ font-family: 'Times New Roman', Times, serif;
 }
 .halfSize{
     max-width: 50%;
+    min-width: 45px;
 }
 .previewBubble{
     height: 20px;

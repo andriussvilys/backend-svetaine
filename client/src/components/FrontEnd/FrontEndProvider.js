@@ -135,8 +135,6 @@ export class Provider extends React.Component{
         const checkbox = document.getElementById(`category-${category}`)
         if(hideAll){
           Object.keys(this.state.visibleArtwork).forEach(fileName => {
-            console.log("categories")
-            console.log("hideAll")
             const file = this.state.visibleArtwork[fileName]
             if(file.category[category]){
               return newDisplay = {...newDisplay, [fileName]: file}
@@ -340,25 +338,25 @@ export class Provider extends React.Component{
           Object.keys(zeroDisplay).forEach(id => {
               document.getElementById(id).classList.add('image-hide')
           })
-          return this.setState({artworkOnDisplay: newDisplay})
+          setTimeout(() => {
+            return this.setState({artworkOnDisplay: newDisplay})
+          }, 200);
       }
       //ON CHECK
       else{
           newDisplay={...this.state.artworkOnDisplay}
-          Object.keys(this.state.visibleArtwork).forEach(fileName => {
-              const file = this.state.visibleArtwork[fileName]
-              if(file.category[category]){
-                if(file.category[category][subcategory]){
-                  if(file.category[category][subcategory].includes(listitem)){
-                    newDisplay = {...newDisplay, [fileName]: file}
-                  }
+          Object.keys(this.state.artworkInfoData).forEach(fileName => {
+              const file = this.state.artworkInfoData[fileName]
+                if(file.displayTriggers.listitems.includes(listitem)){
+                  newDisplay = {...newDisplay, [fileName]: file}
                 }
-              }
           })
           Object.keys(newDisplay).forEach(id => {
               document.getElementById(id).classList.remove('image-hide')
           })
-          return this.setState({artworkOnDisplay: newDisplay})
+          setTimeout(() => {
+            return this.setState({artworkOnDisplay: newDisplay})
+          }, 200);
       }
 
     }
@@ -393,8 +391,6 @@ export class Provider extends React.Component{
           return this.setState({artworkOnDisplay: newDisplay})
         }, 200);
       }
-      console.log("filter by theme")
-      console.log(theme)
       //ON UN-CHECK
       const newState = {...this.state}
       const toggleArtwork = [...newState.themesOnDisplay[theme]]
@@ -420,25 +416,41 @@ export class Provider extends React.Component{
       }
 
       else{
-        this.state.themesOnDisplay[theme].forEach(item => {
-          const DOMitem = document.getElementById(item)
-          if(!DOMitem.src){
-            DOMitem.src = DOMitem.getAttribute('data-src')
+        // this.state.themesOnDisplay[theme].forEach(item => {
+        //   const DOMitem = document.getElementById(item)
+        //   if(!DOMitem.src){
+        //     DOMitem.src = DOMitem.getAttribute('data-src')
+        //   }
+        //   DOMitem.classList.remove("image-hide")
+        // })
+
+        let all = this.state.artworkInfoData
+        let allNames = Object.keys(this.state.artworkInfoData)
+
+        allNames.forEach(name => {
+          if(all[name].displayTriggers.themes.includes(theme)){
+            artworkOnDisplay = {...artworkOnDisplay, [name]: this.state.artworkInfoData[name]}
           }
-          DOMitem.classList.remove("image-hide")
         })
 
-        toggleArtwork.forEach(fileName => {
-          artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
-        })
+        // toggleArtwork.forEach(fileName => {
+        // })
 
-        return this.setState({artworkOnDisplay})
+        return this.setState({artworkOnDisplay}, () => {
+          allNames.forEach(name => {
+            const DOMitem = document.getElementById(name)
+            if(!DOMitem.src){
+              DOMitem.src = DOMitem.getAttribute('data-src')
+            }
+            setTimeout(() => {
+              DOMitem.classList.remove("image-hide")
+            }, 200);
+          })
+        })
       }
     }
 
     this.filterAllThemes = (hide) => {
-      console.log("filterAllthemes hide")
-      console.log(hide)
       let themes = []
       Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
         const file = this.state.artworkOnDisplay[fileName]
@@ -478,8 +490,6 @@ export class Provider extends React.Component{
             let checkbox = document.getElementById(`year-${year}`)
 
             if(!checkbox.checked){
-              console.log("!checkbox checked")
-              console.log(toggleArtwork)
 
               toggleArtwork.forEach(item => {
                 document.getElementById(item).classList.add("image-hide")
@@ -502,15 +512,18 @@ export class Provider extends React.Component{
               }, 400);
             }
             else{
-              this.state.yearLocation.all.years[year].forEach(item => {
-                const DOMitem = document.getElementById(item)
-                DOMitem.classList.remove("image-hide")
+              const all = this.state.artworkInfoData
+              const allNames = Object.keys(this.state.artworkInfoData)
+              allNames.forEach(name => {
+                const file = all[name]
+                if(file.displayTriggers.year){
+                  if(all[name].displayTriggers.year.includes(year)){
+                    artworkOnDisplay = {...artworkOnDisplay, [name]: all[name]}
+                    const DOMitem = document.getElementById(name)
+                    DOMitem.classList.remove("image-hide")
+                  }
+                }
               })
-      
-              this.state.yearLocation.all.years[year].forEach(fileName => {
-                artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
-              })
-      
               return this.setState({artworkOnDisplay})
             }
 
@@ -531,7 +544,7 @@ export class Provider extends React.Component{
       let onDisplay = []
       const artworkOnDisplay = {...this.state.artworkOnDisplay}
       onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
-        return artworkOnDisplay[fileName].themes.includes(theme) === true
+        return artworkOnDisplay[fileName].displayTriggers.themes.includes(theme) === true
       })
       return onDisplay.length > 0
     }
@@ -540,14 +553,13 @@ export class Provider extends React.Component{
                   //ON UN-CHECK
                   const newState = {...this.state}
                   const toggleArtwork = [...newState.yearLocation.all.locations[location]]
+
                   let artworkOnDisplay = {...newState.artworkOnDisplay}
                   let visibleByYear = {}
             
                   let checkbox = document.getElementById(`location-${location}`)
       
                   if(!checkbox.checked){
-                    console.log("!checkbox checked")
-                    console.log(toggleArtwork)
       
                     toggleArtwork.forEach(item => {
                       document.getElementById(item).classList.add("image-hide")
@@ -570,14 +582,25 @@ export class Provider extends React.Component{
                     }, 400);
                   }
                   else{
-                    this.state.yearLocation.all.locations[location].forEach(item => {
-                      const DOMitem = document.getElementById(item)
-                      DOMitem.classList.remove("image-hide")
+                    const all = this.state.artworkInfoData
+                    const allNames = Object.keys(this.state.artworkInfoData)
+                    allNames.forEach(name => {
+                      const file = all[name]
+                      if(file.displayTriggers.location){
+                        if(all[name].displayTriggers.location.includes(location)){
+                          artworkOnDisplay = {...artworkOnDisplay, [name]: all[name]}
+                          const DOMitem = document.getElementById(name)
+                          DOMitem.classList.remove("image-hide")
+                        }
+                      }
                     })
+
+                    // this.state.yearLocation.all.locations[location].forEach(item => {
+                    // })
             
-                    this.state.yearLocation.all.locations[location].forEach(fileName => {
-                      artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
-                    })
+                    // this.state.yearLocation.all.locations[location].forEach(fileName => {
+                    //   artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
+                    // })
             
                     return this.setState({artworkOnDisplay})
                   }
@@ -728,10 +751,6 @@ export class Provider extends React.Component{
          @returns current index in common sequence or the last one recorded in state
          */
         const checkFamilySequence = () => {
-          // if(familyName === "none" || familyName === "about"){
-          //   return nextPic = null
-          // }
-          console.log("checkk gamily sequence")
 
           let sequence = null
           const createSequence = () => {
@@ -755,11 +774,7 @@ export class Provider extends React.Component{
 
             sequence = {...this.state.enlarge.familySequence}
           }
-          console.log("sequence")
-          console.log(sequence)
           nextIndex = sequence.currentIndex+1 > sequence.familySequence.length-1 ? 0 : sequence.currentIndex+1
-          console.log("nextIndex")
-          console.log(nextIndex)
           if(nextIndex === sequence.startIndex){
             delete newState.enlarge.familySequence
             return null
@@ -778,8 +793,6 @@ export class Provider extends React.Component{
           let indexes = allVisible.filter(id => onDisplay.includes(id))
           let currentIndex = this.state.enlarge.commonIndex || indexes.indexOf(this.state.enlarge.background.fileName) 
           currentIndex = currentIndex < 0 ? 0 : currentIndex
-          console.log("currentIndex")
-          console.log(currentIndex)
           return currentIndex 
           // < 0 ? this.state.enlarge.commonIndex : currentIndex
         }
@@ -792,12 +805,8 @@ export class Provider extends React.Component{
           const allVisible = Array.from(document.getElementsByClassName("ImagesPreview--imageContainer")).map(container => container.childNodes[0].id)
           let onDisplay = Object.keys(this.state.artworkOnDisplay)
           let indexes = allVisible.filter(id => onDisplay.includes(id))
-          console.log("indexes")
-          console.log(indexes)
           // nextIndex = commonIndex()+1 > indexes.length-1 ? 0 : commonIndex()+1
           nextIndex = this.state.enlarge.commonIndex ? this.state.enlarge.commonIndex : commonIndex()+1 > indexes.length-1 ? 0 : commonIndex()+1
-          console.log("nextIndex")
-          console.log(nextIndex)
           nextPicName = indexes[nextIndex]
           nextPic = this.state.artworkInfoData[nextPicName]
           newState.enlarge.commonIndex = nextIndex
