@@ -135,6 +135,8 @@ export class Provider extends React.Component{
         const checkbox = document.getElementById(`category-${category}`)
         if(hideAll){
           Object.keys(this.state.visibleArtwork).forEach(fileName => {
+            console.log("categories")
+            console.log("hideAll")
             const file = this.state.visibleArtwork[fileName]
             if(file.category[category]){
               return newDisplay = {...newDisplay, [fileName]: file}
@@ -146,7 +148,6 @@ export class Provider extends React.Component{
         Object.keys(newDisplay).forEach(id => {
           document.getElementById(id).classList.remove('image-hide')
         })
-        
         Object.keys(zeroDisplay).forEach(id => {
             document.getElementById(id).classList.add('image-hide')
         })
@@ -164,7 +165,9 @@ export class Provider extends React.Component{
             Object.keys(zeroDisplay).forEach(id => {
                 document.getElementById(id).classList.add('image-hide')
             })
-            return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
+            setTimeout(() => {
+              return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
+            }, 200);
         }
         //ON CHECK
         else{
@@ -174,24 +177,17 @@ export class Provider extends React.Component{
                 if(file.displayTriggers.category.includes(category)){
                   newDisplay = {...newDisplay, [fileName]: file}
                 }
-                // if(Object.keys(file.category).includes(category)){
-                //     newDisplay = {...newDisplay, [fileName]: file}
-                // }
             })
-            // Object.keys(this.state.visibleArtwork).forEach(fileName => {
-            //     const file = this.state.visibleArtwork[fileName]
-            //     if(Object.keys(file.category).includes(category)){
-            //         newDisplay = {...newDisplay, [fileName]: file}
-            //     }
-            // })
             Object.keys(newDisplay).forEach(id => {
                 document.getElementById(id).classList.remove('image-hide')
             })
-            return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
+            setTimeout(() => {
+              return this.setState({artworkOnDisplay: newDisplay}, () => {res(150)})
+            }, 200);
         }
       })
-
     }
+
     this.filterBySubcategory = (category, subcategory, hideAll) => {
         let newDisplay = {}
         let zeroDisplay = {}
@@ -238,25 +234,32 @@ export class Provider extends React.Component{
             Object.keys(zeroDisplay).forEach(id => {
                 document.getElementById(id).classList.add('image-hide')
             })
-            return this.setState({artworkOnDisplay: newDisplay})
+            setTimeout(() => {
+              return this.setState({artworkOnDisplay: newDisplay})
+            }, 200);
         }
         //ON CHECK
         else{
             newDisplay={...this.state.artworkOnDisplay}
 
-            Object.keys(this.state.visibleArtwork).forEach(fileName => {
-                const file = this.state.visibleArtwork[fileName]
-                if(file.category[category]){
-                    if(Object.keys(file.category[category]).includes(subcategory)){
-                        newDisplay = {...newDisplay, [fileName]: file}
-                    }
+            Object.keys(this.state.artworkInfoData).forEach(fileName => {
+                const file = this.state.artworkInfoData[fileName]
+                // if(file.category[category]){
+                //     if(Object.keys(file.category[category]).includes(subcategory)){
+                //         newDisplay = {...newDisplay, [fileName]: file}
+                //     }
+                // }
+                if(file.displayTriggers.subcategory.includes(subcategory)){
+                  newDisplay = {...newDisplay, [fileName]: file}
                 }
             })
             Object.keys(newDisplay).forEach(id => {
                 document.getElementById(id).classList.remove('image-hide')
             })
 
-            return this.setState({artworkOnDisplay: newDisplay})
+            setTimeout(() => {
+              return this.setState({artworkOnDisplay: newDisplay})
+            }, 200);
         }
 
     }
@@ -386,7 +389,9 @@ export class Provider extends React.Component{
             document.getElementById(id).classList.add('image-hide')
         })
 
-        return this.setState({artworkOnDisplay: newDisplay})
+        setTimeout(() => {
+          return this.setState({artworkOnDisplay: newDisplay})
+        }, 200);
       }
       console.log("filter by theme")
       console.log(theme)
@@ -409,8 +414,9 @@ export class Provider extends React.Component{
         toggleArtwork.forEach(fileName => {
           delete artworkOnDisplay[fileName]
         })
-
-          return this.setState({artworkOnDisplay})
+          setTimeout(() => {
+            return this.setState({artworkOnDisplay})
+          }, 200);
       }
 
       else{
@@ -444,12 +450,18 @@ export class Provider extends React.Component{
         Object.keys(this.state.artworkOnDisplay).forEach(id => {
             document.getElementById(id).classList.add('image-hide')
         })
-
-        return this.setState({artworkOnDisplay: {}})
+        setTimeout(() => {
+          return this.setState({artworkOnDisplay: {}})
+        }, 200);
       }
       else{
-        Object.keys(this.state.visibleArtwork).forEach(id => {
+        // Object.keys(this.state.visibleArtwork).forEach(id => {
+        //     document.getElementById(id).classList.remove('image-hide')
+        // })
+        Object.keys(this.state.artworkInfoData).forEach(id => {
             document.getElementById(id).classList.remove('image-hide')
+            document.getElementById(id).classList.remove('ImagesPreview--imageContainer__empty')
+            document.getElementById(id).src = document.getElementById(id).getAttribute("data-src")
         })
         return this.setState({artworkOnDisplay: {...this.state.visibleArtwork}})
       }
@@ -1190,30 +1202,14 @@ export class Provider extends React.Component{
 
                         let artworkByTheme = {}
 
-                        let arr = Object.keys(onDisplay).map(name => onDisplay[name])
                         let themesArr = Object.keys(res).map(name => res[name])
-
-                        // allThemesSet.forEach(theme => {
-                        //   arr.forEach(obj => {
-                        //     if(obj.themes.includes(theme)){
-                        //       if(!artworkByTheme[theme]){
-                        //         artworkByTheme[theme] = []
-                        //       }
-                        //       artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
-                        //     }
-                        //   })
-                        // })
 
                         allThemesSet.forEach(theme => {
                           themesArr.forEach(obj => {
-                            console.log(theme)
                             if(obj.themes.includes(theme)){
                               if(!artworkByTheme[theme]){
                                 artworkByTheme[theme] = []
                               }
-                              console.log("obj.displayTriggers.themes")
-                              console.log(obj.displayTriggers.themes)
-                              console.log()
                               if(obj.displayTriggers.themes.includes(theme)){
                                 artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
                               }

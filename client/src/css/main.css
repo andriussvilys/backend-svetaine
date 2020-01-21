@@ -999,15 +999,8 @@ label {
 }
 
 .image-hide {
-  -webkit-animation-name: image-hide;
-          animation-name: image-hide;
-  -webkit-animation-duration: 0.6s;
-          animation-duration: 0.6s;
-  -webkit-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
-  cursor: default;
-  -webkit-animation-fill-mode: forwards;
-          animation-fill-mode: forwards;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
 }
 
 .low-opacity {

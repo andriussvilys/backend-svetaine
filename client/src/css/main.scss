@@ -748,12 +748,13 @@ font-family: 'Times New Roman', Times, serif;
 }
 
 .image-hide{
-    animation-name: image-hide;
-    animation-duration: 0.6s;
-    animation-timing-function: ease-out;
-    // transform: translateY(200%);
-    cursor: default;
-    animation-fill-mode: forwards;
+    // animation-name: image-hide;
+    // animation-duration: 0.6s;
+    // animation-timing-function: ease-out;
+    // // transform: translateY(200%);
+    // cursor: default;
+    // animation-fill-mode: forwards;
+    transform: translateY(100%);
 }
 
 .low-opacity{

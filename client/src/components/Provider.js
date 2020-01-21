@@ -1256,10 +1256,10 @@ export class Provider extends React.Component{
 
         updateArtworkByFamily: (familyName) => {
 
-            if(Object.keys(this.state.familySetupData.category).length <= 0){
-                alert('select categories')
-                return
-                }
+            // if(Object.keys(this.state.familySetupData.category).length <= 0){
+            //     alert('select categories')
+            //     return
+            //     }
 
             this.familySetupMethods.updateFamilySetup(this.state.familySetupData.artworkFamily)
 
