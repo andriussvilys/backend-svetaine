@@ -2037,5 +2037,9 @@ label {
     -webkit-transition: opacity 0.7s;
     transition: opacity 0.7s;
   }
+  #themes-subcategories {
+    max-height: 40vh;
+    overflow-y: auto;
+  }
 }
 /*# sourceMappingURL=main.css.map */

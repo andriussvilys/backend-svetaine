@@ -1563,6 +1563,10 @@ font-family: 'Times New Roman', Times, serif;
     .foreground-transition{
         transition: opacity 0.7s;
     }
+    #themes-subcategories{
+        max-height: 40vh;
+        overflow-y: auto;
+    }
     
   }
 
