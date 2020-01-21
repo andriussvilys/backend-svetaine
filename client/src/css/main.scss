@@ -1532,6 +1532,7 @@ font-family: 'Times New Roman', Times, serif;
     .side-scroll .ImagesPreview--imageContainer__empty{
         width: 0px !important;
         height: 100% !important;
+        min-width: 0 !important;
     }
     .info-up{
         opacity: 1;
