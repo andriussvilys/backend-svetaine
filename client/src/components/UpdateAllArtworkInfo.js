@@ -26,49 +26,56 @@ const UpdateAllArtworkInfo = (props) => {
     }
 
     const commenceUpdate = () => {
-        const allDocuments = props.context.state.artworkInfoData
-        const allDocumentNames = Object.keys(props.context.state.artworkInfoData)
-        let progressCount = 1
-        let updateLength = allDocumentNames.length
+        // const allDocuments = props.context.state.artworkInfoData
+        // const allDocumentNames = Object.keys(props.context.state.artworkInfoData)
+        const allFams = axios.get('/api/familysetup')
+        
+        allFams.then(res => {
+            const allFamNames = res.data.map(obj => obj.artworkFamily)
+            
+            let progressCount = 0
+            let updateLength = allFamNames.length
+            console.log("allFams")
+            console.log(res.data)
+            console.log("allFamNames")
+            console.log(allFamNames)
+            console.log("updateLength")
+            console.log(updateLength)
+
+            res.data.forEach(artwork => {
+                let fileData = artwork
     
-        allDocumentNames.forEach(artwork => {
-            let fileData = allDocuments[artwork]
-            if(!fileData.displayTriggers){
-                let displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
-                displayTriggers.category = Object.keys(fileData.category)
-                displayTriggers.subcategory = getSubcategories(fileData)
-                displayTriggers.listitems = getListitems(fileData)
-                displayTriggers.themes = fileData.themes
-                displayTriggers.year = fileData.year
-                displayTriggers.location = fileData.location
-                fileData.displayTriggers = displayTriggers
-            }
-            else{return}
-
-            console.log(artwork)
-            console.log(fileData)
-            console.log("********************************************")
-
-            progressCount += 1
-            console.log(`${progressCount} / ${updateLength}`)
-            if(progressCount === updateLength){
-                console.log('files updated')
-            }
-
-            axios.put(`/api/artworkInfo/update/${artwork}`, fileData)
-            .then(res => {
-                console.log(res)
+                    let displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+                    displayTriggers.category = Object.keys(fileData.category)
+                    displayTriggers.subcategory = getSubcategories(fileData)
+                    displayTriggers.listitems = getListitems(fileData)
+                    displayTriggers.themes = fileData.themes
+                    displayTriggers.year = fileData.year
+                    displayTriggers.location = fileData.location
+                    fileData.displayTriggers = displayTriggers
+    
+                console.log(fileData)
+                console.log("********************************************")
+    
                 progressCount += 1
                 console.log(`${progressCount} / ${updateLength}`)
                 if(progressCount === updateLength){
                     console.log('files updated')
                 }
+    
+                axios.put(`/api/familysetup/update/${artwork}`, fileData)
+                .then(res => {
+                    console.log(res)
+                    progressCount += 1
+                    console.log(`${progressCount} / ${updateLength}`)
+                    if(progressCount === updateLength){
+                        console.log('files updated')
+                    }
+                })
+                })
             })
-        })
-    }
-
-
-
+        }
+    
     return(
         <Button
             onClick={() => {

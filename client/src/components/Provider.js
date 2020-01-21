@@ -744,27 +744,14 @@ export class Provider extends React.Component{
             this.setState(newState)
 
         },
-        onChangeDisplayTriggers: (value, string, fileName, cb) => {
-                        // console.log("onChange")
-            // console.log("value")
-            // console.log(value)
+        onChangeDisplayTriggers: (value, string, fileName, familySetup, cb) => {
             console.log("string")
             console.log(string)
-            // console.log("fileName")
-            // console.log(fileName)
-
-
 
             let nestType = () => {
                 if(string !== "year" && string !== "location"){
                     return "themes"
                 }
-                // if(string === "themes"){
-                //     return "array"
-                // }
-                // if(string !== "year" && string !== "location"){
-                //     return "category"
-                // }
                 else{ 
                     return "string"
                 }
@@ -776,34 +763,56 @@ export class Provider extends React.Component{
             console.log(nestTypeResult)
 
             let newState = {...this.state}
+            let nest = null
+            if(!familySetup){
+                console.log("familySetup")
+                console.log(`!familySetup ${!familySetup}`)
+                nest = newState.fileData.files[fileName].displayTriggers
+            }
+            else{
+                nest = newState.familySetupData.displayTriggers
+            }
 
             if(nestTypeResult === "themes"){
                 let newList = []
                 console.log("array runs")
-                if(!newState.fileData.files[fileName].displayTriggers[string]){
-                    newState.fileData.files[fileName].displayTriggers[string] = []
+                if(!nest[string]){
+                    nest[string] = []
                 }
-                    if(this.state.fileData.files[fileName].displayTriggers[string].includes(value)){
-                        newList = this.state.fileData.files[fileName].displayTriggers[string].filter(item => item !== value)
+                    if(nest[string].includes(value)){
+                        newList = nest[string].filter(item => item !== value)
                     }
                     else{
-                        newList = [...this.state.fileData.files[fileName].displayTriggers[string], value]
+                        newList = [...nest[string], value]
                     }
                         // let newState = []    
 
-        
-                        newState = {
-                            ...this.state,
-                            fileData: {
-                                ...this.state.fileData,
-                                files: {
-                                    ...this.state.fileData.files,
-                                    [fileName]: {
-                                        ...this.state.fileData.files[fileName],
-                                        displayTriggers: {
-                                            ...this.state.fileData.files[fileName].displayTriggers, 
-                                            [string]: newList
+                        if(!familySetup){
+                            newState = {
+                                ...this.state,
+                                fileData: {
+                                    ...this.state.fileData,
+                                    files: {
+                                        ...this.state.fileData.files,
+                                        [fileName]: {
+                                            ...this.state.fileData.files[fileName],
+                                            displayTriggers: {
+                                                ...this.state.fileData.files[fileName].displayTriggers, 
+                                                [string]: newList
+                                            }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            newState = {
+                                ...this.state,
+                                familySetupData: {
+                                    ...this.state.familySetupData,
+                                    displayTriggers: {
+                                        ...this.state.familySetupData.displayTriggers,
+                                        [string]: newList
                                     }
                                 }
                             }
@@ -820,28 +829,43 @@ export class Provider extends React.Component{
                         return
                     
                 
-            }
+                    }
+            //if category, subcategory or listitems
             else if(string !== "year" && string !== "location"){
                 console.log("category runs")
-                if(!newState.fileData.files[fileName].displayTriggers[string]){
-                    newState.fileData.files[fileName].displayTriggers[string] = []
+                if(!nest[string]){
+                    nest[string] = []
                 }
-                    if(this.state.fileData.files[fileName].displayTriggers[string].includes(value)){
+                    if(this.nest[string].includes(value)){
                         // let newState = []    
-                        let newList = this.state.fileData.files[fileName].displayTriggers[string].filter(item => item !== value)
-        
-                        newState = {
-                            ...this.state,
-                            fileData: {
-                                ...this.state.fileData,
-                                files: {
-                                    ...this.state.fileData.files,
-                                    [fileName]: {
-                                        ...this.state.fileData.files[fileName],
-                                        displayTriggers: {
-                                            ...this.state.fileData.files[fileName].displayTriggers, 
-                                            [string]: newList
+                        let newList = nest[string].filter(item => item !== value)
+                        
+                        if(!familySetup){
+                            newState = {
+                                ...this.state,
+                                fileData: {
+                                    ...this.state.fileData,
+                                    files: {
+                                        ...this.state.fileData.files,
+                                        [fileName]: {
+                                            ...this.state.fileData.files[fileName],
+                                            displayTriggers: {
+                                                ...this.state.fileData.files[fileName].displayTriggers, 
+                                                [string]: newList
+                                            }
                                         }
+                                    }
+                                }
+                            }
+                        }
+                        else{
+                            newState = {
+                                ...this.state,
+                                familySetupData: {
+                                    ...this.state.familySetupData,
+                                    displayTriggers: {
+                                        ...this.state.familySetupData.displayTriggers,
+                                        [string]: newList
                                     }
                                 }
                             }
@@ -854,20 +878,36 @@ export class Provider extends React.Component{
                         return
                     }
             }
-            //if category, subcategory or listitems
+            //if year or location
             else{    
                 console.log("string runs")
-                          
-                newState = {
-                    ...this.state,
-                    fileData: {
-                        ...this.state.fileData,
-                        files: {
-                            ...this.state.fileData.files,
-                            [fileName]: {
-                                ...this.state.fileData.files[fileName],
-                                [string]: value,
-                                displayTriggers: {...this.state.fileData.files[fileName].displayTriggers, [string]: value}
+                if(nest[string] === value){
+                    value = ""
+                }
+                if(!familySetup){
+                    newState = {
+                        ...this.state,
+                        fileData: {
+                            ...this.state.fileData,
+                            files: {
+                                ...this.state.fileData.files,
+                                [fileName]: {
+                                    ...this.state.fileData.files[fileName],
+                                    // [string]: value,
+                                    displayTriggers: {...this.state.fileData.files[fileName].displayTriggers, [string]: value}
+                                }
+                            }
+                        }
+                    }
+                }
+                else{
+                    newState = {
+                        ...this.state,
+                        familySetupData: {
+                            ...this.state.familySetupData,
+                            displayTriggers: {
+                                ...this.state.familySetupData.displayTriggers,
+                                [string]: value
                             }
                         }
                     }
@@ -1231,12 +1271,12 @@ export class Provider extends React.Component{
                     const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
 
                     const familyData = this.state.familySetupData
-                    const {category, themes, seeAlso, familyDescription, year, location} = familyData
+                    const {category, themes, seeAlso, familyDescription, year, location, displayTriggers} = familyData
                     let fileData = this.state.relatedArtwork[familyName].files[fileName]
                     delete fileData.__v
                     delete fileData._id
                     delete fileData.relatedArtwork
-                    fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location}
+                    fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location, displayTriggers}
                     console.log(fileData)
                     axios.put(`/api/artworkInfo/update/${fileName}`, fileData)
                         .then(res => {

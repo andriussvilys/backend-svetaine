@@ -531,7 +531,7 @@ export class Provider extends React.Component{
                   let artworkOnDisplay = {...newState.artworkOnDisplay}
                   let visibleByYear = {}
             
-                  let checkbox = document.getElementById(`year-${location}`)
+                  let checkbox = document.getElementById(`location-${location}`)
       
                   if(!checkbox.checked){
                     console.log("!checkbox checked")
@@ -680,7 +680,9 @@ export class Provider extends React.Component{
             document.getElementById('imageSelect').classList.remove("side-scroll")
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-scroll-down")
-              document.getElementById("ArtworkInfo").classList.remove("show")
+              if(document.getElementById("ArtworkInfo")){
+                document.getElementById("ArtworkInfo").classList.remove("show")
+              }
             }, 400);
           }
           //if dekstop

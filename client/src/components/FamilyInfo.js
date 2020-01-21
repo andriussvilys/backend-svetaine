@@ -4,6 +4,7 @@ import DropDownList from './DropDownList'
 import NavigationInfo from './NavigationInfo'
 import SeeAlsoSelector from './SeeAlsoSelector'
 import Button from 'react-bootstrap/Button'
+import DisplayTriggers from './DisplayTriggers'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
 import '../css/components/imageInfo.css';
@@ -101,7 +102,11 @@ export default class FamilyInfo extends Component {
                             </div>
 
                             {/* <ThemeSelector/> */}
-
+                                <DisplayTriggers 
+                                    file={this.context.state.familySetupData}
+                                    context={this.context}
+                                    familySetup
+                                />
     
 
                             </div>

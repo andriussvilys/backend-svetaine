@@ -196,12 +196,15 @@ export default class TagsMenu extends React.Component{
                                 years={this.props.context.state.yearLocation.years}
                                 filterByYear={this.props.context.filterByYear}
                                 yearChecked={this.props.context.yearChecked}
+                                context={this.props.context}
+                                modifierClass={"halfSize"}
                             />
                         </div>
                         <div className="button-wrapper TagsMenu-listitem" id={`location-listitem`}>
                             <Location 
                                 locations={this.props.context.state.yearLocation.locations}
                                 filterByYear={this.props.context.filterByYear}
+                                context={this.props.context}
                             />
                         </div>
                     </div>

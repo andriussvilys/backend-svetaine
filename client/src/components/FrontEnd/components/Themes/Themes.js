@@ -9,10 +9,10 @@ const Themes = (props) => {
         const allThemes = Object.keys(props.state.themesOnDisplay).sort()
         let renderList = allThemes.map(theme => {
             return <li key={theme} className="tags-li">
-            <div 
+            {/* <div 
             className={props.context.themeChecked(theme) ? "tagsMenu-listItem checkbox-selected" : "tagsMenu-listItem"}
             >
-                <span>{theme}</span>
+                <span className="nowrap">{theme}</span>
                 <input 
                     id={`theme-${theme}`}
                     type="checkbox" 
@@ -21,7 +21,17 @@ const Themes = (props) => {
                     // checked={props.state.visibleThemes[theme].length > 0}
                     checked={props.context.themeChecked(theme)}
                 />
-            </div>
+            </div> */}
+            <Category 
+            key={theme}
+            category={theme}
+            level="theme"
+            onChange={() => props.context.filterByTheme(theme)}
+            isChecked={props.context.themeChecked(theme)}
+            showContent={() => {return}}
+            titleModifier={"nowrap"}
+            // modifierClass={"year-tag"}
+        />
             </li>
         })
         return <ul className="tagsMenu-list tagsMenu-list-tags">{renderList}</ul>

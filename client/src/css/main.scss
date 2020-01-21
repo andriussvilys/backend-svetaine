@@ -402,7 +402,7 @@ $border-main-color: #bbb;
     margin-left: 8px;
 }
 .tags-li{
-    flex: 1;
+    flex: 1 1 45%;
     height: auto;
 }
 .tagsMenu-list-tags{
@@ -1181,7 +1181,7 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: space-between;
     flex: 1;
     cursor: pointer;
-
+    width: 100%;
 }
 // .list-items, .subcategory{
 //     display: none;
@@ -1261,6 +1261,16 @@ font-family: 'Times New Roman', Times, serif;
 }
 .enlarge-scroll-left{
     transform: translateX(0);
+}
+.year-tag{
+    flex: 1 1 40% !important;
+}
+.location-tag{
+    font-size: 12px;
+}
+.nowrap{
+    white-space: nowrap;
+    flex-wrap: nowrap;
 }
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {

@@ -29,6 +29,9 @@ const DisplayTriggers = (props) => {
         if(file.location){array = [...array, file.location]}
         return array
     }
+
+    console.log("DISPLAY TRIGGERS")
+    console.log(props)
     
     return(
         <div className="imageInfo--box">
@@ -39,6 +42,7 @@ const DisplayTriggers = (props) => {
                     // data={props.file.displayTriggers["category"]}
                     data={Object.keys(props.file.category)}
                     file={props.file}
+                    familySetup={props.familySetup}
                     onChange={props.context.fileDataMethods.onChangeDisplayTriggers}
                 />
                 <DisplayTriggerList 
@@ -46,6 +50,7 @@ const DisplayTriggers = (props) => {
                     // data={props.file.displayTriggers["subcategory"]}
                     data={getSubcategories(props.file)}
                     file={props.file}
+                    familySetup={props.familySetup}
                     onChange={props.context.fileDataMethods.onChangeDisplayTriggers}
                 />
                 <DisplayTriggerList 
@@ -53,12 +58,14 @@ const DisplayTriggers = (props) => {
                     // data={props.file.displayTriggers["listitems"]}
                     data={getListitems(props.file)}
                     file={props.file}
+                    familySetup={props.familySetup}
                     onChange={props.context.fileDataMethods.onChangeDisplayTriggers}
                 />
                 <DisplayTriggerList 
                     title={'themes'}
                     data={props.file.themes}
                     file={props.file}
+                    familySetup={props.familySetup}
                     onChange={props.context.fileDataMethods.onChangeDisplayTriggers}
                 />
                 {/* <DisplayTriggerList 
@@ -76,7 +83,7 @@ const DisplayTriggers = (props) => {
                                 <input 
                                     type="checkbox"
                                     checked={props.file.displayTriggers["year"] === props.file.year}
-                                    onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.year, "year", props.file.fileName)}
+                                    onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.year, "year", props.file.fileName, props.familySetup)}
                                 />
                             </li>
                             : null
@@ -88,7 +95,7 @@ const DisplayTriggers = (props) => {
                                 <input 
                                     type="checkbox"
                                     checked={props.file.displayTriggers["location"] === props.file.location}
-                                    onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.location, "location", props.file.fileName)}
+                                    onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.location, "location", props.file.fileName, props.familySetup)}
                                 />
                             </li>
                             : null

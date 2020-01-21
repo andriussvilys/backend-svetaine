@@ -539,8 +539,8 @@ label {
 
 .tags-li {
   -webkit-box-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+      -ms-flex: 1 1 45%;
+          flex: 1 1 45%;
   height: auto;
 }
 
@@ -1589,6 +1589,7 @@ label {
       -ms-flex: 1;
           flex: 1;
   cursor: pointer;
+  width: 100%;
 }
 
 .scroll-down {
@@ -1686,6 +1687,22 @@ label {
 .enlarge-scroll-left {
   -webkit-transform: translateX(0);
           transform: translateX(0);
+}
+
+.year-tag {
+  -webkit-box-flex: 1 !important;
+      -ms-flex: 1 1 40% !important;
+          flex: 1 1 40% !important;
+}
+
+.location-tag {
+  font-size: 12px;
+}
+
+.nowrap {
+  white-space: nowrap;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
 }
 
 @media only screen and (max-width: 720px) {

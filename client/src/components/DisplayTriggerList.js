@@ -4,6 +4,10 @@ const DisplayTriggerList = (props) => {
 
     const isChecked = (title, file, item) => {
 
+        if(props.familySetup){
+
+        }
+
         if(title === "category"){
             return file.displayTriggers ? file.displayTriggers[title].includes(item) : false
         }
@@ -21,7 +25,7 @@ const DisplayTriggerList = (props) => {
 
 
     
-    const createList = (title, data, fileName) => {
+    const createList = (title, data, fileName, familySetup) => {
         if(!data){return}
         if(data.length <= 0){return}
         let list = data.map(item => {
@@ -32,7 +36,7 @@ const DisplayTriggerList = (props) => {
                             type="checkbox"
                             onChange={() => {}}
                             checked={isChecked(props.title, props.file, item)}
-                            onChange={() => props.onChange(item, title, fileName)}
+                            onChange={() => props.onChange(item, title, fileName, familySetup)}
                         />
                     </li>
         })
@@ -43,7 +47,7 @@ const DisplayTriggerList = (props) => {
         <div className="displayTrigger-wrapper">
             <p className="displayTrigger-title">{props.title}</p>
             <ul>
-                {createList(props.title, props.data, props.file.fileName)}
+                {createList(props.title, props.data, props.file.fileName, props.familySetup)}
             </ul>
         </div>
     )

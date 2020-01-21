@@ -9,10 +9,11 @@ const Location = (props) => {
         return <Category 
                     key={loc}
                     category={loc}
-                    level="listitem"
-                    // onChange={() => this.props.context.filterBySubcategory(category, subcategory, listitem)}
-                    // isChecked={this.props.context.listitemChecked(category, subcategory, listitem)}
+                    level="location"
+                    onChange={() => props.context.filterByLocation(loc)}
+                    isChecked={props.context.locationChecked(loc)}
                     showContent={() => {return}}
+                    modifierClass={"location-tag"}
                 />
 
         // return <li key={`location-${loc}`}>{loc}</li>
