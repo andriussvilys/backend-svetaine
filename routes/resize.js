@@ -46,7 +46,7 @@ router.post("/:fileName", (req, res, next) => {
             image
             .quality(90)
             .resize(desktopSize.width, desktopSize.height)
-            .write(`./client/public/uploads/desktop/${req.params.fileName}-desktop2.jpg`, () => {
+            .write(`./client/public/uploads/desktop/${req.params.fileName}-desktop.jpg`, () => {
 
                 image
                     .quality(90)
