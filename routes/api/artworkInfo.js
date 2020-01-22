@@ -48,7 +48,7 @@ router.get('/fileName/:fileName', (req, res) => {
 //@description add a new artwork
 //@access Public
 router.post('/create', 
-upload.single('artworkImage'), 
+// upload.single('artworkImage'), 
 (req, res, rej) => {
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
@@ -56,6 +56,7 @@ upload.single('artworkImage'),
 })
 
 router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
+    res.send('image file uploaded')
 })
 
 router.put("/update/:fileName", (req, res, next) => {

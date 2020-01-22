@@ -4,8 +4,10 @@ const Jimp = require('jimp')
 
 
 router.post("/:fileName", (req, res, next) => {
+    console.log('resize runs')
       Jimp.read(`./client/public/uploads/${req.params.fileName}`)
         .then(image => {
+            console.log('jimp read complete')
             let thumbnailSize = {width: null, height: null}
             let mobileSize = {width: null, height: null}
             let desktopSize = {width: null, height: null}

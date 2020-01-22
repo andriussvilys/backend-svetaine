@@ -112,7 +112,7 @@ export default class FileUpdate extends React.Component{
                 newState.fileToDelete = noFile
                 console.log("no File")
                 console.log(noFile)
-                this.setState(newState, console.log(this.state))
+                // this.setState(newState, console.log(this.state))
             })
 
     }

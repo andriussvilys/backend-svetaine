@@ -1120,9 +1120,12 @@ export class Provider extends React.Component{
                 fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
     
                 axios.post('/api/artworkInfo/imageUpload', fd)
-                    .then(res => { this.readImageDir()
+                    .then(res => {
+                        axios.post(`/resize/${fileName}`)
+                        .then(res => { this.readImageDir()
+                        })
+                        .catch(err => alert(err))
                     })
-                    .catch(err => alert(err))
 
             //     if(this.state.serverFileDir.includes(fileName)){
             //         resolve()
