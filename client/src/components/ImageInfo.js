@@ -35,19 +35,20 @@ export default class ImageInfo extends Component{
             <Button
                 onClick={() => {
                   const files = Object.keys(this.context.state.artworkInfoData)
-                  this.setState({progress: 0, showModal: true}, () => {
+              
+                  this.setState({progress: 0, showModal: true, modalMessage: "ennumerating files"}, () => {
                     let progress = 0
                     let updateLength = files.length
                     files.forEach(fileName => {
                       console.log(fileName)
-                      let progressBar = Math.round(progress * 100 / updateLength)
                       // let updateLength = Object.keys(this.context.state.artworkInfoData).length
-
+                      
                       console.log("resize runs")
-                        axios.post(`/resize/${fileName}`)
-                            .then(res => { 
-                              console.log("resize resolves")
-                              progress += 1
+                      axios.post(`/resize/${fileName}`)
+                      .then(res => { 
+                        console.log("resize resolves")
+                        progress += 1
+                        let progressBar = Math.round(progress * 100 / updateLength)
                               this.setState({progress: progressBar, modalMessage: `updating ${fileName}`}, () => {
                                 console.log("progress")
                                 console.log(progress)
