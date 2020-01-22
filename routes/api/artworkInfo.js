@@ -15,12 +15,9 @@ const storage = multer.diskStorage({
 })
 
 const upload = multer({storage: storage})
-//model
 
 //@route GET api/artworkInfo
 //@description get all artoworks
-//@access Public
-
 router.get('/', (req, res) => {
     ArtworkInfo.find()
         .then(artworks => res.json(artworks))

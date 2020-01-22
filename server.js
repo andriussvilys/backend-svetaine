@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const path = require('path')
+const path = require('path');
 
 const artworkInfo = require('./routes/api/artworkInfo');
 const familySetup = require('./routes/api/familysetup');
@@ -11,6 +11,8 @@ const categories = require('./routes/api/categories');
 const users = require('./routes/api/users');
 const fetchImages = require('./fetchImages');
 const deleteImage = require('./deleteImage');
+
+const resize = require('./routes/resize');
 
 const app = express();
 
@@ -48,6 +50,8 @@ app.use('/api/categories', categories);
 app.use('/api/users', users);
 app.use('/fetchImages', fetchImages);
 app.use('/deleteImage', deleteImage);
+
+app.use('/resize', resize);
 // this uses a folder inside the server
 // app.use(express.static('files'))
 

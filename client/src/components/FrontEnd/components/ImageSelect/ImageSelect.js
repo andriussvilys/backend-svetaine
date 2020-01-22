@@ -6,7 +6,7 @@ const ImageSelect = (props) => {
 
     const createPreviewsALL = (data) => {
         if(data){
-            let previews = Object.keys(data).map((objName, index) => {
+            let previews = Object.keys(data).map((objName) => {
               //check if width < height 
               //if true, add half-size class
               const halfSize = props.state.artworkInfoData[objName].naturalSize.naturalWidth < props.state.artworkInfoData[objName].naturalSize.naturalHeight ? "halfSize" : null
@@ -37,19 +37,17 @@ const ImageSelect = (props) => {
                       className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
                       >
                           {previews}
-                          {props.mobile ? <div style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
+                          {props.mobile ? <div id="spanner" style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
                           {setTimeout(() => {
                             lazyLoadImages()
-                            // if(!props.mobile){
-                            //   document.getElementById("tags-collapse").classList.add('show')
-                            // }
                           }, 50)}
+
                     </div>
         }
         else{return null}  
     }
 
-    const lazyLoadImages = () => {
+    const lazyLoadImages = () => {  
         const images = document.querySelectorAll(".loadByDefault")
 
         if(images){
@@ -83,7 +81,6 @@ const ImageSelect = (props) => {
             imgObserver.observe(image)
           })
         }
-    
       }
     return(
       createPreviewsALL(props.data)
