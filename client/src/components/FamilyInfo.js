@@ -96,7 +96,7 @@ export default class FamilyInfo extends Component {
                                         type="number" 
                                         min="1992" 
                                         onChange={(e) => this.context.onChange(e, "year") } 
-                                        value={this.context.state.familySetupData.year ? this.context.state.familySetupData.year : null }
+                                        value={this.context.state.familySetupData.year ? this.context.state.familySetupData.year : "" }
                                         />
                                 </div>
                             </div>

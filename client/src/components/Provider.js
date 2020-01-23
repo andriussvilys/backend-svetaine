@@ -1975,7 +1975,6 @@ export class Provider extends React.Component{
             let FamilyList = new Promise ((resolve, rej) => {
                 axios.get('/api/familySetup')
                     .then(res => {
-                        console.log()
                         let familyList = Object.keys(res.data).map(obj => {
                             return res.data[obj].artworkFamily
                         })

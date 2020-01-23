@@ -4,10 +4,14 @@ const Jimp = require('jimp')
 
 
 router.post("/:fileName", (req, res, next) => {
-    console.log('resize runs')
-      Jimp.read(`./client/public/uploads/${req.params.fileName}`)
-        .then(image => {
-            console.log('jimp read complete')
+    Jimp.read(`./client/public/uploads/${req.params.fileName}`)
+    .then(image => {
+            const newName = req.params.fileName.slice(0, req.params.fileName.indexOf("."))
+            const fileExtension = req.params.fileName.slice(req.params.fileName.indexOf("."), req.params.fileName.length)
+            // if(!isNaN(req.params.fileName[0])){
+            //     console.log(req.params.fileName)
+            //     console.log(`${newName}-desktop${fileExtension}`)
+            // }
             let thumbnailSize = {width: null, height: null}
             let mobileSize = {width: null, height: null}
             let desktopSize = {width: null, height: null}
@@ -48,17 +52,17 @@ router.post("/:fileName", (req, res, next) => {
             image
             .quality(90)
             .resize(desktopSize.width, desktopSize.height)
-            .write(`./client/public/uploads/desktop/${req.params.fileName}-desktop.jpg`, () => {
+            .write(`./client/public/uploads/desktop/${newName}-desktop${fileExtension}`, () => {
 
                 image
                     .quality(90)
                     .resize(mobileSize.width, mobileSize.height)
-                    .write(`./client/public/uploads/mobile/${req.params.fileName}-mob.jpg`, () => {
+                    .write(`./client/public/uploads/mobile/${newName}-mob${fileExtension}`, () => {
                     
                 image
                     .quality(90)
                     .resize(thumbnailSize.width, thumbnailSize.height)
-                    .write(`./client/public/uploads/thumbnails/${req.params.fileName}-thumbnail.jpg`, () => {
+                    .write(`./client/public/uploads/thumbnails/${newName}-thumbnail${fileExtension}`, () => {
                         return res.json(`${req.params.fileName} resized`)
                     })
                 })
