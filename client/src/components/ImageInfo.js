@@ -45,7 +45,7 @@ export default class ImageInfo extends Component{
                     // for (const fileName of files) {
                     for (const fileName of dummy) {
                       console.log(`post ${fileName}`)
-                            axios.post(`/resize`, dummy)
+                            axios.post(`/resize/${fileName}`)
                             .then(res => { 
                               console.log("resize resolves")
                               console.log(res)
