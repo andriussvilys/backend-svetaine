@@ -5,7 +5,8 @@ const Jimp = require('jimp')
 
 router.post("/:fileName", (req, res, next) => {
       Jimp.read(`./client/public/uploads/${req.params.fileName}`)
-        .then(image => {
+      .then(image => {
+        const newName = req.params.fileName.slice(req.params.fileName[0], req.params.fileName.indexOf("."))
             let thumbnailSize = {width: null, height: null}
             let mobileSize = {width: null, height: null}
             let desktopSize = {width: null, height: null}
@@ -46,17 +47,17 @@ router.post("/:fileName", (req, res, next) => {
             image
             .quality(90)
             .resize(desktopSize.width, desktopSize.height)
-            .write(`./client/public/uploads/desktop/${req.params.fileName}-desktop.jpg`, () => {
+            .write(`./client/public/uploads/desktop/${newName}-desktop.jpg`, () => {
 
                 image
                     .quality(90)
                     .resize(mobileSize.width, mobileSize.height)
-                    .write(`./client/public/uploads/mobile/${req.params.fileName}-mob.jpg`, () => {
+                    .write(`./client/public/uploads/mobile/${newName}-mob.jpg`, () => {
                     
                 image
                     .quality(90)
                     .resize(thumbnailSize.width, thumbnailSize.height)
-                    .write(`./client/public/uploads/thumbnails/${req.params.fileName}-thumbnail.jpg`, () => {
+                    .write(`./client/public/uploads/thumbnails/${newName}-thumbnail.jpg`, () => {
                         return res.json(`${req.params.fileName} resized`)
                     })
                 })
@@ -66,6 +67,76 @@ router.post("/:fileName", (req, res, next) => {
         .catch(err => {
             res.json(`ERROR: ${err}`)
         })
+})
+
+router.post("/", (req, res, next) => {
+    res.send(req.body)
+    for (const fileName of req.body){
+        console.log(fileName)
+        Jimp.read(`./client/public/uploads/${fileName}`)
+        .then(image => {
+          const newName = fileName.slice(fileName[0], fileName.indexOf("."))
+              let thumbnailSize = {width: null, height: null}
+              let mobileSize = {width: null, height: null}
+              let desktopSize = {width: null, height: null}
+    
+              const countDimension = () => {
+                  const width = image.bitmap.width
+                  const height = image.bitmap.height
+                  if(width > height){
+                      const mobHeight = (height * 640) / width
+                      mobileSize.width = 640
+                      mobileSize.height = Math.round(mobHeight)
+    
+                      const thumbHeight = (height * 200) / width
+                      thumbnailSize.width = 200
+                      thumbnailSize.height = Math.round(thumbHeight)
+    
+                      const desktopHeight = (height * 1080) / width
+                      desktopSize.width = 1080
+                      desktopSize.height = Math.round(desktopHeight)
+                  }
+                  else{
+                      const mobWidth = (width * 640) / height
+                      mobileSize.width = Math.round(mobWidth)
+                      mobileSize.height = 640
+    
+                      const thumbWidth = (width * 200) / height
+                      thumbnailSize.width = Math.round(thumbWidth)
+                      thumbnailSize.height = 200
+    
+                      const desktopWidth = (width * 1080) / height
+                      desktopSize.width = Math.round(desktopWidth)
+                      desktopSize.height = 1080
+                  }
+                  return mobileSize
+              }
+
+              countDimension()
+              image
+              .quality(90)
+              .resize(desktopSize.width, desktopSize.height)
+              .write(`./client/public/uploads/desktop/${newName}-desktop.jpg`, () => {
+    
+                  image
+                      .quality(90)
+                      .resize(mobileSize.width, mobileSize.height)
+                      .write(`./client/public/uploads/mobile/${newName}-mob.jpg`, () => {
+                      
+                  image
+                      .quality(90)
+                      .resize(thumbnailSize.width, thumbnailSize.height)
+                      .write(`./client/public/uploads/thumbnails/${newName}-thumbnail.jpg`, () => {
+                          return res.json(`${fileName} resized`)
+                      })
+                  })
+              })
+    
+          })
+          .catch(err => {
+              err.send(`ERROR: ${err}`)
+          })
+    }
 })
 
 module.exports = router;

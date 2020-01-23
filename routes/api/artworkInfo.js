@@ -48,14 +48,15 @@ router.get('/fileName/:fileName', (req, res) => {
 //@description add a new artwork
 //@access Public
 router.post('/create', 
-upload.single('artworkImage'), 
 (req, res, rej) => {
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
     .catch(err => console.error(err))
 })
 
-router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
+router.post('/imageUpload', upload.single("artwork") , (req, res, err) => {
+    console.log("IMAGE UPLOAD")
+    res.send("file uploaded")
 })
 
 router.put("/update/:fileName", (req, res, next) => {

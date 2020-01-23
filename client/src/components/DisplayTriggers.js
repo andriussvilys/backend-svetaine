@@ -29,9 +29,6 @@ const DisplayTriggers = (props) => {
         if(file.location){array = [...array, file.location]}
         return array
     }
-
-    console.log("DISPLAY TRIGGERS")
-    console.log(props)
     
     return(
         <div className="imageInfo--box">

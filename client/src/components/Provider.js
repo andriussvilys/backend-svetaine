@@ -173,6 +173,7 @@ export class Provider extends React.Component{
                 console.log(reqBody)
                 axios.post('/api/categories/create', reqBody)
                 .then(res => {
+
                     let newState = {...this.state}
                     newState.categoriesData = [...newState.categoriesData, res.data]
                     newState.categoriesOptionList.data = {...newState.categoriesOptionList.data, [categoryInput.value]:[]}
@@ -1113,22 +1114,7 @@ export class Provider extends React.Component{
         },
         //THIS UPLOADS FILE TO SERVER
 
-        uploadFile: (fileName) => {
-                const fileData = this.state.fileData.files
-    
-                const fd = new FormData();
-                fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
-    
-                axios.post('/api/artworkInfo/imageUpload', fd)
-                    .then(res => { this.readImageDir()
-                    })
-                    .catch(err => alert(err))
 
-            //     if(this.state.serverFileDir.includes(fileName)){
-            //         resolve()
-            //     }
-            // })
-        },
         //Removes selected file from state and thus DOM
         removeFile: (fileName, familyName) => {
         
@@ -1294,7 +1280,6 @@ export class Provider extends React.Component{
 
         postArtworkInfo: (file) => {
             console.log('post artwork info RUNS with')
-            console.log(file)
             return new Promise((resolve, rej) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
                     return resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
@@ -1352,7 +1337,6 @@ export class Provider extends React.Component{
                 
                             fileDataObject.familyDisplayIndex = familyIndex
                             
-                            console.log(fileDataObject)
 
                             axios.post('/api/artworkInfo/create', fileDataObject)
                             .then( res => { 
@@ -1376,6 +1360,28 @@ export class Provider extends React.Component{
             })
 
         },
+        uploadFile: (fileName) => {
+            console.log("upload file runs")
+            const fileData = this.state.fileData.files
+
+            const fd = new FormData();
+            fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
+
+            axios.post('/api/artworkInfo/imageUpload', fd)
+                .then(res => { 
+                    console.log("IMAGE UPLOADED")
+                    console.log(res)
+                    axios.post(`/resize/${fileName}`)
+                    
+                    this.readImageDir()
+                })
+                .catch(err => alert(err))
+
+        //     if(this.state.serverFileDir.includes(fileName)){
+        //         resolve()
+        //     }
+        // })
+    },
 
         initialIndex: () => {
             let newState = {...this.state}
@@ -1959,7 +1965,7 @@ export class Provider extends React.Component{
             console.log('backend provider mount')
             let newState = {...this.state}
 
-            this.setState({showModal: true})
+            this.setState({showModal: true, progress: 0})
 
             let Themes = new Promise((resolve, rej) => {
                 axios.get('/api/themes')

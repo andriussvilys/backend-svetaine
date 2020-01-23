@@ -1131,7 +1131,7 @@ export class Provider extends React.Component{
     componentDidMount(){
             let newState = {...this.state}
 
-            this.setState({showModal: true})
+            this.setState({showModal: true, modalMessage: "loading data"})
 
             // let Themes = new Promise ((resolve,rej) => {
             //     axios.get('/api/themes')
@@ -1299,6 +1299,7 @@ export class Provider extends React.Component{
             ])
                 .then(res => {
                     newState.showModal = false
+                    newState.modalMessage = null
                     newState.mobile = this.toggleMobile()
                     window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
                     this.setState(newState)
