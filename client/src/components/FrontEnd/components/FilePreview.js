@@ -11,15 +11,33 @@ export default class FilePreview extends React.Component{
         const imgRef = React.createRef()
 
         //files in server dont have 'preview' property, and files in state dont have filePath
-        const previewSource = file.filePath ? file.filePath : file.preview
+        const previewSource = () => {
+            let source = null
+            //check if file has been uploaded already/is present in database
+            if(file.filePath){
+                if(!this.props.mobile){
+                    source = file.mobilePath
+                }
+                else{
+                    source = file.thumbnailPath
+                }
+            }
+            //if file is to be uploaded
+            else{
+                source = file.preview
+            }
+            console.log("source")
+            console.log(source)
+            return source
+        }
 
         if(fileType.match('image')){
             let image = <img 
             loadbydefault={this.props.loadbydefault}
             className={this.props.className}
-            alt={file.fileName} 
-            data-src={previewSource}
-            src={this.props.loadbydefault ? previewSource : ""} 
+            alt={file.artworkDescription || file.familyDescription || file.artworkName || file.fileName } 
+            data-src={previewSource()}
+            src={this.props.loadbydefault ? previewSource() : ""} 
             id={this.props.id || this.props.file.fileName}
             name={this.props.previewName}
             onClick={(e) => {this.props.onClick(e)}}

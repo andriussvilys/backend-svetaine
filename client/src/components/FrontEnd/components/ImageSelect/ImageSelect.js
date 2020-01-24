@@ -12,12 +12,13 @@ const ImageSelect = (props) => {
               const halfSize = props.state.artworkInfoData[objName].naturalSize.naturalWidth < props.state.artworkInfoData[objName].naturalSize.naturalHeight ? "halfSize" : null
               if(props.state.artworkOnDisplay[objName]){
                 return <FilePreview 
-                key={`imageSelect-${objName}`}
-                containerClassName={`ImagesPreview--imageContainer ${halfSize}`}
-                className="imageSelect-FilePreview loadByDefault" 
-                onClick={e => props.methods.loadEnlarge(e, objName)}
-                file={data[objName]} 
-                />
+                        key={`imageSelect-${objName}`}
+                        containerClassName={`ImagesPreview--imageContainer ${halfSize}`}
+                        className="imageSelect-FilePreview loadByDefault" 
+                        onClick={e => props.methods.loadEnlarge(e, objName)}
+                        file={data[objName]} 
+                        mobile={props.mobile}
+                        />
               }
               else{
                 return <FilePreview 
@@ -29,6 +30,7 @@ const ImageSelect = (props) => {
                         className="imageSelect-FilePreview" 
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
+                        mobile={props.mobile}
                         />
               }
             })

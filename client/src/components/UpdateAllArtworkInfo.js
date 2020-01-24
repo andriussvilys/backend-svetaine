@@ -27,43 +27,51 @@ const UpdateAllArtworkInfo = (props) => {
 
     const commenceUpdate = () => {
         // const allDocuments = props.context.state.artworkInfoData
-        // const allDocumentNames = Object.keys(props.context.state.artworkInfoData)
-        const allFams = axios.get('/api/familysetup')
         
-        allFams.then(res => {
-            const allFamNames = res.data.map(obj => obj.artworkFamily)
+        const allDocuments = axios.get('/api/artworkInfo')
+        
+        allDocuments.then(res => {
+            const allDocumentNames = Object.keys(res.data)
+            // const allFamNames = res.data.map(obj => obj.artworkFamily)
             
             let progressCount = 0
-            let updateLength = allFamNames.length
+            let updateLength = allDocumentNames.length
             console.log("allFams")
             console.log(res.data)
             console.log("allFamNames")
-            console.log(allFamNames)
+            console.log(allDocumentNames)
             console.log("updateLength")
             console.log(updateLength)
 
             res.data.forEach(artwork => {
                 let fileData = artwork
+                const fileName = artwork.fileName
+                const nameRoot = fileName.slice(0, fileName.indexOf("."))
+                const fileExtension = fileName.slice(fileName.indexOf("."), fileName.length)
     
-                    let displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
-                    displayTriggers.category = Object.keys(fileData.category)
-                    displayTriggers.subcategory = getSubcategories(fileData)
-                    displayTriggers.listitems = getListitems(fileData)
-                    displayTriggers.themes = fileData.themes
-                    displayTriggers.year = fileData.year
-                    displayTriggers.location = fileData.location
-                    fileData.displayTriggers = displayTriggers
+                    // let displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+                    // displayTriggers.category = Object.keys(fileData.category)
+                    // displayTriggers.subcategory = getSubcategories(fileData)
+                    // displayTriggers.listitems = getListitems(fileData)
+                    // displayTriggers.themes = fileData.themes
+                    // displayTriggers.year = fileData.year
+                    // displayTriggers.location = fileData.location
+                    // fileData.displayTriggers = displayTriggers
+
+                fileData.thumbnailPath = `/uploads/thumbnails/${nameRoot}-thumbnail${fileExtension}`
+                fileData.mobilePath = `/uploads/mobile/${nameRoot}-mob${fileExtension}`
+                fileData.desktopPath = `/uploads/desktop/${nameRoot}-desktop${fileExtension}`
     
                 console.log(fileData)
                 console.log("********************************************")
     
-                progressCount += 1
-                console.log(`${progressCount} / ${updateLength}`)
-                if(progressCount === updateLength){
-                    console.log('files updated')
-                }
+                // progressCount += 1
+                // console.log(`${progressCount} / ${updateLength}`)
+                // if(progressCount === updateLength){
+                //     console.log('files updated')
+                // }
     
-                axios.put(`/api/familysetup/update/${artwork}`, fileData)
+                axios.put(`/api/artworkInfo/update/${artwork.fileName}`, fileData)
                 .then(res => {
                     console.log(res)
                     progressCount += 1

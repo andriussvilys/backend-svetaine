@@ -107,7 +107,7 @@ export default class TagsMenu extends React.Component{
                             showContent={() => {return}}
                     />
         })
-        return <div className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>
+        return <div key={`tagsMenu-listItems-${subcategory}`} className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>
                     {/* <div className="shadow"></div> */}
                     {listItems}
                 </div>
@@ -152,7 +152,7 @@ export default class TagsMenu extends React.Component{
 
             // subContainer = [...subContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
         subCatBlocks = [...subCatBlocks, 
-            <Fragment>
+            <Fragment key={`subcategories-${obj.category}`}>
                 <div className="TagsMenu-subcategories" id={`${obj.category}-subcategories`}>
                     <div data-title="subcategories" className="button-wrapper subcategories">
                         {subContainer}
@@ -165,13 +165,13 @@ export default class TagsMenu extends React.Component{
     ]
         })
         subCatBlocks = [...subCatBlocks, 
-            <div className="TagsMenu-subcategories subcategories button-wrapper" id="themes-subcategories">
+            <div key={`TagsMenu-themes`} className="TagsMenu-subcategories subcategories button-wrapper" id="themes-subcategories">
                 <Themes
                     state={this.props.context.state}
                     context={this.props.context}
                 />
             </div>,
-            <div className="TagsMenu-subcategories" id="year/location-subcategories">
+            <div key={`TagsMenu-yearLocation`} className="TagsMenu-subcategories" id="year/location-subcategories">
                 <div data-title="subcategories" className="button-wrapper subcategories">
                     <Category 
                         clickable
@@ -209,7 +209,7 @@ export default class TagsMenu extends React.Component{
                         </div>
                     </div>
             </div>,
-            <div className="TagsMenu-subcategories" id="contact-subcategories">
+            <div key={`TagsMenu-contact`} className="TagsMenu-subcategories" id="contact-subcategories">
                 <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
                 <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
             </div>
