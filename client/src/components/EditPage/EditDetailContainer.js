@@ -25,6 +25,7 @@ export default class FileUpdate extends React.Component{
     }
 
     EditDetail = (file) => {
+        if(!file){return}
         return(
             // {
             //     fileName: file.fileName,

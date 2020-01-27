@@ -570,9 +570,15 @@ export class Provider extends React.Component{
             // const id = this.state.relatedArtwork[familyName].files[fileName]._id
             // console.log(id)
             return new Promise ((resolve, rej) => {
+                const file = this.state.artworkInfoData[fileName]
+                const paths = {
+                    "mobilePath": `file.mobilePath`,
+                    "thumbnailPath": `file.thumbnailPath`,
+                    "desktopPath": `file.desktopPath`
+                }
                 axios.delete(`/api/artworkInfo/delete/${fileName}`)
                     .then(res => {
-                        axios.delete(`/deleteImage/delete/${fileName}`)
+                        axios.delete(`/deleteImage/delete/${fileName}`, paths)
                         .then(res => {
                             console.log(`file deleted:`)
                             console.log(res)

@@ -1703,17 +1703,6 @@ label {
   overflow: visible;
 }
 
-.TagsMenu-checkbox::before {
-  content: "hello";
-  background-color: yellow;
-}
-
-input::before {
-  content: "hello";
-  background-color: yellow;
-  position: relative;
-}
-
 .styledCheckbox-container {
   display: block;
   position: relative;

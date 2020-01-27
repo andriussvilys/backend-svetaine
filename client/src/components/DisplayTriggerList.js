@@ -18,7 +18,7 @@ const DisplayTriggerList = (props) => {
             return file.displayTriggers ? file.displayTriggers[title].includes(item) : false
         }
         if(title === "themes"){
-            if(file.displayTriggers[title])
+            if(file.displayTriggers && file.displayTriggers[title])
             return file.displayTriggers ? file.displayTriggers[title].includes(item) : false
         }
     }
