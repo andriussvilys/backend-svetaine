@@ -14,6 +14,18 @@ let ArtworkInfoSchema = new Schema({
         type: String,
         required: true
     },
+    thumbnailPath: {
+        type: String,
+        required: true,
+    },
+    mobilePath:{
+        type: String,
+        required: true
+    },
+    desktopPath: {
+        type: String,
+        required: true
+    },
     fileName: {
         type: String,
         required: true,

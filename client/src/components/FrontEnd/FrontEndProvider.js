@@ -1301,7 +1301,10 @@ export class Provider extends React.Component{
                     newState.showModal = false
                     newState.mobile = this.toggleMobile()
                     window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-                    this.setState(newState)
+                    this.setState(newState, () => {
+                      console.log("STATE")
+                      console.log(this.state.yearLocation)
+                    })
                 })
                 .catch(err => {
                      

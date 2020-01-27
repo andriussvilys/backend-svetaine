@@ -1469,7 +1469,6 @@ label {
 
 .TagsMenu-Accordion-label {
   border: 1px solid black;
-  padding: 3px;
   margin: 3px;
   -webkit-box-flex: 1;
       -ms-flex: 1 1 48%;
@@ -1698,6 +1697,102 @@ label {
   white-space: nowrap;
   -ms-flex-wrap: nowrap;
       flex-wrap: nowrap;
+}
+
+.TagsMenu-checkbox {
+  position: absolute;
+  right: 30px;
+  overflow: visible;
+}
+
+.TagsMenu-checkbox::before {
+  content: "hello";
+  background-color: yellow;
+}
+
+input::before {
+  content: "hello";
+  background-color: yellow;
+  position: relative;
+}
+
+.styledCheckbox-container {
+  display: block;
+  position: relative;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  overflow: hidden;
+  margin-left: 3px !important;
+}
+
+.styledCheckbox-container_large {
+  padding-left: 27px;
+}
+
+.styledCheckbox-container_small {
+  padding-left: 18px;
+}
+
+.styledCheckbox-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  right: 0;
+}
+
+.styleCheckbox-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-left: 1px solid black;
+  background-color: white;
+}
+
+.styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
+  background-color: #b5b5b5;
+}
+
+.styleCheckbox-checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.styledCheckbox-container input:checked ~ .styleCheckbox-checkmark:after {
+  display: block;
+}
+
+.styledCheckbox-container_large .styleCheckbox-checkmark:after {
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 15px;
+  width: 15px;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.styledCheckbox-container_small .styleCheckbox-checkmark:after {
+  left: 4px;
+  top: 3px;
+  width: 5px;
+  height: 9px;
+  width: 9px;
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
 }
 
 @media only screen and (max-width: 720px) {

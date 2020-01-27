@@ -1,5 +1,5 @@
 import React from 'react';
-import { cpus } from 'os';
+import Checkbox from './Checkbox';
 
 const Category = (props) => {
 
@@ -21,14 +21,20 @@ const Category = (props) => {
                 {spreadLetters(props.category, props.level)}
             </div>
             {!props.button ? 
-                <input 
-                id={`${props.level}-${props.category}`}
-                className="TagsMenu-checkbox"
-                type="checkbox" 
-                // onChange={() => props.context.filterByCategory(props.category)} 
-                // checked={props.context.categoryChecked(props.category)}
-                onChange={props.onChange} 
-                checked={props.isChecked}
+                // <input 
+                // id={`${props.level}-${props.category}`}
+                // className="TagsMenu-checkbox"
+                // type="checkbox" 
+                // // onChange={() => props.context.filterByCategory(props.category)} 
+                // // checked={props.context.categoryChecked(props.category)}
+                // onChange={props.onChange} 
+                // checked={props.isChecked}
+                // />
+                <Checkbox
+                    id={`${props.level}-${props.category}`}
+                    onChange={props.onChange} 
+                    isChecked={props.isChecked}
+                    className={props.level === "category" ? "styledCheckbox-container_large" : "styledCheckbox-container_small"}
                 />
                 : null
             }

@@ -26,8 +26,6 @@ export default class FilePreview extends React.Component{
             else{
                 source = file.preview
             }
-            console.log("source")
-            console.log(source)
             return source
         }
 

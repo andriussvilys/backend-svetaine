@@ -62,7 +62,6 @@ router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
 router.put("/update/:fileName", (req, res, next) => {
     console.log('udate file runs')
     console.log(req.params.fileName)
-    console.log(req.body.familyDisplayIndex)
 
     const obj = {}
     Object.keys(req.body).forEach(key => {
