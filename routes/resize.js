@@ -70,7 +70,8 @@ router.post("/:fileName", (req, res, next) => {
 
         })
         .catch(err => {
-            res.json(`ERROR: ${err}`)
+            console.log(err)
+            res.send(`ERROR: ${err}`)
         })
 })
 

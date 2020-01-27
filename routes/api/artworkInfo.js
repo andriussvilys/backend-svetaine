@@ -48,8 +48,9 @@ router.get('/fileName/:fileName', (req, res) => {
 //@description add a new artwork
 //@access Public
 router.post('/create', 
-// upload.single('artworkImage'), 
+upload.single('artworkImage'), 
 (req, res, rej) => {
+    console.log(req.body.fileName)
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
     .catch(err => console.error(err))

@@ -22,18 +22,18 @@ const ArtworkInfo = (props) => {
                     id={`seeAlso-${fileName}`}
                 />
             })
-            seeAlsos =  <div className="SeeAlso-related">
+            seeAlsos =  <div key={"SeeAlso-related"} className="SeeAlso-related">
                             <div className="subtitle subtitle_seeAlso">related:</div>
                             <div className="SeeAlso-related_images">
                                 {seeAlsos}
                             </div>
                         </div>
         }
-        let previous = <div className="SeeAlso-previous">
+        let previous = <div key={"SeeAlso-previous"} className="SeeAlso-previous">
                             <div className="subtitle subtitle_seeAlso"></div>
                         </div>;
         if(props.file.previous.fileName !== props.file.foreground.fileName){
-        previous = <div className="SeeAlso-previous">
+        previous = <div key={"SeeAlso-previous"} className="SeeAlso-previous">
                             <div className="subtitle subtitle_seeAlso">previous:</div>
                             <FilePreview 
                                 loadbydefault={"true"}

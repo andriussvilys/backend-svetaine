@@ -87,12 +87,19 @@ export class Provider extends React.Component{
     }
 
     //creates an array of all files in the server uploads folder
+    /**
+     * @returns 
+     */
     this.readImageDir = () => {
-        axios.get('/fetchImages')
-        .then(res => 
-            {return res}
-            // this.setState({serverFileDir: res.data})
-            )
+        return new Promise ((resolve, reject) => {
+            axios.get('/fetchImages')
+            .then(res => {
+                console.log(res)
+                resolve(res)
+                // this.setState({serverFileDir: res.data})
+            })
+            .catch(err => {console.log("readImageDir failed"); console.log(err); reject(err)})
+        })
     }
 
     //this takes care of CATEGORIES used for navigation
@@ -1114,6 +1121,7 @@ export class Provider extends React.Component{
         //THIS UPLOADS FILE TO SERVER
 
         uploadFile: (fileName) => {
+            return new Promise((resolve, reject) => {
                 const fileData = this.state.fileData.files
     
                 const fd = new FormData();
@@ -1121,11 +1129,17 @@ export class Provider extends React.Component{
     
                 axios.post('/api/artworkInfo/imageUpload', fd)
                     .then(res => {
+                        console.log("og image uploaded")
                         axios.post(`/resize/${fileName}`)
-                        .then(res => { this.readImageDir()
+                        .then(res => { 
+                            this.readImageDir()
+                                .then(res => {
+                                    return resolve("uploads folder successfully read")
+                                })
                         })
-                        .catch(err => alert(err))
+                        .catch(err => reject(err))
                     })
+            })
 
             //     if(this.state.serverFileDir.includes(fileName)){
             //         resolve()
@@ -1332,12 +1346,20 @@ export class Provider extends React.Component{
                         }
             
                         else{
+                            
                             fileData = this.state.fileData.files[file.fileName]
+
+                            const newName = fileData.fileName.slice(0, fileData.fileName.indexOf("."))
+                            const fileExtension = fileData.fileName.slice(fileData.fileName.indexOf("."), fileData.fileName.length)
+                            
                 
                             let fileDataObject = {                                                 
                             category: fileData.category ? fileData.category : null,
                             displayTriggers: fileData.displayTriggers,
                             filePath: `/uploads/${fileData.fileName}`,
+                            thumbnailPath: `/uploads/thumbnails/${newName}-thumbnail${fileExtension}`,
+                            mobilePath: `/uploads/mobile/${newName}-mob${fileExtension}`,
+                            desktopPath: `/uploads/desktop/${newName}-desktop${fileExtension}`,
                             fileName: fileData.fileName,
                             fileType: fileData.fileType,
                 
@@ -1350,7 +1372,7 @@ export class Provider extends React.Component{
                             location: fileData.location ?  fileData.location : null,
                             year: fileData.year ? fileData.year : null,
                             naturalSize, 
-                            displayMain: fileData.displayMain ? fileData.displayMain : null 
+                            displayMain: fileData.displayMain ? fileData.displayMain : null
                             }
                 
                             fileDataObject.familyDisplayIndex = familyIndex
@@ -1363,18 +1385,23 @@ export class Provider extends React.Component{
                                     console.log('new record craeted')
                                     console.log(res)
                                     this.fileDataMethods.uploadFile(file.fileName)
-                                        let newState = {...this.state}
-                                        this.familySetupMethods.getArtworkInfo()
-                                            .then(res => {
-                                                console.log("getArtworkInfo")
-                                                newState.artworkInfoData = res
-                                                newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
-                                                this.setState(newState, () => {return resolve(`new file registered in "${file.artworkFamily}" family`)})
+                                        .then(res => {
+                                            console.log("file uploaded")
+                                            console.log(res)
+                                            return resolve("file uploaded")
+                                        })
+                                        // let newState = {...this.state}
+                                        // this.familySetupMethods.getArtworkInfo()
+                                        //     .then(res => {
+                                        //         console.log("getArtworkInfo")
+                                        //         newState.artworkInfoData = res
+                                        //         newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
+                                        //         this.setState(newState, () => {return resolve(`new file registered in "${file.artworkFamily}" family`)})
                                                 
-                                            })
-                                            .catch(err=>console.log(err))
+                                        //     })
+                                        //     .catch(err=>console.log(err))
                                 })
-                                .catch(err => console.log(err))
+                                .catch(err => {console.log(err); return rej('upload failed')})
                         }
             })
 
@@ -1594,13 +1621,15 @@ export class Provider extends React.Component{
                     axios.get('/fetchImages')
                         .then(res => {
                             serverFileNames = res.data
+
             
                             //get all artwork records from database
                             axios.get('/api/artworkInfo')
                                 .then(res => {
                                     let databaseFiles = {}
                                     let usedNames = []
-                                    
+                                    console.log()
+                                    console.log(res.data)
                                     //check that a record has a file in the server
                                     serverFileNames.forEach(fileName => {
                                         res.data.forEach(obj => {
@@ -1618,6 +1647,7 @@ export class Provider extends React.Component{
                                     resolve(databaseFiles)
                                 })
                         })   
+                        .catch(err => rej(err))
                 })
         },
         resetRenderFiles: () => {

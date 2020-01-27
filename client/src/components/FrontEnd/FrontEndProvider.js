@@ -699,7 +699,9 @@ export class Provider extends React.Component{
       else { return 1}
     }
     this.closeEnlarge = (e, clearAll) => {
-      e.stopPropagation()
+      if(e){
+        e.stopPropagation()
+      }
         if(document.getElementsByClassName("info-up").length > 0){
           this.showInfo()
           if(!clearAll)
@@ -722,7 +724,9 @@ export class Provider extends React.Component{
           }
           //if dekstop
           else{
-            document.getElementById('imageSelect').style.width = `${imagesWidth}px`
+            // document.getElementById('imageSelect').style.width = `${imagesWidth}px`
+            document.getElementById('imageSelect').style.width = `100%`
+
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-scroll-left")
             }, 200);
@@ -1081,12 +1085,29 @@ export class Provider extends React.Component{
       }
     }
     this.toggleMobile = () => {
+      // if(this.state.enlarge && this.state.enlarge.open){
+      //   console.log("force animate enlarge")
+      //   this.animateEnlarge(this.state.enlarge.background)
+      // }
+      let mobile = null
       if(document.documentElement.clientWidth < 721){
-        return true
+        mobile = true
       }
       else{
-        return false
+        mobile = false
       }
+      if(mobile !== this.state.mobile){
+        console.log("close enlarge")
+        this.closeEnlarge()
+        if(mobile){
+          Array.from(document.getElementsByClassName("scroll-down")).forEach(item => {
+            item.classList.remove("scroll-down")
+          })
+        }
+        // if(this.state.enlarge && this.state.enlarge.open)
+        // this.animateEnlarge(this.state.enlarge.background)
+      }
+      return mobile
     }
     this.onTouchStart= (e) => {
       const touches = e.touches
@@ -1302,8 +1323,11 @@ export class Provider extends React.Component{
                     newState.mobile = this.toggleMobile()
                     window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
                     this.setState(newState, () => {
-                      console.log("STATE")
-                      console.log(this.state.yearLocation)
+                      console.log("provider rerender")
+                      if(this.state.enlarge && this.state.enlarge.open){
+                        console.log("force animate enlarge")
+                        this.animateEnlarge(this.state.enlarge.background)
+                      }
                     })
                 })
                 .catch(err => {

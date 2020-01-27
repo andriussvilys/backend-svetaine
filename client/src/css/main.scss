@@ -15,7 +15,7 @@ ul{
 }
 .container{
     position: relative;
-    width: 100vw !important;
+    // width: 100vw !important;
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -180,7 +180,6 @@ textarea{
     width: auto !important;
 }
 .FamilyList--detail{
-    width: 100%;
     display: flex;
     flex-wrap: wrap;
     border: 1px solid;
@@ -402,7 +401,7 @@ $border-main-color: #bbb;
     margin-left: 8px;
 }
 .tags-li{
-    flex: 1 1 45%;
+    flex: 1 1 50%;
     height: auto;
 }
 .tagsMenu-list-tags{
@@ -1321,11 +1320,11 @@ input::before{
     height: 100%;
     width: 100%;
     border-left: 1px solid black;
-    background-color: white;
+    background-color: rgba(0,0,0,.1);
     // background-color: #eee;
 }
 .styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
-    background-color: #b5b5b5;
+    background-color: rgba(0,0,0,.18);
   }
   .styleCheckbox-checkmark:after {
     content: "";
@@ -1361,6 +1360,10 @@ input::before{
   }
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
+    .FamilyList--detail__image{
+        width: 100%;
+        max-width: 400px;
+    }
     body{
         overscroll-behavior: contain;
         overflow: hidden;
@@ -1593,7 +1596,7 @@ input::before{
         display: none;
     }
     .ImagesPreview--imageContainer{
-        width: 50%;
+        // width: 50%;
         min-height: 90px;
         flex: 1 1 50%;
         // border: 1px solid red;

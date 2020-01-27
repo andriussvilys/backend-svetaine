@@ -12,9 +12,9 @@ const Tags = (props) => {
                 "onClick": props.context.filterByTheme
                 }
             })
-            DOMthemes = themes.map(tag => {
+            DOMthemes = themes.map((tag, index) => {
                 return <div 
-                key={`tag-${tag}`}
+                key={`tag-${tag}${index}`}
                 className="Tags-item_container"
                 onClick={(e) => {e.stopPropagation(); 
                     document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
@@ -35,16 +35,16 @@ const Tags = (props) => {
         }
 
         let categories = Object.keys(file.category) 
-        categories = categories.map(category => {
+        categories = categories.map((category) => {
             return {
                 "type": "category", 
                 "title": category, 
                 "onClick": props.context.filterByCategory
             }
         })
-        const DOMcategories = categories.map(tag => {
+        const DOMcategories = categories.map((tag, index) => {
             return <div 
-            key={`category-${tag.title}`}
+            key={`category-${tag.title}${index}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
                 document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")

@@ -18,7 +18,7 @@ const Admin = (props) => {
                 <div className="data-container overflow-yes">
                     <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                     <div style={{marginLeft: "20px", fontWeight: "bold"}}>ADMIN</div>
-                        <ul style={{display: "flex", listStyle:"none", margin:"0"}}>
+                        <ul style={{display: "flex", listStyle:"none", margin:"0", flexWrap: "wrap", justifyContent: "flex-end"}}>
                             <li>
                                 <Link to="/admin/create">
                                     <Button>
