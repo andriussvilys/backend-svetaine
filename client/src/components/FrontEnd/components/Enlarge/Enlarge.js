@@ -57,18 +57,9 @@ export default class Enlarge extends React.Component{
         )
     }
     createPreview = (source, imageName, fgId) => {
-        return <img src={source.desktopPath} className={`enlarge-preview ${imageName}`} />
-        // return <img src={source.filePath} className={`enlarge-preview ${imageName}`} />
-        
-        // return <FilePreview 
-        // id={fgId}
-        // file={source} 
-        // containerClassName="enlarge-container" 
-        // className={`enlarge-preview ${imageName}`}
-        // previewName="foreground-preview"
-        // onClick={this.props.closeEnlarge}
-        // noWrapper={true}
-        // />
+        let imgSrc = `/uploads/imagemin/${source.fileName}`
+        return <img src={imgSrc} className={`enlarge-preview ${imageName}`} />
+        // return <img src={source.desktopPath} className={`enlarge-preview ${imageName}`} />
     }
     
     render(){

@@ -26,6 +26,7 @@ export default class FilePreview extends React.Component{
             else{
                 source = file.preview
             }
+            source = `/uploads/imagemin/${file.fileName}`
             return source
         }
 

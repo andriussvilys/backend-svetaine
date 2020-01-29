@@ -12,14 +12,16 @@ router.post(`/`, (req, res, next) => {
         const files = await imagemin([`./client/public/uploads/*.jpg`], {
             destination: './client/public/uploads/imagemin',
             plugins: [
-                imageminJpegtran({progressive: true, quality: 0.8}),
+                imageminMozjpeg({progressive: true, quality: 0.8}),
                 imageminPngquant({
-                    quality: [0.6, 0.8]
+                    quality: [0.6, 0.8],
+                    strip: true
                 })
             ]
         });
         
         console.log(files);
+        
         //=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
     })();
 })
