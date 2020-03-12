@@ -32,7 +32,12 @@ const Login = (props) => {
                                     .then(res => {
                                         console.log(res.data)
                                         if(res.data.password && res.data.password === password){
-                                            auth.login( () => props.history.push('/admin/create'))
+                                            if(username === "guest"){
+                                                auth.login( () => props.history.push('/admin/create'), {guest: true})
+                                            }
+                                            else{
+                                                auth.login( () => props.history.push('/admin/create'))
+                                            }
                                         }
                                         else{
                                             if(!res.data.username){
@@ -42,7 +47,6 @@ const Login = (props) => {
                                             passwordBgColor = wrongInput
                                             document.getElementById("uname").value = ""
                                             document.getElementById("psw").value = ""
-                                            // props.history.push('/admin/login')
                                         }
                                     })
                             }
@@ -50,18 +54,6 @@ const Login = (props) => {
                     >
                         Log In
                     </Button>
-
-                    {/* <Button
-                        onClick={
-                            () => {
-                                auth.login( () => {
-                                    props.history.push('/admin')
-                                })
-                            }
-                        }
-                    >
-                        Force Login
-                    </Button> */}
                 </form>
             </div>
         )

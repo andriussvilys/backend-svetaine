@@ -85,10 +85,16 @@ export class Provider extends React.Component{
 
             let serverFileNames = null;
             
-            //get an array of all file names in the server
+            //get an array of all file names in the server from thumbnail folder
             axios.get('/fetchImages')
                 .then(res => {
                     serverFileNames = res.data
+                    serverFileNames = serverFileNames.map(name => {
+                      let newName = name.replace("-thumbnail", "")
+                      return newName
+                    })
+                    console.log("fetchImages")
+                    console.log(serverFileNames)
     
                     //get all artwork records from database
                     axios.get('/api/artworkInfo')
@@ -109,7 +115,8 @@ export class Provider extends React.Component{
 
                             //add an array of all file object
                             // renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
-
+                            console.log("databaseFiles")
+                            console.log(databaseFiles)
                             resolve(databaseFiles)
                         })
                 })   
@@ -1215,6 +1222,8 @@ export class Provider extends React.Component{
             let ArtworkInfo = new Promise ((resolve, rej) => {
                 this.getArtworkInfo()
                     .then(res => {
+                      console.log("artworkinfo res")
+                      console.log(res)
                         newState.artworkInfoData = res
                         let onDisplay = {}
                         Object.keys(res).forEach(fileName => {
@@ -1300,6 +1309,8 @@ export class Provider extends React.Component{
                         newState.artworkOnDisplay = artworkOnDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
+                        console.log("artworkInfo data")
+                        console.log(this.state)
                         resolve()
                     })
             })
@@ -1324,6 +1335,7 @@ export class Provider extends React.Component{
                     window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
                     this.setState(newState, () => {
                       console.log("provider rerender")
+                      console.log(this.state)
                       if(this.state.enlarge && this.state.enlarge.open){
                         console.log("force animate enlarge")
                         this.animateEnlarge(this.state.enlarge.background)
@@ -1331,7 +1343,8 @@ export class Provider extends React.Component{
                     })
                 })
                 .catch(err => {
-                     
+                     console.log("ERROR")
+                     console.log(err)
                 })
         }
 

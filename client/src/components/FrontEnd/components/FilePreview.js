@@ -8,8 +8,6 @@ export default class FilePreview extends React.Component{
 
     fileContainer = (fileType, file) => {
 
-        const imgRef = React.createRef()
-
         //files in server dont have 'preview' property, and files in state dont have filePath
         const previewSource = () => {
             let source = null
@@ -26,7 +24,6 @@ export default class FilePreview extends React.Component{
             else{
                 source = file.preview
             }
-            source = `/uploads/imagemin/${file.fileName}`
             return source
         }
 

@@ -57,7 +57,13 @@ export default class Enlarge extends React.Component{
         )
     }
     createPreview = (source, imageName, fgId) => {
-        let imgSrc = `/uploads/imagemin/${source.fileName}`
+        let imgSrc = null
+        if(this.props.mobile){
+            imgSrc = source.mobilePath
+        }
+        else{
+            imgSrc = source.desktopPath
+        }
         return <img src={imgSrc} className={`enlarge-preview ${imageName}`} />
         // return <img src={source.desktopPath} className={`enlarge-preview ${imageName}`} />
     }

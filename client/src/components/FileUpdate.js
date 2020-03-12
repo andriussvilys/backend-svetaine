@@ -20,6 +20,14 @@ export default class FileUpdate extends React.Component{
             axios.get('/fetchImages')
                 .then(res => {
                     serverFileNames = res.data
+                    serverFileNames = res.data
+                    serverFileNames = serverFileNames.map(name => {
+                      let newName = name.replace("-thumbnail", "")
+                      return newName
+                    })
+
+                    console.log("FILES NAMES IN FILE UPDATE")
+                    console.log(serverFileNames)
 
                     axios.get('/api/artworkInfo')
                         .then(res => {

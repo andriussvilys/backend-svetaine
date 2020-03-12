@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Context } from './Provider';
 import DropDownList from './DropDownList'
 import NavigationInfo from './NavigationInfo'
@@ -8,9 +8,61 @@ import DisplayTriggers from './DisplayTriggers'
 import "bootstrap/dist/css/bootstrap.min.css";
 import '../css/components/jsonPreview.css';
 import '../css/components/imageInfo.css';
+import auth from './Auth'
 
 export default class FamilyInfo extends Component {
     static contextType = Context;
+
+    guest = () => {
+        if(!auth.guest){
+            return <Fragment>
+                                          <div className="imageInfo--box">
+                                <span>record new family setup:</span>
+                                <Button
+                                 variant="success" 
+                                 size="sm"
+                                 disabled={
+                                    document.getElementById("add-artworkFamilyList-item")
+                                    ? this.context.state.artworkFamilyList.includes(document.getElementById("add-artworkFamilyList-item").value) 
+                                    : false
+                                    }
+                                 onClick={
+                                    () => this.context.familySetupMethods.createFamilySetup()
+                                 }
+                                >
+                                    SEND
+                                </Button>
+                            </div>      
+                            <div className="imageInfo--box">
+                                <span>update family setup:</span>
+                                <Button
+                                 variant="primary" 
+                                 size="sm"
+                                 onClick={
+                                    () => this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
+                                 }
+                                >
+                                    SEND
+                                </Button>
+                            </div>  
+                            <div className="imageInfo--box">
+                                <span>update files in the family:</span>
+                                <Button
+                                 variant="primary" 
+                                 size="sm"
+                                 onClick={
+                                    () => this.context.fileDataMethods.updateArtworkByFamily(this.context.state.familySetupData.artworkFamily)
+                                 }
+                                >
+                                    SEND
+                                </Button>
+                            </div>  
+            </Fragment>
+        }
+        else{
+            return null
+        }
+    }
 
     render(){
         return(
@@ -115,47 +167,7 @@ export default class FamilyInfo extends Component {
                                 <NavigationInfo />
                             </div>
 
-                            <div className="imageInfo--box">
-                                <span>record new family setup:</span>
-                                <Button
-                                 variant="success" 
-                                 size="sm"
-                                 disabled={
-                                    document.getElementById("add-artworkFamilyList-item")
-                                    ? this.context.state.artworkFamilyList.includes(document.getElementById("add-artworkFamilyList-item").value) 
-                                    : false
-                                    }
-                                 onClick={
-                                    () => this.context.familySetupMethods.createFamilySetup()
-                                 }
-                                >
-                                    SEND
-                                </Button>
-                            </div>      
-                            <div className="imageInfo--box">
-                                <span>update family setup:</span>
-                                <Button
-                                 variant="primary" 
-                                 size="sm"
-                                 onClick={
-                                    () => this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
-                                 }
-                                >
-                                    SEND
-                                </Button>
-                            </div>  
-                            <div className="imageInfo--box">
-                                <span>update files in the family:</span>
-                                <Button
-                                 variant="primary" 
-                                 size="sm"
-                                 onClick={
-                                    () => this.context.fileDataMethods.updateArtworkByFamily(this.context.state.familySetupData.artworkFamily)
-                                 }
-                                >
-                                    SEND
-                                </Button>
-                            </div>  
+                            { this.guest() }
 
 
                         </div>

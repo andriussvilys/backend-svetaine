@@ -11,11 +11,14 @@ import auth from './Auth'
 
 const Admin = (props) => {
     console.log('ADMIN load')
+    console.log("auth")
+    console.log(auth)
     return(    
         <BrowserRouter>
             <Provider>
                 <div className="container">
                 <div className="data-container overflow-yes">
+
                     <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                     <div style={{marginLeft: "20px", fontWeight: "bold"}}>ADMIN</div>
                         <ul style={{display: "flex", listStyle:"none", margin:"0", flexWrap: "wrap", justifyContent: "flex-end"}}>
@@ -33,13 +36,17 @@ const Admin = (props) => {
                                     </Button>
                                 </Link>
                             </li>
-                            <li>
-                                <Link to="/admin/delete">
-                                    <Button variant="danger">
-                                        Delete 
-                                    </Button>
-                                </Link>
-                            </li>
+                            {() => {
+                                if(!auth.guest){
+                                    return <li>
+                                        <Link to="/admin/delete">
+                                            <Button variant="danger">
+                                                Delete 
+                                            </Button>
+                                        </Link>
+                                    </li>
+                                }
+                            }}
                             <li>
                                 <Button 
                                     variant="success"
@@ -64,12 +71,13 @@ const Admin = (props) => {
                             </li>
                         </ul>
                     </nav>
-                    <PrivateRoute path="/admin/create" component={ImageInfo} />
-                    <PrivateRoute path="/admin/edit" component={Edit} />
-                    <PrivateRoute path="/admin/delete" component={Delete} />
+
+                    <PrivateRoute path="/admin/create" component={ImageInfo} guest={auth.guest} />
+                    <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
+                    <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
                 </div>
                 </div>
-                </Provider>
+            </Provider>
         </BrowserRouter>
       )
 }

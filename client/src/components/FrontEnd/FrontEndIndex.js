@@ -89,6 +89,7 @@ export default class FrontEndIndex extends React.Component{
                                     closeEnlarge={this.context.closeEnlarge}
                                     hideArtworkInfo={this.context.hideArtworkInfo}
                                     context={this.context}
+                                    mobile={this.context.state.mobile}
                                 />
                                     {/* <Fragment>
                                         {this.context.state.enlarge ? 
