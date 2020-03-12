@@ -19,6 +19,8 @@ export default class FileUpdate extends React.Component{
 
             axios.get('/fetchImages')
                 .then(res => {
+                    console.log("fetch Images in fileUpdate")
+                    console.log(res)
                     serverFileNames = res.data
                     serverFileNames = res.data
                     serverFileNames = serverFileNames.map(name => {

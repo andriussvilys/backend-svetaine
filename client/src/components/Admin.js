@@ -10,9 +10,6 @@ import {PrivateRoute} from './PrivateRoute'
 import auth from './Auth'
 
 const Admin = (props) => {
-    console.log('ADMIN load')
-    console.log("auth")
-    console.log(auth)
     return(    
         <BrowserRouter>
             <Provider>
@@ -20,7 +17,7 @@ const Admin = (props) => {
                 <div className="data-container overflow-yes">
 
                     <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                    <div style={{marginLeft: "20px", fontWeight: "bold"}}>ADMIN</div>
+                    <div style={{marginLeft: "20px", fontWeight: "bold"}}>{!auth.guest ? "ADMIN" : "Guest"}</div>
                         <ul style={{display: "flex", listStyle:"none", margin:"0", flexWrap: "wrap", justifyContent: "flex-end"}}>
                             <li>
                                 <Link to="/admin/create">
@@ -36,17 +33,15 @@ const Admin = (props) => {
                                     </Button>
                                 </Link>
                             </li>
-                            {() => {
-                                if(!auth.guest){
-                                    return <li>
+                            {!auth.guest ? <li>
                                         <Link to="/admin/delete">
                                             <Button variant="danger">
                                                 Delete 
                                             </Button>
                                         </Link>
-                                    </li>
-                                }
-                            }}
+                                    </li> :
+                                    null
+                            }
                             <li>
                                 <Button 
                                     variant="success"
@@ -61,7 +56,6 @@ const Admin = (props) => {
                             <Button
                                 onClick={() => {
                                     auth.logout( () => {
-                                        console.log(auth.authenticated)
                                         props.history.push('/')
                                     })
                                 }}

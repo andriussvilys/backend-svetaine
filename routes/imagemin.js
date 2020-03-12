@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const Jimp = require('jimp')
 
 const imagemin = require('imagemin');
 const imageminJpegtran = require('imagemin-jpegtran');
@@ -21,8 +20,6 @@ router.post(`/:directory`, (req, res, next) => {
         });
 
         return res.send(`operation complete in ${req.params.directory}`)
-        
-        //=> [{data: <Buffer 89 50 4e …>, destinationPath: 'build/images/foo.jpg'}, …]
     })();
 })
 

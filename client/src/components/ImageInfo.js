@@ -29,9 +29,8 @@ export default class ImageInfo extends Component{
             return(
             <div className="imageInfo">
               <h3>image info:</h3>
-              {() => {
-                if(!auth.guest){
-                  return <Fragment>
+              {auth.guest ?
+                      <Fragment>
                         <UpdateAllArtworkInfo 
                           context={this.context}
                         />
@@ -71,9 +70,9 @@ export default class ImageInfo extends Component{
                         >
                             Resize all images
                         </Button>
-                        </Fragment>
-                }
-              }}
+                      </Fragment> :
+                      <Fragment/>
+                      }
 
               <div className="imageInfo--section">
                   <h5>file upload:</h5>

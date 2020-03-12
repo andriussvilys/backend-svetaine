@@ -123,8 +123,6 @@ export default class FileUpdate extends React.Component{
     }
 
     render(){
-        console.log('edit detail container')
-        console.log(this.state)
         return(
                 <div 
                 id={'familyContainer'}

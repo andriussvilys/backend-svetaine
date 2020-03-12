@@ -1627,6 +1627,9 @@ export class Provider extends React.Component{
                     axios.get('/fetchImages')
                         .then(res => {
                             serverFileNames = res.data
+                            serverFileNames = serverFileNames.map(name => {
+                                return name.replace("-thumbnail", "")
+                            })
 
             
                             //get all artwork records from database
@@ -2047,8 +2050,10 @@ export class Provider extends React.Component{
             })
                 
             let ArtworkInfo = new Promise((resolve, rej) => {
+                console.log("artwork info gather runs")
                 this.familySetupMethods.getArtworkInfo()
                     .then(res => {
+                        console.log(res)
                         newState.artworkInfoData = res
                         newState.artworkOnDisplay = res
                         resolve()
