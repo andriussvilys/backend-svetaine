@@ -1,6 +1,5 @@
 import React from 'react';
-import '../css/main.css';
-// import Accordion from 'react-bootstrap/Accordion';
+// import '../css/main.css';
 import Accordion from './Accordion'
 import AddNew from './AddNew';
 

@@ -42,15 +42,17 @@ export class Provider extends React.Component{
         this.setState({ fileName: nameWithFileType, filePath: `/uploads/${nameWithFileType}` })
     }
 
-    this.onChange = (e, stateTarget) => {
-        let newValue = {
-            ...this.state,
-            familySetupData: {
-                ...this.state.familySetupData,
-                [stateTarget]: e.target.value
-            }
+    this.onChange = (e, key, fileName) => {
+        let target = null
+        let newState = {...this.state}
+        if(fileName){
+            target = newState.fileData.files[fileName]
         }
-        this.setState(newValue)
+        else{
+            target = newState.familySetupData
+        }
+        target[key] = e.target.value
+        this.setState(newState)
     }
 
     //adds new family name/theme
@@ -776,19 +778,27 @@ export class Provider extends React.Component{
             console.log(nestTypeResult)
 
             let newState = {...this.state}
+            let target = null
             let nest = null
             if(!familySetup){
-                console.log("familySetup")
-                console.log(`!familySetup ${!familySetup}`)
-                nest = newState.fileData.files[fileName].displayTriggers
+                target = newState.fileData.files[fileName]
             }
             else{
-                nest = newState.familySetupData.displayTriggers
+                target = newState.familySetupData
             }
-
+            if(!target.displayTriggers){
+                target.displayTriggers = {
+                    category: [],
+                    subcategory: [],
+                    listitems: [],
+                    themes: [],
+                    year: "",
+                    location: ""
+                }
+            }
+            nest = target.displayTriggers
             if(nestTypeResult === "themes"){
                 let newList = []
-                console.log("array runs")
                 if(!nest[string]){
                     nest[string] = []
                 }
@@ -830,9 +840,6 @@ export class Provider extends React.Component{
                                 }
                             }
                         }
-
-                        console.log("newState")
-                        console.log(newState)
                             
                         this.setState(newState, () => {
                             if(cb){
@@ -845,7 +852,6 @@ export class Provider extends React.Component{
                     }
             //if category, subcategory or listitems
             else if(string !== "year" && string !== "location"){
-                console.log("category runs")
                 if(!nest[string]){
                     nest[string] = []
                 }
@@ -1742,6 +1748,7 @@ export class Provider extends React.Component{
         },
         getFamilySetup: (value, string, fileName) => {
 
+            console.log("get family setup")
             axios.get(`/api/familySetup/${value}`)
             .then( res => {
     
