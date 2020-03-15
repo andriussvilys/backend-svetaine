@@ -7,6 +7,7 @@ import Accordion from './Accordion';
 import FamilyInfo from './FamilyInfo';
 import ChangeIndex from './DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
 import BootstrapModal from './BootstrapModal';
+import Filters from './Admin/Filters/Filters';
 
 export default class Edit extends Component{
     static contextType = Context;
@@ -59,7 +60,7 @@ export default class Edit extends Component{
                                              context={this.context}
                                         >
                                         </FamilyEditor> */}
-                                        <FamilyInfo>
+                                        {/* <FamilyInfo>
                                             <Accordion
                                                 title="Change display indexes"
                                             >
@@ -69,7 +70,10 @@ export default class Edit extends Component{
                                                     artworkFamily={this.context.state.familySetupData.artworkFamily}
                                                 />
                                             </Accordion>
-                                        </FamilyInfo>
+                                        </FamilyInfo> */}
+                                        <Filters 
+                                            context={this.context}
+                                        />
                                     </Route>
                                     <Route 
                                         path="/admin/edit/:fileName"

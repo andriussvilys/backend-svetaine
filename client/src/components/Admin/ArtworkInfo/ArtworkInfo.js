@@ -9,7 +9,7 @@ const ArtworkInfo = (props) => {
                     <p className="subtitle">(different from family name):</p>
                     </div>
                     <input 
-                    value={props.file.artworkTitle}
+                    value={props.file.artworkTitle || ""}
                     type="text" 
                     onChange={(e) => props.onChange(e, 'artworkTitle', props.file.fileName)} 
                     />

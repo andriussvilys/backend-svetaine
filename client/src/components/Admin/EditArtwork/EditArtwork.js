@@ -6,6 +6,8 @@ import Accordion from '../Accordion'
 import BootstrapModal from '../../BootstrapModal'
 import { Button } from 'react-bootstrap' 
 import ArrangeFamilyIndexes from '../ArrangeIndexes/ArrangeFamilyIndexes'
+import SeeAlsoContainer from '../SeeAlso/SeeAlsoContainer'
+import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
 
 const EditArtwork = (props) => {
     let showModal = false
@@ -72,6 +74,14 @@ const EditArtwork = (props) => {
 
                 {/* ARTWORK DATA */}
                 <Accordion
+                    title={"Artwork Family"}
+                >
+                    <SelectFamily 
+                        context={props.context}
+                        fileName={props.file.fileName}
+                    />
+                </Accordion>
+                <Accordion
                 className={`UploadFile-${props.file.fileName}`}
                 title={'Edit Artwork Info'}
                 >
@@ -92,8 +102,15 @@ const EditArtwork = (props) => {
                     <ArrangeFamilyIndexes 
                         data={props.context.state.relatedArtwork[props.file.artworkFamily]}
                         file={props.file}
-                        // fileName={props.file.filename}
-                        // artworkFamily={props.file.artworkFamily}
+                    />
+                </Accordion>
+
+                <Accordion
+                    title={"See Also"}
+                >
+                    <SeeAlsoContainer 
+                        directory={props.context.state.fileData.files[props.file.fileName].seeAlso}
+                        initialData={props.context.state.artworkInfoData}
                     />
                 </Accordion>
 

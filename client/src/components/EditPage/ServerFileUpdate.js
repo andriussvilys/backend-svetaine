@@ -4,10 +4,15 @@ import Button from 'react-bootstrap/Button'
 import FilePreview from '../FilePreview'
 import Accordion from '../Accordion'
 import FamilyInfo from '../FileUpload/FamilyInfo'
-import NavigationInfo from '../DragAndDropList/infoComponents/NavigationInfo'
 import ArtworkInfo from '../ArtworkInfo'
 import ChangeIndex from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
 import BootstrapModal from '../BootstrapModal'
+import Filters from '../Admin/Filters/Filters'
+import EditFamilyInfo from '../Admin/FamilyInfo/EditFamilyInfo';
+
+import SeeAlsoV2 from '../Admin/SeeAlso/SeeAlso'
+import SeeAlsoContainer from '../Admin/SeeAlso/SeeAlsoContainer'
+import EditArtwork from '../Admin/EditArtwork/EditArtwork';
 
 /**
  * @props file 
@@ -88,8 +93,15 @@ export default class ServerFileUpdate extends React.Component {
             </div>
     
             <div className="FamilyList--detail__info">
-    
             {/* ARTWORK DATA */}
+            <Accordion
+                title={"Artwork Family"}
+            >
+                <EditFamilyInfo 
+                    context={this.props.context}
+                    fileName={this.props.file.fileName}
+                />
+            </Accordion>
             <Accordion
             className={`UploadFile-${this.props.file.fileName}`}
             title={'Edit Artwork Info'}
@@ -101,47 +113,32 @@ export default class ServerFileUpdate extends React.Component {
                     state={this.props.context.state}
                 />
             </Accordion>
-    
-            {/* FAMILY DATA */}
+
+            <Filters 
+                context={this.props.context}
+                fileName={this.props.file.fileName}
+            />
+
             <Accordion
-            className={`UploadFile-${this.props.file.fileName}`}
-            title={'Edit Family Info'}
+                title={'Arrange Indexes'}
             >
-                <FamilyInfo 
-                familyDropDown={{...this.props.familyDropDown, fileName: this.props.file.fileName}}
-                themesDropDown={{...this.props.themesDropDown, fileName: this.props.file.fileName}}
-                seeAlso={{...this.props.seeAlso, 
-                    propsCheck: "SERVER FILE UPDATE",
-                    fileName: this.props.file.fileName, 
-                    highlightReference: this.props.seeAlso.state.fileData.files[this.props.file.fileName].seeAlso,
-                    callBack: this.props.context.fileDataMethods.relateSeeAlso
-                }}
-                >
-    
-                    <Accordion
-                        title={'Arrange Indexes'}
-                    >
-                        <ChangeIndex 
-                            data={this.props.relatedArtwork}
-                            fileName={this.props.file.fileName}
-                            artworkFamily={this.props.file.artworkFamily}
-                        />
-    
-                    </Accordion>
-    
-                    <Accordion
-                        title={'Adjust tags'}
-                    >
-                        <NavigationInfo
-                            fileName={this.props.file.fileName}
-                        />
-                    </Accordion>
-    
-    
-                </FamilyInfo>
-    
+                <ChangeIndex 
+                    data={this.props.relatedArtwork}
+                    fileName={this.props.file.fileName}
+                    artworkFamily={this.props.file.artworkFamily}
+                />
             </Accordion>
-    
+            
+            <Accordion
+                title={"See Also"}
+            >
+                <SeeAlsoContainer 
+                    directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
+                    initialData={this.props.context.state.artworkInfoData}
+                />
+            </Accordion>
+
+
             <div className="FamilyList--submit-delete-container">  
                 <Button
                     variant="danger"
@@ -153,10 +150,6 @@ export default class ServerFileUpdate extends React.Component {
                 <Button
                     variant="success"
                     className="custom-button"
-                    // onClick={() => {
-                    //     this.props.controls.postArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
-                    // }
-                    // }
                     onClick={() => {
                         this.setState({showModal: true, modalMessage: "loading..."})
                         const postRes = this.props.controls.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])

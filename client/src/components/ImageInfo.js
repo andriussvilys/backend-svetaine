@@ -13,6 +13,8 @@ import UpdateAllArtworkInfo from './UpdateAllArtworkInfo';
 import Filters from './Admin/Filters/Filters'
 
 import auth from './Auth'
+import GlobalSetup from './Admin/Create/GlobalSetup';
+import SeeAlso from './Admin/SeeAlso/SeeAlso';
 
 export default class ImageInfo extends Component{
 
@@ -96,10 +98,7 @@ export default class ImageInfo extends Component{
               <Accordion
                 title="set up global family template:">
                   {/* <FamilyInfo/> */}
-
-                  
-
-                  <Filters 
+                  <GlobalSetup 
                     context={this.context}
                   />
           

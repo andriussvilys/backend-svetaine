@@ -26,6 +26,8 @@ export default class DropDownList extends React.Component{
         }
 
         const highlighter = (string, listItem) => {
+            if(string === "artworkFamily"){
+            }
             if(!statePath[string]){
                 return false
             }
