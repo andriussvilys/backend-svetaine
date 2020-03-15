@@ -9,6 +9,7 @@ const Themes = (props) => {
         array={props.dataArray}
         onChange={props.onChange}
         isChecked={props.isChecked}
+        fileName={props.fileName}
         // onChange={this.context.familySetupMethods.onChange}
         // isChecked={this.context.familySetupMethods.isChecked}
         string={"themes"}

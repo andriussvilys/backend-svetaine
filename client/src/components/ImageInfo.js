@@ -97,6 +97,8 @@ export default class ImageInfo extends Component{
                 title="set up global family template:">
                   {/* <FamilyInfo/> */}
 
+                  
+
                   <Filters 
                     context={this.context}
                   />

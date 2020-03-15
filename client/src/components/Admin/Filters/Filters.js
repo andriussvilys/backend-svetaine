@@ -7,42 +7,52 @@ import Accordion from '../Accordion'
 
 const Filters = (props) => {
     const data = props.fileName ? props.context.state.fileData.files[props.fileName] : props.context.state.familySetupData
-    console.log("data")
-    console.log(data)
+    const onChange = props.fileName ? props.context.fileDataMethods.onChange : props.context.familySetupMethods.onChange
+    const isChecked = props.fileName ? props.context.fileDataMethods.isChecked : props.context.familySetupMethods.isChecked
+
     return(
         <Accordion
             title={"Filters"}
         >
             <Accordion
-                title={'Select Year and Location'}
+                title={`Year and Location`}
             >
                 <YearLocation 
                     year={data.year}
                     location={data.location}
                     context={props.context}
+                    fileName={data.fileName ? data.fileName : null}
                 />
             </Accordion>
 
-            <Themes 
-                state={props.context.state}
-                dataArray={props.context.state.themesData}
-                onChange={props.context.familySetupMethods.onChange}
-                isChecked={props.context.familySetupMethods.isChecked}
-            />
-
             <Accordion
-                title={"Select categories"}
+                title={"Themes"}
             >
-                <Categories />
+                <Themes 
+                    state={props.context.state}
+                    dataArray={props.context.state.themesData}
+                    onChange={onChange}
+                    isChecked={isChecked}
+                    fileName={data.fileName ? data.fileName : null}
+                />
             </Accordion>
 
             <Accordion
-                title={"Select display triggers"}
+                title={"Categories"}
+            >
+                <Categories 
+                    context={props.context}
+                    fileName={data.fileName ? data.fileName : null}
+                />
+            </Accordion>
+
+            <Accordion
+                title={"Display Triggers"}
             >
                 <DisplayTriggers 
                     file={data}
                     context={props.context}
-                    familySetup
+                    familySetup={data.fileName ? false : true}
                 />
             </Accordion>
         </Accordion>

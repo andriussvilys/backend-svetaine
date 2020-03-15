@@ -103,9 +103,6 @@ export default class DropDownList extends React.Component{
             style={{margin: 0}}
             >
                 <p>{this.props.listName}</p>
-                <Accordion
-                    title={this.props.title}
-                >
                     <div style={{display: "flex", flexWrap: "wrap"}}>
                         {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
                     </div>
@@ -115,7 +112,6 @@ export default class DropDownList extends React.Component{
                         stateKey={this.props.addNewTarget}
                         requestKey={this.props.requestKey}
                     />
-                </Accordion>
             </div>
             </div>
         )

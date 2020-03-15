@@ -45,13 +45,9 @@ const FamilyInfo = (props) => {
                         fileName={props.seeAlso.fileName}
                         state={props.seeAlso.state}
                         context={props.seeAlso.context}
-                        array={props.seeAlso.state.familySetupData.seeAlso}
-                        stateNest={props.seeAlso.state.familySetupData.seeAlso}
                         onChange={props.seeAlso.context.fileDataMethods.onChange}
-                        // onChange={props.seeAlso.context.fileDataMethods.onChange}
                         callBack={props.seeAlso.callBack}
                         isChecked={props.seeAlso.context.fileDataMethods.isChecked}
-                        serverFileDir={props.seeAlso.state.serverFileDir}
                     />
                     {props.children}
                 </div>

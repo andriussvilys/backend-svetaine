@@ -51,6 +51,9 @@ export class Provider extends React.Component{
         else{
             target = newState.familySetupData
         }
+        if(!target[key]){
+            target[key] = null
+        }
         target[key] = e.target.value
         this.setState(newState)
     }
@@ -233,7 +236,7 @@ export class Provider extends React.Component{
             //     () => {axios.put('/api/categories/update', objToUpdate)}
             //     )
         },
-        autoCheckCategories: (category, subcategory, listitem, fileName) => {
+        autoCheckCategories: (fileName, category, subcategory, listitem) => {
 
             let statePath = this.state.familySetupData.category
 
@@ -425,6 +428,12 @@ export class Provider extends React.Component{
                 let newListitems = null
                 let stateCopy = {...statePath}
                 let newState = {...this.state}
+                let target = null
+
+                if(fileName){
+                    target = newState.fileData.files[fileName].displayTriggers
+                }
+                else{ target = newState.familySetupData.displayTriggers}
     
                 if(classname === "listitem"){
                     console.log(fileName)
@@ -436,8 +445,11 @@ export class Provider extends React.Component{
                     listItemNest = statePath.category[category][subcategory]
                     newListitems = listItemNest.filter(item => item !== checkboxId)
     
-                    this.setState(listItemPath(category, subcategory, newListitems, fileName))
-                    return                
+                    newState = listItemPath(category, subcategory, newListitems, fileName)
+
+                    target[classname] = newListitems
+                    // this.setState(listItemPath(category, subcategory, newListitems, fileName))
+                    // return     
                 }
                 else if (classname === "subcategory"){
                     console.log(fileName)
@@ -471,8 +483,12 @@ export class Provider extends React.Component{
                                 }
                             }
                         }
-                        this.setState(newState)
-                    return
+
+                    const listitemsToRemove =  this.state.categoriesData.filter(obj => obj.category === category)[0].subcategory[checkboxId]
+                    target.listitems = target.listitems.filter(trigger => !listitemsToRemove.includes(trigger)) 
+                    target[classname] = target[classname].filter(trigger => trigger !== checkboxId)
+                    // this.setState(newState)
+                    // return
                 }
                 else if (classname === "category"){
                     category = e.target.parentNode.parentNode.id
@@ -501,10 +517,19 @@ export class Provider extends React.Component{
                                 }
                             }
                         }
-                        this.setState(newState)
-                    // e.target.parentNode.classList.toggle('themes-list--selected')
-                    return
+                    
+                    let subcategoriesValues =  Object.values(this.state.categoriesData.filter(obj => obj.category === category)[0].subcategory)
+                    
+                    let listitemsToRemove = subcategoriesValues.flat()
+
+                    target.listitems = target.listitems.filter(trigger => !listitemsToRemove.includes(trigger)) 
+                    target[classname] = target[classname].filter(trigger => trigger !== category)
+                    target.subcategory = target.subcategory.filter(trigger => !this.state.categoriesOptionList.data[category].includes(trigger))
+                    // this.setState(newState)
+                    // return
                 }
+                this.setState(newState)
+                return     
             };
     
             //This creates checkbox trees and and values to it
@@ -625,13 +650,9 @@ export class Provider extends React.Component{
          * @returns updated context state
          */
         onChange: (value, string, fileName, cb) => {
-            // console.log("onChange")
-            // console.log("value")
-            // console.log(value)
+
             console.log("string")
             console.log(string)
-            // console.log("fileName")
-            // console.log(fileName)
 
 
 
@@ -760,8 +781,8 @@ export class Provider extends React.Component{
 
         },
         onChangeDisplayTriggers: (value, string, fileName, familySetup, cb) => {
-            console.log("string")
-            console.log(string)
+            console.log("familySetup")
+            console.log(familySetup)
 
             let nestType = () => {
                 if(string !== "year" && string !== "location"){
@@ -773,9 +794,6 @@ export class Provider extends React.Component{
             }
 
             let nestTypeResult = nestType()
-
-            console.log("nestType()")
-            console.log(nestTypeResult)
 
             let newState = {...this.state}
             let target = null
@@ -808,7 +826,6 @@ export class Provider extends React.Component{
                     else{
                         newList = [...nest[string], value]
                     }
-                        // let newState = []    
 
                         if(!familySetup){
                             newState = {
@@ -898,8 +915,7 @@ export class Provider extends React.Component{
                     }
             }
             //if year or location
-            else{    
-                console.log("string runs")
+            else{
                 if(nest[string] === value){
                     value = ""
                 }

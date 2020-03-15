@@ -5,62 +5,53 @@ import Button from 'react-bootstrap/Button';
 // import '../css/components/navigationInfo.css';
 // import '../css/components/imageInfo.css';
 
-export default class Categories extends Component{
+const Categories = (props) => {
 
-    static contextType = Context;
-
-    constructor(props){
-        super(props);
-        this.state = {
-            categoryNames: [],
-            categoryDatalist: null,
-            selectedCategory: null,
-            subcategoryDatalist: null,
-
-        }
-    }
+    const target = props.fileName ? 
+                props.context.state.fileData.files[props.fileName] :
+                props.context.state.familySetupdata
 
     //methods that check cheboxes if state has appropriate values and unchecks it if not
-    autoCheckCategories = (category, subcategory, listitem) => {
-        if(!this.context.state.familySetupData.category){return}
-        if(this.context.state.familySetupData.category[category]){
-            if(this.context.state.familySetupData.category[category][subcategory]){
-                if(this.context.state.familySetupData.category[category][subcategory].includes(listitem)){
-                    return true
-                } 
-                else{
-                    return false
-                }
-            }
-        }
-    }
-    autoCheckCategories = (category, subcategory) => {
-        if(!this.context.state.familySetupData.category){return}
-        if(this.context.state.familySetupData.category[category]){
-            if(this.context.state.familySetupData.category[category][subcategory]){
-                return true
-            }
-            else{
-                return false
-            }
-        }
-    }
-    autoCheckCategories = (category) => {
-        if(!this.context.state.familySetupData.category){return}
-        if(this.context.state.familySetupData.category[category]){
-                return true
-            }
-            else{
-                return false
-            }
-    }
+    // const autoCheckCategories = (category, subcategory, listitem) => {
+    //     if(!target.category){return}
+    //     if(target.category[category]){
+    //         if(target.category[category][subcategory]){
+    //             if(target.category[category][subcategory].includes(listitem)){
+    //                 return true
+    //             } 
+    //             else{
+    //                 return false
+    //             }
+    //         }
+    //     }
+    // }
+    // const autoCheckCategories = (category, subcategory) => {
+    //     if(!target.category){return}
+    //     if(target.category[category]){
+    //         if(target.category[category][subcategory]){
+    //             return true
+    //         }
+    //         else{
+    //             return false
+    //         }
+    //     }
+    // }
+    // const autoCheckCategories = (category) => {
+    //     if(!target.category){return}
+    //     if(target.category[category]){
+    //             return true
+    //         }
+    //         else{
+    //             return false
+    //         }
+    // }
 
     //****************************************************************************************************
     //THIS METHOD DYNAMICALLY CREATES THE MENU 
 
-    makeCategories = () => {
+    const makeCategories = () => {
         
-        let result = this.context.state.categoriesData.map(obj => {
+        let result = props.context.state.categoriesData.map(obj => {
 
             let subcategories = null;
 
@@ -74,14 +65,14 @@ export default class Categories extends Component{
                             <li key={`${listitem}${index}}`} 
                             className={
                             `list--listitem list-group-item
-                            ${this.context.categoryMethods.autoCheckCategories(obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
+                            ${props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
                                     <input 
                                     className="navigation-input listitem" 
                                     type="checkbox" 
                                     value={listitem} 
                                     id={listitem} 
-                                    onChange={(e) => this.context.onCheck(e)} 
-                                    checked={this.context.categoryMethods.autoCheckCategories(obj.category, subcategory, listitem)}
+                                    onChange={(e) => props.context.onCheck(e, props.fileName)} 
+                                    checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem)}
                                     />
                                     <span>{listitem}</span>  
                             </li>
@@ -90,13 +81,13 @@ export default class Categories extends Component{
                     
                     return(
                     <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
-                        <div className={this.context.categoryMethods.autoCheckCategories(obj.category, subcategory) ? "themes-list--selected" : null}>
+                        <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory) ? "themes-list--selected" : null}>
                             <input 
                             className="navigation-input subcategory" 
                             type="checkbox" 
                             value={subcategory} 
-                            onChange={(e) => this.context.onCheck(e)} 
-                            checked={this.context.categoryMethods.autoCheckCategories(obj.category, subcategory)}
+                            onChange={(e) => props.context.onCheck(e, props.fileName)} 
+                            checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory)}
                             />
                             <span>{subcategory}</span>
                         </div>
@@ -107,13 +98,13 @@ export default class Categories extends Component{
             return (
             <div key={obj.category} className="list-group">
                 <ul id={obj.category} className="list--category"> 
-                    <div className={this.context.categoryMethods.autoCheckCategories(obj.category) ? "themes-list--selected" : null}>
+                    <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category) ? "themes-list--selected" : null}>
                         <input 
                             className="navigation-input category" 
                             type="checkbox" 
                             value={obj.category} 
-                            onChange={(e) => this.context.onCheck(e)} 
-                            checked={this.context.categoryMethods.autoCheckCategories(obj.category)}
+                            onChange={(e) => props.context.onCheck(e, props.fileName)} 
+                            checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category)}
                         /> 
                         <span>{obj.category}</span>
                     </div>
@@ -126,77 +117,72 @@ export default class Categories extends Component{
         return result
     }
 
-    checkOptionList = (nest) => {
-        if(this.context.state.categoriesOptionList){
-            if(this.context.state.categoriesOptionList.DOM){
-                return this.context.state.categoriesOptionList.DOM[nest]
+    const checkOptionList = (nest) => {
+        if(props.context.state.categoriesOptionList){
+            if(props.context.state.categoriesOptionList.DOM){
+                return props.context.state.categoriesOptionList.DOM[nest]
             }
             else{ return null}
         }
         else{return null}
     }
 
-  render(){
-    return(
-        <Context.Consumer>
-            { () => {return(
-                    <div className="list--container">
-                        {this.makeCategories()}
+        return(
+            <div className="list--container">
+                {makeCategories()}
 
-                        <div className="categories--addNew_container" >
-                            <h5 className="navigation--addNew_title">add new category</h5>
-                            <div className="navigation--addNew">
-                                <input 
-                                    className="categories-input"
-                                    type="text" 
-                                    list="datalist-add-categories"
-                                    name="add-category" 
-                                    id="add-category" 
-                                    placeholder="category"
-                                    onFocus={this.context.categoryMethods.getCategoryNames}
-                                />
-                                <datalist id="datalist-add-categories">
-                                    {this.checkOptionList("categories")}
-                                </datalist>
+                <div className="categories--addNew_container" >
+                    <h5 className="navigation--addNew_title">add new category</h5>
+                    <div className="navigation--addNew">
+                        <input 
+                            className="categories-input"
+                            type="text" 
+                            list="datalist-add-categories"
+                            name="add-category" 
+                            id="add-category" 
+                            placeholder="category"
+                            onFocus={props.context.categoryMethods.getCategoryNames}
+                        />
+                        <datalist id="datalist-add-categories">
+                            {checkOptionList("categories")}
+                        </datalist>
 
-                                <input 
-                                    className="categories-input"
-                                    type="text" 
-                                    list="datalist-add-subcategories"
-                                    name="add-subcategory" 
-                                    id="add-subcategory" 
-                                    placeholder="subcategory"
-                                    onFocus={this.context.categoryMethods.getSubcategoryNames}
-                                />
+                        <input 
+                            className="categories-input"
+                            type="text" 
+                            list="datalist-add-subcategories"
+                            name="add-subcategory" 
+                            id="add-subcategory" 
+                            placeholder="subcategory"
+                            onFocus={props.context.categoryMethods.getSubcategoryNames}
+                        />
 
-                                <datalist id="datalist-add-subcategories">
-                                   
-                                    {this.checkOptionList("subCategories")}
-                                </datalist>
+                        <datalist id="datalist-add-subcategories">
+                            
+                            {checkOptionList("subCategories")}
+                        </datalist>
 
-                                <input 
-                                    className="categories-input"
-                                    type="text" 
-                                    name="add-listitem" 
-                                    id="add-listitem" 
-                                    placeholder="listitem"
-                                />
-                                <Button
-                                    className="custom-button"
-                                    variant="success" 
-                                    size="sm"
-                                    onClick={
-                                        this.context.categoryMethods.updateCategory
-                                    }
-                                >
-                                    SUBMIT
-                                </Button>
-                            </div>
-                        </div>
+                        <input 
+                            className="categories-input"
+                            type="text" 
+                            name="add-listitem" 
+                            id="add-listitem" 
+                            placeholder="listitem"
+                        />
+                        <Button
+                            className="custom-button"
+                            variant="success" 
+                            size="sm"
+                            onClick={
+                                props.context.categoryMethods.updateCategory
+                            }
+                        >
+                            SUBMIT
+                        </Button>
                     </div>
-            )}
-            }
-        </Context.Consumer>
-    )
+                </div>
+            </div>
+            )
   }
-}
+
+  export default Categories
