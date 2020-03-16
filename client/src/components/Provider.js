@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import FilePreview from './FilePreview'
+// import FilePreview from './FilePreview'
 
 export const Context = React.createContext();
 
@@ -1518,128 +1518,128 @@ export class Provider extends React.Component{
             this.setState({seeAlsoData: {...this.state.seeAlsoData, renderFiles: newRenderList}})
             // this.setState({renderList: newRenderList})
         },
-        renderAllFiles: (highlighterState) => 
-        {
-            return new Promise((resolve, rej) => {
+        // renderAllFiles: (highlighterState) => 
+        // {
+        //     return new Promise((resolve, rej) => {
     
-                const highlighter = (fileName) => {
-                        return highlighterState.includes(fileName)
-                }
+        //         const highlighter = (fileName) => {
+        //                 return highlighterState.includes(fileName)
+        //         }
     
-                let serverFileNames = null;
+        //         let serverFileNames = null;
                 
-                //get an array of all file names in the server
-                axios.get('/fetchImages')
-                    .then(res => {
-                        serverFileNames = res.data
+        //         //get an array of all file names in the server
+        //         axios.get('/fetchImages')
+        //             .then(res => {
+        //                 serverFileNames = res.data
         
-                        //get all artwork records from database
-                        axios.get('/api/artworkInfo')
-                            .then(res => {
-                                let databaseFiles = []
-                                let usedNames = []
+        //                 //get all artwork records from database
+        //                 axios.get('/api/artworkInfo')
+        //                     .then(res => {
+        //                         let databaseFiles = []
+        //                         let usedNames = []
                                 
-                                //check that a record has a file in the server
-                                serverFileNames.forEach(fileName => {
-                                    res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
-                                })
+        //                         //check that a record has a file in the server
+        //                         serverFileNames.forEach(fileName => {
+        //                             res.data.forEach(obj => {if(obj.fileName === fileName){return databaseFiles = [...databaseFiles, obj]}})
+        //                         })
         
-                                let fileList = []
+        //                         let fileList = []
         
-                                databaseFiles.forEach((file, index) => {
-                                    if(usedNames.includes(file.fileName)){
-                                        return
-                                    }
-                                    usedNames = [...usedNames, file.fileName]
-                                    let newFile = {
-                                        fileName: file.fileName,
-                                        artworkFamily: file.artworkFamily,
-                                        checked: highlighter(file.fileName),
-                                        file: 
-                                            <div key={`fileLibrary-${file.fileName}`} 
-                                            style={{width: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
-                                            className={`${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
-                                            >
-                                                <div 
-                                                style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}
-                                                onClick={(e) => (console.log(file))}
-                                                >
-                                                    <div>
-                                                        <p className="subtitle">file name:</p>
-                                                        <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
-                                                        <p className="subtitle">family name:</p>
-                                                        <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
-                                                    </div>
-                                                    <FilePreview 
-                                                        key={`fileUpload-${file.fileName}-${index}`}
-                                                        file={file}
-                                                    />
-                                                </div>
+        //                         databaseFiles.forEach((file, index) => {
+        //                             if(usedNames.includes(file.fileName)){
+        //                                 return
+        //                             }
+        //                             usedNames = [...usedNames, file.fileName]
+        //                             let newFile = {
+        //                                 fileName: file.fileName,
+        //                                 artworkFamily: file.artworkFamily,
+        //                                 checked: highlighter(file.fileName),
+        //                                 file: 
+        //                                     <div key={`fileLibrary-${file.fileName}`} 
+        //                                     style={{width: "200px", display:"flex", flexDirection:"column", justifyContent:"space-between", border: "1px solid black", margin: "2px 1px 0 1px"}}
+        //                                     className={`${highlighter(file.fileName) ? 'themes-list--selected' : 'notSelected'}`} 
+        //                                     >
+        //                                         <div 
+        //                                         style={{display:"flex", flexDirection:"column", height: "100%", justifyContent:"space-between", marginBottom: "1px"}}
+        //                                         onClick={(e) => (console.log(file))}
+        //                                         >
+        //                                             <div>
+        //                                                 <p className="subtitle">file name:</p>
+        //                                                 <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
+        //                                                 <p className="subtitle">family name:</p>
+        //                                                 <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
+        //                                             </div>
+        //                                             <FilePreview 
+        //                                                 key={`fileUpload-${file.fileName}-${index}`}
+        //                                                 file={file}
+        //                                             />
+        //                                         </div>
         
-                                                <div style={{border: "1px solid grey", padding: "2px"}}>
-                                                    <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
-                                                    <form style={{display:"flex", justifyContent:"space-evenly"}}>
-                                                        <div className="container-radio">
-                                                            <input type="radio" 
-                                                            name="useAsSeeAlso" 
-                                                            id="useAsSeeAlso__radio-yes" 
-                                                            value="yes" 
-                                                            onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso", null, 
-                                                            () => this.fileDataMethods.relateSeeAlso(file.fileName, this.state.relatedArtwork[this.state.familySetupData.artworkFamily].column.fileIds, true))}}
-                                                            checked={highlighter(file.fileName)}
-                                                            />
-                                                            <label 
-                                                            htmlFor="useAsSeeAlso_yes"
-                                                            id="useAsSeeAlso_yes"
-                                                            >yes</label>
-                                                        </div>
-                                                        <div className="container-radio">
-                                                            <input type="radio" 
-                                                            name="useAsSeeAlso" 
-                                                            id="useAsSeeAlso__radio-no" 
-                                                            value="no" 
-                                                            onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso", null, 
-                                                            () => this.fileDataMethods.relateSeeAlso(file.fileName, this.state.relatedArtwork[this.state.familySetupData.artworkFamily].column.fileIds))}}
-                                                            checked={!highlighter(file.fileName)}
-                                                            />
-                                                            <label htmlFor="useAsSeeAlso_no">no</label>
-                                                        </div>
-                                                    </form>
-                                                </div>
+        //                                         <div style={{border: "1px solid grey", padding: "2px"}}>
+        //                                             <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
+        //                                             <form style={{display:"flex", justifyContent:"space-evenly"}}>
+        //                                                 <div className="container-radio">
+        //                                                     <input type="radio" 
+        //                                                     name="useAsSeeAlso" 
+        //                                                     id="useAsSeeAlso__radio-yes" 
+        //                                                     value="yes" 
+        //                                                     onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso", null, 
+        //                                                     () => this.fileDataMethods.relateSeeAlso(file.fileName, this.state.relatedArtwork[this.state.familySetupData.artworkFamily].column.fileIds, true))}}
+        //                                                     checked={highlighter(file.fileName)}
+        //                                                     />
+        //                                                     <label 
+        //                                                     htmlFor="useAsSeeAlso_yes"
+        //                                                     id="useAsSeeAlso_yes"
+        //                                                     >yes</label>
+        //                                                 </div>
+        //                                                 <div className="container-radio">
+        //                                                     <input type="radio" 
+        //                                                     name="useAsSeeAlso" 
+        //                                                     id="useAsSeeAlso__radio-no" 
+        //                                                     value="no" 
+        //                                                     onChange={() => {this.familySetupMethods.onChange( file.fileName, "seeAlso", null, 
+        //                                                     () => this.fileDataMethods.relateSeeAlso(file.fileName, this.state.relatedArtwork[this.state.familySetupData.artworkFamily].column.fileIds))}}
+        //                                                     checked={!highlighter(file.fileName)}
+        //                                                     />
+        //                                                     <label htmlFor="useAsSeeAlso_no">no</label>
+        //                                                 </div>
+        //                                             </form>
+        //                                         </div>
         
-                                            </div>
-                                    }
-                                    fileList = {...fileList, [file.fileName]: newFile}
-                                })
+        //                                     </div>
+        //                             }
+        //                             fileList = {...fileList, [file.fileName]: newFile}
+        //                         })
                                 
                                 
-                                let renderFiles = {}
+        //                         let renderFiles = {}
 
-                                //check RENDERLIST and filter out unselected objects 
-                                if(this.state.seeAlsoData.fileList){
-                                        const currentRenderFiles = Object.keys(this.state.seeAlsoData.renderFiles)
+        //                         //check RENDERLIST and filter out unselected objects 
+        //                         if(this.state.seeAlsoData.fileList){
+        //                                 const currentRenderFiles = Object.keys(this.state.seeAlsoData.renderFiles)
 
-                                        Object.keys(fileList).forEach(fileName => {
-                                            if(currentRenderFiles.includes(fileName)){
-                                                renderFiles = {...renderFiles, [fileName]: fileList[fileName]}
-                                            }
-                                        })
+        //                                 Object.keys(fileList).forEach(fileName => {
+        //                                     if(currentRenderFiles.includes(fileName)){
+        //                                         renderFiles = {...renderFiles, [fileName]: fileList[fileName]}
+        //                                     }
+        //                                 })
 
-                                }
-                                else{
-                                    renderFiles = fileList
-                                }
+        //                         }
+        //                         else{
+        //                             renderFiles = fileList
+        //                         }
 
-                                //add an array of all file object
-                                renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
+        //                         //add an array of all file object
+        //                         renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
     
-                                let newSeeAlso = {fileList, renderFiles}
+        //                         let newSeeAlso = {fileList, renderFiles}
 
-                                resolve(newSeeAlso)
-                            })
-                    })   
-            })
-        },
+        //                         resolve(newSeeAlso)
+        //                     })
+        //             })   
+        //     })
+        // },
         getArtworkInfo: () => {
                 return new Promise((resolve, rej) => {
         
