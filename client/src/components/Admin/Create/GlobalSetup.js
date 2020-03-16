@@ -7,10 +7,12 @@ const GlobalSetup = (props) => {
         <Fragment>
             <EditFamilyInfo 
                 context={props.context}
+                addNew={props.addNew}
             />
             <Filters 
                 context={props.context}
             />
+            {props.children}
         </Fragment>
     )
 }

@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link} from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 
-import DropDownList from '../DropDownList'
-import FilePreview from '../FilePreview'
-import BootstrapModal from '../BootstrapModal';
+import DropDownList from '../Admin/DropDownList'
+import BootstrapModal from '../Admin/BootstrapModal';
+import ImageBox from '../Admin/ImageBox/ImageBox';
+import EditFileButtons from '../Admin/ImageBox/optionalComponents/EditFileButtons'
+import FilePreview from '../Admin/FilePreview'
 
 export default class FileUpdate extends React.Component{
 
@@ -23,68 +25,38 @@ export default class FileUpdate extends React.Component{
     onClose = () => {
         this.setState({showModal: false})
     }
+    onModalClick = (fileName) => {
+        console.log("on MODAL CLICK")
+        console.log(fileName)
+        console.log(this.props.context.state.artworkInfoData[fileName])
+        let newState = {...this.state}
+        newState.fileToDelete = this.props.context.state.artworkInfoData[fileName]
+        newState.showModal = true
+        newState.modalMessage = <span>Delete <em>{fileName}</em>?</span>
+        this.setState(newState)
+    }
 
     EditDetail = (file) => {
         if(!file){return}
         return(
-            // {
-            //     fileName: file.fileName,
-            //     artworkFamily: file.artworkFamily,
-            //     file: 
-                    <div 
-                        className="EditDetail-container"
-                        key={`fileLibrary-${file.fileName}`} 
-                    >
-                        <div 
-                        style={{display: "flex", flexDirection:"column", justifyContent:"space-between", height: "100%"}}
-                        >
-                            <div>
-                                <p className="subtitle">file name:</p>
-                                <p style={{fontSize: "10px", fontWeight: "bold"}}>{file.fileName}</p>
-                                <p className="subtitle">family name:</p>
-                                <p style={{fontSize: "10px", fontWeight: "bold"}}>{!file.artworkFamily ? null : file.artworkFamily}</p>
-                            </div>
-                            <FilePreview 
-                                key={`fileUpload-${file.fileName}-EditDetail-FilePreview`}
-                                file={file}
-                            />
-                            <div className="EditDetailContainer--button-wrapper">
-                                <Link to={`/admin/edit/${file.fileName}`}>
-                                    <Button
-                                        onClick={(e) => {
-                                            this.props.context.fileDataMethods.serverFileToState(file)
-                                        }}
-                                    >
-                                        Edit
-                                    </Button>
-                                </Link>
-                                <Button
-                                        className="delete-button"
-                                        onClick={() => {
-                                            this.setState({
-                                                modalConfirm: true,
-                                                showModal: true, 
-                                                fileToDelete: this.props.state.artworkInfoData[file.fileName],
-                                                modalMessage: `delete ${file.fileName}?`,
-                                            })
-                                            // this.props.context.fileDataMethods.deleteDBrecord(file.fileName, file.artworkFamily)
-                                        }}
-                                    >
-                                        Delete
-                                </Button>
-                            </div>
-
-                        </div>
-            
-                    </div>
-            // }
+            <div style={{border: "1px solid", margin: "2px"}} key={`${file.fileName}-detail`}>
+                <ImageBox
+                    file={file}
+                >
+                    <EditFileButtons 
+                        file={file}
+                        context={this.props.context}
+                        onModalClose={this.onClose}
+                        onModalClick={this.onModalClick}
+                    />
+                </ImageBox>
+            </div>
         )
     }
 
     filterByFamily = (value) => {
         console.log('call filterByFamily')
         console.log(value)
-        const artworkFamily = value
         let newRenderList = {}
         const data = this.state.allFiles
         const list = Object.keys(this.state.allFiles)
@@ -110,10 +82,8 @@ export default class FileUpdate extends React.Component{
                 noFile.fileName = null
                 newState.modalMessage = res
                 newState.modalConfirm = false
-                newState.fileToDelete = noFile
-                console.log("no File")
-                console.log(noFile)
-                // this.setState(newState, console.log(this.state))
+                newState.fileToDelete = null
+                this.setState(newState)
             })
 
     }
@@ -135,7 +105,6 @@ export default class FileUpdate extends React.Component{
                                 array={this.props.state.artworkFamilyList}
                                 string={"artworkFamily"}
                                 onChange={this.filterByFamily}
-                                // isChecked={this.props.familySetupMethods.isChecked}
                                 id="artworkFamily-fileUpdata"
                                 displayAddNew="none"
                         />
@@ -165,9 +134,11 @@ export default class FileUpdate extends React.Component{
                         >
                             <div>
                                 <p>{this.state.modalMessage}</p>
-                                {this.state.fileToDelete.fileName ? 
-                                <img style={{height: "150px"}} alt={`delete-${this.state.fileToDelete.fileName}`} src={`/uploads/${this.state.fileToDelete.fileName}`} /> :
-                                null 
+                                {this.state.fileToDelete ? 
+                                    <FilePreview 
+                                        file={this.state.fileToDelete}
+                                    /> :
+                                    null
                                 }
                             </div>
                         </BootstrapModal> :

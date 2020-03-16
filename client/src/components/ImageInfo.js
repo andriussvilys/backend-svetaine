@@ -3,18 +3,15 @@ import { Context } from './Provider';
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import BootstrapModal from './BootstrapModal'
 
-import Accordion from './Accordion'
-import FamilyInfo from './FamilyInfo';
+import BootstrapModal from './Admin/BootstrapModal'
+import Accordion from './Admin/Accordion'
+
 import MainContainer from './FileUpload/MainContainer';
 import UpdateAllArtworkInfo from './UpdateAllArtworkInfo';
 
-import Filters from './Admin/Filters/Filters'
-
 import auth from './Auth'
 import GlobalSetup from './Admin/Create/GlobalSetup';
-import SeeAlso from './Admin/SeeAlso/SeeAlso';
 
 export default class ImageInfo extends Component{
 
@@ -32,9 +29,9 @@ export default class ImageInfo extends Component{
           {() => {
             return(
             <div className="imageInfo">
-              <h3>image info:</h3>
+              <h3>Create</h3>
 
-              {auth.guest ?
+              {!auth.guest ?
                 <Fragment>
                   <UpdateAllArtworkInfo 
                     context={this.context}
@@ -79,29 +76,31 @@ export default class ImageInfo extends Component{
                 <Fragment/>
               }
 
-              <div className="imageInfo--section">
-                  <h5>file upload:</h5>
-                  <div className="imageInfo--box">
-                    <div>
-                      <p>Upload file(-s):</p> 
-                      <input type="file" multiple onChange={this.context.addFileToState} />
-                      <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
+              <Accordion
+                title={"Upload Files"}
+              >
+                <div className="imageInfo--section">
+                    <div className="imageInfo--box">
+                      <div>
+                        <p>Upload file(-s):</p> 
+                        <input type="file" multiple onChange={this.context.addFileToState} />
+                        <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
+                      </div>
                     </div>
-                  </div>
 
-                    <MainContainer
-                     data={this.context.state.fileData}
-                     />
-                  
-              </div>
+                      <MainContainer
+                      data={this.context.state.fileData}
+                      />
+                    
+                </div>
+              </Accordion>
 
               <Accordion
-                title="set up global family template:">
-                  {/* <FamilyInfo/> */}
+                title="Set up global family template">
                   <GlobalSetup 
                     context={this.context}
+                    addNew={true}
                   />
-          
               </Accordion>
 
                   <BootstrapModal 

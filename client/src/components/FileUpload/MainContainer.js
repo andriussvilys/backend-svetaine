@@ -49,37 +49,9 @@ export default class MainContainer extends React.Component{
         let list = this.sortByFamily().familyNames.map(familyName => {
             return (
                 <FamilyList 
-                key={`FamilyList-familyName`}
-                familyDropDown={{
-                    state:this.context.state,
-                    familyList: this.context.state.artworkFamilyList,
-                    context:this.context,
-                }}
-                themesDropDown={{
-                    state:this.context.state,
-                    themesData:this.context.state.themesData,
-                    context: this.context
-                }}
-                seeAlso={{
-                    checkProps: "maincontainer props",
-                    state: this.context.state,
-                    context: this.context,
-                    initialData: this.context.state.artworkInfoData,
-                    onChange: this.context.fileDataMethods.onChange, 
-                }}
-
-                relatedArtwork={this.context.state.relatedArtwork[familyName] ? this.context.state.relatedArtwork[familyName] : null}
-                context={this.context}
-                familyName={familyName}
-                files={sortedData.fileByFamily[familyName]}
-                controls={{
-                    removeFile: this.context.fileDataMethods.removeFile,
-                    postArtworkInfo: this.context.fileDataMethods.postArtworkInfo,
-                    fileDataMethods: this.context.fileDataMethods,
-                    onChange: this.context.onChange
-                }}
-                context={this.context}
-
+                    familyName={familyName}
+                    context={this.context}
+                    files={sortedData.fileByFamily[familyName]}
                 />
             ) 
         })
@@ -92,7 +64,6 @@ export default class MainContainer extends React.Component{
                 {() => {
                     return(
                         <div key={'main_container'}>
-                            {/* <h5>{Object.keys(this.props.data.files).length > 0 ? "family Names:" : null}</h5> */}
                             {this.renderNames(this.props.data.files)}
                         </div>
                     )

@@ -11,7 +11,7 @@ const SeeAlsoContainer = (props) => {
                         directory={props.directory}
                     />
         })
-    return <Fragment>{list}</Fragment>
+    return <div className="admin-seeAlso-container">{list}</div>
     }
     const list = renderContainer(props)
     return(

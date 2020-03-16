@@ -48,11 +48,14 @@ render(){
     return(
         <Context.Consumer>
         {()=>{
+            if(!this.props.addNew){
+                return null
+            }
             return(
                 <div 
                 className="imageInfo--box" 
                 style={{
-                    display: `${this.props.displayAddNew}`,
+                    display: `initial`,
                     margin: "0px",
                     marginLeft: "10px"
                     

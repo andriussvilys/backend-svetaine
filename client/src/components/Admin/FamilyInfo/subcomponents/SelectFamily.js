@@ -14,7 +14,7 @@ const SelectFamily = (props) => {
             id="List-of-artwork-families"
             router={'/api/familySetup/create'}
             addNewTarget={'artworkFamilyList'}
-            displayAddNew="initial"
+            addNew={props.addNew}
             requestKey={"artworkFamily"}
         />
     )

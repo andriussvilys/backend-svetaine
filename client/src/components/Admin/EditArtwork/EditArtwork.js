@@ -1,13 +1,14 @@
 import React from 'react'
-import FilePreview from '../FilePreview'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
 import Filters from '../Filters/Filters'
 import Accordion from '../Accordion'
-import BootstrapModal from '../../BootstrapModal'
+import BootstrapModal from '../BootstrapModal'
 import { Button } from 'react-bootstrap' 
 import ArrangeFamilyIndexes from '../ArrangeIndexes/ArrangeFamilyIndexes'
 import SeeAlsoContainer from '../SeeAlso/SeeAlsoContainer'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
+import ImageBox from '../ImageBox/ImageBox'
+import SelectGlobalSetup from '../ImageBox/optionalComponents/SelectGlobalSetup'
 
 const EditArtwork = (props) => {
     let showModal = false
@@ -18,57 +19,14 @@ const EditArtwork = (props) => {
         return (
             <div key={`FileInfo_${props.file.fileName}`} className="FamilyList--detail">
 
-                <div className="FamilyList--detail__image">
-                    <FilePreview 
+                <ImageBox
+                    file={props.file}
+                >
+                    <SelectGlobalSetup 
                         file={props.file}
-                    >
-                    </FilePreview>
-                    <div className="FamilyList--detail__image__text">
-                        <p className="title">fileName:</p> 
-                        <p>{props.file.fileName}</p>
-                    </div>
-                    <div className="ImageInfo--transferState" style={{display: 'flex'}}>
-                        <p>use global family setup</p>
-
-                        <p className="subtitle"
-                        style={
-                            props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
-                        }
-                        >
-                        please select global artwork family 
-                        </p>
-{/* 
-                        {props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
-                        <form className="ImageInfo--transferState__radios">
-                            <div className="container-radio">
-                                <input type="radio" 
-                                name="familyDisplaySetup" 
-                                id="familyDisplaySetup__radio-yes" 
-                                value="yes" 
-                                disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                                onChange={() => {props.context.fileDataMethods.transferState(props.file, true)}}
-                                checked={!props.context.state.fileData.files[props.file.fileName].useFamilySetup ? false : props.context.state.fileData.files[props.file.fileName].useFamilySetup}
-                                />
-                                <label 
-                                htmlFor="familyDisplaySetup_yes"
-                                id="familyDisplaySetup_yes"
-                                >yes</label>
-                            </div>
-                            <div className="container-radio">
-                                <input type="radio" 
-                                name="familyDisplaySetup" 
-                                id="familyDisplaySetup__radio-no" 
-                                value="no" 
-                                disabled={props.context.state.familySetupData.artworkFamily === null ? true : false}
-                                onChange={() => props.context.fileDataMethods.transferState(props.file)}
-                                checked={!props.context.state.fileData.files[props.file.fileName].useFamilySetup}
-                                
-                                />
-                                <label htmlFor="familyDisplaySetup_no">no</label>
-                            </div>
-                        </form>
-                    </div>  
-                </div>
+                        context={props.context}
+                    />
+                </ImageBox>
 
                 <div className="FamilyList--detail__info">
 
@@ -81,9 +39,10 @@ const EditArtwork = (props) => {
                         fileName={props.file.fileName}
                     />
                 </Accordion>
+
                 <Accordion
-                className={`UploadFile-${props.file.fileName}`}
-                title={'Edit Artwork Info'}
+                    className={`UploadFile-${props.file.fileName}`}
+                    title={'Edit Artwork Info'}
                 >
                     <ArtworkInfo 
                         file={props.file}
@@ -92,10 +51,12 @@ const EditArtwork = (props) => {
                         state={props.context.state}
                     />
                 </Accordion>
+
                 <Filters 
                     context={props.context}
                     fileName={props.file.fileName}
                 />
+
                 <Accordion
                     title={"Arrange Index"}
                 >

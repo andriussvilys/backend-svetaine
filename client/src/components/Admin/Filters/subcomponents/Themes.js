@@ -16,7 +16,7 @@ const Themes = (props) => {
         id="Themes-list"
         router={'/api/themes/update'}
         addNewTarget={'themesData'}
-        displayAddNew="initial"
+        addNew={true}
         requestKey={"list"}
         />
     )

@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Context } from './Provider';
+
 import EditDetailContainer from './EditPage/EditDetailContainer';
 import ServerFileUpdate from './EditPage/ServerFileUpdate';
-import Accordion from './Accordion';
-import FamilyInfo from './FamilyInfo';
-import ChangeIndex from './DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
-import BootstrapModal from './BootstrapModal';
-import Filters from './Admin/Filters/Filters';
+import Accordion from './Admin/Accordion';
+import BootstrapModal from './Admin/BootstrapModal';
+import GlobalSetup from './Admin/Create/GlobalSetup';
 
 export default class Edit extends Component{
     static contextType = Context;
@@ -47,6 +46,7 @@ export default class Edit extends Component{
                         return(
                                 <Switch>
                                     <Route exact path="/admin/edit">
+                                        <h3>Edit</h3>
                                         <Accordion
                                             title="Edit by artwork"
                                         >
@@ -56,24 +56,18 @@ export default class Edit extends Component{
                                                 familySetupMethods={this.context.familySetupMethods}
                                             />
                                         </Accordion>
-                                        {/* <FamilyEditor
-                                             context={this.context}
+
+                                        <Accordion
+                                            title={"Update or Create family record"}
                                         >
-                                        </FamilyEditor> */}
-                                        {/* <FamilyInfo>
-                                            <Accordion
-                                                title="Change display indexes"
+                                            <GlobalSetup
+                                                context={this.context}
                                             >
-                                                <ChangeIndex 
-                                                    data={this.context.state.relatedArtwork[this.context.state.familySetupData.artworkFamily]}
-                                                    fileName="n/a"
-                                                    artworkFamily={this.context.state.familySetupData.artworkFamily}
-                                                />
-                                            </Accordion>
-                                        </FamilyInfo> */}
-                                        <Filters 
-                                            context={this.context}
-                                        />
+                                                <div style={{width: "100%", height: "200px", backgroundColor: "yellow"}}>
+
+                                                </div>
+                                            </GlobalSetup>
+                                        </Accordion>
                                     </Route>
                                     <Route 
                                         path="/admin/edit/:fileName"

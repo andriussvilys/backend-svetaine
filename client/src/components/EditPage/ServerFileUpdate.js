@@ -1,18 +1,15 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
 
-import FilePreview from '../FilePreview'
-import Accordion from '../Accordion'
-import FamilyInfo from '../FileUpload/FamilyInfo'
-import ArtworkInfo from '../ArtworkInfo'
+import Accordion from '../Admin/Accordion'
+import ArtworkInfo from '../Admin/ArtworkInfo/ArtworkInfo'
 import ChangeIndex from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
-import BootstrapModal from '../BootstrapModal'
+import BootstrapModal from '../Admin/BootstrapModal'
 import Filters from '../Admin/Filters/Filters'
 import EditFamilyInfo from '../Admin/FamilyInfo/EditFamilyInfo';
 
-import SeeAlsoV2 from '../Admin/SeeAlso/SeeAlso'
 import SeeAlsoContainer from '../Admin/SeeAlso/SeeAlsoContainer'
-import EditArtwork from '../Admin/EditArtwork/EditArtwork';
+import ImageBox from '../Admin/ImageBox/ImageBox';
 
 /**
  * @props file 
@@ -39,61 +36,16 @@ export default class ServerFileUpdate extends React.Component {
     render(){
         return(
         <div className="FamilyList--detail_update">
+
+            
     
             <div className="FamilyList--detail__image">
-                <FilePreview 
+                <ImageBox 
                     file={this.props.file}
-                >
-                </FilePreview>
-                <div className="FamilyList--detail__image__text">
-                    <p className="title">fileName:</p> 
-                    <p>{this.props.file.fileName}</p>
-                </div>
-                <div className="ImageInfo--transferState" style={{display: 'flex'}}>
-                    <p>use global family setup</p>
-    
-                    <p className="subtitle"
-                    style={
-                        this.props.context.state.familySetupData.artworkFamily ? {transition: "all 0.2s", transform: "scaleY(0)"} : {transition: "all 0.2s", transform: "scaleY(1)"}
-                    }
-                    >
-                    please select global artwork family 
-                    </p>
-        {/* 
-                    {this.props.context.state.familySetupData.artworkFamily ? null : <p className="subtitle">please select global artwork family </p> } */}
-                    <form className="ImageInfo--transferState__radios">
-                        <div className="container-radio">
-                            <input type="radio" 
-                            name="familyDisplaySetup" 
-                            id="familyDisplaySetup__radio-yes" 
-                            value="yes" 
-                            disabled={this.props.context.state.familySetupData.artworkFamily === null ? true : false}
-                            onChange={() => {this.props.context.fileDataMethods.transferState(this.props.file, true)}}
-                            checked={this.props.context.state.fileData.files[this.props.file.fileName].useFamilySetup}
-                            />
-                            <label 
-                            htmlFor="familyDisplaySetup_yes"
-                            id="familyDisplaySetup_yes"
-                            >yes</label>
-                        </div>
-                        <div className="container-radio">
-                            <input type="radio" 
-                            name="familyDisplaySetup" 
-                            id="familyDisplaySetup__radio-no" 
-                            value="no" 
-                            disabled={this.props.context.state.familySetupData.artworkFamily === null ? true : false}
-                            onChange={() => this.props.context.fileDataMethods.transferState(this.props.file)}
-                            checked={!this.props.context.state.fileData.files[this.props.file.fileName].useFamilySetup}
-                            
-                            />
-                            <label htmlFor="familyDisplaySetup_no">no</label>
-                        </div>
-                    </form>
-                </div>  
+                />
             </div>
     
             <div className="FamilyList--detail__info">
-            {/* ARTWORK DATA */}
             <Accordion
                 title={"Artwork Family"}
             >

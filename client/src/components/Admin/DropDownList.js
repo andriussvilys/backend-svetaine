@@ -109,7 +109,7 @@ export default class DropDownList extends React.Component{
                         {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
                     </div>
                     <AddNew 
-                        displayAddNew={this.props.displayAddNew}
+                        addNew={this.props.addNew}
                         router={this.props.router}
                         stateKey={this.props.addNewTarget}
                         requestKey={this.props.requestKey}

@@ -7,7 +7,6 @@
 .imageInfo--box{
     display: flex;
     justify-content: space-between;
-    margin: 0 5vw;
     position: relative;
     align-items: center;
     flex-wrap: wrap;
@@ -61,10 +60,6 @@
     // width: 150px;
     font-size: 12px;
     margin-left: 12px;
-}
-.themes-checkbox{
-    // position: absolute;
-    // right: 0;
 }
 
 .themeSelector > ul {

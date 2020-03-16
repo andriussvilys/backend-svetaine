@@ -58,7 +58,6 @@ form{
 }
 
 .EditDetail-container{
-    width: 150px;
     display: flex;
     flex-direction:column;
     justify-content:space-between;
@@ -138,7 +137,6 @@ Button{
 .card-body{
     padding: 0 10px !important;
     background-color: white !important;
-    border-bottom: 1px solid;
 }
 .TagsMenu-Card-Title{
     display: flex;
@@ -196,15 +194,24 @@ textarea{
 .FamilyList--detail__image{
     padding: 4px;
     width: 200px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
 }
 .FamilyList--detail__image__text{
-    margin: 4px 2px;
+    width: 100%;
+    margin: 4px 0;
     font-size: 12px;
-    border: 1px solid rgb(175, 175, 175);
     padding: 4px;
+    border-top: 1px solid black;
 }
 .title{
     font-weight: 600;
+}
+.admin-seeAlso-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 .FamilyList--submit-delete-container{
     flex: 1;
@@ -227,6 +234,7 @@ label{
     margin: 0 !important;
 }
 .ImageInfo--transferState{
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -291,6 +299,7 @@ label{
     padding: 2px;
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 .delete-button{
     background-color: white !important;
@@ -590,7 +599,6 @@ font-family: 'Times New Roman', Times, serif;
 
 .ImagesPreview--imageContainer{
     display: flex;
-    flex-direction: column;
     justify-content: flex-end;
     align-items: center;
     transition: 0.4s all;
@@ -1051,9 +1059,6 @@ font-family: 'Times New Roman', Times, serif;
     position: relative;
     text-transform: uppercase;
 }
-.tagsMenu-Button .title-letter{
-
-}
 .menu{
     width: 100%;
 }
@@ -1080,9 +1085,6 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: center;
     align-items: center;
     // margin-left: 2px;
-}
-.controls-sildeButton{
-
 }
 .controls-exitButton{
     border-left: 1px solid;
@@ -1351,8 +1353,7 @@ font-family: 'Times New Roman', Times, serif;
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     .FamilyList--detail__image{
-        width: 100%;
-        max-width: 400px;
+        width: 170px;
     }
     body{
         overscroll-behavior: contain;

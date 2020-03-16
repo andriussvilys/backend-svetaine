@@ -1,14 +1,7 @@
 import React from 'react'
 
-import FilePreview from './FilePreview'
-import FamilyInfo from './FamilyInfo'
 import Button from 'react-bootstrap/Button'
-import Accordion from '../Accordion'
-import ArtworkInfo from '../ArtworkInfo'
-// import ChangeIndex from '../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
-import ArrangeFamilyIndexes from '../Admin/ArrangeIndexes/ArrangeFamilyIndexes'
-import NavigationInfo from '../DragAndDropList/infoComponents/NavigationInfo'
-import BootstrapModal from '../BootstrapModal'
+import BootstrapModal from '../Admin/BootstrapModal'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import EditArtwork from '../Admin/EditArtwork/EditArtwork'
 
@@ -33,7 +26,7 @@ export default class FamilyList extends React.Component{
      * 
      * @param {*} data = takes an array of files data
      */
-    renderList = (files, props) => {
+    renderList = (files) => {
         let list = files.map(file => {
             return (
                 <EditArtwork 

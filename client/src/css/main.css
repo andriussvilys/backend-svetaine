@@ -74,7 +74,6 @@ form {
 }
 
 .EditDetail-container {
-  width: 150px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -187,7 +186,6 @@ Button {
 .card-body {
   padding: 0 10px !important;
   background-color: white !important;
-  border-bottom: 1px solid;
 }
 
 .TagsMenu-Card-Title {
@@ -274,17 +272,34 @@ textarea {
 .FamilyList--detail__image {
   padding: 4px;
   width: 200px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 100%;
 }
 
 .FamilyList--detail__image__text {
-  margin: 4px 2px;
+  width: 100%;
+  margin: 4px 0;
   font-size: 12px;
-  border: 1px solid #afafaf;
   padding: 4px;
+  border-top: 1px solid black;
 }
 
 .title {
   font-weight: 600;
+}
+
+.admin-seeAlso-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
 }
 
 .FamilyList--submit-delete-container {
@@ -320,6 +335,7 @@ label {
 }
 
 .ImageInfo--transferState {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -431,6 +447,7 @@ label {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  width: 100%;
 }
 
 .delete-button {
@@ -761,10 +778,6 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -1780,8 +1793,7 @@ label {
 
 @media only screen and (max-width: 720px) {
   .FamilyList--detail__image {
-    width: 100%;
-    max-width: 400px;
+    width: 170px;
   }
   body {
     overscroll-behavior: contain;
