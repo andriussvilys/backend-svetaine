@@ -30,7 +30,7 @@ const DisplayTriggerList = (props) => {
         if(data.length <= 0){return}
         let list = data.map(item => {
             if(item === "" || item === " "){return}
-            return <li key={`trigger-${title}-${item}`} className="themes-list">
+            return <li key={`trigger-${title}-${item}`} className={`themes-list ${isChecked(props.title, props.file, item) ? "themes-list--selected" : ""}`}>
                         <span>{item}</span>
                         <input 
                             type="checkbox"

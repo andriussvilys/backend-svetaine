@@ -400,6 +400,47 @@
   text-transform: uppercase;
 }
 
+.draggable-container {
+  border: 2px solid;
+  margin-bottom: 8px;
+  background-color: #c2c2c2;
+}
+
+.image-index-box {
+  cursor: n-resize;
+  position: relative;
+  height: 120px;
+}
+
+.image-index-box div {
+  position: absolute;
+}
+
+.image-index-box .ImagesPreview--imageContainer {
+  min-width: auto;
+}
+
+.draggable--index {
+  height: 45px;
+  width: 45px;
+  border-radius: 999px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: yellow;
+  font-weight: bold;
+  border: 2px solid;
+  font-size: 30px;
+  right: 35px;
+  top: calc(50% - 22px);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -504,6 +545,7 @@ img {
   background-color: rgba(0, 0, 0, 0.055);
   margin-bottom: 0 !important;
   width: 200px;
+  max-width: 49%;
 }
 
 Button {
@@ -555,6 +597,7 @@ Button {
 
 .card-header {
   margin-bottom: 0 !important;
+  padding: 0 !important;
 }
 
 .card {
@@ -1186,6 +1229,9 @@ label {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   -webkit-transition: 0.4s all;
   transition: 0.4s all;
   -webkit-transition: 0 opacity;
@@ -1202,6 +1248,10 @@ label {
       -ms-flex: 1 1 25%;
           flex: 1 1 25%;
   min-width: 90px;
+}
+
+.ImagesPreview--image {
+  height: 120px;
 }
 
 .ImagesPreview--imageContainer__empty {

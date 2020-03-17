@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 import FilePreview from '../../FilePreview'
+import ImageBox from '../../ImageBox/ImageBox'
 
 const DnDListDraggable = (props) => {
     if(!props.file){
@@ -14,26 +15,43 @@ const DnDListDraggable = (props) => {
         >
         {(provided)=>{
             return(
-                <div className="ImagesPreview--container"
+                <div className="draggable-container"
                     {...provided.draggableProps}
                     ref={provided.innerRef}
-                >       
-                        
-                        <div className="image-index-box">
-                            <FilePreview 
-                                file={props.file}
-                            />
+                >  
 
-                            <div className="ImagesPreview--indexContainer">
-                                <span>family display index:</span>
-                                <div className="ImagesPreview--index">{ props.relatedArtwork.column.fileIds.indexOf(props.file.fileName) }</div>
-                            </div> 
+                        <div
+                            {...provided.dragHandleProps}
+                            onMouseDown={(e)=>{
+                                const dragHandle = e.target
+                                if(!e.target.classList.contains('mouseDown')){
+                                    e.target.classList.add('mouseDown')
+                                }
+                                provided.dragHandleProps.onMouseDown(e)
+
+                                document.addEventListener('mouseup', () => {dragHandle.classList.remove('mouseDown')})
+                                }
+                            }
+                        >
+                            <div className="image-index-box">
+                                <FilePreview 
+                                    file={props.file}
+                                />
+                                <div className="draggable--index">
+                                    <div>
+                                        { props.relatedArtwork.column.fileIds.indexOf(props.file.fileName) }
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+
                         
                             
-                        <div className="button-container">
-                                <div className="ImagesPreview--dragHandle custom-button"
-                                id={`draghandle--${props.index}`}
+                        {/* <div className="button-container">
+                                <div 
+                                // className="draggable--dragHandle custom-button"
+                                // id={`draghandle--${props.index}`}
                                 {...provided.dragHandleProps}
                                 onMouseDown={(e)=>{
                                     const dragHandle = e.target
@@ -48,7 +66,7 @@ const DnDListDraggable = (props) => {
                                 >
                                     DRAG
                                 </div>   
-                        </div>
+                        </div> */}
 
                 
                 </div>

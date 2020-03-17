@@ -73,36 +73,15 @@ export default class Edit extends Component{
                                         path="/admin/edit/:fileName"
                                         render={(props) => 
                                             {return <ServerFileUpdate 
-                                                    familyDropDown={{
-                                                        state:this.context.state,
-                                                        familyList: this.context.state.artworkFamilyList,
-                                                        context:this.context,
-                                                    }}
-                                                    themesDropDown={{
-                                                        state:this.context.state,
-                                                        themesData:this.context.state.themesData,
-                                                        context: this.context
-                                                    }}
-                                                    seeAlso={{
-                                                        state: this.context.state,
-                                                        context: this.context,
-                                                        initialData: this.context.state.artworkInfoData,
-                                                        onChange: this.context.fileDataMethods.onChange, 
-                                                    }}
-                            
                                                     // relatedArtwork={this.context.state.relatedArtwork[familyName]}
                                                     context={this.context}
                                                     familyName={this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily}
-                                                    // file={this.context.state.artworkInfoData[props.match.params.fileName]}
                                                     file={this.context.state.fileData.files[props.match.params.fileName]}
                                                     files={this.sortByFamily().fileByFamily[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
                                                     relatedArtwork={this.context.state.relatedArtwork[this.context.state.artworkInfoData[props.match.params.fileName].artworkFamily]}
-                                                    controls={{
-                                                        removeFile: this.context.fileDataMethods.removeFile,
-                                                        updateArtworkInfo: this.context.fileDataMethods.updateArtworkInfo,
-                                                        fileDataMethods: this.context.fileDataMethods,
-                                                        onChange: this.context.onChange
-                                                    }}
+
+                                                    removeFile={this.context.fileDataMethods.removeFile}
+
                                                 />
                                             }
                                         }

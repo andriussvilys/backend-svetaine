@@ -70,7 +70,7 @@ const DisplayTriggers = (props) => {
                     <ul>
                         {
                             props.file.year ?
-                            <li key={`trigger-year`} className="themes-list">
+                            <li key={`trigger-year`} className={`themes-list ${props.file.displayTriggers && props.file.displayTriggers["year"] === props.file.year ? "themes-list--selected" : ""}`}>
                                 <span>{props.file.year}</span>
                                 <input 
                                     type="checkbox"
@@ -82,7 +82,7 @@ const DisplayTriggers = (props) => {
                         }
                         {
                             props.file.location ?
-                            <li key={`trigger-location`} className="themes-list">
+                            <li key={`trigger-location`} className={`themes-list ${props.file.displayTriggers && props.file.displayTriggers["location"] === props.file.location ? "themes-list--selected" : ""}`}>
                                 <span>{props.file.location}</span>
                                 <input 
                                     type="checkbox"

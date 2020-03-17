@@ -2,6 +2,7 @@
 @import './components/imageInfo';
 @import './components/jsonPreview';
 @import './components/navigationInfo';
+@import './components/draggable';
 
 *{
     margin:0;
@@ -83,6 +84,7 @@ img{
     background-color: rgba(0,0,0,.055);
     margin-bottom: 0 !important;
     width: 200px;
+    max-width: 49%;
 }
 Button{
     margin-top: 3px;
@@ -116,6 +118,7 @@ Button{
 }
 .card-header{
     margin-bottom: 0 !important;
+    padding: 0 !important;
 }
 .card{
     border: none !important;
@@ -606,6 +609,7 @@ font-family: 'Times New Roman', Times, serif;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    justify-content: center;
     transition: 0.4s all;
     transition: 0 opacity;
     z-index: 2;
@@ -617,6 +621,9 @@ font-family: 'Times New Roman', Times, serif;
     overflow: hidden;
     flex: 1 1 25%;
     min-width: 90px;
+}
+.ImagesPreview--image{
+    height: 120px;
 }
 .ImagesPreview--imageContainer__empty{
     // border: 2px solid red;

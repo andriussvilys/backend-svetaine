@@ -8,7 +8,7 @@ const SelectFamily = (props) => {
             state={props.context.state}
             array={props.context.state.artworkFamilyList}
             string={"artworkFamily"}
-            onChange={props.context.getFamilySetup}
+            onChange={props.onChange || props.context.getFamilySetup}
             fileName={props.fileName}
             // isChecked={props.context.familySetupMethods.isChecked}
             id="List-of-artwork-families"

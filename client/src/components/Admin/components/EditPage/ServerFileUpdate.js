@@ -47,14 +47,10 @@ export default class ServerFileUpdate extends React.Component {
             </div>
     
             <div className="FamilyList--detail__info">
-            <Accordion
-                title={"Artwork Family"}
-            >
-                <EditFamilyInfo 
-                    context={this.props.context}
-                    fileName={this.props.file.fileName}
-                />
-            </Accordion>
+            <EditFamilyInfo 
+                context={this.props.context}
+                fileName={this.props.file.fileName}
+            />
             <Accordion
             className={`UploadFile-${this.props.file.fileName}`}
             title={'Edit Artwork Info'}
@@ -62,7 +58,7 @@ export default class ServerFileUpdate extends React.Component {
                 <ArtworkInfo 
                     file={this.props.file}
                     fileName={this.props.file.fileName}
-                    onChange={this.props.controls.fileDataMethods.onChange}
+                    onChange={this.props.context.fileDataMethods.onChange}
                     state={this.props.context.state}
                 />
             </Accordion>
@@ -75,11 +71,6 @@ export default class ServerFileUpdate extends React.Component {
             <Accordion
                 title={'Arrange Indexes'}
             >
-                {/* <ChangeIndex 
-                    data={this.props.relatedArtwork}
-                    fileName={this.props.file.fileName}
-                    artworkFamily={this.props.file.artworkFamily}
-                /> */}
                 <ArrangeFamilyIndexes 
                     data={this.props.context.state.relatedArtwork[this.props.file.artworkFamily]}
                     file={this.props.file}
@@ -100,7 +91,7 @@ export default class ServerFileUpdate extends React.Component {
                 <Button
                     variant="danger"
                     className="custom-button"
-                    onClick={ () => this.props.controls.removeFile(this.props.file.fileName)}
+                    onClick={ () => this.props.context.removeFile(this.props.file.fileName)}
                 >
                     Cancel
                 </Button>   
@@ -109,7 +100,7 @@ export default class ServerFileUpdate extends React.Component {
                     className="custom-button"
                     onClick={() => {
                         this.setState({showModal: true, modalMessage: "loading..."})
-                        const postRes = this.props.controls.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
+                        const postRes = this.props.context.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
                         postRes.then( res => {
                             this.setState({modalMessage: res})
                         })

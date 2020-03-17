@@ -8,6 +8,7 @@ import BootstrapModal from '../BootstrapModal';
 import ImageBox from '../ImageBox/ImageBox';
 import EditFileButtons from '../ImageBox/optionalComponents/EditFileButtons'
 import FilePreview from '../FilePreview'
+import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
 
 export default class FileUpdate extends React.Component{
 
@@ -99,15 +100,11 @@ export default class FileUpdate extends React.Component{
                 style={{position: "relative"}}
                 >
                     <div>
-                        <DropDownList 
-                                title={"filter by artwork families"}
-                                state={this.props.state}
-                                array={this.props.state.artworkFamilyList}
-                                string={"artworkFamily"}
-                                onChange={this.filterByFamily}
-                                id="artworkFamily-fileUpdata"
-                                displayAddNew="none"
+                        <SelectFamily 
+                            context={this.props.context}
+                            onChange={this.filterByFamily}
                         />
+
                         <Button
                             size="sm"
                             variant="primary"
@@ -117,7 +114,7 @@ export default class FileUpdate extends React.Component{
                         </Button>
                     </div>
 
-                    <div style={{display: "flex", flexWrap: "wrap"}}>
+                    <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-around"}}>
                         {
                             Object.keys(this.state.fileList).map(fileName => {
                                 return this.EditDetail(this.props.state.artworkInfoData[fileName])
