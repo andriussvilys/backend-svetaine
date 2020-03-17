@@ -1,13 +1,8 @@
 import React from 'react';
 import { Context } from '../../Provider';
-// import axios from 'axios';
-// import BootstrapModal from './BootstrapModal';
 import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import Spinner from 'react-bootstrap/Spinner'
-// import '../css/components/extendedList.css';
-// import '../css/components/imageInfo.css';
-// import openIconic from 'open-iconic';
 
 class AddNew extends React.Component{
 
@@ -23,9 +18,6 @@ constructor(props){
         spinnerDisplay: "d-none",
         saveButtonDisable: false
     }
-    // this.openModal = () => {
-    //     this.setState({modalShow: !this.state.modalShow})
-    // }
     this.handleClose = () => this.setState({
         setShow: false, 
         show: false,
@@ -55,7 +47,7 @@ render(){
                 <div 
                 className="imageInfo--box" 
                 style={{
-                    display: `initial`,
+                    display: `flex`,
                     margin: "0px",
                     marginLeft: "10px"
                     
@@ -81,6 +73,7 @@ render(){
                         className="button-extend"
                         > SEND
                         </Button>
+
                     <Modal show={this.state.show} onHide={this.handleClose}>
                         <Modal.Header closeButton>
                         <Modal.Title>Add to {this.props.stateKey}</Modal.Title>

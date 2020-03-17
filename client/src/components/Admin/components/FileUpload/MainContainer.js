@@ -49,6 +49,7 @@ export default class MainContainer extends React.Component{
         let list = this.sortByFamily().familyNames.map(familyName => {
             return (
                 <FamilyList 
+                    key={`familyList-${familyName}`}
                     familyName={familyName}
                     context={this.context}
                     files={sortedData.fileByFamily[familyName]}

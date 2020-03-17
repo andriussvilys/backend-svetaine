@@ -1,14 +1,13 @@
 import React, { Fragment } from 'react';
-import { Link} from 'react-router-dom'
 
 import Button from 'react-bootstrap/Button';
 
-import DropDownList from '../DropDownList'
 import BootstrapModal from '../BootstrapModal';
 import ImageBox from '../ImageBox/ImageBox';
 import EditFileButtons from '../ImageBox/optionalComponents/EditFileButtons'
 import FilePreview from '../FilePreview'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
+import { Accordion } from 'react-bootstrap';
 
 export default class FileUpdate extends React.Component{
 
@@ -27,9 +26,6 @@ export default class FileUpdate extends React.Component{
         this.setState({showModal: false})
     }
     onModalClick = (fileName) => {
-        console.log("on MODAL CLICK")
-        console.log(fileName)
-        console.log(this.props.context.state.artworkInfoData[fileName])
         let newState = {...this.state}
         newState.fileToDelete = this.props.context.state.artworkInfoData[fileName]
         newState.showModal = true
@@ -56,8 +52,6 @@ export default class FileUpdate extends React.Component{
     }
 
     filterByFamily = (value) => {
-        console.log('call filterByFamily')
-        console.log(value)
         let newRenderList = {}
         const data = this.state.allFiles
         const list = Object.keys(this.state.allFiles)
@@ -99,7 +93,9 @@ export default class FileUpdate extends React.Component{
                 id={'familyContainer'}
                 style={{position: "relative"}}
                 >
-                    <div>
+                    <Accordion
+                        title={"filter by family"}
+                    >
                         <SelectFamily 
                             context={this.props.context}
                             onChange={this.filterByFamily}
@@ -112,7 +108,8 @@ export default class FileUpdate extends React.Component{
                         >
                             reload file list
                         </Button>
-                    </div>
+                    </Accordion>
+
 
                     <div style={{display: "flex", flexWrap: "wrap", justifyContent: "space-around"}}>
                         {

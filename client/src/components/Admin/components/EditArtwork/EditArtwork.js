@@ -72,6 +72,7 @@ const EditArtwork = (props) => {
                     <SeeAlsoContainer 
                         directory={props.context.state.fileData.files[props.file.fileName].seeAlso}
                         initialData={props.context.state.artworkInfoData}
+                        context={props.context}
                     />
                 </Accordion>
 

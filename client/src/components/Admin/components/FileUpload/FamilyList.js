@@ -30,6 +30,7 @@ export default class FamilyList extends React.Component{
         let list = files.map(file => {
             return (
                 <EditArtwork 
+                    key={`EditArtwork-${file.fileName}`}
                     context={this.props.context}
                     file={file}
                 />
