@@ -4,7 +4,7 @@ import { Provider } from '../Provider';
 import { BrowserRouter,  Link } from 'react-router-dom';
 import ImageInfo from './Create';
 import Edit from './Edit'
-import Delete from './Delete'
+import Delete from './oldComponents/Delete'
 import {PrivateRoute} from '../PrivateRoute'
 
 import auth from '../Auth'
@@ -56,7 +56,7 @@ const Admin = (props) => {
                             <Button
                                 onClick={() => {
                                     auth.logout( () => {
-                                        props.history.push('/')
+                                        props.history.push('/admin/login')
                                     })
                                 }}
                             >

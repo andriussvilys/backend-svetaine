@@ -32,7 +32,6 @@ const Filters = (props) => {
                     state={props.context.state}
                     dataArray={props.context.state.themesData}
                     onChange={onChange}
-                    isChecked={isChecked}
                     fileName={data.fileName ? data.fileName : null}
                 />
             </Accordion>

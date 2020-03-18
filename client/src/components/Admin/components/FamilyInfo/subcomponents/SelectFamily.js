@@ -7,11 +7,14 @@ const SelectFamily = (props) => {
             title={'Select Artwork Family'}
             state={props.context.state}
             array={props.context.state.artworkFamilyList}
-            string={"artworkFamily"}
             onChange={props.onChange || props.context.getFamilySetup}
+            uncontrolled={props.uncontrolled}
+            checkbox
             fileName={props.fileName}
-            // isChecked={props.context.familySetupMethods.isChecked}
+            string={"artworkFamily"}
             id="List-of-artwork-families"
+            highlighted={props.highlighted}
+
             router={'/api/familySetup/create'}
             addNewTarget={'artworkFamilyList'}
             addNew={props.addNew}

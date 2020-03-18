@@ -9,6 +9,7 @@ export default class SeeAlsoContainer extends React.Component{
     constructor(props){
         super(props);
         this.state = {
+            highlighted: {artworkFamily: []},
             fileList: this.props.initialData,
             allFiles: this.props.initialData
         }
@@ -26,17 +27,60 @@ export default class SeeAlsoContainer extends React.Component{
     return <div className="admin-seeAlso-container">{list}</div>
     }
 
-    filterByFamily = (value) => {
-        let newRenderList = {}
-        const data = this.state.allFiles
-        const list = Object.keys(this.state.allFiles)
-        list.forEach(objName => {
-            if(data[objName].artworkFamily === value){
-                const obj = data[objName]
-                newRenderList = {...newRenderList, [objName]: obj}
+    filterByFamily = (value, checked, string) => {
+        console.log("filter family runs")
+        let newState = {...this.state}
+
+            //REMOVE
+        if(!checked){
+            const data = this.state.fileList
+            const list = Object.keys(this.state.fileList)
+            let newList = {}
+            let newHighlighted = []
+            list.forEach(objName => {
+                const currentObj = data[objName]
+                if(currentObj.artworkFamily !== value){
+                    newList = {...newList, [objName]: currentObj}
+                    // newHighlighted = [...newHighlighted, objName]
+                }
+            })
+            newState.fileList = newList
+            // newState.highlighted[string] = newHighlighted
+            newHighlighted = list.filter(fileName => {
+                return data[fileName].artworkFamily !== value
+            })
+            console.log("newState.highlighted[string]")
+            console.log(newHighlighted)
+            return this.setState(newState)
+            // return this.setState({fileList: newList, highlighted: {...this.state.highlighted,
+            //     [string]: newHighlighted
+            // }})
+        }
+
+            //ADD
+        else{
+            let newList = {...this.state.fileList}
+            if(Object.keys(this.state.fileList).length === Object.keys(this.state.allFiles).length){
+                newList = {}
             }
-        })
-        this.setState({fileList: newRenderList})
+            const data = this.state.allFiles
+            const list = Object.keys(this.state.allFiles)
+            if(!newState.highlighted[string]){
+                newState.highlighted[string] = []
+            }
+            let newHighlighted = newState.highlighted[string]
+            list.forEach(objName => {
+                if(data[objName].artworkFamily === value){
+                    const obj = data[objName]
+                    newList = {...newList, [objName]: obj}
+                    newHighlighted = [...newHighlighted, objName]
+                }
+            })
+            newState.fileList = newList
+            newState.highlighted[string] = newHighlighted
+            console.log(newState.highlighted)
+            return this.setState(newState)
+        }
     }
 
     reloadAll = () => {
@@ -57,6 +101,9 @@ export default class SeeAlsoContainer extends React.Component{
                     <SelectFamily 
                         context={this.props.context}
                         onChange={this.filterByFamily}
+                        checkbox
+                        uncontrolled
+                        highlighted={this.state.highlighted}
                     />
                     <Button 
                         onClick={() => {

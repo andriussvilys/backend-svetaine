@@ -8,7 +8,7 @@ import FrontEndContext from './components/FrontEnd/FrontEndContext'
 import Create from './components/Admin/Create';
 import Admin from './components/Admin/Admin'
 import Edit from './components/Admin/Edit'
-import Delete from './components/Admin/Delete'
+import Delete from './components/Admin/oldComponents/Delete'
 import Login from './components/Login'
 import "bootstrap/dist/css/bootstrap.min.css";
 import './css/main.css';

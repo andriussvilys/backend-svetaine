@@ -81,6 +81,7 @@ export default class ServerFileUpdate extends React.Component {
                 title={"See Also"}
             >
                 <SeeAlsoContainer 
+                    context={this.props.context}
                     directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
                     initialData={this.props.context.state.artworkInfoData}
                 />

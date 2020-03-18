@@ -7,7 +7,7 @@ import ImageBox from '../ImageBox/ImageBox';
 import EditFileButtons from '../ImageBox/optionalComponents/EditFileButtons'
 import FilePreview from '../FilePreview'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
-import { Accordion } from 'react-bootstrap';
+import Accordion from '../Accordion';
 
 export default class FileUpdate extends React.Component{
 

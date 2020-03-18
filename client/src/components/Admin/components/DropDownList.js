@@ -26,6 +26,21 @@ export default class DropDownList extends React.Component{
         }
 
         const highlighter = (string, listItem) => {
+            console.log("HIGHLIGHTER RUNS")
+            if(this.props.highlighted){
+                let highlighted = null
+                if(this.props.highlighted[string] && this.props.highlighted[string].includes(listItem)){
+                    highlighted = true
+                }
+                else{
+                    highlighted = false
+                }
+                if(highlighted){
+                }
+                console.log()
+                return highlighted
+            }
+
             if(string === "artworkFamily"){
             }
             if(!statePath[string]){
@@ -50,14 +65,34 @@ export default class DropDownList extends React.Component{
                 key={`${string}-${listItem}`}
                 >
                     <span className="themes-span">{listItem}</span>
-                    <input 
-                    className="themes-checkbox" 
-                    type={string === "artworkFamily" ? "radio" : "checkbox"}
-                    value={listItem}
-                    checked={highlighter(string, listItem)}
-                    // checked={highlighter(string, listItem)}
-                    onChange={(e) => this.props.onChange(e.target.value, string, fileName)}
-                    />
+
+                    {this.props.uncontrolled ?   
+                        <input 
+                            className="themes-checkbox" 
+                            type={ !this.props.checkbox ? "radio" : "checkbox"}
+                            checked={highlighter(string, listItem)}
+                            value={listItem}
+                            onChange={(e) => {
+                                this.props.onChange(e.target.value, e.target.checked, string)
+                                    // e.target.parentNode.classList.toggle('themes-list--selected')
+                                return
+                            }}
+                        />
+
+                        :
+
+                        <input 
+                            className="themes-checkbox" 
+                            type={ !this.props.checkbox ? "radio" : "checkbox"}
+                            value={listItem}
+                            checked={highlighter(string, listItem)}
+                            onChange={(e) => {
+                                this.props.onChange(e.target.value, string, fileName)
+                                return
+                            }}
+                        />   
+                    }
+
                 </li>
             )
         })
@@ -104,7 +139,6 @@ export default class DropDownList extends React.Component{
             className="extendedList--form imageInfo--box"
             style={{margin: 0}}
             >
-                <p>{this.props.listName}</p>
                     <div style={{display: "flex", flexWrap: "wrap"}}>
                         {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
                     </div>

@@ -9,15 +9,17 @@ const Themes = (props) => {
         array={props.dataArray}
         onChange={props.onChange}
         isChecked={props.isChecked}
+        checkbox
         fileName={props.fileName}
-        // onChange={this.context.familySetupMethods.onChange}
-        // isChecked={this.context.familySetupMethods.isChecked}
         string={"themes"}
         id="Themes-list"
+        
         router={'/api/themes/update'}
         addNewTarget={'themesData'}
         addNew={true}
         requestKey={"list"}
+        // isChecked={this.context.familySetupMethods.isChecked}
+        // onChange={this.context.familySetupMethods.onChange}
         />
     )
 }

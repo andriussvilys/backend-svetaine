@@ -54,7 +54,7 @@ const ArtworkInfo = (props) => {
                         <p className="subtitle">this is describes particulars of a work in a series or exhibit in a show</p>
                     </div>
                     <textarea
-                        value={props.file.artworkDescription}
+                        value={props.file.artworkDescription || ""}
                     onChange={
                         (e) => props.onChange(e, "artworkDescription", props.file.fileName)
                     }
