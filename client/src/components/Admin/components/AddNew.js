@@ -28,10 +28,20 @@ constructor(props){
 
     this.handleShow = (e) => {
         e.preventDefault()
-        this.setState({setShow: true, show: true})
+        this.setState({
+            setShow: true, 
+            show: true,
+            modalMessage: <span>Add <em>{document.getElementById(`add-${this.props.stateKey}-item`).value}</em> to <em>{this.props.stateKey}</em>?</span>
+        })
     };
-    this.changeButtonText = () => {
-        this.setState({spinnerDisplay: "d-none", saveButtonText: "Done", saveButtonDisable: true})
+    this.changeButtonText = (message) => {
+        this.setState({
+            spinnerDisplay: "d-none", 
+            saveButtonText: "Done", 
+            saveButtonDisable: true,
+            modalMessage: message
+            
+        })
     };
 }
 
@@ -79,12 +89,13 @@ render(){
                         <Modal.Title>Add to {this.props.stateKey}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {
+                            {/* {
                                 `save ${
                                     document.getElementById(`add-${this.props.stateKey}-item`) ? 
                                     document.getElementById(`add-${this.props.stateKey}-item`).value 
                                     : ""} to ${this.props.stateKey}?` 
-                            }
+                            } */}
+                            {this.state.modalMessage}
                         </Modal.Body>
                         <Modal.Footer>
                         <Button variant="secondary" onClick={this.handleClose}>
@@ -95,8 +106,10 @@ render(){
                         disabled={this.state.saveButtonDisable}
                         variant="primary"
                         onClick={ (e) => {
-                            this.setState({saveButtonText: ""})
-                            this.setState({spinnerDisplay: "d-block"})
+                            this.setState({
+                                saveButtonText: "",
+                                spinnerDisplay: "d-block",
+                            })
                             this.context.addNew(
                                 e,
                                 `add-${this.props.stateKey}-item`,

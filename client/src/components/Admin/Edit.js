@@ -6,7 +6,8 @@ import EditDetailContainer from './components/EditPage/EditDetailContainer';
 import ServerFileUpdate from './components/EditPage/ServerFileUpdate';
 import Accordion from './components/Accordion';
 import BootstrapModal from './components/BootstrapModal';
-import GlobalSetup from './components/Create/GlobalSetup';
+import Filters from './components/Filters/Filters';
+import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
 
 export default class Edit extends Component{
     static contextType = Context;
@@ -60,14 +61,14 @@ export default class Edit extends Component{
                                         <Accordion
                                             title={"Update or Create family record"}
                                         >
-                                            <GlobalSetup
+                                            <EditFamilyInfo 
                                                 context={this.context}
-                                            >
-                                                <div style={{width: "100%", height: "200px", backgroundColor: "yellow"}}>
-
-                                                </div>
-                                            </GlobalSetup>
+                                            />
+                                            <Filters 
+                                                context={this.context}
+                                            />
                                         </Accordion>
+
                                     </Route>
                                     <Route 
                                         path="/admin/edit/:fileName"
