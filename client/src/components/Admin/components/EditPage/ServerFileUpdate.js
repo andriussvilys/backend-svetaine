@@ -34,7 +34,20 @@ export default class ServerFileUpdate extends React.Component {
     onClose = () => {
         this.setState({showModal: false})
     }
+    verify = () => {
+        const result = this.props.context.verify()
+        if(result === "verified"){
+          return true
+        }
+        else{
+          this.setState({...result})
+          return false
+        }
+      }
     render(){
+        // if(!this.props.file){
+        //     return null
+        // }
         return(
         <div className="FamilyList--detail_update">
 
@@ -100,6 +113,9 @@ export default class ServerFileUpdate extends React.Component {
                     variant="success"
                     className="custom-button"
                     onClick={() => {
+                        if(!this.verify()){
+                            return
+                        }
                         this.setState({showModal: true, modalMessage: "loading..."})
                         const postRes = this.props.context.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
                         postRes.then( res => {

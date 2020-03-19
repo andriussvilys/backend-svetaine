@@ -43,6 +43,16 @@ constructor(props){
             
         })
     };
+    this.verify = () => {
+        const result = this.context.verify()
+        if(result === "verified"){
+          return true
+        }
+        else{
+          this.setState({...result})
+          return false
+        }
+      }
 }
 
 
@@ -81,7 +91,8 @@ render(){
                         type="submit" 
                         form={`formFor-${this.props.stateKey}`}
                         className="button-extend"
-                        > SEND
+                        > 
+                        SEND
                         </Button>
 
                     <Modal show={this.state.show} onHide={this.handleClose}>
@@ -89,12 +100,6 @@ render(){
                         <Modal.Title>Add to {this.props.stateKey}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                            {/* {
-                                `save ${
-                                    document.getElementById(`add-${this.props.stateKey}-item`) ? 
-                                    document.getElementById(`add-${this.props.stateKey}-item`).value 
-                                    : ""} to ${this.props.stateKey}?` 
-                            } */}
                             {this.state.modalMessage}
                         </Modal.Body>
                         <Modal.Footer>
@@ -106,6 +111,9 @@ render(){
                         disabled={this.state.saveButtonDisable}
                         variant="primary"
                         onClick={ (e) => {
+                            if(!this.verify({addNew: true})){
+                                return
+                            }
                             this.setState({
                                 saveButtonText: "",
                                 spinnerDisplay: "d-block",

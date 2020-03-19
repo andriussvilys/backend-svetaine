@@ -25,7 +25,25 @@ export default class FileUpdate extends React.Component{
     onClose = () => {
         this.setState({showModal: false})
     }
+
+    verify = () => {
+        const result = this.props.context.verify()
+        console.log("result")
+        console.log(result)
+        if(result === "verified"){
+          return true
+        }
+        else{
+          this.setState({...result})
+          return false
+        }
+      }
+
     onModalClick = (fileName) => {
+        if(!this.verify()){
+            this.setState({modalConfirm: false})
+            return
+        }
         let newState = {...this.state}
         newState.fileToDelete = this.props.context.state.artworkInfoData[fileName]
         newState.showModal = true

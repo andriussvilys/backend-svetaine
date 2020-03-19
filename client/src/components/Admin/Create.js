@@ -20,22 +20,15 @@ export default class Create extends Component{
     }
   }
 
-  verify= () => {
-    if(auth.guest){
-      this.setState({
-        showModal: true, 
-        modalMessage: "You do not have the rights for this action. Log in using admin level account"
-      })
+  verify = () => {
+    const result = this.context.verify()
+    if(result === "verified"){
+      return true
+    }
+    else{
+      this.setState({...result})
       return false
     }
-    if(!this.context.state.familySetupData.artworkFamily){
-      this.setState({
-        showModal: true,
-        modalMessage: "Select or add a new artwork family"
-      })
-      return false
-    }
-    else{return true}
   }
   submitButtons = () => {
         return <Fragment>
@@ -60,11 +53,11 @@ export default class Create extends Component{
                                             this.setState({
                                               modalMessage: res
                                             })
+                                          })
                                           .catch(err => {
                                             this.setState({
                                               modalMessage: err
                                             })
-                                          })
                                           })
                                     })
                                     return
@@ -81,10 +74,26 @@ export default class Create extends Component{
                              size="sm"
                              onClick={
                                 () => {
-                                  if(this.verify()){
+                                  if(!this.verify()){
                                     return
                                   }
-                                  this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
+                                  this.setState({
+                                    showModal: true,
+                                    modalMessage: "...loading..."
+                                  }, () => {
+
+                                    this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
+                                      .then(res => {
+                                        this.setState({
+                                          modalMessage: res
+                                        })
+                                      })
+                                      .catch(err => {
+                                        this.setState({
+                                          modalMessage: err
+                                        })
+                                      })
+                                  })
                                   return
                                 }
                              }
@@ -98,7 +107,7 @@ export default class Create extends Component{
                              variant="primary" 
                              size="sm"
                              onClick={() => {
-                                if(this.verify()){
+                                if(!this.verify()){
                                   return
                                 }
                                this.context.fileDataMethods.updateArtworkByFamily(this.context.state.familySetupData.artworkFamily)

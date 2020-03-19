@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import auth from './Auth'
 
 // import FilePreview from './FilePreview'
 
@@ -72,12 +73,14 @@ export class Provider extends React.Component{
                     console.log("res")
                     console.log(res)
                     let addition = res.data[requestKey]
-                    this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
                       if(callback){
                           callback("Successfully recored")
                       }
+                    // this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
+                    //   if(callback){
+                    //       callback("Successfully recored")
+                    //   }
                       resolve(addition)
-                    })
                   })
                   .catch( err => {
                       console.log("error!!!")
@@ -113,15 +116,6 @@ export class Provider extends React.Component{
                   })
             }) 
         }
-        // promise
-        // .then(res => {
-        //     this.setState({ [stateKey]: [...this.state[stateKey], newAddition]})
-        // })
-        // .then(res => {
-        //     if(callback){
-        //         callback()
-        //     }
-        // })
     }
 
     //creates an array of all files in the server uploads folder
@@ -1872,9 +1866,17 @@ export class Provider extends React.Component{
                 return
             }
 
-            axios.put(`/api/familySetup/update/${familyName}`, requestBody)
-                .then( res => { alert('success')})
-                .catch(err => {console.log(err); alert(err)})
+            return new Promise((resolve, reject) => {
+                axios.put(`/api/familySetup/update/${familyName}`, requestBody)
+                    .then( res => { 
+                        console.log(res)
+                        resolve(`Artwork Family ${familyName} succesfully updated`)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        reject("Artwork family update failed")
+                    })
+            })
 
         },
         getRelatedArtwork: (artworkFamily, newState) => {
@@ -1942,6 +1944,24 @@ export class Provider extends React.Component{
             return this.setState({[propertyName]: value})
         }
     }//end of familySetupMethods
+    this.verify = (props) => {
+        if(auth.guest){
+        return {
+            showModal: true, 
+            modalMessage: "You do not have the rights for this action. Log in using admin level account"
+        }
+        }
+        if(props){
+            if(props.addNew && !this.state.familySetupData.artworkFamily){
+                return {
+                    showModal: true,
+                    modalMessage: props && props.customError ? props.customError : "Select or add a new artwork family"
+                }
+            }
+        }
+
+        else{return "verified"}
+    }
 
 }//END OF CONTSTRUCTOR
 
@@ -2048,6 +2068,7 @@ export class Provider extends React.Component{
             readImageDir: this.readImageDir,
             changeFileName: this.changeFileName,
             onChange: this.onChange,
+            verify: this.verify,
             addNew: this.addNew,
 
             } }>
