@@ -7,11 +7,15 @@ class Auth {
         if(props && props.guest){
             this.guest = true
         }
+        else{
+            this.guest = false
+        }
         this.authenticated = true
         cb()
     }
     logout(cb){
         this.authenticated = false
+        this.guest = null
         cb()
     }
     isAuthenticated(){

@@ -30,7 +30,7 @@ export default class FileUpdate extends React.Component{
         const result = this.props.context.verify()
         console.log("result")
         console.log(result)
-        if(result === "verified"){
+        if(result.verified){
           return true
         }
         else{

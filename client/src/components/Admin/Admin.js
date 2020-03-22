@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button'
 import { Provider } from '../Provider';
 import { BrowserRouter,  Link } from 'react-router-dom';
-import ImageInfo from './Create';
+import Create from './Create';
 import Edit from './Edit'
 import Delete from './oldComponents/Delete'
 import {PrivateRoute} from '../PrivateRoute'
@@ -10,6 +10,8 @@ import {PrivateRoute} from '../PrivateRoute'
 import auth from '../Auth'
 
 const Admin = (props) => {
+    console.log("auth in Admin")
+    console.log(auth)
     return(    
         <BrowserRouter>
             <Provider>
@@ -66,7 +68,7 @@ const Admin = (props) => {
                         </ul>
                     </nav>
 
-                    <PrivateRoute path="/admin/create" component={ImageInfo} guest={auth.guest} />
+                    <PrivateRoute path="/admin/create" component={Create} guest={auth.guest}/>
                     <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
                     <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
                 </div>

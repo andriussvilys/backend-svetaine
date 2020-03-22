@@ -662,12 +662,17 @@ export class Provider extends React.Component{
         },
 
         serverFileToState: (file) => {
-            let newState = {...this.state}
-            newState.fileData.files = {...newState.fileData.files, [file.fileName]: file}
-                if(!file.displayTriggers){
-                    newState.fileData.files[file.fileName].displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+            return new Promise((resolve, reject) => {
+                if(!file){
+                    reject("file record not found")
                 }
-            this.setState(newState)
+                let newState = {...this.state}
+                newState.fileData.files = {...newState.fileData.files, [file.fileName]: file}
+                    if(!file.displayTriggers){
+                        newState.fileData.files[file.fileName].displayTriggers = {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+                    }
+                this.setState(newState, () => {resolve("file transferred")})
+            })
         },
         
         /**
@@ -1291,7 +1296,7 @@ export class Provider extends React.Component{
         updateArtworkInfo: (file) => {
             return new Promise((resolve, reject) => {
                 if(!file.category || !Object.keys(file.category).length > 0 ){
-                    resolve(`To submit, select categories for file ${file.fileName}`)
+                    reject(`To submit, select categories for file ${file.fileName}`)
                 }
 
                 else{
@@ -1320,6 +1325,11 @@ export class Provider extends React.Component{
                                             resolve('file updated')
                                         }
                                     })
+                                    .catch(rej => {
+                                        console.log("Record update failed")
+                                        console.log(rej)
+                                        reject("Record update failed")
+                                    })
                             })
                     }
                 }
@@ -1331,56 +1341,70 @@ export class Provider extends React.Component{
                 return
             }
 
-            this.familySetupMethods.updateFamilySetup(this.state.familySetupData.artworkFamily)
+            return new Promise((resolve, reject) => {
 
-            const fileNamesInFamily = Object.keys(this.state.relatedArtwork[familyName].files)
-            const updateLength = fileNamesInFamily.length
-            let progress = 0
-            if(updateLength > 0){
-                this.state.relatedArtwork[familyName].column.fileIds.forEach((fileName, index) => {
-                    const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
-
-                    const familyData = this.state.familySetupData
-                    const {category, themes, seeAlso, familyDescription, year, location, displayTriggers} = familyData
-                    let fileData = this.state.relatedArtwork[familyName].files[fileName]
-                    delete fileData.__v
-                    delete fileData._id
-                    delete fileData.relatedArtwork
-                    fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location, displayTriggers}
-                    console.log(fileData)
-                    axios.put(`/api/artworkInfo/update/${fileName}`, fileData)
-                        .then(res => {
-                            progress += 1
-                            console.log(`progress: ${progress}/${updateLength}`)
-                            if(progress === updateLength){
-                                axios.get(`/api/artworkInfo/${familyName}`)
-                                    .then(res => {
-                                        console.log("artworks updated")
-                                        console.log(res)
-                                        return res
-                                    })
-
-                            }
+                this.familySetupMethods.updateFamilySetup(this.state.familySetupData.artworkFamily)
+                .then(res => {
+                    const fileNamesInFamily = Object.keys(this.state.relatedArtwork[familyName].files)
+                    const updateLength = fileNamesInFamily.length
+                    let progress = 0
+                    if(updateLength > 0){
+                        this.state.relatedArtwork[familyName].column.fileIds.forEach((fileName, index) => {
+                            const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
+        
+                            const familyData = this.state.familySetupData
+                            const {category, themes, seeAlso, familyDescription, year, location, displayTriggers} = familyData
+                            let fileData = this.state.relatedArtwork[familyName].files[fileName]
+                            delete fileData.__v
+                            delete fileData._id
+                            delete fileData.relatedArtwork
+                            fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location, displayTriggers}
+                            console.log(fileData)
+                            axios.put(`/api/artworkInfo/update/${fileName}`, fileData)
+                                .then(res => {
+                                    progress += 1
+                                    console.log(`progress: ${progress}/${updateLength}`)
+                                    if(progress === updateLength){
+                                        axios.get(`/api/artworkInfo/${familyName}`)
+                                            .then(res => {
+                                                console.log("artworks updated")
+                                                console.log(res)
+                                                resolve(res)
+                                            })
+                                            .catch(rej => {
+                                                console.log("error")
+                                                console.log(rej)
+                                                reject(rej)
+                                            })
+        
+                                    }
+                                })
+                                .catch(rej => {
+                                    console.log("error")
+                                    console.log(rej)
+                                    reject(rej)
+                                })
                         })
-                        .catch(res => {
-                            console.log("error")
-                            console.log(res)
-                            return res
-                        })
+                    }
+    
                 })
-            }
+                .catch(rej => {
+                    console.log(rej);
+                    reject(rej)
+                })
+            })
         },
 
         postArtworkInfo: (file) => {
             console.log('post artwork info RUNS with')
             console.log(file)
-            return new Promise((resolve, rej) => {
+            return new Promise((resolve, reject) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
-                    return resolve('A file with the same name has been registered before. To update it, select "EDIT" tab')
+                    reject('A file with the same name has been registered before. To update it, select "EDIT" tab')
                 }
 
                 if(!file.category || !Object.keys(file.category).length > 0 ){
-                    return resolve('To submit, select categories for this file')
+                    reject('To submit, select categories for this file')
                 }
 
                 const image = document.getElementById(`${file.fileName}-upload`)
@@ -1392,19 +1416,15 @@ export class Provider extends React.Component{
 
                 const artworkFamily = file.artworkFamily || "none"
 
-                // const recorded = axios.get(`/api/artworkInfo/${artworkFamily}`).then(res => {
-                //     console.log('RECORDED RES***********')
-                //     console.log(res)
-                // })
                     console.log(`registering to ${artworkFamily}`)
 
                         const obj = this.state.relatedArtwork[artworkFamily].files[file.fileName]
                         const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
                         let fileData = null
                         
-                        //check if the file is uploaded to server
                         if(this.state.serverFileDir.includes(file.fileName)){
-                            return resolve(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
+                            console.log("file in serverFileDir")
+                            reject(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
                         }
             
                         else{
@@ -1443,27 +1463,23 @@ export class Provider extends React.Component{
 
                             axios.post('/api/artworkInfo/create', fileDataObject)
                             .then( res => { 
-                                // this.fileDataMethods.updateArtworkByFamily(artworkFamily)
                                     console.log('new record craeted')
                                     console.log(res)
                                     this.fileDataMethods.uploadFile(file.fileName)
                                         .then(res => {
                                             console.log("file uploaded")
                                             console.log(res)
-                                            return resolve("file uploaded")
+                                            resolve("file uploaded")
                                         })
-                                        // let newState = {...this.state}
-                                        // this.familySetupMethods.getArtworkInfo()
-                                        //     .then(res => {
-                                        //         console.log("getArtworkInfo")
-                                        //         newState.artworkInfoData = res
-                                        //         newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
-                                        //         this.setState(newState, () => {return resolve(`new file registered in "${file.artworkFamily}" family`)})
-                                                
-                                        //     })
-                                        //     .catch(err=>console.log(err))
+                                        .catch(err => {
+                                            console.log(err); 
+                                            reject(err)
+                                        })
                                 })
-                                .catch(err => {console.log(err); return rej('upload failed')})
+                            .catch(err => {
+                                console.log(err); 
+                                reject(err)
+                            })
                         }
             })
 
@@ -1827,17 +1843,20 @@ export class Provider extends React.Component{
                 location: location,
                 year: year
             }
-            return new Promise ((res, rej) => {
+            return new Promise ((resolve, reject) => {
+                if(!this.state.familySetupData.artworkFamily){
+                    reject("Please select artwork family or add a new one")
+                }
                 axios.post('/api/familySetup/create', requestBody)
                     .then( res => {
                         console.log("create fam succes")
                         console.log(res)
-                        res("create fam succes")
+                        resolve("create fam succes")
                     })
                     .catch(err => {
                         console.log("create fam failed")
                         console.log(err)
-                        res("create fam failed")
+                        reject("create fam failed")
                     })
             })
         },
@@ -1862,9 +1881,9 @@ export class Provider extends React.Component{
                 year: year
             }
 
-            if(!this.state.familySetupData.artworkFamily){
-                return
-            }
+            // if(!this.state.familySetupData.artworkFamily){
+            //     return
+            // }
 
             return new Promise((resolve, reject) => {
                 axios.put(`/api/familySetup/update/${familyName}`, requestBody)
@@ -1947,7 +1966,8 @@ export class Provider extends React.Component{
     this.verify = (props) => {
         if(auth.guest){
         return {
-            showModal: true, 
+            showModal: true,
+            verified: false, 
             modalMessage: "You do not have the rights for this action. Log in using admin level account"
         }
         }
@@ -1960,7 +1980,7 @@ export class Provider extends React.Component{
             }
         }
 
-        else{return "verified"}
+        else{return {verified: true}}
     }
 
 }//END OF CONTSTRUCTOR
@@ -2031,7 +2051,11 @@ export class Provider extends React.Component{
             let ServerFiles = new Promise((resolve, rej) => {
                 axios.get('/fetchImages')
                     .then(res => {
-                        newState.serverFileDir = res.data; 
+                        const serverFileDir = res.data.map(name => {
+                            return name.replace("-thumbnail", "")
+                        })
+                        newState.serverFileDir = serverFileDir
+                        // newState.serverFileDir = res.data; 
                         resolve()
                     })
             }) 

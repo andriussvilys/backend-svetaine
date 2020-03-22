@@ -45,7 +45,7 @@ constructor(props){
     };
     this.verify = () => {
         const result = this.context.verify()
-        if(result === "verified"){
+        if(result.verified){
           return true
         }
         else{

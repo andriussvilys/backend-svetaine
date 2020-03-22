@@ -30,13 +30,15 @@ const Login = (props) => {
                                 console.log(username, password)
                                 axios.get(`/api/users/${username}`)
                                     .then(res => {
-                                        console.log(res.data)
                                         if(res.data.password && res.data.password === password){
-                                            if(username === "guest"){
+                                            if(res.data.username === "guest"){
+                                            // if(username === "guest"){
+                                                console.log("LOGGED IN AS GUEST")
                                                 auth.login( () => props.history.push('/admin/create'), {guest: true})
                                             }
                                             else{
-                                                auth.login( () => props.history.push('/admin/create'))
+                                                console.log("LOGGED IN AS ------------------ADMIN")
+                                                auth.login( () => props.history.push('/admin/create'), {guest: false})
                                             }
                                         }
                                         else{

@@ -1,5 +1,6 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button'
+import {Link} from 'react-router-dom'
 
 import Accordion from '../Accordion'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
@@ -36,7 +37,7 @@ export default class ServerFileUpdate extends React.Component {
     }
     verify = () => {
         const result = this.props.context.verify()
-        if(result === "verified"){
+        if(result.verified){
           return true
         }
         else{
@@ -102,6 +103,8 @@ export default class ServerFileUpdate extends React.Component {
 
 
             <div className="FamilyList--submit-delete-container">  
+
+            <Link to={`/admin/edit`}>
                 <Button
                     variant="danger"
                     className="custom-button"
@@ -109,6 +112,7 @@ export default class ServerFileUpdate extends React.Component {
                 >
                     Cancel
                 </Button>   
+            </Link>
                 <Button
                     variant="success"
                     className="custom-button"

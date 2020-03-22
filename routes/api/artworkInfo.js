@@ -53,7 +53,7 @@ upload.single('artworkImage'),
     console.log(req.body.fileName)
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
-    .catch(err => console.error(err))
+    .catch(err => res.status(500).send(err))
 })
 
 router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {

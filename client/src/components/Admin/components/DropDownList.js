@@ -26,7 +26,6 @@ export default class DropDownList extends React.Component{
         }
 
         const highlighter = (string, listItem) => {
-            console.log("HIGHLIGHTER RUNS")
             if(this.props.highlighted){
                 let highlighted = null
                 if(this.props.highlighted[string] && this.props.highlighted[string].includes(listItem)){
@@ -37,7 +36,6 @@ export default class DropDownList extends React.Component{
                 }
                 if(highlighted){
                 }
-                console.log()
                 return highlighted
             }
 

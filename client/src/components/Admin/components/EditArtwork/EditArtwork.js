@@ -93,8 +93,12 @@ const EditArtwork = (props) => {
                             showModal = true;
                             modalMessage = "loading..."
                             const postRes = props.context.fileDataMethods.postArtworkInfo(props.file)
-                            postRes.then( res => {
+                            postRes
+                            .then( res => {
                                 modalMessage = res
+                            })
+                            .catch(err => {
+                                modalMessage = err
                             })
                         }
                         }
