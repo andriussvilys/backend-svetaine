@@ -22,6 +22,7 @@ export default class SeeAlsoContainer extends React.Component{
                         key={`seeAlso-${fileName}`}
                         file={data[fileName]}
                         directory={this.props.directory}
+                        onChange={this.props.context.onChange}
                     />
         })
     return <div className="admin-seeAlso-container">{list}</div>

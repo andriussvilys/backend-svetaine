@@ -21,11 +21,12 @@ const SeeAlso = (props) => {
                             name="useAsSeeAlso" 
                             id="useAsSeeAlso__radio-yes" 
                             value="yes" 
-                            onChange={() => {
+                            onChange={(e) => {
 
-                                props.onChange( props.file.fileName, "seeAlso", props.file.fileName, 
-                                    props.callBack(props.file.fileName, props.fileName, true)
-                                )
+                                props.onChange(e, "seeAlso", props.file.fileName)
+                                // props.onChange( props.file.fileName, "seeAlso", props.file.fileName, 
+                                //     props.callBack(props.file.fileName, props.fileName, true)
+                                // )
                             }}
                             checked={highlighter(props.file.fileName)}
                             />
@@ -39,8 +40,9 @@ const SeeAlso = (props) => {
                             name="useAsSeeAlso" 
                             id="useAsSeeAlso__radio-no" 
                             value="no" 
-                            onChange={() => {
-                                props.onChange( props.file.fileName, "seeAlso", props.file.fileName)
+                            onChange={(e) => {
+                                props.onChange(e, "seeAlso", props.file.fileName)
+                                // props.onChange( props.file.fileName, "seeAlso", props.file.fileName)
                             }}
                             checked={!highlighter(props.file.fileName)}
                             />

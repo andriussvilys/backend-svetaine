@@ -216,7 +216,7 @@ componentDidMount(){
                     <div className="imageInfo--box">
                       <div>
                         <p>Upload file(-s):</p> 
-                        <input type="file" multiple onChange={this.context.addFileToState} />
+                        <input id="uploadFileInput" type="file" multiple onChange={this.context.addFileToState} />
                         <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
                       </div>
                     </div>
@@ -237,10 +237,10 @@ componentDidMount(){
                   <Filters 
                       context={this.context}
                   />
+                  {this.submitButtons()}  
               </Accordion>
 
               {/* {this.state.submitButtons} */}
-              {this.submitButtons()}
 
                   <BootstrapModal 
                     showModal={this.state.showModal || this.context.state.showModal}

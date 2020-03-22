@@ -44,6 +44,8 @@ export class Provider extends React.Component{
     }
 
     this.onChange = (e, key, fileName) => {
+        console.log("fileName")
+        console.log(fileName)
         let target = null
         let newState = {...this.state}
         if(fileName){
@@ -52,6 +54,8 @@ export class Provider extends React.Component{
         else{
             target = newState.familySetupData
         }
+        console.log("target")
+        console.log(target)
         if(!target[key]){
             target[key] = null
         }
@@ -1208,6 +1212,10 @@ export class Provider extends React.Component{
         },
         //Removes selected file from state and thus DOM
         removeFile: (fileName, familyName) => {
+
+            if(document.getElementById("uploadFileInput")){
+                document.getElementById("uploadFileInput").value = ""
+            }
         
             let newFiles = {...this.state.fileData.files}
         
