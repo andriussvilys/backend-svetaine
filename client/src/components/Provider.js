@@ -1110,77 +1110,117 @@ export class Provider extends React.Component{
             //This iss triggered upon upload files using file upload input
         addFileToState: (e) => {
 
-            const fileInput = e.target.files
-            const fileCount = fileInput.length
-            let filename = null
+            return new Promise((resolve, reject) => {
+                const fileInput = e.target.files
+                const fileCount = fileInput.length
+                let filename = null
+    
+                let obj = {
+                    files: {},
+                    column: {
+                        id: 'column-1',
+                        fileIds: []
+                    },
+                    columnOrder: ['column-1']
+                }
+                let newState = {...this.state}
+                let objCounter = 0;
+    
+                    let objPromise = new Promise ((resolve, reject) => {
+                        let messages = {}
+                        console.log("fileInput")
+                        console.log(fileInput)
 
-            let obj = {
-                files: {},
-                column: {
-                    id: 'column-1',
-                    fileIds: []
-                },
-                columnOrder: ['column-1']
-            }
-            let newState = {...this.state}
-            let objCounter = 0;
-
-                let objPromise = new Promise ((resolve, rejects) => {
-                    Array.from(fileInput).forEach((file, index) => {
-
-                    const reader = new FileReader();
-                        
-                    if(this.state.fileData.column.fileIds.indexOf(file.name) >= 0){
-                        alert(`the file ${file.name} has already been selected`)
-                        return
-                    }
-
-                        reader.onload = () => {
-                            if(file.name.includes(" ") || file.name.includes("/")){
-                                alert("File name cannot contain spaces or '/'")
-                                return
+                        const fileList = Array.from(fileInput)
+                        let filteredList = []
+                        fileList.forEach(file => {
+                            if(this.state.fileData.column.fileIds.includes(file.name)){
+                                console.log("error")
+                                messages = {...messages, [file.name]: `Fail (already selected)`}
                             }
+                            else if(this.state.serverFileDir.includes(file.name)){
+                                console.log("error")
+                                messages = {...messages, [file.name]: `Fail (already updated)`}
+                            }
+                            else if(file.name.includes(" ") || file.name.includes("/")){
+                                console.log("error")
+                               messages = {...messages, [file.name]: "Fail (File name cannot contain spaces or '/')"}
+                            }
+                            else if(file.type.match("application/pdf")){
+                                console.log("error")
+                                messages = {...messages, [file.name]: 'Fail (PDF not supported yet)'}
+                            }
+                            else{
+                                filteredList = [...filteredList, file]
+                            }
+                        })
 
-                            obj.files[file.name] = {                    
-                                preview: reader.result,
-                                file: fileInput[index],
-                                fileName: file.name, 
-                                fileType: file.type,
-                                familyDisplayIndex: null,
-                                src: `/uploads/${file.name}`,
-                                themes: [],
-                                seeAlso: [],
-                                category: {"studio": {"misc": []}},
-                                displayTriggers: {"category": ["studio"], "subcategory": ["misc"], "listitems": []},
-                                artworkFamily: "none"
-                            }
-            
-                            if(file.type.match("application/pdf")){
-                                alert('pdf not supported yet')
-                                return
-                            }
+                        console.log("filteredList")
+                        console.log(filteredList)
 
-                            newState = {
-                                ...this.state, 
-                                fileData: {
-                                    ...this.state.fileData,
-                                    files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
-                                    column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
-                            }} 
-        
-                            objCounter += 1
-        
-                            if(objCounter === fileCount){
-                                filename = file.name
-                                resolve()
-                            }
-                            
+                        if(filteredList.length < 1){
+                            let modalMessages = Object.keys(messages).map(fileName => {
+                                return <div key={`fileUpload-${fileName}`}>
+                                            <em>{fileName}</em>
+                                            <p>{messages[fileName]}</p>
+                                        </div>
+                            })
+                            document.getElementById("uploadFileInput").value = ""
+                            reject(modalMessages)
                         }
-                        reader.readAsDataURL(file)
+                        
+                        filteredList.forEach((file, index) => {
+                        const reader = new FileReader();
+                            reader.onload = () => {
+                                    console.log(`READING FILE ${file.name}`)
+                                    obj.files[file.name] = {                    
+                                        preview: reader.result,
+                                        file: fileInput[index],
+                                        fileName: file.name, 
+                                        fileType: file.type,
+                                        familyDisplayIndex: null,
+                                        src: `/uploads/${file.name}`,
+                                        themes: [],
+                                        seeAlso: [],
+                                        category: {"studio": {"misc": []}},
+                                        displayTriggers: {"category": ["studio"], "subcategory": ["misc"], "listitems": []},
+                                        artworkFamily: "none"
+                                    }    
+    
+                                    newState = {
+                                        ...this.state, 
+                                        fileData: {
+                                            ...this.state.fileData,
+                                            files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
+                                            column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
+                                    }} 
+                                    messages =  {...messages, [file.name]: "Success"}
+                                    objCounter += 1    
+                                    console.log("objCounter")
+                                    console.log(objCounter)
+                                    if(objCounter === filteredList.length){
+                                        console.log("objCounter === fileCount")
+                                        let modalMessages = Object.keys(messages).map(fileName => {
+                                            return <div key={`fileUpload-${fileName}`}>
+                                                        <strong>{fileName}:</strong>
+                                                        <p className="subtitle">{messages[fileName]}</p>
+                                                    </div>
+                                        })
+                                        resolve(modalMessages)
+                                        // resolve(messages)
+                                    }
+                                }       
+                                reader.readAsDataURL(file)       
+                        })
                 })
+            
+                objPromise
+                    .then(res => {
+                        this.setState(newState, () => resolve(res))
+                    })
+                    .catch(err => reject(err))
             })
-        
-            objPromise.then(res => {this.setState(newState)})
+
         },
         //THIS UPLOADS FILE TO SERVER
 

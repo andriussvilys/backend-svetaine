@@ -216,7 +216,30 @@ componentDidMount(){
                     <div className="imageInfo--box">
                       <div>
                         <p>Upload file(-s):</p> 
-                        <input id="uploadFileInput" type="file" multiple onChange={this.context.addFileToState} />
+                        <input 
+                        id="uploadFileInput" 
+                        type="file" 
+                        multiple 
+                        onChange={(e) => {
+                          const event = e
+                          this.context.addFileToState(event)
+                          .then(res => this.setState({
+                            modalMessage: res
+                          }))
+                          .catch(err => {
+                            this.setState({
+                              modalMessage: err
+                            })
+                          })
+
+                          this.setState({
+                            showModal: true,
+                            modalMessage: "uploading File(-s)"
+                          }, () => {
+                            
+                          })
+                          
+                          }} />
                         <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
                       </div>
                     </div>
