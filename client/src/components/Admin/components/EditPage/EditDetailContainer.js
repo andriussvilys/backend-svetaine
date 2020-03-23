@@ -23,7 +23,7 @@ export default class FileUpdate extends React.Component{
     }
 
     onClose = () => {
-        this.setState({showModal: false})
+        this.setState({showModal: false, modalConfirm: true})
     }
 
     verify = () => {
@@ -89,6 +89,7 @@ export default class FileUpdate extends React.Component{
     deletePromise = (fileName, artworkFamily) => {
         this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
             .then(res => {
+                console.log(" RES IN EDITDETAIL CONTAINER ")
                 console.log(res)
                 let newState = {...this.state}
                 const noFile = {...this.state.fileToDelete} 
@@ -96,9 +97,18 @@ export default class FileUpdate extends React.Component{
                 newState.modalMessage = res
                 newState.modalConfirm = false
                 newState.fileToDelete = null
+                this.setState(newState, () => {
+                    console.log("STATE AFTER FILE DELETE")
+                    console.log(this.state)
+                })
+            })
+            .catch(rej => {
+                let newState = {...this.state}
+                newState.modalMessage = rej
+                newState.modalConfirm = false
+                newState.fileToDelete = null
                 this.setState(newState)
             })
-
     }
 
     componentDidMount(){
@@ -140,7 +150,6 @@ export default class FileUpdate extends React.Component{
                         <BootstrapModal 
                             confirm={this.state.modalConfirm}
                             showModal={this.state.showModal}
-                            // message={this.state.modalMessage}
                             onClose={this.onClose}
                             confirmedAction={() => this.deletePromise(this.state.fileToDelete.fileName, this.state.fileToDelete.artworkFamily)}
                         >

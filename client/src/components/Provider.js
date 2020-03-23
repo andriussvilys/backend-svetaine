@@ -1172,45 +1172,63 @@ export class Provider extends React.Component{
                         filteredList.forEach((file, index) => {
                         const reader = new FileReader();
                             reader.onload = () => {
-                                    console.log(`READING FILE ${file.name}`)
-                                    obj.files[file.name] = {                    
-                                        preview: reader.result,
-                                        file: fileInput[index],
-                                        fileName: file.name, 
-                                        fileType: file.type,
-                                        familyDisplayIndex: null,
-                                        src: `/uploads/${file.name}`,
-                                        themes: [],
-                                        seeAlso: [],
-                                        category: {"studio": {"misc": []}},
-                                        displayTriggers: {"category": ["studio"], "subcategory": ["misc"], "listitems": []},
-                                        artworkFamily: "none"
-                                    }    
-    
-                                    newState = {
-                                        ...this.state, 
-                                        fileData: {
-                                            ...this.state.fileData,
-                                            files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
-                                            column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
-                                    }} 
-                                    messages =  {...messages, [file.name]: "Success"}
-                                    objCounter += 1    
-                                    console.log("objCounter")
-                                    console.log(objCounter)
-                                    if(objCounter === filteredList.length){
-                                        console.log("objCounter === fileCount")
-                                        let modalMessages = Object.keys(messages).map(fileName => {
-                                            return <div key={`fileUpload-${fileName}`}>
-                                                        <strong>{fileName}:</strong>
-                                                        <p className="subtitle">{messages[fileName]}</p>
-                                                    </div>
-                                        })
-                                        resolve(modalMessages)
-                                        // resolve(messages)
+
+                                    var image = new Image()
+
+                                    image.src = reader.result;
+
+                                    console.log("image")
+                                    console.log(image)
+
+                                    image.onload = () => {
+                                        let naturalSize = {naturalHeight: image.naturalHeight, naturalWidth: image.naturalWidth}
+
+                                        console.log("naturalSize")
+                                        console.log(naturalSize)
+
+                                        obj.files[file.name] = {                    
+                                            preview: reader.result,
+                                            file: fileInput[index],
+                                            fileName: file.name, 
+                                            fileType: file.type,
+                                            familyDisplayIndex: null,
+                                            src: `/uploads/${file.name}`,
+                                            themes: [],
+                                            seeAlso: [],
+                                            category: {"studio": {"misc": []}},
+                                            displayTriggers: {"category": [], "subcategory": [], "listitems": []},
+                                            artworkFamily: "none",
+                                            naturalSize
+                                        }    
+        
+                                        newState = {
+                                            ...this.state, 
+                                            fileData: {
+                                                ...this.state.fileData,
+                                                files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
+                                                column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
+                                        }} 
+
+                                        newState.artworkInfoData = {...newState.artworkInfoData, [file.name]: obj.files[file.name]}
+                                        messages =  {...messages, [file.name]: "Success"}
+                                        objCounter += 1    
+                                        console.log("objCounter")
+                                        console.log(objCounter)
+                                        if(objCounter === filteredList.length){
+                                            console.log("objCounter === fileCount")
+                                            let modalMessages = Object.keys(messages).map(fileName => {
+                                                return <div key={`fileUpload-${fileName}`}>
+                                                            <strong>{fileName}:</strong>
+                                                            <p className="subtitle">{messages[fileName]}</p>
+                                                        </div>
+                                            })
+                                            resolve(modalMessages)
+                                            // resolve(messages)
+                                        }
                                     }
-                                }       
-                                reader.readAsDataURL(file)       
+                            }       
+                            
+                            reader.readAsDataURL(file)       
                         })
                 })
             
@@ -1455,23 +1473,12 @@ export class Provider extends React.Component{
                     reject('To submit, select categories for this file')
                 }
 
-                const image = document.getElementById(`${file.fileName}-upload`)
-                let naturalSize = {}
-                if(image){
-                    naturalSize = {naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight}
-                }
-                else{naturalSize = null}
-
                 const artworkFamily = file.artworkFamily || "none"
 
-                    console.log(`registering to ${artworkFamily}`)
-
-                        const obj = this.state.relatedArtwork[artworkFamily].files[file.fileName]
                         const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
                         let fileData = null
                         
                         if(this.state.serverFileDir.includes(file.fileName)){
-                            console.log("file in serverFileDir")
                             reject(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
                         }
             
@@ -1492,7 +1499,6 @@ export class Provider extends React.Component{
                             desktopPath: `/uploads/desktop/${newName}-desktop${fileExtension}`,
                             fileName: fileData.fileName,
                             fileType: fileData.fileType,
-                
                             artworkFamily: artworkFamily ?  artworkFamily : null,
                             familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
                             artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
@@ -1501,32 +1507,26 @@ export class Provider extends React.Component{
                             seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
                             location: fileData.location ?  fileData.location : null,
                             year: fileData.year ? fileData.year : null,
-                            naturalSize, 
+                            naturalSize: fileData.naturalSize, 
                             displayMain: fileData.displayMain ? fileData.displayMain : null
                             }
                 
                             fileDataObject.familyDisplayIndex = familyIndex
-                            
-                            console.log(fileDataObject)
 
                             axios.post('/api/artworkInfo/create', fileDataObject)
                             .then( res => { 
-                                    console.log('new record craeted')
-                                    console.log(res)
                                     this.fileDataMethods.uploadFile(file.fileName)
                                         .then(res => {
-                                            console.log("file uploaded")
-                                            console.log(res)
                                             resolve("file uploaded")
                                         })
                                         .catch(err => {
                                             console.log(err); 
-                                            reject(err)
+                                            reject("error")
                                         })
                                 })
                             .catch(err => {
                                 console.log(err); 
-                                reject(err)
+                                reject("error")
                             })
                         }
             })

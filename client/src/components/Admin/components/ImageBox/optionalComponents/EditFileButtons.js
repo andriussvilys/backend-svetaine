@@ -10,7 +10,7 @@ const EditFileButtons = (props) => {
                     onClick={(e) => {
                         props.context.fileDataMethods.serverFileToState(props.file)
                             .then(res => console.log(res))
-                            .catch(rej => (console.log(rej)))
+                            .catch(rej => console.log(rej))
                     }}
                 >
                     Edit

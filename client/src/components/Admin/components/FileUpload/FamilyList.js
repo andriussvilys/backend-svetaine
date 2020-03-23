@@ -47,7 +47,7 @@ export default class FamilyList extends React.Component{
             return fileData.files[fileName].artworkFamily === familyName
         })
 
-        const postAll = new Promise((resolve, rej) => {
+        return new Promise((resolve, rej) => {
             const promiseLength = allInFamily.length
             let progress = 0
             allInFamily.forEach(fileName => {
@@ -65,11 +65,6 @@ export default class FamilyList extends React.Component{
                     .catch(err => rej(err))
             })
         }) 
-        postAll
-            .then(res => {
-                this.setState({modalMessage: res})
-            })
-            .catch(err => console.log(err))
     }
  
 
@@ -87,6 +82,10 @@ export default class FamilyList extends React.Component{
                             onClick={() => {
                                 this.setState({showModal: true})
                                 this.postAll(this.props.familyName)
+                                    .then(res => {
+                                        this.setState({modalMessage: res})
+                                    })
+                                    .catch(rej => this.setState({modalMessage: rej}))
                             }}
                         >
                             Submit ALL to server
