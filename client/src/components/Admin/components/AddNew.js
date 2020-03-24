@@ -64,33 +64,26 @@ render(){
                 return null
             }
             return(
-                <div 
-                className="imageInfo--box" 
-                style={{
-                    display: `flex`,
-                    margin: "0px",
-                    marginLeft: "10px"
-                    
-                }}>
-                    {/* displayAddNew controls wether this component will be visible */}
-                    <span className="subtitle">
-                        Add new {this.props.stateKey}
-                    </span>
+                <div className="addNew-container">
                     <form 
-                    style={{flexWrap: "wrap", width: "100%", justifyContent: "space-between"}}
                     id={`formFor-${this.props.stateKey}`}
                     action={this.props.router}
                     onSubmit={this.handleShow}
+                    className="addNew-form"
                     >
-                        <input 
-                            type="text" 
-                            id={`add-${this.props.stateKey}-item`} 
-                        />
+                        <div>
+                            <input 
+                                type="text" 
+                                id={`add-${this.props.stateKey}-item`} 
+                            />
+                            <br/>
+                            <label htmlFor={`add-${this.props.stateKey}-item`} className="subtitle">Add new {this.props.stateKey}</label>
+                        </div>
                         <Button 
                         variant="success" size="sm"
                         type="submit" 
                         form={`formFor-${this.props.stateKey}`}
-                        className="button-extend"
+                        className="button-extend addNew-button"
                         > 
                         SEND
                         </Button>

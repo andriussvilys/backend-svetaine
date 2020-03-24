@@ -67,6 +67,31 @@
   width: 100%;
 }
 
+.dropdown-wrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(min-content, 200px))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(-webkit-min-content, 200px));
+      grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
+  width: 100%;
+}
+
+.dropdown-container {
+  border: 1px solid;
+  margin: 2px;
+  background-color: #f6f6f6;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.dropdown-headline {
+  border-bottom: 2px solid #7c7c7c;
+  font-weight: bold;
+  background-color: #cae0e7;
+  padding-left: 8px;
+}
+
 .themelist {
   height: 400px;
   overflow-y: scroll;
@@ -77,7 +102,8 @@
 }
 
 .themes-list {
-  border-bottom: 1px solid;
+  margin-bottom: 3px;
+  padding: 4px 4px 4px 12px;
   background-color: rgba(0, 0, 0, 0.055);
   display: -webkit-box;
   display: -ms-flexbox;
@@ -91,15 +117,26 @@
   min-height: 19px;
 }
 
+.themes-list:hover {
+  background-color: #f5fff5;
+}
+
 .themes-list--selected {
-  background-color: #c9eec9 !important;
+  background-color: #c9eec9;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
+.themes-list--selected:hover {
+  background-color: #fdd5c2 !important;
+}
+
 .themes-span {
+  margin: 0 8px 0 0;
+  width: 100%;
   font-size: 12px;
-  margin-left: 12px;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .themeSelector > ul {
@@ -516,6 +553,33 @@ form {
   margin: 0;
 }
 
+.addNew-container {
+  margin: 2px;
+  border: 2px solid;
+  padding-left: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  padding: 12px;
+}
+
+.addNew-button {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.addNew-form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
 .EditDetail-container {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -773,10 +837,6 @@ h5 {
   font-weight: 600 !important;
   font-size: calc(12px + 0.75vw) !important;
   padding-bottom: 5px;
-}
-
-label {
-  margin: 0 !important;
 }
 
 .ImageInfo--transferState {

@@ -57,6 +57,10 @@ app.use('/imagemin', imagemin);
 // this uses a folder inside the server
 // app.use(express.static('files'))
 
+app.use((err, req, res, next) => {
+    res.status(500).send({error: err})
+})
+
 if(process.env.NODE_ENV === "production"){
     app.use(express.static('client/build'))
     app.get('*', ((req, res) => {

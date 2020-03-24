@@ -6,16 +6,6 @@ let ThemesSchema = new Schema({
         type: Array
     }
 }
-    // {
-    // $addToSet: {
-    //     type: String,
-    //     required: true
-    // }
-    // // theme: {
-    // //     type: String,
-    // //     required: true
-    // // }
-    // }
 );
 
 module.exports = ThemesSchema = mongoose.model('themes', ThemesSchema);

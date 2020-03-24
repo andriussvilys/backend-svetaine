@@ -30,6 +30,23 @@
     // padding: 7px;
     // max-width: 678px;
 }
+.dropdown-wrapper{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
+    width: 100%;
+}
+.dropdown-container{
+    border: 1px solid;
+    margin: 2px;
+    background-color: #f6f6f6;
+    flex: 1;
+}
+.dropdown-headline{
+    border-bottom: 2px solid #7c7c7c;
+    font-weight: bold;
+    background-color: #cae0e7;
+    padding-left: 8px;
+}
 .themelist{
     height: 400px;
     overflow-y: scroll;
@@ -38,28 +55,30 @@
     display: initial;
 }
 .themes-list{
-    // position: relative;
-    // width: 200px;
-    border-bottom: 1px solid;
-    // height: 22px;
+    margin-bottom: 3px;
+    padding: 4px 4px 4px 12px;
     background-color: rgba(0,0,0,.055);
     display: flex;
     justify-content: space-between;
     align-items: center;
     min-height: 19px;
 }
+.themes-list:hover{
+    background-color: #f5fff5;
+}
 .themes-list--selected{
-    background-color: #c9eec9 !important;
+    background-color: #c9eec9;
     transition: all 0.2s;
 }
+.themes-list--selected:hover{
+    background-color: #fdd5c2 !important;
+}
 .themes-span{
-    // position: absolute;
-    // left: 10px;
-    // height: 30px;
-    // overflow: hidden;
-    // width: 150px;
+    margin: 0 8px 0 0;
+    width: 100%;
     font-size: 12px;
-    margin-left: 12px;
+    cursor: pointer;
+    white-space: nowrap;
 }
 
 .themeSelector > ul {

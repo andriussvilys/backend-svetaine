@@ -15,30 +15,13 @@ router.get('/', (req, res) => {
       .then(category => res.json(category))
 })
 
-router.post('/create', (req, res) => {
+router.post('/create', (req, res, next) => {
   console.log(req.body)
-      FamilySetup.create(req.body, (err, result) => {
-        if(err){
-          console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
-          console.log(err.errmsg)
-          console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR")
-          res.status(500).send({error: err.errmsg})
-          // res.status(500).send({error: err.errmsg})
-        }
-        else{
-          console.log("SUCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
-          console.log(result)
+      FamilySetup.create(req.body)
+        .then(result => {
           res.send(result)
-          console.log("SUCCCCCCCCCCCCCCCCCCCCCCCCCCCCC")
-        }
-      })
-        // .then((familySetup)=>{res.send(familySetup)})
-        // .catch(next => {
-        //   console.log("ERRRRRRRRRRRORRRRRRRRR");
-        //   console.log(next.errmsg); 
-        //   console.log("ERRRRRRRRRRRORRRRRRRRR");
-        //   // res.status(500).send(err)
-        // })
+        })
+        .catch(next)
   })
 
 router.put('/update/:artworkFamily', (req, res, next) => {

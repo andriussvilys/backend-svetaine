@@ -35,6 +35,9 @@ const SubmitFamilyInfo = (props) => {
         )
     }
 
+    if(!props.context.state.familySetupData.artworkFamily){
+        return null
+    }
     if(recordedFamilyNames.includes(currentFamily)){
         return submitUpdate()
     }

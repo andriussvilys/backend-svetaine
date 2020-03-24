@@ -121,10 +121,15 @@ export default class ServerFileUpdate extends React.Component {
                             return
                         }
                         this.setState({showModal: true, modalMessage: "loading..."})
-                        const postRes = this.props.context.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
-                        postRes.then( res => {
+                        //*************** */
+                        const postRes = this.props.context.fileDataMethods.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
+                        postRes
+                            .then( res => {
                             this.setState({modalMessage: res})
-                        })
+                            })
+                            .catch(err => {
+                                this.setState({modalMessage: err})
+                            })
                     }
                     }
                 >

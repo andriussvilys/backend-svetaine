@@ -28,7 +28,7 @@ export default class App extends Component{
                 <PrivateRoute  path="/admin/create" component={Create} />
                 <PrivateRoute  path="/admin/edit" component={Edit} />
                 <PrivateRoute  path="/admin/delete" component={Delete} />
-                <Route to="/*" exact component={FrontEndIndex} />
+                <Route to="/*" exact component={FrontEndContext} />
               </Switch>
 
               </div>

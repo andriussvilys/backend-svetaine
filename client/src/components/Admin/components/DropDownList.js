@@ -55,17 +55,34 @@ export default class DropDownList extends React.Component{
             else return false
         }
 
-        let sortedArray = Array.from(new Set(array.sort()));
-        let listItems = sortedArray.map((listItem) => {
+        array = array.map(item => item.toUpperCase())
+
+        let lettersArray = []
+        array.forEach(item => {
+            if(!lettersArray.includes(item[0])){
+                lettersArray = [...lettersArray, item[0]]
+            }
+        })
+
+        let sortedByLetter = {}
+
+        lettersArray.sort().forEach(letter => {
+            sortedByLetter[letter] = []
+            sortedByLetter[letter] = array.filter(item => {
+                return item[0] === letter
+            })
+        })
+        let listItem = (listItem) => {
             return (
                 <li 
                 className={` themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
                 key={`${string}-${listItem}`}
                 >
-                    <span className="themes-span">{listItem}</span>
+                    <label htmlFor={`${string}-${listItem}`} className="themes-span">{listItem}</label>
 
                     {this.props.uncontrolled ?   
                         <input 
+                            id={`${string}-${listItem}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
                             checked={highlighter(string, listItem)}
@@ -80,6 +97,7 @@ export default class DropDownList extends React.Component{
                         :
 
                         <input 
+                            id={`${string}-${listItem}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
                             value={listItem}
@@ -93,60 +111,43 @@ export default class DropDownList extends React.Component{
 
                 </li>
             )
-        })
-
-        function columnLists(){
-          const groups = Math.ceil(sortedArray.length / 10);
-          let columns = [[]];
-          //This create an array with a number of Arrays equal to UL tags that will be needed
-          for (let index = 1; index < groups; index++) {
-            columns = [...columns, []];
-          }
-          //this defines column index
-          let counter = 0;
-          //this counts the number of LIs in a coumn
-          let subcounter = 0;
-
-          listItems.forEach((li) => {
-              columns[counter] = [...columns[counter], li]
-                subcounter += 1
-                //if theres 10 LIs in the column, increment column index (push LIs to the next column)
-                if(subcounter === 10 ){
-                    counter += 1;
-                    subcounter = 0
-                }
-            })
-
-          let finalList = columns.map((array, index) => {
-            return(<ul className="no-padding" key={`${string}-${index}`}>
-              {array}
-            </ul>)
-          })
-          return finalList;
         }
-  
-        return columnLists()
+
+        const listsByLetter = () => {
+            let finalList = Object.keys(sortedByLetter).map(letter => {
+                return <div className="dropdown-container">
+                        <p className="dropdown-headline">{letter.toUpperCase()}</p>
+                        <ul>
+                            {sortedByLetter[letter].sort().map(item => {
+                            return listItem(item)
+                            })}
+                        </ul>
+                       </div>
+            })
+            return finalList
+        }
+
+        return listsByLetter()
     }
 
     render(){
         return(
 
             <div className="themeSelector ">
-                        
-            <div 
-            className="extendedList--form imageInfo--box"
-            style={{margin: 0}}
-            >
-                    <div style={{display: "flex", flexWrap: "wrap"}}>
-                        {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
-                    </div>
-                    <AddNew 
-                        addNew={this.props.addNew}
-                        router={this.props.router}
-                        stateKey={this.props.addNewTarget}
-                        requestKey={this.props.requestKey}
-                    />
-            </div>
+                <div 
+                className="extendedList--form imageInfo--box"
+                style={{margin: 0}}
+                >
+                        <div className="dropdown-wrapper">
+                            {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
+                            <AddNew 
+                                addNew={this.props.addNew}
+                                router={this.props.router}
+                                stateKey={this.props.addNewTarget}
+                                requestKey={this.props.requestKey}
+                            />
+                        </div>
+                </div>
             </div>
         )
     }

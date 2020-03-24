@@ -88,9 +88,10 @@ export class Provider extends React.Component{
                   })
                   .catch( err => {
                       console.log("error!!!")
-                      console.log(err)
+                      console.log(err.toJSON())
                       if(callback){
                         callback(err.toString())
+                        // callback(err.toString())
                         }
                       reject(err)
                   })
@@ -102,21 +103,23 @@ export class Provider extends React.Component{
             return new Promise((resolve, reject) => {
                 axios.put(router, {[requestKey]: newAddition})
                 .then( res => {
-                    let addition = res.data[requestKey]
+                    console.log("______________________________")
+                    console.log(res)
+                    console.log("______________________________")
                     this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
                       if(callback){
-                          callback("Successfully recored")
+                          callback(res.data)
                       }
-                      resolve(addition)
+                      resolve()
                     })
                   })
                   .catch( err => {
                       console.log("error!!!")
-                      console.log(err)
+                      console.log(err.toJSON())
                       if(callback){
-                        callback(err.toString())
+                        callback(`Theme ${newAddition} has already been recorded`)
                         }
-                      reject(err)
+                      reject()
                   })
             }) 
         }

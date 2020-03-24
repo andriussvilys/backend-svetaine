@@ -551,6 +551,9 @@ export class Provider extends React.Component{
       let onDisplay = []
       const artworkOnDisplay = {...this.state.artworkOnDisplay}
       onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
+        if(!artworkOnDisplay[fileName].displayTriggers.themes){
+          return false
+        }
         return artworkOnDisplay[fileName].displayTriggers.themes.includes(theme) === true
       })
       return onDisplay.length > 0

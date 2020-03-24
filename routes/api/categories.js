@@ -12,41 +12,33 @@ router.get('/', (req, res) => {
 })
 
 router.post('/create', (req, res) => {
+  console.log("CATEGORIES CREATE")
+  console.log(req.body)
   Categories.create(req.body)
     .then((category)=>{res.send(category)})
-
-  // const newArtwork = new ArtworkInfo({
-  //     category: req.body.category, 
-  //     uploadURL: req.body.uploadURL, 
-  //     fileName: req.body.fileName, 
-  //     artworkFamily: req.body.artworkFamily, 
-  //     artworkTitle: req.body.artworkTitle, 
-  //     displayMain: req.body.displayMain, 
-  //     familyDisplayIndex: req.body.familyDisplayIndex, 
-  //     fileType: req.body.fileType, 
-  //     themes: req.body.themes, 
-  //     seeAlso: req.body.seeAlso, 
-  //     location: req.body.location, 
-  //     year: req.body.year
-  // })
-
-  // newArtwork.save()
-  //     .then(artwork => res.json(artwork))
 })
 
-
-
 //UPDATE ROUTE
+// router.put("/update/", (req, res, next) => {
+//     console.log("CATEGORIES UPDATE")
+//      Categories.replaceOne(
+//        {category: req.body.category},
+//        req.body
+//      ) 
+
+//     .then(newObj => {
+//       category.save()
+//       .then(() => {
+//         res.status(200).send(newObj)
+//       })
+//       .catch(next)
+//       // res.status(200).send(newObj)
+//     })
+//     .catch(err => {console.log(err); res.status(500).send('problem')})
+// })
 router.put("/update/", (req, res, next) => {
-
-    // console.log(req.body.category)
-    // console.log(req.body.subcategory)
-    // Categories.findOneAndUpdate(
-    //   { category: req.body.category },  // <-- find stage
-    //   { subacategory: req.body.subcategory },
-    //   {new: true}
-    // )
-
+    console.log("CATEGORIES UPDATE")
+    console.log(req.body)
      Categories.replaceOne(
        {category: req.body.category},
        req.body
@@ -60,16 +52,35 @@ router.put("/update/", (req, res, next) => {
 
 //DELETE THEME
 
+router.get('/findOne/', (req,res) => {
+  console.log("req.body.category")
+  console.log(req.body.category)
+  Themes.findOne(
+    {category: req.body.category}
+  )
+  .then( category => {
+    res.status(200).send(category)
+  })
+  .catch(err => {console.log(err)})
+})
+
 router.put('/delete/', (req, res) => {
+    console.log("req.body")
+    console.log(req.body)
+
+    // Themes.findOne(
+    //   {}
+    // )
+
     Themes.findOneAndUpdate(
-        { main: true },  // <-- find stage
-        { $pull: req.body },
+        { category: req.body.category },  // <-- find stage
+        { $pull: "category" },
         {new: true}
     )
     .then(newObj => {
         res.status(200).send(newObj)
       })
-      .catch(err => {console.log(err); res.status(500).send('problem')})
+      .catch(err => {console.log(err); res.status(500).send(err)})
 })
 
 module.exports = router;
