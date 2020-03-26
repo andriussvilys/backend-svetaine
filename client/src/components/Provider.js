@@ -27,7 +27,8 @@ export class Provider extends React.Component{
             year: null,
             seeAlso: [],
             themes: [],
-            category: {}
+            category: {},
+            displayTriggers: {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
         },
         relatedArtwork: {},
         categoriesData: [],
@@ -262,13 +263,41 @@ export class Provider extends React.Component{
 
             console.log("objToUpdate")
             console.log(objToUpdate)
-             let newState = {...this.state}
-             newState.categoriesData[objIndex] = objToUpdate
             axios.put('/api/categories/update', objToUpdate)
-                .then(res => this.setState(newState))
-            // this.setState({categoriesDataUpdate},
-            //     () => {axios.put('/api/categories/update', objToUpdate)}
-            //     )
+                .then(res => {
+                    console.log("update success ____________________")
+                    console.log(res)
+                    let newState = {...this.state}
+                    newState.categoriesData[objIndex] = res.data
+                    this.setState(newState)
+                    })
+                .catch(err => err)
+        },
+        deleteCategory: (categoryName, updateContent, listitem) => {
+            return new Promise((resolve, reject) => {
+                axios.put('/api/categories/delete', {categoryName, updateContent})
+                    .then(res => {
+
+                        let newState = {...this.state}
+                        const categoryObj = newState.categoriesData.find(category => category.category === categoryName)
+                        const categoryIndex = newState.categoriesData.indexOf(categoryObj)
+
+                        if(!res.data){
+                            newState.categoriesData = newState.categoriesData.filter(category => category.category !== categoryName)
+                        }
+                        if(listitem){
+                            let newArray = newState.categoriesData[categoryIndex].subcategory[listitem.subcategory]
+                            newState.categoriesData[categoryIndex].subcategory[listitem.subcategory] = newArray.filter(listItem => listItem !== listitem.listitem)
+                        }
+                        else{
+                            delete newState.categoriesData[categoryIndex]
+                            newState.categoriesData[categoryIndex] = res.data
+                        }
+                        this.setState(newState)
+                        resolve(res)
+                    })
+                    .catch(err => reject(err))
+            })
         },
         autoCheckCategories: (fileName, category, subcategory, listitem) => {
 

@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import { Context } from '../../../../Provider';
+import React from 'react';
 import Button from 'react-bootstrap/Button';
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import '../css/components/navigationInfo.css';
@@ -10,44 +9,6 @@ const Categories = (props) => {
     const target = props.fileName ? 
                 props.context.state.fileData.files[props.fileName] :
                 props.context.state.familySetupdata
-
-    //methods that check cheboxes if state has appropriate values and unchecks it if not
-    // const autoCheckCategories = (category, subcategory, listitem) => {
-    //     if(!target.category){return}
-    //     if(target.category[category]){
-    //         if(target.category[category][subcategory]){
-    //             if(target.category[category][subcategory].includes(listitem)){
-    //                 return true
-    //             } 
-    //             else{
-    //                 return false
-    //             }
-    //         }
-    //     }
-    // }
-    // const autoCheckCategories = (category, subcategory) => {
-    //     if(!target.category){return}
-    //     if(target.category[category]){
-    //         if(target.category[category][subcategory]){
-    //             return true
-    //         }
-    //         else{
-    //             return false
-    //         }
-    //     }
-    // }
-    // const autoCheckCategories = (category) => {
-    //     if(!target.category){return}
-    //     if(target.category[category]){
-    //             return true
-    //         }
-    //         else{
-    //             return false
-    //         }
-    // }
-
-    //****************************************************************************************************
-    //THIS METHOD DYNAMICALLY CREATES THE MENU 
 
     const makeCategories = () => {
         
@@ -74,7 +35,39 @@ const Categories = (props) => {
                                     onChange={(e) => props.context.onCheck(e, props.fileName)} 
                                     checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem)}
                                     />
-                                    <span>{listitem}</span>  
+                                    <label>{listitem}</label>  
+                                    <div
+                                        key={`categories-delete-${obj.category}-${subcategory}-${listitem}`}
+                                        style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
+                                        onClick={() => {
+                                            const categoryName = obj.category
+                                            const listitemObj = {category: categoryName, subcategory, listitem}
+                                            const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
+                                            const currentSubcategory = category.subcategory[subcategory]
+                                            console.log("currentSubcategory")
+                                            console.log(currentSubcategory)
+                                            const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
+                                            const newCategoryList = {
+                                                ...category, 
+                                                subcategory: {...category.subcategory, 
+                                                [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
+                                                }
+                                            }
+                                            console.log("newCategoryList")
+                                            console.log(newCategoryList)
+
+                                            props.context.categoryMethods.deleteCategory(obj.category, newCategoryList, listitemObj)
+                                                .then(res => {
+                                                    console.log('success')
+                                                    console.log(res)
+                                                })
+                                                .catch(err => {
+                                                    console.log("error")
+                                                    console.log(err)
+                                                })
+                                        }}
+                                    >
+                                    </div>
                             </li>
                         )
                     })
@@ -89,7 +82,34 @@ const Categories = (props) => {
                             onChange={(e) => props.context.onCheck(e, props.fileName)} 
                             checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory)}
                             />
-                            <span>{subcategory}</span>
+                            <label>{subcategory}</label>
+                            <div
+                                        key={`categories-delete-${obj.category}-${subcategory}`}
+                                        style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
+                                        onClick={() => {
+                                            const categoryName = obj.category
+                                            const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
+                                            let newCategoryList = {...category}
+                                            delete newCategoryList.subcategory[subcategory]
+                                            console.log("newCategoryList")
+                                            console.log(newCategoryList)
+                                            console.log({
+                                                category: categoryName,
+                                                subcategory: subcategory,
+                                                listitem: null
+                                            })
+                                            props.context.categoryMethods.deleteCategory(obj.category, newCategoryList)
+                                                .then(res => {
+                                                    console.log('success')
+                                                    console.log(res)
+                                                })
+                                                .catch(err => {
+                                                    console.log("error")
+                                                    console.log(err)
+                                                })
+                                        }}
+                                    >
+                                    </div>
                         </div>
                         {listItems}
                      </ul>)
@@ -106,7 +126,29 @@ const Categories = (props) => {
                             onChange={(e) => props.context.onCheck(e, props.fileName)} 
                             checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category)}
                         /> 
-                        <span>{obj.category}</span>
+                        <label>{obj.category}</label>
+                        <div
+                                        key={`categories-delete-${obj.category}`}
+                                        style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
+                                        onClick={() => {
+                                            const categoryName = obj.category
+                                            console.log({
+                                                category: categoryName,
+                                                subcategory: null,
+                                                listitem: null
+                                            })
+                                            props.context.categoryMethods.deleteCategory(obj.category)
+                                            .then(res => {
+                                                console.log('success')
+                                                console.log(res)
+                                            })
+                                            .catch(err => {
+                                                console.log("error")
+                                                console.log(err)
+                                            })
+                                        }}
+                                    >
+                                    </div>
                     </div>
                     {subcategories}
                 </ul>

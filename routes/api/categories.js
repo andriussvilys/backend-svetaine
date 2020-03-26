@@ -45,7 +45,8 @@ router.put("/update/", (req, res, next) => {
      ) 
 
     .then(newObj => {
-      res.status(200).send(newObj)
+      console.log("update success ____________________")
+      res.status(200).json(req.body)
     })
     .catch(err => {console.log(err); res.status(500).send('problem')})
 })
@@ -64,23 +65,46 @@ router.get('/findOne/', (req,res) => {
   .catch(err => {console.log(err)})
 })
 
-router.put('/delete/', (req, res) => {
-    console.log("req.body")
-    console.log(req.body)
+// router.put('/delete/', (req, res) => {
+//     console.log("req.body")
+//     console.log(req.body)
 
-    // Themes.findOne(
-    //   {}
-    // )
+//     // Themes.findOne(
+//     //   {}
+//     // )
+//     Themes.findOneAndUpdate(
+//         { category: req.body.category },  // <-- find stage
+//         { $pull: "category" },
+//         {new: true}
+//     )
+//     .then(newObj => {
+//         res.status(200).send(newObj)
+//       })
+//       .catch(err => {console.log(err); res.status(500).send(err)})
+// })
 
-    Themes.findOneAndUpdate(
-        { category: req.body.category },  // <-- find stage
-        { $pull: "category" },
-        {new: true}
-    )
-    .then(newObj => {
-        res.status(200).send(newObj)
-      })
-      .catch(err => {console.log(err); res.status(500).send(err)})
+router.put("/delete/", (req, res, next) => {
+  console.log("CATEGORIES DELETE")
+  console.log(req.body)
+
+  if(!req.body.updateContent){
+    Categories.deleteOne({ category: req.body.categoryName })
+    .then(success => {
+      res.status(200).send(null)
+    })
+    .catch(next)
+    return
+  }
+
+   Categories.replaceOne(
+     {category: req.body.categoryName},
+     req.body.updateContent
+   ) 
+  .then(newObj => {
+    res.status(200).send(req.body.updateContent)
+  })
+  .catch(err => {console.log(err); res.status(500).send('problem')})
 })
+
 
 module.exports = router;

@@ -115,7 +115,10 @@ export default class DropDownList extends React.Component{
 
         const listsByLetter = () => {
             let finalList = Object.keys(sortedByLetter).map(letter => {
-                return <div className="dropdown-container">
+                return <div 
+                            key={`dropdown-${string}-${letter}`}
+                            className="dropdown-container"
+                        >
                         <p className="dropdown-headline">{letter.toUpperCase()}</p>
                         <ul>
                             {sortedByLetter[letter].sort().map(item => {
