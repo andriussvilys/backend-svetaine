@@ -18,7 +18,8 @@ export default class Create extends Component{
   constructor(props){
     super(props);
     this.state = {
-      submitButtons: null
+      submitButtons: null,
+      confirmedAction: null
     }
   }
 //   submitButtons = () => {
@@ -151,10 +152,10 @@ modalInvoke = (options, callbackPromise) => {
             })
           }
           else{
-            this.setState({
-              confirmedAction: options.confirmedAction,
-              modalMessage: options.modalMessage,
-            })
+                this.setState({
+                  confirmedAction: options.confirmedAction,
+                  modalMessage: options.modalMessage,
+                })
           }
 
         })
@@ -321,7 +322,21 @@ componentDidMount(){
                     message={this.state.modalMessage}
                     onClose={() => {this.setState({showModal: false})}}
                     confirm={this.state.confirm || false}
-                    confirmedAction={() => this.state.confirmedAction || null}
+                    confirmedAction={() => {
+                      this.state.confirmedAction()
+                        .then(res => {
+                          this.setState({
+                            confirm: res.confirm,
+                            modalMessage: res.modalMessage
+                          })
+                        })
+                        .catch(err => {
+                          this.setState({
+                            confirm: err.confirm,
+                            modalMessage: err.modalMessage
+                          })
+                        })
+                    }}
                   >
                     {this.state.progress ?
                       <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :

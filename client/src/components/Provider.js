@@ -285,6 +285,10 @@ export class Provider extends React.Component{
         },
         deleteCategory: (categoryName, updateContent, listitem) => {
             return new Promise((resolve, reject) => {
+                console.log("updateContent")
+                console.log(updateContent)
+
+
                 axios.put('/api/categories/delete', {categoryName, updateContent})
                     .then(res => {
 
@@ -297,11 +301,13 @@ export class Provider extends React.Component{
                         //delete category
                         if(!res.data){
                             newState.categoriesData = newState.categoriesData.filter(category => category.category !== categoryName)
+                            res.modalMessage = `Category ${categoryName} successfully delete`
                         }
                         //delete listitem
                         else if(listitem){
                             let newArray = newState.categoriesData[categoryIndex].subcategory[listitem.subcategory]
                             newState.categoriesData[categoryIndex].subcategory[listitem.subcategory] = newArray.filter(listItem => listItem !== listitem.listitem)
+                            res.modalMessage = `Listitem ${listitem} delete from category ${categoryName}`
                         }
                         //delete subcategory
                         else{
@@ -309,7 +315,9 @@ export class Provider extends React.Component{
                             newState.categoriesData[categoryIndex] = res.data
                         }
                         this.setState(newState, () => {
-                            res.modalMessage = "Successfully deleted"
+                            console.log("state after deleteCategory")
+                            console.log(this.state)
+                            // res.modalMessage = "Successfully deleted"
                             resolve(res)
                         })
                     })

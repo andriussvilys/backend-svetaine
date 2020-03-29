@@ -24,8 +24,6 @@ export default class BootstrapModal extends Component {
     }
 
     render(){
-        console.log("BOOTSTRAP MODAL PROPS")
-        console.log(this.props)
         return(
             <>
             <Modal show={this.state.show} onHide={this.handleClose}>
@@ -41,29 +39,6 @@ export default class BootstrapModal extends Component {
                         variant="success"
                         onClick={() => {
                             this.props.confirmedAction()
-                                .then(res => {
-                                    console.log("CONFIRMED ACTION RES")
-                                    console.log(res)
-                                    let newState = {...this.state}
-                                    newState.message = res.modalMessage
-                                    newState.confirm = false
-                                    console.log("newState")
-                                    console.log(newState)
-                                    this.setState(newState, () => {
-                                        console.log("STATE UPDATED _______________")
-                                        console.log(this.state)
-                                    })
-                                })
-                                .catch(err => {
-                                    console.log("CONFIRMED ACTION ERR")
-                                    console.log(err)
-                                    let newState = {...this.state}
-                                    newState.message = err.modalMessage
-                                    newState.confirm = false
-                                    console.log("newState")
-                                    console.log(newState)
-                                    this.setState(newState)
-                                })
                             }
                         }   
                         >

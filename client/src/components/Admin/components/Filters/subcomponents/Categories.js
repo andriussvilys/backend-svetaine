@@ -10,6 +10,47 @@ const Categories = (props) => {
                 props.context.state.fileData.files[props.fileName] :
                 props.context.state.familySetupdata
 
+    const deletePromise = (categoryName, subcategory, listitem) => {
+        return new Promise((resolve, reject) => {
+            // const categoryName = obj.category
+            const listitemObj = listitem ? {category: categoryName, subcategory, listitem} : null
+            const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
+            const currentSubcategory = category.subcategory[subcategory]
+            // const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
+            let newCategoryList = null
+            newCategoryList = {
+                ...category, 
+                subcategory: {...category.subcategory, 
+                [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
+                }
+            }
+            if(subcategory && !listitem){
+                delete newCategoryList.subcategory[subcategory]
+            }
+            // const newCategoryList = subcategory ? {
+            //     ...category, 
+            //     subcategory: {...category.subcategory, 
+            //     [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
+            //     }
+            // } : null
+
+            console.log("newCategoryList")
+            console.log(newCategoryList)
+
+            props.context.categoryMethods.deleteCategory(categoryName, newCategoryList, listitemObj)
+                .then(res => {
+                    res.modalMessage = res.modalMessage
+                    res.confirm = false
+                    resolve(res)
+                })
+                .catch(err => {
+                    err.modalMessage = "Action failed"
+                    err.confirm = false
+                    reject(err)
+                })
+        })
+    }
+
     const makeCategories = () => {
         
         let result = props.context.state.categoriesData.map(obj => {
@@ -41,48 +82,39 @@ const Categories = (props) => {
                                         style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
                                         onClick={() => {
 
-                                            const deletePromise = () => {
-                                                return new Promise((resolve, reject) => {
-                                                    const categoryName = obj.category
-                                                    const listitemObj = {category: categoryName, subcategory, listitem}
-                                                    const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
-                                                    const currentSubcategory = category.subcategory[subcategory]
-                                                    console.log("currentSubcategory")
-                                                    console.log(currentSubcategory)
-                                                    const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
-                                                    const newCategoryList = {
-                                                        ...category, 
-                                                        subcategory: {...category.subcategory, 
-                                                        [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
-                                                        }
-                                                    }
-                                                    console.log("newCategoryList")
-                                                    console.log(newCategoryList)
+                                            // const deletePromise = () => {
+                                            //     return new Promise((resolve, reject) => {
+                                            //         const categoryName = obj.category
+                                            //         const listitemObj = {category: categoryName, subcategory, listitem}
+                                            //         const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
+                                            //         const currentSubcategory = category.subcategory[subcategory]
+                                            //         const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
+                                            //         const newCategoryList = {
+                                            //             ...category, 
+                                            //             subcategory: {...category.subcategory, 
+                                            //             [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
+                                            //             }
+                                            //         }
         
-                                                    props.context.categoryMethods.deleteCategory(obj.category, newCategoryList, listitemObj)
-                                                        .then(res => {
-                                                            res.modalMessage = "Record deleted"
-                                                            res.confirm = false
-                                                            console.log('confirmed action success__________________________________________')
-                                                            console.log(res)
-                                                            resolve(res)
-                                                        })
-                                                        .catch(err => {
-                                                            console.log("error")
-                                                            console.log(err)
-                                                            err.modalMessage = "Action failed"
-                                                            err.confirm = false
-                                                            reject(err)
-                                                        })
-                                                })
-                                            }
+                                            //         props.context.categoryMethods.deleteCategory(obj.category, newCategoryList, listitemObj)
+                                            //             .then(res => {
+                                            //                 res.modalMessage = "Record deleted"
+                                            //                 res.confirm = false
+                                            //                 resolve(res)
+                                            //             })
+                                            //             .catch(err => {
+                                            //                 err.modalMessage = "Action failed"
+                                            //                 err.confirm = false
+                                            //                 reject(err)
+                                            //             })
+                                            //     })
+                                            // }
 
                                             props.modalInvoke({
                                                     requireActionConfirm: true,
-                                                    confirmedAction: deletePromise,
+                                                    confirmedAction: () => deletePromise(obj.category, subcategory, listitem),
                                                     modalMessage: "Are you sure you want to delete?"
                                                 }, 
-                                                // deletePromise()
                                                 )
 
                                         }}
@@ -107,26 +139,34 @@ const Categories = (props) => {
                                         key={`categories-delete-${obj.category}-${subcategory}`}
                                         style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
                                         onClick={() => {
-                                            const categoryName = obj.category
-                                            const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
-                                            let newCategoryList = {...category}
-                                            delete newCategoryList.subcategory[subcategory]
-                                            console.log("newCategoryList")
-                                            console.log(newCategoryList)
-                                            console.log({
-                                                category: categoryName,
-                                                subcategory: subcategory,
-                                                listitem: null
-                                            })
-                                            props.context.categoryMethods.deleteCategory(obj.category, newCategoryList)
-                                                .then(res => {
-                                                    console.log('success')
-                                                    console.log(res)
-                                                })
-                                                .catch(err => {
-                                                    console.log("error")
-                                                    console.log(err)
-                                                })
+
+                                            props.modalInvoke({
+                                                requireActionConfirm: true,
+                                                confirmedAction: () => deletePromise(obj.category, subcategory),
+                                                modalMessage: "Are you sure you want to delete?"
+                                            }, 
+                                            )
+
+                                            // const categoryName = obj.category
+                                            // const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
+                                            // let newCategoryList = {...category}
+                                            // delete newCategoryList.subcategory[subcategory]
+                                            // console.log("newCategoryList")
+                                            // console.log(newCategoryList)
+                                            // console.log({
+                                            //     category: categoryName,
+                                            //     subcategory: subcategory,
+                                            //     listitem: null
+                                            // })
+                                            // props.context.categoryMethods.deleteCategory(obj.category, newCategoryList)
+                                            //     .then(res => {
+                                            //         console.log('success')
+                                            //         console.log(res)
+                                            //     })
+                                            //     .catch(err => {
+                                            //         console.log("error")
+                                            //         console.log(err)
+                                            //     })
                                         }}
                                     >
                                     </div>
@@ -151,21 +191,31 @@ const Categories = (props) => {
                                         key={`categories-delete-${obj.category}`}
                                         style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
                                         onClick={() => {
-                                            const categoryName = obj.category
-                                            console.log({
-                                                category: categoryName,
-                                                subcategory: null,
-                                                listitem: null
-                                            })
-                                            props.context.categoryMethods.deleteCategory(obj.category)
-                                            .then(res => {
-                                                console.log('success')
-                                                console.log(res)
-                                            })
-                                            .catch(err => {
-                                                console.log("error")
-                                                console.log(err)
-                                            })
+                                            props.modalInvoke({
+                                                requireActionConfirm: true,
+                                                confirmedAction: () => deletePromise(obj.category),
+                                                modalMessage: "Are you sure you want to delete?"
+                                            }, 
+                                            )
+                                            // return new Promise((resolve, reject) => {
+                                            //     const categoryName = obj.category
+                                            //     console.log({
+                                            //         category: categoryName,
+                                            //         subcategory: null,
+                                            //         listitem: null
+                                            //     })
+                                            //     props.context.categoryMethods.deleteCategory(obj.category)
+                                            //     .then(res => {
+                                            //         console.log('success')
+                                            //         console.log(res)
+                                            //         resolve(res)
+                                            //     })
+                                            //     .catch(err => {
+                                            //         console.log("error")
+                                            //         console.log(err)
+                                            //         reject(err)
+                                            //     })
+                                            // })
                                         }}
                                     >
                                     </div>
@@ -243,6 +293,7 @@ const Categories = (props) => {
                         </Button>
                     </div>
                 </div>
+            
             </div>
             )
   }
