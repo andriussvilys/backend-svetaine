@@ -11,11 +11,12 @@ router.get('/', (req, res) => {
       .then(category => res.json(category))
 })
 
-router.post('/create', (req, res) => {
+router.post('/create', (req, res, next) => {
   console.log("CATEGORIES CREATE")
   console.log(req.body)
   Categories.create(req.body)
-    .then((category)=>{res.send(category)})
+    .then((category)=>{res.status(200).send(category)})
+    .catch(err => {console.log(err); next})
 })
 
 //UPDATE ROUTE
@@ -48,8 +49,9 @@ router.put("/update/", (req, res, next) => {
       console.log("update success ____________________")
       res.status(200).json(req.body)
     })
-    .catch(err => {console.log(err); res.status(500).send('problem')})
-})
+    // .catch(err => {console.log(err); res.status(500).send('problem')})
+    .catch(next)
+  })
 
 //DELETE THEME
 

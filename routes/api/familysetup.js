@@ -3,13 +3,14 @@ const router = express.Router();
 const FamilySetup = require('../../models/FamilySetup');
 
 //get all
-router.get('/', (req, res) => {
+router.get('/', (req, res, next) => {
   FamilySetup.find()
       .then(category => res.json(category))
+      .catch(next)
 })
 
 //find one
-router.get('/:artworkFamily', (req, res) => {
+router.get('/:artworkFamily', (req, res, next) => {
     console.log(req.params.artworkFamily)
     FamilySetup.findOne( {"artworkFamily": req.params.artworkFamily} )
         .then(setup => res.json(setup))
@@ -37,7 +38,8 @@ router.put('/update/:artworkFamily', (req, res, next) => {
    .then(newObj => {
      res.status(200).send(newObj)
    })
-   .catch(err => {console.log(err); res.status(500).send('problem')})
+  //  .catch(err => {console.log(err); res.status(500).send('problem')})
+  .catch(next)
 })
 
 module.exports = router;

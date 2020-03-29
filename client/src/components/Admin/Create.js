@@ -111,29 +111,81 @@ export default class Create extends Component{
 //         </Fragment>
 // }
 
+modalInvoke = (options, callbackPromise) => {
+  const verify = new Promise((resolve, reject) => {
+    const result = this.context.verify()
+    if(result.verified){
+      resolve({verified: true})
+    }
+    else{
+      reject({verified: false, message: result.modalMessage})
+    }
+  })
+
+  verify
+    .then(res => {
+      let newState = {...this.state}
+      newState = {
+        ...newState,         
+        showModal: true,
+        modalMessage: "...loading..."
+      }
+      if(options.requireActionConfirm){
+        newState.confirm = true
+      }
+
+      console.log("CREATE -> MODAL INVOKE -> NEWSTATE")
+      this.setState(newState, () => {
+          let action = null
+          if(!options.requireActionConfirm){
+            callbackPromise
+            .then(res => {
+              this.setState({
+                modalMessage: res.modalMessage
+              })
+            })
+            .catch(err => {
+              this.setState({
+                modalMessage: err.modalMessage
+              })
+            })
+          }
+          else{
+            this.setState({
+              confirmedAction: options.confirmedAction,
+              modalMessage: options.modalMessage,
+            })
+          }
+
+        })
+    })
+    .catch(err => {
+      this.setState({
+        showModal: true,
+        modalMessage: err.message
+      })
+    })
+}
+
+verify = () => {
+  const result = this.context.verify()
+  if(result.verified){
+    return {verified: true}
+  }
+  else{
+    return {verified: false, message: result.modalMessage}
+  }
+}
+
 submitButtons = () => {
   const currentFamily = this.context.state.familySetupData.artworkFamily
   const recordedFamilyNames = this.context.state.artworkFamilyList
 
   const submitAction = () => {
 
-    const verify = () => {
-      const result = this.context.verify()
-      console.log("result")
-      console.log(result)
-      if(result.verified){
-        return {verified: true}
-      }
-      else{
-        return {verified: false, message: result.modalMessage}
-      }
-    }
-
-    console.log("Auth")
-    const verification = verify()
+    const verification = this.verify()
 
     if(!verification.verified){
-      console.log("NOT VERIFIED")
       const refuseAction = () => {
         this.setState({
           showModal: true,
@@ -145,7 +197,6 @@ submitButtons = () => {
 
     if(recordedFamilyNames.includes(currentFamily)){
       const submitUpdate = () => {
-        console.log("SUBMIT UPDATE")
         this.setState({
           showModal: true,
           modalMessage: "...loading..."
@@ -169,7 +220,6 @@ submitButtons = () => {
 
     else{
       const submitNew = () => {
-        console.log("SUBMIT NEW")
         this.setState({
           showModal: true,
           modalMessage: "...loading..."
@@ -259,6 +309,7 @@ componentDidMount(){
                   />
                   <Filters 
                       context={this.context}
+                      modalInvoke={this.modalInvoke}
                   />
                   {this.submitButtons()}  
               </Accordion>
@@ -269,6 +320,8 @@ componentDidMount(){
                     showModal={this.state.showModal || this.context.state.showModal}
                     message={this.state.modalMessage}
                     onClose={() => {this.setState({showModal: false})}}
+                    confirm={this.state.confirm || false}
+                    confirmedAction={() => this.state.confirmedAction || null}
                   >
                     {this.state.progress ?
                       <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :

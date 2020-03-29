@@ -40,31 +40,51 @@ const Categories = (props) => {
                                         key={`categories-delete-${obj.category}-${subcategory}-${listitem}`}
                                         style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
                                         onClick={() => {
-                                            const categoryName = obj.category
-                                            const listitemObj = {category: categoryName, subcategory, listitem}
-                                            const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
-                                            const currentSubcategory = category.subcategory[subcategory]
-                                            console.log("currentSubcategory")
-                                            console.log(currentSubcategory)
-                                            const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
-                                            const newCategoryList = {
-                                                ...category, 
-                                                subcategory: {...category.subcategory, 
-                                                [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
-                                                }
-                                            }
-                                            console.log("newCategoryList")
-                                            console.log(newCategoryList)
 
-                                            props.context.categoryMethods.deleteCategory(obj.category, newCategoryList, listitemObj)
-                                                .then(res => {
-                                                    console.log('success')
-                                                    console.log(res)
+                                            const deletePromise = () => {
+                                                return new Promise((resolve, reject) => {
+                                                    const categoryName = obj.category
+                                                    const listitemObj = {category: categoryName, subcategory, listitem}
+                                                    const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
+                                                    const currentSubcategory = category.subcategory[subcategory]
+                                                    console.log("currentSubcategory")
+                                                    console.log(currentSubcategory)
+                                                    const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
+                                                    const newCategoryList = {
+                                                        ...category, 
+                                                        subcategory: {...category.subcategory, 
+                                                        [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
+                                                        }
+                                                    }
+                                                    console.log("newCategoryList")
+                                                    console.log(newCategoryList)
+        
+                                                    props.context.categoryMethods.deleteCategory(obj.category, newCategoryList, listitemObj)
+                                                        .then(res => {
+                                                            res.modalMessage = "Record deleted"
+                                                            res.confirm = false
+                                                            console.log('confirmed action success__________________________________________')
+                                                            console.log(res)
+                                                            resolve(res)
+                                                        })
+                                                        .catch(err => {
+                                                            console.log("error")
+                                                            console.log(err)
+                                                            err.modalMessage = "Action failed"
+                                                            err.confirm = false
+                                                            reject(err)
+                                                        })
                                                 })
-                                                .catch(err => {
-                                                    console.log("error")
-                                                    console.log(err)
-                                                })
+                                            }
+
+                                            props.modalInvoke({
+                                                    requireActionConfirm: true,
+                                                    confirmedAction: deletePromise,
+                                                    modalMessage: "Are you sure you want to delete?"
+                                                }, 
+                                                // deletePromise()
+                                                )
+
                                         }}
                                     >
                                     </div>

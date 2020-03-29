@@ -55,21 +55,23 @@ export default class DropDownList extends React.Component{
             else return false
         }
 
-        array = array.map(item => item.toUpperCase())
+        // array = array.map(item => item.toUpperCase())
 
         let lettersArray = []
         array.forEach(item => {
-            if(!lettersArray.includes(item[0])){
-                lettersArray = [...lettersArray, item[0]]
+            if(!lettersArray.includes(item[0].toUpperCase())){
+                lettersArray = [...lettersArray, item[0].toUpperCase()]
             }
         })
 
         let sortedByLetter = {}
 
         lettersArray.sort().forEach(letter => {
-            sortedByLetter[letter] = []
+            if(Object.keys(lettersArray).includes(letter)){
+                sortedByLetter[letter] = []
+            }
             sortedByLetter[letter] = array.filter(item => {
-                return item[0] === letter
+                return item[0].toUpperCase() === letter.toUpperCase()
             })
         })
         let listItem = (listItem) => {

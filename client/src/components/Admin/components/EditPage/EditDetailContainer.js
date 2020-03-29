@@ -87,28 +87,41 @@ export default class FileUpdate extends React.Component{
     }
 
     deletePromise = (fileName, artworkFamily) => {
-        this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
-            .then(res => {
-                console.log(" RES IN EDITDETAIL CONTAINER ")
-                console.log(res)
-                let newState = {...this.state}
-                const noFile = {...this.state.fileToDelete} 
-                noFile.fileName = null
-                newState.modalMessage = res
-                newState.modalConfirm = false
-                newState.fileToDelete = null
-                this.setState(newState, () => {
-                    console.log("STATE AFTER FILE DELETE")
-                    console.log(this.state)
+        return new Promise((resolve, reject) => {
+            this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
+                .then(res => {resolve({
+                        modalMessage: res,
+                        modalConfirm: false
+                    })
                 })
-            })
-            .catch(rej => {
-                let newState = {...this.state}
-                newState.modalMessage = rej
-                newState.modalConfirm = false
-                newState.fileToDelete = null
-                this.setState(newState)
-            })
+                .catch(err => {reject({
+                        modalMessage: err,
+                        modalConfirm: false
+                    })
+                })
+        })
+        // this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
+        //     .then(res => {
+        //         console.log(" RES IN EDITDETAIL CONTAINER ")
+        //         console.log(res)
+        //         let newState = {...this.state}
+        //         const noFile = {...this.state.fileToDelete} 
+        //         noFile.fileName = null
+        //         newState.modalMessage = res
+        //         newState.modalConfirm = false
+        //         newState.fileToDelete = null
+        //         this.setState(newState, () => {
+        //             console.log("STATE AFTER FILE DELETE")
+        //             console.log(this.state)
+        //         })
+        //     })
+        //     .catch(rej => {
+        //         let newState = {...this.state}
+        //         newState.modalMessage = rej
+        //         newState.modalConfirm = false
+        //         newState.fileToDelete = null
+        //         this.setState(newState)
+        //     })
     }
 
     componentDidMount(){

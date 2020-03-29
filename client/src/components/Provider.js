@@ -203,21 +203,25 @@ export class Provider extends React.Component{
             const subcategoryInput = document.getElementById("add-subcategory")
             const listitemInput = document.getElementById("add-listitem")
 
-            const allCats = Object.values(this.state.categoriesData)
-    
-            let reqBody = {category: null, subcategory: {}}
-            console.log('all cats')
-            console.log(allCats)
+            // const allCats = Object.values(this.state.categoriesData)
+            // console.log('all cats')
+            // console.log(allCats)
+
+            let reqBody = {category: categoryInput.value, subcategory: {}}
             //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
-                reqBody = {category: categoryInput.value}
+                // reqBody = {category: categoryInput.value}
                 if(subcategoryInput.value){
                     reqBody.subcategory = {[subcategoryInput.value]: []}
                 }
-                else{reqBody.subcategory = []}
+                else{reqBody.subcategory = {}}
                 if(listitemInput.value){
                     reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
                 }
-                console.log(reqBody)
+                else{
+                    reqBody.subcategory[subcategoryInput.value] = []
+                }
+                // JSON.stringify(reqBody)
+                // console.log(reqBody)
                 axios.post('/api/categories/create', reqBody)
                 .then(res => {
                     let newState = {...this.state}
@@ -229,13 +233,19 @@ export class Provider extends React.Component{
             
         },
         updateCategory: () => {
+            console.log('updatecategory')
             const categoryInput = document.getElementById("add-category")
             const subcategoryInput = document.getElementById("add-subcategory")
             const listitemInput = document.getElementById("add-listitem")
 
+            console.log("categoryInput")
+            console.log(categoryInput)
+            console.log("subcategoryInput")
+            console.log(subcategoryInput)
+            console.log("listitemInput")
+            console.log(listitemInput)
+
             const allCats = Object.values(this.state.categoriesData).map(obj => obj.category)
-            console.log('updatecategory')
-            console.log(allCats)
 
             //check if the CATGORY input value is already recorded in the database
             //if it is run submitNewCategory method instead and exit this function
@@ -282,21 +292,31 @@ export class Provider extends React.Component{
                         const categoryObj = newState.categoriesData.find(category => category.category === categoryName)
                         const categoryIndex = newState.categoriesData.indexOf(categoryObj)
 
+                        console.log("res.data")
+                        console.log(res)
+                        //delete category
                         if(!res.data){
                             newState.categoriesData = newState.categoriesData.filter(category => category.category !== categoryName)
                         }
-                        if(listitem){
+                        //delete listitem
+                        else if(listitem){
                             let newArray = newState.categoriesData[categoryIndex].subcategory[listitem.subcategory]
                             newState.categoriesData[categoryIndex].subcategory[listitem.subcategory] = newArray.filter(listItem => listItem !== listitem.listitem)
                         }
+                        //delete subcategory
                         else{
                             delete newState.categoriesData[categoryIndex]
                             newState.categoriesData[categoryIndex] = res.data
                         }
-                        this.setState(newState)
-                        resolve(res)
+                        this.setState(newState, () => {
+                            res.modalMessage = "Successfully deleted"
+                            resolve(res)
+                        })
                     })
-                    .catch(err => reject(err))
+                    .catch(err => {
+                        err.modalMessage = "Action failed"
+                        reject(err)
+                    })
             })
         },
         autoCheckCategories: (fileName, category, subcategory, listitem) => {
@@ -688,10 +708,14 @@ export class Provider extends React.Component{
                             let artworkInfoData = this.state.artworkInfoData
                             delete artworkInfoData[fileName]
                             this.setState({relatedArtwork, artworkInfoData, artworkOnDisplay}
-                                , resolve("File and its DB record deleted")
+                                , () => {
+                                    res.modalMessage = "File and its DB record deleted"
+                                    resolve(res)
+                                }
                                 )
                         })
-                        .catch(err => console.log(err))
+                        .catch(err => {
+                            console.log(err)})
                     })
                     .catch(err => console.log(err))
             })

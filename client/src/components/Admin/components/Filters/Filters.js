@@ -42,6 +42,7 @@ const Filters = (props) => {
                 <Categories 
                     context={props.context}
                     fileName={data.fileName ? data.fileName : null}
+                    modalInvoke={props.modalInvoke}
                 />
             </Accordion>
 

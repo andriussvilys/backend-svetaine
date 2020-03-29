@@ -9,74 +9,78 @@ import {PrivateRoute} from '../PrivateRoute'
 
 import auth from '../Auth'
 
-const Admin = (props) => {
-    console.log("auth in Admin")
-    console.log(auth)
-    return(    
-        <BrowserRouter>
-            <Provider>
-                <div className="container">
-                <div className="data-container overflow-yes">
-
-                    <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                    <div style={{marginLeft: "20px", fontWeight: "bold"}}>{!auth.guest ? "ADMIN" : "Guest"}</div>
-                        <ul style={{display: "flex", listStyle:"none", margin:"0", flexWrap: "wrap", justifyContent: "flex-end"}}>
-                            <li>
-                                <Link to="/admin/create">
-                                    <Button>
-                                        Create 
+export default class Admin extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+        }
+    }
+    render(){
+        console.log("auth in Admin")
+        console.log(auth)
+        return(    
+            <BrowserRouter>
+                <Provider>
+                    <div className="container">
+                    <div className="data-container overflow-yes">
+    
+                        <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
+                        <div style={{marginLeft: "20px", fontWeight: "bold"}}>{!auth.guest ? "ADMIN" : "Guest"}</div>
+                            <ul style={{display: "flex", listStyle:"none", margin:"0", flexWrap: "wrap", justifyContent: "flex-end"}}>
+                                <li>
+                                    <Link to="/admin/create">
+                                        <Button>
+                                            Create 
+                                        </Button>
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link to="/admin/edit">
+                                        <Button>
+                                            Edit
+                                        </Button>
+                                    </Link>
+                                </li>
+                                {!auth.guest ? <li>
+                                            <Link to="/admin/delete">
+                                                <Button variant="danger">
+                                                    Delete 
+                                                </Button>
+                                            </Link>
+                                        </li> :
+                                        null
+                                }
+                                <li>
+                                    <Button 
+                                        variant="success"
+                                        onClick={() => {
+                                            this.props.history.push('/')
+                                        }}
+                                    >
+                                        Home
                                     </Button>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/admin/edit">
-                                    <Button>
-                                        Edit
-                                    </Button>
-                                </Link>
-                            </li>
-                            {!auth.guest ? <li>
-                                        <Link to="/admin/delete">
-                                            <Button variant="danger">
-                                                Delete 
-                                            </Button>
-                                        </Link>
-                                    </li> :
-                                    null
-                            }
-                            <li>
-                                <Button 
-                                    variant="success"
+                                </li>
+                                <li>
+                                <Button
                                     onClick={() => {
-                                        props.history.push('/')
+                                        auth.logout( () => {
+                                            this.props.history.push('/admin/login')
+                                        })
                                     }}
                                 >
-                                    Home
+                                    Log OUT
                                 </Button>
-                            </li>
-                            <li>
-                            <Button
-                                onClick={() => {
-                                    auth.logout( () => {
-                                        props.history.push('/admin/login')
-                                    })
-                                }}
-                            >
-                                Log OUT
-                            </Button>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <PrivateRoute path="/admin/create" component={Create} guest={auth.guest}/>
-                    <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
-                    <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
-                </div>
-                </div>
-            </Provider>
-        </BrowserRouter>
-      )
+                                </li>
+                            </ul>
+                        </nav>
+    
+                        <PrivateRoute path="/admin/create" component={Create} guest={auth.guest}/>
+                        <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
+                        <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
+                    </div>
+                    </div>
+                </Provider>
+            </BrowserRouter>
+          )
+    }
 }
-
-export default Admin
-
