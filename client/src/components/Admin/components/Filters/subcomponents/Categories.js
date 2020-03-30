@@ -12,11 +12,9 @@ const Categories = (props) => {
 
     const deletePromise = (categoryName, subcategory, listitem) => {
         return new Promise((resolve, reject) => {
-            // const categoryName = obj.category
             const listitemObj = listitem ? {category: categoryName, subcategory, listitem} : null
             const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
             const currentSubcategory = category.subcategory[subcategory]
-            // const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
             let newCategoryList = null
             newCategoryList = {
                 ...category, 
@@ -27,12 +25,6 @@ const Categories = (props) => {
             if(subcategory && !listitem){
                 delete newCategoryList.subcategory[subcategory]
             }
-            // const newCategoryList = subcategory ? {
-            //     ...category, 
-            //     subcategory: {...category.subcategory, 
-            //     [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
-            //     }
-            // } : null
 
             console.log("newCategoryList")
             console.log(newCategoryList)
@@ -66,50 +58,12 @@ const Categories = (props) => {
                         return (
                             <li key={`${listitem}${index}}`} 
                             className={
-                            `list--listitem list-group-item
+                            `list--listitem list-group-item themes-list
                             ${props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
-                                    <input 
-                                    className="navigation-input listitem" 
-                                    type="checkbox" 
-                                    value={listitem} 
-                                    id={listitem} 
-                                    onChange={(e) => props.context.onCheck(e, props.fileName)} 
-                                    checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem)}
-                                    />
-                                    <label>{listitem}</label>  
                                     <div
+                                        className={"themes-list-delete"}
                                         key={`categories-delete-${obj.category}-${subcategory}-${listitem}`}
-                                        style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
                                         onClick={() => {
-
-                                            // const deletePromise = () => {
-                                            //     return new Promise((resolve, reject) => {
-                                            //         const categoryName = obj.category
-                                            //         const listitemObj = {category: categoryName, subcategory, listitem}
-                                            //         const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
-                                            //         const currentSubcategory = category.subcategory[subcategory]
-                                            //         const newListItemsArray = currentSubcategory.filter(listItem => listItem !== listItem)
-                                            //         const newCategoryList = {
-                                            //             ...category, 
-                                            //             subcategory: {...category.subcategory, 
-                                            //             [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
-                                            //             }
-                                            //         }
-        
-                                            //         props.context.categoryMethods.deleteCategory(obj.category, newCategoryList, listitemObj)
-                                            //             .then(res => {
-                                            //                 res.modalMessage = "Record deleted"
-                                            //                 res.confirm = false
-                                            //                 resolve(res)
-                                            //             })
-                                            //             .catch(err => {
-                                            //                 err.modalMessage = "Action failed"
-                                            //                 err.confirm = false
-                                            //                 reject(err)
-                                            //             })
-                                            //     })
-                                            // }
-
                                             props.modalInvoke({
                                                     requireActionConfirm: true,
                                                     confirmedAction: () => deletePromise(obj.category, subcategory, listitem),
@@ -119,14 +73,40 @@ const Categories = (props) => {
 
                                         }}
                                     >
+                                        <img alt="delete icon" src="/icons/close-round-line.png" />
                                     </div>
+                                    <label>{listitem}</label>  
+                                    <input 
+                                    className="navigation-input listitem" 
+                                    type="checkbox" 
+                                    value={listitem} 
+                                    id={listitem} 
+                                    onChange={(e) => props.context.onCheck(e, props.fileName)} 
+                                    checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem)}
+                                    />
                             </li>
                         )
                     })
                     
                     return(
                     <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
-                        <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory) ? "themes-list--selected" : null}>
+                        <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory) ? "themes-list--selected themes-list " : "themes-list "}>
+                        <div
+                                className={"themes-list-delete"}
+                                key={`categories-delete-${obj.category}-${subcategory}`}
+                                onClick={() => {
+
+                                    props.modalInvoke({
+                                        requireActionConfirm: true,
+                                        confirmedAction: () => deletePromise(obj.category, subcategory),
+                                        modalMessage: "Are you sure you want to delete?"
+                                    }, 
+                                    )
+                                }}
+                            >
+                                <img alt="delete icon" src="/icons/close-round-line.png" />
+                            </div>
+                            <label>{subcategory}</label>
                             <input 
                             className="navigation-input subcategory" 
                             type="checkbox" 
@@ -134,42 +114,6 @@ const Categories = (props) => {
                             onChange={(e) => props.context.onCheck(e, props.fileName)} 
                             checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory)}
                             />
-                            <label>{subcategory}</label>
-                            <div
-                                        key={`categories-delete-${obj.category}-${subcategory}`}
-                                        style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
-                                        onClick={() => {
-
-                                            props.modalInvoke({
-                                                requireActionConfirm: true,
-                                                confirmedAction: () => deletePromise(obj.category, subcategory),
-                                                modalMessage: "Are you sure you want to delete?"
-                                            }, 
-                                            )
-
-                                            // const categoryName = obj.category
-                                            // const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
-                                            // let newCategoryList = {...category}
-                                            // delete newCategoryList.subcategory[subcategory]
-                                            // console.log("newCategoryList")
-                                            // console.log(newCategoryList)
-                                            // console.log({
-                                            //     category: categoryName,
-                                            //     subcategory: subcategory,
-                                            //     listitem: null
-                                            // })
-                                            // props.context.categoryMethods.deleteCategory(obj.category, newCategoryList)
-                                            //     .then(res => {
-                                            //         console.log('success')
-                                            //         console.log(res)
-                                            //     })
-                                            //     .catch(err => {
-                                            //         console.log("error")
-                                            //         console.log(err)
-                                            //     })
-                                        }}
-                                    >
-                                    </div>
                         </div>
                         {listItems}
                      </ul>)
@@ -178,7 +122,22 @@ const Categories = (props) => {
             return (
             <div key={obj.category} className="list-group">
                 <ul id={obj.category} className="list--category"> 
-                    <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category) ? "themes-list--selected" : null}>
+                    <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category) ? "themes-list--selected themes-list" : "themes-list"}>
+                        <div
+                            className={"themes-list-delete"}
+                            key={`categories-delete-${obj.category}`}
+                            onClick={() => {
+                                props.modalInvoke({
+                                    requireActionConfirm: true,
+                                    confirmedAction: () => deletePromise(obj.category),
+                                    modalMessage: "Are you sure you want to delete?"
+                                }, 
+                                )
+                            }}
+                        >
+                            <img alt="delete icon" src="/icons/close-round-line.png" />
+                        </div>
+                        <label>{obj.category}</label>
                         <input 
                             className="navigation-input category" 
                             type="checkbox" 
@@ -186,39 +145,6 @@ const Categories = (props) => {
                             onChange={(e) => props.context.onCheck(e, props.fileName)} 
                             checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category)}
                         /> 
-                        <label>{obj.category}</label>
-                        <div
-                                        key={`categories-delete-${obj.category}`}
-                                        style={{height: "20px", width: "20px", borderRadius: "10px", backgroundColor: "red"}}
-                                        onClick={() => {
-                                            props.modalInvoke({
-                                                requireActionConfirm: true,
-                                                confirmedAction: () => deletePromise(obj.category),
-                                                modalMessage: "Are you sure you want to delete?"
-                                            }, 
-                                            )
-                                            // return new Promise((resolve, reject) => {
-                                            //     const categoryName = obj.category
-                                            //     console.log({
-                                            //         category: categoryName,
-                                            //         subcategory: null,
-                                            //         listitem: null
-                                            //     })
-                                            //     props.context.categoryMethods.deleteCategory(obj.category)
-                                            //     .then(res => {
-                                            //         console.log('success')
-                                            //         console.log(res)
-                                            //         resolve(res)
-                                            //     })
-                                            //     .catch(err => {
-                                            //         console.log("error")
-                                            //         console.log(err)
-                                            //         reject(err)
-                                            //     })
-                                            // })
-                                        }}
-                                    >
-                                    </div>
                     </div>
                     {subcategories}
                 </ul>

@@ -117,6 +117,12 @@
   min-height: 19px;
 }
 
+.themes-list label {
+  margin-bottom: 0 !important;
+  margin-right: 10px;
+  white-space: nowrap;
+}
+
 .themes-list:hover {
   background-color: #f5fff5;
 }
@@ -137,6 +143,34 @@
   font-size: 12px;
   cursor: pointer;
   white-space: nowrap;
+}
+
+.themes-list-delete {
+  height: 16px;
+  min-height: 16px;
+  width: 16px;
+  min-width: 16px;
+  border-radius: 10px;
+  margin-right: 10px;
+  opacity: 0;
+  position: relative;
+  cursor: pointer;
+}
+
+.themes-list-delete img {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+}
+
+.themes-list:hover .themes-list-delete {
+  opacity: 0.4;
+}
+
+.themes-list-delete:hover {
+  opacity: 1 !important;
+  -webkit-transform: scale(1.2) !important;
+          transform: scale(1.2) !important;
 }
 
 .themeSelector > ul {
