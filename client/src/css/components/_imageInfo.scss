@@ -147,6 +147,18 @@
     width: 100%;
 }
 
+@media only screen and (max-width: 720px) {
+    .dropdown-wrapper{
+        grid-template-columns: repeat(auto-fill, 33%);
+    }
+}
+@media only screen and (max-width: 480px) {
+    .dropdown-wrapper{
+        grid-template-columns: repeat(auto-fill, 50%);
+    }
+}
+
+
 
 
 

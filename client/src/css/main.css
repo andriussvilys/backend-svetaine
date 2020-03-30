@@ -228,6 +228,20 @@
   width: 100%;
 }
 
+@media only screen and (max-width: 720px) {
+  .dropdown-wrapper {
+    -ms-grid-columns: (33%)[auto-fill];
+        grid-template-columns: repeat(auto-fill, 33%);
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .dropdown-wrapper {
+    -ms-grid-columns: (50%)[auto-fill];
+        grid-template-columns: repeat(auto-fill, 50%);
+  }
+}
+
 .jsonPreview {
   height: calc(100vh - 100px);
   width: 300px;
@@ -614,6 +628,11 @@ form {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
+  width: 100%;
+}
+
+.addNew-form div {
+  width: 100%;
 }
 
 .EditDetail-container {

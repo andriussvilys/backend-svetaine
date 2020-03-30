@@ -79,6 +79,10 @@ form{
 .addNew-form{
     display: flex;
     flex-wrap: wrap;
+    width: 100%;
+    div{
+        width: 100%;
+    }
 }
 
 .EditDetail-container{
