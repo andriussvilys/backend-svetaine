@@ -10,26 +10,32 @@ const Categories = (props) => {
                 props.context.state.fileData.files[props.fileName] :
                 props.context.state.familySetupdata
 
-    const deletePromise = (categoryName, subcategory, listitem) => {
+    const deletePromise = (recordToDelete) => {
         return new Promise((resolve, reject) => {
-            const listitemObj = listitem ? {category: categoryName, subcategory, listitem} : null
+            const categoryName = recordToDelete.category
+            const subcategory = recordToDelete.subcategory
+            const listitem = recordToDelete.listitem
+
             const category = props.context.state.categoriesData.find(obj => obj.category === categoryName)
-            const currentSubcategory = category.subcategory[subcategory]
-            let newCategoryList = null
-            newCategoryList = {
-                ...category, 
-                subcategory: {...category.subcategory, 
-                [subcategory]: currentSubcategory.filter(listItem => listItem !== listitem)
+            
+            let newCategoryObject = null
+
+            if(subcategory){
+                const currentSubcategory = category.subcategory[subcategory]
+                newCategoryObject = {
+                    ...category, 
+                    subcategory: {...category.subcategory, 
+                    [subcategory]: currentSubcategory
+                    }
+                }
+                if(listitem){
+                    newCategoryObject.subcategory[subcategory] = currentSubcategory.filter(listItem => listItem !== listitem)
+                }
+                else{
+                    delete newCategoryObject.subcategory[subcategory]
                 }
             }
-            if(subcategory && !listitem){
-                delete newCategoryList.subcategory[subcategory]
-            }
-
-            console.log("newCategoryList")
-            console.log(newCategoryList)
-
-            props.context.categoryMethods.deleteCategory(categoryName, newCategoryList, listitemObj)
+            props.context.categoryMethods.deleteCategory(categoryName, newCategoryObject, recordToDelete)
                 .then(res => {
                     res.modalMessage = res.modalMessage
                     res.confirm = false
@@ -66,8 +72,8 @@ const Categories = (props) => {
                                         onClick={() => {
                                             props.modalInvoke({
                                                     requireActionConfirm: true,
-                                                    confirmedAction: () => deletePromise(obj.category, subcategory, listitem),
-                                                    modalMessage: "Are you sure you want to delete?"
+                                                    confirmedAction: () => deletePromise({category: obj.category, subcategory, listitem}),
+                                                    modalMessage: <span>Delete list item <strong>{listitem}</strong> from <strong>{subcategory}</strong> subcategory in <strong>{obj.category}</strong> category?</span>
                                                 }, 
                                                 )
 
@@ -98,8 +104,8 @@ const Categories = (props) => {
 
                                     props.modalInvoke({
                                         requireActionConfirm: true,
-                                        confirmedAction: () => deletePromise(obj.category, subcategory),
-                                        modalMessage: "Are you sure you want to delete?"
+                                        confirmedAction: () => deletePromise({category: obj.category, subcategory}),
+                                        modalMessage: <span>Delete <strong>{subcategory}</strong> subcategory from <strong>{obj.category}</strong> category?</span>
                                     }, 
                                     )
                                 }}
@@ -127,10 +133,11 @@ const Categories = (props) => {
                             className={"themes-list-delete"}
                             key={`categories-delete-${obj.category}`}
                             onClick={() => {
+                                console.log("CLICKED DELETE CATEGORY")
                                 props.modalInvoke({
                                     requireActionConfirm: true,
-                                    confirmedAction: () => deletePromise(obj.category),
-                                    modalMessage: "Are you sure you want to delete?"
+                                    confirmedAction: () => deletePromise({category: obj.category}),
+                                    modalMessage: <span>Delete <strong>{obj.category}</strong> category?</span>
                                 }, 
                                 )
                             }}

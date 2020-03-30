@@ -283,10 +283,14 @@ export class Provider extends React.Component{
                     })
                 .catch(err => err)
         },
-        deleteCategory: (categoryName, updateContent, listitem) => {
+        deleteCategory: (categoryName, updateContent, deletedItem) => {
             return new Promise((resolve, reject) => {
+                console.log("DELETE CATEGORY IN PROVIDER****************************")
                 console.log("updateContent")
                 console.log(updateContent)
+
+                console.log("deletedItem")
+                console.log(deletedItem)
 
 
                 axios.put('/api/categories/delete', {categoryName, updateContent})
@@ -299,20 +303,21 @@ export class Provider extends React.Component{
                         console.log("res.data")
                         console.log(res)
                         //delete category
-                        if(!res.data){
+                        if(!deletedItem.subcategory){
                             newState.categoriesData = newState.categoriesData.filter(category => category.category !== categoryName)
-                            res.modalMessage = `Category ${categoryName} successfully delete`
+                            res.modalMessage = <span>Category <strong>{deletedItem.category}</strong> deleted.</span>
                         }
                         //delete listitem
-                        else if(listitem){
-                            let newArray = newState.categoriesData[categoryIndex].subcategory[listitem.subcategory]
-                            newState.categoriesData[categoryIndex].subcategory[listitem.subcategory] = newArray.filter(listItem => listItem !== listitem.listitem)
-                            res.modalMessage = `Listitem ${listitem} delete from category ${categoryName}`
+                        else if(deletedItem.listitem){
+                            let newArray = newState.categoriesData[categoryIndex].subcategory[deletedItem.subcategory]
+                            newState.categoriesData[categoryIndex].subcategory[deletedItem.subcategory] = newArray.filter(listItem => listItem !== deletedItem.listitem)
+                        res.modalMessage = <span>Listitem <strong>{deletedItem.listitem}</strong> deleted from <strong>{deletedItem.subcategory}</strong> subcategory in <strong>{deletedItem.category}</strong> category.</span>
                         }
                         //delete subcategory
-                        else{
+                        else if(deletedItem.subcategory && !deletedItem.listitem){
                             delete newState.categoriesData[categoryIndex]
                             newState.categoriesData[categoryIndex] = res.data
+                            res.modalMessage = <span>Subcategory <strong>{deletedItem.subcategory}</strong> deleted from <strong>{deletedItem.category}</strong> category.</span>
                         }
                         this.setState(newState, () => {
                             console.log("state after deleteCategory")
