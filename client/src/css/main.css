@@ -121,6 +121,8 @@
   margin-bottom: 0 !important;
   margin-right: 10px;
   white-space: nowrap;
+  width: 100%;
+  cursor: pointer;
 }
 
 .themes-list:hover {

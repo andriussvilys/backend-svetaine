@@ -81,12 +81,13 @@ const Categories = (props) => {
                                     >
                                         <img alt="delete icon" src="/icons/close-round-line.png" />
                                     </div>
-                                    <label>{listitem}</label>  
+                                    <label htmlFor={`filters-${obj.category}-${subcategory}-${listitem}`}>{listitem}</label>  
                                     <input 
+                                    id={`filters-${obj.category}-${subcategory}-${listitem}`}
                                     className="navigation-input listitem" 
                                     type="checkbox" 
                                     value={listitem} 
-                                    id={listitem} 
+                                    // id={listitem} 
                                     onChange={(e) => props.context.onCheck(e, props.fileName)} 
                                     checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem)}
                                     />
@@ -112,8 +113,9 @@ const Categories = (props) => {
                             >
                                 <img alt="delete icon" src="/icons/close-round-line.png" />
                             </div>
-                            <label>{subcategory}</label>
+                            <label htmlFor={`filters-${obj.category}-${subcategory}`}>{subcategory}</label>
                             <input 
+                            id={`filters-${obj.category}-${subcategory}`}
                             className="navigation-input subcategory" 
                             type="checkbox" 
                             value={subcategory} 
@@ -144,8 +146,9 @@ const Categories = (props) => {
                         >
                             <img alt="delete icon" src="/icons/close-round-line.png" />
                         </div>
-                        <label>{obj.category}</label>
+                        <label htmlFor={`filters-${obj.category}`}>{obj.category}</label>
                         <input 
+                            id={`filters-${obj.category}`}
                             className="navigation-input category" 
                             type="checkbox" 
                             value={obj.category} 
