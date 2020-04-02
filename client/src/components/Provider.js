@@ -1276,7 +1276,16 @@ export class Provider extends React.Component{
                                                 ...this.state.fileData,
                                                 files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
                                                 column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
-                                        }} 
+                                            },
+                                            relatedArtwork: {
+                                                ...this.state.relatedArtwork,
+                                                "none": {
+                                                    ...this.state.relatedArtwork.none,
+                                                    files: {...newState.relatedArtwork.none.files, [file.name]: obj.files[file.name]},
+                                                    column: {...newState.relatedArtwork.none.column, fileIds: [...newState.relatedArtwork.none.column.fileIds, file.name]}
+                                                }
+                                            }
+                                        } 
 
                                         newState.artworkInfoData = {...newState.artworkInfoData, [file.name]: obj.files[file.name]}
                                         messages =  {...messages, [file.name]: "Success"}
