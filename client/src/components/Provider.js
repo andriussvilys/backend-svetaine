@@ -45,8 +45,6 @@ export class Provider extends React.Component{
     }
 
     this.onChange = (e, key, fileName) => {
-        console.log("fileName")
-        console.log(fileName)
         let target = null
         let newState = {...this.state}
         if(fileName){
@@ -55,8 +53,6 @@ export class Provider extends React.Component{
         else{
             target = newState.familySetupData
         }
-        console.log("target")
-        console.log(target)
         if(!target[key]){
             target[key] = null
         }
@@ -68,62 +64,80 @@ export class Provider extends React.Component{
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
 
         e.preventDefault();
-        const newAddition = document.getElementById(id).value;
-        if(requestKey === "artworkFamily"){
-            // promise = 
-            console.log(requestKey)
-            return new Promise((resolve, reject) => {
-                axios.post(router, {[requestKey]: newAddition})
-                .then( res => {
-                    console.log("res")
-                    console.log(res)
-                    let addition = res.data[requestKey]
-                      if(callback){
-                          callback("Successfully recored")
-                      }
-                    // this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
-                    //   if(callback){
-                    //       callback("Successfully recored")
-                    //   }
-                      resolve(addition)
-                  })
-                  .catch( err => {
-                      console.log("error!!!")
-                      console.log(err.toJSON())
-                      if(callback){
-                        callback(err.toString())
-                        // callback(err.toString())
-                        }
-                      reject(err)
-                  })
-            })
-        }
-        else{
-            console.log(requestKey)
-            // promise = 
-            return new Promise((resolve, reject) => {
-                axios.put(router, {[requestKey]: newAddition})
-                .then( res => {
-                    console.log("______________________________")
-                    console.log(res)
-                    console.log("______________________________")
-                    this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
-                      if(callback){
-                          callback(res.data)
-                      }
-                      resolve()
-                    })
-                  })
-                  .catch( err => {
-                      console.log("error!!!")
-                      console.log(err.toJSON())
-                      if(callback){
-                        callback(`Theme ${newAddition} has already been recorded`)
-                        }
-                      reject()
-                  })
-            }) 
-        }
+
+        return new Promise((resolve, reject) => {
+
+            const newAddition = document.getElementById(id).value;
+            if(!this.verify().verified){
+                console.log("requestKey")
+                console.log(requestKey)
+                console.log("stateKey")
+                console.log(stateKey)
+                let newState = {...this.state}
+                if(newState[stateKey].includes(newAddition)){
+                    return reject()
+                }
+                newState[stateKey] = [...newState[stateKey], newAddition]
+                this.setState(newState, resolve({modalMessage: "State updated."})) 
+                return
+            }
+            if(requestKey === "artworkFamily"){
+                // promise = 
+                console.log(requestKey)
+                    axios.post(router, {[requestKey]: newAddition})
+                    .then( res => {
+                        console.log("res")
+                        console.log(res)
+                        let addition = res.data[requestKey]
+                          if(callback){
+                              callback("Successfully recored")
+                          }
+                        // this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
+                        //   if(callback){
+                        //       callback("Successfully recored")
+                        //   }
+                        let newState = {...this.state}
+                        newState[stateKey] = [...newState[stateKey], newAddition]
+                        this.setState(newState, () => resolve())
+                      })
+                      .catch( err => {
+                          console.log("error!!!")
+                          console.log(err.toJSON())
+                          if(callback){
+                            callback(err.toString())
+                            // callback(err.toString())
+                            }
+                          reject(err)
+                      })
+            }
+            else{
+                console.log(requestKey)
+                // promise = 
+                    axios.put(router, {[requestKey]: newAddition})
+                    .then( res => {
+                        console.log("______________________________")
+                        console.log(res)
+                        console.log("______________________________")
+                        this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
+                          if(callback){
+                              callback(res.data)
+                          }
+                          let newState = {...this.state}
+                          newState[stateKey] = [...newState[stateKey], newAddition]
+                          this.setState(newState, () => resolve())
+                        })
+                      })
+                      .catch( err => {
+                          console.log("error!!!")
+                          console.log(err.toJSON())
+                          if(callback){
+                            callback(`Theme ${newAddition} has already been recorded`)
+                            }
+                          reject()
+                      })
+            }
+        })
+
     }
 
     //creates an array of all files in the server uploads folder
@@ -197,139 +211,150 @@ export class Provider extends React.Component{
         },
 
         submitNewCategory: () => {
-            console.log("submitNew")
+            return new Promise((resolve, reject) => {
+                console.log("submitNew")
+    
+                const categoryInput = document.getElementById("add-category")
+                const subcategoryInput = document.getElementById("add-subcategory")
+                const listitemInput = document.getElementById("add-listitem")
+    
+                let reqBody = {category: categoryInput.value, subcategory: {}}
+                //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
+                    if(subcategoryInput.value){
+                        reqBody.subcategory = {[subcategoryInput.value]: []}
+                    }
+                    else{reqBody.subcategory = {}}
+                    if(listitemInput.value){
+                        reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
+                    }
+                    else{
+                        reqBody.subcategory[subcategoryInput.value] = []
+                    }
 
-            const categoryInput = document.getElementById("add-category")
-            const subcategoryInput = document.getElementById("add-subcategory")
-            const listitemInput = document.getElementById("add-listitem")
+                    console.log("reqBody")
+                    console.log(reqBody)
 
-            // const allCats = Object.values(this.state.categoriesData)
-            // console.log('all cats')
-            // console.log(allCats)
-
-            let reqBody = {category: categoryInput.value, subcategory: {}}
-            //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
-                // reqBody = {category: categoryInput.value}
-                if(subcategoryInput.value){
-                    reqBody.subcategory = {[subcategoryInput.value]: []}
-                }
-                else{reqBody.subcategory = {}}
-                if(listitemInput.value){
-                    reqBody.subcategory[subcategoryInput.value] = [listitemInput.value]
-                }
-                else{
-                    reqBody.subcategory[subcategoryInput.value] = []
-                }
-                // JSON.stringify(reqBody)
-                // console.log(reqBody)
-                axios.post('/api/categories/create', reqBody)
-                .then(res => {
-                    let newState = {...this.state}
-                    newState.categoriesData = [...newState.categoriesData, res.data]
-                    newState.categoriesOptionList.data = {...newState.categoriesOptionList.data, [categoryInput.value]:[]}
-                    this.setState(newState)
-                })
-                .catch(err => console.log(err))
+                    if(!this.verify({customGuestMessage: true}).verified){
+                        let newState = {...this.state}
+                        newState.categoriesData.push(reqBody)
+                        return this.setState(newState, resolve({modalMessage: "State updated"}))
+                    }
+                    else{
+                        axios.post('/api/categories/create', reqBody)
+                        .then(res => {
+                            let newState = {...this.state}
+                            newState.categoriesData = [...newState.categoriesData, res.data]
+                            newState.categoriesOptionList.data = {...newState.categoriesOptionList.data, [categoryInput.value]:[]}
+                            this.setState(newState, resolve({modalMessage: "New category registered."}))
+                        })
+                        .catch(err => {console.log(err); reject({modalMessage: "Action failed."})})
+                    }
+            })
             
         },
         updateCategory: () => {
-            console.log('updatecategory')
-            const categoryInput = document.getElementById("add-category")
-            const subcategoryInput = document.getElementById("add-subcategory")
-            const listitemInput = document.getElementById("add-listitem")
+            return new Promise((resolve, reject) => {
 
-            console.log("categoryInput")
-            console.log(categoryInput)
-            console.log("subcategoryInput")
-            console.log(subcategoryInput)
-            console.log("listitemInput")
-            console.log(listitemInput)
+                const categoryInput = document.getElementById("add-category")
+                const subcategoryInput = document.getElementById("add-subcategory")
+                const listitemInput = document.getElementById("add-listitem")
+    
+                const allCats = Object.values(this.state.categoriesData).map(obj => obj.category)
+    
+                //check if the CATGORY input value is already recorded in the database
+                //if it is run submitNewCategory method instead and exit this function
+                if(!allCats.includes(categoryInput.value)){
+                    this.categoryMethods.submitNewCategory()
+                        .then(res => resolve({modalMessage: "New category registered."}))
+                        .catch(err => reject({modalMessage: "Action failed."}))
+                    return
+                }
+    
+                //if category name already exists
+                let objToUpdate = this.state.categoriesData.find(obj => obj.category === categoryInput.value)
+                let objIndex = this.state.categoriesData.indexOf(objToUpdate)
+    
+    
+                let categoriesDataUpdate = {...this.state.categoriesData}
+                let subcategoryArray = categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value]
+                //if subcategory doesnt exist, initiate it
+                if(!subcategoryArray){
+                    subcategoryArray = []
+                    categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = subcategoryArray
+                }
+                //if new listitem has been entered
+                if(listitemInput.value){
+                    categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
+                }
 
-            const allCats = Object.values(this.state.categoriesData).map(obj => obj.category)
-
-            //check if the CATGORY input value is already recorded in the database
-            //if it is run submitNewCategory method instead and exit this function
-            if(!allCats.includes(categoryInput.value)){
-                this.categoryMethods.submitNewCategory()
-                return
-            }
-
-            //if category name already exists
-            let objToUpdate = this.state.categoriesData.find(obj => obj.category === categoryInput.value)
-            let objIndex = this.state.categoriesData.indexOf(objToUpdate)
-
-
-            let categoriesDataUpdate = this.state.categoriesData
-            let subcategoryArray = categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value]
-            //if subcategory doesnt exist, initiate it
-            if(!subcategoryArray){
-                subcategoryArray = []
-                categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = subcategoryArray
-            }
-            //if new listitem has been entered
-            if(listitemInput.value){
-                categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
-            }
-
-            console.log("objToUpdate")
-            console.log(objToUpdate)
-            axios.put('/api/categories/update', objToUpdate)
-                .then(res => {
-                    console.log("update success ____________________")
-                    console.log(res)
+                if(!this.verify({customGuestMessage: true}).verified){
                     let newState = {...this.state}
-                    newState.categoriesData[objIndex] = res.data
-                    this.setState(newState)
-                    })
-                .catch(err => err)
+                    newState.categoriesData[objIndex] = objToUpdate
+                    return this.setState(newState, resolve({modalMessage: "State updated."}))
+                }
+                else{
+                    axios.put('/api/categories/update', objToUpdate)
+                        .then(res => {
+                            let newState = {...this.state}
+                            newState.categoriesData[objIndex] = res.data
+                            this.setState(newState, resolve({modalMessage: "Database updated."}))
+                            })
+                        .catch(err => reject({modalMessage: "Action failed."}))
+                }
+            })
         },
         deleteCategory: (categoryName, updateContent, deletedItem) => {
             return new Promise((resolve, reject) => {
-                console.log("DELETE CATEGORY IN PROVIDER****************************")
-                console.log("updateContent")
-                console.log(updateContent)
 
-                console.log("deletedItem")
-                console.log(deletedItem)
+                if(!this.verify({customGuestMessage: true}).verified){
+                    
+                    let newState = {...this.state}
+                    const deletetedCategoryIndex = newState.categoriesData.indexOf(deletedItem.category)
 
+                    //if category is deleted
+                    if(!updateContent){
+                        newState.categoriesData = newState.categoriesData.filter(obj => obj.category !== deletedItem.category)
+                    }
+                    //if subcategory or listitem is deleted
+                    else{
+                        newState.categoriesData.splice(deletetedCategoryIndex, 1, updateContent)
+                    }
+                    return this.setState(newState, resolve({modalMessage: "State updated."}))
+                }
 
-                axios.put('/api/categories/delete', {categoryName, updateContent})
-                    .then(res => {
-
-                        let newState = {...this.state}
-                        const categoryObj = newState.categoriesData.find(category => category.category === categoryName)
-                        const categoryIndex = newState.categoriesData.indexOf(categoryObj)
-
-                        console.log("res.data")
-                        console.log(res)
-                        //delete category
-                        if(!deletedItem.subcategory){
-                            newState.categoriesData = newState.categoriesData.filter(category => category.category !== categoryName)
-                            res.modalMessage = <span>Category <strong>{deletedItem.category}</strong> deleted.</span>
-                        }
-                        //delete listitem
-                        else if(deletedItem.listitem){
-                            let newArray = newState.categoriesData[categoryIndex].subcategory[deletedItem.subcategory]
-                            newState.categoriesData[categoryIndex].subcategory[deletedItem.subcategory] = newArray.filter(listItem => listItem !== deletedItem.listitem)
-                        res.modalMessage = <span>Listitem <strong>{deletedItem.listitem}</strong> deleted from <strong>{deletedItem.subcategory}</strong> subcategory in <strong>{deletedItem.category}</strong> category.</span>
-                        }
-                        //delete subcategory
-                        else if(deletedItem.subcategory && !deletedItem.listitem){
-                            delete newState.categoriesData[categoryIndex]
-                            newState.categoriesData[categoryIndex] = res.data
-                            res.modalMessage = <span>Subcategory <strong>{deletedItem.subcategory}</strong> deleted from <strong>{deletedItem.category}</strong> category.</span>
-                        }
-                        this.setState(newState, () => {
-                            console.log("state after deleteCategory")
-                            console.log(this.state)
-                            // res.modalMessage = "Successfully deleted"
-                            resolve(res)
+                else{
+                    axios.put('/api/categories/delete', {categoryName, updateContent})
+                        .then(res => {
+    
+                            let newState = {...this.state}
+                            const categoryObj = newState.categoriesData.find(category => category.category === categoryName)
+                            const categoryIndex = newState.categoriesData.indexOf(categoryObj)
+                            //delete category
+                            if(!deletedItem.subcategory){
+                                newState.categoriesData = newState.categoriesData.filter(category => category.category !== categoryName)
+                                res.modalMessage = <span>Category <strong>{deletedItem.category}</strong> deleted.</span>
+                            }
+                            //delete listitem
+                            else if(deletedItem.listitem){
+                                let newArray = newState.categoriesData[categoryIndex].subcategory[deletedItem.subcategory]
+                                newState.categoriesData[categoryIndex].subcategory[deletedItem.subcategory] = newArray.filter(listItem => listItem !== deletedItem.listitem)
+                            res.modalMessage = <span>Listitem <strong>{deletedItem.listitem}</strong> deleted from <strong>{deletedItem.subcategory}</strong> subcategory in <strong>{deletedItem.category}</strong> category.</span>
+                            }
+                            //delete subcategory
+                            else if(deletedItem.subcategory && !deletedItem.listitem){
+                                delete newState.categoriesData[categoryIndex]
+                                newState.categoriesData[categoryIndex] = res.data
+                                res.modalMessage = <span>Subcategory <strong>{deletedItem.subcategory}</strong> deleted from <strong>{deletedItem.category}</strong> category.</span>
+                            }
+                            this.setState(newState, () => {
+                                resolve(res)
+                            })
                         })
-                    })
-                    .catch(err => {
-                        err.modalMessage = "Action failed"
-                        reject(err)
-                    })
+                        .catch(err => {
+                            err.modalMessage = "Action failed"
+                            reject(err)
+                        })
+                }
             })
         },
         autoCheckCategories: (fileName, category, subcategory, listitem) => {
@@ -1478,8 +1503,7 @@ export class Provider extends React.Component{
                     }
                 }
         })
-    },
-
+        },
         updateArtworkByFamily: (familyName) => {
             if(!familyName){
                 return
@@ -1538,7 +1562,6 @@ export class Provider extends React.Component{
                 })
             })
         },
-
         postArtworkInfo: (file) => {
             console.log('post artwork info RUNS with')
             console.log(file)
@@ -1610,7 +1633,6 @@ export class Provider extends React.Component{
             })
 
         },
-
         initialIndex: () => {
             let newState = {...this.state}
             this.state.fileData.column.fileIds.forEach((fileName, index) => {
@@ -2089,24 +2111,29 @@ export class Provider extends React.Component{
             return this.setState({[propertyName]: value})
         }
     }//end of familySetupMethods
-    this.verify = (props) => {
+
+    this.verify = (options) => {
         if(auth.guest){
-        return {
-            showModal: true,
-            verified: false, 
-            modalMessage: "You do not have the rights for this action. Log in using admin level account"
+            return {
+                showModal: true,
+                verified: false, 
+                modalMessage: options && options.customMessage ? options.customMessage : "You do not have the rights for this action. Log in using admin level account"
+            }
         }
-        }
-        if(props){
-            if(props.addNew && !this.state.familySetupData.artworkFamily){
+        else if(options){
+            if(options.addNew && !this.state.familySetupData.artworkFamily){
                 return {
+                    verfied: true,
                     showModal: true,
-                    modalMessage: props && props.customError ? props.customError : "Select or add a new artwork family"
+                    modalMessage: options && options.customError ? options.customError : "Select or add a new artwork family"
                 }
+            }
+            else{
+                return{ verified: true}
             }
         }
 
-        else{return {verified: true}}
+        else if (!options){return {verified: true}}
     }
 
 }//END OF CONTSTRUCTOR

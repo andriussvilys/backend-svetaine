@@ -22,123 +22,37 @@ export default class Create extends Component{
       confirmedAction: null
     }
   }
-//   submitButtons = () => {
-//         return <Fragment>
-//                           <div className="imageInfo--box">
-//                             <span>record new family setup:</span>
-//                             <Button
-//                              variant="success" 
-//                              size="sm"
-//                              onClick={
-//                                 () => {
-//                                   if(!this.verify()){
-//                                     return
-//                                   }
-//                                   else{
-//                                     console.log("CREATE NEW FAM")
-//                                     this.setState({
-//                                       showModal: true,
-//                                       modalMessage: "...loading..."
-//                                     }, () => {
-//                                         this.context.familySetupMethods.createFamilySetup()
-//                                           .then(res => {
-//                                             this.setState({
-//                                               modalMessage: res
-//                                             })
-//                                           })
-//                                           .catch(err => {
-//                                             this.setState({
-//                                               modalMessage: err
-//                                             })
-//                                           })
-//                                     })
-//                                     return
-//                                   }
-//                              }}
-//                             >
-//                                 SEND
-//                             </Button>
-//                         </div>      
-//                         <div className="imageInfo--box">
-//                             <span>update family setup:</span>
-//                             <Button
-//                              variant="primary" 
-//                              size="sm"
-//                              onClick={
-//                                 () => {
-//                                   if(!this.verify()){
-//                                     return
-//                                   }
-//                                   this.setState({
-//                                     showModal: true,
-//                                     modalMessage: "...loading..."
-//                                   }, () => {
-
-//                                     this.context.familySetupMethods.updateFamilySetup(this.context.state.familySetupData.artworkFamily)
-//                                       .then(res => {
-//                                         this.setState({
-//                                           modalMessage: res
-//                                         })
-//                                       })
-//                                       .catch(err => {
-//                                         this.setState({
-//                                           modalMessage: err
-//                                         })
-//                                       })
-//                                   })
-//                                   return
-//                                 }
-//                              }
-//                             >
-//                                 SEND
-//                             </Button>
-//                         </div>  
-//                         <div className="imageInfo--box">
-//                             <span>update files in the family:</span>
-//                             <Button
-//                              variant="primary" 
-//                              size="sm"
-//                              onClick={() => {
-//                                 if(!this.verify()){
-//                                   return
-//                                 }
-//                                this.context.fileDataMethods.updateArtworkByFamily(this.context.state.familySetupData.artworkFamily)
-//                              }
-//                              }
-//                             >
-//                                 SEND
-//                             </Button>
-//                         </div>  
-//         </Fragment>
-// }
 
 modalInvoke = (options, callbackPromise) => {
-  const verify = new Promise((resolve, reject) => {
-    const result = this.context.verify()
-    if(result.verified){
-      resolve({verified: true})
-    }
-    else{
-      reject({verified: false, message: result.modalMessage})
-    }
-  })
+  // const verify = new Promise((resolve, reject) => {
+  //   const result = this.context.verify()
+  //   if(result.verified){
+  //     resolve({verified: true})
+  //   }
+  //   else{
+  //     reject({verified: false, message: result.modalMessage})
+  //   }
+  // })
 
-  verify
-    .then(res => {
+  // verify
+  //   .then(res => {
       let newState = {...this.state}
       newState = {
         ...newState,         
         showModal: true,
         modalMessage: "...loading..."
       }
-      if(options.requireActionConfirm){
+      if(options && options.requireActionConfirm){
         newState.confirm = true
+      }
+      else{
+        newState.confirm = false
       }
 
       console.log("CREATE -> MODAL INVOKE -> NEWSTATE")
       this.setState(newState, () => {
           let action = null
-          if(!options.requireActionConfirm){
+          if(!options || !options.requireActionConfirm){
             callbackPromise
             .then(res => {
               this.setState({
@@ -159,24 +73,19 @@ modalInvoke = (options, callbackPromise) => {
           }
 
         })
-    })
-    .catch(err => {
-      this.setState({
-        showModal: true,
-        modalMessage: err.message
-      })
-    })
+    // })
+    // .catch(err => {
+    //   this.setState({
+    //     showModal: true,
+    //     modalMessage: err.message
+    //   })
+    // })
 }
 
-verify = () => {
-  const result = this.context.verify()
-  if(result.verified){
-    return {verified: true}
-  }
-  else{
-    return {verified: false, message: result.modalMessage}
-  }
-}
+// verify = () => {
+//   const result = this.context.verify()
+//   return result
+// }
 
 submitButtons = () => {
   const currentFamily = this.context.state.familySetupData.artworkFamily
@@ -184,7 +93,7 @@ submitButtons = () => {
 
   const submitAction = () => {
 
-    const verification = this.verify()
+    const verification = this.context.verify()
 
     if(!verification.verified){
       const refuseAction = () => {
@@ -248,6 +157,7 @@ submitButtons = () => {
     />
   )
 }
+
 componentDidMount(){
   this.setState({submitButtons: this.submitButtons()})
 }

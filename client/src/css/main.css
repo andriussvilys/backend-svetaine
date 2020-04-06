@@ -1366,7 +1366,8 @@ h5 {
 }
 
 .ImagesPreview--image {
-  height: 120px;
+  max-height: 120px;
+  max-width: 100%;
 }
 
 .ImagesPreview--imageContainer__empty {

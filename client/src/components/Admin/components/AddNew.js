@@ -104,9 +104,9 @@ render(){
                         disabled={this.state.saveButtonDisable}
                         variant="primary"
                         onClick={ (e) => {
-                            if(!this.verify({addNew: true})){
-                                return
-                            }
+                            // if(!this.verify({addNew: true})){
+                            //     return
+                            // }
                             this.setState({
                                 saveButtonText: "",
                                 spinnerDisplay: "d-block",
@@ -119,6 +119,22 @@ render(){
                                 this.props.stateKey,
                                 this.changeButtonText
                             )
+                            .then(res => {
+                                this.setState({
+                                    modalMessage: "Success.",
+                                    saveButtonText: "Done",
+                                    spinnerDisplay: "d-none",
+                                    saveButtonDisable: true
+                                })
+                            })
+                            .catch(err => {
+                                this.setState({
+                                    modalMessage: "Action Failed.",
+                                    saveButtonText: "Done",
+                                    spinnerDisplay: "d-none",
+                                    saveButtonDisable: true
+                                })
+                            })
                         }
                         }
                         >

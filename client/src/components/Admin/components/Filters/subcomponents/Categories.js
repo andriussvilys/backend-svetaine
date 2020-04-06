@@ -221,8 +221,11 @@ const Categories = (props) => {
                             className="custom-button"
                             variant="success" 
                             size="sm"
-                            onClick={
-                                props.context.categoryMethods.updateCategory
+                            onClick={ () => {
+                                console.log("SUBMIT CATEGORIES UPDATE")
+                                props.modalInvoke(null, props.context.categoryMethods.updateCategory()) 
+                            }
+                                // props.context.categoryMethods.updateCategory
                             }
                         >
                             SUBMIT

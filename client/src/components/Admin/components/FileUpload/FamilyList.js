@@ -80,6 +80,10 @@ export default class FamilyList extends React.Component{
                             variant="success"
                             className="custom-button"
                             onClick={() => {
+                                const verification = this.props.context.verify()
+                                if(!verification.verified){
+                                    return this.setState({showModal: true, modalMessage: verification.modalMessage})
+                                }
                                 this.setState({showModal: true})
                                 this.postAll(this.props.familyName)
                                     .then(res => {
@@ -96,7 +100,10 @@ export default class FamilyList extends React.Component{
                     message={this.state.modalMessage}
                     onClose={() => {this.setState({showModal: false})}}
                 >
-                    <ProgressBar now={this.state.progressBar} />
+                    {this.state.progressBar ? 
+                        <ProgressBar now={this.state.progressBar} /> :
+                        null
+                    }
                 </BootstrapModal>
             </div>
         ) 

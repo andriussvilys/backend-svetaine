@@ -96,6 +96,10 @@ export default class EditArtwork extends React.Component{
                           variant="success"
                           className="custom-button"
                           onClick={() => {
+                              const verification = this.props.context.verify()
+                              if(!verification.verified){
+                                  return this.setState({showModal: true, modalMessage: verification.modalMessage})
+                              }
                               this.setState({
                                   showModal: true,
                                   modalMessage: "loading..."
