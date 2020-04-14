@@ -52,6 +52,8 @@ router.put('/delete/', (req, res) => {
         {new: true}
     )
     .then(newObj => {
+        console.log("theme deleted")
+        console.log(newObj)
         res.status(200).send(newObj)
       })
       .catch(err => {console.log(err); res.status(500).send('problem')})

@@ -5,6 +5,7 @@ const SelectFamily = (props) => {
     return(
         <DropDownList 
             title={'Select Artwork Family'}
+            parent={props.parent}
             state={props.context.state}
             array={props.context.state.artworkFamilyList}
             onChange={props.onChange || props.context.getFamilySetup}

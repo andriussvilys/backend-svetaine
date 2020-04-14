@@ -1,6 +1,4 @@
 import React from 'react';
-// import '../css/main.css';
-import Accordion from './Accordion'
 import AddNew from './AddNew';
 
 export default class DropDownList extends React.Component{
@@ -11,6 +9,20 @@ export default class DropDownList extends React.Component{
           category: {}
         }
       }
+
+deletePromise = (string, theme) => {
+    return new Promise((resolve, reject) => {
+        if(string !== "themes"){
+            reject()
+        }
+        else{
+            console.log("initiate context.deleteTheme")
+            this.props.context.deleteTheme(theme)
+                .then(res => resolve())
+                .catch(err => reject())
+        }
+    })
+}      
 
 /**
  *@param {array} array source data for list
@@ -77,21 +89,45 @@ export default class DropDownList extends React.Component{
         let listItem = (listItem) => {
             return (
                 <li 
-                className={` themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
+                className={`themes-list ${highlighter(string, listItem) ? 'themes-list--selected' : null}`} 
                 key={`${string}-${listItem}`}
                 >
-                    <label htmlFor={`${string}-${listItem}`} className="themes-span">{listItem}</label>
+
+                        {this.props.allowDelete ?                         
+                            <div
+                                className={"themes-list-delete"}
+                                key={`dropdown-${string}-delete-${listItem}`}
+                                onClick={() => {
+                                    this.props.modalInvoke({
+                                        requireActionConfirm: true,
+                                        confirmedAction: () => {
+                                            return new Promise((resolve, reject) => {
+                                                this.deletePromise(string, listItem)
+                                                    .then(res => resolve({confirm: false, modalMessage: "Theme deleted."}))
+                                                    .catch(err => reject({confirm: false, modalMessage: "Theme delete failed."}))
+                                            })
+                                        },
+                                        modalMessage: <span>Delete <strong>{listItem}</strong> {string}?</span>
+                                    }, 
+                                    )
+                                }}
+                            >
+                                <img alt="delete icon" src="/icons/close-round-line.png" />
+                            </div> : 
+                            null
+                        }   
+
+                    <label htmlFor={`${string}-${listItem}-${this.props.parent}`} className="themes-span">{listItem}</label>
 
                     {this.props.uncontrolled ?   
                         <input 
-                            id={`${string}-${listItem}`}
+                            id={`${string}-${listItem}-${this.props.parent}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
                             checked={highlighter(string, listItem)}
                             value={listItem}
                             onChange={(e) => {
                                 this.props.onChange(e.target.value, e.target.checked, string)
-                                    // e.target.parentNode.classList.toggle('themes-list--selected')
                                 return
                             }}
                         />
@@ -99,7 +135,7 @@ export default class DropDownList extends React.Component{
                         :
 
                         <input 
-                            id={`${string}-${listItem}`}
+                            id={`${string}-${listItem}-${this.props.parent}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
                             value={listItem}

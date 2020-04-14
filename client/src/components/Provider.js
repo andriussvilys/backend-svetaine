@@ -121,10 +121,14 @@ export class Provider extends React.Component{
                         this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
                           if(callback){
                               callback(res.data)
+                              resolve()
                           }
-                          let newState = {...this.state}
-                          newState[stateKey] = [...newState[stateKey], newAddition]
-                          this.setState(newState, () => resolve())
+                          else{
+                              resolve()
+                          }
+                        //   let newState = {...this.state}
+                        //   newState[stateKey] = [...newState[stateKey], newAddition]
+                        //   this.setState(newState, () => resolve())
                         })
                       })
                       .catch( err => {
@@ -138,6 +142,34 @@ export class Provider extends React.Component{
             }
         })
 
+    }
+
+    this.deleteTheme = (theme) => {
+        console.log("deleteTheme runs")
+        return new Promise((resolve, reject) => {
+            if(!this.verify().verified){
+                console.log("NOT verified")
+                let newState = {...this.state}
+                newState.themesData = newState.themesData.filter(oldtheme => oldtheme !== theme )
+                this.setState(newState, () => resolve({modalMessage: "State updated."}))
+            }
+            else{
+                console.log("run api/themes/delte")
+                console.log(`theme: ${theme}`)
+                axios.put('/api/themes/delete', {"list": theme})
+                    .then(res => {
+                        console.log("themee deleted")
+                        let newState = {...this.state}
+                        newState.themesData = newState.themesData.filter(oldtheme => oldtheme !== theme )
+                        console.log("newState.themesData")
+                        console.log(newState.themesData)
+                        this.setState(newState, () => {
+                            resolve()
+                        })
+                    })
+                    .catch(err => reject())
+            }
+        })
     }
 
     //creates an array of all files in the server uploads folder
@@ -217,7 +249,11 @@ export class Provider extends React.Component{
                 const categoryInput = document.getElementById("add-category")
                 const subcategoryInput = document.getElementById("add-subcategory")
                 const listitemInput = document.getElementById("add-listitem")
-    
+                
+                if(!categoryInput.value || categoryInput.value === "" || categoryInput.value === " "){
+                    reject({modalMessage: "Action failed. Cannot submit empty value."})
+                }
+
                 let reqBody = {category: categoryInput.value, subcategory: {}}
                 //IF THE VALUE DOES NOT EXIST IN THE CATEGORYNAMES ARRAY IE IS NEW
                     if(subcategoryInput.value){
@@ -409,7 +445,6 @@ export class Provider extends React.Component{
             let statePath = this.state.familySetupData
             
             if(fileName){
-                console.log('checked NOT in global setup')
                 statePath = this.state.fileData.files[fileName]
                 if(!this.state.fileData.files[fileName].category){
                     this.state.fileData.files[fileName].category = {}
@@ -557,10 +592,6 @@ export class Provider extends React.Component{
                 else{ target = newState.familySetupData.displayTriggers}
     
                 if(classname === "listitem"){
-                    console.log(fileName)
-                    console.log("listItem")
-                    console.log("stateCopy")
-                    console.log(stateCopy)
                     subcategory = e.target.parentNode.parentNode.id
                     category = e.target.parentNode.parentNode.parentNode.id
                     listItemNest = statePath.category[category][subcategory]
@@ -569,14 +600,8 @@ export class Provider extends React.Component{
                     newState = listItemPath(category, subcategory, newListitems, fileName)
 
                     target[classname] = newListitems
-                    // this.setState(listItemPath(category, subcategory, newListitems, fileName))
-                    // return     
                 }
                 else if (classname === "subcategory"){
-                    console.log(fileName)
-                    console.log("subCategory")
-                    console.log("stateCopy")
-                    console.log(stateCopy)
                     category = e.target.parentNode.parentNode.parentNode.id
     
                     delete stateCopy.category[category][checkboxId]
@@ -608,8 +633,6 @@ export class Provider extends React.Component{
                     const listitemsToRemove =  this.state.categoriesData.filter(obj => obj.category === category)[0].subcategory[checkboxId]
                     target.listitems = target.listitems.filter(trigger => !listitemsToRemove.includes(trigger)) 
                     target[classname] = target[classname].filter(trigger => trigger !== checkboxId)
-                    // this.setState(newState)
-                    // return
                 }
                 else if (classname === "category"){
                     category = e.target.parentNode.parentNode.id
@@ -646,8 +669,6 @@ export class Provider extends React.Component{
                     target.listitems = target.listitems.filter(trigger => !listitemsToRemove.includes(trigger)) 
                     target[classname] = target[classname].filter(trigger => trigger !== category)
                     target.subcategory = target.subcategory.filter(trigger => !this.state.categoriesOptionList.data[category].includes(trigger))
-                    // this.setState(newState)
-                    // return
                 }
                 this.setState(newState)
                 return     
@@ -657,9 +678,6 @@ export class Provider extends React.Component{
             const parentCheckbox = (target) => {
                 return Array.from(target.getElementsByTagName('input'))[0]; 
             };
-        
-            //returns a boolean for SWITCH statement
-            //checks for className of input parent 
             const classNameCheck = (name) => {
     
                 if(name === "list--listitem"){
@@ -715,8 +733,6 @@ export class Provider extends React.Component{
         },
 
         deleteDBrecord: (fileName, artworkFamily, cb) => {
-            // const id = this.state.relatedArtwork[familyName].files[fileName]._id
-            // console.log(id)
             return new Promise ((resolve, rej) => {
                 const file = this.state.artworkInfoData[fileName]
                 const paths = {
@@ -728,19 +744,11 @@ export class Provider extends React.Component{
                     .then(res => {
                         axios.delete(`/deleteImage/delete/${fileName}`, paths)
                         .then(res => {
-                            console.log(`file deleted:`)
-                            console.log(res)
                             let relatedArtwork = {...this.state.relatedArtwork}
                             delete relatedArtwork[artworkFamily].files[fileName]
                             const fileIds = relatedArtwork[artworkFamily].column.fileIds
-                            console.log("fileIds")
-                            console.log(fileIds)
                             let newFileIds = fileIds.filter(name => name !== fileName)
-                            console.log("fileIds")
-                            console.log(newFileIds)
                             relatedArtwork[artworkFamily].column.fileIds = newFileIds
-                            console.log("********** NEW relatedArtwork")
-                            console.log(relatedArtwork)
                             let artworkOnDisplay = this.state.artworkOnDisplay
                             delete artworkOnDisplay[fileName]
                             let artworkInfoData = this.state.artworkInfoData
@@ -780,12 +788,6 @@ export class Provider extends React.Component{
          * @returns updated context state
          */
         onChange: (value, string, fileName, cb) => {
-
-            console.log("string")
-            console.log(string)
-
-
-
             let nestType = () => {
                 if(string === "themes"){
                     return "array"
@@ -800,14 +802,10 @@ export class Provider extends React.Component{
 
             let nestTypeResult = nestType()
 
-            console.log("nestType()")
-            console.log(nestTypeResult)
-
             let newState = {...this.state}
 
             if(string === "themes"){
                 let newList = []
-                console.log("array runs")
                 if(!newState.fileData.files[fileName][string]){
                     newState.fileData.files[fileName][string] = []
                 }
@@ -841,9 +839,6 @@ export class Provider extends React.Component{
                                 }
                             }
                         }
-
-                        console.log("newState")
-                        console.log(newState)
                             
                         this.setState(newState, () => {
                             if(cb){
@@ -856,7 +851,6 @@ export class Provider extends React.Component{
             }
 
             else if(string !== "year" && string !== "location"){
-                console.log("category runs")
                 if(!newState.fileData.files[fileName].displayTriggers[string]){
                     newState.fileData.files[fileName].displayTriggers[string] = []
                 }
@@ -888,8 +882,7 @@ export class Provider extends React.Component{
                         return
                     }
                 }
-            else{    
-                console.log("string runs")
+            else{   
                           
                 newState = {
                     ...this.state,
@@ -1081,13 +1074,11 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
 
-        transferState: (file, radioValue) => {
-            console.log("transfer state runs")
+        transferState: (file, radioValue, options) => {
             let newState = {...this.state}
 
             //on check
             if(radioValue === true){
-                console.log("radio value true")
                 this.setState({showModal: true})
 
                 //overwrite file data witch each familySetUp property
@@ -1106,10 +1097,6 @@ export class Provider extends React.Component{
                         }
                     }
                 })
-
-                // let displayTriggers = {
-                //     category: Object.keys(this.state.familySetupData.category)
-                // }
                 let newDisplayTriggers = {}
                 newDisplayTriggers.category = Object.keys(this.state.familySetupData.category)
 
@@ -1158,39 +1145,27 @@ export class Provider extends React.Component{
             }
 
             else{
-                console.log("radio value false")
-                const checkType = (elem) => {
-                    let elemType = null
-                    elemType = typeof elem
-                    if(elemType === "object"){
-                        if(Array.isArray(elem)){
-                            return new Array
-                        }
-                        else{
-                            return new Object
-                        }
-                    }
-                    else{
-                        return new String
-                    }
-                }
+                axios.get(`/api/familySetup/none`)
+                    .then(res => {
+                        let newFamInfo = res.data
+                        delete newFamInfo.__v
+                        delete newFamInfo._id
 
-                Object.keys(this.state.familySetupData).forEach(property => {
-                    newState = {
-                        ...newState,
-                        fileData: {
-                            ...newState.fileData,
-                            files: {
-                                ...newState.fileData.files,
-                                [file.fileName]: {
-                                    ...newState.fileData.files[file.fileName],
-                                    [property]: checkType(this.state.fileData.files[file.fileName][property])
-                                }
-                            }
-                        }
-                    }
-                })
-                newState.fileData.files[file.fileName].useFamilySetup = false
+                        const currentInfo = this.state.fileData.files[file.fileName]
+                        let newFileInfo = {...currentInfo}
+                        
+                        Object.keys(newFamInfo).forEach(propertyName => {
+                            newFileInfo[propertyName] = newFamInfo[propertyName]
+                        })
+                        newFileInfo.useFamilySetup = false
+
+                        newState.fileData.files[file.fileName] = newFileInfo
+                        this.setState(newState)
+                    })
+                    .catch(err => {
+                        console.log(err)
+                    })
+
                 this.setState(newState)
             }
         },
@@ -1234,7 +1209,7 @@ export class Provider extends React.Component{
                             }
                             else if(this.state.serverFileDir.includes(file.name)){
                                 console.log("error")
-                                messages = {...messages, [file.name]: `Fail (already updated)`}
+                                messages = {...messages, [file.name]: `Fail (already uploaded)`}
                             }
                             else if(file.name.includes(" ") || file.name.includes("/")){
                                 console.log("error")
@@ -1841,106 +1816,109 @@ export class Provider extends React.Component{
             } 
         },
         getFamilySetup: (value, string, fileName) => {
-
-            console.log("get family setup")
-            axios.get(`/api/familySetup/${value}`)
-            .then( res => {
+            return new Promise((resolve, reject) => {
+                console.log("get family setup")
+                console.log("fileName")
+                console.log(fileName)
+                axios.get(`/api/familySetup/${value}`)
+                .then( res => {
+        
+                    let newFamilySetup = {}
+                    let newState = {...this.state}
     
-                let newFamilySetup = {}
-                let newState = {...this.state}
-
-                if(fileName){
-                    newFamilySetup = {...this.state.fileData.files[fileName]}
-
-                    Object.keys(res.data).forEach(objKey => {
-                        newFamilySetup = {
-                            ...newFamilySetup,
+                    if(fileName){
+                        newFamilySetup = {...this.state.fileData.files[fileName]}
+    
+                        Object.keys(res.data).forEach(objKey => {
+                            newFamilySetup = {
+                                ...newFamilySetup,
+                                    [objKey]: res.data[objKey]
+                                }
+                        })
+        
+                        newState = {...this.state,
+                            fileData: {
+                                ...this.state.fileData,
+                                files: {
+                                    ...this.state.fileData.files,
+                                    [fileName]: newFamilySetup
+                                }
+                            }
+                        }
+                        let newDisplayTriggers = {}
+                        newDisplayTriggers.category = Object.keys(res.data.category)
+        
+                        const getSubcategories = () => {
+                            let categories = Object.keys(res.data.category)
+                            let subcategories = []
+                            categories.forEach(category => {
+                                subcategories = [...subcategories, ...Object.keys(res.data.category[category])]
+                            })
+                            return subcategories
+                        }
+                        newDisplayTriggers.subcategory = getSubcategories()
+        
+                        const getListitems = () => {
+                            const categories = Object.keys(res.data.category)
+                            let listItems = []
+                            categories.forEach(category => {
+                                let subcategories = Object.keys(res.data.category[category])
+                                subcategories.forEach(sub => {
+                                    if(!res.data.category[category][sub].length > 0){return}
+                                    listItems = [...listItems, ...res.data.category[category][sub]]
+                                })
+                            })
+                            return listItems
+                        }
+                        newDisplayTriggers.listitems = getListitems()
+        
+                        newDisplayTriggers.themes = res.data.themes
+        
+                        newDisplayTriggers.year = res.data.year
+                        newDisplayTriggers.location = res.data.location    
+        
+                        newState.fileData.files[fileName].displayTriggers = newDisplayTriggers
+                    }
+    
+                    else if(!fileName){
+                        console.log("GET FAMILY SET UP")
+                        console.log("NO FILE NAME")
+                        Object.keys(res.data).forEach(objKey => {
+                            newFamilySetup = {
+                                ...newFamilySetup,
                                 [objKey]: res.data[objKey]
                             }
-                    })
-    
-                    newState = {...this.state,
-                        fileData: {
-                            ...this.state.fileData,
-                            files: {
-                                ...this.state.fileData.files,
-                                [fileName]: newFamilySetup
-                            }
-                        }
-                    }
-                    let newDisplayTriggers = {}
-                    newDisplayTriggers.category = Object.keys(res.data.category)
-    
-                    const getSubcategories = () => {
-                        let categories = Object.keys(res.data.category)
-                        let subcategories = []
-                        categories.forEach(category => {
-                            subcategories = [...subcategories, ...Object.keys(res.data.category[category])]
                         })
-                        return subcategories
+                        
+                        newState = {...this.state, familySetupData: newFamilySetup}
                     }
-                    newDisplayTriggers.subcategory = getSubcategories()
     
-                    const getListitems = () => {
-                        const categories = Object.keys(res.data.category)
-                        let listItems = []
-                        categories.forEach(category => {
-                            let subcategories = Object.keys(res.data.category[category])
-                            subcategories.forEach(sub => {
-                                if(!res.data.category[category][sub].length > 0){return}
-                                listItems = [...listItems, ...res.data.category[category][sub]]
-                            })
-                        })
-                        return listItems
-                    }
-                    newDisplayTriggers.listitems = getListitems()
+                    const withRelatedArtwork = this.familySetupMethods.getRelatedArtwork(value, newState)
     
-                    newDisplayTriggers.themes = res.data.themes
+                    withRelatedArtwork
+                        .then(  res => {
     
-                    newDisplayTriggers.year = res.data.year
-                    newDisplayTriggers.location = res.data.location    
+                            newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
+                            let fileIds = Object.keys(res)
     
-                    newState.fileData.files[fileName].displayTriggers = newDisplayTriggers
-                }
-
-                else if(!fileName){
-                    Object.keys(res.data).forEach(objKey => {
-                        newFamilySetup = {
-                            ...newFamilySetup,
-                            [objKey]: res.data[objKey]
-                        }
-                    })
-                    
-                    newState = {...this.state, familySetupData: newFamilySetup}
-                }
-
-                const withRelatedArtwork = this.familySetupMethods.getRelatedArtwork(value, newState)
-
-                withRelatedArtwork
-                    .then(  res => {
-
-                        newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
-                        let fileIds = Object.keys(res)
-
-                        // this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res =>{ 
-                        //     newState.seeAlsoData = res
-                        //     this.setState(newState)
-                        // })
-                        this.setState(newState)
-
-                    } 
-                    )
+                            // this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res =>{ 
+                            //     newState.seeAlsoData = res
+                            //     this.setState(newState)
+                            // })
+                            this.setState(newState, () => resolve(res))
+    
+                        } 
+                        )
+                })
+                .catch(err => {
+                    // console.log("err")
+                    // console.log(err)
+                    // let newState = {...this.state}
+                    // newState.familySetupData.artworkFamily = value
+                    // this.setState(newState)
+                    reject(err)
+                })
             })
-            .catch(err => 
-                {
-                console.log("err")
-                console.log(err)
-                let newState = {...this.state}
-                newState.familySetupData.artworkFamily = value
-                this.setState(newState)
-                }
-            )
-    
         },
         restoreFamilySetup: (fileName) => {
             let newState ={
@@ -2247,6 +2225,7 @@ export class Provider extends React.Component{
             onChange: this.onChange,
             verify: this.verify,
             addNew: this.addNew,
+            deleteTheme: this.deleteTheme
 
             } }>
         {this.props.children}

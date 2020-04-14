@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
-import PreviewBubbles from './PreviewBubble'
 
 
 export default class Enlarge extends React.Component{
@@ -65,7 +64,6 @@ export default class Enlarge extends React.Component{
             imgSrc = source.desktopPath
         }
         return <img src={imgSrc} className={`enlarge-preview ${imageName}`} />
-        // return <img src={source.desktopPath} className={`enlarge-preview ${imageName}`} />
     }
     
     render(){
@@ -107,8 +105,6 @@ export default class Enlarge extends React.Component{
                             }
                             if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
                                  document.getElementById("ArtworkInfo").classList.remove("info-up")
-                                //  setTimeout(() => {document.getElementById("ArtworkInfo").classList.remove("show")
-                                //  }, 100);
                                  return
                             }
                             else{
@@ -122,15 +118,12 @@ export default class Enlarge extends React.Component{
                                 document.getElementById("TagsMenu").classList.remove("show-menu")
                                 return
                             }
-                            // document.getElementById("ArtworkInfo").classList.add("show")
-                            // setTimeout(() => {
                             if(!document.getElementById("ArtworkInfo").classList.contains("info-up")){
                                 document.getElementById("ArtworkInfo").classList.add("info-up")
                             }
                             else{
                                 document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
                             }
-                            // }, 100);
                         }
                     }
                 }
@@ -145,11 +138,6 @@ export default class Enlarge extends React.Component{
                         <div id="background" className="foreground-transition">
                             {this.props.file && this.props.file.background ? this.createPreview(this.props.file.background, 'background-image') : null}
                         </div>
-                        {/* <PreviewBubbles 
-                            file={this.props.file}
-                            relatedArtwork={this.props.context.state.relatedArtwork}
-                            enlarge={this.props.context.loadEnlarge}
-                        /> */}
                         <Fragment>
                             {this.props.file ? 
                                 this.props.file.foreground ?

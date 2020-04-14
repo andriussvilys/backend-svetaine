@@ -10,8 +10,8 @@ const EditFamilyInfo = (props) => {
         >
             <SelectFamily 
                 context={props.context}
-                fileName={props.fileName}
                 addNew={props.addNew}
+                parent={"EditFamilyInfo"}
             />
             <FamilyDescription 
                 context={props.context}

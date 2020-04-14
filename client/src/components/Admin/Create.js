@@ -1,12 +1,11 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import { Context } from '../Provider';
-import { ProgressBar, Button } from 'react-bootstrap'
+import { ProgressBar } from 'react-bootstrap'
 
 import BootstrapModal from './components/BootstrapModal'
 import Accordion from './components/Accordion'
 import Filters from './components/Filters/Filters'
 import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
-import Auth from '../Auth'
 
 import MainContainer from './components/FileUpload/MainContainer';
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo';
@@ -24,18 +23,6 @@ export default class Create extends Component{
   }
 
 modalInvoke = (options, callbackPromise) => {
-  // const verify = new Promise((resolve, reject) => {
-  //   const result = this.context.verify()
-  //   if(result.verified){
-  //     resolve({verified: true})
-  //   }
-  //   else{
-  //     reject({verified: false, message: result.modalMessage})
-  //   }
-  // })
-
-  // verify
-  //   .then(res => {
       let newState = {...this.state}
       newState = {
         ...newState,         
@@ -49,7 +36,6 @@ modalInvoke = (options, callbackPromise) => {
         newState.confirm = false
       }
 
-      console.log("CREATE -> MODAL INVOKE -> NEWSTATE")
       this.setState(newState, () => {
           let action = null
           if(!options || !options.requireActionConfirm){
@@ -73,19 +59,7 @@ modalInvoke = (options, callbackPromise) => {
           }
 
         })
-    // })
-    // .catch(err => {
-    //   this.setState({
-    //     showModal: true,
-    //     modalMessage: err.message
-    //   })
-    // })
 }
-
-// verify = () => {
-//   const result = this.context.verify()
-//   return result
-// }
 
 submitButtons = () => {
   const currentFamily = this.context.state.familySetupData.artworkFamily
@@ -221,11 +195,11 @@ componentDidMount(){
                   <Filters 
                       context={this.context}
                       modalInvoke={this.modalInvoke}
+                      allowCategoriesDelete={true}
+                      allowThemesDelete={true}
                   />
                   {this.submitButtons()}  
               </Accordion>
-
-              {/* {this.state.submitButtons} */}
 
                   <BootstrapModal 
                     showModal={this.state.showModal || this.context.state.showModal}

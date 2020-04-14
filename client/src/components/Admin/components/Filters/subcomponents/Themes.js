@@ -5,7 +5,8 @@ const Themes = (props) => {
     return(
         <DropDownList 
         title={"Select Family Themes"}
-        state={props.state}
+        context={props.context}
+        state={props.context.state}
         array={props.dataArray}
         onChange={props.onChange}
         isChecked={props.isChecked}
@@ -18,6 +19,9 @@ const Themes = (props) => {
         addNewTarget={'themesData'}
         addNew={true}
         requestKey={"list"}
+
+        allowDelete={props.allowDelete}
+        modalInvoke={props.modalInvoke}
         // isChecked={this.context.familySetupMethods.isChecked}
         // onChange={this.context.familySetupMethods.onChange}
         />

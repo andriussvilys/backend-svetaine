@@ -29,10 +29,12 @@ const Filters = (props) => {
                 title={"Themes"}
             >
                 <Themes 
-                    state={props.context.state}
+                    context={props.context}
                     dataArray={props.context.state.themesData}
                     onChange={onChange}
                     fileName={data.fileName ? data.fileName : null}
+                    modalInvoke={props.modalInvoke}
+                    allowDelete={props.allowThemesDelete}
                 />
             </Accordion>
 
@@ -43,6 +45,7 @@ const Filters = (props) => {
                     context={props.context}
                     fileName={data.fileName ? data.fileName : null}
                     modalInvoke={props.modalInvoke}
+                    allowDelete={props.allowCategoriesDelete}
                 />
             </Accordion>
 
