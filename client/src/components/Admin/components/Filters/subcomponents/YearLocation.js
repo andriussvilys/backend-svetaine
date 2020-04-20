@@ -5,9 +5,11 @@ const YearLocation = (props) => {
         <div className="imageInfo--box" style={{display: "block"}}>
             <div className="yearLocation-wrapper">
                 <label 
+                className={"yearLocation-label"}
                 htmlFor={"filters-location"}
                 >location:</label>
                     <input 
+                    className={"yearLocation-input"}
                     id={"filters-location"}
                     type="text" 
                     value={props.location ? props.location : "" }
@@ -17,8 +19,12 @@ const YearLocation = (props) => {
                     />
             </div>
             <div className="yearLocation-wrapper">
-                <label htmlFor={"filters-year"}>year:</label>
+                <label 
+                className={"yearLocation-label"}
+                htmlFor={"filters-year"}
+                >year:</label>
                     <input 
+                    className={"yearLocation-input"}
                     id={"filters-year"}
                     type="number" 
                     value={props.year ? props.year : "" }

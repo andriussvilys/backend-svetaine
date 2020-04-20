@@ -4,41 +4,69 @@
 @import './components/navigationInfo';
 @import './components/draggable';
 
+$frame-color: rgb(53, 25, 8);
+$frame-color: white;
+$font-color-main: black;
+$background-color: white;
+//3d effect
+// $border-dark: 3px solid #8b8b8b;
+// $border-light: 3px solid rgb(233, 233, 233);
+// $border-main:  4px solid #bbb;
+// $border-gutter: 4px solid #bbb;
+// $border-main-color: #bbb;
+
+//2d
+$border-dark: 1px solid black;
+$border-light: 1px solid black;
+$border-main:  4px solid white;
+$border-gutter: none;
+$border-main-color: #bbb;
+
 *{
     margin:0;
     padding: 0;
     white-space: normal;
+    color: black;
+}
+
+html, body, #root, .app-container, .admin-container{
+    height: 100%;
+    width: 100%;
 }
 body{
     font-family: Arial, Helvetica, sans-serif;
 }
-
 ul{
     padding: 15px 7px;
     margin: 0; 
     white-space: nowrap;
 }
-
 .container{
     position: relative;
-    // width: 100vw !important;
     max-width: none !important;
     margin: 0 !important;
     padding: 0 !important;
-    // display: grid;
     grid-template-columns: 1fr 300px;
     grid-template-rows: auto 1fr;
     overflow-y: auto;
 }
-.overflow-yes{
+.app-container{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: $border-main;
+}
+.admin-container{
     overflow-x: hidden;
     overflow-y: auto;
-    width: 100%;
+    display: grid;
+    grid-template-rows: min-content 1fr;
+    overflow: hidden;
+    border-bottom: 1px solid #dee2e6;;
 }
-.yearLocation-wrapper{
-    
+.yearLocation-label{
+    width: 80px;
 }
-
 h3{
     margin: 0 !important;
     padding: 15px 0px 10px 50px;
@@ -66,6 +94,28 @@ form{
     color: rgb(165, 165, 165);
     margin: 0;
 }
+//BOOTSTRAP TABS
+.tab-pane{
+    padding-top: 15px;
+    height: 100%;
+}
+.card-header-tabs{
+    margin-top: 10px;
+}
+.nav-link{
+    background-color: rgb(228, 228, 228);
+    margin-right: 3px;
+}
+.tab-content{
+    border: 1px solid #dee2e6;
+    border-top: 0;
+    border-bottom: 0;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+//_________________________________________
 .addNew-container{
     margin: 2px;
     border: 2px solid;
@@ -86,6 +136,9 @@ form{
     div{
         width: 100%;
     }
+}
+.addNew-input{
+    width: 100%;
 }
 
 .EditDetail-container{
@@ -345,39 +398,7 @@ h5{
 //FRONT END
 //------------
 //TAGS MENU
-//------------
-$frame-color: rgb(53, 25, 8);
-$frame-color: white;
-$font-color-main: black;
-$background-color: white;
-//3d effect
-// $border-dark: 3px solid #8b8b8b;
-// $border-light: 3px solid rgb(233, 233, 233);
-// $border-main:  4px solid #bbb;
-// $border-gutter: 4px solid #bbb;
-// $border-main-color: #bbb;
-
-//2d
-$border-dark: 1px solid black;
-$border-light: 1px solid black;
-$border-main:  4px solid white;
-$border-gutter: none;
-$border-main-color: #bbb;
-
-
-
-.app-container{
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    border: $border-main;
-}
-
-*{
-    color: black;
-}
+//-----------
 
 .TagsMenu-container{
     width: 250px;

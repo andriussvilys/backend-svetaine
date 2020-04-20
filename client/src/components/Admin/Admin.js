@@ -21,8 +21,7 @@ export default class Admin extends React.Component{
         return(    
             <BrowserRouter>
                 <Provider>
-                    <div className="container">
-                    <div className="data-container overflow-yes">
+                    <div className="admin-container">
     
                         <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
                         <div style={{marginLeft: "20px", fontWeight: "bold"}}>{!auth.guest ? "ADMIN" : "Guest"}</div>
@@ -77,7 +76,6 @@ export default class Admin extends React.Component{
                         <PrivateRoute path="/admin/create" component={Create} guest={auth.guest}/>
                         <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
                         <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
-                    </div>
                     </div>
                 </Provider>
             </BrowserRouter>

@@ -73,6 +73,7 @@ render(){
                     >
                         <div>
                             <input 
+                                className="addNew-input"
                                 type="text" 
                                 id={`add-${this.props.stateKey}-item`} 
                             />

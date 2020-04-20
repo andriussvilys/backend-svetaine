@@ -59,7 +59,7 @@ export default class Edit extends Component{
                                         </Accordion>
 
                                         <Accordion
-                                            title={"Update or Create family record"}
+                                            title={"Update family record"}
                                         >
                                             <EditFamilyInfo 
                                                 context={this.context}

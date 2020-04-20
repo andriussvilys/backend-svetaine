@@ -4,6 +4,7 @@ import { ProgressBar } from 'react-bootstrap'
 
 import BootstrapModal from './components/BootstrapModal'
 import Accordion from './components/Accordion'
+import { Tabs, Tab } from 'react-bootstrap'
 import Filters from './components/Filters/Filters'
 import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
 
@@ -142,11 +143,10 @@ componentDidMount(){
           {() => {
             return(
             <div className="imageInfo">
-              <h3>Create</h3>
+              {/* <h3>Create</h3> */}
 
-              <Accordion
-                title={"Upload Files"}
-              >
+              <Tabs defaultActiveKey="upload" transition={false} id="noanim-tab-example">
+              <Tab eventKey="upload" title="Upload new files">
                 <div className="imageInfo--section">
                     <div className="imageInfo--box">
                       <div>
@@ -184,24 +184,33 @@ componentDidMount(){
                       />
                     
                 </div>
-              </Accordion>
+              </Tab>
+              <Tab eventKey="create_family" title="Create a new Family">
+                  <Tabs eventKey="create_family" transition={false} title="Create a new Family">
+                    <Tab eventKey="editFamilyInfo" title="Family Basics">
 
-              <Accordion
-                title="Set up global family template">
-                  <EditFamilyInfo 
-                      context={this.context}
-                      addNew
-                  />
-                  <Filters 
-                      context={this.context}
-                      modalInvoke={this.modalInvoke}
-                      allowCategoriesDelete={true}
-                      allowThemesDelete={true}
-                  />
-                  {this.submitButtons()}  
-              </Accordion>
+                      <EditFamilyInfo 
+                          context={this.context}
+                          addNew
+                      />
 
-                  <BootstrapModal 
+                    </Tab>
+                    <Tab eventKey="filters" title="Filters">
+
+                      <Filters 
+                          context={this.context}
+                          modalInvoke={this.modalInvoke}
+                          allowCategoriesDelete={true}
+                          allowThemesDelete={true}
+                      />
+                      {this.submitButtons()}  
+                      
+                    </Tab>
+                  </Tabs>
+              </Tab>
+            </Tabs>
+
+            <BootstrapModal 
                     showModal={this.state.showModal || this.context.state.showModal}
                     message={this.state.modalMessage}
                     onClose={() => {this.setState({showModal: false})}}
@@ -227,9 +236,6 @@ componentDidMount(){
                       null
                     }
                   </BootstrapModal>
-
-
-
             </div>
             )
           }}

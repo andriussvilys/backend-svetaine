@@ -4,6 +4,7 @@ import DisplayTriggers from './subcomponents/DisplayTriggers/DisplayTriggers'
 import YearLocation from './subcomponents/YearLocation'
 import Themes from './subcomponents/Themes'
 import Accordion from '../Accordion'
+import { Tabs, Tab } from 'react-bootstrap'
 
 const Filters = (props) => {
     const data = props.fileName ? props.context.state.fileData.files[props.fileName] : props.context.state.familySetupData
@@ -11,23 +12,23 @@ const Filters = (props) => {
     const isChecked = props.fileName ? props.context.fileDataMethods.isChecked : props.context.familySetupMethods.isChecked
 
     return(
-        <Accordion
-            title={"Filters"}
-        >
-            <Accordion
-                title={`Year and Location`}
-            >
-                <YearLocation 
-                    year={data.year}
-                    location={data.location}
+        <Tabs defaultActiveKey="categories" transition={false} id="noanim-tab-example">
+            <Tab eventKey="categories" title="Categories">
+                <Categories 
                     context={props.context}
                     fileName={data.fileName ? data.fileName : null}
+                    modalInvoke={props.modalInvoke}
+                    allowDelete={props.allowCategoriesDelete}
                 />
-            </Accordion>
-
-            <Accordion
-                title={"Themes"}
-            >
+            </Tab>
+            <Tab eventKey="displayTriggers" title="Display Triggers">
+                <DisplayTriggers 
+                    file={data}
+                    context={props.context}
+                    familySetup={data.fileName ? false : true}
+                />
+            </Tab>
+            <Tab eventKey="themes" title="Themes">
                 <Themes 
                     context={props.context}
                     dataArray={props.context.state.themesData}
@@ -36,29 +37,65 @@ const Filters = (props) => {
                     modalInvoke={props.modalInvoke}
                     allowDelete={props.allowThemesDelete}
                 />
-            </Accordion>
-
-            <Accordion
-                title={"Categories"}
-            >
-                <Categories 
+            </Tab>
+            <Tab eventKey="yearAndLocation" title="Year and Location">
+                <YearLocation 
+                    year={data.year}
+                    location={data.location}
                     context={props.context}
                     fileName={data.fileName ? data.fileName : null}
-                    modalInvoke={props.modalInvoke}
-                    allowDelete={props.allowCategoriesDelete}
                 />
-            </Accordion>
+            </Tab>
+        </Tabs>
 
-            <Accordion
-                title={"Display Triggers"}
-            >
-                <DisplayTriggers 
-                    file={data}
-                    context={props.context}
-                    familySetup={data.fileName ? false : true}
-                />
-            </Accordion>
-        </Accordion>
+        // <Accordion
+        //     title={"Filters"}
+        // >
+        //     <Accordion
+        //         title={`Year and Location`}
+        //     >
+        //         <YearLocation 
+        //             year={data.year}
+        //             location={data.location}
+        //             context={props.context}
+        //             fileName={data.fileName ? data.fileName : null}
+        //         />
+        //     </Accordion>
+
+        //     <Accordion
+        //         title={"Themes"}
+        //     >
+        //         <Themes 
+        //             context={props.context}
+        //             dataArray={props.context.state.themesData}
+        //             onChange={onChange}
+        //             fileName={data.fileName ? data.fileName : null}
+        //             modalInvoke={props.modalInvoke}
+        //             allowDelete={props.allowThemesDelete}
+        //         />
+        //     </Accordion>
+
+        //     <Accordion
+        //         title={"Categories"}
+        //     >
+        //         <Categories 
+        //             context={props.context}
+        //             fileName={data.fileName ? data.fileName : null}
+        //             modalInvoke={props.modalInvoke}
+        //             allowDelete={props.allowCategoriesDelete}
+        //         />
+        //     </Accordion>
+
+        //     <Accordion
+        //         title={"Display Triggers"}
+        //     >
+        //         <DisplayTriggers 
+        //             file={data}
+        //             context={props.context}
+        //             familySetup={data.fileName ? false : true}
+        //         />
+        //     </Accordion>
+        // </Accordion>
     )
 }
 

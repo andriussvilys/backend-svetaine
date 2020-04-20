@@ -1,13 +1,11 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import FamilyDescription from './subcomponents/FamilyDescription'
 import SelectFamily from './subcomponents/SelectFamily'
 import Accordion from '../Accordion'
 
 const EditFamilyInfo = (props) => {
     return(
-        <Accordion
-            title={"Family Name and Description"}
-        >
+        <Fragment>
             <SelectFamily 
                 context={props.context}
                 addNew={props.addNew}
@@ -17,7 +15,7 @@ const EditFamilyInfo = (props) => {
                 context={props.context}
                 fileName={props.fileName}
             />
-        </Accordion>
+        </Fragment>
     )
 }
 
