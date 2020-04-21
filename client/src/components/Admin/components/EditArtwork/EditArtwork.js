@@ -57,11 +57,13 @@ export default class EditArtwork extends React.Component{
                           state={this.props.context.state}
                       />
                   </Accordion>
-  
-                  <Filters 
-                      context={this.props.context}
-                      fileName={this.props.file.fileName}
-                  />
+
+                <Accordion title={"Filters"}>
+                    <Filters 
+                        context={this.props.context}
+                        fileName={this.props.file.fileName}
+                    />
+                </Accordion>
   
                   <Accordion
                       title={"Arrange Index"}

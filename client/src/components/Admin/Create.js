@@ -201,7 +201,7 @@ componentDidMount(){
                                 <AddNew 
                                   addNew
                                   router={'/api/familySetup/create'}
-                                  addNewTarget={'artworkFamilyList'}
+                                  stateKey={'artworkFamilyList'}
                                   requestKey={"artworkFamily"}
                                 />
 

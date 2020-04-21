@@ -1450,8 +1450,6 @@ h5 {
   z-index: 2;
   overflow: hidden;
   max-height: 200px;
-  position: -webkit-sticky;
-  position: sticky;
   top: 0;
   text-indent: -100%;
   overflow: hidden;

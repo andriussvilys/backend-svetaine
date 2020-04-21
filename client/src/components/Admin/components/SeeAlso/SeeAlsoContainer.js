@@ -103,7 +103,7 @@ export default class SeeAlsoContainer extends React.Component{
                         context={this.props.context}
                         onChange={this.filterByFamily}
                         checkbox
-                        uncontrolled
+                        // uncontrolled
                         highlighted={this.state.highlighted}
                     />
                     <Button 
