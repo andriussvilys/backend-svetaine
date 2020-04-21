@@ -23,9 +23,9 @@ export default class Admin extends React.Component{
                 <Provider>
                     <div className="admin-container">
     
-                        <nav style={{display:"flex", alignItems:"center", justifyContent:"space-between"}}>
-                        <div style={{marginLeft: "20px", fontWeight: "bold"}}>{!auth.guest ? "ADMIN" : "Guest"}</div>
-                            <ul style={{display: "flex", listStyle:"none", margin:"0", flexWrap: "wrap", justifyContent: "flex-end"}}>
+                        <nav className={"admin-nav"}>
+                        <div className={"admin-level"}>{!auth.guest ? "ADMIN" : "Guest"}</div>
+                            <ul className={"admin-nav-list"}>
                                 <li>
                                     <Link to="/admin/create">
                                         <Button>

@@ -28,9 +28,8 @@
 .list-group{
     flex: 1;
     border: 1px solid rgb(226, 226, 226);
-    max-width: 300px;
     background-color: #f1f1f1;
-    margin: 5px;;
+    margin: 5px;
 }
 .list--subcategory{
     background-color: #e6e6e6;
@@ -71,8 +70,8 @@
 .categories--addNew_container{
     flex: 1;
     margin: 5px;
+    padding: 10px;
     border: 1px solid black;
-    max-width: 235px;
     display: flex;
     flex-direction: column;
     justify-content: end;

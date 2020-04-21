@@ -7,6 +7,9 @@ import Accordion from './components/Accordion'
 import { Tabs, Tab } from 'react-bootstrap'
 import Filters from './components/Filters/Filters'
 import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
+import FamilyDescription from './components/FamilyInfo/subcomponents/FamilyDescription'
+import AddNew from './components/AddNew'
+import SelectFamily from './components/FamilyInfo/subcomponents/SelectFamily'
 
 import MainContainer from './components/FileUpload/MainContainer';
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo';
@@ -144,71 +147,83 @@ componentDidMount(){
             return(
             <div className="imageInfo">
               {/* <h3>Create</h3> */}
+                <Tabs defaultActiveKey="upload" transition={false} id="noanim-tab-example">
+                  <Tab eventKey="upload" title="Upload new files">
+                    <div className="imageInfo--section">
+                        <div className="imageInfo--box">
+                          <div>
+                            <p>Upload file(-s):</p> 
+                            <input 
+                            id="uploadFileInput" 
+                            type="file" 
+                            multiple 
+                            onChange={(e) => {
+                              const event = e
+                              this.context.addFileToState(event)
+                              .then(res => this.setState({
+                                modalMessage: res
+                              }))
+                              .catch(err => {
+                                this.setState({
+                                  modalMessage: err
+                                })
+                              })
 
-              <Tabs defaultActiveKey="upload" transition={false} id="noanim-tab-example">
-              <Tab eventKey="upload" title="Upload new files">
-                <div className="imageInfo--section">
-                    <div className="imageInfo--box">
-                      <div>
-                        <p>Upload file(-s):</p> 
-                        <input 
-                        id="uploadFileInput" 
-                        type="file" 
-                        multiple 
-                        onChange={(e) => {
-                          const event = e
-                          this.context.addFileToState(event)
-                          .then(res => this.setState({
-                            modalMessage: res
-                          }))
-                          .catch(err => {
-                            this.setState({
-                              modalMessage: err
-                            })
-                          })
+                              this.setState({
+                                showModal: true,
+                                modalMessage: "uploading File(-s)"
+                              }, () => {
+                                
+                              })
+                              
+                              }} />
+                            <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
+                          </div>
+                        </div>
 
-                          this.setState({
-                            showModal: true,
-                            modalMessage: "uploading File(-s)"
-                          }, () => {
-                            
-                          })
-                          
-                          }} />
-                        <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
-                      </div>
+                          <MainContainer
+                          data={this.context.state.fileData}
+                          />
+                        
                     </div>
-
-                      <MainContainer
-                      data={this.context.state.fileData}
-                      />
-                    
-                </div>
-              </Tab>
-              <Tab eventKey="create_family" title="Create a new Family">
-                  <Tabs eventKey="create_family" transition={false} title="Create a new Family">
-                    <Tab eventKey="editFamilyInfo" title="Family Basics">
-
-                      <EditFamilyInfo 
+                    <Accordion
+                      title={"Select common family"}
+                    >
+                      <SelectFamily 
                           context={this.context}
-                          addNew
                       />
+                    </Accordion>
+                  </Tab>
+                  <Tab eventKey="create_family" title="Create a new Family">
+                      <Tabs eventKey="create_family" transition={false} title="Create a new Family">
+                        <Tab eventKey="editFamilyInfo" title="Family Basics">
+                            <div className={"create-createFamily"}>
+                                <AddNew 
+                                  addNew
+                                  router={'/api/familySetup/create'}
+                                  addNewTarget={'artworkFamilyList'}
+                                  requestKey={"artworkFamily"}
+                                />
 
-                    </Tab>
-                    <Tab eventKey="filters" title="Filters">
+                                <FamilyDescription 
+                                  context={this.context}
+                                />
+                            </div>
+                        </Tab>
+                        <Tab eventKey="filters" title="Filters">
 
-                      <Filters 
-                          context={this.context}
-                          modalInvoke={this.modalInvoke}
-                          allowCategoriesDelete={true}
-                          allowThemesDelete={true}
-                      />
-                      {this.submitButtons()}  
-                      
-                    </Tab>
-                  </Tabs>
-              </Tab>
-            </Tabs>
+                          <Filters 
+                              context={this.context}
+                              modalInvoke={this.modalInvoke}
+                              allowCategoriesDelete={true}
+                              allowThemesDelete={true}
+                          />
+                          {this.submitButtons()}  
+                          
+                        </Tab>
+                      </Tabs>
+                  </Tab>
+                </Tabs>
 
             <BootstrapModal 
                     showModal={this.state.showModal || this.context.state.showModal}
