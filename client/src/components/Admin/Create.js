@@ -186,13 +186,13 @@ componentDidMount(){
                           />
                         
                     </div>
-                    <Accordion
+                    {/* <Accordion
                       title={"Select common family"}
                     >
                       <SelectFamily 
                           context={this.context}
                       />
-                    </Accordion>
+                    </Accordion> */}
                   </Tab>
                   <Tab eventKey="create_family" title="Create a new Family">
                       <Tabs eventKey="create_family" transition={false} title="Create a new Family">

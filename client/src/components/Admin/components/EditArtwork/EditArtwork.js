@@ -28,17 +28,17 @@ export default class EditArtwork extends React.Component{
                   <ImageBox
                       file={this.props.file}
                   >
-                      <SelectGlobalSetup 
+                      {/* <SelectGlobalSetup 
                           file={this.props.file}
                           context={this.props.context}
-                      />
+                      /> */}
                   </ImageBox>
   
                   <div className="FamilyList--detail__info">
   
                   {/* ARTWORK DATA */}
                   <Accordion
-                      title={"Artwork Family"}
+                      title={"Select Artwork Family"}
                   >
                       <SelectFamily 
                           context={this.props.context}

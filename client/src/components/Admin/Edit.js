@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Context } from '../Provider';
 
+import { Tab, Tabs } from 'react-bootstrap'
 import EditDetailContainer from './components/EditPage/EditDetailContainer';
 import ServerFileUpdate from './components/EditPage/ServerFileUpdate';
 import Accordion from './components/Accordion';
@@ -47,27 +48,35 @@ export default class Edit extends Component{
                         return(
                                 <Switch>
                                     <Route exact path="/admin/edit">
-                                        <h3>Edit</h3>
-                                        <Accordion
+                                        {/* <h3>Edit</h3> */}
+                                        <Tabs defaultActiveKey="editArtwork" transition={false} id="edit-artwork-family">
+                                            <Tab eventKey="editArtwork" title="Edit by Artwork">
+                                                <EditDetailContainer 
+                                                    context={this.context}
+                                                    state={this.context.state}
+                                                    familySetupMethods={this.context.familySetupMethods}
+                                                />
+                                            </Tab>
+                                            <Tab eventKey="editFamily" title="Edit Artwork Families">
+                                                <EditFamilyInfo 
+                                                    context={this.context}
+                                                />
+                                                <Filters 
+                                                    context={this.context}
+                                                />
+                                            </Tab>
+                                        </Tabs>
+                                        {/* <Accordion
                                             title="Edit by artwork"
                                         >
-                                            <EditDetailContainer 
-                                                context={this.context}
-                                                state={this.context.state}
-                                                familySetupMethods={this.context.familySetupMethods}
-                                            />
+
                                         </Accordion>
 
                                         <Accordion
                                             title={"Update family record"}
                                         >
-                                            <EditFamilyInfo 
-                                                context={this.context}
-                                            />
-                                            <Filters 
-                                                context={this.context}
-                                            />
-                                        </Accordion>
+
+                                        </Accordion> */}
 
                                     </Route>
                                     <Route 

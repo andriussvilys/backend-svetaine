@@ -19,7 +19,7 @@ const SeeAlso = (props) => {
                         <div className="container-radio">
                             <input type="radio" 
                             name="useAsSeeAlso" 
-                            id="useAsSeeAlso__radio-yes" 
+                            id={`${props.file.fileName}-useAsSeeAlso__radio-yes`} 
                             value="yes" 
                             onChange={(e) => {
 
@@ -38,7 +38,7 @@ const SeeAlso = (props) => {
                         <div className="container-radio">
                             <input type="radio" 
                             name="useAsSeeAlso" 
-                            id="useAsSeeAlso__radio-no" 
+                            id={`${props.file.fileName}-useAsSeeAlso__radio-no`} 
                             value="no" 
                             onChange={(e) => {
                                 props.onChange(e, "seeAlso", props.file.fileName)

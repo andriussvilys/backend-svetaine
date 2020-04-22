@@ -2,6 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/Button'
 import {Link} from 'react-router-dom'
 
+import { Tab, Tabs } from 'react-bootstrap'
 import Accordion from '../Accordion'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
 // import ChangeIndex from '../../../DragAndDropList/FamilyListDnD/FamilyListDnDContainer'
@@ -51,56 +52,46 @@ export default class ServerFileUpdate extends React.Component {
         // }
         return(
         <div className="FamilyList--detail_update">
-
-            
-    
-            <div className="FamilyList--detail__image">
-                <ImageBox 
-                    file={this.props.file}
-                />
-            </div>
+            <ImageBox 
+                file={this.props.file}
+            />
     
             <div className="FamilyList--detail__info">
-            <EditFamilyInfo 
-                context={this.props.context}
-                fileName={this.props.file.fileName}
-            />
-            <Accordion
-            className={`UploadFile-${this.props.file.fileName}`}
-            title={'Edit Artwork Info'}
-            >
-                <ArtworkInfo 
-                    file={this.props.file}
-                    fileName={this.props.file.fileName}
-                    onChange={this.props.context.fileDataMethods.onChange}
-                    state={this.props.context.state}
-                />
-            </Accordion>
-
-            <Filters 
-                context={this.props.context}
-                fileName={this.props.file.fileName}
-            />
-
-            <Accordion
-                title={'Arrange Indexes'}
-            >
-                <ArrangeFamilyIndexes 
-                    data={this.props.context.state.relatedArtwork[this.props.file.artworkFamily]}
-                    file={this.props.file}
-                />
-            </Accordion>
-            
-            <Accordion
-                title={"See Also"}
-            >
-                <SeeAlsoContainer 
+            <Tabs defaultActiveKey="artworkInfo" transition={false} id={`${this.props.file.fileName}-fileUpdate`}>
+                <Tab eventKey="artworkInfo" title="Edit Artwork Info">
+                    <ArtworkInfo 
+                        file={this.props.file}
+                        fileName={this.props.file.fileName}
+                        onChange={this.props.context.fileDataMethods.onChange}
+                        state={this.props.context.state}
+                    />
+                </Tab>
+                <Tab eventKey="familyInfo" title="Edit Artwork Family Info">
+                    <EditFamilyInfo 
                     context={this.props.context}
-                    directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
-                    initialData={this.props.context.state.artworkInfoData}
-                />
-            </Accordion>
-
+                    fileName={this.props.file.fileName}
+                    />
+                </Tab>
+                <Tab eventKey="filters" title="Filters">
+                    <Filters 
+                    context={this.props.context}
+                    fileName={this.props.file.fileName}
+                    />
+                </Tab>
+                <Tab eventKey="indexes" title="Arrange indexes">
+                    <ArrangeFamilyIndexes 
+                        data={this.props.context.state.relatedArtwork[this.props.file.artworkFamily]}
+                        file={this.props.file}
+                    />
+                </Tab>
+                <Tab eventKey="seeAlso" title="Select See Also recommendations">
+                    <SeeAlsoContainer 
+                        context={this.props.context}
+                        directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
+                        initialData={this.props.context.state.artworkInfoData}
+                    />
+                </Tab>
+            </Tabs>
 
             <div className="FamilyList--submit-delete-container">  
 
