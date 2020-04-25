@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import FamilyList from './FamilyList'
 import { Context } from '../../../Provider';
 
@@ -64,9 +64,9 @@ export default class MainContainer extends React.Component{
             <Context.Consumer>
                 {() => {
                     return(
-                        <div key={'main_container'}>
+                        <Fragment key={'main_container'}>
                             {this.renderNames(this.props.data.files)}
-                        </div>
+                        </Fragment>
                     )
                 }}
             </Context.Consumer>

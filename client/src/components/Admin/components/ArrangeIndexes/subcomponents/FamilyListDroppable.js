@@ -4,10 +4,6 @@ import FamilyListDraggable from './FamilyListDraggable';
 
 const DndListDroppable = (props) => {
 
-    const createFileIds = () => {
-
-    }
-
     return(
             <Droppable 
             droppableId={`${props.artworkFamily}-relatedArtworks`}

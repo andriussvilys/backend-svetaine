@@ -67,15 +67,6 @@
   width: 100%;
 }
 
-.dropdown-wrapper {
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-columns: (minmax(min-content, 200px))[auto-fill];
-      grid-template-columns: repeat(auto-fill, minmax(-webkit-min-content, 200px));
-      grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
-  width: 100%;
-}
-
 .dropdown-container {
   border: 1px solid;
   margin: 2px;
@@ -120,7 +111,7 @@
 .themes-list label {
   margin-bottom: 0 !important;
   margin-right: 10px;
-  white-space: nowrap;
+  white-space: normal;
   width: 100%;
   cursor: pointer;
 }
@@ -231,14 +222,14 @@
 }
 
 @media only screen and (max-width: 720px) {
-  .dropdown-wrapper {
+  .grid-wrapper {
     -ms-grid-columns: (33%)[auto-fill];
         grid-template-columns: repeat(auto-fill, 33%);
   }
 }
 
 @media only screen and (max-width: 480px) {
-  .dropdown-wrapper {
+  .grid-wrapper {
     -ms-grid-columns: (50%)[auto-fill];
         grid-template-columns: repeat(auto-fill, 50%);
   }
@@ -397,6 +388,8 @@
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
   padding: 15px 0 0 0;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .list-group {
@@ -486,6 +479,11 @@
   margin: 0 0 12px 20px !important;
   padding: 10px 0 !important;
   text-transform: uppercase;
+}
+
+.DnDfilesList {
+  height: 100%;
+  overflow-y: auto;
 }
 
 .draggable-container {
@@ -580,9 +578,9 @@ ul {
   overflow-y: auto;
   display: -ms-grid;
   display: grid;
-  -ms-grid-rows: min-content 1fr;
-      grid-template-rows: -webkit-min-content 1fr;
-      grid-template-rows: min-content 1fr;
+  -ms-grid-rows: [navigation] min-content [content] minmax(60%, auto);
+      grid-template-rows: [navigation] -webkit-min-content [content] minmax(60%, auto);
+      grid-template-rows: [navigation] min-content [content] minmax(60%, auto);
   border-bottom: 1px solid #dee2e6;
 }
 
@@ -631,8 +629,18 @@ form {
   margin: 0;
 }
 
+.Tabs-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: min-content 1fr;
+      grid-template-rows: -webkit-min-content 1fr;
+      grid-template-rows: min-content 1fr;
+  height: 100%;
+}
+
 .tab-pane {
   padding-top: 3px;
+  height: 100%;
 }
 
 .card-header-tabs {
@@ -649,13 +657,111 @@ form {
   border-top: 0;
   border-bottom: 0;
   padding: 0 5px;
+  overflow-y: hidden;
+}
+
+Button {
+  margin: 0 !important;
+}
+
+.FileUpload-container {
+  height: 100%;
+  overflow-y: auto;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: min-content 1fr;
+      grid-template-rows: -webkit-min-content 1fr;
+      grid-template-rows: min-content 1fr;
+}
+
+.FileInfo-container {
+  width: 100%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100%;
+  border: 1px solid #afafaf;
+}
+
+.FileInfo-container .Tabs-container {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.SingleFile-container {
+  height: initial;
+  width: initial;
+  margin: 10px;
+}
+
+.FileInfo-preview {
+  border-right: 1px solid #dee2e6;
+  margin-right: 3px;
+  width: 200px;
+  padding: 5px;
+  background-color: #dee2e6;
+}
+
+.FileInfo-preview .imageBox__wrapper {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.FileInfo-preview .imageBox__wrapper .ImagesPreview--imageContainer {
+  -webkit-box-flex: initial;
+      -ms-flex: initial;
+          flex: initial;
+  height: initial;
+  flex: initial;
+}
+
+.FileInfo-preview .imageBox__wrapper img {
+  max-width: 100%;
+}
+
+.familyPicker {
+  position: relative;
+  border: 2px solid;
+  padding: 4px 0 0 0;
+}
+
+.familyPicker-reload {
+  border: 0;
+  position: absolute;
+  top: 7px;
+  right: 3px;
+  z-index: 2;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.themeSelector {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.two-layer-grid {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: min-content 1fr;
+      grid-template-rows: -webkit-min-content 1fr;
+      grid-template-rows: min-content 1fr;
+}
+
+.three-layer-grid {
+  display: -ms-grid !important;
+  display: grid !important;
+  -ms-grid-rows: min-content 1fr min-content;
+      grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
+      grid-template-rows: min-content 1fr min-content;
 }
 
 .addNew-container {
@@ -707,6 +813,96 @@ form {
           justify-content: space-between;
   border: 1px solid black;
   margin: 2px 1px 0 1px;
+}
+
+.grid-wrapper {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(200px, auto))[auto-fill];
+      grid-template-columns: repeat(auto-fill, minmax(200px, auto));
+  grid-gap: 4px;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.EditDetailContainer {
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: minmax(min-content, 50px) minmax(300px, min-content);
+      grid-template-rows: minmax(-webkit-min-content, 50px) minmax(300px, -webkit-min-content);
+      grid-template-rows: minmax(min-content, 50px) minmax(300px, min-content);
+}
+
+.EditDetailContainer .themeSelector {
+  max-height: 50vh;
+}
+
+.EditDetailContainer .accordion {
+  overflow: hidden;
+  height: 100%;
+}
+
+.EditDetailContainer .accordion .card {
+  height: 100%;
+  overflow: hidden;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: [button] min-content min-content;
+      grid-template-rows: [button] -webkit-min-content -webkit-min-content;
+      grid-template-rows: [button] min-content min-content;
+}
+
+.EditDetailContainer .accordion .card .collapsing {
+  height: 0;
+  display: none;
+  -webkit-transition: 0s all;
+  transition: 0s all;
+}
+
+.EditDetailContainer .accordion .card .collapse {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.EditDetailContainer {
+  height: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: minmax(min-content, 50px) minmax(300px, min-content);
+      grid-template-rows: minmax(-webkit-min-content, 50px) minmax(300px, -webkit-min-content);
+      grid-template-rows: minmax(min-content, 50px) minmax(300px, min-content);
+}
+
+.EditDetailContainer .themeSelector {
+  max-height: 50vh;
+}
+
+.EditDetailContainer .accordion {
+  overflow: hidden;
+  height: 100%;
+}
+
+.EditDetailContainer .accordion .card {
+  height: 100%;
+  overflow: hidden;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: [button] min-content min-content;
+      grid-template-rows: [button] -webkit-min-content -webkit-min-content;
+      grid-template-rows: [button] min-content min-content;
+}
+
+.EditDetailContainer .accordion .card .collapsing {
+  height: 0;
+  display: none;
+  -webkit-transition: 0s all;
+  transition: 0s all;
+}
+
+.EditDetailContainer .accordion .card .collapse {
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .create-createFamily {
@@ -862,7 +1058,7 @@ Button {
 }
 
 .card-body {
-  padding: 0 10px !important;
+  padding: 0 !important;
   background-color: white !important;
 }
 
@@ -907,16 +1103,23 @@ textarea {
 
 .FamilyList--familyName__text {
   color: white;
-  text-transform: uppercase;
+  font-size: 18px;
   margin: 0;
   padding: 0;
 }
 
 .FamilyList--main {
-  border: 5px solid !important;
+  border: 5px solid;
+  border-top: 0;
   padding: 0 !important;
   margin: 0;
   width: auto !important;
+  overflow: auto;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (min-content)[auto-fill];
+      grid-template-rows: repeat(auto-fill, -webkit-min-content);
+      grid-template-rows: repeat(auto-fill, min-content);
 }
 
 .FamilyList--detail {
@@ -947,12 +1150,22 @@ textarea {
   border-left: 1px solid #afafaf;
 }
 
-.FamilyList--detail__image {
+.imageBox__wrapper {
   padding: 4px;
   width: 200px;
+  margin: 4px;
+  border: 1px solid #888888;
+  max-height: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-.FamilyList--detail__image__text {
+.imageBox__text {
   width: 100%;
   margin: 4px 0;
   font-size: 12px;
@@ -960,18 +1173,14 @@ textarea {
   border-top: 1px solid black;
 }
 
-.title {
-  font-weight: 600;
+.serverFileUpdate-imageBox {
+  height: 100%;
+  margin: 0;
+  border: none;
 }
 
-.admin-seeAlso-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+.title {
+  font-weight: 600;
 }
 
 .FamilyList--submit-delete-container {
@@ -981,12 +1190,21 @@ textarea {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
   -webkit-box-align: end;
       -ms-flex-align: end;
           align-items: flex-end;
+  margin-bottom: 10px;
+  padding: 0 15px;
+}
+
+.FamilyList--submit-delete-container button {
+  margin-bottom: 5px !important;
+  width: 100%;
 }
 
 h3 {
@@ -1054,21 +1272,6 @@ h5 {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.FamilyList--detail_update {
-  width: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  height: 100%;
-  margin: 15px 0 0 0;
-  border: 1px solid #afafaf;
 }
 
 .Login-container {
@@ -1443,7 +1646,7 @@ h5 {
   transition: 0 opacity;
   z-index: 2;
   overflow: hidden;
-  max-height: 200px;
+  height: 120px;
   top: 0;
   text-indent: -100%;
   overflow: hidden;
@@ -2448,6 +2651,32 @@ h5 {
 }
 
 @media only screen and (max-width: 720px) {
+  .ServerFileUpdate-preview {
+    width: 100%;
+  }
+  .serverFileUpdate-imageBox {
+    -webkit-box-orient: initial;
+    -webkit-box-direction: initial;
+        -ms-flex-direction: initial;
+            flex-direction: initial;
+    height: 120px;
+  }
+  .serverFileUpdate-imageBox .imageBox__text {
+    width: auto;
+    border: 0;
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2;
+  }
+  .serverFileUpdate-imageBox .ImagesPreview--imageContainer {
+    height: 100% !important;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
+  }
+  .serverFileUpdate-imageBox .ImagesPreview--imageContainer img {
+    height: 100%;
+  }
   .admin-nav {
     display: block;
   }
@@ -2459,7 +2688,7 @@ h5 {
   .admin-nav-list li button {
     width: 100%;
   }
-  .FamilyList--detail__image {
+  .imageBox__wrapper {
     width: 170px;
   }
   body {

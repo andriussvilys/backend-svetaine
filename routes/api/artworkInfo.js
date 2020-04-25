@@ -56,7 +56,9 @@ upload.single('artworkImage'),
     .catch(err => res.status(500).send(err))
 })
 
-router.post('/imageUpload', upload.single('artworkImage'), (req, res) => {
+router.post('/imageUpload', 
+upload.single('artworkImage'), 
+(req, res, rej) => {
     res.send('image file uploaded')
 })
 

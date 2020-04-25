@@ -8,8 +8,9 @@ import EditFileButtons from '../ImageBox/optionalComponents/EditFileButtons'
 import FilePreview from '../FilePreview'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
 import Accordion from '../Accordion';
+import SeeAlso from './SeeAlso'
 
-export default class FileUpdate extends React.Component{
+export default class SeeAlsoPicker extends React.Component{
 
     constructor(props){
         super(props);
@@ -17,8 +18,8 @@ export default class FileUpdate extends React.Component{
             showModal: false,
             modalMessage: null,
             modalConfirm: true,
-            fileList: this.props.state.artworkInfoData,
-            allFiles: this.props.state.artworkInfoData
+            fileList: this.props.context.state.artworkInfoData,
+            allFiles: this.props.context.state.artworkInfoData
         }
     }
 
@@ -39,33 +40,15 @@ export default class FileUpdate extends React.Component{
         }
       }
 
-    onModalClick = (fileName) => {
-        if(!this.verify()){
-            this.setState({modalConfirm: false})
-            return
-        }
-        let newState = {...this.state}
-        newState.fileToDelete = this.props.context.state.artworkInfoData[fileName]
-        newState.showModal = true
-        newState.modalMessage = <span>Delete <em>{fileName}</em>?</span>
-        this.setState(newState)
-    }
-
     EditDetail = (file) => {
-        if(!file){return}
-        return(
-                <ImageBox
+        return <SeeAlso 
+                    key={`seeAlso-${file.fileName}`}
                     file={file}
-                    key={`${file.fileName}-detail`}
-                >
-                    <EditFileButtons 
-                        file={file}
-                        context={this.props.context}
-                        onModalClose={this.onClose}
-                        onModalClick={this.onModalClick}
-                    />
-                </ImageBox>
-        )
+                    directory={this.props.directory}
+                    onChange={this.props.context.fileDataMethods.updateSeeAlso}
+                    parent={this.props.parent.fileName}
+                    // onChange={this.props.context.onChange}
+                />
     }
 
     filterByFamily = (value) => {
@@ -85,30 +68,14 @@ export default class FileUpdate extends React.Component{
         this.setState({fileList: this.state.allFiles})
     }
 
-    deletePromise = (fileName, artworkFamily) => {
-        return new Promise((resolve, reject) => {
-            this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
-                .then(res => {resolve({
-                        modalMessage: res,
-                        modalConfirm: false
-                    })
-                })
-                .catch(err => {reject({
-                        modalMessage: err,
-                        modalConfirm: false
-                    })
-                })
-        })
-    }
-
     componentDidMount(){
-        this.setState({fileList: this.props.state.artworkInfoData})
+        this.setState({fileList: this.props.context.state.artworkInfoData})
     }
 
     render(){
         return(
                 <div 
-                id={'familyContainer'}
+                id={'familyContainer-seeAlso'}
                 className={"EditDetailContainer"}
                 >
                     <div className="familyPicker">
@@ -137,29 +104,10 @@ export default class FileUpdate extends React.Component{
                     >
                         {
                             Object.keys(this.state.fileList).map(fileName => {
-                                return this.EditDetail(this.props.state.artworkInfoData[fileName])
+                                return this.EditDetail(this.props.context.state.artworkInfoData[fileName])
                             })
                         }
                     </div>
-                    {this.state.showModal ?                     
-                        <BootstrapModal 
-                            confirm={this.state.modalConfirm}
-                            showModal={this.state.showModal}
-                            onClose={this.onClose}
-                            confirmedAction={() => this.deletePromise(this.state.fileToDelete.fileName, this.state.fileToDelete.artworkFamily)}
-                        >
-                            <div>
-                                <p>{this.state.modalMessage}</p>
-                                {this.state.fileToDelete ? 
-                                    <FilePreview 
-                                        file={this.state.fileToDelete}
-                                    /> :
-                                    null
-                                }
-                            </div>
-                        </BootstrapModal> :
-                        null
-                    }
                 </div>
         )
     }

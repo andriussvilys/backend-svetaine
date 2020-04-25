@@ -24,7 +24,7 @@ export default class Admin extends React.Component{
                     <div className="admin-container">
     
                         <nav className={"admin-nav"}>
-                        <div className={"admin-level"}>{!auth.guest ? "ADMIN" : "Guest"}</div>
+                            <div className={"admin-level"}>{!auth.guest ? "ADMIN" : "Guest"}</div>
                             <ul className={"admin-nav-list"}>
                                 <li>
                                     <Link to="/admin/create">
@@ -72,10 +72,11 @@ export default class Admin extends React.Component{
                                 </li>
                             </ul>
                         </nav>
-    
-                        <PrivateRoute path="/admin/create" component={Create} guest={auth.guest}/>
-                        <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
-                        <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
+                        <div className="admin-content">                            
+                            <PrivateRoute path="/admin/create" component={Create} guest={auth.guest}/>
+                            <PrivateRoute path="/admin/edit" component={Edit} guest={auth.guest}/>
+                            <PrivateRoute path="/admin/delete" component={Delete} guest={auth.guest} />
+                        </div>
                     </div>
                 </Provider>
             </BrowserRouter>

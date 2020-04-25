@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch, } from 'react-router-dom';
 import {PrivateRoute} from './components/PrivateRoute'
 
-import FrontEndIndex from './components/FrontEnd/FrontEndIndex'
 import FrontEndContext from './components/FrontEnd/FrontEndContext'
 
 import Create from './components/Admin/Create';

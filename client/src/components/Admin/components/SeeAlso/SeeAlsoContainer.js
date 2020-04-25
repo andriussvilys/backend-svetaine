@@ -16,16 +16,18 @@ export default class SeeAlsoContainer extends React.Component{
     }
 
     renderContainer = (data) => {
-        const fileNames = Object.keys(data)
+        const fileNames = Object.keys(data).filter(fileName => fileName !== this.props.parent.fileName)
         const list = fileNames.map(fileName => {
             return <SeeAlso 
                         key={`seeAlso-${fileName}`}
                         file={data[fileName]}
                         directory={this.props.directory}
-                        onChange={this.props.context.onChange}
+                        onChange={this.props.context.fileDataMethods.updateSeeAlso}
+                        parent={this.props.parent.fileName}
+                        // onChange={this.props.context.onChange}
                     />
         })
-    return <div className="admin-seeAlso-container">{list}</div>
+    return <div className="admin-seeAlso-container grid-wrapper">{list}</div>
     }
 
     filterByFamily = (value, checked, string) => {

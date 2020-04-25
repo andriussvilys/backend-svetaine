@@ -8,38 +8,48 @@ const SubmitFamilyInfo = (props) => {
 
     const submitNew = () => {
         return (
-            <div className="imageInfo--box">
+            <div 
+            >
             <span>record new family setup:</span>
                 <Button
                     variant="success" 
                     size="sm"
                     onClick={() => props.submitAction()}
             >
-                SEND
+            SUBMIT
             </Button>
             </div>     
         )
     }
     const submitUpdate = () => {
         return (
-            <div className="imageInfo--box">
+            <div 
+            >
                 <span>Update family setup:</span>
                 <Button
                     variant="primary" 
                     size="sm"
                     onClick={() => props.submitAction()}
                 >
-                SEND
+                SUBMIT
                 </Button>
             </div>     
         )
     }
 
-    if(!props.context.state.familySetupData.artworkFamily){
-        return null
+    const noFamilyName = () => {
+        return(
+            <div 
+            >
+                <span>Create new Artwork Family name.</span>
+            </div>
+        )
     }
     if(recordedFamilyNames.includes(currentFamily)){
         return submitUpdate()
+    }
+    else if(!currentFamily){
+        return noFamilyName()
     }
     else{
         return submitNew()

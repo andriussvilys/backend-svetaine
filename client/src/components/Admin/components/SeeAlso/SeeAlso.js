@@ -1,5 +1,4 @@
 import React from 'react'
-import FilePreview from '../FilePreview'
 import ImageBox from '../ImageBox/ImageBox'
 
 const SeeAlso = (props) => {
@@ -9,9 +8,9 @@ const SeeAlso = (props) => {
     }
 
     return(
-        <div style={{border: "1px solid", margin: "2px"}} className={highlighter(props.file.fileName)? 'themes-list--selected' : 'notSelected'}>
             <ImageBox
                 file={props.file}
+                directory={props.directory}
             >
                 <div style={{border: "1px solid grey", padding: "2px"}}>
                     <p style={{fontSize: "10px"}}>use as See Also recommendation</p>
@@ -23,10 +22,8 @@ const SeeAlso = (props) => {
                             value="yes" 
                             onChange={(e) => {
 
-                                props.onChange(e, "seeAlso", props.file.fileName)
-                                // props.onChange( props.file.fileName, "seeAlso", props.file.fileName, 
-                                //     props.callBack(props.file.fileName, props.fileName, true)
-                                // )
+                                props.onChange(props.file.fileName, props.parent)
+                                // props.onChange(e, "seeAlso", props.file.fileName)
                             }}
                             checked={highlighter(props.file.fileName)}
                             />
@@ -41,8 +38,8 @@ const SeeAlso = (props) => {
                             id={`${props.file.fileName}-useAsSeeAlso__radio-no`} 
                             value="no" 
                             onChange={(e) => {
-                                props.onChange(e, "seeAlso", props.file.fileName)
-                                // props.onChange( props.file.fileName, "seeAlso", props.file.fileName)
+                                props.onChange(props.file.fileName, props.parent)
+                                // props.onChange(e, "seeAlso", props.file.fileName)
                             }}
                             checked={!highlighter(props.file.fileName)}
                             />
@@ -51,7 +48,6 @@ const SeeAlso = (props) => {
                     </form>
                 </div>
             </ImageBox>
-        </div>
     )
 }
 

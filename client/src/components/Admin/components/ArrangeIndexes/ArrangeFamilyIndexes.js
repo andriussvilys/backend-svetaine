@@ -13,29 +13,25 @@ export default class ArrangeFamilyIndexes extends React.Component{
 
     createDroppable = () => {
         return(
-            <div>
-                <FamilyListDroppable 
-                key={this.props.data.column.id}
-                column={this.props.data.column}
-                files={this.props.data.files}
-                columnIndex={0}
-                fileName={this.props.file.fileName}
-                artworkFamily={this.props.file.artworkFamily}
-                >
-                </FamilyListDroppable>
-            </div>
+            <FamilyListDroppable 
+            key={this.props.data.column.id}
+            column={this.props.data.column}
+            files={this.props.data.files}
+            columnIndex={0}
+            fileName={this.props.file.fileName}
+            artworkFamily={this.props.file.artworkFamily}
+            >
+            </FamilyListDroppable>
         )
     }
 
     render(){
         if(this.props.data){
             return(
-                <div> 
-                    <DragDropContext 
-                        onDragEnd={this.context.fileDataMethods.onDragEndFamilyList}>
-                        {this.props.data ? this.createDroppable() : null}
-                    </DragDropContext>  
-                </div>
+                <DragDropContext 
+                    onDragEnd={this.context.fileDataMethods.onDragEndFamilyList}>
+                    {this.props.data ? this.createDroppable() : null}
+                </DragDropContext>  
             )
 
         }

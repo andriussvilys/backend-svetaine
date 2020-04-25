@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { Context } from '../Provider';
 import { ProgressBar } from 'react-bootstrap'
 
 import BootstrapModal from './components/BootstrapModal'
-import Accordion from './components/Accordion'
 import { Tabs, Tab } from 'react-bootstrap'
 import Filters from './components/Filters/Filters'
-import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
 import FamilyDescription from './components/FamilyInfo/subcomponents/FamilyDescription'
 import AddNew from './components/AddNew'
-import SelectFamily from './components/FamilyInfo/subcomponents/SelectFamily'
 
 import MainContainer from './components/FileUpload/MainContainer';
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo';
@@ -145,113 +142,112 @@ componentDidMount(){
         <Context.Consumer>
           {() => {
             return(
-            <div className="imageInfo">
-              {/* <h3>Create</h3> */}
-                <Tabs defaultActiveKey="upload" transition={false} id="noanim-tab-example">
-                  <Tab eventKey="upload" title="Upload new files">
-                    <div className="imageInfo--section">
-                        <div className="imageInfo--box">
-                          <div>
-                            <p>Upload file(-s):</p> 
-                            <input 
-                            id="uploadFileInput" 
-                            type="file" 
-                            multiple 
-                            onChange={(e) => {
-                              const event = e
-                              this.context.addFileToState(event)
-                              .then(res => this.setState({
-                                modalMessage: res
-                              }))
-                              .catch(err => {
-                                this.setState({
-                                  modalMessage: err
-                                })
-                              })
+              <Fragment>
+                  <div className="Tabs-container">
+                    <Tabs defaultActiveKey="upload" transition={false} id="noanim-tab-example">
+                      <Tab eventKey="upload" title="Upload new files">
+                        <div className="FileUpload-container">
+                            <div className="imageInfo--box">
+                              <div>
+                                <p>Upload file(-s):</p> 
+                                <input 
+                                id="uploadFileInput" 
+                                type="file" 
+                                multiple 
+                                onChange={(e) => {
+                                  const event = e
+                                  this.context.addFileToState(event)
+                                  .then(res => this.setState({
+                                    modalMessage: res
+                                  }))
+                                  .catch(err => {
+                                    this.setState({
+                                      modalMessage: err
+                                    })
+                                  })
 
-                              this.setState({
-                                showModal: true,
-                                modalMessage: "uploading File(-s)"
-                              }, () => {
-                                
-                              })
-                              
-                              }} />
-                            <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
-                          </div>
-                        </div>
-
-                          <MainContainer
-                          data={this.context.state.fileData}
-                          />
-                        
-                    </div>
-                    {/* <Accordion
-                      title={"Select common family"}
-                    >
-                      <SelectFamily 
-                          context={this.context}
-                      />
-                    </Accordion> */}
-                  </Tab>
-                  <Tab eventKey="create_family" title="Create a new Family">
-                      <Tabs eventKey="create_family" transition={false} title="Create a new Family">
-                        <Tab eventKey="editFamilyInfo" title="Family Basics">
-                            <div className={"create-createFamily"}>
-                                <AddNew 
-                                  addNew
-                                  router={'/api/familySetup/create'}
-                                  stateKey={'artworkFamilyList'}
-                                  requestKey={"artworkFamily"}
-                                />
-
-                                <FamilyDescription 
-                                  context={this.context}
-                                />
+                                  this.setState({
+                                    showModal: true,
+                                    modalMessage: "uploading File(-s)"
+                                  }, () => {
+                                    
+                                  })
+                                  
+                                  }} />
+                                <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
+                              </div>
                             </div>
-                        </Tab>
-                        <Tab eventKey="filters" title="Filters">
 
-                          <Filters 
-                              context={this.context}
-                              modalInvoke={this.modalInvoke}
-                              allowCategoriesDelete={true}
-                              allowThemesDelete={true}
-                          />
-                          {this.submitButtons()}  
-                          
-                        </Tab>
-                      </Tabs>
-                  </Tab>
-                </Tabs>
+                              <MainContainer
+                              data={this.context.state.fileData}
+                              />
+                            
+                        </div>
+                      </Tab>
+                      <Tab eventKey="create_family" title="Create a new Family">
+                            <div style={{backgroundColor: "#e4e4e4", padding: "7px"}}>
+                              {this.submitButtons()}  
+                              <div>
+                                current Artwork Family:
+                                <strong>{this.context.state.familySetupData.artworkFamily}</strong>
+                              </div>
+                            </div>
+                            <div className="Tabs-container">
+                              <Tabs eventKey="create_family" transition={false} title="Create a new Family">
+                                <Tab eventKey="editFamilyInfo" title="Family Basics">
+                                    <div className={"create-createFamily"}>
+                                        <AddNew 
+                                          addNew
+                                          router={'/api/familySetup/create'}
+                                          stateKey={'artworkFamilyList'}
+                                          requestKey={"artworkFamily"}
+                                        />
 
-            <BootstrapModal 
-                    showModal={this.state.showModal || this.context.state.showModal}
-                    message={this.state.modalMessage}
-                    onClose={() => {this.setState({showModal: false})}}
-                    confirm={this.state.confirm || false}
-                    confirmedAction={() => {
-                      this.state.confirmedAction()
-                        .then(res => {
-                          this.setState({
-                            confirm: res.confirm,
-                            modalMessage: res.modalMessage
-                          })
+                                        <FamilyDescription 
+                                          context={this.context}
+                                        />
+                                    </div>
+                                </Tab>
+                                <Tab eventKey="filters" title="Filters">
+                                  <Filters 
+                                      context={this.context}
+                                      modalInvoke={this.modalInvoke}
+                                      allowCategoriesDelete={true}
+                                      allowThemesDelete={true}
+                                  />
+                                </Tab>
+                              </Tabs>
+                            </div>
+                      </Tab>
+                    </Tabs>
+                  </div>
+                  <BootstrapModal 
+                  showModal={this.state.showModal || this.context.state.showModal}
+                  message={this.state.modalMessage}
+                  onClose={() => {this.setState({showModal: false})}}
+                  confirm={this.state.confirm || false}
+                  confirmedAction={() => {
+                    this.state.confirmedAction()
+                      .then(res => {
+                        this.setState({
+                          confirm: res.confirm,
+                          modalMessage: res.modalMessage
                         })
-                        .catch(err => {
-                          this.setState({
-                            confirm: err.confirm,
-                            modalMessage: err.modalMessage
-                          })
+                      })
+                      .catch(err => {
+                        this.setState({
+                          confirm: err.confirm,
+                          modalMessage: err.modalMessage
                         })
-                    }}
-                  >
-                    {this.state.progress ?
-                      <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :
-                      null
-                    }
-                  </BootstrapModal>
-            </div>
+                      })
+                  }}
+                >
+                  {this.state.progress ?
+                    <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :
+                    null
+                  }
+              </BootstrapModal>
+              </Fragment>
             )
           }}
         </Context.Consumer>

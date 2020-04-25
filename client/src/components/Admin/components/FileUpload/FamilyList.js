@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button'
 import BootstrapModal from '../BootstrapModal'
 import ProgressBar from 'react-bootstrap/ProgressBar'
 import EditArtwork from '../EditArtwork/EditArtwork'
+import NewSingleFile from './NewSingleFile'
 
 
 //this component returns a div with a family name and FilePreviews of each child in the family
@@ -29,7 +30,12 @@ export default class FamilyList extends React.Component{
     renderList = (files) => {
         let list = files.map(file => {
             return (
-                <EditArtwork 
+                // <EditArtwork 
+                //     key={`EditArtwork-${file.fileName}`}
+                //     context={this.props.context}
+                //     file={file}
+                // />
+                <NewSingleFile 
                     key={`EditArtwork-${file.fileName}`}
                     context={this.props.context}
                     file={file}
@@ -72,10 +78,11 @@ export default class FamilyList extends React.Component{
         return (
             <div className="FamilyList--main">
                 <div className="FamilyList--familyName">
-                    <h5 className="FamilyList--familyName__text">{this.props.familyName ? this.props.familyName : "none"}</h5>
+                    <div className="FamilyList--familyName__text">Family name: {this.props.familyName ? this.props.familyName : "none"}</div>
+                    {/* <h5 className="FamilyList--familyName__text">Family name: {this.props.familyName ? this.props.familyName : "none"}</h5> */}
                 </div>
                 {this.renderList(this.props.files, this.props)}
-                <div style={{display: "flex", justifyContent: "flex-end"}}>  
+                <div style={{display: "flex", justifyContent: "center"}}>  
                 <Button
                             variant="success"
                             className="custom-button"

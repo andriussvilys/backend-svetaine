@@ -179,7 +179,7 @@ deletePromise = (string, theme) => {
                 className="extendedList--form imageInfo--box"
                 style={{margin: 0}}
                 >
-                        <div className="dropdown-wrapper">
+                        <div className="grid-wrapper">
                             {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
                             <AddNew 
                                 addNew={this.props.addNew}

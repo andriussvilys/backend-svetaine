@@ -25,10 +25,14 @@ import SeeAlsoPicker from '../SeeAlso/SeeAlsoPicker';
     onChange: this.context.fileDataMethods.onChange, 
         }
  */
-export default class FileInfo extends React.Component {
+export default class NewSingleFile extends React.Component {
     constructor(props){
         super(props);
-        this.state = {showModal: false, modalMessage: null}
+        this.state = {
+            submitButtons: null,
+            showModal: null,
+            modalMessage: null
+        }
     }
 
     onClose = () => {
@@ -49,49 +53,49 @@ export default class FileInfo extends React.Component {
         //     return null
         // }
         return(
-        <div className="FileInfo-container">
+        <div className="FileInfo-container SingleFile-container">
             <div className="FileInfo-preview">
                 <ImageBox 
-                    customClass={"serverFileUpdate-imageBox"}
+                    customClass={"FileInfo-imageBox"}
                     file={this.props.file}
                 />
                 <div className="FamilyList--submit-delete-container">  
-                        <Button
-                            variant="success"
-                            className="custom-button"
-                            onClick={() => {
-                                if(!this.verify()){
-                                    return
-                                }
-                                this.setState({showModal: true, modalMessage: "loading..."})
-                                //*************** */
-                                const postRes = this.props.context.fileDataMethods.updateArtworkInfo(this.props.context.state.fileData.files[this.props.file.fileName])
-                                postRes
-                                    .then( res => {
-                                    this.setState({modalMessage: res})
-                                    })
-                                    .catch(err => {
-                                        this.setState({modalMessage: err})
-                                    })
+                    <Button
+                        variant="danger"
+                        className="custom-button"
+                        onClick={ () => this.props.context.fileDataMethods.removeFile(this.props.file.fileName, this.props.artworkFamily)}
+                    >
+                        Remove
+                    </Button>   
+                    <Button
+                        variant="success"
+                        className="custom-button"
+                        onClick={() => {
+                            const verification = this.props.context.verify()
+                            if(!verification.verified){
+                                return this.setState({showModal: true, modalMessage: verification.modalMessage})
                             }
-                            }
-                        >
-                            Submit to server
-                        </Button>
-                        <Link to={`/admin/edit`}>
-                            <Button
-                                variant="danger"
-                                className="custom-button"
-                                onClick={ () => this.props.context.removeFile(this.props.file.fileName)}
-                            >
-                                Cancel
-                            </Button>   
-                        </Link>
-                        <BootstrapModal 
-                            showModal={this.state.showModal}
-                            message={this.state.modalMessage}
-                            onClose={this.onClose}
-                        />
+                            this.setState({
+                                showModal: true,
+                                modalMessage: "loading..."
+                            })
+                            const postRes = this.props.context.fileDataMethods.postArtworkInfo(this.props.file)
+                            postRes
+                            .then( res => {
+                                this.setState({
+                                    modalMessage: res
+                                })
+                            })
+                            .catch(err => {
+                                this.setState({
+                                    modalMessage: err
+                                })
+                            })
+                        }
+                        }
+                    >
+                        Submit to server
+                    </Button>
                     </div>    
             </div>
 
@@ -133,6 +137,12 @@ export default class FileInfo extends React.Component {
                     </Tab>
                 </Tabs>
             </div>
+
+            <BootstrapModal 
+                showModal={this.state.showModal}
+                message={this.state.modalMessage}
+                onClose={() => {this.setState({showModal: false})}}
+            />
     
         </div>
         )

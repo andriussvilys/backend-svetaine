@@ -49,14 +49,16 @@ export class Provider extends React.Component{
         let newState = {...this.state}
         if(fileName){
             target = newState.fileData.files[fileName]
+            console.log(newState.fileData.files[fileName])
         }
         else{
             target = newState.familySetupData
         }
+
         if(!target[key]){
-            target[key] = null
+            target[key] = []
         }
-        target[key] = e.target.value
+        target[key] = [...target[key], e.target.value]
         this.setState(newState)
     }
 
@@ -97,7 +99,9 @@ export class Provider extends React.Component{
                         //       callback("Successfully recored")
                         //   }
                         let newState = {...this.state}
-                        newState[stateKey] = [...newState[stateKey], newAddition]
+                        // newState[stateKey] = [...newState[stateKey], newAddition]
+                        // newState.artworkFamilyList = [...newState.artworkFamilyList, newAddition]
+                        newState.familySetupData.artworkFamily = newAddition
                         this.setState(newState, () => resolve())
                       })
                       .catch( err => {
@@ -1337,7 +1341,7 @@ export class Provider extends React.Component{
                                     return resolve("uploads folder successfully read")
                                 })
                         })
-                        .catch(err => reject(err))
+                        .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
                     })
             })
 
@@ -1673,6 +1677,31 @@ export class Provider extends React.Component{
                 })
             }
         },
+
+        updateSeeAlso: (newValue, parent) => {
+            // if(!parent || !newValue){
+            //     return
+            // }
+            console.log("newValue")
+            console.log(newValue)
+            console.log("Parent")
+            console.log(parent)
+            let target = null
+            let newState = {...this.state}
+            if(parent){
+                target = newState.fileData.files[parent]
+            }
+            else{
+                target = newState.familySetupData
+            }
+            if(target.seeAlso.includes(newValue)){
+                target.seeAlso = target.seeAlso.filter(value => value !== newValue)
+            }
+            else{
+                target.seeAlso = [...target.seeAlso, newValue]
+            }
+            this.setState(newState)
+        }
     
     }//END OF file data methods
 
@@ -1817,9 +1846,6 @@ export class Provider extends React.Component{
         },
         getFamilySetup: (value, string, fileName) => {
             return new Promise((resolve, reject) => {
-                console.log("get family setup")
-                console.log("fileName")
-                console.log(fileName)
                 axios.get(`/api/familySetup/${value}`)
                 .then( res => {
         
@@ -1881,8 +1907,6 @@ export class Provider extends React.Component{
                     }
     
                     else if(!fileName){
-                        console.log("GET FAMILY SET UP")
-                        console.log("NO FILE NAME")
                         Object.keys(res.data).forEach(objKey => {
                             newFamilySetup = {
                                 ...newFamilySetup,
@@ -1897,25 +1921,12 @@ export class Provider extends React.Component{
     
                     withRelatedArtwork
                         .then(  res => {
-    
                             newState = {...newState, relatedArtwork: {...newState.relatedArtwork, [value]: res}}
                             let fileIds = Object.keys(res)
-    
-                            // this.familySetupMethods.renderAllFiles(newState.familySetupData.seeAlso).then(res =>{ 
-                            //     newState.seeAlsoData = res
-                            //     this.setState(newState)
-                            // })
                             this.setState(newState, () => resolve(res))
-    
-                        } 
-                        )
-                })
+                        })
+                    })
                 .catch(err => {
-                    // console.log("err")
-                    // console.log(err)
-                    // let newState = {...this.state}
-                    // newState.familySetupData.artworkFamily = value
-                    // this.setState(newState)
                     reject(err)
                 })
             })
