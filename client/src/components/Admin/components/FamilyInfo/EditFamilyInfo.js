@@ -6,7 +6,7 @@ import SubmitFamilyInfo from './subcomponents/SubmitFamilyInfo'
 
 const EditFamilyInfo = (props) => {
     return(
-        <Fragment>
+        <div className="themeSelector">
             <SelectFamily 
                 context={props.context}
                 addNew={props.addNew}
@@ -17,7 +17,7 @@ const EditFamilyInfo = (props) => {
                 context={props.context}
                 fileName={props.fileName}
             />
-        </Fragment>
+        </div>
     )
 }
 

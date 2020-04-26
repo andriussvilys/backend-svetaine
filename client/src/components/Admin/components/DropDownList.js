@@ -173,22 +173,14 @@ deletePromise = (string, theme) => {
 
     render(){
         return(
-
-            <div className="themeSelector ">
-                <div 
-                className="extendedList--form imageInfo--box"
-                style={{margin: 0}}
-                >
-                        <div className="grid-wrapper">
-                            {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
-                            <AddNew 
-                                addNew={this.props.addNew}
-                                router={this.props.router}
-                                stateKey={this.props.addNewTarget}
-                                requestKey={this.props.requestKey}
-                            />
-                        </div>
-                </div>
+            <div className="grid-wrapper">
+                {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
+                <AddNew 
+                    addNew={this.props.addNew}
+                    router={this.props.router}
+                    stateKey={this.props.addNewTarget}
+                    requestKey={this.props.requestKey}
+                />
             </div>
         )
     }

@@ -635,7 +635,6 @@ form {
   -ms-grid-rows: min-content 1fr;
       grid-template-rows: -webkit-min-content 1fr;
       grid-template-rows: min-content 1fr;
-  height: 100%;
 }
 
 .tab-pane {
@@ -867,6 +866,7 @@ Button {
 
 .EditDetailContainer {
   height: 100%;
+  overflow-y: auto;
   display: -ms-grid;
   display: grid;
   -ms-grid-rows: minmax(min-content, 50px) minmax(300px, min-content);
