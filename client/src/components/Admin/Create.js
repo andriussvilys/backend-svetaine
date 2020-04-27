@@ -10,6 +10,8 @@ import AddNew from './components/AddNew'
 
 import MainContainer from './components/FileUpload/MainContainer';
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo';
+import Themes from './components/Filters/subcomponents/Themes';
+import Categories from './components/Filters/subcomponents/Categories';
 
 export default class Create extends Component{
 
@@ -185,22 +187,20 @@ componentDidMount(){
                         </div>
                       </Tab>
                       <Tab eventKey="create_family" title="Create a new Family">
-                            <div style={{backgroundColor: "#e4e4e4", padding: "7px"}}>
-                              {this.submitButtons()}  
-                              <div>
-                                current Artwork Family:
-                                <strong>{this.context.state.familySetupData.artworkFamily}</strong>
-                              </div>
-                            </div>
+
                             <div className="Tabs-container">
                               <Tabs eventKey="create_family" transition={false} title="Create a new Family">
                                 <Tab eventKey="editFamilyInfo" title="Family Basics">
                                     <div className={"create-createFamily"}>
+                                    <div style={{backgroundColor: "#e4e4e4", padding: "7px", width: "100%"}}>
+                                      {this.submitButtons()}  
+                                    </div>
                                         <AddNew 
                                           addNew
                                           router={'/api/familySetup/create'}
                                           stateKey={'artworkFamilyList'}
                                           requestKey={"artworkFamily"}
+                                          addNewTitle="Add new Artwork Family name"
                                         />
 
                                         <FamilyDescription 
@@ -212,12 +212,32 @@ componentDidMount(){
                                   <Filters 
                                       context={this.context}
                                       modalInvoke={this.modalInvoke}
-                                      allowCategoriesDelete={true}
-                                      allowThemesDelete={true}
                                   />
                                 </Tab>
                               </Tabs>
                             </div>
+                      </Tab>
+                      <Tab eventKey="new_theme" title="Create data filters">
+                      <div className="Tabs-container">
+                        <Tabs>
+                          <Tab eventKey="new_theme" title="New Themes">
+                            <Themes 
+                            context={this.context}
+                            dataArray={this.context.state.themesData}
+                            onChange={this.context.familySetupMethods.onChange}
+                            modalInvoke={this.modalInvoke}
+                            addNew
+                          />
+                          </Tab>
+                          <Tab eventKey="new_category" title="New Categories">
+                            <Categories 
+                            context={this.context}
+                            modalInvoke={this.modalInvoke}
+                            addNew
+                            />
+                          </Tab>
+                        </Tabs>
+                      </div>
                       </Tab>
                     </Tabs>
                   </div>

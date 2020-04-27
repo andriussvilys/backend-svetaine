@@ -10,9 +10,19 @@ import BootstrapModal from './components/BootstrapModal';
 import Filters from './components/Filters/Filters';
 import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo'
+import Themes from './components/Filters/subcomponents/Themes'
+import Categories from './components/Filters/subcomponents/Categories'
 
 export default class Edit extends Component{
     static contextType = Context;
+    constructor(props){
+      super(props);
+      this.state = {
+        submitButtons: null,
+        confirmedAction: null
+      }
+    }
+  
 
     //returns an array from a names collection
     filesData = (dataObj) => Object.keys(dataObj).map(objName => {
@@ -110,6 +120,46 @@ export default class Edit extends Component{
             submitAction={submitAction()}
           />
         )
+    }
+
+    modalInvoke = (options, callbackPromise) => {
+      let newState = {...this.state}
+      newState = {
+        ...newState,         
+        showModal: true,
+        modalMessage: "...loading..."
+      }
+      if(options && options.requireActionConfirm){
+        newState.confirm = true
+      }
+      else{
+        newState.confirm = false
+      }
+
+      this.setState(newState, () => {
+          let action = null
+          if(!options || !options.requireActionConfirm){
+            // callbackPromise
+            options.confirmedAction
+            .then(res => {
+              this.setState({
+                modalMessage: res.modalMessage
+              })
+            })
+            .catch(err => {
+              this.setState({
+                modalMessage: err.modalMessage
+              })
+            })
+          }
+          else{
+                this.setState({
+                  confirmedAction: options.confirmedAction,
+                  modalMessage: options.modalMessage,
+                })
+          }
+
+        })
       }
 
     render(){
@@ -145,8 +195,52 @@ export default class Edit extends Component{
                                                         context={this.context}
                                                     />
                                                 </Tab>
+                                                <Tab eventKey="new_theme" title="Delete data filters">
+                                                  <div className="Tabs-container">
+                                                    <Tabs>
+                                                      <Tab eventKey="delete_theme" title="Delete Themes">
+                                                        <Themes 
+                                                        context={this.context}
+                                                        dataArray={this.context.state.themesData}
+                                                        onChange={this.context.familySetupMethods.onChange}
+                                                        modalInvoke={this.modalInvoke}
+                                                        allowDelete
+                                                      />
+                                                      </Tab>
+                                                      <Tab eventKey="delete_category" title="Delete Categories">
+                                                        <Categories 
+                                                        context={this.context}
+                                                        modalInvoke={this.modalInvoke}
+                                                        allowDelete
+                                                        />
+                                                      </Tab>
+                                                    </Tabs>
+                                                  </div>
+                                                </Tab>
                                             </Tabs>
                                           </div>
+                                          <BootstrapModal 
+                                              showModal={this.state.showModal || this.context.state.showModal}
+                                              message={this.state.modalMessage}
+                                              onClose={() => {this.setState({showModal: false})}}
+                                              confirm={this.state.confirm || false}
+                                              confirmedAction={() => {
+                                                this.state.confirmedAction()
+                                                  .then(res => {
+                                                    this.setState({
+                                                      confirm: res.confirm,
+                                                      modalMessage: res.modalMessage
+                                                    })
+                                                  })
+                                                  .catch(err => {
+                                                    this.setState({
+                                                      confirm: err.confirm,
+                                                      modalMessage: err.modalMessage
+                                                    })
+                                                  })
+                                              }}
+                                            >
+                                          </BootstrapModal>
 
                                     </Route>
                                     <Route 
@@ -166,11 +260,11 @@ export default class Edit extends Component{
                                             }
                                         }
                                     /> 
-                                    <BootstrapModal 
+                                    {/* <BootstrapModal 
                                         showModal={this.context.state.showModal}
                                         message="updating database"
                                         onClose={this.context.onClose}
-                                    />
+                                    /> */}
                                 </Switch>
                         )
                     }

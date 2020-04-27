@@ -1845,6 +1845,11 @@ export class Provider extends React.Component{
             } 
         },
         getFamilySetup: (value, string, fileName) => {
+            console.log("getFamilySetup runs")
+            console.log("value")
+            console.log(value)
+            console.log("fileName")
+            console.log(fileName)
             return new Promise((resolve, reject) => {
                 axios.get(`/api/familySetup/${value}`)
                 .then( res => {

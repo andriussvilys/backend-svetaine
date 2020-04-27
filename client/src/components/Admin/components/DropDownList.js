@@ -38,6 +38,9 @@ deletePromise = (string, theme) => {
         }
 
         const highlighter = (string, listItem) => {
+            if(this.props.uncontrolled){
+                return
+            }
             if(this.props.highlighted){
                 let highlighted = null
                 if(this.props.highlighted[string] && this.props.highlighted[string].includes(listItem)){
@@ -117,17 +120,20 @@ deletePromise = (string, theme) => {
                             null
                         }   
 
-                    <label htmlFor={`${string}-${listItem}-${this.props.parent}`} className="themes-span">{listItem}</label>
+                    <label htmlFor={`${string}-${listItem}-${this.props.fileName || this.props.parent}`} className="themes-span">{listItem}</label>
 
                     {this.props.uncontrolled ?   
                         <input 
-                            id={`${string}-${listItem}-${this.props.parent}`}
+                            id={`${string}-${listItem}-${this.props.fileName || this.props.parent}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
-                            checked={highlighter(string, listItem)}
+                            // checked={highlighter(string, listItem)}
                             value={listItem}
+                            name={string}
                             onChange={(e) => {
-                                this.props.onChange(e.target.value, e.target.checked, string)
+                                // e.target.parentNode.classList.toggle("themes-list--selected")
+                                // this.props.onChange(e.target.value, e.target.checked, string)
+                                this.props.onChange(e.target.value, string, fileName)
                                 return
                             }}
                         />
@@ -135,10 +141,11 @@ deletePromise = (string, theme) => {
                         :
 
                         <input 
-                            id={`${string}-${listItem}-${this.props.parent}`}
+                            id={`${string}-${listItem}-${this.props.fileName || this.props.parent}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
                             value={listItem}
+                            name={string}
                             checked={highlighter(string, listItem)}
                             onChange={(e) => {
                                 this.props.onChange(e.target.value, string, fileName)
@@ -177,6 +184,7 @@ deletePromise = (string, theme) => {
                 {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
                 <AddNew 
                     addNew={this.props.addNew}
+                    addNewTitle={this.props.addNewTitle}
                     router={this.props.router}
                     stateKey={this.props.addNewTarget}
                     requestKey={this.props.requestKey}

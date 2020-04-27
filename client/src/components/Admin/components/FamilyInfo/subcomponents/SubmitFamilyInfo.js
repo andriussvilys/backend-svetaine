@@ -41,7 +41,7 @@ const SubmitFamilyInfo = (props) => {
         return(
             <div 
             >
-                <span>Create new Artwork Family name.</span>
+                <span>Add new Artwork Family name to continue.</span>
             </div>
         )
     }

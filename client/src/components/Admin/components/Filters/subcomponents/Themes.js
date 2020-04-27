@@ -17,13 +17,12 @@ const Themes = (props) => {
         
         router={'/api/themes/update'}
         addNewTarget={'themesData'}
-        addNew={true}
+        addNew={props.addNew}
+        addNewTitle="Add new Theme"
         requestKey={"list"}
 
         allowDelete={props.allowDelete}
         modalInvoke={props.modalInvoke}
-        // isChecked={this.context.familySetupMethods.isChecked}
-        // onChange={this.context.familySetupMethods.onChange}
         />
     )
 }

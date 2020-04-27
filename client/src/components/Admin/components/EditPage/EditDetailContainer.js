@@ -126,6 +126,8 @@ export default class FileUpdate extends React.Component{
                             <SelectFamily 
                                 context={this.props.context}
                                 onChange={this.filterByFamily}
+                                uncontrolled
+                                radio
                             />
                         </Accordion>
                     </div>

@@ -110,9 +110,11 @@ export default class NewSingleFile extends React.Component {
                         />
                     </Tab>
                     <Tab eventKey="familyInfo" title="Edit Artwork Family Info">
+                    <h3>{this.props.file.fileName}</h3>
                         <EditFamilyInfo 
-                        context={this.props.context}
-                        fileName={this.props.file.fileName}
+                            context={this.props.context}
+                            fileName={this.props.file.fileName}
+                            uncontrolled
                         />
                     </Tab>
                     <Tab eventKey="filters" title="Filters">

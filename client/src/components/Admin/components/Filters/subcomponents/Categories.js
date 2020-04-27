@@ -191,59 +191,62 @@ const Categories = (props) => {
             <div className="list--container">
                 {makeCategories()}
 
-                <div className="categories--addNew_container" >
-                    <h5 className="navigation--addNew_title">add new category</h5>
-                    <div className="navigation--addNew">
-                        <input 
-                            className="categories-input"
-                            type="text" 
-                            list="datalist-add-categories"
-                            name="add-category" 
-                            id="add-category" 
-                            placeholder="category"
-                            onFocus={props.context.categoryMethods.getCategoryNames}
-                        />
-                        <datalist id="datalist-add-categories">
-                            {checkOptionList("categories")}
-                        </datalist>
+                {props.addNew ? 
+                    <div className="categories--addNew_container" >
+                        <h5 className="navigation--addNew_title">add new category</h5>
+                        <div className="navigation--addNew">
+                            <input 
+                                className="categories-input"
+                                type="text" 
+                                list="datalist-add-categories"
+                                name="add-category" 
+                                id="add-category" 
+                                placeholder="category"
+                                onFocus={props.context.categoryMethods.getCategoryNames}
+                            />
+                            <datalist id="datalist-add-categories">
+                                {checkOptionList("categories")}
+                            </datalist>
 
-                        <input 
-                            className="categories-input"
-                            type="text" 
-                            list="datalist-add-subcategories"
-                            name="add-subcategory" 
-                            id="add-subcategory" 
-                            placeholder="subcategory"
-                            onFocus={props.context.categoryMethods.getSubcategoryNames}
-                        />
+                            <input 
+                                className="categories-input"
+                                type="text" 
+                                list="datalist-add-subcategories"
+                                name="add-subcategory" 
+                                id="add-subcategory" 
+                                placeholder="subcategory"
+                                onFocus={props.context.categoryMethods.getSubcategoryNames}
+                            />
 
-                        <datalist id="datalist-add-subcategories">
-                            
-                            {checkOptionList("subCategories")}
-                        </datalist>
+                            <datalist id="datalist-add-subcategories">
+                                
+                                {checkOptionList("subCategories")}
+                            </datalist>
 
-                        <input 
-                            className="categories-input"
-                            type="text" 
-                            name="add-listitem" 
-                            id="add-listitem" 
-                            placeholder="listitem"
-                        />
-                        <Button
-                            className="custom-button"
-                            variant="success" 
-                            size="sm"
-                            onClick={ () => {
-                                console.log("SUBMIT CATEGORIES UPDATE")
-                                props.modalInvoke(null, props.context.categoryMethods.updateCategory()) 
-                            }
-                                // props.context.categoryMethods.updateCategory
-                            }
-                        >
-                            SUBMIT
-                        </Button>
+                            <input 
+                                className="categories-input"
+                                type="text" 
+                                name="add-listitem" 
+                                id="add-listitem" 
+                                placeholder="listitem"
+                            />
+                            <Button
+                                className="custom-button"
+                                variant="success" 
+                                size="sm"
+                                onClick={ () => {
+                                    console.log("SUBMIT CATEGORIES UPDATE")
+                                    props.modalInvoke(null, props.context.categoryMethods.updateCategory()) 
+                                }
+                                    // props.context.categoryMethods.updateCategory
+                                }
+                            >
+                                SUBMIT
+                            </Button>
+                        </div>
                     </div>
-                </div>
+                    : null
+                }
             
             </div>
             )

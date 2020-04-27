@@ -82,7 +82,7 @@ export default class FamilyList extends React.Component{
                     {/* <h5 className="FamilyList--familyName__text">Family name: {this.props.familyName ? this.props.familyName : "none"}</h5> */}
                 </div>
                 {this.renderList(this.props.files, this.props)}
-                <div style={{display: "flex", justifyContent: "center"}}>  
+                {/* <div style={{display: "flex", justifyContent: "center", padding: "5px 0"}}>  
                 <Button
                             variant="success"
                             className="custom-button"
@@ -101,7 +101,7 @@ export default class FamilyList extends React.Component{
                         >
                             Submit ALL to server
                 </Button>
-                </div>
+                </div> */}
                 <BootstrapModal 
                     showModal={this.state.showModal}
                     message={this.state.modalMessage}

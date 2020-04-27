@@ -1,11 +1,6 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
-import Button from 'react-bootstrap/Button';
-
-import BootstrapModal from '../BootstrapModal';
 import ImageBox from '../ImageBox/ImageBox';
-import EditFileButtons from '../ImageBox/optionalComponents/EditFileButtons'
-import FilePreview from '../FilePreview'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
 import Accordion from '../Accordion';
 
@@ -30,12 +25,6 @@ export default class FileUpdate extends React.Component{
                     key={`${file.fileName}-detail`}
                 >
                     {this.props.children}
-                    {/* <EditFileButtons 
-                        file={file}
-                        context={this.props.context}
-                        onModalClose={this.onClose}
-                        onModalClick={this.onModalClick}
-                    /> */}
                 </ImageBox>
         )
     }
@@ -88,8 +77,6 @@ export default class FileUpdate extends React.Component{
                     >
                         <div className="familyPicker">
                             <button
-                                // size="sm"
-                                // variant="primary"
                                 className={"btn-sm btn-primary familyPicker-reload"}
                                 onClick={this.reloadAll}
                             >
@@ -108,7 +95,6 @@ export default class FileUpdate extends React.Component{
     
                         <div 
                         className={"grid-wrapper"}
-                        // style={{display: "flex", flexWrap: "wrap", justifyContent: "space-around"}}
                         >
                             {
                                 Object.keys(this.state.fileList).map(fileName => {
@@ -116,25 +102,6 @@ export default class FileUpdate extends React.Component{
                                 })
                             }
                         </div>
-                        {/* {this.state.showModal ?                     
-                            <BootstrapModal 
-                                confirm={this.state.modalConfirm}
-                                showModal={this.state.showModal}
-                                onClose={this.onClose}
-                                confirmedAction={() => this.deletePromise(this.state.fileToDelete.fileName, this.state.fileToDelete.artworkFamily)}
-                            >
-                                <div>
-                                    <p>{this.state.modalMessage}</p>
-                                    {this.state.fileToDelete ? 
-                                        <FilePreview 
-                                            file={this.state.fileToDelete}
-                                        /> :
-                                        null
-                                    }
-                                </div>
-                            </BootstrapModal> :
-                            null
-                        } */}
                     </div>
             )
         }

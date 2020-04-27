@@ -10,7 +10,7 @@ const SelectFamily = (props) => {
             array={props.context.state.artworkFamilyList}
             onChange={props.onChange || props.context.getFamilySetup}
             uncontrolled={props.uncontrolled}
-            checkbox
+            checkbox={!props.radio ? true : false}
             fileName={props.fileName}
             string={"artworkFamily"}
             id="List-of-artwork-families"
@@ -19,6 +19,7 @@ const SelectFamily = (props) => {
             router={'/api/familySetup/create'}
             addNewTarget={'artworkFamilyList'}
             addNew={props.addNew}
+            addNewTitle="Add new Artwork Family name"
             requestKey={"artworkFamily"}
         />
     )

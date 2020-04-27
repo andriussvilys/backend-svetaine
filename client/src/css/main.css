@@ -54,22 +54,8 @@
   right: 0;
 }
 
-.themeSelector {
-  position: relative;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-      flex-wrap: wrap;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  width: 100%;
-}
-
 .dropdown-container {
   border: 1px solid;
-  margin: 2px;
   background-color: #f6f6f6;
   -webkit-box-flex: 1;
       -ms-flex: 1;
@@ -563,13 +549,6 @@ ul {
 
 .app-container {
   overflow: hidden;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
   border: 4px solid white;
 }
 
@@ -584,6 +563,10 @@ ul {
   border-bottom: 1px solid #dee2e6;
 }
 
+.yearLocation-wrapper {
+  margin-bottom: 5px;
+}
+
 .yearLocation-label {
   width: 80px;
 }
@@ -596,6 +579,10 @@ h3 {
 
 h5 {
   padding-left: 60px;
+}
+
+.familyDescription {
+  width: 100%;
 }
 
 .container-radio {
@@ -663,6 +650,10 @@ Button {
   margin: 0 !important;
 }
 
+label {
+  margin-bottom: 0 !important;
+}
+
 .FileUpload-container {
   height: 100%;
   overflow-y: auto;
@@ -683,8 +674,6 @@ Button {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  height: 100%;
-  border: 1px solid #afafaf;
 }
 
 .FileInfo-container .Tabs-container {
@@ -696,7 +685,11 @@ Button {
 .SingleFile-container {
   height: initial;
   width: initial;
-  margin: 10px;
+  border: 1px solid;
+  border-left: 0;
+  border-right: 0;
+  padding: 5px;
+  margin-bottom: 10px;
 }
 
 .FileInfo-preview {
@@ -732,6 +725,10 @@ Button {
   padding: 4px 0 0 0;
 }
 
+.familyPicker .grid-wrapper {
+  max-height: 50vh;
+}
+
 .familyPicker-reload {
   border: 0;
   position: absolute;
@@ -745,6 +742,10 @@ Button {
 .themeSelector {
   overflow-y: auto;
   height: 100%;
+}
+
+.themeSelector .accordion {
+  width: 100%;
 }
 
 .two-layer-grid {
@@ -764,22 +765,21 @@ Button {
 }
 
 .addNew-container {
-  margin: 2px;
-  border: 2px solid;
-  padding-left: 10px;
+  padding: 5px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  position: relative;
-  padding: 12px;
+  width: 100%;
 }
 
 .addNew-button {
-  margin-top: 20px;
-  width: 100%;
+  margin-left: 5px !important;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
 }
 
 .addNew-form {
@@ -793,10 +793,17 @@ Button {
 
 .addNew-form div {
   width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
 }
 
 .addNew-input {
-  width: 100%;
+  -webkit-box-flex: 3;
+      -ms-flex: 3;
+          flex: 3;
 }
 
 .EditDetail-container {
@@ -911,10 +918,6 @@ Button {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-}
-
-.create-createFamily .addNew-container {
-  width: 200px;
 }
 
 .create-createFamily .imageInfo--box {
@@ -1074,6 +1077,10 @@ textarea {
   padding: 15px;
 }
 
+.themes-list > input:checked {
+  background-color: red;
+}
+
 .themes-list--selected {
   background-color: #c9eec9 !important;
   -webkit-transition: all 0.2s;
@@ -1098,7 +1105,6 @@ textarea {
       -ms-flex-pack: center;
           justify-content: center;
   background-color: black;
-  margin-bottom: 2vw;
 }
 
 .FamilyList--familyName__text {
@@ -1174,7 +1180,6 @@ textarea {
 }
 
 .serverFileUpdate-imageBox {
-  height: 100%;
   margin: 0;
   border: none;
 }

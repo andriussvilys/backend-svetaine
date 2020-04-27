@@ -71,24 +71,25 @@ render(){
                     onSubmit={this.handleShow}
                     className="addNew-form"
                     >
-                        <div>
-                            <input 
-                                className="addNew-input"
-                                type="text" 
-                                id={`add-${this.props.stateKey}-item`} 
-                            />
-                            <br/>
-                            <label htmlFor={`add-${this.props.stateKey}-item`} className="subtitle">Add new {this.props.stateKey}</label>
-                        </div>
-                        <Button 
-                        variant="success" size="sm"
-                        type="submit" 
-                        form={`formFor-${this.props.stateKey}`}
-                        className="button-extend addNew-button"
-                        > 
-                        SEND
-                        </Button>
-
+                            <label htmlFor={`add-${this.props.stateKey}-item`} 
+                            // className="subtitle"
+                            >{this.props.addNewTitle ? this.props.addNewTitle : `Add new ${this.props.stateKey}`}:</label>
+                            <div>
+                                <input 
+                                    className="addNew-input"
+                                    type="text" 
+                                    id={`add-${this.props.stateKey}-item`} 
+                                />
+                                <Button 
+                                variant="success" size="sm"
+                                type="submit" 
+                                form={`formFor-${this.props.stateKey}`}
+                                className="button-extend addNew-button"
+                                > 
+                                SUBMIT
+                                </Button>
+                            </div>
+                    </form>
                     <Modal show={this.state.show} onHide={this.handleClose}>
                         <Modal.Header closeButton>
                         <Modal.Title>Add to {this.props.stateKey}</Modal.Title>
@@ -153,7 +154,6 @@ render(){
                         </Button>
                         </Modal.Footer>
                     </Modal>
-                    </form>
                 </div>
             )
             }

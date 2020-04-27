@@ -5,7 +5,7 @@ const FamilyDescription = (props) => {
     props.context.state.familySetupData :
     props.context.state.fileData.files[props.fileName]
     return(
-        <div className="imageInfo--box"  style={{display: "block"}}>
+        <div className="imageInfo--box familyDescription"  style={{display: "block"}}>
         <div>
             <p>Family description:</p> 
             <p className="subtitle">this description will appear on each item in the artwork family</p>
