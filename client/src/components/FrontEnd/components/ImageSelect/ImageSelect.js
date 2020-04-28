@@ -1,6 +1,5 @@
 import React from 'react'
 import FilePreview from '../FilePreview'
-import { Context } from '../../FrontEndProvider';
 
 const ImageSelect = (props) => {
 
@@ -37,6 +36,12 @@ const ImageSelect = (props) => {
             return <div 
                       id="imageSelect"
                       className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
+                      onClick={() => {
+                        if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+                          props.context.showMenu()
+                        }
+                        return
+                      }}
                       >
                           {previews}
                           {props.mobile ? <div id="spanner" style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}

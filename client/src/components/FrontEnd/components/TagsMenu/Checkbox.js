@@ -12,16 +12,6 @@ const Checkbox = (props) => {
                 />
                 <span className="styleCheckbox-checkmark"></span>
         </label>
-//         <Fragment>
-//                 <input 
-//                 id={props.id}
-//                 className="styled-checkbox"
-//                 type="checkbox" 
-//                 onChange={props.onChange} 
-//                 checked={props.isChecked}
-//                 />
-// <label htmlFor={props.id}></label>
-//         </Fragment>
     )
 }
 export default Checkbox

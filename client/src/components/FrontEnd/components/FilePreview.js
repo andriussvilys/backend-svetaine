@@ -2,10 +2,6 @@ import React from 'react';
 
 export default class FilePreview extends React.Component{
 
-    constructor(props){
-        super(props)
-    }
-
     fileContainer = (fileType, file) => {
 
         //files in server dont have 'preview' property, and files in state dont have filePath
@@ -73,7 +69,7 @@ export default class FilePreview extends React.Component{
         }
         if(fileType.match("application/pdf")){
             return(
-                    <iframe src={previewSource} style={{width: "100%"}}></iframe>
+                    <iframe title="pdf" src={previewSource} style={{width: "100%"}}></iframe>
             )
         }
     }

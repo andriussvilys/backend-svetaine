@@ -19,7 +19,7 @@ const ClearAll = (props) => {
     return(
         <div 
         onClick={(e) => {clearImgs(hide, e)}}
-        className="TagsMenu-Accordion-label dark-bg">
+        className="TagsMenu-Accordion-label category dark-bg">
             <div className="TagsMenu-category-title">
                 {spreadLetters(
                     props.context.state.artworkOnDisplay && Object.keys(props.context.state.artworkOnDisplay).length > 0 ?

@@ -1,8 +1,42 @@
 import React from 'react'
 
 const Tags = (props) => {
+    /**
+     * 
+     * @param filterFunc takes a Promise function
+     */
+    const animateFilter = (filterFunc) => {
+        const artworkOnDisplay = props.context.state.artworkOnDisplay
+        let enlargeImg = props.file
+        let scrollToId = props.file.fileName
+
+        if(!Object.keys(artworkOnDisplay).includes(scrollToId)){
+            let newImg = null
+            Object.keys(artworkOnDisplay).forEach(objName => {
+                const currentObj = artworkOnDisplay[objName]
+                if(Object.values(currentObj).includes(enlargeImg.artworkFamily)){
+                    newImg = currentObj.fileName
+                }
+            })
+            scrollToId = newImg
+        }
+        let infoUpDelay = 0
+        if(!document.getElementById("ArtworkInfo").classList.contains("ArtworkInfo-toggleTags")){
+            infoUpDelay = 200;
+            document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
+        }
+        setTimeout(() => {
+            filterFunc
+                .then(res => {
+                        setTimeout(() => {
+                            props.context.scrollToHorizontal(null, "imageSelect"); 
+                        }, 400);
+                    }
+                )
+        }, infoUpDelay);
+    }
+
     const tags = (file) => {
-        
         let DOMthemes = null
         if(file.themes){
             let themes = file.themes
@@ -17,16 +51,7 @@ const Tags = (props) => {
                 key={`tag-${tag}${index}`}
                 className="Tags-item_container"
                 onClick={(e) => {e.stopPropagation(); 
-                    document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
-                    // tag.onClick(tag.title, true)
-                    //     .then(res => props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName))
-                    setTimeout(() => {
-                        tag.onClick(tag.title, true)
-                        setTimeout(() => {
-                            
-                            props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); 
-                        }, 150);
-                    }, 150);
+                    animateFilter(tag.onClick(tag.title, true))
                 }}
                 >
                     <p className="Tags-item_text">{tag.title}</p>
@@ -34,7 +59,7 @@ const Tags = (props) => {
             })
         }
 
-        let categories = Object.keys(file.category) 
+        let categories = Object.keys(file.category)
         categories = categories.map((category) => {
             return {
                 "type": "category", 
@@ -47,24 +72,7 @@ const Tags = (props) => {
             key={`category-${tag.title}${index}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
-                document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
-
-                // setTimeout(() => {
-                //     tag.onClick(tag.title, true)
-                // }, props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName));
-
-                // tag.onClick(tag.title, true)
-                //     .then(res => {
-                //         props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); 
-                //     })
-
-                setTimeout(() => {
-                    tag.onClick(tag.title, true)
-                    setTimeout(() => {
-                        
-                        props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); 
-                    }, 150);
-                }, 150);
+                animateFilter(tag.onClick(tag.title, true))
             }}
             >
                 <p className="Tags-item_text">{tag.title}</p>
@@ -84,18 +92,14 @@ const Tags = (props) => {
             })
         })
         const DOMsubcategories = subcategories.map(tag => {
+            if(tag.title === "studio"){
+                return
+            }
             return <div 
             key={`subcategory-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
-                document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
-                setTimeout(() => {
-                    tag.onClick(tag.category, tag.title, true)
-                    setTimeout(() => {
-                        
-                        props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); 
-                    }, 150);
-                }, 150);
+                animateFilter(tag.onClick(tag.category, tag.title, true))
             }}
             >
                 <p className="Tags-item_text">{tag.title}</p>
@@ -122,15 +126,8 @@ const Tags = (props) => {
             key={`listitem-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
-                document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
-                setTimeout(() => {
-                    tag.onClick(tag.category, tag.subcategory, tag.title, true)
-                    setTimeout(() => {    
-                        props.context.scrollToHorizontal(props.context.state.enlarge.background.fileName); 
-                    }, 150);
-                }, 150);
-            }
-            }
+                animateFilter(tag.onClick(tag.category, tag.subcategory, tag.title, true))
+            }}
             >
                 <p className="Tags-item_text">{tag.title}</p>
             </div>

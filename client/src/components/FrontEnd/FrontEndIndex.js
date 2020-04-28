@@ -1,14 +1,14 @@
 import React from 'react'
 import { Context } from './FrontEndProvider';
-import { BrowserRouter } from 'react-router-dom';
-import Modal from 'react-bootstrap/Modal'
-import Spinner from 'react-bootstrap/Spinner'
 
 import TagsMenu from './components/TagsMenu'
 import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
 import Nav from './components/Nav/Nav'
 import PreviewBubbles from './components/Enlarge/PreviewBubble'
+import Controls from './components/ArtworkInfo/Controls'
+
+import '../../css/frontEndMain.css'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -21,96 +21,85 @@ export default class FrontEndIndex extends React.Component{
             imgSelectLoaded: document.querySelectorAll(".ImagesPreview--imageContainer")
         }
     }
-
-    // adminButtons = (props) => {
-    //     return(
-    //                 <div style={{display:"flex", flexDirection:"column"}}>
-    //                     <Button
-    //                         onClick={
-    //                             () => {
-    //                                 if(auth.isAuthenticated()){
-    //                                     this.props.props.history.push('/admin/create')
-    //                                 }
-    //                                 else{
-    //                                     this.props.props.history.push('/admin/login')
-    //                                 }
-    //                             }
-    //                         }
-    //                     >
-    //                         Admin
-    //                     </Button>
-    //                 </div>
-    //     )
-    // }  
+    spreadLetters = (title) => {
+        let letters = Array.from(title).map((letter, index) => {
+            return <div key={`${title}-leter-${index}`} className="title-letter white-font">{letter}</div>
+        })
+        return letters
+    }
     
     render(){
         return(
-            <BrowserRouter>
-                <Context.Consumer>
-                    {() => {
-                        return <div 
-                                    className="frontEndIndex-container" 
-                                >
-                            <TagsMenu context={this.context}>
-                            </TagsMenu>
+            <Context.Consumer>
+                {() => {
+                    return (
+                    <div className="app-container">
 
-                            <div 
-                            id="images" 
-                            // className="images-container"
-                            className={this.context.state.mobile ? "images-container"  : "images-container images-grid" }
+                        <div 
+                                className="frontEndIndex-container" 
                             >
-                                <ImageSelect 
-                                    data={this.context.state.artworkInfoData} 
-                                    mobile={this.context.state.mobile}
-                                    state={this.context.state}
-                                    // data={this.context.state.visibleArtwork}
-                                    methods={{
-                                        enlarge: this.context.enlarge,
-                                        loadEnlarge: this.context.loadEnlarge,
-                                        toggleMobile: this.context.toggleMobile,
-                                        lazyLoad: this.context.lazyLoadImages
-                                    }}
-                                />
-                                <Enlarge 
-                                    nextEnlarge={this.context.state.nextEnlarge}
-                                    file={this.context.state.enlarge}
-                                    onClick={this.context.closeEnlarge}
-                                    artworkInfoData={this.context.state.artworkInfoData}
-                                    loadEnlarge={this.context.loadEnlarge}
-                                    closeEnlarge={this.context.closeEnlarge}
-                                    hideArtworkInfo={this.context.hideArtworkInfo}
+                        <TagsMenu context={this.context}>
+                        </TagsMenu>
+
+                        <div 
+                        id="images" 
+                        // className="images-container"
+                        className={this.context.state.mobile ? "images-container"  : "images-container images-grid" }
+                        >
+                            <ImageSelect 
+                                data={this.context.state.artworkInfoData} 
+                                mobile={this.context.state.mobile}
+                                state={this.context.state}
+                                context={this.context}
+                                // data={this.context.state.visibleArtwork}
+                                methods={{
+                                    enlarge: this.context.enlarge,
+                                    loadEnlarge: this.context.loadEnlarge,
+                                    toggleMobile: this.context.toggleMobile,
+                                    lazyLoad: this.context.lazyLoadImages
+                                }}
+                            />
+                            <Enlarge 
+                                nextEnlarge={this.context.state.nextEnlarge}
+                                file={this.context.state.enlarge}
+                                onClick={this.context.closeEnlarge}
+                                artworkInfoData={this.context.state.artworkInfoData}
+                                loadEnlarge={this.context.loadEnlarge}
+                                closeEnlarge={this.context.closeEnlarge}
+                                hideArtworkInfo={this.context.hideArtworkInfo}
+                                context={this.context}
+                                mobile={this.context.state.mobile}
+                            />
+                        </div>
+                        {!this.context.state.mobile ? 
+                        <Nav context={this.context}/> :   
+                        <PreviewBubbles 
+                            file={this.context.state.enlarge}
+                            relatedArtwork={this.context.state.enlarge && this.context.state.enlarge.familySequence ? this.context.state.enlarge.familySequence.familySequence : []}
+                            // relatedArtwork={this.context.state.relatedArtwork}
+                            enlarge={this.context.loadEnlarge}
+                            context={this.context}
+                        >
+                            <div className="menu-container">
+                                <div 
+                                onClick={() => {this.context.showMenu()}}
+                                className="TagsMenu-Accordion-label category TagsMenu-hamburger">
+                                    <div className="TagsMenu-category-title menu-title">
+                                        {this.spreadLetters("menu")}
+                                    </div>
+                                </div>
+                                <Controls
+                                    showInfo={this.context.showInfo}
                                     context={this.context}
-                                    mobile={this.context.state.mobile}
                                 />
                             </div>
-                            {!this.context.state.mobile ? 
-                            <Nav context={this.context}/> :   
-                            <PreviewBubbles 
-                                file={this.context.state.enlarge}
-                                relatedArtwork={this.context.state.relatedArtwork}
-                                enlarge={this.context.loadEnlarge}
-                                context={this.context}
-                            >
-                                <div 
-                                    className="TagsMenu-hamburger"
-                                    onClick={() => {this.context.showMenu()}}
-                                >
-                                    <span className="white-font">MENU</span>
-                                </div>
-                            </PreviewBubbles>
-                            }
-                            <Modal show={this.context.state.showModal} onHide={this.handleClose}>
-                                <Modal.Body>
-                                <Spinner animation="grow" variant="primary" />
-                                <Spinner animation="grow" variant="primary" />
-                                <Spinner animation="grow" variant="primary" />
-                                </Modal.Body>
-                            </Modal>
-                        </div>
-                    }}
-                </Context.Consumer>
-
-            </BrowserRouter>
+                        </PreviewBubbles>
+                        }
+                    </div>
+                </div>
+                    )
+                }}
+            </Context.Consumer>
         )
     }
 }

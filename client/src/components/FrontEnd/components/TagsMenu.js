@@ -1,18 +1,13 @@
 import React, { Fragment } from 'react'
-import { Context } from '../../Provider';
-import Accordion from './Accordion';
-import YearLocation from './YearLocation/YearLocation';
 import Year from './YearLocation/Year';
 import Location from './YearLocation/Location';
 import Themes from './Themes/Themes';
 import ClearAll from './ClearAll';
 import About from './About/About';
-import Contact from './About/Contact'
 import Category from './TagsMenu/Category';
 
 
 export default class TagsMenu extends React.Component{
-    static contextType = Context;
     constructor(props){
         super(props)
         this.state = {subcategory: null, listItems: null}
@@ -116,9 +111,7 @@ export default class TagsMenu extends React.Component{
     listitemsContainer = []
 
     createSubcategories = (data) => {
-        let buttons = []
         let subCatBlocks = []
-        let combined = []
         let listItems = []
 
         //obj === category
@@ -210,8 +203,8 @@ export default class TagsMenu extends React.Component{
                     </div>
             </div>,
             <div key={`TagsMenu-contact`} className="TagsMenu-subcategories" id="contact-subcategories">
-                <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
-                <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
+                <a className="title-letter contact-title" href="mailto:andriussvilys@gmail.com">andriussvilys@gmail.com</a>
+                <a className="title-letter contact-title" href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
             </div>
         ]
         this.listitemsContainer = [...this.listitemsContainer, 
@@ -242,30 +235,7 @@ export default class TagsMenu extends React.Component{
                 `TagsMenu-container TagsMenu-max` : 
             `TagsMenu-container`
         }
-        onTouchStart={(e) => {
-            const touches = e.touches
-            const touch = {"y": touches[0].clientY}
-            this.setState({touch})
-        }}
-        onTouchMove={(e) => {
-            this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
-        }}
-        onTouchEnd={(e) => {
-            //check if any accordions are open
-            const collapseShow = Array.from(document.getElementsByClassName("collapse")).filter(collapse => collapse.classList.contains("show"))
-
-            if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
-                if(this.state.touch.y > this.state.touch.endY && collapseShow.length === 0){
-                    document.getElementById("TagsMenu").classList.remove("show-menu")
-                }
-            }
-        }
-        }
         >
-            {/* <div 
-            className="TagsMenu-hamburger"
-            onClick={() => {this.props.context.showMenu()}}
-            ></div> */}
             <div className="TagsMenu-wrapper">
                 <div className="button-wrapper TagsMenu-about-contact">
                     <Category 
@@ -288,6 +258,7 @@ export default class TagsMenu extends React.Component{
                             <Category 
                                 clickable
                                 category="year/location"
+                                level="category"
                                 context={this.props.context}
                                 button
                                 showContent={this.onCategoriesClick}
@@ -296,6 +267,7 @@ export default class TagsMenu extends React.Component{
                                 clickable
                                 category="themes"
                                 context={this.props.context}
+                                level="category"
                                 button
                                 showContent={this.onCategoriesClick}
                             />

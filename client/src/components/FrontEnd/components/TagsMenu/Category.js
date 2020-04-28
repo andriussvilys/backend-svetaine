@@ -13,23 +13,15 @@ const Category = (props) => {
     return(
         <div
         key={`TagsMenu-category-${props.category}`} 
-        className={props.button || props.isChecked ? `TagsMenu-Accordion-label checkbox-selected ${props.modifierClass}` : `TagsMenu-Accordion-label ${props.modifierClass}`}
+        className={props.isChecked ? `TagsMenu-Accordion-label checkbox-selected ${props.level}` : `TagsMenu-Accordion-label ${props.level}`}
+        onClick={props.onChange}
         >   
             <div 
-            onClick={() => {props.showContent(props.category)}}
-            className={`TagsMenu-category-title ${props.clickable ? null : "no-click"} ${props.titleModifier}`} >
+            onClick={() => {props.showContent(props.category);}}
+            className={`TagsMenu-category-title ${props.clickable ? "" : "no-click"} ${props.titleModifier ? props.titleModifier : ""}`} >
                 {spreadLetters(props.category, props.level)}
             </div>
             {!props.button ? 
-                // <input 
-                // id={`${props.level}-${props.category}`}
-                // className="TagsMenu-checkbox"
-                // type="checkbox" 
-                // // onChange={() => props.context.filterByCategory(props.category)} 
-                // // checked={props.context.categoryChecked(props.category)}
-                // onChange={props.onChange} 
-                // checked={props.isChecked}
-                // />
                 <Checkbox
                     id={`${props.level}-${props.category}`}
                     onChange={props.onChange} 

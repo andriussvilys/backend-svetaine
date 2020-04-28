@@ -9,6 +9,8 @@ import {PrivateRoute} from '../PrivateRoute'
 
 import auth from '../Auth'
 
+import '../../css/main.css'
+
 export default class Admin extends React.Component{
     constructor(props){
         super(props);

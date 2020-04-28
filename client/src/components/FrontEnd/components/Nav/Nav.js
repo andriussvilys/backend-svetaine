@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import Controls from '../ArtworkInfo/Controls'
 
 const Nav = (props) => {
     const showButtons = () => {
@@ -32,23 +33,23 @@ const Nav = (props) => {
                                     <Fragment>
                                     <button
                                         id="button-next"
-                                        onClick={() => props.context.viewNext()}
+                                        onClick={() => props.context.viewNext(+1)}
                                         className={showButtons() ? "Nav-button Nav-button_next" : "Nav-button Nav-button_next move-right"}
                                     >
-                                        <img alt="view next" src="/icons/point-right.png" />
+                                        <img alt="view next" src="icons/point-right.png" />
                                     </button>
                                     <button
                                         id="button-prev"
-                                        onClick={() => props.context.viewPrev()}
+                                        onClick={() => props.context.viewNext(-1)}
                                         className={showButtons() ? "Nav-button Nav-button_prev" : "Nav-button Nav-button_prev move-left"}
                                     >
-                                        <img alt="view previous" src="/icons/point-left.png"/>
+                                        <img alt="view previous" src="icons/point-left.png"/>
                                     </button>
                                         <div 
                                             className="Nav-button Nav-button-menu" 
                                             onClick={() => props.context.showMenu()}
                                         >
-                                            <img className="menu" alt="menu button" src='/icons/menu.png'/>
+                                            <img className="menu" alt="menu button" src='icons/menu.png'/>
                                             {/* <h3 className="nav-menuButton">menu</h3> */}
                                         </div>
                                     {showInfo() ?                                    
@@ -56,7 +57,7 @@ const Nav = (props) => {
                                             className="Nav-button Nav-infoButton"
                                             onClick={() => props.context.showInfo()}
                                         >
-                                            <img className="Nav-infoButton-icon" alt="info buton" src="/icons/info.png" />
+                                            <img className="Nav-infoButton-icon" alt="info buton" src="icons/info.png" />
                                             {/* <h1>i</h1> */}
                                         </div>
                                         : 

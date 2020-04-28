@@ -3,15 +3,16 @@ import React from 'react'
 const PreviewBubbles = (props) => {
     const countBubbles = (file) => {
         let bubbles = []
-        const famName = file.background.artworkFamily
-        const famArray = props.relatedArtwork[famName].column.fileIds
-        const currentIndex = famArray.indexOf(file.background.fileName)
+        // const famName = file.background.artworkFamily
+        const famName = props.file.familySequence.familyName
+        // const famArray = props.relatedArtwork[famName].column.fileIds
+        const famArray = props.relatedArtwork
         bubbles = famArray.map(item => {
             if(item === file.background.fileName){
                 return <div 
                             key={`previewBubble-${item}`}
+                            id={`previewBubble-${item}`}
                             onClick={(e) => {
-                                if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
                                 props.enlarge(e, item)
                             }} 
                             className="previewBubble previewBubble-filled"
@@ -19,8 +20,8 @@ const PreviewBubbles = (props) => {
             }
             return <div 
                         key={`previewBubble-${item}`}
+                        id={`previewBubble-${item}`}
                         onClick={(e) => {
-                            if(document.getElementById("ArtworkInfo")){document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")}
                             props.enlarge(e, item)}} 
                         className="previewBubble"
                     ></div>
@@ -31,14 +32,16 @@ const PreviewBubbles = (props) => {
             }
         return bubbles
     }
-    return(
-        <div className="previewBubble-container">
-            <div className="previewBubble-wrapper">
-                {props.file && props.file.open ? countBubbles(props.file) : null}
+    if(props.relatedArtwork){
+        return(
+            <div className="previewBubble-container" id="previewBubble-container">
+                <div className="previewBubble-wrapper" id="previewBubble-wrapper">
+                    {props.file && props.file.open ? countBubbles(props.file) : null}
+                </div>
+                {props.children}
             </div>
-            {props.children}
-        </div>
-    )
+        )
+    }
 }
 
 export default PreviewBubbles
