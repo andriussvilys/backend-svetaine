@@ -9,9 +9,8 @@ const Accordion = (props) => {
             as={Button} 
             variant="link" 
             eventKey="0"
-            // className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
-            // className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category" : "tagsMenu-Button tagsMenu-Button_subcategory"}
-            className={props.level ? `tagsMenu-Button tagsMenu-Button_${props.level}` : "tagsMenu-Button tagsMenu-Button"}
+            // className={props.level ? `tagsMenu-Button tagsMenu-Button_${props.level}` : "tagsMenu-Button"}
+            className="tagsMenu-Button"
             >
                 {props.title}
             </BootstrapAccordion.Toggle>
@@ -19,7 +18,6 @@ const Accordion = (props) => {
         else{
             return(
             <BootstrapAccordion 
-            // as={Button} 
             variant="link" 
             eventKey="0"
             className={props.level === "category" ? "tagsMenu-Button tagsMenu-Button_category noClick" : "tagsMenu-Button tagsMenu-Button_subcategory noClick"}
@@ -35,7 +33,6 @@ const Accordion = (props) => {
                     className={`
                     TagsMenu-Card-Title 
                     ${props.className}
-                    ${props.level} 
                     ${props.checked ? 'checkbox-selected' : null}
                     `}
                 >

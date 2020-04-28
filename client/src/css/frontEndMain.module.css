@@ -1095,6 +1095,10 @@ label {
   font-size: 12px;
 }
 
+.TagsMenu-collapsed {
+  width: 0;
+}
+
 .TagsMenu-subcategory-container {
   width: 100%;
   border-top: 1px solid black;
@@ -1383,7 +1387,7 @@ label {
 }
 
 .pinch-to-zoom-container {
-  height: 100% !important;
+  height: 100%;
   width: 100%;
   background-color: yellow;
 }
@@ -1493,6 +1497,7 @@ label {
     -webkit-box-pack: start;
         -ms-flex-pack: start;
             justify-content: flex-start;
+    width: calc(100% - 195px);
     height: 100%;
   }
   .previewBubble {
@@ -1503,7 +1508,7 @@ label {
   }
   .TagsMenu-hamburger {
     height: 100% !important;
-    width: 100%;
+    width: 90px;
     cursor: pointer;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1547,14 +1552,11 @@ label {
   .app-container {
     height: 100%;
   }
-  .appContainer {
-    height: 100%;
-  }
   .frontEndIndex-container {
     -ms-grid-columns: 100%;
         grid-template-columns: 100%;
-    -ms-grid-rows: 1fr 50px;
-        grid-template-rows: 1fr 50px;
+    -ms-grid-rows: auto 1fr 50px;
+        grid-template-rows: auto 1fr 50px;
   }
   .TagsMenu-container {
     -ms-grid-row: 1;
@@ -1597,17 +1599,16 @@ label {
     font-size: 12px;
   }
   .images-container {
-    position: absolute;
-    -ms-grid-row: 1;
-        grid-row-start: 1;
-    grid-row-end: 2;
+    -ms-grid-row: 2;
+        grid-row-start: 2;
+    grid-row-end: 3;
     display: -ms-grid;
     display: grid;
     -ms-grid-columns: 100%;
         grid-template-columns: 100%;
-    -ms-grid-rows: min-content 1fr;
-        grid-template-rows: -webkit-min-content 1fr;
-        grid-template-rows: min-content 1fr;
+    -ms-grid-rows: max-content 1fr;
+        grid-template-rows: -webkit-max-content 1fr;
+        grid-template-rows: max-content 1fr;
     overflow: hidden;
     border-left: 1px solid;
     border-right: 1px solid;
@@ -1778,6 +1779,13 @@ label {
     width: auto !important;
     z-index: 9999;
   }
+  .images-container {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-rows: max-content 1fr;
+        grid-template-rows: -webkit-max-content 1fr;
+        grid-template-rows: max-content 1fr;
+  }
   .about-container {
     width: 50%;
     position: relative;
@@ -1834,7 +1842,6 @@ label {
   .side-scroll .ImagesPreview--imageContainer {
     width: initial;
     left: initial;
-    min-width: initial;
   }
   .hide-imageSelect {
     -webkit-transform: translateY(100%);

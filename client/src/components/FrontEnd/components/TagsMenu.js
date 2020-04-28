@@ -6,6 +6,8 @@ import ClearAll from './ClearAll';
 import About from './About/About';
 import Category from './TagsMenu/Category';
 
+import '../../../css/frontEndMain.css'
+import styles from '../../../css/frontEndMain.module.css'
 
 export default class TagsMenu extends React.Component{
     constructor(props){
@@ -17,7 +19,11 @@ export default class TagsMenu extends React.Component{
      */
     spreadLetters = (title) => {
         let letters = Array.from(title).map((letter, index) => {
-            return <div key={`${title}-leter-${index}`} className="title-letter">{letter}</div>
+            return <div 
+            key={`${title}-leter-${index}`} 
+            className={styles.title-letter}
+            // className="title-letter"
+            >{letter}</div>
         })
         return letters
     }
@@ -229,11 +235,15 @@ export default class TagsMenu extends React.Component{
         return <div
         id="TagsMenu"
         className={
-            !this.props.context.state.mobile ? 
-                `TagsMenu-container show-menu-desktop` :
-                this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
-                `TagsMenu-container TagsMenu-max` : 
-            `TagsMenu-container`
+            `TagsMenu-collapsed
+            ${
+                !this.props.context.state.mobile ? 
+                    `TagsMenu-container show-menu-desktop` :
+                    this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
+                    `TagsMenu-container TagsMenu-max` : 
+                `TagsMenu-container`
+            }
+            `
         }
         >
             <div className="TagsMenu-wrapper">

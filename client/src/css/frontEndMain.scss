@@ -1032,7 +1032,7 @@ font-family: 'Times New Roman', Times, serif;
     color: red !important;
 }
 .pinch-to-zoom-container{
-    height: 100%;
+    height: 100% !important;
     width: 100%;
     background-color: yellow;
 }
@@ -1123,7 +1123,7 @@ font-family: 'Times New Roman', Times, serif;
     .previewBubble-wrapper{
         padding: 5px 5px 0 0;
         justify-content: flex-start;
-        width: calc(100% - 195px);
+        // width: calc(100% - 195px);
         height: 100%;
     }
     .previewBubble{
@@ -1134,7 +1134,8 @@ font-family: 'Times New Roman', Times, serif;
     }
     .TagsMenu-hamburger{
         height: 100% !important;
-        width: 90px;
+        // width: 90px;
+        width: 100%;
         // background-color: black;
         cursor: pointer;
         display: flex;
@@ -1175,9 +1176,12 @@ font-family: 'Times New Roman', Times, serif;
     .app-container{
         height: 100%;
     }
+    .appContainer{
+        height: 100%;
+    }
     .frontEndIndex-container{
         grid-template-columns: 100%;
-        grid-template-rows: auto 1fr 50px;
+        grid-template-rows: 1fr 50px;
     }
     .TagsMenu-container{
         grid-row-start: 1;
@@ -1212,11 +1216,12 @@ font-family: 'Times New Roman', Times, serif;
         font-size: 12px;
     }
     .images-container{
-        grid-row-start: 2;
-        grid-row-end: 3;
+        position: absolute;
+        grid-row-start: 1;
+        grid-row-end: 2;
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: max-content 1fr;
+        grid-template-rows: min-content 1fr;
         overflow: hidden;
         border-left: 1px solid;
         border-right: 1px solid;
@@ -1249,10 +1254,6 @@ font-family: 'Times New Roman', Times, serif;
         height: 90px;
         overflow-y: hidden;
     }
-    // .side-scroll > div {
-    //     max-width: 120px;
-    //     justify-content: center;
-    // }
     .enlargeContainer{
         grid-column-start: 1;
         grid-column-end: 2;
@@ -1360,11 +1361,6 @@ font-family: 'Times New Roman', Times, serif;
         width: auto !important;
         z-index: 9999;
     }
-
-    .images-container{
-        display: grid;
-        grid-template-rows: max-content 1fr;
-    }
     .about-container{
         width: 50%;
         position: relative;
@@ -1419,6 +1415,7 @@ font-family: 'Times New Roman', Times, serif;
     .side-scroll .ImagesPreview--imageContainer{
         width: initial;
         left: initial;
+        min-width: initial;
     }
     .hide-imageSelect{
         transform: translateY(100%)

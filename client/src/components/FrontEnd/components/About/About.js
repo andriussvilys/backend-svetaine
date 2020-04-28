@@ -4,7 +4,6 @@ import Category from '../TagsMenu/Category';
 const About = (props) => {
     return(
         <div 
-            // className="tagsMenu-Button tagsMenu-Button_category about-container TagsMenu-Accordion-label"
             onClick={(e) => {
                 props.loadEnlarge(e, "portrait.jpg");
                 setTimeout(() => {
@@ -17,8 +16,6 @@ const About = (props) => {
                 }, 600)
             }}
         >
-
-            {/* <span>ABOUT</span> */}
             <Category 
                 clickable
                 category="about"

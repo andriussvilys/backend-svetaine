@@ -8,7 +8,9 @@ import Nav from './components/Nav/Nav'
 import PreviewBubbles from './components/Enlarge/PreviewBubble'
 import Controls from './components/ArtworkInfo/Controls'
 
-import '../../css/frontEndMain.css'
+// import '../../css/frontEndMain.css'
+
+import styles from '../../css/frontEndMain.module.css'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
@@ -33,11 +35,10 @@ export default class FrontEndIndex extends React.Component{
             <Context.Consumer>
                 {() => {
                     return (
-                    <div className="app-container">
-
+                    // <div className="app-container">
                         <div 
-                                className="frontEndIndex-container" 
-                            >
+                            className="frontEndIndex-container"
+                        >
                         <TagsMenu context={this.context}>
                         </TagsMenu>
 
@@ -96,7 +97,6 @@ export default class FrontEndIndex extends React.Component{
                         </PreviewBubbles>
                         }
                     </div>
-                </div>
                     )
                 }}
             </Context.Consumer>

@@ -29,17 +29,6 @@ const YearLocation = (props) => {
 
         return(
             <Fragment>
-                {/* <Category 
-                    category="year/location"
-                    context={props.context}
-                    button
-                /> */}
-                {/* <div className="category TagsMenu-Accordion-label">
-                    <span>year/location</span><span/>
-                </div> */}
-                {/* <div className="subcategory">
-                    subcategories
-                </div> */}
                 <Accordion
                 >
                     <div>
