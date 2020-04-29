@@ -7,7 +7,6 @@ import About from './About/About';
 import Category from './TagsMenu/Category';
 
 import '../../../css/frontEndMain.css'
-import styles from '../../../css/frontEndMain.module.css'
 
 export default class TagsMenu extends React.Component{
     constructor(props){
@@ -21,8 +20,7 @@ export default class TagsMenu extends React.Component{
         let letters = Array.from(title).map((letter, index) => {
             return <div 
             key={`${title}-leter-${index}`} 
-            className={styles.title-letter}
-            // className="title-letter"
+            className="title-letter"
             >{letter}</div>
         })
         return letters

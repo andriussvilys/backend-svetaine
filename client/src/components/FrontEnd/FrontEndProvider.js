@@ -19177,7 +19177,7 @@ export class Provider extends React.Component{
         // })
         Object.keys(this.state.artworkInfoData).forEach(id => {
             document.getElementById(id).classList.remove('image-hide')
-            document.getElementById(id).classList.remove('ImagesPreview--imageContainer__empty')
+            document.getElementById(id).classList.remove('FilePreview--imageContainer__empty')
             document.getElementById(id).src = document.getElementById(id).getAttribute("data-src")
         })
         return this.setState({artworkOnDisplay: {...this.state.visibleArtwork}})
@@ -19833,7 +19833,8 @@ export class Provider extends React.Component{
     }
 
     this.scrollToHorizontal = (id, parent_id, options) => {
-      let scrollTo = {behavior: 'smooth'}
+      let scrollTo = {}
+      // let scrollTo = {behavior: 'smooth'}
       if(!document.getElementById(parent_id)){
         console.log(`${parent_id} was not found`)
         return
@@ -19859,35 +19860,13 @@ export class Provider extends React.Component{
         }, scrollDelay);
       }
     }
-    // this.scrollToHorizontal = (fileName) => {
-    //   console.log("scrollhorizontal runs")
-    //   let scrollTo = {behavior: 'smooth'}
-    //   if(!fileName){
-    //     scrollTo.left = 0
-    //     document.getElementById("imageSelect").scrollTo(scrollTo)
-    //     return
-    //   }
-    //   let scrollDelay = document.getElementById("imageSelect").scrollLeft > 0 ? 200 : 800
-    //   if(this.state.mobile){
-    //     setTimeout(() => {
-    //       if(document.getElementById(fileName)){
-    //         scrollTo.left = document.getElementById(fileName).getBoundingClientRect().x - 5
-    //         if(document.getElementById("imageSelect").scrollLeft > 0){
-    //           scrollTo.left += document.getElementById("imageSelect").scrollLeft
-    //         }
-    //         document.getElementById("imageSelect").scrollTo(scrollTo)
-    //       }
-    //       console.log("scrollhorizontal ends")
-    //     }, scrollDelay);
-    //   }
-    // }
 
     this.createFamilySequence = (file) => {
       //THIS WILL BE THE RETURNED OBJECT
       let options = {state: null, scroll: null }
       let familySequence = {}
 
-      const allVisible =  Array.from(document.querySelectorAll(".ImagesPreview--imageContainer:not(.ImagesPreview--imageContainer__empty)")).map(container => container.childNodes[0].id)
+      const allVisible =  Array.from(document.querySelectorAll(".FilePreview--imageContainer:not(.FilePreview--imageContainer__empty)")).map(container => container.childNodes[0].id)
       let newState = {...this.state}
 
       const familyName = file.artworkFamily

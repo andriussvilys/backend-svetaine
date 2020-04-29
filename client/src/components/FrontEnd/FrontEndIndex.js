@@ -10,8 +10,6 @@ import Controls from './components/ArtworkInfo/Controls'
 
 // import '../../css/frontEndMain.css'
 
-import styles from '../../css/frontEndMain.module.css'
-
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
     item.style.whiteSpace = "normal"
 })
@@ -20,7 +18,7 @@ export default class FrontEndIndex extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            imgSelectLoaded: document.querySelectorAll(".ImagesPreview--imageContainer")
+            imgSelectLoaded: document.querySelectorAll(".FilePreview--imageContainer")
         }
     }
     spreadLetters = (title) => {

@@ -12,7 +12,7 @@ const ImageSelect = (props) => {
               if(props.state.artworkOnDisplay[objName]){
                 return <FilePreview 
                         key={`imageSelect-${objName}`}
-                        containerClassName={`ImagesPreview--imageContainer ${halfSize}`}
+                        containerClassName={`FilePreview--imageContainer ${halfSize}`}
                         className="imageSelect-FilePreview loadByDefault" 
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
@@ -23,8 +23,8 @@ const ImageSelect = (props) => {
                 return <FilePreview 
                         key={`imageSelect-${objName}`}
                         containerClassName={`
-                        ImagesPreview--imageContainer 
-                        ImagesPreview--imageContainer__empty
+                        FilePreview--imageContainer 
+                        FilePreview--imageContainer__empty
                         ${halfSize}`}
                         className="imageSelect-FilePreview" 
                         onClick={e => props.methods.loadEnlarge(e, objName)}

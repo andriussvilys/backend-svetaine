@@ -302,6 +302,11 @@ label {
           transform: translateX(0);
 }
 
+.imageSelect-container * {
+  -webkit-transition: 0s all !important;
+  transition: 0s all !important;
+}
+
 .Nav-button {
   width: 4vw;
   height: 45px;
@@ -357,7 +362,7 @@ label {
   transition: 0.2s all;
 }
 
-.ImagesPreview--imageContainer {
+.FilePreview--imageContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -377,25 +382,23 @@ label {
   transition: 0 opacity;
   z-index: 2;
   overflow: hidden;
-  max-height: 200px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
   text-indent: -100%;
   overflow: hidden;
   -webkit-box-flex: 1;
-      -ms-flex: 1 1 25%;
-          flex: 1 1 25%;
-  min-width: 90px;
+      -ms-flex: 1 1 19%;
+          flex: 1 1 19%;
+  min-width: 59px;
 }
 
-.ImagesPreview--imageContainer__empty {
+.FilePreview--imageContainer__empty {
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
   -webkit-transition: 0 opacity;
   transition: 0 opacity;
   overflow: hidden;
-  max-height: 200px;
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -403,7 +406,7 @@ label {
   height: 0;
 }
 
-.ImagesPreview--imageContainer__empty > * {
+.FilePreview--imageContainer__empty > * {
   -webkit-transform: translateY(200px) !important;
           transform: translateY(200px) !important;
 }
@@ -496,8 +499,6 @@ label {
           transform-origin: bottom;
   -webkit-transform: translateY(0);
           transform: translateY(0);
-  transition: 0.2s all;
-  max-height: 200px;
   cursor: pointer;
   width: 100%;
 }
@@ -600,7 +601,7 @@ label {
   opacity: 0.2;
 }
 
-.ImagesPreview--imageContainer:hover {
+.FilePreview--imageContainer:hover {
   opacity: 1;
 }
 
@@ -1262,6 +1263,8 @@ label {
 }
 
 .fade-out {
+  -webkit-transition: 0.2s opacity !important;
+  transition: 0.2s opacity !important;
   opacity: 0 !important;
   mix-blend-mode: luminosity;
 }
@@ -1432,6 +1435,10 @@ label {
   .TagsMenu-category-title:hover * {
     color: black;
   }
+  * {
+    -webkit-transition: 0s all !important;
+    transition: 0s all !important;
+  }
   .TagsMenu-category-title:focus * {
     color: black;
   }
@@ -1451,7 +1458,6 @@ label {
     color: black !important;
   }
   .menu-container {
-    position: absolute;
     right: 0;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1483,12 +1489,19 @@ label {
     border-left: 1px solid;
   }
   .previewBubble-container {
+    position: relative;
+    -ms-grid-row: 2;
+        grid-row-start: 2;
     border: 1px solid black;
     bottom: 0;
     width: 100%;
     height: 50px;
   }
   .previewBubble-wrapper {
+    position: initial;
+    -webkit-box-flex: 1;
+        -ms-flex: 1;
+            flex: 1;
     padding: 5px 5px 0 0;
     -webkit-box-pack: start;
         -ms-flex-pack: start;
@@ -1503,7 +1516,7 @@ label {
   }
   .TagsMenu-hamburger {
     height: 100% !important;
-    width: 100%;
+    width: 100px;
     cursor: pointer;
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1647,6 +1660,7 @@ label {
     overflow-y: hidden;
   }
   .enlargeContainer {
+    background-color: white !important;
     -ms-grid-column: 1;
         grid-column-start: 1;
     grid-column-end: 2;
@@ -1669,7 +1683,6 @@ label {
     border-top: none;
     border-bottom: none;
     z-index: 1;
-    position: absolute;
     grid-row-start: 1;
     grid-row-end: 2;
     border-left: none;
@@ -1770,7 +1783,6 @@ label {
         align-self: flex-start;
     -o-object-position: bottom left;
        object-position: bottom left;
-    height: 100%;
     width: auto;
     max-width: 100%;
   }
@@ -1797,13 +1809,14 @@ label {
   .image-hide {
     display: none;
   }
-  .ImagesPreview--imageContainer {
-    min-height: 90px;
+  .FilePreview--imageContainer {
     -webkit-box-flex: 1;
         -ms-flex: 1 1 50%;
             flex: 1 1 50%;
   }
-  .ImagesPreview--imageContainer__empty {
+  .FilePreview--imageContainer__empty {
+    height: 0 !important;
+    width: 0 !important;
     min-height: 0 !important;
   }
   .ArtworkInfo--descriptions {
@@ -1812,7 +1825,7 @@ label {
   .ArtworkInfo_locationYear {
     font-size: 10px;
   }
-  .side-scroll .ImagesPreview--imageContainer__empty {
+  .side-scroll .FilePreview--imageContainer__empty {
     width: 0px !important;
     height: 100% !important;
     min-width: 0 !important;
@@ -1831,10 +1844,13 @@ label {
   .side-scroll img {
     height: 90px;
   }
-  .side-scroll .ImagesPreview--imageContainer {
+  .side-scroll .FilePreview--imageContainer {
     width: initial;
     left: initial;
     min-width: initial;
+    -webkit-box-flex: 1;
+        -ms-flex: 1 1 100%;
+            flex: 1 1 100%;
   }
   .hide-imageSelect {
     -webkit-transform: translateY(100%);
