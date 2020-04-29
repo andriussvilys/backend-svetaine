@@ -559,7 +559,7 @@ font-family: 'Times New Roman', Times, serif;
     overflow: hidden;
 }
 .SeeAlso-wrapper{
-    max-width: 100%;
+    max-width: 50%;
 }
 .SeeAlso-related{
     margin-right: 20px;
@@ -575,6 +575,7 @@ font-family: 'Times New Roman', Times, serif;
     display: flex;
     max-height: 90px;
     overflow-x: auto;  
+    overflow-y: hidden;
 }
 .subtitle_seeAlso{
     margin-bottom: 3px;
@@ -612,16 +613,16 @@ font-family: 'Times New Roman', Times, serif;
 }
 .Tags-item_container{
     border: 1px solid black;
-    padding: 3px;
+    padding: 4px 7px 7px 7px;
     margin: 2px 3px;
-    padding-top: 1px;
     cursor: pointer;
 }
 .Tags-item_container:hover{
     transform: scale(1.1);
 }
 .Tags-item_text{
-    font-size: 10px;
+    font-size: 12px;
+    font-weight: 600;
     white-space: nowrap;
 }
 

@@ -777,7 +777,7 @@ label {
 }
 
 .SeeAlso-wrapper {
-  max-width: 100%;
+  max-width: 50%;
 }
 
 .SeeAlso-related {
@@ -801,6 +801,7 @@ label {
   display: flex;
   max-height: 90px;
   overflow-x: auto;
+  overflow-y: hidden;
 }
 
 .subtitle_seeAlso {
@@ -847,9 +848,8 @@ label {
 
 .Tags-item_container {
   border: 1px solid black;
-  padding: 3px;
+  padding: 4px 7px 7px 7px;
   margin: 2px 3px;
-  padding-top: 1px;
   cursor: pointer;
 }
 
@@ -859,7 +859,8 @@ label {
 }
 
 .Tags-item_text {
-  font-size: 10px;
+  font-size: 12px;
+  font-weight: 600;
   white-space: nowrap;
 }
 

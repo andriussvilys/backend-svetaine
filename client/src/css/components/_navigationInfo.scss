@@ -45,15 +45,17 @@
     padding-left: 10px;
     background-color: rgb(179, 179, 179);
 }
+
+.list-group-item{
+    display: flex !important;
+    padding: 0 !important;
+}
 .list--listitem{
     background-color: #d3d3d3;
     font-size: 12px;
     width: 95%;
     align-self: center;
-    // white-space: nowrap;
-}
-.list-group-item{
-    display: flex !important;
+    padding-left: 5px !important;
 }
 .categories-input{
     width: 200px;
