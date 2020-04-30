@@ -19097,7 +19097,7 @@ export class Provider extends React.Component{
           let artworkOnDisplay = {}
 
           allNames.forEach(name => {
-            if(all[name].displayTriggers.themes.includes(theme)){
+            if(all[name].displayTriggers.themes && all[name].displayTriggers.themes.includes(theme)){
               artworkOnDisplay = {...artworkOnDisplay, [name]: this.state.artworkInfoData[name]}
             }
           })
@@ -19133,7 +19133,7 @@ export class Provider extends React.Component{
           let allNames = Object.keys(this.state.artworkInfoData)
 
           allNames.forEach(name => {
-            if(all[name].displayTriggers.themes.includes(theme)){
+            if(all[name].displayTriggers.themes && all[name].displayTriggers.themes.includes(theme)){
               artworkOnDisplay = {...artworkOnDisplay, [name]: this.state.artworkInfoData[name]}
             }
           })
@@ -19249,6 +19249,9 @@ export class Provider extends React.Component{
       let onDisplay = []
       const artworkOnDisplay = {...this.state.artworkOnDisplay}
       onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
+        if(!artworkOnDisplay[fileName].displayTriggers.themes){
+          return
+        }
         return artworkOnDisplay[fileName].displayTriggers.themes.includes(theme) === true
       })
       return onDisplay.length > 0
@@ -19835,6 +19838,7 @@ export class Provider extends React.Component{
     }
 
     this.scrollToHorizontal = (id, parent_id, options) => {
+      console.log("scrollToHorizontal")
       let scrollTo = {}
       // let scrollTo = {behavior: 'smooth'}
       if(!document.getElementById(parent_id)){
@@ -20088,9 +20092,6 @@ export class Provider extends React.Component{
           axios.get('/fetchImages')
               .then(res => {
                   serverFileNames = res.data
-                  console.log("/fetch images res")
-                  console.log(res.data)
-
                   let newServerFileName = res.data.map(name => {
                     let start = name.substring(0, name.indexOf("-thumbnail"))
                     let cutout = "-thumbnail"
@@ -20100,13 +20101,8 @@ export class Provider extends React.Component{
                   })
 
                   serverFileNames = newServerFileName
-                  console.log("newServerFileName")
-                  console.log(newServerFileName)
-                  //get all artwork records from database
                   axios.get('/api/artworkInfo')
                       .then(res => {
-                        console.log("/api/artworkInfo")
-                        console.log(res)
                           let databaseFiles = {}
                           let usedNames = []
                           
@@ -20222,16 +20218,20 @@ export class Provider extends React.Component{
                   return res.data[obj].artworkFamily
               })
               newState.artworkFamilyList = familyList
+              console.log("Families loaded")
+              console.log(res)
               resolve()
           })
           .catch(err => {
-               
-              document.location.reload(true)
+               rej(err)
+               console.log("family list laod error")
+              // document.location.reload(true)
           })
       })
 
       let Categories = new Promise ((resolve, rej) => {
-          FamilyList.then(res => {
+          FamilyList
+          .then(res => {
                   axios.get('/api/categories')
                   .then(res => {
       
@@ -20246,6 +20246,8 @@ export class Provider extends React.Component{
                       newState.categoriesOptionList = {}
                       newState.categoriesOptionList.data = categoryObj
       
+                      const progressLength = newState.artworkFamilyList.length
+                      let counter = 0
                       newState.artworkFamilyList.forEach(familyName => {
                           this.getRelatedArtwork(familyName, newState)
                           .then(res => {
@@ -20253,20 +20255,30 @@ export class Provider extends React.Component{
                               newState.relatedArtwork = {}
                             }
                             newState.relatedArtwork[familyName] = res
-                          }
-                          )
+                            counter += 1
+                            if(counter === progressLength){
+                              resolve()
+                            }
+                          })
                           .catch(err => {
                             console.log("getrelated artwork err")
                             console.log(err)
+                            rej("getrelated artwork err")
                           })
                       })
-                      resolve()
+                      // resolve()
                   })
                   .catch(err => {
                        console.log("get categories err")
                        console.log(err)
+                       rej("get categories err")
                       // document.location.reload(true)
                   })
+          })
+          .catch(err => {
+            console.log("categories error")
+            console.log(err)
+            rej(err)
           })
       }) 
 
@@ -20300,7 +20312,7 @@ export class Provider extends React.Component{
                         if(!artworkByTheme[theme]){
                           artworkByTheme[theme] = []
                         }
-                        if(obj.displayTriggers.themes.includes(theme)){
+                        if(obj.displayTriggers.themes && obj.displayTriggers.themes.includes(theme)){
                           artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
                         }
                       }
@@ -20365,6 +20377,7 @@ export class Provider extends React.Component{
               .catch(err => {
                 console.log("getArtworkInfo err")
                 console.log(err)
+                rej(err)
               })
       })
 
@@ -20374,27 +20387,28 @@ export class Provider extends React.Component{
             newState.serverData = res
             resolve()
           })
+          .catch(err => rej(err))
       })
 
       Promise.all([
+        serverFiles,
         Categories, 
         ArtworkInfo, 
         // Themes, 
-        serverFiles
       ])
-          .then(res => {
-              newState.showModal = false
-              newState.modalMessage = null
-              newState.mobile = this.toggleMobile()
-              window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-              console.log("newState")
-              console.log(newState)
-              this.setState(newState)
-          })
-          .catch(err => {
-               console.log("promise all err")
-               console.log(err)
-          })
+      .then(res => {
+          newState.showModal = false
+          newState.modalMessage = null
+          newState.mobile = this.toggleMobile()
+          window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+          console.log("newState")
+          console.log(newState)
+          this.setState(newState)
+      })
+      .catch(err => {
+            console.log("promise all err")
+            console.log(err)
+      })
   }
 
     render(){

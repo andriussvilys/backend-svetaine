@@ -87,6 +87,13 @@ export default class FileInfo extends React.Component {
                                 Cancel
                             </Button>   
                         </Link>
+                        <Button
+                                variant="primary"
+                                className="custom-button"
+                                onClick={ () => this.props.context.fileDataMethods.relateSeeAlso(this.props.file)}
+                            >
+                                Check see also
+                            </Button>   
                         <BootstrapModal 
                             showModal={this.state.showModal}
                             message={this.state.modalMessage}

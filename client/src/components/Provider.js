@@ -1450,35 +1450,70 @@ export class Provider extends React.Component{
                 else{
                     if(file.artworkFamily){
                         const artworkFamily = file.artworkFamily
-                        const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length 
-                        let progressCount = 0
-        
-                        Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
-
-                            
-                            let obj = this.state.artworkInfoData[objName]
-                            // let obj = this.state.relatedArtwork[artworkFamily].files[objName]
-                            if(objName === file.fileName){
-                                obj = this.state.fileData.files[file.fileName]
-                            }
-                            // const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
-                            const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
-                            let fileData =  obj
-                                fileData.familyDisplayIndex = familyIndex
-                                axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
+                        //check if display index has changed
+                        const currentFamilyDisplayIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
+                        const ogData = axios.get(`/api/artworkInfo/fileName/${file.fileName}`)
+                        ogData.then(res => {
+                            console.log("res.data.familyDisplayIndex")
+                            console.log(res.data)
+                            console.log(res.data[0].familyDisplayIndex)
+                            if(res.data[0].familyDisplayIndex === currentFamilyDisplayIndex){
+                                console.log("fam index not changed")
+                                const fileData = this.state.fileData.files[file.fileName]
+                                this.fileDataMethods.relateSeeAlso(file)
+                                .then(res => { 
+                                    axios.put(`/api/artworkInfo/update/${file.fileName}`, fileData)
                                     .then(res => {
-                                        progressCount += 1
-                                        console.log(progressCount)
-                                        if(progressCount === updateLength){
-                                            resolve('file updated')
-                                        }
+                                        resolve('file updated')
                                     })
                                     .catch(rej => {
                                         console.log("Record update failed")
                                         console.log(rej)
                                         reject("Record update failed")
                                     })
-                            })
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    reject()
+                                })
+                            }
+                            //his will update each file in the family with new index
+                            else{
+                                this.fileDataMethods.relateSeeAlso(file)
+                                    .then(res => {                                        
+                                        const updateLength = Object.keys(this.state.relatedArtwork[artworkFamily].files).length 
+                                        let progressCount = 0
+                                        Object.keys(this.state.relatedArtwork[artworkFamily].files).forEach(objName => {
+                                            let obj = this.state.artworkInfoData[objName]
+                                            if(objName === file.fileName){
+                                                obj = this.state.fileData.files[file.fileName]
+                                            }
+                                            const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(obj.fileName)
+                                            let fileData =  obj
+                                                fileData.familyDisplayIndex = familyIndex
+                                                axios.put(`/api/artworkInfo/update/${obj.fileName}`, fileData)
+                                                    .then(res => {
+                                                        progressCount += 1
+                                                        console.log(progressCount)
+                                                        if(progressCount === updateLength){
+                                                            resolve('file updated')
+                                                        }
+                                                    })
+                                                    .catch(rej => {
+                                                        console.log("Record update failed")
+                                                        console.log(rej)
+                                                        reject("Record update failed")
+                                                    })
+                                            })
+                                    })
+                                    .catch(err => {
+                                        console.log("relate see also error")
+                                        console.log(err)
+                                        reject(err)
+                                    })
+                            }
+
+                        })
                     }
                 }
         })
@@ -1619,63 +1654,95 @@ export class Provider extends React.Component{
             })
             this.setState(newState)
         },
-        /**
-         * @param: fileName = file to be updated
-         * @param: newItem = an array of items to be added to seeAlso
-         * @param: boolean = if true - add, if false = remove
-         */
-        relateSeeAlso: (fileName, newItem, boolean) => {
-            console.log("RELATE SEE ALSO RUNS")
-            console.log(fileName)
-            console.log(newItem)
-            if(boolean){
-                console.log('RELATE SEE ALSO === TRUE')
-                return new Promise ((res, rej) => {
-                    let record = this.state.artworkInfoData[fileName]
-                    let seeAlso = [...record.seeAlso]
-                    let newSeeAlso = [...seeAlso]
-                    if(Array.isArray(newItem)){
-                        newSeeAlso = newItem.map(name => {
-                            return name
+
+        relateSeeAlso: (file) => {
+            const fileName = file.fileName
+            console.log("relate see also init _____________________________________")
+            console.log(file)
+            const makeSet = (array) => {
+                let newArray = new Set(array)
+                newArray = [...newArray]
+                return newArray
+            }
+            return new Promise((resolve, reject) => {
+                axios.get(`/api/artworkInfo/fileName/${fileName}`)
+                    .then(res => {
+                        const newState = {...this.state}
+                        const prevSeeAlso = makeSet(res.data[0].seeAlso)
+                        const currentSeeAlso = makeSet(file.seeAlso)
+                        const newToAdd = currentSeeAlso.filter(record => {
+                            return !prevSeeAlso.includes(record)
                         })
-                    }
-                    else{newSeeAlso = [...seeAlso, newItem]}
-                    newSeeAlso = new Set(newSeeAlso)
-                    newSeeAlso = Array.from(newSeeAlso)
-                    record.seeAlso = newSeeAlso
-                    console.log(newSeeAlso)
-                    console.log(fileName)
-                    console.log(newItem)
-                    console.log(record)
-
-                    axios.put(`/api/artworkInfo/update/${fileName}`, record)
-                        .then(resolve => {console.log("file upadted");res()})
-                        .catch(reject => rej())
-                })
-            }
-            else{
-                return new Promise ((res, rej) => {
-                    let record = this.state.relatedArtwork[fileName]
-                    let seeAlso = [...this.state.artworkInfoData.seeAlso]
-                    let newSeeAlso = []
-                    if(Array.isArray(newItem)){
-                        newSeeAlso = seeAlso.filter(name => !newItem.includes(name))
-                    }
-                    else{newSeeAlso = seeAlso.filter(name => name !== newItem)}
-                    newSeeAlso = new Set(newSeeAlso)
-                    newSeeAlso = Array.from(newSeeAlso)
-                    record.seeAlso = newSeeAlso
-
-                    console.log(newSeeAlso)
-                    console.log(fileName)
-                    console.log(newItem)
-                    console.log(record)
-
-                    axios.put(`/api/artworkInfo/update/${fileName}`, record)
-                        .then(resolve => res())
-                        .catch(reject => rej())
-                })
-            }
+                        const newToRemove = prevSeeAlso.filter(record => {
+                            return !currentSeeAlso.includes(record)
+                        })
+                        const removeSeeAlsos = new Promise((resolve, reject) => {
+                            let counter = 0
+                            let progressLength = newToRemove.length
+                            if(progressLength === 0){
+                                resolve()
+                            }
+                            newToRemove.forEach(seeAlsoParent => {
+                                let fileData = newState.artworkInfoData[seeAlsoParent]
+                                let newSeeAlso = fileData.seeAlso.filter(record => record !== fileName)
+                                newSeeAlso = makeSet(newSeeAlso)
+                                fileData.seeAlso = newSeeAlso
+                                axios.put(`/api/artworkInfo/update/${seeAlsoParent}`, fileData)
+                                    .then(res => {
+                                        counter += 1
+                                        if(counter === progressLength){
+                                            resolve()
+                                        }
+                                    })
+                                    .catch(err => {
+                                        console.log(err)
+                                        reject()
+                                    })
+                            })
+                        }) 
+                        const addSeeAlsos = new Promise((resolve, reject) => {
+                            let counter = 0
+                            let progressLength = newToAdd.length
+                            if(progressLength === 0){
+                                resolve()
+                            }
+                            newToAdd.forEach(seeAlsoParent => {
+                                let fileData = newState.artworkInfoData[seeAlsoParent]
+                                let newSeeAlso = [...fileData.seeAlso, fileName]
+                                newSeeAlso = makeSet(newSeeAlso)
+                                fileData.seeAlso = newSeeAlso
+                                axios.put(`/api/artworkInfo/update/${seeAlsoParent}`, fileData)
+                                .then(res => {
+                                    counter += 1
+                                    if(counter === progressLength){
+                                        resolve()
+                                    }
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    reject()
+                                })
+                            })
+                        })
+                        
+                        console.log("pre Promise all")
+                        Promise.all([removeSeeAlsos, addSeeAlsos])
+                        .then(res => {
+                            console.log("Promise All resolve")
+                            resolve()
+                        })
+                        .catch(err => {
+                            console.log(err);
+                            //  document.location.reload(true)
+                            reject()
+                        })
+                    })
+                    .catch(err => {
+                        console.log("RELATE SEE ALSO ERR")
+                        console.log(err)
+                        reject(err)
+                    })
+            })
         },
 
         updateSeeAlso: (newValue, parent) => {
@@ -2174,12 +2241,14 @@ export class Provider extends React.Component{
                             newState.categoriesOptionList.data = categoryObj
 
                             newState.artworkFamilyList.forEach(familyName => {
-                                this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => 
+                                this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => {
                                     newState.relatedArtwork[familyName] = res
-
+                                }
                                 )
                             })
                             resolve()
+                        })
+                        .catch(err => {
                         })
                 })
             })
