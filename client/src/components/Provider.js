@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import BootstrapModal from './Admin/components/BootstrapModal'
 import auth from './Auth'
 
 // import FilePreview from './FilePreview'
@@ -1201,8 +1202,6 @@ export class Provider extends React.Component{
     
                     let objPromise = new Promise ((resolve, reject) => {
                         let messages = {}
-                        console.log("fileInput")
-                        console.log(fileInput)
 
                         const fileList = Array.from(fileInput)
                         let filteredList = []
@@ -1228,9 +1227,6 @@ export class Provider extends React.Component{
                             }
                         })
 
-                        console.log("filteredList")
-                        console.log(filteredList)
-
                         if(filteredList.length < 1){
                             let modalMessages = Object.keys(messages).map(fileName => {
                                 return <div key={`fileUpload-${fileName}`}>
@@ -1250,14 +1246,8 @@ export class Provider extends React.Component{
 
                                     image.src = reader.result;
 
-                                    console.log("image")
-                                    console.log(image)
-
                                     image.onload = () => {
                                         let naturalSize = {naturalHeight: image.naturalHeight, naturalWidth: image.naturalWidth}
-
-                                        console.log("naturalSize")
-                                        console.log(naturalSize)
 
                                         obj.files[file.name] = {                    
                                             preview: reader.result,
@@ -1579,6 +1569,7 @@ export class Provider extends React.Component{
         postArtworkInfo: (file) => {
             console.log('post artwork info RUNS with')
             console.log(file)
+            this.setState({showModal: true})
             return new Promise((resolve, reject) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
                     reject('A file with the same name has been registered before. To update it, select "EDIT" tab')
@@ -1628,21 +1619,31 @@ export class Provider extends React.Component{
                 
                             fileDataObject.familyDisplayIndex = familyIndex
 
-                            axios.post('/api/artworkInfo/create', fileDataObject)
-                            .then( res => { 
-                                    this.fileDataMethods.uploadFile(file.fileName)
-                                        .then(res => {
-                                            resolve("file uploaded")
+                            this.fileDataMethods.relateSeeAlso(file)
+                                .then(res => {
+                                    axios.post('/api/artworkInfo/create', fileDataObject)
+                                    .then( res => { 
+                                            this.fileDataMethods.uploadFile(file.fileName)
+                                                .then(res => {
+                                                    let newState = {...this.state}
+                                                    delete newState.fileData.files[file.fileName]
+                                                    resolve("file uploaded")
+                                                })
+                                                .catch(err => {
+                                                    console.log(err); 
+                                                    reject("error")
+                                                })
                                         })
-                                        .catch(err => {
-                                            console.log(err); 
-                                            reject("error")
-                                        })
+                                    .catch(err => {
+                                        console.log(err); 
+                                        reject("error")
+                                    })
                                 })
-                            .catch(err => {
-                                console.log(err); 
-                                reject("error")
-                            })
+                                .catch(err => {
+                                    console.log("relateSeeAlso singleFileUpload error")
+                                    console.log(err)
+                                    reject(err)
+                                })
                         }
             })
 
@@ -1654,7 +1655,6 @@ export class Provider extends React.Component{
             })
             this.setState(newState)
         },
-
         relateSeeAlso: (file) => {
             const fileName = file.fileName
             console.log("relate see also init _____________________________________")
@@ -1737,14 +1737,39 @@ export class Provider extends React.Component{
                             reject()
                         })
                     })
+                    //if new file (cannot find file name in database)
                     .catch(err => {
-                        console.log("RELATE SEE ALSO ERR")
-                        console.log(err)
-                        reject(err)
+                        console.log("new file")
+                        const newState = {...this.state} 
+                        const newToAdd = makeSet(file.seeAlso)
+                        const addSeeAlsos = new Promise((resolve, reject) => {
+                            let counter = 0
+                            let progressLength = newToAdd.length
+                            if(progressLength === 0){
+                                resolve()
+                            }
+                            newToAdd.forEach(seeAlsoParent => {
+                                let fileData = newState.artworkInfoData[seeAlsoParent]
+                                let newSeeAlso = [...fileData.seeAlso, fileName]
+                                newSeeAlso = makeSet(newSeeAlso)
+                                fileData.seeAlso = newSeeAlso
+                                axios.put(`/api/artworkInfo/update/${seeAlsoParent}`, fileData)
+                                .then(res => {
+                                    counter += 1
+                                    if(counter === progressLength){
+                                        resolve()
+                                    }
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    reject()
+                                })
+                            })
+                        })
+                        addSeeAlsos.then(res => {resolve("single file see also resolve")}).catch(err => {reject(err)})
                     })
             })
         },
-
         updateSeeAlso: (newValue, parent) => {
             // if(!parent || !newValue){
             //     return
@@ -2314,6 +2339,34 @@ export class Provider extends React.Component{
 
             } }>
         {this.props.children}
+
+        {/* <BootstrapModal 
+            showModal={this.state.showModal}
+            message={this.state.modalMessage}
+            onClose={() => {this.setState({showModal: false})}}
+            confirm={this.state.confirm || false}
+            confirmedAction={() => {
+            this.state.confirmedAction()
+                .then(res => {
+                this.setState({
+                    confirm: res.confirm,
+                    modalMessage: res.modalMessage
+                })
+                })
+                .catch(err => {
+                this.setState({
+                    confirm: err.confirm,
+                    modalMessage: err.modalMessage
+                })
+                })
+            }}
+        >
+            {this.state.progress ?
+            <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :
+            null
+            }
+        </BootstrapModal> */}
+
         </Context.Provider>
     )
     }
