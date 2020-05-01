@@ -5,7 +5,7 @@ import TagsMenu from './components/TagsMenu'
 import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
 import Nav from './components/Nav/Nav'
-import PreviewBubbles from './components/Enlarge/PreviewBubble'
+import PreviewBubbles from './components/ArtworkInfo/PreviewBubble'
 import Controls from './components/ArtworkInfo/Controls'
 
 // import '../../css/frontEndMain.css'

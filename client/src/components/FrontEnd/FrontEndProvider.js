@@ -19375,15 +19375,12 @@ export class Provider extends React.Component{
           }
           //if menu open
           else{
-            // document.getElementById("TagsMenu").classList.add("show-menu-desktop")
-            // document.getElementById("imageSelect").classList.remove("imageSelect-slide")
               if(this.state.enlarge.open){
                 const imageSelectWidth = document.getElementById("imageSelect").offsetWidth
                 const imageSelect = document.getElementById("imageSelect")
                 imageSelect.style.width = `${imageSelectWidth+250}px`
                 setTimeout(() => {
                   document.getElementById("TagsMenu").classList.add("show-menu-desktop")
-                  // this.animateEnlarge(this.state.enlarge.foreground)
                 }, 200);
               }
               else{
@@ -19704,33 +19701,6 @@ export class Provider extends React.Component{
                           imageSelect.classList.add("side-scroll")
                       }, 200);
                     }
-                    // console.log(`scrollTo? ${options.scroll}`)
-                    // if(options){
-                    //   const familySequence = options.state.enlarge.familySequence
-                    //   const artworkOnDisplay = this.state.artworkOnDisplay
-                    //   let scrollToId = null
-                    //   if(artworkOnDisplay[file.fileName]){
-                    //     scrollToId = file.fileName
-                    //   }
-                    //   //if currentFile is not visible in imageSelector
-                    //   else{
-                    //     scrollToId = Object.keys(artworkOnDisplay).find(fileName => {
-                    //       if(artworkOnDisplay[fileName].artworkFamily === file.artworkFamily){
-                    //         if(familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex){
-                    //           return fileName
-                    //         }
-                    //       }
-                    //     })
-                    //     if(!scrollToId){
-                    //       scrollToId = familySequence.commonSequence[familySequence.commonIndex]
-                    //     }
-                    //   }
-                    //   setTimeout(() => {
-                    //     console.log(`scrollTo ${scrollToId}`)
-                    //     this.scrollToHorizontal(scrollToId, "imageSelect")
-                    //   }, scrollToDelay);
-
-                    // }
                   }
                   //DESKTOP
                   else{
@@ -19739,7 +19709,7 @@ export class Provider extends React.Component{
                       container.style.width = `${futureSize.width}px`
                       setTimeout(() => {
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                      }, 200);
+                      }, 250);
                     }
                     else{
                       //if enlargeContainer will shrink
