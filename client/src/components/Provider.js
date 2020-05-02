@@ -327,15 +327,8 @@ export class Provider extends React.Component{
                 if(listitemInput.value){
                     categoriesDataUpdate[objIndex].subcategory[subcategoryInput.value] = [...subcategoryArray, listitemInput.value];
                 }
-<<<<<<< HEAD
-                console.log(reqBody)
-                axios.post('/api/categories/create', reqBody)
-                .then(res => {
-
-=======
 
                 if(!this.verify({customGuestMessage: true}).verified){
->>>>>>> adminRefactor
                     let newState = {...this.state}
                     newState.categoriesData[objIndex] = objToUpdate
                     return this.setState(newState, resolve({modalMessage: "State updated."}))

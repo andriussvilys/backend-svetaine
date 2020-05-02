@@ -1252,36 +1252,6 @@ export class Provider extends React.Component{
                           //add an array of all file object
                           // renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
 
-<<<<<<< HEAD
-            this.setState({showModal: true, modalMessage: "loading data"})
-
-            // let Themes = new Promise ((resolve,rej) => {
-            //     axios.get('/api/themes')
-            //     .then( res => {
-            //     newState.themesData = res.data.list
-            //     resolve()
-            //     })
-            //     .catch(err => {
-                     
-            //         // document.location.reload(true)
-            //     })
-            // })
-
-            let FamilyList = new Promise ((resolve, rej) => {
-                axios.get('/api/familySetup')
-                .then(res => {
-                    let familyList = Object.keys(res.data).map(obj => {
-                        return res.data[obj].artworkFamily
-                    })
-                    newState.artworkFamilyList = familyList
-                    resolve()
-                })
-                .catch(err => {
-                     
-                    document.location.reload(true)
-                })
-            })
-=======
                           resolve(databaseFiles)
                       })
                       .catch(err => {
@@ -1296,7 +1266,6 @@ export class Provider extends React.Component{
       })
     }
     this.getRelatedArtwork = (artworkFamily, newState) => {
->>>>>>> adminRefactor
 
       let relatedArtwork = {}
       //get all records from the selected family from database
@@ -1544,25 +1513,6 @@ export class Provider extends React.Component{
               })
       })
 
-<<<<<<< HEAD
-            Promise.all([
-              Categories, 
-              ArtworkInfo, 
-              // Themes, 
-              serverFiles
-            ])
-                .then(res => {
-                    newState.showModal = false
-                    newState.modalMessage = null
-                    newState.mobile = this.toggleMobile()
-                    window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-                    this.setState(newState)
-                })
-                .catch(err => {
-                     
-                })
-        }
-=======
       let serverFiles = new Promise ((resolve, rej) => {
         axios.get('/fetchimages')
           .then(res => {
@@ -1592,7 +1542,6 @@ export class Provider extends React.Component{
             console.log(err)
       })
   }
->>>>>>> adminRefactor
 
     render(){
     return(
