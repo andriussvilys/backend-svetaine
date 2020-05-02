@@ -30,9 +30,16 @@ const Login = (props) => {
                                 console.log(username, password)
                                 axios.get(`/api/users/${username}`)
                                     .then(res => {
-                                        console.log(res.data)
                                         if(res.data.password && res.data.password === password){
-                                            auth.login( () => props.history.push('/admin/create'))
+                                            if(res.data.username === "guest"){
+                                            // if(username === "guest"){
+                                                console.log("LOGGED IN AS GUEST")
+                                                auth.login( () => props.history.push('/admin/create'), {guest: true})
+                                            }
+                                            else{
+                                                console.log("LOGGED IN AS ------------------ADMIN")
+                                                auth.login( () => props.history.push('/admin/create'), {guest: false})
+                                            }
                                         }
                                         else{
                                             if(!res.data.username){
@@ -42,7 +49,6 @@ const Login = (props) => {
                                             passwordBgColor = wrongInput
                                             document.getElementById("uname").value = ""
                                             document.getElementById("psw").value = ""
-                                            // props.history.push('/admin/login')
                                         }
                                     })
                             }
@@ -50,18 +56,6 @@ const Login = (props) => {
                     >
                         Log In
                     </Button>
-
-                    {/* <Button
-                        onClick={
-                            () => {
-                                auth.login( () => {
-                                    props.history.push('/admin')
-                                })
-                            }
-                        }
-                    >
-                        Force Login
-                    </Button> */}
                 </form>
             </div>
         )

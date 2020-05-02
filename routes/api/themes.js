@@ -15,16 +15,32 @@ router.get('/', (req, res) => {
 
 //UPDATE ROUTE
 router.put("/update/", (req, res, next) => {
-
-    Themes.findOneAndUpdate(
-      { main: true },  // <-- find stage
-      { $addToSet: req.body },
-      {new: true}
-    )
-    .then(newObj => {
-      res.status(200).send(newObj)
+    const getThemesList = new Promise((resolve, reject) => {
+      Themes.findOne({main: true})
+        .then(res => {
+          if(res.list.includes(req.body.list)){
+            reject(`The theme ${req.body.list} has already been recorded.`)
+          }
+          else{
+            resolve(res)
+          }
+        })
+        .catch(err => reject(err))
     })
-    .catch(err => {console.log(err); res.status(500).send('problem')})
+
+    getThemesList
+      .then(() => {
+          Themes.findOneAndUpdate(
+            { main: true },  // <-- find stage
+            { $addToSet: req.body },
+            {new: true}
+          )
+          .then(newList => {
+              res.status(200).send(`Theme ${req.body.list} has been successfully recorded`)
+          })
+          .catch(err => next(err))
+        })
+      .catch(next)
 })
 
 //DELETE THEME
@@ -36,6 +52,8 @@ router.put('/delete/', (req, res) => {
         {new: true}
     )
     .then(newObj => {
+        console.log("theme deleted")
+        console.log(newObj)
         res.status(200).send(newObj)
       })
       .catch(err => {console.log(err); res.status(500).send('problem')})

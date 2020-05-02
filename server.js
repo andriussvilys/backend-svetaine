@@ -13,6 +13,7 @@ const fetchImages = require('./fetchImages');
 const deleteImage = require('./deleteImage');
 
 const resize = require('./routes/resize');
+const imagemin = require('./routes/imagemin');
 
 const app = express();
 
@@ -52,8 +53,13 @@ app.use('/fetchImages', fetchImages);
 app.use('/deleteImage', deleteImage);
 
 app.use('/resize', resize);
+app.use('/imagemin', imagemin);
 // this uses a folder inside the server
 // app.use(express.static('files'))
+
+app.use((err, req, res, next) => {
+    res.status(500).send({error: err})
+})
 
 if(process.env.NODE_ENV === "production"){
     app.use(express.static('client/build'))

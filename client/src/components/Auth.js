@@ -1,18 +1,24 @@
 class Auth {
     constructor(){
         this.authenticated = false
+        this.guest = false
     }
-    login(cb){
+    login(cb, props){
+        if(props && props.guest){
+            this.guest = true
+        }
+        else{
+            this.guest = false
+        }
         this.authenticated = true
-        console.log(`Logged IN = ${this.authenticated}`)
         cb()
     }
     logout(cb){
         this.authenticated = false
+        this.guest = null
         cb()
     }
     isAuthenticated(){
-        console.log(this.authenticated)
         return this.authenticated
     }
 }

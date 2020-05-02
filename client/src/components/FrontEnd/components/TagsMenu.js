@@ -1,18 +1,14 @@
 import React, { Fragment } from 'react'
-import { Context } from '../../Provider';
-import Accordion from './Accordion';
-import YearLocation from './YearLocation/YearLocation';
 import Year from './YearLocation/Year';
 import Location from './YearLocation/Location';
 import Themes from './Themes/Themes';
 import ClearAll from './ClearAll';
 import About from './About/About';
-import Contact from './About/Contact'
 import Category from './TagsMenu/Category';
 
+import '../../../css/frontEndMain.css'
 
 export default class TagsMenu extends React.Component{
-    static contextType = Context;
     constructor(props){
         super(props)
         this.state = {subcategory: null, listItems: null}
@@ -22,7 +18,10 @@ export default class TagsMenu extends React.Component{
      */
     spreadLetters = (title) => {
         let letters = Array.from(title).map((letter, index) => {
-            return <div key={`${title}-leter-${index}`} className="title-letter">{letter}</div>
+            return <div 
+            key={`${title}-leter-${index}`} 
+            className="title-letter"
+            >{letter}</div>
         })
         return letters
     }
@@ -107,7 +106,7 @@ export default class TagsMenu extends React.Component{
                             showContent={() => {return}}
                     />
         })
-        return <div className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>
+        return <div key={`tagsMenu-listItems-${subcategory}`} className="button-wrapper TagsMenu-listitem" id={`${subcategory}-listitem`}>
                     {/* <div className="shadow"></div> */}
                     {listItems}
                 </div>
@@ -116,9 +115,7 @@ export default class TagsMenu extends React.Component{
     listitemsContainer = []
 
     createSubcategories = (data) => {
-        let buttons = []
         let subCatBlocks = []
-        let combined = []
         let listItems = []
 
         //obj === category
@@ -152,7 +149,7 @@ export default class TagsMenu extends React.Component{
 
             // subContainer = [...subContainer, this.createListItems(obj.subcategory[subcategory], subcategory, obj.category)]
         subCatBlocks = [...subCatBlocks, 
-            <Fragment>
+            <Fragment key={`subcategories-${obj.category}`}>
                 <div className="TagsMenu-subcategories" id={`${obj.category}-subcategories`}>
                     <div data-title="subcategories" className="button-wrapper subcategories">
                         {subContainer}
@@ -165,13 +162,13 @@ export default class TagsMenu extends React.Component{
     ]
         })
         subCatBlocks = [...subCatBlocks, 
-            <div className="TagsMenu-subcategories subcategories button-wrapper" id="themes-subcategories">
+            <div key={`TagsMenu-themes`} className="TagsMenu-subcategories subcategories button-wrapper" id="themes-subcategories">
                 <Themes
                     state={this.props.context.state}
                     context={this.props.context}
                 />
             </div>,
-            <div className="TagsMenu-subcategories" id="year/location-subcategories">
+            <div key={`TagsMenu-yearLocation`} className="TagsMenu-subcategories" id="year/location-subcategories">
                 <div data-title="subcategories" className="button-wrapper subcategories">
                     <Category 
                         clickable
@@ -209,9 +206,9 @@ export default class TagsMenu extends React.Component{
                         </div>
                     </div>
             </div>,
-            <div className="TagsMenu-subcategories" id="contact-subcategories">
-                <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
-                <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
+            <div key={`TagsMenu-contact`} className="TagsMenu-subcategories" id="contact-subcategories">
+                <a className="title-letter contact-title" href="mailto:andriussvilys@gmail.com">andriussvilys@gmail.com</a>
+                <a className="title-letter contact-title" href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
             </div>
         ]
         this.listitemsContainer = [...this.listitemsContainer, 
@@ -236,36 +233,17 @@ export default class TagsMenu extends React.Component{
         return <div
         id="TagsMenu"
         className={
-            !this.props.context.state.mobile ? 
-                `TagsMenu-container show-menu-desktop` :
-                this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
-                `TagsMenu-container TagsMenu-max` : 
-            `TagsMenu-container`
-        }
-        onTouchStart={(e) => {
-            const touches = e.touches
-            const touch = {"y": touches[0].clientY}
-            this.setState({touch})
-        }}
-        onTouchMove={(e) => {
-            this.setState({touch: {...this.state.touch, "endX": e.touches[0].clientX, "endY": e.touches[0].clientY}})
-        }}
-        onTouchEnd={(e) => {
-            //check if any accordions are open
-            const collapseShow = Array.from(document.getElementsByClassName("collapse")).filter(collapse => collapse.classList.contains("show"))
-
-            if(Math.abs(this.state.touch.y - this.state.touch.endY) > 30){
-                if(this.state.touch.y > this.state.touch.endY && collapseShow.length === 0){
-                    document.getElementById("TagsMenu").classList.remove("show-menu")
-                }
+            `TagsMenu-collapsed
+            ${
+                !this.props.context.state.mobile ? 
+                    `TagsMenu-container show-menu-desktop` :
+                    this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
+                    `TagsMenu-container TagsMenu-max` : 
+                `TagsMenu-container`
             }
-        }
+            `
         }
         >
-            {/* <div 
-            className="TagsMenu-hamburger"
-            onClick={() => {this.props.context.showMenu()}}
-            ></div> */}
             <div className="TagsMenu-wrapper">
                 <div className="button-wrapper TagsMenu-about-contact">
                     <Category 
@@ -288,6 +266,7 @@ export default class TagsMenu extends React.Component{
                             <Category 
                                 clickable
                                 category="year/location"
+                                level="category"
                                 context={this.props.context}
                                 button
                                 showContent={this.onCategoriesClick}
@@ -296,6 +275,7 @@ export default class TagsMenu extends React.Component{
                                 clickable
                                 category="themes"
                                 context={this.props.context}
+                                level="category"
                                 button
                                 showContent={this.onCategoriesClick}
                             />

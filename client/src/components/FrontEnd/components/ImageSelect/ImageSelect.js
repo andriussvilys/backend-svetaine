@@ -1,6 +1,5 @@
 import React from 'react'
 import FilePreview from '../FilePreview'
-import { Context } from '../../FrontEndProvider';
 
 const ImageSelect = (props) => {
 
@@ -12,29 +11,37 @@ const ImageSelect = (props) => {
               const halfSize = props.state.artworkInfoData[objName].naturalSize.naturalWidth < props.state.artworkInfoData[objName].naturalSize.naturalHeight ? "halfSize" : null
               if(props.state.artworkOnDisplay[objName]){
                 return <FilePreview 
-                key={`imageSelect-${objName}`}
-                containerClassName={`ImagesPreview--imageContainer ${halfSize}`}
-                className="imageSelect-FilePreview loadByDefault" 
-                onClick={e => props.methods.loadEnlarge(e, objName)}
-                file={data[objName]} 
-                />
+                        key={`imageSelect-${objName}`}
+                        containerClassName={`FilePreview--imageContainer ${halfSize}`}
+                        className="imageSelect-FilePreview loadByDefault" 
+                        onClick={e => props.methods.loadEnlarge(e, objName)}
+                        file={data[objName]} 
+                        mobile={props.mobile}
+                        />
               }
               else{
                 return <FilePreview 
                         key={`imageSelect-${objName}`}
                         containerClassName={`
-                        ImagesPreview--imageContainer 
-                        ImagesPreview--imageContainer__empty
+                        FilePreview--imageContainer 
+                        FilePreview--imageContainer__empty
                         ${halfSize}`}
                         className="imageSelect-FilePreview" 
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
+                        mobile={props.mobile}
                         />
               }
             })
             return <div 
                       id="imageSelect"
                       className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
+                      onClick={(e) => {
+                        if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+                          props.context.showMenu(e)
+                        }
+                        return
+                      }}
                       >
                           {previews}
                           {props.mobile ? <div id="spanner" style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}

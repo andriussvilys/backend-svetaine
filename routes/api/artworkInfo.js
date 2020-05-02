@@ -49,20 +49,27 @@ router.get('/fileName/:fileName', (req, res) => {
 //@access Public
 router.post('/create', 
 (req, res, rej) => {
+    console.log(req.body.fileName)
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
-    .catch(err => console.error(err))
+    .catch(err => res.status(500).send(err))
 })
 
+<<<<<<< HEAD
 router.post('/imageUpload', upload.single("artwork") , (req, res, err) => {
     console.log("IMAGE UPLOAD")
     res.send("file uploaded")
+=======
+router.post('/imageUpload', 
+upload.single('artworkImage'), 
+(req, res, rej) => {
+    res.send('image file uploaded')
+>>>>>>> adminRefactor
 })
 
 router.put("/update/:fileName", (req, res, next) => {
     console.log('udate file runs')
     console.log(req.params.fileName)
-    console.log(req.body.familyDisplayIndex)
 
     const obj = {}
     Object.keys(req.body).forEach(key => {

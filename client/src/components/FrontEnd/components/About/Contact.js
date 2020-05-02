@@ -9,8 +9,8 @@ const Contact = (props) => {
         className="TagsMenu-Accordion-label"
         collapseId="about-collapse"
         level="category"
-    >
-        <p style={{margin: "20px 0 !important"}}>andriussvilys@gmail.com</p>
+    >   
+        <a href="mailto:andriussvilys@gmail.com">andriussvilys@gmail.com</a>
         <a href="https://www.instagram.com/istmblr/" rel="noopener noreferrer" target="_blank">instagram</a>
         </Accordion>
     )
