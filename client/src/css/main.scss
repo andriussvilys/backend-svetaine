@@ -922,10 +922,10 @@ font-family: 'Times New Roman', Times, serif;
     .Nav-infoButton-icon{
         height: 75%;
     }
-    .show{
-        border-bottom: 0px !important;
-        bottom: -91px;
-    }
+    // .show{
+    //     border-bottom: 0px !important;
+    //     bottom: -91px;
+    // }
     .about-container{
         width: 50%;
         position: relative;
@@ -947,14 +947,14 @@ font-family: 'Times New Roman', Times, serif;
         flex: 1 1 50%;
         // border: 1px solid red;
     }
-    .info-up{
-        opacity: 1;
-        transform: translateY(0);
-        border-top: 1px solid black;
-    }
-    .show{
-        display: flex;
-    }
+    // .info-up{
+    //     opacity: 1;
+    //     transform: translateY(0);
+    //     border-top: 1px solid black;
+    // }
+    // .show{
+    //     display: flex;
+    // }
     .hide-imageSelect{
         transform: translateY(100%)
     }

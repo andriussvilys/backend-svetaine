@@ -47,7 +47,7 @@ const Nav = (props) => {
                                     </button>
                                         <div 
                                             className="Nav-button Nav-button-menu" 
-                                            onClick={() => props.context.showMenu()}
+                                            onClick={(e) => props.context.showMenu(e)}
                                         >
                                             <img className="menu" alt="menu button" src='icons/menu.png'/>
                                             {/* <h3 className="nav-menuButton">menu</h3> */}

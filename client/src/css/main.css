@@ -1777,10 +1777,6 @@ h5 {
   .Nav-infoButton-icon {
     height: 75%;
   }
-  .show {
-    border-bottom: 0px !important;
-    bottom: -91px;
-  }
   .about-container {
     width: 50%;
     position: relative;
@@ -1805,17 +1801,6 @@ h5 {
     -webkit-box-flex: 1;
         -ms-flex: 1 1 50%;
             flex: 1 1 50%;
-  }
-  .info-up {
-    opacity: 1;
-    -webkit-transform: translateY(0);
-            transform: translateY(0);
-    border-top: 1px solid black;
-  }
-  .show {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
   }
   .hide-imageSelect {
     -webkit-transform: translateY(100%);

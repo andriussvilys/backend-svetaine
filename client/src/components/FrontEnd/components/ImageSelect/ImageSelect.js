@@ -36,9 +36,9 @@ const ImageSelect = (props) => {
             return <div 
                       id="imageSelect"
                       className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
-                      onClick={() => {
+                      onClick={(e) => {
                         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-                          props.context.showMenu()
+                          props.context.showMenu(e)
                         }
                         return
                       }}

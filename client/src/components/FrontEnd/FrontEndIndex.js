@@ -71,6 +71,8 @@ export default class FrontEndIndex extends React.Component{
                             />
                         </div>
                         {!this.context.state.mobile ? 
+                        <Nav context={this.context}/> :   null }
+                        {/* {!this.context.state.mobile ? 
                         <Nav context={this.context}/> :   
                         <PreviewBubbles 
                             file={this.context.state.enlarge}
@@ -93,7 +95,7 @@ export default class FrontEndIndex extends React.Component{
                                 />
                             </div>
                         </PreviewBubbles>
-                        }
+                        } */}
                     </div>
                     )
                 }}
