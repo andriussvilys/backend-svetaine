@@ -4,12 +4,6 @@ const Jimp = require('jimp')
 
 
 router.post("/:fileName", (req, res, next) => {
-<<<<<<< HEAD
-      Jimp.read(`./client/public/uploads/${req.params.fileName}`)
-      .then(image => {
-        const newName = req.params.fileName.slice(req.params.fileName[0], req.params.fileName.indexOf("."))
-        const fileExtension = req.params.fileName.slice(req.params.fileName.indexOf("."), req.params.fileName.length)
-=======
     Jimp.read(`./client/public/uploads/${req.params.fileName}`)
     .then(image => {
             const newName = req.params.fileName.slice(0, req.params.fileName.indexOf("."))
@@ -18,7 +12,6 @@ router.post("/:fileName", (req, res, next) => {
             //     console.log(req.params.fileName)
             //     console.log(`${newName}-desktop${fileExtension}`)
             // }
->>>>>>> adminRefactor
             let thumbnailSize = {width: null, height: null}
             let mobileSize = {width: null, height: null}
             let desktopSize = {width: null, height: null}
@@ -70,11 +63,7 @@ router.post("/:fileName", (req, res, next) => {
                     .quality(90)
                     .resize(thumbnailSize.width, thumbnailSize.height)
                     .write(`./client/public/uploads/thumbnails/${newName}-thumbnail${fileExtension}`, () => {
-<<<<<<< HEAD
-                        res.send(`${req.params.fileName} resized`)
-=======
                         return res.json(`${req.params.fileName} resized`)
->>>>>>> adminRefactor
                     })
                 })
             })

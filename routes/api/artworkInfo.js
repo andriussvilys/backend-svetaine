@@ -55,16 +55,10 @@ router.post('/create',
     .catch(err => res.status(500).send(err))
 })
 
-<<<<<<< HEAD
-router.post('/imageUpload', upload.single("artwork") , (req, res, err) => {
-    console.log("IMAGE UPLOAD")
-    res.send("file uploaded")
-=======
 router.post('/imageUpload', 
 upload.single('artworkImage'), 
 (req, res, rej) => {
     res.send('image file uploaded')
->>>>>>> adminRefactor
 })
 
 router.put("/update/:fileName", (req, res, next) => {
