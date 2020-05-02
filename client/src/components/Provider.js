@@ -1314,8 +1314,6 @@ export class Provider extends React.Component{
         },
         //THIS UPLOADS FILE TO SERVER
 
-<<<<<<< HEAD
-=======
         uploadFile: (fileName) => {
             return new Promise((resolve, reject) => {
                 const fileData = this.state.fileData.files
@@ -1336,7 +1334,7 @@ export class Provider extends React.Component{
                         .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
                     })
             })
->>>>>>> adminRefactor
+        },
 
         //Removes selected file from state and thus DOM
         removeFile: (fileName, familyName) => {
@@ -1566,13 +1564,9 @@ export class Provider extends React.Component{
         },
         postArtworkInfo: (file) => {
             console.log('post artwork info RUNS with')
-<<<<<<< HEAD
-            return new Promise((resolve, rej) => {
-=======
             console.log(file)
             this.setState({showModal: true})
             return new Promise((resolve, reject) => {
->>>>>>> adminRefactor
                 if(this.state.serverFileDir.includes(file.fileName)){
                     reject('A file with the same name has been registered before. To update it, select "EDIT" tab')
                 }
@@ -1620,26 +1614,6 @@ export class Provider extends React.Component{
                             }
                 
                             fileDataObject.familyDisplayIndex = familyIndex
-<<<<<<< HEAD
-                            
-
-                            axios.post('/api/artworkInfo/create', fileDataObject)
-                            .then( res => { 
-                                // this.fileDataMethods.updateArtworkByFamily(artworkFamily)
-                                    console.log('new record craeted')
-                                    console.log(res)
-                                    this.fileDataMethods.uploadFile(file.fileName)
-                                        let newState = {...this.state}
-                                        this.familySetupMethods.getArtworkInfo()
-                                            .then(res => {
-                                                console.log("getArtworkInfo")
-                                                newState.artworkInfoData = res
-                                                newState.serverFileDir = [...this.state.serverFileDir, file.fileName]
-                                                this.setState(newState, () => {return resolve(`new file registered in "${file.artworkFamily}" family`)})
-                                                
-                                            })
-                                            .catch(err=>console.log(err))
-=======
 
                             this.fileDataMethods.relateSeeAlso(file)
                                 .then(res => {
@@ -1665,38 +1639,11 @@ export class Provider extends React.Component{
                                     console.log("relateSeeAlso singleFileUpload error")
                                     console.log(err)
                                     reject(err)
->>>>>>> adminRefactor
                                 })
                         }
             })
 
         },
-<<<<<<< HEAD
-        uploadFile: (fileName) => {
-            console.log("upload file runs")
-            const fileData = this.state.fileData.files
-
-            const fd = new FormData();
-            fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
-
-            axios.post('/api/artworkInfo/imageUpload', fd)
-                .then(res => { 
-                    console.log("IMAGE UPLOADED")
-                    console.log(res)
-                    axios.post(`/resize/${fileName}`)
-                    
-                    this.readImageDir()
-                })
-                .catch(err => alert(err))
-
-        //     if(this.state.serverFileDir.includes(fileName)){
-        //         resolve()
-        //     }
-        // })
-    },
-
-=======
->>>>>>> adminRefactor
         initialIndex: () => {
             let newState = {...this.state}
             this.state.fileData.column.fileIds.forEach((fileName, index) => {
