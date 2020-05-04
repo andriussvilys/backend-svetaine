@@ -12,6 +12,7 @@ const users = require('./routes/api/users');
 const fetchImages = require('./fetchImages');
 const deleteImage = require('./deleteImage');
 
+const staticState = require('./routes/staticState');
 const resize = require('./routes/resize');
 const imagemin = require('./routes/imagemin');
 
@@ -52,6 +53,7 @@ app.use('/api/users', users);
 app.use('/fetchImages', fetchImages);
 app.use('/deleteImage', deleteImage);
 
+app.use('/staticState', staticState);
 app.use('/resize', resize);
 app.use('/imagemin', imagemin);
 // this uses a folder inside the server

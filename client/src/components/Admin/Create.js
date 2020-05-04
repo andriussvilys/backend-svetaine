@@ -239,6 +239,13 @@ componentDidMount(){
                         </Tabs>
                       </div>
                       </Tab>
+                      <Tab eventKey="record_state" title="Write state">
+                        <button onClick={() => {
+                          this.context.staticState()
+                        }}>
+                          WRITE NEW STAIC STATE
+                        </button>
+                      </Tab>
                     </Tabs>
                   </div>
                   <BootstrapModal 

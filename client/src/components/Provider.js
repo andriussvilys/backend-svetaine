@@ -2221,6 +2221,314 @@ export class Provider extends React.Component{
 
         else if (!options){return {verified: true}}
     }
+    this.staticState = () => {
+        const getArtworkInfo = () => {
+            return new Promise((resolve, rej) => {
+      
+                let serverFileNames = null;
+                
+                //get an array of all file names in the server
+                axios.get('/fetchImages')
+                    .then(res => {
+                        serverFileNames = res.data
+                        let newServerFileName = res.data.map(name => {
+                          let start = name.substring(0, name.indexOf("-thumbnail"))
+                          let cutout = "-thumbnail"
+                          let extension = name.substring(name.indexOf("-thumbnail") + cutout.length)
+                          let newName = `${start}${extension}`
+                          return newName
+                        })
+      
+                        serverFileNames = newServerFileName
+                        axios.get('/api/artworkInfo')
+                            .then(res => {
+                                let databaseFiles = {}
+                                let usedNames = []
+                                
+                                //check that a record has a file in the server
+                                serverFileNames.forEach(fileName => {
+                                    res.data.forEach(obj => {
+                                        if(obj.fileName === fileName && !usedNames.includes[fileName]){
+                                            usedNames = [...usedNames, fileName]
+                                         databaseFiles = {...databaseFiles, [fileName]: obj}
+                                        databaseFiles[fileName].useFamilySetup = false
+                                    }
+                                })
+                                })
+      
+                                //add an array of all file object
+                                // renderFiles.fileNames = Object.keys(renderFiles).filter(fileName => fileName !== "fileList")
+      
+                                resolve(databaseFiles)
+                            })
+                            .catch(err => {
+                              console.log("getArtworkInfo err")
+                              console.log(err)
+                            })
+                    })   
+                    .catch(err => {
+                      console.log("fetch images err")
+                      console.log(err)
+                    })
+            })
+        }
+        const getRelatedArtwork = (artworkFamily, newState) => {
+    
+        let relatedArtwork = {}
+        //get all records from the selected family from database
+        return new Promise((resolve, reject) => {
+            // if(this.state.relatedArtwork[value]){
+            //     relatedArtwork = {...this.state.relatedArtwork}
+            // }
+    
+            axios.get(`/api/artworkInfo/${artworkFamily}`)
+                .then(res =>{
+    
+                //for each fileData object in res.data array 
+                    res.data.forEach((obj, index) => {
+                    //paste all properties of this file object unto relatedArtwork object
+                    Object.keys(obj).forEach(property => {
+                            relatedArtwork = {
+                                ...relatedArtwork,
+                                    [obj.fileName]: {
+                                        ...relatedArtwork[obj.fileName],
+                                        [property]: obj[property]
+                                    }
+                                }
+                        })
+                    })        
+                    let fileIds = Object.keys(relatedArtwork).map(obj => null)
+                    Object.keys(relatedArtwork).forEach(fileName => {
+                        if(relatedArtwork[fileName].familyDisplayIndex < 0){
+                            fileIds.push(fileName)
+                        }
+                        else{
+                            fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                        }
+                    })
+                    fileIds = fileIds.filter(fileName => fileName !== null || false)
+                    let finalRelatedArtwork = {
+                            files: relatedArtwork,
+                            column: {
+                                // fileIds: Object.keys(relatedArtwork).map(objName => objName),
+                                fileIds,
+                                id: `${artworkFamily}-relatedArtworks`
+                            },
+                            columnOrder: [`${artworkFamily}-relatedArtworks`]
+                    };
+                    
+                    
+                    resolve(finalRelatedArtwork)
+                })
+        }) 
+        }
+      
+            console.log("write static state runs")
+            let newState = {}
+
+            let FamilyList = new Promise ((resolve, rej) => {
+                axios.get('/api/familySetup')
+                .then(res => {
+                    let familyList = Object.keys(res.data).map(obj => {
+                        return res.data[obj].artworkFamily
+                    })
+                    newState.artworkFamilyList = familyList
+                    console.log("Families loaded")
+                    console.log(res)
+                    resolve()
+                })
+                .catch(err => {
+                     rej(err)
+                     console.log("family list laod error")
+                    // document.location.reload(true)
+                })
+            })
+      
+            let Categories = new Promise ((resolve, rej) => {
+                FamilyList
+                .then(res => {
+                        axios.get('/api/categories')
+                        .then(res => {
+            
+                                let categoryNames = Object.values(res.data).map(obj => obj.category)
+                                let categoryObj = {}
+                                categoryNames.forEach(categoryName => {
+                                    const currentObj = res.data.find(item => item.category === categoryName)
+                                    return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
+                                })
+            
+                            newState.categoriesData = res.data
+                            newState.categoriesOptionList = {}
+                            newState.categoriesOptionList.data = categoryObj
+            
+                            const progressLength = newState.artworkFamilyList.length
+                            let counter = 0
+                            newState.artworkFamilyList.forEach(familyName => {
+                                getRelatedArtwork(familyName, newState)
+                                .then(res => {
+                                  if(!newState.relatedArtwork){
+                                    newState.relatedArtwork = {}
+                                  }
+                                  newState.relatedArtwork[familyName] = res
+                                  counter += 1
+                                  if(counter === progressLength){
+                                    resolve()
+                                  }
+                                })
+                                .catch(err => {
+                                  console.log("getrelated artwork err")
+                                  console.log(err)
+                                  rej("getrelated artwork err")
+                                })
+                            })
+                            // resolve()
+                        })
+                        .catch(err => {
+                             console.log("get categories err")
+                             console.log(err)
+                             rej("get categories err")
+                            // document.location.reload(true)
+                        })
+                })
+                .catch(err => {
+                  console.log("categories error")
+                  console.log(err)
+                  rej(err)
+                })
+            }) 
+      
+            let ArtworkInfo = new Promise ((resolve, rej) => {
+                getArtworkInfo()
+                    .then(res => {
+                        console.log("this.getArtworkInfo res")
+                        console.log(res)
+                        newState.artworkInfoData = res
+                        let onDisplay = {}
+                        Object.keys(res).forEach(fileName => {
+                          if(res[fileName].displayMain){
+                            onDisplay = {...onDisplay, [fileName]: res[fileName]}
+                          }
+                        })
+                        
+                        let allThemes = []
+                        Object.keys(res).forEach(objName => {
+                            allThemes = [...allThemes, ...res[objName].themes]
+                        })
+                        let allThemesSet = new Set(allThemes)
+                        allThemesSet = Array.from(allThemesSet)
+      
+                        let artworkByTheme = {}
+      
+                        let themesArr = Object.keys(res).map(name => res[name])
+      
+                        allThemesSet.forEach(theme => {
+                          themesArr.forEach(obj => {
+                            if(obj.themes.includes(theme)){
+                              if(!artworkByTheme[theme]){
+                                artworkByTheme[theme] = []
+                              }
+                              if(obj.displayTriggers.themes && obj.displayTriggers.themes.includes(theme)){
+                                artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
+                              }
+                            }
+                          })
+                        })
+      
+                        let artworkOnDisplay = {}
+                        let displayThemes = ["metal", "social", "tools", "cloud"]
+                        let hideThemes = ["celestial body"]
+                        let artworkNames = Object.keys(onDisplay)
+                        artworkNames.forEach(fileName => {
+                          displayThemes.forEach(theme => {
+                            if(onDisplay[fileName].themes.includes(theme)){
+                              hideThemes.forEach(hideTheme => {
+                                if(!onDisplay[fileName].themes.includes(hideTheme)){
+                                  artworkOnDisplay[fileName] = onDisplay[fileName]
+                                }
+                              })
+                            }
+                          })
+                        })
+      
+                        let years = []
+                        let locations = []
+                        let artworkByYear = {}
+                        let artworkByLocation = {}
+                    
+                        const allFiles = Object.keys(res)
+                    
+                        allFiles.forEach(fileName => {
+                            const file = res[fileName]
+                            if(file.year){
+                                years = [...years, file.year]
+                                if(!artworkByYear[file.year]){
+                                  artworkByYear[file.year] = []
+                                }
+                                artworkByYear = {...artworkByYear, [file.year]: [...artworkByYear[file.year], fileName]}
+                            }
+                            if(file.location){
+                                locations = [...locations, file.location]
+                                if(!artworkByLocation[file.location]){
+                                  artworkByLocation[file.location] = []
+                                }
+                                artworkByLocation = {...artworkByLocation, [file.location]: [...artworkByLocation[file.location], fileName]}
+                            }
+                        })
+                    
+                        years = new Set(years)
+                        years = Array.from(years).sort()
+                    
+                        locations = new Set(locations)
+                        locations = Array.from(locations).sort()
+      
+                        const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
+      
+                        newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
+                        newState.artworkOnDisplay = artworkOnDisplay
+                        newState.visibleArtwork = onDisplay
+                        newState.themesOnDisplay = artworkByTheme
+                        resolve()
+                    })
+                    .catch(err => {
+                      console.log("getArtworkInfo err")
+                      console.log(err)
+                      rej(err)
+                    })
+            })
+      
+            let serverFiles = new Promise ((resolve, rej) => {
+              axios.get('/fetchimages')
+                .then(res => {
+                  newState.serverData = res
+                  resolve()
+                })
+                .catch(err => rej(err))
+            })
+      
+            Promise.all([
+              serverFiles,
+              Categories, 
+              ArtworkInfo, 
+              // Themes, 
+            ])
+            .then(res => {
+                console.log("_________________________________________________")
+                console.log(JSON.stringify(newState))
+                axios.post(`/staticState`, newState)
+                    .then(res => { 
+                        console.log("file writen")
+                        console.log(res)
+                    })
+                    .catch(err => {
+                        console.log("write staticstate file error")
+                        console.log(err)
+                    })
+            })
+            .catch(err => {
+                  console.log("promise all err")
+                  console.log(err)
+            })
+    }
 
 }//END OF CONTSTRUCTOR
 
@@ -2335,7 +2643,8 @@ export class Provider extends React.Component{
             onChange: this.onChange,
             verify: this.verify,
             addNew: this.addNew,
-            deleteTheme: this.deleteTheme
+            deleteTheme: this.deleteTheme,
+            staticState: this.staticState
 
             } }>
         {this.props.children}
