@@ -8,6 +8,8 @@ import Nav from './components/Nav/Nav'
 import PreviewBubbles from './components/ArtworkInfo/PreviewBubble'
 import Controls from './components/ArtworkInfo/Controls'
 
+import FilterTree from './components/TagsMenu/v2/FilterTree'
+
 // import '../../css/frontEndMain.css'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
@@ -37,9 +39,11 @@ export default class FrontEndIndex extends React.Component{
                         <div 
                             className="frontEndIndex-container"
                         >
-                        <TagsMenu context={this.context}>
-                        </TagsMenu>
-
+                        {/* <TagsMenu context={this.context}>
+                        </TagsMenu> */}
+                        <FilterTree 
+                            categoriesData={this.context.state.categoriesData}
+                        />
                         <div 
                         id="images" 
                         // className="images-container"

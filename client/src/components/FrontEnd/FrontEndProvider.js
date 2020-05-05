@@ -790,7 +790,6 @@ export class Provider extends React.Component{
     }
     this.animateEnlarge = (file, options) => {
       console.log("animate enlarge runs")
-      console.log(file)
       this.enlarge.loaded = false
       let fgLoaded = null
 
@@ -833,7 +832,6 @@ export class Provider extends React.Component{
 
         backgroundLoad
           .then(res => {
-            console.log(res)
             let futureSize = null
 
                   //COUNT FUTURE SIZES
@@ -903,7 +901,6 @@ export class Provider extends React.Component{
                     foreground.style.height = `${futureSize.height}px`
                     // container.style.width = `${futureSize.width}px`
                   }
-                  console.log(`scrollTo? ${options.scroll}`)
                   if(options){
                     const familySequence = options.state.enlarge.familySequence
                     const artworkOnDisplay = this.state.artworkOnDisplay
@@ -925,7 +922,6 @@ export class Provider extends React.Component{
                       }
                     }
                     setTimeout(() => {
-                      console.log(`scrollTo ${scrollToId}`)
                       this.scrollToHorizontal(scrollToId, "imageSelect")
                     }, scrollToDelay);
 
@@ -944,11 +940,9 @@ export class Provider extends React.Component{
                          document.querySelector("#foreground-img").src= fgSrc
                          document.querySelector("#foreground-img").addEventListener('load', () => {
                            if(!fgLoaded){
-                             console.log("foregound loads")
                              foreground.classList.remove("fade-out")
                              this.enlarge.loaded = false
                               fgLoaded = true
-                              // this.setState(newState)
                             res("finished")
                            }
                            else{rej(fgLoaded)}
@@ -960,7 +954,6 @@ export class Provider extends React.Component{
 
                        loadForeground()
                        .then(res => {
-                         console.log(res)
                          document.getElementById("ArtworkInfo").classList.add("show")
                         })
                         .catch(rej => {
@@ -979,7 +972,6 @@ export class Provider extends React.Component{
     }
 
     this.scrollToHorizontal = (id, parent_id, options) => {
-      console.log("scrollToHorizontal")
       let scrollTo = {}
       // let scrollTo = {behavior: 'smooth'}
       if(!document.getElementById(parent_id)){

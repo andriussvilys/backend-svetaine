@@ -15,7 +15,6 @@ const Category = (props) => {
         key={`TagsMenu-category-${props.category}`} 
         className={props.isChecked ? 
             `TagsMenu-Accordion-label checkbox-selected` : `TagsMenu-Accordion-label`}
-            // `TagsMenu-Accordion-label checkbox-selected ${props.level}` : `TagsMenu-Accordion-label ${props.level}`}
         onClick={props.onChange}
         >   
             <div 

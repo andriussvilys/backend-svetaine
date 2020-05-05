@@ -1,0 +1,85 @@
+.FilterTree-list{
+    list-style: none;
+    padding: 0;
+}
+.FilterTree-listItems, .FilterTree-subcategories{
+    padding: 15px 5px 5px 15px;
+}
+.FilterTree-container{
+    height: 100%;
+    width: 300px;
+    overflow-y: auto;
+    font-family: 'Courier New', Courier, monospace;
+}
+.FilterTree-category{
+}
+.FilterTree-subcategories{
+    padding: 0;
+}
+.FilterTree-subcategory_item{
+    padding: 0 0 5px 15px;
+    position: relative;
+    border-left: 1px solid;
+}
+.FilterTree-title{
+    position: relative;
+}
+.FilterTree-item_listItem{
+    position: relative;
+    padding-left: 15px;
+    border-left: 1px solid;
+}
+.FilterTree-item_listItem::before{
+    content: "";
+    width: 15px;
+    height: 1px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    // left: -15px;
+}
+.FilterTree-title::before{
+    content: "";
+    width: 15px;
+    height: 1px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: -15px;
+}
+.FilterTree-listItems::before{
+    content: "";
+    width: 15px;
+    height: 1px;
+    background-color: black;
+    position: absolute;
+    top: 50%;
+    left: -15px;
+}
+.FilterTree-item_listItem:last-child{
+    border-left: 0;
+}
+.FilterTree-subcategory_item:last-child{
+    border-left: 0;
+}
+.FilterTree-item_listItem:last-child::after{
+    content: "";
+    width: 1px;
+    height: 12px;
+    background-color: black;
+    position: absolute;
+    left: 0;
+}
+.FilterTree-subcategory_item:last-child::after{
+    content: "";
+    width: 1px;
+    height: 12px;
+    background-color: black;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+.FilterTree-listItems{
+    padding: 0;
+}
