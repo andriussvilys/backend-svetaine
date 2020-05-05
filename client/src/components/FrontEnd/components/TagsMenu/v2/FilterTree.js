@@ -13,25 +13,34 @@ const FilterTree = (props) => {
 
     const createTitle = (options) => {
         return(
-            <form
+            <div
                 className={`FilterTree-form ${props.isChecked ? "checkbox-selected" : ""}`}
-                onChange={options.onChange}
             >
                 <label 
                     className={`FilterTree-title`}
                     htmlFor={`FilterTree-checkbox-${options.title}`}
-                    // onClick={options.onClick}
-                    >{options.title}</label>
-                <div className="styledCheckbox-container">
+                    >
+                    {options.title}
+                    {options.caret ? 
+                        <img className="FilterTree-caret" src="icons/triangle.svg" alt="open or close filter category"></img>
+                        : null
+                    }
+                </label>
+                <div 
+                    className="styledCheckbox-container"
+                >
                     <input 
                     className={`styledCheckbox-checkbox`}
                     id={`FilterTree-checkbox-${options.title}`} 
                     type="checkbox" checked={options.isChecked}
                     onChange={options.onChange}
                     ></input>
-                    <span className="styleCheckbox-checkmark"></span>
+                    <span 
+                    onClick={options.onChange}
+                    className="styleCheckbox-checkmark"
+                    ></span>
                 </div>
-            </form>
+            </div>
         )
     }
 
@@ -46,8 +55,9 @@ const FilterTree = (props) => {
                             {/* <span className={`FilterTree-title FilterTree-title_subcategory`}>{name}</span> */}
                             {createTitle({
                                 title: name,
-                                onChange: () => props.context.filterBySubcategory(parent, name),
-                                isChecked: props.context.subcategoryChecked(parent, name)
+                                onChange: (e) => props.context.filterBySubcategory(e, parent, name),
+                                isChecked: props.context.subcategoryChecked(parent, name),
+                                caret: true
                             })}
                             {subcategories[name].length > 0 ?
                             <ul className={`FilterTree-list FilterTree-listItems`}>
@@ -58,7 +68,7 @@ const FilterTree = (props) => {
                                         {/* <span className={"FilterTree-title FilterTree-title_listItem"}>{listItem}</span> */}
                                         {createTitle({
                                             title: listItem,
-                                            onChange: () => props.context.filterByListitem(parent, name, listItem),
+                                            onChange: (e) => props.context.filterByListitem(e, parent, name, listItem),
                                             isChecked: props.context.listitemChecked(parent, name, listItem)
                                         })}
                                     </li>
@@ -81,8 +91,9 @@ const FilterTree = (props) => {
                         {/* <span>{obj.category}</span> */}
                         {createTitle({
                             title: obj.category,
-                            onChange: () => props.context.filterByCategory(obj.category),
-                            isChecked: props.context.categoryChecked(obj.category)
+                            onChange: (e) => props.context.filterByCategory(e, obj.category),
+                            isChecked: props.context.categoryChecked(obj.category),
+                            caret: true
                         })}
                         {subcategories(obj.subcategory, obj.category)}
                     </ul>

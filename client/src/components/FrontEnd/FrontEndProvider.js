@@ -22,15 +22,13 @@ export class Provider extends React.Component{
         return onDisplay
     }
 
-    this.filterByCategory = (category, hideAll) => {
-      console.log("filter by category")
-      console.log(category)
+    this.filterByCategory = (e, category, hideAll) => {
+      e.stopPropagation()
       return new Promise((res,rej) => {
         let newDisplay = {}
         let zeroDisplay = {}
 
         if(hideAll){
-          console.log("hideAll true")
             Object.keys(this.state.visibleArtwork).forEach(fileName => {
               const file = this.state.visibleArtwork[fileName]
               if(file.category[category]){
@@ -46,7 +44,6 @@ export class Provider extends React.Component{
         //ON UN-CHECK
         // if(!checkbox.checked){
           if(this.categoryChecked(category)){
-          console.log("checkbox unchecked")
             Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
                 const file = this.state.artworkOnDisplay[fileName]
                 if(!Object.keys(file.category).includes(category)){
@@ -63,7 +60,6 @@ export class Provider extends React.Component{
         }
         //ON CHECK
         else{
-          console.log("checkbox checked")
             newDisplay={...this.state.artworkOnDisplay}
             Object.keys(this.state.artworkInfoData).forEach(fileName => {
                 const file = this.state.artworkInfoData[fileName]
@@ -81,7 +77,9 @@ export class Provider extends React.Component{
       })
     }
 
-    this.filterBySubcategory = (category, subcategory, hideAll) => {
+    this.filterBySubcategory = (e, category, subcategory, hideAll) => {
+      console.log(e.target)
+      e.stopPropagation()
       return new Promise ((res, rej) => {
           let newDisplay = {}
           let zeroDisplay = {}
@@ -170,7 +168,8 @@ export class Provider extends React.Component{
         })
         return onDisplay
     }
-    this.filterByListitem = (category, subcategory, listitem, hideAll) => {
+    this.filterByListitem = (e, category, subcategory, listitem, hideAll) => {
+      e.stopPropagation()
       return new Promise ((res, rej) => {
         let newDisplay = {}
         let zeroDisplay = {}
