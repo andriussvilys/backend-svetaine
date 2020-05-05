@@ -42,6 +42,7 @@ export default class FrontEndIndex extends React.Component{
                         {/* <TagsMenu context={this.context}>
                         </TagsMenu> */}
                         <FilterTree 
+                            context={this.context}
                             categoriesData={this.context.state.categoriesData}
                         />
                         <div 

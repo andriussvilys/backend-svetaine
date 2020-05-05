@@ -50,7 +50,7 @@ h5{
     padding-bottom: 5px;
 }
 label{
-    margin: 0 !important;
+    margin: 0;
 }
 //FRONT END
 //------------
@@ -402,10 +402,6 @@ font-family: 'Times New Roman', Times, serif;
 .zero-width{
     height: 0;
 }
-.TagsMenu-Accordion-label{
-    display: flex !important;
-    justify-content: space-between !important;
-}
 @keyframes modalFade {
     0% {
       opacity: 1;
@@ -747,6 +743,8 @@ font-family: 'Times New Roman', Times, serif;
     margin-left: 5px;
 }
 .TagsMenu-Accordion-label{
+    display: flex !important;
+    justify-content: space-between !important;
     border: 1px solid black;
     margin: 3px;
     flex: 1 1 48%;
@@ -925,41 +923,41 @@ font-family: 'Times New Roman', Times, serif;
     right: 30px;
     overflow: visible;
 }
-.styledCheckbox-container{
-    display: block;
-    position: relative;
-    margin-bottom: 12px;
-    cursor: pointer;
-    font-size: 22px;
-    // user-select: none;
-    overflow: hidden;
-    border-left: 1px solid black;
-    background-color: white;
-}
+// .styledCheckbox-container{
+//     display: block;
+//     position: relative;
+//     margin-bottom: 12px;
+//     cursor: pointer;
+//     font-size: 22px;
+//     // user-select: none;
+//     overflow: hidden;
+//     border-left: 1px solid black;
+//     background-color: white;
+// }
 .styledCheckbox-container_large{
     padding-left: 40px;
 }
 .styledCheckbox-container_small{
     padding-left: 18px;
 }
-.styledCheckbox-checkbox{
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-    right: 0;
-}
-.styleCheckbox-checkmark{
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    border: solid black;
-    border-radius: 99px;
-    border-width: 2px;
-}
+// .styledCheckbox-checkbox{
+//     position: absolute;
+//     opacity: 0;
+//     cursor: pointer;
+//     height: 0;
+//     width: 0;
+//     right: 0;
+// }
+// .styleCheckbox-checkmark{
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     height: 100%;
+//     width: 100%;
+//     border: solid black;
+//     border-radius: 99px;
+//     border-width: 2px;
+// }
 .styledCheckbox-container_large .styleCheckbox-checkmark{
     left: calc(50% - 10px);
     top: calc(50% - 10px);
@@ -1013,12 +1011,12 @@ font-family: 'Times New Roman', Times, serif;
 .previewBubble-filled{
     background-color: $checkedcolor !important;
 }
-.checkbox-selected{
-    background-color: $checkedcolor !important;
-}
-.styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
-    background-color: $checkedcolor !important;
-  }
+// .checkbox-selected{
+//     background-color: $checkedcolor !important;
+// }
+// .styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
+//     background-color: $checkedcolor !important;
+//   }
 .dark-bg:hover{
     background-color: $checkedcolor !important;
 }

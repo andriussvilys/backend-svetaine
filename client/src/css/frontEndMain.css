@@ -1,10 +1,7 @@
 .FilterTree-list {
   list-style: none;
   padding: 0;
-}
-
-.FilterTree-listItems, .FilterTree-subcategories {
-  padding: 15px 5px 5px 15px;
+  padding-left: 7px;
 }
 
 .FilterTree-container {
@@ -12,10 +9,6 @@
   width: 300px;
   overflow-y: auto;
   font-family: 'Courier New', Courier, monospace;
-}
-
-.FilterTree-subcategories {
-  padding: 0;
 }
 
 .FilterTree-subcategory_item {
@@ -26,6 +19,7 @@
 
 .FilterTree-title {
   position: relative;
+  margin-left: 28px;
 }
 
 .FilterTree-item_listItem {
@@ -34,53 +28,24 @@
   border-left: 1px solid;
 }
 
-.FilterTree-item_listItem::before {
+.FilterTree-item_listItem::before,
+.FilterTree-subcategory_item::before {
   content: "";
-  width: 15px;
+  width: 16px;
   height: 1px;
   background-color: black;
   position: absolute;
-  top: 50%;
+  top: 12px;
   left: 0;
 }
 
-.FilterTree-title::before {
-  content: "";
-  width: 15px;
-  height: 1px;
-  background-color: black;
-  position: absolute;
-  top: 50%;
-  left: -15px;
-}
-
-.FilterTree-listItems::before {
-  content: "";
-  width: 15px;
-  height: 1px;
-  background-color: black;
-  position: absolute;
-  top: 50%;
-  left: -15px;
-}
-
-.FilterTree-item_listItem:last-child {
-  border-left: 0;
-}
-
+.FilterTree-item_listItem:last-child,
 .FilterTree-subcategory_item:last-child {
   border-left: 0;
+  padding-left: 16px;
 }
 
-.FilterTree-item_listItem:last-child::after {
-  content: "";
-  width: 1px;
-  height: 12px;
-  background-color: black;
-  position: absolute;
-  left: 0;
-}
-
+.FilterTree-item_listItem:last-child::after,
 .FilterTree-subcategory_item:last-child::after {
   content: "";
   width: 1px;
@@ -91,8 +56,62 @@
   top: 0;
 }
 
-.FilterTree-listItems {
-  padding: 0;
+.FilterTree-item_listItem:first-child::after,
+.FilterTree-subcategory_item:first-child::after {
+  content: "";
+  width: 1px;
+  height: 18px;
+  background-color: black;
+  position: absolute;
+  left: -1px;
+  top: -5px;
+}
+
+.FilterTree-form {
+  position: relative;
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+}
+
+.styledCheckbox-container {
+  display: block;
+  position: absolute;
+  cursor: pointer;
+  overflow: hidden;
+  height: 16px;
+  width: 16px;
+  top: 4px;
+}
+
+.styledCheckbox-checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+  right: 0;
+}
+
+.styleCheckbox-checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border: solid black;
+  border-width: 1px;
+}
+
+.checkbox-selected {
+  background-color: #e6e6e6 !important;
+}
+
+.styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
+  background-color: #e6e6e6 !important;
 }
 
 * {
@@ -151,7 +170,7 @@ h5 {
 }
 
 label {
-  margin: 0 !important;
+  margin: 0;
 }
 
 .app-container {
@@ -599,15 +618,6 @@ label {
 
 .zero-width {
   height: 0;
-}
-
-.TagsMenu-Accordion-label {
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-box-pack: justify !important;
-      -ms-flex-pack: justify !important;
-          justify-content: space-between !important;
 }
 
 @-webkit-keyframes modalFade {
@@ -1126,6 +1136,12 @@ label {
 }
 
 .TagsMenu-Accordion-label {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
   border: 1px solid black;
   margin: 3px;
   -webkit-box-flex: 1;
@@ -1379,43 +1395,12 @@ label {
   overflow: visible;
 }
 
-.styledCheckbox-container {
-  display: block;
-  position: relative;
-  margin-bottom: 12px;
-  cursor: pointer;
-  font-size: 22px;
-  overflow: hidden;
-  border-left: 1px solid black;
-  background-color: white;
-}
-
 .styledCheckbox-container_large {
   padding-left: 40px;
 }
 
 .styledCheckbox-container_small {
   padding-left: 18px;
-}
-
-.styledCheckbox-checkbox {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-  right: 0;
-}
-
-.styleCheckbox-checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  border: solid black;
-  border-radius: 99px;
-  border-width: 2px;
 }
 
 .styledCheckbox-container_large .styleCheckbox-checkmark {
@@ -1492,14 +1477,6 @@ label {
 }
 
 .previewBubble-filled {
-  background-color: blue !important;
-}
-
-.checkbox-selected {
-  background-color: blue !important;
-}
-
-.styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
   background-color: blue !important;
 }
 
