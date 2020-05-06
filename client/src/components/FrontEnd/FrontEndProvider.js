@@ -849,10 +849,10 @@ export class Provider extends React.Component{
                   //DESKTOP
                   if(!this.state.mobile){
                     //flip from mobile to desktop reset
-                    if(document.getElementById('background').style.width !== "100%"){
-                      document.getElementById('background').style.width = "100%"
-                      document.getElementById('foreground').style.width = "100%"
-                    }
+                    // if(document.getElementById('background').style.width !== "100%"){
+                    //   document.getElementById('background').style.width = "100%"
+                    //   document.getElementById('foreground').style.width = "100%"
+                    // }
                     futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
                   }
                   //MOBILES**************************************************************************************
@@ -1159,12 +1159,17 @@ export class Provider extends React.Component{
           container.style.height = `${images.clientHeight - 90}px`
           document.getElementById("foreground").style.height = "auto"
           document.getElementById("background").style.height = "auto"
+
           Array.from(document.getElementsByClassName("scroll-down")).forEach(item => {
             item.classList.remove("scroll-down")
           })
           // container.classList.add("enlarge-scroll-down")
       }
       else{
+          document.getElementById('background').style.width = "100%"
+          document.getElementById('foreground').style.width = "100%"
+          document.getElementById('background').style.height = "100%"
+          document.getElementById('foreground').style.height = "100%"
         mobile = false
         // container.style.height = "calc(100% - 50px)"
         container.style.width = `${this.state.enlarge ? this.state.enlarge.background.currentWidth : 0}px`
@@ -1176,9 +1181,13 @@ export class Provider extends React.Component{
             newState.mobile = mobile
             if(mobile){
               imageSelect.classList.add("side-scroll")
+              container.classList.add("enlarge-scroll-down")
+              container.classList.remove("enlarge-scroll-left")
               this.scrollToHorizontal(this.state.enlarge ? this.state.enlarge.background.fileName : null, "imageSelect")
             }
             else{
+              container.classList.remove("enlarge-scroll-down")
+              container.classList.add("enlarge-scroll-left")
                 // this.animateEnlarge(this.state.enlarge.background, {state: newState})
             }
           }, 400);

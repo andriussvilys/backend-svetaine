@@ -1499,42 +1499,6 @@ h5 {
   display: none;
 }
 
-#foreground {
-  position: absolute;
-  z-index: 2;
-  width: 100%;
-  opacity: 1;
-  max-height: 100%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 100%;
-  width: 100%;
-  mix-blend-mode: luminosity;
-}
-
-#background {
-  z-index: 1;
-  position: absolute;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
 .zero-width {
   height: 0;
 }
@@ -1756,10 +1720,6 @@ h5 {
   .imageSelect-slide {
     -webkit-transform: translateX(250px);
             transform: translateX(250px);
-  }
-  #foreground, #background {
-    max-height: 100%;
-    height: auto;
   }
   .nav-menuButton {
     padding: 0;

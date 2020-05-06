@@ -364,20 +364,12 @@ font-family: 'Times New Roman', Times, serif;
     position: absolute;
     z-index: 2;
     width: 100%;
-    // height: 100%;
-    max-height: 100%;
+    height: 100%;
     opacity: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    // mix-blend-mode: luminosity;
 }
 #background{
     z-index: 1;
     position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     height: 100%;
     width: 100%;
     max-height: 100%;
@@ -621,14 +613,17 @@ font-family: 'Times New Roman', Times, serif;
     border-top: 1px solid black;
     background-color: white;
     width: 100% !important;
-}
-.info-up{
-    transform: translateY(-100%);
+    max-height: calc(100vh - 59px);
+    overflow-y: auto;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
     max-width: 600px;
     padding: 10px 0px 20px 20px;
+    height: 100%;
+}
+.info-up{
+    transform: translateY(-100%);
 }
 .ArtworkInfo-preview-container{
     height: 75px;
@@ -994,6 +989,7 @@ font-family: 'Times New Roman', Times, serif;
 .pinch-to-zoom-area{
     transition: height 0.2s !important;
     height: 100%;
+    max-height: 100%;
     display: flex !important;
     align-items: center;
     justify-content: center;
@@ -1253,17 +1249,17 @@ font-family: 'Times New Roman', Times, serif;
         display: initial;
         border-left: none;
     }
-    .pinch-to-zoom-container{
-        display: none;
-        border: none;
-    }
+    // .pinch-to-zoom-container{
+    //     display: none;
+    //     border: none;
+    // }
     .enlarge-scroll-down{
         display: grid;
         transform: translateY(0px);
         top: 0;
-        .pinch-to-zoom-container{
-            display: initial;
-        }
+        // .pinch-to-zoom-container{
+        //     display: initial;
+        // }
     }
     .scroll-down{
         top: 0;
@@ -1373,7 +1369,11 @@ font-family: 'Times New Roman', Times, serif;
         overflow-y: auto;
     }
     .pinch-to-zoom-area{
-        height: auto !important;
+        height: 100% !important;
+        // max-height: 100%;
+    }
+    .pinch-to-zoom-container{
+        display: inline-block !important;
     }
   }
 
