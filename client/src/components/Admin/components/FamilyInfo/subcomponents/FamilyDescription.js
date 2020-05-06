@@ -1,4 +1,6 @@
 import React, { Fragment } from 'react'
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+
 
 const FamilyDescription = (props) => {
     const target = !props.fileName ?
@@ -11,12 +13,26 @@ const FamilyDescription = (props) => {
             <p className="subtitle">this description will appear on each item in the artwork family</p>
         </div>
         <textarea
+            id="input_familyDescription"
             value={target.familyDescription || ""}
-        onChange={
-            (e) => props.context.onChange(e, "familyDescription", props.fileName)
-        }
-        style={{width: "100%"}}
+            onChange={
+                (e) => {
+                    const inputvalue = e.target.value
+                    props.context.inputFamilyDescription(inputvalue)
+                }
+            }
+            style={{width: "100%"}}
         ></textarea>
+        <div style={{border: "1px solid "}}>
+            <p>preview</p>
+            <div style={{border: "1px solid black"}}>
+                {
+                    target.familyDescription ? 
+                        target.familyDescription ? <div>{ ReactHtmlParser(target.familyDescription)}</div> : ""
+                    : ""
+                }
+            </div>
+        </div>
     </div>
     )
 }

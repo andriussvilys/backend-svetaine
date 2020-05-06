@@ -188,12 +188,13 @@ export default class Edit extends Component{
                                                     />
                                                 </Tab>
                                                 <Tab eventKey="editFamily" title="Edit Artwork Families">
+                                                    {this.submitButtons()} 
                                                     <EditFamilyInfo 
                                                         context={this.context}
                                                     />
                                                     <Filters 
                                                         context={this.context}
-                                                    />
+                                                    /> 
                                                 </Tab>
                                                 <Tab eventKey="new_theme" title="Delete data filters">
                                                   <div className="Tabs-container">

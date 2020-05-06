@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import BootstrapModal from './Admin/components/BootstrapModal'
 import auth from './Auth'
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 // import FilePreview from './FilePreview'
 
@@ -46,6 +47,8 @@ export class Provider extends React.Component{
     }
 
     this.onChange = (e, key, fileName) => {
+        console.log("onchange")
+        console.log(e.target.value ? e.target.value : e.target.innerHTML)
         let target = null
         let newState = {...this.state}
         if(fileName){
@@ -59,10 +62,16 @@ export class Provider extends React.Component{
         if(!target[key]){
             target[key] = []
         }
-        target[key] = [...target[key], e.target.value]
+        const inputValue = e.target.value ? e.target.value : e.target.textContent
+        // target[key] = [...target[key], inputValue]
+        target[key] = inputValue
+        this.setState(newState)
+    } 
+    this.inputFamilyDescription = (value) => {
+        let newState = {...this.state}
+        newState.familySetupData.familyDescription = value
         this.setState(newState)
     }
-
     //adds new family name/theme
     this.addNew = (e, id, router, requestKey, stateKey, callback) => {
 
@@ -736,7 +745,6 @@ export class Provider extends React.Component{
                 alert(res)
             })
         },
-
         deleteDBrecord: (fileName, artworkFamily, cb) => {
             return new Promise ((resolve, rej) => {
                 const file = this.state.artworkInfoData[fileName]
@@ -771,7 +779,6 @@ export class Provider extends React.Component{
                     .catch(err => console.log(err))
             })
         },
-
         serverFileToState: (file) => {
             return new Promise((resolve, reject) => {
                 if(!file){
@@ -785,7 +792,6 @@ export class Provider extends React.Component{
                 this.setState(newState, () => {resolve("file transferred")})
             })
         },
-        
         /**
          * @param value the value to be added to state
          * @param string the name of the family nest where the new value will be added
@@ -1078,7 +1084,6 @@ export class Provider extends React.Component{
             }
             this.setState(newState)
         },
-
         transferState: (file, radioValue, options) => {
             let newState = {...this.state}
 
@@ -1174,14 +1179,13 @@ export class Provider extends React.Component{
                 this.setState(newState)
             }
         },
-
         isChecked: (string, value, fileName) => {
             if(this.state.fileData.files[fileName][string].includes(value)){
                 return true
             }
             else return false
         },
-            //This iss triggered upon upload files using file upload input
+        //This iss triggered upon upload files using file upload input
         addFileToState: (e) => {
 
             return new Promise((resolve, reject) => {
@@ -1313,7 +1317,6 @@ export class Provider extends React.Component{
 
         },
         //THIS UPLOADS FILE TO SERVER
-
         uploadFile: (fileName) => {
             return new Promise((resolve, reject) => {
                 const fileData = this.state.fileData.files
@@ -1509,21 +1512,13 @@ export class Provider extends React.Component{
         })
         },
         updateArtworkByFamily: (familyName) => {
-            if(!familyName){
-                return
-            }
-
-            return new Promise((resolve, reject) => {
-
-                this.familySetupMethods.updateFamilySetup(this.state.familySetupData.artworkFamily)
-                .then(res => {
+            return new Promise((resolve, reject) => { 
                     const fileNamesInFamily = Object.keys(this.state.relatedArtwork[familyName].files)
                     const updateLength = fileNamesInFamily.length
                     let progress = 0
                     if(updateLength > 0){
                         this.state.relatedArtwork[familyName].column.fileIds.forEach((fileName, index) => {
                             const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
-        
                             const familyData = this.state.familySetupData
                             const {category, themes, seeAlso, familyDescription, year, location, displayTriggers} = familyData
                             let fileData = this.state.relatedArtwork[familyName].files[fileName]
@@ -1531,24 +1526,25 @@ export class Provider extends React.Component{
                             delete fileData._id
                             delete fileData.relatedArtwork
                             fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location, displayTriggers}
+                            console.log("fileData")
                             console.log(fileData)
                             axios.put(`/api/artworkInfo/update/${fileName}`, fileData)
                                 .then(res => {
                                     progress += 1
                                     console.log(`progress: ${progress}/${updateLength}`)
                                     if(progress === updateLength){
-                                        axios.get(`/api/artworkInfo/${familyName}`)
-                                            .then(res => {
-                                                console.log("artworks updated")
-                                                console.log(res)
-                                                resolve(res)
-                                            })
-                                            .catch(rej => {
-                                                console.log("error")
-                                                console.log(rej)
-                                                reject(rej)
-                                            })
-        
+                                        resolve()
+                                        // axios.get(`/api/artworkInfo/${familyName}`)
+                                        //     .then(res => {
+                                        //         console.log("artworks updated")
+                                        //         console.log(res)
+                                        //         resolve(res)
+                                        //     })
+                                        //     .catch(rej => {
+                                        //         console.log("error")
+                                        //         console.log(rej)
+                                        //         reject(rej)
+                                        //     })
                                     }
                                 })
                                 .catch(rej => {
@@ -1558,12 +1554,9 @@ export class Provider extends React.Component{
                                 })
                         })
                     }
-    
-                })
-                .catch(rej => {
-                    console.log(rej);
-                    reject(rej)
-                })
+                else{
+                    resolve()
+                }
             })
         },
         postArtworkInfo: (file) => {
@@ -2123,7 +2116,15 @@ export class Provider extends React.Component{
                 axios.put(`/api/familySetup/update/${familyName}`, requestBody)
                     .then( res => { 
                         console.log(res)
-                        resolve(`Artwork Family ${familyName} succesfully updated`)
+                        this.fileDataMethods.updateArtworkByFamily(familyName)
+                        .then(res => {
+                            console.log("FIELS UPDATES")
+                            resolve(`Artwork Family ${familyName} succesfully updated`)
+                        })
+                        .catch(err => {
+                            console.log("updateArtworkByFamily FAIL")
+                            console.log(err)
+                        })
                     })
                     .catch(err => {
                         console.log(err)
@@ -2192,7 +2193,6 @@ export class Provider extends React.Component{
                     })
             }) 
         },
-
         updateContext: (value, propertyName) => {
             return this.setState({[propertyName]: value})
         }
@@ -2644,7 +2644,8 @@ export class Provider extends React.Component{
             verify: this.verify,
             addNew: this.addNew,
             deleteTheme: this.deleteTheme,
-            staticState: this.staticState
+            staticState: this.staticState,
+            inputFamilyDescription: this.inputFamilyDescription
 
             } }>
         {this.props.children}
