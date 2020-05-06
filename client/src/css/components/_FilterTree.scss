@@ -2,6 +2,8 @@
     list-style: none;
     padding: 0;
     padding-left: 7px;
+    transition: 0.2s all;
+    overflow: hidden;
 }
 .FilterTree-container{
     height: 100%;
@@ -31,18 +33,6 @@
 .FilterTree-form:hover{
     background-color: rgba(0,0,0,0.03);
     border-bottom: 1px dotted black;
-}
-.FilterTree-caret{
-    width: 24px;
-    height: 24px;
-    margin-right: 5px;
-    opacity: 0.1;
-}
-.FilterTree-form:hover .FilterTree-caret{
-    opacity: 0.1;
-}
-.FilterTree-caret:hover{
-    opacity: 0.3 !important;
 }
 .FilterTree-item_listItem{
     position: relative;
@@ -109,10 +99,26 @@
     width: 100%;
     border: solid black;
     border-width: 1px;
-}
-.checkbox-selected{
-    background-color: #e6e6e6 !important;
+    background-color: #ffffff;
 }
 .styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
     background-color: #e6e6e6 !important;
+}
+//OPEN / CLOSE list
+.FilterTree-caret{
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+    opacity: 0;
+    cursor: pointer;
+    user-select: none;
+}
+.FilterTree-form:hover .FilterTree-caret{
+    opacity: 0.1;
+}
+.FilterTree-caret:hover{
+    opacity: 0.3 !important;
+}
+.FilterTree-caret_down{
+    transform: rotate(180deg);
 }

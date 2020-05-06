@@ -21,10 +21,6 @@ const FilterTree = (props) => {
                     htmlFor={`FilterTree-checkbox-${options.title}`}
                     >
                     {options.title}
-                    {options.caret ? 
-                        <img className="FilterTree-caret" src="icons/triangle.svg" alt="open or close filter category"></img>
-                        : null
-                    }
                 </label>
                 <div 
                     className="styledCheckbox-container"
@@ -40,6 +36,35 @@ const FilterTree = (props) => {
                     className="styleCheckbox-checkmark"
                     ></span>
                 </div>
+                {options.caret ? 
+                    <img 
+                    className="FilterTree-caret" 
+                    src="icons/triangle.svg" 
+                    alt="open or close filter category"
+                    onClick={(e) => {
+                        console.log("caret clicked")
+                        e.stopPropagation()
+                        e.target.classList.toggle("FilterTree-caret_down")
+                        const list = document.getElementById(options.listId)
+
+                        let timeout = 1
+                        if (!list.classList.contains("FilterTree-list_closed") && !list.style.maxHeight){
+                            list.style.maxHeight = `${list.scrollHeight}px`
+                            timeout += 200
+                        }
+                        setTimeout(() => {                            
+                            if (!list.classList.contains("FilterTree-list_closed")) {
+                                list.style.maxHeight = 0;
+                            } else {
+                            list.style.maxHeight = list.scrollHeight + "px";
+                            }
+                            list.classList.toggle("FilterTree-list_closed")
+                            return
+                        }, timeout);
+                    }}
+                    ></img>
+                    : null
+                }
             </div>
         )
     }
@@ -57,10 +82,14 @@ const FilterTree = (props) => {
                                 title: name,
                                 onChange: (e) => props.context.filterBySubcategory(e, parent, name),
                                 isChecked: props.context.subcategoryChecked(parent, name),
-                                caret: true
+                                caret: subcategories[name].length > 0 ? true : false,
+                                listId: `FilterTree-list_subcategory-${name}`
                             })}
                             {subcategories[name].length > 0 ?
-                            <ul className={`FilterTree-list FilterTree-listItems`}>
+                            <ul 
+                            className={`FilterTree-list FilterTree-listItems`}
+                            id={`FilterTree-list_subcategory-${name}`}
+                            >
                                 { subcategories[name].map(listItem => {
                                     return <li 
                                     className={"FilterTree-item_listItem"}
@@ -81,7 +110,10 @@ const FilterTree = (props) => {
                 ) 
             })
             return (
-                <ul className={`FilterTree-list FilterTree-subcategories`}>{subcategoryLists}</ul>
+                <ul 
+                className={`FilterTree-list FilterTree-subcategories`}
+                id={`FilterTree-list_category-${parent}`}
+                >{subcategoryLists}</ul>
             )
         }
 
@@ -93,7 +125,8 @@ const FilterTree = (props) => {
                             title: obj.category,
                             onChange: (e) => props.context.filterByCategory(e, obj.category),
                             isChecked: props.context.categoryChecked(obj.category),
-                            caret: true
+                            caret: Object.keys(obj.subcategory).length > 0 ? true : false,
+                            listId: `FilterTree-list_category-${obj.category}`
                         })}
                         {subcategories(obj.subcategory, obj.category)}
                     </ul>

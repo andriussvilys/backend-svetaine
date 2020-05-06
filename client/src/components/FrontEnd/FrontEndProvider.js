@@ -547,11 +547,20 @@ export class Provider extends React.Component{
           //if menu open
           else{
               if(this.state.enlarge.open){
-                const imageSelectWidth = document.getElementById("imageSelect").offsetWidth
                 const imageSelect = document.getElementById("imageSelect")
-                imageSelect.style.width = `${imageSelectWidth+250}px`
+
+                // const enlargeNaturalSize = this.state.enlarge.background.naturalSize
+                // const imagesHeight = imageSelect.parentNode.offsetHeight
+                // const futureSize  = this.countWidth(imagesHeight, enlargeNaturalSize.naturalHeight, enlargeNaturalSize.naturalWidth, false, {tagsMenuClosed: true})
+
+                // const imagesWidth = document.querySelector(".frontEndIndex-container").offsetWidth
+                // const imageNavBar = document.querySelector(".Navbar").offsetWidth
+                // const imageSelectFutureWidth = `${imagesWidth - futureSize.width - imageNavBar}px`
+
+                imageSelect.style.width = "auto"
+                document.getElementById("TagsMenu").classList.add("show-menu-desktop")
                 setTimeout(() => {
-                  document.getElementById("TagsMenu").classList.add("show-menu-desktop")
+                  this.animateEnlarge(this.state.enlarge.background)
                 }, 200);
               }
               else{
@@ -754,10 +763,15 @@ export class Provider extends React.Component{
     }
 
 
-    this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile) => {
-      let maxWidth = document.getElementById("images").clientWidth - 120
-      const naturalRatio = naturalWidth / naturalHeight
+    this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile, options) => {
+      let tagsMenuWidth = document.getElementById("TagsMenu").offsetWidth
+      const imageNavWidth = document.querySelector(".Navbar").offsetWidth
+      if(options && options.tagsMenuClosed){
+        tagsMenuWidth = 0
+      }
 
+      let maxWidth = document.getElementById("images").parentNode.offsetWidth - tagsMenuWidth - imageNavWidth - 120
+      const naturalRatio = naturalWidth / naturalHeight
       if(mobile){
         maxWidth = document.getElementById("images").clientWidth
         const maxHeight = document.getElementById("images").clientHeight - 70
@@ -788,7 +802,6 @@ export class Provider extends React.Component{
       return {width: futureWidth, height: futureHeight}
     }
     this.animateEnlarge = (file, options) => {
-      console.log("animate enlarge runs")
       this.enlarge.loaded = false
       let fgLoaded = null
 
@@ -872,16 +885,18 @@ export class Provider extends React.Component{
                   }
                   //DESKTOP
                   else{
+                    //if enlarge not been opened
                     if(!container.classList.contains("enlarge-scroll-left")){
                       container.classList.add("enlarge-scroll-left")
                       container.style.width = `${futureSize.width}px`
                       setTimeout(() => {
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                      }, 250);
+                      }, 600);
                     }
                     else{
                       //if enlargeContainer will shrink
                       if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
+                        console.log("enlargeContainer will shrink")
 
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                         setTimeout(() => {
@@ -890,10 +905,16 @@ export class Provider extends React.Component{
                       }
                       //
                       else{
+                        console.log("enlargeContainer will GROW")
+                        const momentum = futureSize.width / container.offsetWidth
+                        console.log("mmentum")
+                        let delay = 300 * momentum
+                        delay = delay.toFixed(3)
+                        console.log(delay)
                         container.style.width = `${futureSize.width}px`
                         setTimeout(() => {
                           imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                        }, 400);
+                        }, delay);
                       }
                     }
                     background.style.height = `${futureSize.height}px`
