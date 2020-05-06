@@ -236,9 +236,6 @@ font-family: 'Times New Roman', Times, serif;
     transform: translateX(-100%);
     opacity: 0;
 }
-.show-menu{
-    transform: translateY(0) !important;
-}
 .nav-menuButton{
     background-color: white;
     padding: 10px;
@@ -367,13 +364,12 @@ font-family: 'Times New Roman', Times, serif;
     position: absolute;
     z-index: 2;
     width: 100%;
-    opacity: 1;
+    // height: 100%;
     max-height: 100%;
+    opacity: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    width: 100%;
     // mix-blend-mode: luminosity;
 }
 #background{
@@ -480,34 +476,34 @@ font-family: 'Times New Roman', Times, serif;
     animation-duration: 2s;
     animation-timing-function: ease-out;
 }
-@keyframes move-left{
-    0% {
-        left: 100%;
-    }
-    100% {
-        left: 0;
-    }
-}
-.move-left{
-    animation-name: move-left;
-    animation-duration: 0.2s;
-    animation-timing-function: ease-out;
-}
-@keyframes foreground-shrink{
-    0% {
-        height: 100%;
-        width: 100%;
-    }
-    100% {
-        height: 0;
-        width: 100%;
-    }
-}
-.foreground-shrink{
-    animation-duration: 0.2s;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
-}
+// @keyframes move-left{
+//     0% {
+//         left: 100%;
+//     }
+//     100% {
+//         left: 0;
+//     }
+// }
+// .move-left{
+//     animation-name: move-left;
+//     animation-duration: 0.2s;
+//     animation-timing-function: ease-out;
+// }
+// @keyframes foreground-shrink{
+//     0% {
+//         height: 100%;
+//         width: 100%;
+//     }
+//     100% {
+//         height: 0;
+//         width: 100%;
+//     }
+// }
+// .foreground-shrink{
+//     animation-duration: 0.2s;
+//     animation-timing-function: ease-out;
+//     animation-fill-mode: forwards;
+// }
 
 .Tags-item_wrapper{
     display: flex;
@@ -586,7 +582,7 @@ font-family: 'Times New Roman', Times, serif;
 }
 .previewBubble-container{
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     position: absolute;
     z-index: 9999;
@@ -600,9 +596,8 @@ font-family: 'Times New Roman', Times, serif;
 .previewBubble-wrapper{
     padding: 0 5px 0 0;
     display: flex;
-    position: absolute;
-    left: 0;
     overflow-x: auto;
+    overflow-y: hidden;
 }
 .previewBubble{
     height: 30px;
@@ -974,10 +969,6 @@ font-family: 'Times New Roman', Times, serif;
 .TagsMenu-Accordion-label:hover .styleCheckbox-checkmark{
     background-color: white;
 }
-.previewBubble-wrapper{
-    justify-content: flex-end;
-    width: 100%;
-}
 .checkbox-selected .title-letter{
     color: white;
 }
@@ -997,9 +988,11 @@ font-family: 'Times New Roman', Times, serif;
 .pinch-to-zoom-container{
     height: 100% !important;
     width: 100%;
+    display: flex !important;
+    align-items: center;
 }
 .pinch-to-zoom-area{
-    transition: transform 0.2s cubic-bezier(0.1, 0.57, 0.1, 1) 0s !important;
+    transition: height 0.2s !important;
     height: 100%;
     display: flex !important;
     align-items: center;
@@ -1040,6 +1033,9 @@ font-family: 'Times New Roman', Times, serif;
     *{
         transition: 0s all !important;
     }
+    #foreground{
+        mix-blend-mode: unset;
+    }
     .TagsMenu-category-title:focus *{
         color: black;
     }
@@ -1055,15 +1051,26 @@ font-family: 'Times New Roman', Times, serif;
     .SeeAlso-related_images{
         max-height: 70px;
     }
-    .menu-title *{
-        color: black !important;
-    }
     .menu-container{
         right: 0;
         display: flex;
         height: 100%;
         position: absolute;
         bottom: 50px;
+        width: 100px;
+        background-color: white;
+        border-top: 1px solid black;
+        border-left: 1px solid black;
+    }
+    .menu-title{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        padding-right: 5px;
+    }
+    .menu-title *{
+        color: black !important;
     }
     .controls{
         position: absolute;
@@ -1365,10 +1372,9 @@ font-family: 'Times New Roman', Times, serif;
         max-height: 40vh;
         overflow-y: auto;
     }
-    // .ArtworkInfo-toggleTags{
-    //     bottom: 0px !important;
-    // }
-    
+    .pinch-to-zoom-area{
+        height: auto !important;
+    }
   }
 
 //   *{transition: 0s all !important;}

@@ -44,6 +44,7 @@ export default class EditArtwork extends React.Component{
                             fileName={this.props.file.fileName}
                             onChange={this.props.context.onChange}
                             state={this.props.context.state}
+                            context={this.props.context}
                         />
                     </Tab>
                     <Tab eventKey="filters" title="Filters">

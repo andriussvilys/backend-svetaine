@@ -1520,12 +1520,12 @@ export class Provider extends React.Component{
                         this.state.relatedArtwork[familyName].column.fileIds.forEach((fileName, index) => {
                             const familyDisplayIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(fileName)
                             const familyData = this.state.familySetupData
-                            const {category, themes, seeAlso, familyDescription, year, location, displayTriggers} = familyData
+                            const {category, themes, seeAlso, familyDescription, year, location} = familyData
                             let fileData = this.state.relatedArtwork[familyName].files[fileName]
                             delete fileData.__v
                             delete fileData._id
                             delete fileData.relatedArtwork
-                            fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location, displayTriggers}
+                            fileData = {...fileData, familyDisplayIndex, category, themes, seeAlso, familyDescription, year, location}
                             console.log("fileData")
                             console.log(fileData)
                             axios.put(`/api/artworkInfo/update/${fileName}`, fileData)

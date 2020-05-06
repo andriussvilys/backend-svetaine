@@ -119,7 +119,7 @@ const ArtworkInfo = (props) => {
     const descriptions = () => {
         return(
             <div className="ArtworkInfo--descriptions">
-                {props.file.foreground.artworkDescription ? <div className="ArtworkInfo--artworkDescription ArtworkInfo--descriptions_instance">{props.file.foreground.artworkDescription}</div> : null}
+                {props.file.foreground.artworkDescription ? <div className="ArtworkInfo--artworkDescription ArtworkInfo--descriptions_instance">{ReactHtmlParser(props.file.foreground.artworkDescription)}</div> : null}
                 {props.file.foreground.familyDescription ? <div className="ArtworkInfo--familyDescription ArtworkInfo--descriptions_instance">{ReactHtmlParser(props.file.foreground.familyDescription)}</div> : null}
             </div>
         )

@@ -1426,11 +1426,6 @@ h5 {
   transition: 0.2s all;
 }
 
-.show-menu {
-  -webkit-transform: translateY(0) !important;
-          transform: translateY(0) !important;
-}
-
 .nav-menuButton {
   background-color: white;
   padding: 10px;

@@ -77,30 +77,6 @@ export default class FrontEndIndex extends React.Component{
                         </div>
                         {!this.context.state.mobile ? 
                         <Nav context={this.context}/> :   null }
-                        {/* {!this.context.state.mobile ? 
-                        <Nav context={this.context}/> :   
-                        <PreviewBubbles 
-                            file={this.context.state.enlarge}
-                            relatedArtwork={this.context.state.enlarge && this.context.state.enlarge.familySequence ? this.context.state.enlarge.familySequence.familySequence : []}
-                            // relatedArtwork={this.context.state.relatedArtwork}
-                            enlarge={this.context.loadEnlarge}
-                            context={this.context}
-                        >
-                            <div className="menu-container">
-                                <div 
-                                onClick={() => {this.context.showMenu()}}
-                                className="TagsMenu-Accordion-label category TagsMenu-hamburger">
-                                    <div className="TagsMenu-category-title menu-title">
-                                        {this.spreadLetters("menu")}
-                                    </div>
-                                </div>
-                                <Controls
-                                    showInfo={this.context.showInfo}
-                                    context={this.context}
-                                />
-                            </div>
-                        </PreviewBubbles>
-                        } */}
                     </div>
                     )
                 }}

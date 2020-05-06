@@ -11,7 +11,7 @@ const ArtworkInfo = (props) => {
                     <input 
                     value={props.file.artworkTitle || ""}
                     type="text" 
-                    onChange={(e) => props.onChange(e, 'artworkTitle', props.file.fileName)} 
+                    onChange={(e) => props.context.onChange(e, 'artworkTitle', props.file.fileName)} 
                     />
                 </div>
 
@@ -56,7 +56,7 @@ const ArtworkInfo = (props) => {
                     <textarea
                         value={props.file.artworkDescription || ""}
                     onChange={
-                        (e) => props.onChange(e, "artworkDescription", props.file.fileName)
+                        (e) => props.context.onChange(e, "artworkDescription", props.file.fileName)
                     }
                     style={{width: "100%"}}
                     ></textarea>

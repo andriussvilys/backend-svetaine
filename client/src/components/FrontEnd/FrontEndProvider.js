@@ -240,8 +240,8 @@ export class Provider extends React.Component{
      * @param: e
      * @param: theme
      */
-    this.filterByTheme = (theme, hideAll) => {
-
+    this.filterByTheme = (e, theme, hideAll) => {
+      e.stopPropagation()
       return new Promise ((res, rej) => {
 
         const newState = {...this.state}
@@ -534,9 +534,10 @@ export class Provider extends React.Component{
           if(document.getElementById("TagsMenu").classList.contains("show-menu-desktop")){
             if(this.state.enlarge && this.state.enlarge.open){
               document.getElementById("TagsMenu").classList.remove("show-menu-desktop")
-              setTimeout(() => {
-                this.animateEnlarge(this.state.enlarge.background)
-              }, 200);
+              // setTimeout(() => {
+              //   this.animateEnlarge(this.state.enlarge.background)
+              // }, 200);
+              this.animateEnlarge(this.state.enlarge.background)
             }
             else{
               document.getElementById("TagsMenu").classList.remove("show-menu-desktop")
@@ -549,19 +550,12 @@ export class Provider extends React.Component{
               if(this.state.enlarge.open){
                 const imageSelect = document.getElementById("imageSelect")
 
-                // const enlargeNaturalSize = this.state.enlarge.background.naturalSize
-                // const imagesHeight = imageSelect.parentNode.offsetHeight
-                // const futureSize  = this.countWidth(imagesHeight, enlargeNaturalSize.naturalHeight, enlargeNaturalSize.naturalWidth, false, {tagsMenuClosed: true})
-
-                // const imagesWidth = document.querySelector(".frontEndIndex-container").offsetWidth
-                // const imageNavBar = document.querySelector(".Navbar").offsetWidth
-                // const imageSelectFutureWidth = `${imagesWidth - futureSize.width - imageNavBar}px`
-
                 imageSelect.style.width = "auto"
                 document.getElementById("TagsMenu").classList.add("show-menu-desktop")
-                setTimeout(() => {
-                  this.animateEnlarge(this.state.enlarge.background)
-                }, 200);
+                // setTimeout(() => {
+                //   this.animateEnlarge(this.state.enlarge.background)
+                // }, 200);
+                this.animateEnlarge(this.state.enlarge.background)
               }
               else{
                 document.getElementById("imageSelect").style.width = "100%"
@@ -764,8 +758,13 @@ export class Provider extends React.Component{
 
 
     this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile, options) => {
+      console.log("countWidth")
       let tagsMenuWidth = document.getElementById("TagsMenu").offsetWidth
-      const imageNavWidth = document.querySelector(".Navbar").offsetWidth
+      const imageNavWidth = document.querySelector(".Navbar") ? document.querySelector(".Navbar").offsetWidth : 0
+      console.log("tagsMenuWidth")
+      console.log(tagsMenuWidth)
+      console.log("imageNavWidth")
+      console.log(imageNavWidth)
       if(options && options.tagsMenuClosed){
         tagsMenuWidth = 0
       }
@@ -917,8 +916,10 @@ export class Provider extends React.Component{
                         }, delay);
                       }
                     }
-                    background.style.height = `${futureSize.height}px`
-                    foreground.style.height = `${futureSize.height}px`
+                    document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
+                    // background.style.height = `${futureSize.height}px`
+                    // foreground.style.height = `${futureSize.height}px`
+
                     // container.style.width = `${futureSize.width}px`
                   }
                   if(options){
@@ -955,7 +956,7 @@ export class Provider extends React.Component{
                     this.setState(newState)
 
                      const loadForeground = () => {
-
+                      console.log("loadForeground")
                        return new Promise((res, rej) => {
                          document.querySelector("#foreground-img").src= fgSrc
                          document.querySelector("#foreground-img").addEventListener('load', () => {

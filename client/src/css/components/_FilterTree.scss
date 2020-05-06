@@ -10,6 +10,10 @@
     width: 300px;
     overflow-y: auto;
     font-family: 'Courier New', Courier, monospace;
+    z-index: 99;
+    background-color: white;
+    border: 1px solid black;
+    border-right: 0;
 }
 .FilterTree-subcategory_item{
     padding: 0 0 5px 15px;
@@ -121,4 +125,17 @@
 }
 .FilterTree-caret_down{
     transform: rotate(180deg);
+}
+
+@media only screen and (max-width: 720px) {
+    .FilterTree-container{
+        height: calc(100% - 90px);
+        width: calc(100% - 100px);
+        transform: translateX(-100%);
+        transition: transform 0.2s;
+        border-right: 1px solid black;
+    }
+    .show-menu{
+        transform: translateX(0);
+    }
 }

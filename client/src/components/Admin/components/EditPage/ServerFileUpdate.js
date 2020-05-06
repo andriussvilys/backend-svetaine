@@ -110,6 +110,7 @@ export default class FileInfo extends React.Component {
                             fileName={this.props.file.fileName}
                             onChange={this.props.context.fileDataMethods.onChange}
                             state={this.props.context.state}
+                            context={this.props.context}
                         />
                     </Tab>
                     <Tab eventKey="familyInfo" title="Edit Artwork Family Info">

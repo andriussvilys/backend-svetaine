@@ -33,15 +33,15 @@ const Combined = (props) => {
             }
             {props.mobile ? 
                 <Fragment>
-                    <div className="menu-container">
-                        <div 
-                        onClick={(e) => {
-                            console.log("combined show menu")
-                            props.context.showMenu(e)}}
-                        className="TagsMenu-Accordion-label category TagsMenu-hamburger">
-                            <div className="TagsMenu-category-title menu-title">
-                                {spreadLetters("menu")}
-                            </div>
+                    <div 
+                    className="menu-container"
+                    onClick={(e) => {
+                        console.log("combined show menu")
+                        props.context.showMenu(e)}
+                    }
+                    >
+                        <div className="menu-title">
+                            {spreadLetters("menu")}
                         </div>
                     </div>
                     <Controls 
