@@ -9,6 +9,7 @@ import PreviewBubbles from './components/ArtworkInfo/PreviewBubble'
 import Controls from './components/ArtworkInfo/Controls'
 
 import FilterTree from './components/TagsMenu/v2/FilterTree'
+import Menu from './components/TagsMenu/v2/Menu';
 
 // import '../../css/frontEndMain.css'
 
@@ -41,10 +42,15 @@ export default class FrontEndIndex extends React.Component{
                         >
                         {/* <TagsMenu context={this.context}>
                         </TagsMenu> */}
-                        <FilterTree 
+                        {/* <FilterTree 
+                            context={this.context}
+                            categoriesData={this.context.state.categoriesData}
+                        /> */}
+                        <Menu
                             context={this.context}
                             categoriesData={this.context.state.categoriesData}
                         />
+
                         <div 
                         id="images" 
                         // className="images-container"

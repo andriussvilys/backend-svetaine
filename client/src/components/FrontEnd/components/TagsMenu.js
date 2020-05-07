@@ -62,7 +62,6 @@ export default class TagsMenu extends React.Component{
             }, delay);
         }
     }
-
     onSubcategoriesClick = (subcategory) => {
         if(document.getElementById(`${subcategory}-listitem`) && document.getElementById(`${subcategory}-listitem`).classList.contains("scroll-down")){
             Array.from(document.getElementsByClassName("scroll-down-listitem")).forEach(item => item.classList.remove("scroll-down-listitem"))
@@ -72,8 +71,6 @@ export default class TagsMenu extends React.Component{
         if(document.getElementById(`${subcategory}-listitem`))
         document.getElementById(`${subcategory}-listitem`).classList.toggle("scroll-down-listitem")
     }
-
-
     createCategories = (data) => {
 
         let buttons = data.map(obj => {
@@ -111,9 +108,7 @@ export default class TagsMenu extends React.Component{
                     {listItems}
                 </div>
     }
-
     listitemsContainer = []
-
     createSubcategories = (data) => {
         let subCatBlocks = []
         let listItems = []
@@ -228,7 +223,6 @@ export default class TagsMenu extends React.Component{
         ]
         return subCatBlocks
     }
-
     render(){
         return <div
         id="TagsMenu"

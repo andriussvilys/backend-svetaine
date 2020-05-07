@@ -135,11 +135,12 @@ const FilterTree = (props) => {
     return tree
     }
 
-    return(
-        <div className="FilterTree-container" id="TagsMenu">
-            {props.categoriesData ? createTree(props.categoriesData) : null}
-        </div>
-    )
+    // return(
+    //     <div className="FilterTree-container" id="TagsMenu">
+    //         {props.categoriesData ? createTree(props.categoriesData) : null}
+    //     </div>
+    // )
+    return createTree(props.categoriesData)
 }
 
 export default FilterTree 
