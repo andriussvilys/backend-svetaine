@@ -18,7 +18,6 @@ let FamilySetupSchema = new Schema({
     familyDescription: {
         type: String,
         required: false,
-        default: ""
     },
     themes: {
         type: Array,

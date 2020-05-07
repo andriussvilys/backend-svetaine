@@ -30,6 +30,9 @@ router.post('/create', (req, res, next) => {
 //update
 router.put('/update/:artworkFamily', (req, res, next) => {
 
+    console.log("req.body.familDescription")
+    console.log(req.body.familyDescription)
+
     FamilySetup.replaceOne(
       {artworkFamily: req.body.artworkFamily},
       req.body
