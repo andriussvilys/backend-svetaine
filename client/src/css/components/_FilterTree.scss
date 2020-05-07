@@ -1,3 +1,7 @@
+.FilteTree-container_main{
+    border: 1px solid black;
+    padding: 4px;
+}
 .FilterTree-list{
     list-style: none;
     padding: 0;
@@ -126,7 +130,6 @@
 .FilterTree-caret_down{
     transform: rotate(180deg);
 }
-
 @media only screen and (max-width: 720px) {
     .FilterTree-container{
         height: calc(100% - 90px);

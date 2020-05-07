@@ -13,28 +13,22 @@ const spreadLetters = (title) => {
     return letters
 }
 
-// const createThemesList = () => {
-//     return(
-//         <div 
-//         className={`FilterTree-list FilterTree-listItems`}
-//         id={`FilterTree-list_themes`}
-//         >
-//             { subcategories[name].map(listItem => {
-//                 return <li 
-//                 className={"FilterTree-item_listItem"}
-//                 key={`FilterTree-listItem-${name}-${listItem}`}>
-//                     {/* <span className={"FilterTree-title FilterTree-title_listItem"}>{listItem}</span> */}
-//                     {createTitle({
-//                         title: listItem,
-//                         onChange: (e) => props.context.filterByListitem(e, parent, name, listItem),
-//                         isChecked: props.context.listitemChecked(parent, name, listItem)
-//                     })}
-//                 </li>
-//                 })
-//             }
-//         </div> 
-//     )
-// }
+const createTheme = (options) => {
+    return(
+        <li 
+        key={options.title} 
+        className={`tags-li ${options.isChecked ? "checkbox-selected" : ""}`}
+        onClick = {(e) => options.filter(e, options.title)}
+        >
+            <div 
+            key={`TagsMenu-theme-${options.title}`} 
+            className={`TagsMenu-category-title TagsMenu-Accordion-label`} 
+            >
+                {spreadLetters(options.title)}
+            </div>
+        </li>
+    )
+}
 
 const renderList = () => {
     if(!props.context.state.themesOnDisplay){
@@ -42,17 +36,13 @@ const renderList = () => {
     }
     const allThemes = Object.keys(props.context.state.themesOnDisplay).filter(theme => props.context.state.themesOnDisplay[theme].length > 0).sort()
     let renderList = allThemes.map(theme => {
-        return <li key={theme} className="tags-li">
-        <Category 
-        key={theme}
-        category={theme}
-        level="theme"
-        onChange={(e) => props.context.filterByTheme(e, theme)}
-        isChecked={props.context.themeChecked(theme)}
-        showContent={() => {return}}
-        titleModifier={"nowrap"}
-    />
-        </li>
+        return (
+            createTheme({
+                title: theme,
+                filter: props.context.filterByTheme,
+                isChecked: props.context.themeChecked(theme)
+            })
+        )
     })
     return <ul className="tagsMenu-list tagsMenu-list-tags">{renderList}</ul>
 }

@@ -1,3 +1,8 @@
+.FilteTree-container_main {
+  border: 1px solid black;
+  padding: 4px;
+}
+
 .FilterTree-list {
   list-style: none;
   padding: 0;

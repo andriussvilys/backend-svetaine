@@ -13,7 +13,7 @@ const Menu = (props) => {
                 categoriesData={props.context.state.categoriesData || []}
                 context={props.context}
             />
-            <div className="button-wrapper TagsMenu-about-contact">
+            {/* <div className="button-wrapper TagsMenu-about-contact">
                 <Category 
                     clickable
                     category="contact"
@@ -36,13 +36,13 @@ const Menu = (props) => {
                 context={props.context}
                 level="category"
             /> */}
-            <Themes
+            {/* <Themes
                 context={props.context}
             />
             <ClearAll 
                 context={props.context}
                 enlarge={props.context.state.enlarge}
-            />
+            /> */}
         </div>
     )
 }
