@@ -45,7 +45,6 @@ client.connect(err => {
 
 //Use routes
 app.use('/api/artworkInfo', artworkInfo);
-<<<<<<< HEAD
 app.use('/api/familySetup', familySetup);
 
 if(process.env.NODE_ENV === 'production'){
@@ -57,7 +56,6 @@ if(process.env.NODE_ENV === 'production'){
 }
 
 const port = process.env.PORT || 5000;
-=======
 app.use('/api/familysetup', familySetup);
 app.use('/api/themes', themes);
 app.use('/api/artworkFamilyList', artworkFamilyList);
@@ -65,7 +63,6 @@ app.use('/api/categories', categories);
 app.use('/api/users', users);
 app.use('/fetchImages', fetchImages);
 app.use('/deleteImage', deleteImage);
->>>>>>> f5af9e571a2fc29ef92bcad30ab29a32653d45f0
 
 app.use('/staticState', staticState);
 app.use('/resize', resize);
