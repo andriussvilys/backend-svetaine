@@ -1,30 +1,37 @@
 import React, { Component } from 'react';
-import { Provider } from './components/Provider';
-import JsonPreview from './components/JsonPreview';
-import ImageInfo from './components/ImageInfo';
-import NavigationInfo from './components/NavigationInfo'
+import { BrowserRouter, Route, Switch, } from 'react-router-dom';
+import {PrivateRoute} from './components/PrivateRoute'
 
+import FrontEndContext from './components/FrontEnd/FrontEndContext'
+
+import Create from './components/Admin/Create';
+import Admin from './components/Admin/Admin'
+import Edit from './components/Admin/Edit'
+import Delete from './components/Admin/oldComponents/Delete'
+import Login from './components/Login'
 import "bootstrap/dist/css/bootstrap.min.css";
-import './css/main.css';
-
-
-
-// const navData = require('./JSON/navigation.json');
-// const categories = Object.keys(navData);
+// import './css/main.css';
 
 export default class App extends Component{
 
   render(){
     return(
-      <Provider>
-        <div className="container">
-          <div className="data-container">
-            <ImageInfo />
-            <NavigationInfo onClick={this.onCheck}/>
-          </div>
-            <JsonPreview />
-      </div>
-        </Provider>
+        <BrowserRouter>
+              <div className="app-container" >
+
+              <Switch>
+                <Route  path="/" exact component={FrontEndContext} />
+                {/* <Route  path="/" exact component={FrontEndIndex} /> */}
+                <Route  path="/admin/login" exact component={Login} />
+                <PrivateRoute  path="/admin"  component={Admin} />
+                <PrivateRoute  path="/admin/create" component={Create} />
+                <PrivateRoute  path="/admin/edit" component={Edit} />
+                <PrivateRoute  path="/admin/delete" component={Delete} />
+                <Route to="/*" exact component={FrontEndContext} />
+              </Switch>
+
+              </div>
+        </BrowserRouter>
     )
   }
 }

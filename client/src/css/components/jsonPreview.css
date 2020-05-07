@@ -1,5 +1,5 @@
 .jsonPreview {
-  height: 100vh;
+  height: calc(100vh - 100px);
   width: 300px;
   -ms-grid-column: 2;
       grid-column-start: 2;
@@ -49,10 +49,6 @@
   width: 260px;
   top: 380px;
   padding-bottom: 50px;
-}
-
-.category {
-  margin-left: 15px;
 }
 
 .jsonPreviewContent {
@@ -111,5 +107,9 @@
 .preview-span {
   font-weight: 600;
   font-size: 14px;
+}
+
+.whiteSpace--break {
+  white-space: normal;
 }
 /*# sourceMappingURL=jsonPreview.css.map */

@@ -2,28 +2,49 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let FamilySetupSchema = new Schema({
-    category: Schema.Types.Mixed,
+    category: {
+        type: Schema.Types.Mixed,
+        default: {}
+    },
+    displayTriggers: {
+        type:Schema.Types.Mixed,
+        default: {category: [], subcategory: [], listitems: [], themes: [], year: "", location: ""}
+    },
     artworkFamily: {
-        type: [],
-        required: true
+        type: String,
+        required: true,
+        unique: true
+    },
+    familyDescription: {
+        type: String,
+        required: false,
     },
     themes: {
         type: Array,
-        required: true
+        required: false,
+        default: []
+    },
+    relatedArtwork: {
+        type: Array,
+        required: false,
+        default: []        
     },
     seeAlso: {
         type: Array,
-        required: true
+        required: false,
+        default: []
     },
     location: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     },
     year: {
         type: String,
-        required: false
+        required: false,
+        default: ""
     }
-});
+}, {minimize: false});
 
 module.exports = FamilySetupSchema = mongoose.model('familySetup', FamilySetupSchema);
 
