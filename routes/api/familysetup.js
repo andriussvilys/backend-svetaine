@@ -1,15 +1,48 @@
 const express = require('express');
 const router = express.Router();
-// const ArtworkInfo = require('../../models/ArtworkInfo')
 const FamilySetup = require('../../models/FamilySetup');
 
-router.get('/', (req, res) => {
-    FamilySetup.find()
-        .then(setup => res.json(setup))
+//get all
+router.get('/', (req, res, next) => {
+  FamilySetup.find()
+      .then(category => res.json(category))
+      .catch(next)
 })
 
-router.post('/', (req, res) => {
-    FamilySetup.create(req.body).then((setup)=>{res.send(setup)})
+//find one
+router.get('/:artworkFamily', (req, res, next) => {
+    console.log(req.params.artworkFamily)
+    FamilySetup.findOne( {"artworkFamily": req.params.artworkFamily} )
+        .then(setup => res.json(setup))
+        .catch(next)
+})
+
+//create new
+router.post('/create', (req, res, next) => {
+  console.log(req.body)
+      FamilySetup.create(req.body)
+        .then(result => {
+          res.send(result)
+        })
+        .catch(next)
+  })
+
+//update
+router.put('/update/:artworkFamily', (req, res, next) => {
+
+    console.log("req.body.familDescription")
+    console.log(req.body.familyDescription)
+
+    FamilySetup.replaceOne(
+      {artworkFamily: req.body.artworkFamily},
+      req.body
+    ) 
+
+   .then(newObj => {
+     res.status(200).send(newObj)
+   })
+  //  .catch(err => {console.log(err); res.status(500).send('problem')})
+  .catch(next)
 })
 
 module.exports = router;
