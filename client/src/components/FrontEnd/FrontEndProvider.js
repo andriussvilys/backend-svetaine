@@ -1509,19 +1509,12 @@ export class Provider extends React.Component{
   //           console.log(err)
   //     })
   // }
-  // componentDidMount(){
-  //     axios.get(`/staticState`)
-  //     .then(res => {
-  //       window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-  //       let newState = res.data
-  //       newState.mobile = this.toggleMobile()
-  //       this.setState(newState)
-  //     })
-  //     .catch(err => {
-  //       console.log("COMPONENT DID MOUNT ERR")
-  //       console.log(err)
-  //     })
-  // }
+  componentDidMount(){
+    let newState = {...this.state}
+            newState.mobile = this.toggleMobile()
+            window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+            this.setState(newState)
+  }
 
     render(){
     return(
