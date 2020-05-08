@@ -23,3 +23,5 @@ yarn-error.log*
 
 node_modules/*
 !node_modules/react-pinch-and-zoom
+
+package.json
