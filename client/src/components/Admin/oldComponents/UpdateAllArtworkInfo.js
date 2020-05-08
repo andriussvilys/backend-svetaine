@@ -58,9 +58,9 @@ const UpdateAllArtworkInfo = (props) => {
                     // displayTriggers.location = fileData.location
                     // fileData.displayTriggers = displayTriggers
 
-                fileData.thumbnailPath = `/uploads/thumbnails/${nameRoot}-thumbnail${fileExtension}`
-                fileData.mobilePath = `/uploads/mobile/${nameRoot}-mob${fileExtension}`
-                fileData.desktopPath = `/uploads/desktop/${nameRoot}-desktop${fileExtension}`
+                fileData.thumbnailPath = `uploads/thumbnails/${nameRoot}-thumbnail${fileExtension}`
+                fileData.mobilePath = `uploads/mobile/${nameRoot}-mob${fileExtension}`
+                fileData.desktopPath = `uploads/desktop/${nameRoot}-desktop${fileExtension}`
     
                 console.log(fileData)
                 console.log("********************************************")

@@ -43,7 +43,7 @@ export class Provider extends React.Component{
         
     this.changeFileName = (e) => {
         let nameWithFileType = `${e.target.value.split('.')[0]}.${this.state.fileType.split('/')[1]}`
-        this.setState({ fileName: nameWithFileType, filePath: `/uploads/${nameWithFileType}` })
+        this.setState({ fileName: nameWithFileType, filePath: `uploads/${nameWithFileType}` })
     }
 
     this.onChange = (e, key, fileName) => {
@@ -1259,7 +1259,7 @@ export class Provider extends React.Component{
                                             fileName: file.name, 
                                             fileType: file.type,
                                             familyDisplayIndex: null,
-                                            src: `/uploads/${file.name}`,
+                                            src: `uploads/${file.name}`,
                                             themes: [],
                                             seeAlso: [],
                                             category: {"studio": {"misc": []}},
@@ -1592,10 +1592,10 @@ export class Provider extends React.Component{
                             let fileDataObject = {                                                 
                             category: fileData.category ? fileData.category : null,
                             displayTriggers: fileData.displayTriggers,
-                            filePath: `/uploads/${fileData.fileName}`,
-                            thumbnailPath: `/uploads/thumbnails/${newName}-thumbnail${fileExtension}`,
-                            mobilePath: `/uploads/mobile/${newName}-mob${fileExtension}`,
-                            desktopPath: `/uploads/desktop/${newName}-desktop${fileExtension}`,
+                            filePath: `uploads/${fileData.fileName}`,
+                            thumbnailPath: `uploads/thumbnails/${newName}-thumbnail${fileExtension}`,
+                            mobilePath: `uploads/mobile/${newName}-mob${fileExtension}`,
+                            desktopPath: `uploads/desktop/${newName}-desktop${fileExtension}`,
                             fileName: fileData.fileName,
                             fileType: fileData.fileType,
                             artworkFamily: artworkFamily ?  artworkFamily : null,
