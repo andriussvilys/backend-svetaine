@@ -12,7 +12,7 @@ export default class FilePreview extends React.Component{
         const previewSource = file.filePath ? file.mobilePath : file.preview
 
         if(fileType.match('image')){
-            return <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
+            return <img className="ImagesPreview--image" alt={file.fileName} src={`/${previewSource}`} />
           
         }
         if(fileType.match('video')){

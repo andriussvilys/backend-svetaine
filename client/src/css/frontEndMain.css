@@ -1,3 +1,8 @@
+.FilteTree-container_main {
+  border: 1px solid black;
+  padding: 4px;
+}
+
 .FilterTree-list {
   list-style: none;
   padding: 0;
@@ -16,6 +21,22 @@
   background-color: white;
   border: 1px solid black;
   border-right: 0;
+}
+
+.FilterTree-title_categories {
+  margin-left: 2px !important;
+}
+
+.FilterTree-form_categories .FilterTree-caret {
+  margin-right: 0 !important;
+}
+
+#FilterTree-list_all:not(.FilterTree-list_closed) {
+  border-bottom: 1px solid black !important;
+}
+
+.FilterTree-form_categories {
+  border-bottom: 1px solid black !important;
 }
 
 .FilterTree-subcategory_item {

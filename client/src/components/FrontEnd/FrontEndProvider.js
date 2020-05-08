@@ -1135,19 +1135,6 @@ export class Provider extends React.Component{
           info.classList.add('show')
         }, counter);
       }
-
-      // else{
-      //   let delay = 0
-      //   if(document.getElementById("ArtworkInfo").classList.contains("ArtworkInfo-toggleTags")){
-      //       document.getElementById("ArtworkInfo").classList.remove("ArtworkInfo-toggleTags")
-      //     delay += 150
-      //   }
-      //   // info.classList.remove('info-up')
-      //   setTimeout(() => {
-      //     info.classList.remove('info-up')
-      //     // info.classList.remove('show')
-      //   }, delay);
-      // }
     }
     this.toggleMobile = () => {
       const container = document.getElementById("enlargeContainer")
@@ -1159,11 +1146,6 @@ export class Provider extends React.Component{
         container.style.height = `${images.clientHeight - 90}px`
         document.getElementById("foreground").style.height = "auto"
         document.getElementById("background").style.height = "auto"
-
-        // Array.from(document.getElementsByClassName("scroll-down")).forEach(item => {
-        //   item.classList.remove("scroll-down")
-        // })
-          // container.classList.add("enlarge-scroll-down")
       }
       else{
         console.log("width/height 100%")
@@ -1172,28 +1154,7 @@ export class Provider extends React.Component{
         document.getElementById('background').style.height = "100%"
         document.getElementById('foreground').style.height = "100%"
         mobile = false
-          // container.style.height = "calc(100% - 50px)"
-        // container.style.width = `${this.state.enlarge ? this.state.enlarge.backg round.currentWidth : 0}px`
       }
-
-      // if(this.state.enlarge && this.state.enlarge.open){
-      //     setTimeout(() => {
-      //       let newState = {...this.state}
-      //       newState.mobile = mobile
-      //       if(mobile){
-      //         imageSelect.classList.add("side-scroll")
-      //         container.classList.add("enlarge-scroll-down")
-      //         container.classList.remove("enlarge-scroll-left")
-      //         this.scrollToHorizontal(this.state.enlarge ? this.state.enlarge.background.fileName : null, "imageSelect")
-      //       }
-      //       else{
-      //         container.classList.remove("enlarge-scroll-down")
-      //         container.classList.add("enlarge-scroll-left")
-      //           // this.animateEnlarge(this.state.enlarge.background, {state: newState})
-      //       }
-      //     }, 400);
-      //   }
-
       if(this.state.enlarge && this.state.enlarge.open){
         let newState = {...this.state}
         newState.mobile = mobile

@@ -12,6 +12,7 @@ import MainContainer from './components/FileUpload/MainContainer';
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo';
 import Themes from './components/Filters/subcomponents/Themes';
 import Categories from './components/Filters/subcomponents/Categories';
+import UpdateAllArtworkInfo from './oldComponents/UpdateAllArtworkInfo';
 
 export default class Create extends Component{
 
@@ -245,6 +246,7 @@ componentDidMount(){
                         }}>
                           WRITE NEW STAIC STATE
                         </button>
+                        <UpdateAllArtworkInfo />
                       </Tab>
                     </Tabs>
                   </div>
