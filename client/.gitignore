@@ -27,3 +27,5 @@ node_modules/*
 package.json
 
 build
+
+src/components/Admin
