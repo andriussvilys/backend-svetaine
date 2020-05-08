@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "f2de08ed72c4ebda3d021ba21827db89",
+    "revision": "35a53f1e8e2d13033e48a7c3b218b067",
     "url": "/backend-svetaine/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/backend-svetaine/static/css/2.69121389.chunk.css"
   },
   {
-    "revision": "ddc2cb62fe85d4fdcf36",
+    "revision": "085b0c0e29aae9093e1b",
     "url": "/backend-svetaine/static/css/main.ba38842c.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/backend-svetaine/static/js/2.ddc11123.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ddc2cb62fe85d4fdcf36",
-    "url": "/backend-svetaine/static/js/main.f45f7d24.chunk.js"
+    "revision": "085b0c0e29aae9093e1b",
+    "url": "/backend-svetaine/static/js/main.43b59222.chunk.js"
   },
   {
     "revision": "c1df018ea9d9588ca6bc",
