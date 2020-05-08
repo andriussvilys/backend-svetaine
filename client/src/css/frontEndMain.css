@@ -23,6 +23,22 @@
   border-right: 0;
 }
 
+.FilterTree-title_categories {
+  margin-left: 2px !important;
+}
+
+.FilterTree-form_categories .FilterTree-caret {
+  margin-right: 0 !important;
+}
+
+#FilterTree-list_all:not(.FilterTree-list_closed) {
+  border-bottom: 1px solid black !important;
+}
+
+.FilterTree-form_categories {
+  border-bottom: 1px solid black !important;
+}
+
 .FilterTree-subcategory_item {
   padding: 0 0 5px 15px;
   position: relative;

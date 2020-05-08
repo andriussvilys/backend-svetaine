@@ -83,12 +83,12 @@ const FilterTree = (props) => {
     })
     return tree
     }
-    // return createTree(props.categoriesData)
 return(
-    <Fragment>
+    <div className="FilterTree-container_main">
         <Accordion 
+        containerClass={"FilterTree-form_categories"}
         listId={"FilterTree-list_all"}>
-            <div className="FilterTree-title">
+            <div className="FilterTree-title FilterTree-title_categories">
                 {spreadLetters("Categories")}
             </div>
         </Accordion>
@@ -98,7 +98,7 @@ return(
         >
             {createTree(props.categoriesData)}  
         </div>
-    </Fragment>
+    </div>
 ) 
 }
 
