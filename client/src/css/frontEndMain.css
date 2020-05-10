@@ -1,6 +1,26 @@
-.FilteTree-container_main {
+.FilterTree-container {
+  height: 100%;
+  width: 300px;
+  overflow-y: scroll;
+  font-family: 'Courier New', Courier, monospace;
+  z-index: 99;
+  background-color: white;
   border: 1px solid black;
-  padding: 4px;
+  border-right: 0;
+}
+
+.FilterTree-container_main {
+  border: 1px solid black;
+  border-top: 0;
+  padding: 0 7px !important;
+}
+
+.FilterTree-wrapper {
+  margin: 8px !important;
+}
+
+.list-item:hover {
+  background-color: rgba(0, 0, 0, 0.07);
 }
 
 .FilterTree-list {
@@ -12,17 +32,6 @@
   overflow: hidden;
 }
 
-.FilterTree-container {
-  height: 100%;
-  width: 300px;
-  overflow-y: auto;
-  font-family: 'Courier New', Courier, monospace;
-  z-index: 99;
-  background-color: white;
-  border: 1px solid black;
-  border-right: 0;
-}
-
 .FilterTree-title_categories {
   margin-left: 2px !important;
 }
@@ -31,12 +40,8 @@
   margin-right: 0 !important;
 }
 
-#FilterTree-list_all:not(.FilterTree-list_closed) {
-  border-bottom: 1px solid black !important;
-}
-
-.FilterTree-form_categories {
-  border-bottom: 1px solid black !important;
+.FilterTree-list_closed {
+  border-bottom: 0 !important;
 }
 
 .FilterTree-subcategory_item {
@@ -69,8 +74,12 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0);
 }
 
+.FilterTree-form_category-title {
+  border: 1px solid black !important;
+  padding: 8px 0 8px 8px;
+}
+
 .FilterTree-form:hover {
-  background-color: rgba(0, 0, 0, 0.03);
   border-bottom: 1px dotted black;
 }
 
@@ -176,6 +185,63 @@
 .FilterTree-caret_down {
   -webkit-transform: rotate(180deg);
           transform: rotate(180deg);
+}
+
+.clearAll-container {
+  display: -webkit-box !important;
+  display: -ms-flexbox !important;
+  display: flex !important;
+  -webkit-box-pack: justify !important;
+      -ms-flex-pack: justify !important;
+          justify-content: space-between !important;
+  border: 1px solid black;
+  margin: 8px 8px 0 8px;
+  cursor: pointer;
+}
+
+.dark-bg {
+  background-color: black;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.white-font {
+  color: white;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.dark-bg:hover {
+  background-color: white;
+}
+
+.dark-bg:hover .white-font {
+  color: black;
+}
+
+.tagsMenu-list {
+  padding: 0 0 8px 8px !important;
+}
+
+.tags-item {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 45%;
+          flex: 1 1 45%;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border: 1px solid black;
+  margin: 8px 8px 0 0;
+  padding: 4px;
 }
 
 @media only screen and (max-width: 720px) {
@@ -877,23 +943,6 @@ label {
   bottom: 0;
 }
 
-.dark-bg {
-  background-color: black;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.white-font {
-  color: white;
-  font-weight: bold;
-  padding-left: 5px;
-  white-space: nowrap;
-}
-
 .halfSize {
   max-width: 50%;
   min-width: 45px;
@@ -1134,20 +1183,6 @@ label {
   top: initial;
   position: initial;
   margin-left: 5px;
-}
-
-.TagsMenu-Accordion-label {
-  display: -webkit-box !important;
-  display: -ms-flexbox !important;
-  display: flex !important;
-  -webkit-box-pack: justify !important;
-      -ms-flex-pack: justify !important;
-          justify-content: space-between !important;
-  border: 1px solid black;
-  margin: 3px;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 48%;
-          flex: 1 1 48%;
 }
 
 .TagsMenu-Accordion-label.category {
@@ -1419,22 +1454,6 @@ label {
   border: 1px solid;
 }
 
-.TagsMenu-Accordion-label:hover .styleCheckbox-checkmark {
-  background-color: white;
-}
-
-.checkbox-selected .title-letter {
-  color: white;
-}
-
-.TagsMenu-category-title:hover * {
-  color: white;
-}
-
-.TagsMenu-category-title:focus * {
-  color: white;
-}
-
 .TagsMenu-category-title:hover .white-font {
   color: red !important;
 }
@@ -1476,10 +1495,6 @@ label {
 }
 
 .previewBubble-filled {
-  background-color: blue !important;
-}
-
-.dark-bg:hover {
   background-color: blue !important;
 }
 

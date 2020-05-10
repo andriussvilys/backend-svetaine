@@ -550,17 +550,6 @@ font-family: 'Times New Roman', Times, serif;
     position: sticky;
     bottom: 0;
 }
-.dark-bg{
-    background-color: black;
-    display: flex;
-    align-items: center;
-}
-.white-font{
-    color: white;
-    font-weight: bold;
-    padding-left: 5px;
-    white-space: nowrap;
-}
 .halfSize{
     max-width: 50%;
     min-width: 45px;
@@ -732,13 +721,13 @@ font-family: 'Times New Roman', Times, serif;
     position: initial;
     margin-left: 5px;
 }
-.TagsMenu-Accordion-label{
-    display: flex !important;
-    justify-content: space-between !important;
-    border: 1px solid black;
-    margin: 3px;
-    flex: 1 1 48%;
-}
+// .TagsMenu-Accordion-label{
+//     display: flex !important;
+//     justify-content: space-between !important;
+//     border: 1px solid black;
+//     margin: 3px;
+//     flex: 1 1 48%;
+// }
 .TagsMenu-Accordion-label.category{
     height: 40px;
 }
@@ -961,19 +950,6 @@ font-family: 'Times New Roman', Times, serif;
     width: 14px;
     border: 1px solid;
 }
-.TagsMenu-Accordion-label:hover .styleCheckbox-checkmark{
-    background-color: white;
-}
-.checkbox-selected .title-letter{
-    color: white;
-}
-
-.TagsMenu-category-title:hover *{
-    color: white;
-}
-.TagsMenu-category-title:focus *{
-    color: white;
-}
 .TagsMenu-category-title:hover .white-font{
     color: red !important;
 }
@@ -1000,22 +976,12 @@ font-family: 'Times New Roman', Times, serif;
 .previewBubble-filled{
     background-color: $checkedcolor !important;
 }
-// .checkbox-selected{
+// .dark-bg:hover{
 //     background-color: $checkedcolor !important;
 // }
-// .styledCheckbox-container input:checked ~ .styleCheckbox-checkmark {
-//     background-color: $checkedcolor !important;
-//   }
-.dark-bg:hover{
-    background-color: $checkedcolor !important;
-}
 .single-container{
     justify-content: flex-end;
 }
-// .pinchContainer{
-//     height: 100%;
-//     width: 100%;
-// }
 
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {

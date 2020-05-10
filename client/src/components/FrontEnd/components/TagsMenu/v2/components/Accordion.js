@@ -3,7 +3,7 @@ import React from 'react'
 const Accordion = (props) => {
     return(
         <div
-        className={`FilterTree-form ${props.containerClass ? props.containerClass : ""}`}
+        className={`FilterTree-form list-item ${props.containerClass ? props.containerClass : ""}`}
         >
             {props.children}
             {props.listId ? 
@@ -28,7 +28,9 @@ const Accordion = (props) => {
                         } 
                         else {
                         list.style.maxHeight = list.scrollHeight + "px";
-                        const parent = document.getElementById("FilterTree-list_all")
+                        // const parent = document.getElementById("FilterTree-list_all")
+                        const parent = document.getElementById(`${props.mainContainer}`)
+
                             if(parent.style.maxHeight){
                                 setTimeout(() => {
                                     parent.style.maxHeight = `${parent.scrollHeight}px` 

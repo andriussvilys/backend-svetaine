@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react'
-import Category from '../Category'
+import Accordion from './components/Accordion'
+import ClearAll from '../../ClearAll'
 
 const Themes = (props) => {
 
@@ -16,16 +17,11 @@ const spreadLetters = (title) => {
 const createTheme = (options) => {
     return(
         <li 
+        className={`tags-item list-item  ${options.isChecked ? "checkbox-selected" : ""}`}
         key={options.title} 
-        className={`tags-li ${options.isChecked ? "checkbox-selected" : ""}`}
         onClick = {(e) => options.filter(e, options.title)}
         >
-            <div 
-            key={`TagsMenu-theme-${options.title}`} 
-            className={`TagsMenu-category-title TagsMenu-Accordion-label`} 
-            >
-                {spreadLetters(options.title)}
-            </div>
+            {spreadLetters(options.title)}
         </li>
     )
 }
@@ -44,51 +40,33 @@ const renderList = () => {
             })
         )
     })
-    return <ul className="tagsMenu-list tagsMenu-list-tags">{renderList}</ul>
-}
-
-const createThemesTitle = () => {
-    return(
-            <div 
-                className="styledCheckbox-container"
-            >
-                <Fragment>{spreadLetters("Themes")}</Fragment>
-                <img 
-                className="FilterTree-caret" 
-                src="icons/triangle.svg" 
-                alt="open or close filter category"
-                onClick={(e) => {
-                    console.log("caret clicked")
-                    e.stopPropagation()
-                    e.target.classList.toggle("FilterTree-caret_down")
-                    const list = document.getElementById("FilterTree-list_themes")
-
-                    let timeout = 1
-                    if (!list.classList.contains("FilterTree-list_closed") && !list.style.maxHeight){
-                        list.style.maxHeight = `${list.scrollHeight}px`
-                        timeout += 200
-                    }
-                    setTimeout(() => {                            
-                        if (!list.classList.contains("FilterTree-list_closed")) {
-                            list.style.maxHeight = 0;
-                        } else {
-                        list.style.maxHeight = list.scrollHeight + "px";
-                        }
-                        list.classList.toggle("FilterTree-list_closed")
-                        return
-                    }, timeout);
-                }}
-                />
-            </div>
-    )
+    return <ul className="tagsMenu-list tagsMenu-list-tags" id="TagsMenu-themes_list">{renderList}</ul>
 }
 
     return(
         <div
-            className={`FilterTree-form`}
+            className="FilterTree-wrapper"
+            id="TagsMenu-themes_main"
         >
-            {renderList()}
-            {createThemesTitle()}
+            <Accordion 
+                containerClass={"FilterTree-form_category-title"}
+                listId={"TagsMenu-themes_list"}
+                mainContainer={"TagsMenu-themes_main"}
+                >
+                <div className="FilterTree-title FilterTree-title_categories">
+                    {spreadLetters("Themes")}
+                </div>
+            </Accordion>
+            <div 
+                className="FilterTree-list FilterTree-category FilterTree-container_main" 
+                id="TagsMenu-themes_list"
+            >
+                <ClearAll 
+                    context={props.context}
+                    enlarge={props.context.state.enlarge}
+                />
+                {renderList()}
+            </div>
         </div>
     )
 }

@@ -18,8 +18,9 @@ const FilterTree = (props) => {
         const subcategoryNames = Object.keys(subcategories)
         const subcategoryLists = subcategoryNames.map(name => {
             return(
-                <li className={`FilterTree-subcategory_item`} key={`FilterTree-${parent}-${name}`}>
+                <li className={`FilterTree-subcategory_item list-item`} key={`FilterTree-${parent}-${name}`}>
                 <Accordion
+                    mainContainer={"FilterTree-list_all"}
                     listId={subcategories[name].length > 0 ? `FilterTree-list_subcategory-${name}` : null}
                 >
                     <Title 
@@ -36,7 +37,7 @@ const FilterTree = (props) => {
                         { subcategories[name].map(listItem => {
                             return (
                                 <li 
-                                className={"FilterTree-item_listItem"}
+                                className={"FilterTree-item_listItem list-item"}
                                 key={`FilterTree-listItem-${name}-${listItem}`}>
                                     <Title 
                                         title={listItem}
@@ -64,12 +65,13 @@ const FilterTree = (props) => {
     const tree = data.map(obj => {
         return (
                 <ul 
-                    className="FilterTree-list FilterTree-category" 
+                    className="FilterTree-list FilterTree-category list-item" 
                     key={`FilterTree-category-${obj.category}`}
                     // id="FilterTree-list_all"
                 >
                     <Accordion
                         listId={ Object.keys(obj.subcategory).length > 0 ? `FilterTree-list_category-${obj.category}` : null}
+                        mainContainer={"FilterTree-list_all"}
                     >
                         <Title 
                             title={obj.category}
@@ -84,16 +86,20 @@ const FilterTree = (props) => {
     return tree
     }
 return(
-    <div className="FilterTree-container_main">
+    <div 
+    className="FilterTree-wrapper"
+    >
         <Accordion 
-        containerClass={"FilterTree-form_categories"}
-        listId={"FilterTree-list_all"}>
+        containerClass={"FilterTree-form_category-title"}
+        listId={"FilterTree-list_all"}
+        mainContainer={"FilterTree-list_all"}
+        >
             <div className="FilterTree-title FilterTree-title_categories">
                 {spreadLetters("Categories")}
             </div>
         </Accordion>
         <div 
-            className="FilterTree-list FilterTree-category" 
+            className="FilterTree-list FilterTree-category FilterTree-container_main" 
             id="FilterTree-list_all"
         >
             {createTree(props.categoriesData)}  

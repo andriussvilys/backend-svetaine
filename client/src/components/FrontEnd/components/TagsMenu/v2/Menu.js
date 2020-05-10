@@ -36,13 +36,9 @@ const Menu = (props) => {
                 context={props.context}
                 level="category"
             /> */}
-            {/* <Themes
+            <Themes
                 context={props.context}
-            />
-            <ClearAll 
-                context={props.context}
-                enlarge={props.context.state.enlarge}
-            /> */}
+            /> 
         </div>
     )
 }
