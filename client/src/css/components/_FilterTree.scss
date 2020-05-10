@@ -26,6 +26,7 @@
     padding-left: 7px;
     transition: 0.2s all;
     overflow: hidden;
+    margin-bottom: 0;
 }
 .FilterTree-title_categories{
     margin-left: 2px !important;
@@ -51,6 +52,9 @@
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+}
+.title-letter{
+    user-select: none;
 }
 .FilterTree-form{
     position: relative;
@@ -185,11 +189,28 @@
     flex: 1 1 45%;
     cursor: pointer;
     display: flex;
-    display: flex;
     justify-content: space-between;
     border: 1px solid black;
     margin: 8px 8px 0 0 ;
     padding: 4px;
+}
+.yearLocation-container{
+    border: 1px solid black;
+    margin: 12px 0;
+}
+.yearLocation-list{
+    margin: 0;
+    padding: 0;
+    padding-left: 8px;
+    font-size: 12px;
+    overflow: hidden;
+    border: 1px solid;
+    border-top: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.yearLocation-item:last-child{
+    margin-bottom: 8px;
 }
 @media only screen and (max-width: 720px) {
     .FilterTree-container{
@@ -201,5 +222,8 @@
     }
     .show-menu{
         transform: translateX(0);
+    }
+    .FilterTree-caret{
+        opacity: 0.5;
     }
 }

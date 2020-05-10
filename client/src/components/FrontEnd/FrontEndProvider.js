@@ -350,50 +350,51 @@ export class Provider extends React.Component{
       // themes.forEach(theme => this.filterByTheme(theme, true))
     }
 
-    this.filterByYear = (year) => {
-            //ON UN-CHECK
-            const newState = {...this.state}
-            const toggleArtwork = [...newState.yearLocation.all.years[year]]
-            let artworkOnDisplay = {...newState.artworkOnDisplay}
+    this.filterByYear = (e, year) => {
+      e.stopPropagation()
+      //ON UN-CHECK
+      const newState = {...this.state}
+      const toggleArtwork = [...newState.yearLocation.all.years[year]]
+      let artworkOnDisplay = {...newState.artworkOnDisplay}
 
-            // if(!checkbox.checked){
-            if(this.yearChecked(year)){
+      // if(!checkbox.checked){
+      if(this.yearChecked(year)){
 
-              toggleArtwork.forEach(item => {
-                document.getElementById(item).classList.add("image-hide")
-              })
+        toggleArtwork.forEach(item => {
+          document.getElementById(item).classList.add("image-hide")
+        })
 
-              setTimeout(() => {
+        setTimeout(() => {
 
-                toggleArtwork.forEach(fileName => {
-                  delete artworkOnDisplay[fileName]
+          toggleArtwork.forEach(fileName => {
+            delete artworkOnDisplay[fileName]
 
-                })
-                return this.setState({artworkOnDisplay: artworkOnDisplay,
-                  yearLocation:{...newState.yearLocation, visible: {
-                    ...newState.yearLocation.visible, years: {
-                      ...newState.yearLocation.visible.years, [year]: []
-                    }
-                  }}
-                })
+          })
+          return this.setState({artworkOnDisplay: artworkOnDisplay,
+            yearLocation:{...newState.yearLocation, visible: {
+              ...newState.yearLocation.visible, years: {
+                ...newState.yearLocation.visible.years, [year]: []
+              }
+            }}
+          })
 
-              }, 400);
+        }, 400);
+      }
+      else{
+        const all = this.state.artworkInfoData
+        const allNames = Object.keys(this.state.artworkInfoData)
+        allNames.forEach(name => {
+          const file = all[name]
+          if(file.displayTriggers.year){
+            if(all[name].displayTriggers.year.includes(year)){
+              artworkOnDisplay = {...artworkOnDisplay, [name]: all[name]}
+              const DOMitem = document.getElementById(name)
+              DOMitem.classList.remove("image-hide")
             }
-            else{
-              const all = this.state.artworkInfoData
-              const allNames = Object.keys(this.state.artworkInfoData)
-              allNames.forEach(name => {
-                const file = all[name]
-                if(file.displayTriggers.year){
-                  if(all[name].displayTriggers.year.includes(year)){
-                    artworkOnDisplay = {...artworkOnDisplay, [name]: all[name]}
-                    const DOMitem = document.getElementById(name)
-                    DOMitem.classList.remove("image-hide")
-                  }
-                }
-              })
-              return this.setState({artworkOnDisplay})
-            }
+          }
+        })
+        return this.setState({artworkOnDisplay})
+      }
 
     }
 
@@ -420,59 +421,60 @@ export class Provider extends React.Component{
       return onDisplay.length > 0
     }
 
-    this.filterByLocation = location => {
-                  //ON UN-CHECK
-                  const newState = {...this.state}
-                  const toggleArtwork = [...newState.yearLocation.all.locations[location]]
+    this.filterByLocation = (e, location) => {
+      e.stopPropagation()
+      //ON UN-CHECK
+      const newState = {...this.state}
+      const toggleArtwork = [...newState.yearLocation.all.locations[location]]
 
-                  let artworkOnDisplay = {...newState.artworkOnDisplay}
+      let artworkOnDisplay = {...newState.artworkOnDisplay}
 
-                  // if(!checkbox.checked){
-                    if(this.locationChecked(location)){
+      // if(!checkbox.checked){
+        if(this.locationChecked(location)){
 
-                    toggleArtwork.forEach(item => {
-                      document.getElementById(item).classList.add("image-hide")
-                    })
+        toggleArtwork.forEach(item => {
+          document.getElementById(item).classList.add("image-hide")
+        })
 
-                    setTimeout(() => {
+        setTimeout(() => {
 
-                      toggleArtwork.forEach(fileName => {
-                        delete artworkOnDisplay[fileName]
+          toggleArtwork.forEach(fileName => {
+            delete artworkOnDisplay[fileName]
 
-                      })
-                      return this.setState({artworkOnDisplay: artworkOnDisplay,
-                        yearLocation:{...newState.yearLocation, visible: {
-                          ...newState.yearLocation.visible, locations: {
-                            ...newState.yearLocation.visible.locations, [location]: []
-                          }
-                        }}
-                      })
+          })
+          return this.setState({artworkOnDisplay: artworkOnDisplay,
+            yearLocation:{...newState.yearLocation, visible: {
+              ...newState.yearLocation.visible, locations: {
+                ...newState.yearLocation.visible.locations, [location]: []
+              }
+            }}
+          })
 
-                    }, 400);
-                  }
-                  else{
-                    const all = this.state.artworkInfoData
-                    const allNames = Object.keys(this.state.artworkInfoData)
-                    allNames.forEach(name => {
-                      const file = all[name]
-                      if(file.displayTriggers.location){
-                        if(all[name].displayTriggers.location.includes(location)){
-                          artworkOnDisplay = {...artworkOnDisplay, [name]: all[name]}
-                          const DOMitem = document.getElementById(name)
-                          DOMitem.classList.remove("image-hide")
-                        }
-                      }
-                    })
+        }, 400);
+      }
+      else{
+        const all = this.state.artworkInfoData
+        const allNames = Object.keys(this.state.artworkInfoData)
+        allNames.forEach(name => {
+          const file = all[name]
+          if(file.displayTriggers.location){
+            if(all[name].displayTriggers.location.includes(location)){
+              artworkOnDisplay = {...artworkOnDisplay, [name]: all[name]}
+              const DOMitem = document.getElementById(name)
+              DOMitem.classList.remove("image-hide")
+            }
+          }
+        })
 
-                    // this.state.yearLocation.all.locations[location].forEach(item => {
-                    // })
+        // this.state.yearLocation.all.locations[location].forEach(item => {
+        // })
 
-                    // this.state.yearLocation.all.locations[location].forEach(fileName => {
-                    //   artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
-                    // })
+        // this.state.yearLocation.all.locations[location].forEach(fileName => {
+        //   artworkOnDisplay = {...artworkOnDisplay, [fileName]: this.state.artworkInfoData[fileName]}
+        // })
 
-                    return this.setState({artworkOnDisplay})
-                  }
+        return this.setState({artworkOnDisplay})
+      }
     }
 
     this.locationChecked = (location) => {

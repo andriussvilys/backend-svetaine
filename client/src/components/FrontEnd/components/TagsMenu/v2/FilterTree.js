@@ -3,12 +3,45 @@ import Accordion from './components/Accordion'
 import Title from './components/Title'
 
 const FilterTree = (props) => {
+
+    const collapse = (e, mainContainer, listId) => {
+        console.log("caret clicked")
+        e.stopPropagation()
+        const caret = e.target.classList.contains("FilterTree-title") ? e.target.nextSibling :  e.target.parentNode.nextSibling
+        console.log(caret)
+        caret.classList.toggle("FilterTree-caret_down")
+        const list = document.getElementById(listId)
+
+        let timeout = 1
+        if (!list.classList.contains("FilterTree-list_closed") && !list.style.maxHeight){
+            list.style.maxHeight = `${list.scrollHeight}px`
+            timeout += 200
+        }
+        setTimeout(() => {      
+            if (!list.classList.contains("FilterTree-list_closed")) {
+                list.style.maxHeight = 0;
+            } 
+            else {
+            list.style.maxHeight = list.scrollHeight + "px";
+            // const parent = document.getElementById("FilterTree-list_all")
+            const parent = document.getElementById(`${mainContainer}`)
+
+                if(parent.style.maxHeight){
+                    setTimeout(() => {
+                        parent.style.maxHeight = `${parent.scrollHeight}px` 
+                    }, 300);
+                }
+            }
+            list.classList.toggle("FilterTree-list_closed")
+            return
+        }, timeout);
+    }
     const spreadLetters = (title) => {
         let letters = Array.from(title).map((letter, index) => {
-            return <div 
+            return <span 
             key={`${title}-leter-${index}`} 
             className="title-letter"
-            >{letter}</div>
+            >{letter}</span>
         })
         return letters
     }
@@ -94,7 +127,12 @@ return(
         listId={"FilterTree-list_all"}
         mainContainer={"FilterTree-list_all"}
         >
-            <div className="FilterTree-title FilterTree-title_categories">
+            <div 
+            className="FilterTree-title FilterTree-title_categories"
+            onClick={(e) => {
+                collapse(e, "FilterTree-list_all", "FilterTree-list_all")
+            }}
+            >
                 {spreadLetters("Categories")}
             </div>
         </Accordion>

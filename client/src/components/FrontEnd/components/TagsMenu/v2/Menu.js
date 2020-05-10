@@ -4,6 +4,7 @@ import Category from '../Category'
 import About from '../../About/About'
 import ClearAll from '../../ClearAll'
 import Themes from './Themes'
+import YearLocation from './YearLocation'
 
 const Menu = (props) => {
     return(
@@ -23,19 +24,16 @@ const Menu = (props) => {
                 <About
                     loadEnlarge={props.context.loadEnlarge}
                 />
-            </div>
-            <Category 
+            </div> */}
+            {/* <Category 
                 clickable
                 category="year/location"
                 level="category"
                 context={props.context}
-            />
-            {/* <Category 
-                clickable
-                category="themes"
-                context={props.context}
-                level="category"
             /> */}
+            <YearLocation 
+                context={props.context}
+            />
             <Themes
                 context={props.context}
             /> 
