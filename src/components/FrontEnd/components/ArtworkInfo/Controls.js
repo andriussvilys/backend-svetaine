@@ -54,12 +54,6 @@ const Controls = (props) => {
             if(artworkInfo){
                 artworkInfo.classList.toggle("info-up")
             }
-            //     if(artworkInfo.classList.contains("info-up")){
-            //     }
-            //     else{
-            //         artworkInfo.classList.add("info-up")
-            //     }
-            // }
         }
         return(
             <div 
@@ -70,10 +64,30 @@ const Controls = (props) => {
             </div>
         )
     }
+    const spreadLetters = (title) => {
+        let letters = Array.from(title).map((letter, index) => {
+            return <span 
+            key={`${title}-leter-${index}`} 
+            className="title-letter"
+            >{letter}</span>
+        })
+        return letters
+    }
 
     return(
         <div className="controls">
             {slideButton()}
+            <div 
+                className="menu-container"
+                onClick={(e) => {
+                    console.log("combined show menu")
+                    props.context.showMenu(e)}
+                }
+                >
+                <div className="menu-title">
+                    {spreadLetters("menu")}
+                </div>
+            </div>
             {exitButton()}
         </div>
     )

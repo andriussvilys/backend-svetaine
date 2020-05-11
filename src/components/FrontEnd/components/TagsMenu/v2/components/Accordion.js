@@ -2,9 +2,22 @@ import React, { Fragment } from 'react'
 
 const Accordion = (props) => {
     const collapse = (e) => {
-        // console.log("caret clicked")
         e.stopPropagation()
-        e.target.classList.toggle("FilterTree-caret_down")
+        let caret = null
+        //if clicked on caret
+        if(e.target.classList.contains("FilterTree-caret")){ caret = e.target}
+        else{
+            if(props.collapse){
+                console.log(e.target)
+                if(e.target.classList.contains("title-letter")){
+                    caret = e.target.parentNode.nextSibling
+                }
+                else{
+                    caret = e.target.nextSibling
+                }
+            }
+        }
+        caret.classList.toggle("FilterTree-caret_down")
         const list = document.getElementById(props.listId)
 
         let timeout = 1
@@ -36,7 +49,17 @@ const Accordion = (props) => {
         <div
         className={`FilterTree-form list-item ${props.containerClass ? props.containerClass : ""}`}
         >   
-            {props.children}
+            <div 
+            className="FilterTree-title FilterTree-title_categories"
+            onClick={e => {
+                if(props.collapse){
+                    collapse(e)
+                }
+                else{return}
+            }}
+            >
+                {props.children}
+            </div>
             {props.listId ? 
                 <img 
                 className="FilterTree-caret" 

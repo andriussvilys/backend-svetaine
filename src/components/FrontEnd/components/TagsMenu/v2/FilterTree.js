@@ -4,38 +4,6 @@ import Title from './components/Title'
 
 const FilterTree = (props) => {
 
-    const collapse = (e, mainContainer, listId) => {
-        console.log("caret clicked")
-        e.stopPropagation()
-        const caret = e.target.classList.contains("FilterTree-title") ? e.target.nextSibling :  e.target.parentNode.nextSibling
-        console.log(caret)
-        caret.classList.toggle("FilterTree-caret_down")
-        const list = document.getElementById(listId)
-
-        let timeout = 1
-        if (!list.classList.contains("FilterTree-list_closed") && !list.style.maxHeight){
-            list.style.maxHeight = `${list.scrollHeight}px`
-            timeout += 200
-        }
-        setTimeout(() => {      
-            if (!list.classList.contains("FilterTree-list_closed")) {
-                list.style.maxHeight = 0;
-            } 
-            else {
-            list.style.maxHeight = list.scrollHeight + "px";
-            // const parent = document.getElementById("FilterTree-list_all")
-            const parent = document.getElementById(`${mainContainer}`)
-
-                if(parent.style.maxHeight){
-                    setTimeout(() => {
-                        parent.style.maxHeight = `${parent.scrollHeight}px` 
-                    }, 300);
-                }
-            }
-            list.classList.toggle("FilterTree-list_closed")
-            return
-        }, timeout);
-    }
     const spreadLetters = (title) => {
         let letters = Array.from(title).map((letter, index) => {
             return <span 
@@ -89,16 +57,18 @@ const FilterTree = (props) => {
         })
         return (
             <ul 
-            className={`FilterTree-list FilterTree-subcategories`}
+            className={`FilterTree-list`}
             id={`FilterTree-list_category-${parent}`}
-            >{subcategoryLists}</ul>
+            >
+                {subcategoryLists}
+            </ul>
         )
     }
 
     const tree = data.map(obj => {
         return (
                 <ul 
-                    className="FilterTree-list FilterTree-category list-item" 
+                    className="FilterTree-list FilterTree-category FilterTree-subcategories list-item" 
                     key={`FilterTree-category-${obj.category}`}
                     // id="FilterTree-list_all"
                 >
@@ -126,15 +96,9 @@ return(
         containerClass={"FilterTree-form_category-title"}
         listId={"FilterTree-list_all"}
         mainContainer={"FilterTree-list_all"}
+        collapse
         >
-            <div 
-            className="FilterTree-title FilterTree-title_categories"
-            onClick={(e) => {
-                collapse(e, "FilterTree-list_all", "FilterTree-list_all")
-            }}
-            >
-                {spreadLetters("Categories")}
-            </div>
+            {spreadLetters("Categories")}
         </Accordion>
         <div 
             className="FilterTree-list FilterTree-category FilterTree-container_main" 

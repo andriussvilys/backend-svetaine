@@ -1,6 +1,4 @@
 import React, { Fragment } from 'react'
-import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
-import PreviewBubbles from '../ArtworkInfo/PreviewBubble'
 import PinchToZoom from 'react-pinch-and-zoom'
 import Combined from '../ArtworkInfo/Combined'
 

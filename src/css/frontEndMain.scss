@@ -366,6 +366,7 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     height: 100%;
     opacity: 1;
+    max-height: 100%;
 }
 #background{
     z-index: 1;
@@ -468,40 +469,9 @@ font-family: 'Times New Roman', Times, serif;
     animation-duration: 2s;
     animation-timing-function: ease-out;
 }
-// @keyframes move-left{
-//     0% {
-//         left: 100%;
-//     }
-//     100% {
-//         left: 0;
-//     }
-// }
-// .move-left{
-//     animation-name: move-left;
-//     animation-duration: 0.2s;
-//     animation-timing-function: ease-out;
-// }
-// @keyframes foreground-shrink{
-//     0% {
-//         height: 100%;
-//         width: 100%;
-//     }
-//     100% {
-//         height: 0;
-//         width: 100%;
-//     }
-// }
-// .foreground-shrink{
-//     animation-duration: 0.2s;
-//     animation-timing-function: ease-out;
-//     animation-fill-mode: forwards;
-// }
-
 .Tags-item_wrapper{
     display: flex;
     flex-wrap: wrap;
-    // margin: 1vw 2vw;
-    // margin-top: 0;
     margin: 20px;
     justify-content: flex-end;
     
@@ -509,7 +479,7 @@ font-family: 'Times New Roman', Times, serif;
 .Tags-item_container{
     font-family: 'Courier New', Courier, monospace;
     border: 1px solid black;
-    padding: 4px 7px 2px 7px;
+    padding: 2px 7px 2px 7px;
     margin: 2px 3px;
     cursor: pointer;
 }
@@ -559,7 +529,7 @@ font-family: 'Times New Roman', Times, serif;
     height: 50px;
     width: 100%;
     bottom: 0;
-    background-color: yellow;
+    background-color: white;
 }
 .previewBubble-container{
     display: flex;
@@ -597,7 +567,8 @@ font-family: 'Times New Roman', Times, serif;
     display: flex;
     justify-content: flex-end;
     transform: translateY(100%);
-    transition: 0.2s transform !important, .4s opacity;
+    transition: 0.2s all !important;
+    // transition: 0.2s transform !important, .4s opacity;
     position: absolute;
     border-top: 1px solid black;
     background-color: white;
@@ -992,9 +963,15 @@ font-family: 'Times New Roman', Times, serif;
     .TagsMenu-category-title:hover *{
         color: black;
     }
-    *{
+    .enlargeContainer *{
         transition: 0s all !important;
     }
+    .ArtworkInfo-container{
+        transition: 0.2s all !important;
+    }
+    // *{
+    //     transition: 0s all !important;
+    // }
     #foreground{
         mix-blend-mode: unset;
     }
@@ -1014,15 +991,17 @@ font-family: 'Times New Roman', Times, serif;
         max-height: 70px;
     }
     .menu-container{
-        right: 0;
         display: flex;
         height: 100%;
-        position: absolute;
-        bottom: 50px;
         width: 100px;
         background-color: white;
-        border-top: 1px solid black;
+        cursor: pointer;
         border-left: 1px solid black;
+        // right: 0;
+        // position: absolute;
+        // bottom: 50px;
+        // border-top: 1px solid black;
+        // border-left: 1px solid black;
     }
     .menu-title{
         display: flex;
@@ -1060,7 +1039,7 @@ font-family: 'Times New Roman', Times, serif;
         flex: 1;
         height: 100%;
         border: none;
-        max-width: calc(100% - 100px);
+        max-width: calc(100% - 200px);
     }
     .previewBubble-wrapper{
         position: initial;
