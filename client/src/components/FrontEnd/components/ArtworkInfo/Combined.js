@@ -32,23 +32,9 @@ const Combined = (props) => {
                 </Fragment> : null
             }
             {props.mobile ? 
-                <Fragment>
-                    <div 
-                    className="menu-container"
-                    onClick={(e) => {
-                        console.log("combined show menu")
-                        props.context.showMenu(e)}
-                    }
-                    >
-                        <div className="menu-title">
-                            {spreadLetters("menu")}
-                        </div>
-                    </div>
-                    <Controls 
-                        context={props.context}
-                    />
-                </Fragment>
-                : null
+                <Controls 
+                    context={props.context}
+                /> : null
             }
         </div>
     )

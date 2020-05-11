@@ -57,7 +57,7 @@ const renderList = () => {
                 {spreadLetters("Themes")}
             </Accordion>
             <div 
-                className="FilterTree-list FilterTree-category FilterTree-container_main" 
+                className="FilterTree-list FilterTree-category FilterTree-container_main FilterTree-list_closed" 
                 id="TagsMenu-themes_list"
             >
                 <ClearAll 

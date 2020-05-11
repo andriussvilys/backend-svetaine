@@ -57,16 +57,18 @@ const FilterTree = (props) => {
         })
         return (
             <ul 
-            className={`FilterTree-list FilterTree-subcategories`}
+            className={`FilterTree-list`}
             id={`FilterTree-list_category-${parent}`}
-            >{subcategoryLists}</ul>
+            >
+                {subcategoryLists}
+            </ul>
         )
     }
 
     const tree = data.map(obj => {
         return (
                 <ul 
-                    className="FilterTree-list FilterTree-category list-item" 
+                    className="FilterTree-list FilterTree-category FilterTree-subcategories list-item" 
                     key={`FilterTree-category-${obj.category}`}
                     // id="FilterTree-list_all"
                 >

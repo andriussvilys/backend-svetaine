@@ -850,11 +850,13 @@ export class Provider extends React.Component{
                   //COUNT FUTURE SIZES
                   //DESKTOP
                   if(!this.state.mobile){
-                    //flip from mobile to desktop reset
-                    // if(document.getElementById('background').style.width !== "100%"){
-                    //   document.getElementById('background').style.width = "100%"
-                    //   document.getElementById('foreground').style.width = "100%"
-                    // }
+                    if(background.style.width !== "100%" || background.style.height !== "100%"){
+                      console.log("reset desktop enlarge")
+                      document.getElementById('background').style.width = "100%"
+                      document.getElementById('foreground').style.width = "100%"
+                      document.getElementById('background').style.height = "100%"
+                      document.getElementById('foreground').style.height = "100%"
+                    }
                     futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
                   }
                   //MOBILES**************************************************************************************
@@ -1149,14 +1151,14 @@ export class Provider extends React.Component{
         document.getElementById("foreground").style.height = "auto"
         document.getElementById("background").style.height = "auto"
       }
-      else{
-        console.log("width/height 100%")
-        document.getElementById('background').style.width = "100%"
-        document.getElementById('foreground').style.width = "100%"
-        document.getElementById('background').style.height = "100%"
-        document.getElementById('foreground').style.height = "100%"
-        mobile = false
-      }
+      // else{
+      //   console.log("width/height 100%")
+      //   document.getElementById('background').style.width = "100%"
+      //   document.getElementById('foreground').style.width = "100%"
+      //   document.getElementById('background').style.height = "100%"
+      //   document.getElementById('foreground').style.height = "100%"
+      //   mobile = false
+      // }
       if(this.state.enlarge && this.state.enlarge.open){
         let newState = {...this.state}
         newState.mobile = mobile

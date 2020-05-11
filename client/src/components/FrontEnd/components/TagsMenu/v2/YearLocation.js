@@ -1,5 +1,6 @@
 import React from 'react'
 import Accordion from './components/Accordion'
+import Title from './components/Title'
 import ClearAll from '../../ClearAll'
 
 const YearLocation = (props) => {
@@ -23,73 +24,121 @@ const YearLocation = (props) => {
             </li>
         )
     }
-    const renderLocationList = () => {
-        const data = props.context.state.yearLocation.all.locations
-        const locations = Object.keys(data).filter(location => data[location].length > 0).sort()
-        let List = locations.map(location => {
-            return (
-                createTheme({
-                    title: location,
-                    filter: props.context.filterByLocation,
-                    isChecked: props.context.locationChecked(location)
-                })
-            )
-        })
-        return (
-            <div className="yearLocation-container">
-                <Accordion
-                    containerClass={"FilterTree-form_category-title"}
-                    listId={`FilterTree-list_yearLocation_location`}
-                    mainContainer={"TagsMenu-yearLocation_list"}
-                    collapse
-                >
-                    {/* <div className="FilterTree-title FilterTree-title_categories"> */}
-                        {spreadLetters("Locations")}
-                    {/* </div> */}
-                </Accordion>
-                <ul 
-                    className="FilterTree-list yearLocation-list" 
-                    id="FilterTree-list_yearLocation_location"
-                    // onClick={e => collapse(e, "TagsMenu-yearLocation_list", `FilterTree-list_yearLocation_location`)}
-                >
-                    {List}
-                </ul>
-            </div>
-        )
-    }
+    // const renderLocationList = () => {
+    //     const data = props.context.state.yearLocation.all.locations
+    //     const locations = Object.keys(data).filter(location => data[location].length > 0).sort()
+    //     let List = locations.map(location => {
+    //         return (
+    //             createTheme({
+    //                 title: location,
+    //                 filter: props.context.filterByLocation,
+    //                 isChecked: props.context.locationChecked(location)
+    //             })
+    //         )
+    //     })
+    //     return (
+    //         <div className="yearLocation-container">
+    //             <Accordion
+    //                 containerClass={"FilterTree-form_category-title"}
+    //                 listId={`FilterTree-list_yearLocation_location`}
+    //                 mainContainer={"TagsMenu-yearLocation_list"}
+    //                 collapse
+    //             >
+    //                 {/* <div className="FilterTree-title FilterTree-title_categories"> */}
+    //                     {spreadLetters("Locations")}
+    //                 {/* </div> */}
+    //             </Accordion>
+    //             <ul 
+    //                 className="FilterTree-list yearLocation-list" 
+    //                 id="FilterTree-list_yearLocation_location"
+    //                 // onClick={e => collapse(e, "TagsMenu-yearLocation_list", `FilterTree-list_yearLocation_location`)}
+    //             >
+    //                 {List}
+    //             </ul>
+    //         </div>
+    //     )
+    // }
     const renderYearList = () => {
         const data = props.context.state.yearLocation.all.years
         const years = Object.keys(data).filter(year => data[year].length > 0).sort()
         let List = years.map(year => {
             return (
-                createTheme({
-                    title: year,
-                    filter: props.context.filterByYear,
-                    isChecked: props.context.yearChecked(year)
-                })
+                <li 
+                className={"FilterTree-item_listItem list-item"}
+                key={`FilterTree-yearLocation-year-${year}`}>
+                    <Title 
+                        title={year}
+                        onChange={(e) => props.context.filterByYear(e, year)}
+                        isChecked={props.context.yearChecked(year)}
+                    />
+                </li>
             )
-        })
+        }) 
+
         return (
-            <div className="yearLocation-container">
+            <ul 
+            className={`FilterTree-list FilterTree-subcategories`}
+            id={`FilterTree-yearLocation-year`}
+            >
+                <li className={"list-item"} key={`FilterTree-yearLocation-year`}>
                 <Accordion
-                    containerClass={"FilterTree-form_category-title"}
-                    listId={`FilterTree-list_yearLocation_year`}
                     mainContainer={"TagsMenu-yearLocation_list"}
+                    listId={`FilterTree-list_yearLocation_year`}
                     collapse
                 >
-                    {/* <div className="FilterTree-title FilterTree-title_categories"> */}
-                        {spreadLetters("Years")}
-                    {/* </div> */}
+                    {/* {spreadLetters("Year")} */}
+                    <span>Year</span>
                 </Accordion>
-                <ul 
-                    // className="FilterTree-list FilterTree-category" 
-                    className="FilterTree-list yearLocation-list"
-                    id="FilterTree-list_yearLocation_year"
-                    // onClick={e => collapse(e, "TagsMenu-yearLocation_list", `FilterTree-list_yearLocation_location`)}
+                    <ul 
+                        className={"FilterTree-list list-item"}
+                        id="FilterTree-list_yearLocation_year"
+                    >
+                        {List}
+                    </ul>
+                </li>
+            </ul>
+        )
+    }
+    const renderLocationList = () => {
+        const data = props.context.state.yearLocation.all.locations
+        const locations = Object.keys(data).filter(location => data[location].length > 0).sort()
+        let List = locations.map(location => {
+            return (
+                <li 
+                className={"FilterTree-item_listItem list-item"}
+                key={`FilterTree-yearLocation-year-${location}`}>
+                    <Title 
+                        title={location}
+                        onChange={(e) => props.context.filterByLocation(e, location)}
+                        isChecked={props.context.locationChecked(location)}
+                    />
+                </li>
+            )
+        }) 
+
+        return (
+            <ul 
+            className={`FilterTree-list FilterTree-subcategories`}
+            id={`FilterTree-yearLocation-location`}
+            >
+                <li className={"list-item"} key={`FilterTree-yearLocation-location`}>
+                <Accordion
+                    mainContainer={"TagsMenu-yearLocation_list"}
+                    listId={`FilterTree-list_yearLocation_location`}
+                    collapse
                 >
-                    {List}
-                </ul>
-            </div>
+                    {/* {spreadLetters("Location")} */}
+                    <span>Location</span>
+                </Accordion>
+                    <ul 
+                        // className={"TagsMen-yearLocation-dropdown list-item"}
+                        className={"FilterTree-list list-item"}
+                        id="FilterTree-list_yearLocation_location"
+                    >
+                        {List}
+                    </ul>
+                </li>
+            </ul>
         )
     }
 
@@ -108,7 +157,7 @@ const YearLocation = (props) => {
                 {spreadLetters("Year / Location")}
             </Accordion>
             <div 
-                className="FilterTree-list FilterTree-category FilterTree-container_main" 
+                className="FilterTree-list FilterTree-category FilterTree-container_main FilterTree-list_closed" 
                 id="TagsMenu-yearLocation_list"
             >
                 {renderYearList()}

@@ -36,16 +36,9 @@ export default class FrontEndIndex extends React.Component{
             <Context.Consumer>
                 {() => {
                     return (
-                    // <div className="app-container">
                         <div 
                             className="frontEndIndex-container"
                         >
-                        {/* <TagsMenu context={this.context}>
-                        </TagsMenu> */}
-                        {/* <FilterTree 
-                            context={this.context}
-                            categoriesData={this.context.state.categoriesData}
-                        /> */}
                         <Menu
                             context={this.context}
                             categoriesData={this.context.state.categoriesData}
@@ -53,7 +46,6 @@ export default class FrontEndIndex extends React.Component{
 
                         <div 
                         id="images" 
-                        // className="images-container"
                         className={this.context.state.mobile ? "images-container"  : "images-container images-grid" }
                         >
                             <ImageSelect 
@@ -61,7 +53,6 @@ export default class FrontEndIndex extends React.Component{
                                 mobile={this.context.state.mobile}
                                 state={this.context.state}
                                 context={this.context}
-                                // data={this.context.state.visibleArtwork}
                                 methods={{
                                     enlarge: this.context.enlarge,
                                     loadEnlarge: this.context.loadEnlarge,
