@@ -3,42 +3,6 @@ import Accordion from './components/Accordion'
 import ClearAll from '../../ClearAll'
 
 const YearLocation = (props) => {
-
-    const collapse = (e, mainContainer, listId) => {
-        console.log("caret clicked")
-        e.stopPropagation()
-        if(e.target.classList.contains(".FilterTree-container_main")){
-            return
-        }
-        const caret = e.target.classList.contains("FilterTree-title") ? e.target.nextSibling :  e.target.parentNode.nextSibling
-        console.log(caret)
-        caret.classList.toggle("FilterTree-caret_down")
-        const list = document.getElementById(listId)
-
-        let timeout = 1
-        if (!list.classList.contains("FilterTree-list_closed") && !list.style.maxHeight){
-            list.style.maxHeight = `${list.scrollHeight}px`
-            timeout += 200
-        }
-        setTimeout(() => {      
-            if (!list.classList.contains("FilterTree-list_closed")) {
-                list.style.maxHeight = 0;
-            } 
-            else {
-            list.style.maxHeight = list.scrollHeight + "px";
-            // const parent = document.getElementById("FilterTree-list_all")
-            const parent = document.getElementById(`${mainContainer}`)
-
-                if(parent.style.maxHeight){
-                    setTimeout(() => {
-                        parent.style.maxHeight = `${parent.scrollHeight}px` 
-                    }, 300);
-                }
-            }
-            list.classList.toggle("FilterTree-list_closed")
-            return
-        }, timeout);
-    }
     const spreadLetters = (title) => {
         let letters = Array.from(title).map((letter, index) => {
             return <span 
@@ -77,14 +41,16 @@ const YearLocation = (props) => {
                     containerClass={"FilterTree-form_category-title"}
                     listId={`FilterTree-list_yearLocation_location`}
                     mainContainer={"TagsMenu-yearLocation_list"}
+                    collapse
                 >
-                    <div className="FilterTree-title FilterTree-title_categories">
+                    {/* <div className="FilterTree-title FilterTree-title_categories"> */}
                         {spreadLetters("Locations")}
-                    </div>
+                    {/* </div> */}
                 </Accordion>
                 <ul 
                     className="FilterTree-list yearLocation-list" 
                     id="FilterTree-list_yearLocation_location"
+                    // onClick={e => collapse(e, "TagsMenu-yearLocation_list", `FilterTree-list_yearLocation_location`)}
                 >
                     {List}
                 </ul>
@@ -109,15 +75,17 @@ const YearLocation = (props) => {
                     containerClass={"FilterTree-form_category-title"}
                     listId={`FilterTree-list_yearLocation_year`}
                     mainContainer={"TagsMenu-yearLocation_list"}
+                    collapse
                 >
-                    <div className="FilterTree-title FilterTree-title_categories">
+                    {/* <div className="FilterTree-title FilterTree-title_categories"> */}
                         {spreadLetters("Years")}
-                    </div>
+                    {/* </div> */}
                 </Accordion>
                 <ul 
                     // className="FilterTree-list FilterTree-category" 
                     className="FilterTree-list yearLocation-list"
                     id="FilterTree-list_yearLocation_year"
+                    // onClick={e => collapse(e, "TagsMenu-yearLocation_list", `FilterTree-list_yearLocation_location`)}
                 >
                     {List}
                 </ul>
@@ -130,20 +98,14 @@ const YearLocation = (props) => {
         return(
         <div
             className="FilterTree-wrapper"
-            onClick={e => {
-                collapse(e, "TagsMenu-yearLocation_list", "TagsMenu-yearLocation_list")
-            }}
-            // id="TagsMenu-yearLocation_main"
         >   
             <Accordion 
                 containerClass={"FilterTree-form_category-title"}
                 listId={"TagsMenu-yearLocation_list"}
                 mainContainer={"TagsMenu-yearLocation_list"}
-                // mainContainer={"TagsMenu-yearLocation_main"}
-                >
-                <div className="FilterTree-title FilterTree-title_categories">
-                    {spreadLetters("Year / Location")}
-                </div>
+                collapse
+            >
+                {spreadLetters("Year / Location")}
             </Accordion>
             <div 
                 className="FilterTree-list FilterTree-category FilterTree-container_main" 
