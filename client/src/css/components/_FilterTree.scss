@@ -235,6 +235,10 @@ ul{
         transition: transform 0.2s !important;
         border-right: 1px solid black;
     }
+    .FilterTree-form{
+        border-bottom: 1px dotted rgba(0,0,0,0.7);
+        padding-top: 5px;
+    }
     .show-menu{
         transform: translateX(0);
     }
