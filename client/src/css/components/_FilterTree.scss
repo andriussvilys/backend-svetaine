@@ -234,6 +234,9 @@ ul{
         transform: translateX(-100%);
         transition: transform 0.2s !important;
         border-right: 1px solid black;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        width: 80%;
     }
     .show-menu{
         transform: translateX(0);

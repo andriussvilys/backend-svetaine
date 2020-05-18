@@ -31,11 +31,11 @@ const Combined = (props) => {
                     />
                 </Fragment> : null
             }
-            {props.mobile ? 
+            {/* {props.mobile ? 
                 <Controls 
                     context={props.context}
                 /> : null
-            }
+            } */}
         </div>
     )
 }

@@ -11,6 +11,9 @@ import Controls from './components/ArtworkInfo/Controls'
 import FilterTree from './components/TagsMenu/v2/FilterTree'
 import Menu from './components/TagsMenu/v2/Menu';
 
+import TopBar from './components/Nav/MobileBars/TopBar'
+import BottomBar from './components/Nav/MobileBars/BottomBar'
+
 // import '../../css/frontEndMain.css'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
@@ -43,6 +46,11 @@ export default class FrontEndIndex extends React.Component{
                             context={this.context}
                             categoriesData={this.context.state.categoriesData}
                         />
+                        {this.context.state.mobile ? 
+                        <TopBar 
+                            context={this.context}
+                        /> : null
+                        }
 
                         <div 
                         id="images" 
@@ -72,8 +80,11 @@ export default class FrontEndIndex extends React.Component{
                                 mobile={this.context.state.mobile}
                             />
                         </div>
-                        {!this.context.state.mobile ? 
-                        <Nav context={this.context}/> :   null }
+                        {this.context.state.mobile ? 
+                        <BottomBar 
+                            context={this.context}
+                        /> : null
+                        }
                     </div>
                     )
                 }}

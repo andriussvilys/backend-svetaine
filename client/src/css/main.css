@@ -1421,11 +1421,6 @@ h5 {
   border-bottom: 0 !important;
 }
 
-#button-next, #button-prev {
-  -webkit-transition: 0.2s all;
-  transition: 0.2s all;
-}
-
 .nav-menuButton {
   background-color: white;
   padding: 10px;
