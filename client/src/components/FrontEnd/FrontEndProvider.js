@@ -338,9 +338,6 @@ export class Provider extends React.Component{
         }, 200);
       }
       else{
-        // Object.keys(this.state.visibleArtwork).forEach(id => {
-        //     document.getElementById(id).classList.remove('image-hide')
-        // })
         Object.keys(this.state.artworkInfoData).forEach(id => {
             document.getElementById(id).classList.remove('image-hide')
             document.getElementById(id).classList.remove('FilePreview--imageContainer__empty')
@@ -348,7 +345,6 @@ export class Provider extends React.Component{
         })
         return this.setState({artworkOnDisplay: {...this.state.visibleArtwork}})
       }
-      // themes.forEach(theme => this.filterByTheme(theme, true))
     }
 
     this.filterByYear = (e, year) => {
@@ -879,12 +875,12 @@ export class Provider extends React.Component{
                   //MOBILE
                   if(this.state.mobile){
                     if(!container.classList.contains("enlarge-scroll-down")){
-                      container.style.height = `${images.clientHeight - 90}px`
+                      container.style.height = `${images.clientHeight - 90 - 50}px`
                       container.classList.add("enlarge-scroll-down")
                       scrollToDelay = 400
                       setTimeout(() => {
                           imageSelect.classList.add("side-scroll")
-                      }, 200);
+                      }, 400);
                     }
                   }
                   //DESKTOP

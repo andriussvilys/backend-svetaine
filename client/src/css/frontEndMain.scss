@@ -338,7 +338,7 @@ font-family: 'Times New Roman', Times, serif;
     width: 1px;
     position: absolute;
     max-width: 100%;
-    transition: 0.4s all;
+    transition: 0.3s all;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
@@ -963,9 +963,6 @@ font-family: 'Times New Roman', Times, serif;
     .TagsMenu-category-title:hover *{
         color: black;
     }
-    .enlargeContainer *{
-        transition: 0s all !important;
-    }
     .ArtworkInfo-container{
         transition: 0.2s all !important;
     }
@@ -1008,7 +1005,7 @@ font-family: 'Times New Roman', Times, serif;
         width: 100%;
         justify-content: space-between;
         align-items: center;
-        padding-right: 5px;
+        padding: 0 5px;
     }
     .menu-title *{
         color: black !important;
@@ -1180,6 +1177,13 @@ font-family: 'Times New Roman', Times, serif;
         transform: none;
         overflow: hidden;
         bottom: calc(100% - 49px);
+
+        transform: translateY(calc(-100% + 49px));
+        top: unset;
+        bottom: unset;
+    }
+    .enlargeContainer *{
+        transition: 0.3s all !important;
     }
     .enlarge-info{
         display: flex;
@@ -1194,17 +1198,8 @@ font-family: 'Times New Roman', Times, serif;
         display: initial;
         border-left: none;
     }
-    // .pinch-to-zoom-container{
-    //     display: none;
-    //     border: none;
-    // }
     .enlarge-scroll-down{
-        display: grid;
         transform: translateY(0px);
-        top: 0;
-        // .pinch-to-zoom-container{
-        //     display: initial;
-        // }
     }
     .scroll-down{
         top: 0;

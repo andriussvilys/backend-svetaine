@@ -6,7 +6,7 @@ const ClearAll = (props) => {
 
     const clearImgs = (hide, e) => {
         props.context.filterAllThemes(hide)
-            props.context.closeEnlarge(e, true)
+        props.context.closeEnlarge(e, true)
     }
 
     const spreadLetters = (title) => {
