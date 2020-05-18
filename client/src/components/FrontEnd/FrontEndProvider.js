@@ -1,5 +1,6 @@
 import React from 'react';
-import axios from 'axios'
+import axios from 'axios';
+import staticState from './staticState'
 
 export const Context = React.createContext();
 
@@ -1512,18 +1513,30 @@ export class Provider extends React.Component{
   //           console.log(err)
   //     })
   // }
+
+  // componentDidMount(){
+  //     axios.get(`/staticState`)
+  //     .then(res => {
+  //       window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+  //       let newState = res.data
+  //       newState.mobile = this.toggleMobile()
+  //       this.setState(newState)
+  //     })
+  //     .catch(err => {
+  //       console.log("COMPONENT DID MOUNT ERR")
+  //       console.log(err)
+  //     })
+  // }
+
   componentDidMount(){
-      axios.get(`/staticState`)
-      .then(res => {
+        let newState = staticState
+        console.log("staticState")
+        console.log(staticState)
         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-        let newState = res.data
         newState.mobile = this.toggleMobile()
         this.setState(newState)
-      })
-      .catch(err => {
-        console.log("COMPONENT DID MOUNT ERR")
-        console.log(err)
-      })
+        // console.log("COMPONENT DID MOUNT ERR")
+        // console.log(err)
   }
 
     render(){

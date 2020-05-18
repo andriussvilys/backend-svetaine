@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/backend-svetaine/static/css/main.4d8e418c.chunk.css",
+    "main.js": "/backend-svetaine/static/js/main.6e1d9c67.chunk.js",
+    "main.js.map": "/backend-svetaine/static/js/main.6e1d9c67.chunk.js.map",
+    "runtime-main.js": "/backend-svetaine/static/js/runtime-main.7c051d6c.js",
+    "runtime-main.js.map": "/backend-svetaine/static/js/runtime-main.7c051d6c.js.map",
+    "static/css/2.de424728.chunk.css": "/backend-svetaine/static/css/2.de424728.chunk.css",
+    "static/js/2.c23e28b5.chunk.js": "/backend-svetaine/static/js/2.c23e28b5.chunk.js",
+    "static/js/2.c23e28b5.chunk.js.map": "/backend-svetaine/static/js/2.c23e28b5.chunk.js.map",
+    "index.html": "/backend-svetaine/index.html",
+    "precache-manifest.b77092c0f63a6195197031de803237f1.js": "/backend-svetaine/precache-manifest.b77092c0f63a6195197031de803237f1.js",
+    "service-worker.js": "/backend-svetaine/service-worker.js",
+    "static/css/2.de424728.chunk.css.map": "/backend-svetaine/static/css/2.de424728.chunk.css.map",
+    "static/css/main.4d8e418c.chunk.css.map": "/backend-svetaine/static/css/main.4d8e418c.chunk.css.map",
+    "static/js/2.c23e28b5.chunk.js.LICENSE.txt": "/backend-svetaine/static/js/2.c23e28b5.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.7c051d6c.js",
+    "static/css/2.de424728.chunk.css",
+    "static/js/2.c23e28b5.chunk.js",
+    "static/css/main.4d8e418c.chunk.css",
+    "static/js/main.6e1d9c67.chunk.js"
+  ]
+}
