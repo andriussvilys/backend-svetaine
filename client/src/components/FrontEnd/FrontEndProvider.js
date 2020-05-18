@@ -1535,8 +1535,6 @@ export class Provider extends React.Component{
         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
         newState.mobile = this.toggleMobile()
         this.setState(newState)
-        // console.log("COMPONENT DID MOUNT ERR")
-        // console.log(err)
   }
 
     render(){
