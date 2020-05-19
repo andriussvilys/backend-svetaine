@@ -9,7 +9,7 @@ const BottomBar = (props) => {
         >
             <div className="mobileBars-navButton_container">
                 <button
-                    classname="mobileBar-navButton"
+                    className="mobileBar-navButton"
                     id="button-prev"
                     onClick={() => props.context.viewNext(-1)}
                 >
@@ -17,14 +17,14 @@ const BottomBar = (props) => {
                 </button>
 
                 <button
-                    classname="mobileBar-navButton"
+                    className="mobileBar-navButton"
                     id="button-prev"
                     onClick={() => props.context.viewNext(-1)}
                 >
                     <img alt="view previous" src="icons/svg/view-up.svg"/>
                 </button>
                 <button
-                    classname="mobileBar-navButton"
+                    className="mobileBar-navButton"
                     id="button-next"
                     onClick={() => props.context.viewNext(+1)}
                 >
@@ -32,7 +32,7 @@ const BottomBar = (props) => {
                 </button>
 
                 <button
-                    classname="mobileBar-navButton"
+                    className="mobileBar-navButton"
                     id="button-next"
                     onClick={() => props.context.viewNext(+1)}
                 >

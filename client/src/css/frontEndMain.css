@@ -1861,7 +1861,6 @@ label {
   .enlargeContainer {
     background-color: white !important;
     width: 100% !important;
-    height: calc(100% - 90px) !important;
     max-height: none;
     -webkit-box-pack: center;
         -ms-flex-pack: center;
@@ -1899,9 +1898,8 @@ label {
     border-left: none;
   }
   .enlarge-scroll-down {
-    -webkit-transform: translateY(0px);
-            transform: translateY(0px);
-    top: 0;
+    -webkit-transform: translateY(100%);
+            transform: translateY(100%);
   }
   .scroll-down {
     top: 0;

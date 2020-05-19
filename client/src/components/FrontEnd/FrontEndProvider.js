@@ -587,7 +587,7 @@ export class Provider extends React.Component{
 
       if(ArtworkInfo && ArtworkInfo.classList.contains("info-up")){
         ArtworkInfo.classList.remove("info-up")
-        if(ArtworkInfo)ArtworkInfo.classList.remove("show")
+        // if(ArtworkInfo)ArtworkInfo.classList.remove("show")
         if(!clearAll)
         return
       }
@@ -607,9 +607,9 @@ export class Provider extends React.Component{
             document.getElementById('imageSelect').classList.remove("side-scroll")
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-scroll-down")
-              if(ArtworkInfo){
-                ArtworkInfo.classList.remove("show")
-              }
+              // if(ArtworkInfo){
+              //   ArtworkInfo.classList.remove("show")
+              // }
             }, 400);
           }
           //if dekstop
@@ -879,12 +879,13 @@ export class Provider extends React.Component{
                   //MOBILE
                   if(this.state.mobile){
                     if(!container.classList.contains("enlarge-scroll-down")){
-                      container.style.height = `${images.clientHeight - 90}px`
+                      container.style.height = `${images.clientHeight}px`
+                      // container.style.height = `${images.clientHeight - 90}px`
                       container.classList.add("enlarge-scroll-down")
                       scrollToDelay = 400
-                      setTimeout(() => {
-                          imageSelect.classList.add("side-scroll")
-                      }, 200);
+                      // setTimeout(() => {
+                      //     imageSelect.classList.add("side-scroll")
+                      // }, 200);
                     }
                   }
                   //DESKTOP
@@ -955,7 +956,7 @@ export class Provider extends React.Component{
 
                     newState.enlarge.foreground = enlarge.background
                     newState.enlarge.currentWidth = futureSize.width
-                    newState.enlarge.currentHeight = images.clientHeight - 90
+                    // newState.enlarge.currentHeight = images.clientHeight - 90
                     newState.enlarge.open = true
 
                     this.setState(newState)
@@ -980,7 +981,7 @@ export class Provider extends React.Component{
 
                        loadForeground()
                        .then(res => {
-                         document.getElementById("ArtworkInfo").classList.add("show")
+                        //  document.getElementById("ArtworkInfo").classList.add("show")
                         })
                         .catch(rej => {
                           console.log("enlarge.fgLoaded")
@@ -1118,28 +1119,34 @@ export class Provider extends React.Component{
       }
       console.log("run show info")
       const info = document.getElementById("ArtworkInfo")
-      if(!this.state.mobile && !info.classList.contains("info-up")){
-        if(!info.classList.contains("info-up")){
-          info.classList.add("info-up")
-        }
-        else info.classList.remove("info-up")
-        return
-      }
-      if(!info.classList.contains('show')){
-        let counter = 1
-        if(this.state.mobile){
-          if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-            this.showMenu(e)
-            counter = 1
-          }
-        }
-        setTimeout(() => {
-          setTimeout(() => {
-            info.classList.add('info-up')
-          }, 100);
-          info.classList.add('show')
-        }, counter);
-      }
+      info.classList.toggle("info-up")
+      // if(!info.classList.contains("info-up")){
+      //   info.classList.add("info-up")
+      // }
+      // else info.classList.remove("info-up")
+      return
+      // if(!this.state.mobile && !info.classList.contains("info-up")){
+      //   if(!info.classList.contains("info-up")){
+      //     info.classList.add("info-up")
+      //   }
+      //   else info.classList.remove("info-up")
+      //   return
+      // }
+      // if(!info.classList.contains('show')){
+      //   let counter = 1
+      //   if(this.state.mobile){
+      //     if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+      //       this.showMenu(e)
+      //       counter = 1
+      //     }
+      //   }
+      //   setTimeout(() => {
+      //     setTimeout(() => {
+      //       info.classList.add('info-up')
+      //     }, 100);
+      //     info.classList.add('show')
+      //   }, counter);
+      // }
     }
     this.toggleMobile = () => {
       const container = document.getElementById("enlargeContainer")

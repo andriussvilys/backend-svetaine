@@ -1158,7 +1158,7 @@ font-family: 'Times New Roman', Times, serif;
     .enlargeContainer{
         background-color: white !important;
         width: 100% !important;
-        height: calc(100% - 90px) !important;
+        // height: calc(100% - 90px) !important;
         max-height: none;
         justify-content: center;
         z-index: 999;
@@ -1188,8 +1188,9 @@ font-family: 'Times New Roman', Times, serif;
         border-left: none;
     }
     .enlarge-scroll-down{
-        transform: translateY(0px);
-        top: 0;
+        // transform: translateY(0px);
+        transform: translateY(100%);
+        // top: 0;
     }
     .scroll-down{
         top: 0;
