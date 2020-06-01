@@ -2332,6 +2332,11 @@ export class Provider extends React.Component{
                     let familyList = Object.keys(res.data).map(obj => {
                         return res.data[obj].artworkFamily
                     })
+                    let familiesData = {}
+                    Object.keys(res.data).forEach(obj => {
+                        familiesData[res.data[obj].artworkFamily] = res.data[obj]
+                    })
+                    newState.familiesData = familiesData
                     newState.artworkFamilyList = familyList
                     console.log("Families loaded")
                     console.log(res)

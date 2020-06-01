@@ -127,10 +127,10 @@ const ArtworkInfo = (props) => {
 
     return(
         <div 
-            className={props.file.open && props.context.state.mobile ? "ArtworkInfo-container" : "ArtworkInfo-container"}
+            className={"ArtworkInfo-container"}
 
             id="ArtworkInfo" 
-            style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
+            // style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
         >   
             <div key={"ArtworkInfo-wrapper"} className="ArtworkInfo-wrapper">
                 <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >

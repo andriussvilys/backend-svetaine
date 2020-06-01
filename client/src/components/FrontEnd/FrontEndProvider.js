@@ -1114,11 +1114,14 @@ export class Provider extends React.Component{
 
 
     this.showInfo = (e) => {
+      e.stopPropagation()
       if(this.state.enlarge && !this.state.enlarge.open){
         return
       }
       console.log("run show info")
       const info = document.getElementById("ArtworkInfo")
+      // info.classList.add("info-up")
+
       info.classList.toggle("info-up")
       // if(!info.classList.contains("info-up")){
       //   info.classList.add("info-up")

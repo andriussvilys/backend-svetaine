@@ -80,11 +80,6 @@ export default class FrontEndIndex extends React.Component{
                                 mobile={this.context.state.mobile}
                             />
                         </div>
-                        {this.context.state.mobile ? 
-                        <BottomBar 
-                            context={this.context}
-                        /> : null
-                        }
                     </div>
                     )
                 }}

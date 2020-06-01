@@ -19,11 +19,20 @@ const TopBar = (props) => {
                 className="menu-button" 
                 onClick={(e) => props.context.showMenu(e)}
             >
-                {spreadLetters("menu")}
+                {spreadLetters("filter")}
             </div>
-            <CloseButton
-                context={props.context}
-            />
+            <div 
+                className="menu-button" 
+                onClick={(e) => props.context.showMenu(e)}
+            >
+                {spreadLetters("about")}
+            </div>
+            <div 
+                className="menu-button" 
+                onClick={(e) => props.context.showMenu(e)}
+            >
+                {spreadLetters("contact")}
+            </div>
         </div>
     )
 }
