@@ -616,7 +616,10 @@ export class Provider extends React.Component{
             document.getElementById('imageSelect').style.width = `100%`
 
             setTimeout(() => {
-              enlargeContainer.classList.remove("enlarge-scroll-left")
+              enlargeContainer.classList.remove("enlarge-opacity")
+              setTimeout(() => {
+                enlargeContainer.classList.remove("enlarge-scroll-left")
+              }, 400);
             }, 200);
           
 
@@ -892,6 +895,9 @@ export class Provider extends React.Component{
                     if(!container.classList.contains("enlarge-scroll-left")){
                       container.classList.add("enlarge-scroll-left")
                       container.style.width = `${futureSize.width}px`
+                      setTimeout(() => {
+                        container.classList.add("enlarge-opacity")
+                      }, 200);
                       setTimeout(() => {
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                       }, 600);

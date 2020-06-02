@@ -1,3 +1,22 @@
+.enlargeContainer{
+    height: 100% !important;
+    width: 1px;
+    position: absolute;
+    max-width: 100%;
+    opacity: 0;
+    transition: opacity 0.4s;
+    // transition: 0.4s all;
+    transform-origin: right;
+    transform: translateX(100%);
+    right: 0;
+    background-color: white;
+    justify-content: center;
+    position: absolute;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 50px;
+    border-left: 1px solid black;
+}
 .enlarge-bar{
     height: 50px;
     border-bottom: 1px solid black;
@@ -17,4 +36,30 @@
 }
 .controls-slideButton{
     border-left: 1px solid;
+}
+
+@media only screen and (max-width: 720px) {
+    .enlargeContainer{
+        background-color: white !important;
+        width: 100% !important;
+        // height: calc(100% - 90px) !important;
+        max-height: none;
+        justify-content: center;
+        z-index: 999;
+        border-top: none;
+        border-bottom: none;
+        z-index:1;
+        border-left: none;
+        transform: none;
+        overflow: hidden;
+        display: initial;
+        transform: translateX(100%);
+        display: grid;
+    }
+}
+.enlarge-scroll-left{
+    transform: translateX(0);
+}
+.enlarge-opacity{
+    opacity: 1;
 }
