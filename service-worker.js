@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/backend-svetaine/precache-manifest.f2923291a6b60149776c5b390e54a86b.js"
+  "/backend-svetaine/precache-manifest.bde5786b2fd1e62abd60111d60dd5a35.js"
 );
 
 self.addEventListener('message', (event) => {
