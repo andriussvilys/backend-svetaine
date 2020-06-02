@@ -2004,9 +2004,9 @@ label {
   width: 1px;
   position: absolute;
   max-width: 100%;
-  opacity: 0;
-  -webkit-transition: opacity 0.4s;
-  transition: opacity 0.4s;
+  opacity: 1;
+  -webkit-transition: 0.4s all;
+  transition: 0.4s all;
   -webkit-transform-origin: right;
           transform-origin: right;
   -webkit-transform: translateX(100%);
@@ -2052,6 +2052,9 @@ label {
   .enlargeContainer {
     background-color: white !important;
     width: 100% !important;
+    opacity: 0;
+    -webkit-transition: opacity 0.4s;
+    transition: opacity 0.4s;
     max-height: none;
     -webkit-box-pack: center;
         -ms-flex-pack: center;

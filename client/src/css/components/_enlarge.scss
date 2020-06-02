@@ -3,9 +3,8 @@
     width: 1px;
     position: absolute;
     max-width: 100%;
-    opacity: 0;
-    transition: opacity 0.4s;
-    // transition: 0.4s all;
+    opacity: 1;
+    transition: 0.4s all;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
@@ -42,7 +41,8 @@
     .enlargeContainer{
         background-color: white !important;
         width: 100% !important;
-        // height: calc(100% - 90px) !important;
+        opacity: 0;
+        transition: opacity 0.4s;
         max-height: none;
         justify-content: center;
         z-index: 999;
