@@ -603,23 +603,22 @@ export class Provider extends React.Component{
           const enlargeContainer = document.getElementById('enlargeContainer')
 
           //if mobile
-          if(this.state.mobile){
-            document.getElementById('imageSelect').classList.remove("side-scroll")
-            setTimeout(() => {
-              enlargeContainer.classList.remove("enlarge-scroll-down")
-              // if(ArtworkInfo){
-              //   ArtworkInfo.classList.remove("show")
-              // }
-            }, 400);
-          }
+          // if(this.state.mobile){
+          //   document.getElementById('imageSelect').classList.remove("side-scroll")
+          //   setTimeout(() => {
+          //     enlargeContainer.classList.remove("enlarge-scroll-down")
+          //     // if(ArtworkInfo){
+          //     //   ArtworkInfo.classList.remove("show")
+          //     // }
+          //   }, 400);
+          // }
           //if dekstop
-          else{
             document.getElementById('imageSelect').style.width = `100%`
 
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-scroll-left")
             }, 200);
-          }
+          
 
           if(!clearAll){
             const enlarge = {...this.state.enlarge}
@@ -877,19 +876,18 @@ export class Provider extends React.Component{
                   let scrollToDelay = 0
                   //APPLY SIZE CHANGES
                   //MOBILE
-                  if(this.state.mobile){
-                    if(!container.classList.contains("enlarge-scroll-down")){
-                      container.style.height = `${images.clientHeight}px`
-                      // container.style.height = `${images.clientHeight - 90}px`
-                      container.classList.add("enlarge-scroll-down")
-                      scrollToDelay = 400
-                      // setTimeout(() => {
-                      //     imageSelect.classList.add("side-scroll")
-                      // }, 200);
-                    }
-                  }
+                  // if(this.state.mobile){
+                  //   if(!container.classList.contains("enlarge-scroll-down")){
+                  //     container.style.height = `${images.clientHeight}px`
+                  //     // container.style.height = `${images.clientHeight - 90}px`
+                  //     container.classList.add("enlarge-scroll-down")
+                  //     scrollToDelay = 400
+                  //     // setTimeout(() => {
+                  //     //     imageSelect.classList.add("side-scroll")
+                  //     // }, 200);
+                  //   }
+                  // }
                   //DESKTOP
-                  else{
                     //if enlarge not been opened
                     if(!container.classList.contains("enlarge-scroll-left")){
                       container.classList.add("enlarge-scroll-left")
@@ -927,7 +925,7 @@ export class Provider extends React.Component{
                     // foreground.style.height = `${futureSize.height}px`
 
                     // container.style.width = `${futureSize.width}px`
-                  }
+                  
                   if(options){
                     const familySequence = options.state.enlarge.familySequence
                     const artworkOnDisplay = this.state.artworkOnDisplay

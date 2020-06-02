@@ -1018,18 +1018,13 @@ font-family: 'Times New Roman', Times, serif;
         justify-content: center;
         align-items: center;
     }
-    .controls-exitButton{
-        border-left: 1px solid;
-    }
-    .controls-slideButton{
-        border-left: 1px solid;
-    }
     .previewBubble-container{
         position: relative;
         flex: 1;
         height: 100%;
         border: none;
         flex: 1;
+        max-width: calc(100% - 50px);
     }
     .previewBubble-wrapper{
         position: initial;
@@ -1167,12 +1162,12 @@ font-family: 'Times New Roman', Times, serif;
         border-left: none;
         transform: none;
         overflow: hidden;
-        bottom: 100%;
         display: initial;
+        transform: translateX(100%);
     }
     .enlargeContainer{
         display: grid;
-        grid-template-rows: min-content 1fr min-content;
+        // grid-template-rows: min-content 1fr min-content;
     }
     .enlarge-info{
         display: flex;

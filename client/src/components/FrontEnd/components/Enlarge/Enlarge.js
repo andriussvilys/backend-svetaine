@@ -12,16 +12,16 @@ export default class Enlarge extends React.Component{
                 onClick={(e) => this.props.closeEnlarge(e)}
                 className="enlargeContainer" id="enlargeContainer"
                 >
-                    {this.props.context.state.mobile ? 
+                    {/* {this.props.context.state.mobile ? 
                         <CloseBar 
                             context={this.props.context}
                         /> : null
-                    }
-                    {/* {this.props.context.state.mobile ? 
+                    } */}
+                    {this.props.context.state.mobile ? 
                         <CloseButton
                             context={this.props.context}
                         /> : null
-                    } */}
+                    }
                     <PinchToZoom 
                         className="pinchContainer"
                         panEvent={{

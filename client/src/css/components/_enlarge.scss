@@ -7,3 +7,14 @@
         }
     }
 }
+.controls-exitButton{
+    position: absolute;
+    z-index: 9;
+    height: 50px;
+    right: 0;
+    width: 50px;
+    background-color: unset;
+}
+.controls-slideButton{
+    border-left: 1px solid;
+}

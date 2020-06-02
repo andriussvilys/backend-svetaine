@@ -1696,12 +1696,6 @@ label {
         -ms-flex-align: center;
             align-items: center;
   }
-  .controls-exitButton {
-    border-left: 1px solid;
-  }
-  .controls-slideButton {
-    border-left: 1px solid;
-  }
   .previewBubble-container {
     position: relative;
     -webkit-box-flex: 1;
@@ -1710,6 +1704,7 @@ label {
     height: 100%;
     border: none;
     flex: 1;
+    max-width: calc(100% - 50px);
   }
   .previewBubble-wrapper {
     position: initial;
@@ -1879,15 +1874,13 @@ label {
     -webkit-transform: none;
             transform: none;
     overflow: hidden;
-    bottom: 100%;
     display: initial;
+    -webkit-transform: translateX(100%);
+            transform: translateX(100%);
   }
   .enlargeContainer {
     display: -ms-grid;
     display: grid;
-    -ms-grid-rows: min-content 1fr min-content;
-        grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
-        grid-template-rows: min-content 1fr min-content;
   }
   .enlarge-info {
     display: -webkit-box;
@@ -2067,5 +2060,18 @@ label {
 
 .enlarge-bar .controls-exitButton img {
   height: 100%;
+}
+
+.controls-exitButton {
+  position: absolute;
+  z-index: 9;
+  height: 50px;
+  right: 0;
+  width: 50px;
+  background-color: unset;
+}
+
+.controls-slideButton {
+  border-left: 1px solid;
 }
 /*# sourceMappingURL=frontEndMain.css.map */

@@ -32,7 +32,7 @@ const Combined = (props) => {
                         />
                         {props.context.state.mobile ? 
                             <div 
-                            className="controls-button controls-exitButton" >
+                            className="controls-button" >
                                 <img 
                                 alt="info icon" 
                                 src="icons/svg/info.svg" 

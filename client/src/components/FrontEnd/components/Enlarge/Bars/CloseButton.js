@@ -25,7 +25,7 @@ const ExitButton = (props) => {
             // }
         }}
         >
-            <img alt="close icon" src="/icons/svg/close.svg"/>
+            <img alt="close icon" src="/icons/svg/close_filled.svg"/>
         </div>
     )
 }
