@@ -1999,6 +1999,17 @@ label {
   }
 }
 
+.previewCounter {
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+  padding-left: 20px;
+}
+
+.previewCounter span {
+  font-size: 18px;
+}
+
 .enlargeContainer {
   height: 100% !important;
   width: 1px;

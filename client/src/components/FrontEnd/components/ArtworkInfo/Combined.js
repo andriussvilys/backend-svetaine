@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import ArtworkInfo from './ArtworkInfo'
 import PreviewBubbles from './PreviewBubble'
 import Controls from './Controls'
+import PreviewCounter from './PreviewCounter'
 
 const Combined = (props) => {
     const spreadLetters = (title) => {
@@ -24,11 +25,15 @@ const Combined = (props) => {
                         mobile={props.mobile}
                     />
                     <div className="imageInfo-nav">
-                        <PreviewBubbles 
+                        {/* <PreviewBubbles 
                             file={props.context.state.enlarge}
                             relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
                             enlarge={props.context.loadEnlarge}
                             context={props.context}
+                        /> */}
+                        <PreviewCounter 
+                            relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
+                            file={props.context.state.enlarge}
                         />
                         {props.context.state.mobile ? 
                             <div 

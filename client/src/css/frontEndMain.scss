@@ -1269,6 +1269,13 @@ font-family: 'Times New Roman', Times, serif;
         display: inline-block !important;
     }
   }
+  .previewCounter{
+      justify-content: start;
+      padding-left: 20px;
+      span{
+          font-size: 18px;
+      }
+  }
 
   @import './components/enlarge'
 

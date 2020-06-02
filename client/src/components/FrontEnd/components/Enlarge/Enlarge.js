@@ -31,6 +31,7 @@ export default class Enlarge extends React.Component{
                             showInfo: this.props.context.showInfo,
                             closeEnlarge: this.props.context.closeEnlarge
                         }}
+                        state={this.props.context.state}
                         mobile={this.props.mobile}
                     >
                         <div id="foreground" className="foreground-transition">
