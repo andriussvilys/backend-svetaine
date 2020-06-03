@@ -21,49 +21,30 @@ export default class EditDetailContainer extends React.Component{
             allFiles: this.props.state.artworkInfoData
         }
     }
-
-    onClose = () => {
-        this.setState({showModal: false, modalConfirm: true})
-    }
-
-    verify = () => {
-        const result = this.props.context.verify()
-        console.log("result")
-        console.log(result)
-        if(result.verified){
-          return true
-        }
-        else{
-          this.setState({...result})
-          return false
-        }
-      }
-
-    onModalClick = (fileName) => {
-        if(!this.verify()){
-            this.setState({modalConfirm: false})
-            return
-        }
-        let newState = {...this.state}
-        newState.fileToDelete = this.props.context.state.artworkInfoData[fileName]
-        newState.showModal = true
-        newState.modalMessage = <span>Delete <em>{fileName}</em>?</span>
-        this.setState(newState)
-    }
-
+    
     EditDetail = (file) => {
         if(!file){return}
         return(
                 <ImageBox
                     file={file}
                     key={`${file.fileName}-detail`}
+                    directory={this.state.selectedFiles}
                 >
-                    <EditFileButtons 
-                        file={file}
-                        context={this.props.context}
-                        onModalClose={this.onClose}
-                        onModalClick={this.onModalClick}
-                    />
+                    <Button
+                        onClick={() => {
+                            const selected = this.state.selectedFiles.includes(file.fileName)
+                            let newState = {...this.state}
+                            let selectedFiles = []
+                            if(selected){
+                                selectedFiles = newState.selectedFiles.filter(fileName => fileName !== file.fileName)
+                            }
+                            else{
+                                selectedFiles = [...newState.selectedFiles, file.fileName]
+                            }
+                            newState.selectedFiles = selectedFiles
+                            this.setState(newState)
+                        }}
+                    >{this.state.selectedFiles.includes(file.fileName) ? "Unselecte" : "Select"}</Button>
                 </ImageBox>
         )
     }
@@ -85,32 +66,49 @@ export default class EditDetailContainer extends React.Component{
         this.setState({fileList: this.state.allFiles})
     }
 
-    deletePromise = (fileName, artworkFamily) => {
-        return new Promise((resolve, reject) => {
-            this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
-                .then(res => {resolve({
-                        modalMessage: res,
-                        modalConfirm: false
-                    })
-                })
-                .catch(err => {reject({
-                        modalMessage: err,
-                        modalConfirm: false
-                    })
-                })
-        })
-    }
-
     componentDidMount(){
-        this.setState({fileList: this.props.state.artworkInfoData})
+        const allFileNames = Object.keys(this.props.state.artworkInfoData)
+        const selectedFiles = this.props.highlightRef
+        const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
+        const orderedList = [...selectedFiles, ...withoutSelected]
+        console.log(orderedList)
+        const newState = {...this.state}
+        newState.orderedList = orderedList
+        newState.fileList = this.props.state.artworkInfoData
+        newState.selectedFiles = this.props.highlightRef
+        this.setState(newState)
+        // this.setState({fileList: this.props.state.artworkInfoData})
     }
 
     render(){
-        return(
+        if(this.state.orderedList){
+            return(
                 <div 
                 id={'familyContainer'}
                 className={"EditDetailContainer"}
                 >
+                    <Button
+                        onClick={() => {
+
+                            let artworkOnDisplay = {}
+                            this.state.selectedFiles.forEach(fileName => {
+                                artworkOnDisplay[fileName] = this.state.fileList[fileName]
+                            })
+
+                            this.props.context.setArtworkOnDisplay(artworkOnDisplay)
+                            let newState = {...this.state}
+                            newState.showModal = true
+                            newState.modalMessage = "Saved"
+                            this.setState()
+                        }}
+                    >Save
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            this.setState({selectedFiles: []})
+                        }}
+                    >Unselect All
+                    </Button>
                     <div className="familyPicker">
                         <button
                             // size="sm"
@@ -131,14 +129,11 @@ export default class EditDetailContainer extends React.Component{
                             />
                         </Accordion>
                     </div>
-
-
                     <div 
                     className={"grid-wrapper"}
-                    // style={{display: "flex", flexWrap: "wrap", justifyContent: "space-around"}}
                     >
                         {
-                            Object.keys(this.state.fileList).map(fileName => {
+                            this.state.orderedList.map(fileName => {
                                 return this.EditDetail(this.props.state.artworkInfoData[fileName])
                             })
                         }
@@ -150,7 +145,7 @@ export default class EditDetailContainer extends React.Component{
                             onClose={this.onClose}
                             confirmedAction={() => this.deletePromise(this.state.fileToDelete.fileName, this.state.fileToDelete.artworkFamily)}
                         >
-                            <div>
+                            {/* <div>
                                 <p>{this.state.modalMessage}</p>
                                 {this.state.fileToDelete ? 
                                     <FilePreview 
@@ -158,11 +153,14 @@ export default class EditDetailContainer extends React.Component{
                                     /> :
                                     null
                                 }
-                            </div>
+                            </div> */}
+                            {this.state.modalMessage}
                         </BootstrapModal> :
                         null
                     }
                 </div>
         )
+        }
+        else return null
     }
 }

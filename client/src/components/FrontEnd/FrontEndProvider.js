@@ -651,31 +651,27 @@ export class Provider extends React.Component{
           if(direction > 0){
             //if last in currentSequence reached
             if(familyIndex+1 > familySequence.length-1){
-                const artworkOnDisplay = this.state.artworkOnDisplay
-                let nextPicName = commonSequence.find(fileName => {
-                  if(artworkOnDisplay[fileName].artworkFamily !== familyName){
-                    if(commonSequence.indexOf(fileName) > commonIndex){
-                      return commonSequence.indexOf(fileName)
-                    }
-                  }
-                  return
-                  })
+              //   const artworkOnDisplay = this.state.artworkOnDisplay
+              //   let nextPicName = commonSequence.find(fileName => {
+              //     if(artworkOnDisplay[fileName].artworkFamily !== familyName){
+              //       if(commonSequence.indexOf(fileName) > commonIndex){
+              //         return commonSequence.indexOf(fileName)
+              //       }
+              //     }
+              //     return
+              //     })
               
-                  if(!nextPicName){
-                    nextPicName = commonSequence[0]
-                  }
+              //     if(!nextPicName){
+              //       nextPicName = commonSequence[0]
+              //     }
+              // let nextPic = this.state.artworkInfoData[nextPicName]
 
-              // options.state.enlarge.familySequence.commonIndex = commonSequence.indexOf(nextPicName)
-              let nextPic = this.state.artworkInfoData[nextPicName]
-
-              console.log("nextPicName")
-              console.log(nextPicName)
-
-
-              options = this.createFamilySequence(nextPic)
-              // sequence = options.state.enlarge.familySequence.familySequence
-              sequence = commonSequence
-              nextIndex = commonSequence.indexOf(nextPicName)
+              // options = this.createFamilySequence(nextPic)
+              // sequence = commonSequence
+              // nextIndex = commonSequence.indexOf(nextPicName)
+              nextIndex = 0
+              options.state.enlarge.familySequence.familyIndex = 0
+              sequence = options.state.enlarge.familySequence.familySequence
             }
             else{
               nextIndex = familyIndex+1
@@ -685,59 +681,34 @@ export class Provider extends React.Component{
           }
           //VIEW PREVIOUS
           else{
-            //if current image is the first in the familySequence
             if(familyIndex-1 < 0 ){
-              let prevPicName = null
-              const artworkOnDisplay = this.state.artworkOnDisplay
-              if(commonIndex === 0){
-                prevPicName = commonSequence[commonSequence.length-1]
-              }
-              else{
-                prevPicName = commonSequence[commonIndex-1]
-              }
+            //   let prevPicName = null
+            //   const artworkOnDisplay = this.state.artworkOnDisplay
+            //   if(commonIndex === 0){
+            //     prevPicName = commonSequence[commonSequence.length-1]
+            //   }
+            //   else{
+            //     prevPicName = commonSequence[commonIndex-1]
+            //   }
+            // console.log(prevPicName)
+            // console.log("prevPicName")
 
+            // let prevPic = this.state.artworkInfoData[prevPicName]
 
-              // else{
-              //   const filteredSequence = commonSequence.filter(fileName => {
-              //       if(fileName === file.fileName || artworkOnDisplay[fileName].artworkFamily !== familyName){
-              //         return fileName
-              //       }
-              //   })
+            // const familyArray = this.state.relatedArtwork[prevPic.artworkFamily].column.fileIds
+            // const lastOfFamilyFile = this.state.artworkInfoData[prevPicName]
+            //   options = this.createFamilySequence(lastOfFamilyFile)
 
-              //   const nextFileIndex = filteredSequence.indexOf(file.fileName)-1
-              //   prevPicName = filteredSequence[nextFileIndex]
-
-              // }
-              
-              // if(!prevPicName){
-              //   prevPicName = commonSequence[commonSequence.length-1]
-              // }
-
-            // options.state.enlarge.familySequence.commonIndex = commonSequence.indexOf(prevPicName)
-            console.log(prevPicName)
-            console.log("prevPicName")
-
-            let prevPic = this.state.artworkInfoData[prevPicName]
-
-            const familyArray = this.state.relatedArtwork[prevPic.artworkFamily].column.fileIds
-            // const lastOfFamilyName = familyArray[familyArray.length-1]
-            const lastOfFamilyFile = this.state.artworkInfoData[prevPicName]
-
-              // options = this.createFamilySequence(prevPic)
-              options = this.createFamilySequence(lastOfFamilyFile)
-
-              sequence = options.state.enlarge.familySequence.familySequence
-              nextIndex = sequence.indexOf(lastOfFamilyFile.fileName)
-              // nextIndex = sequence.indexOf(prevPicName)
-
-              // nextIndex = sequence.length-1
-              options.reverse = true
+            //   sequence = options.state.enlarge.familySequence.familySequence
+            //   nextIndex = sequence.indexOf(lastOfFamilyFile.fileName)
+            //   options.reverse = true
+            nextIndex = options.state.enlarge.familySequence.familySequence.length-1
+            options.state.enlarge.familySequence.familyIndex = options.state.enlarge.familySequence.familySequence.length-1
+            sequence = options.state.enlarge.familySequence.familySequence
+            options.reverse = true
             }
             else{
               nextIndex = familyIndex-1
-              // const prevPicName = familySequence[nextIndex]
-              // const prevPic = this.state.artworkInfoData[prevPicName]
-              // options = this.createFamilySequence(prevPic)
               options.state.enlarge.familySequence.familyIndex -= 1
               sequence = options.state.enlarge.familySequence.familySequence
               options.reverse = true

@@ -3,7 +3,7 @@ import axios from 'axios';
 import BootstrapModal from './Admin/components/BootstrapModal'
 import auth from './Auth'
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
-
+import staticState from './FrontEnd/staticState'
 // import FilePreview from './FilePreview'
 
 export const Context = React.createContext();
@@ -45,7 +45,11 @@ export class Provider extends React.Component{
         let nameWithFileType = `${e.target.value.split('.')[0]}.${this.state.fileType.split('/')[1]}`
         this.setState({ fileName: nameWithFileType, filePath: `uploads/${nameWithFileType}` })
     }
-
+    this.setArtworkOnDisplay = (list) => {
+        let newState = {...this.state}
+        newState.artworkOnDisplay = list
+        this.setState(newState)
+    }
     this.onChange = (e, key, fileName) => {
         console.log("onchange")
         console.log(e.target.value ? e.target.value : e.target.innerHTML)
@@ -2489,7 +2493,7 @@ export class Provider extends React.Component{
                         const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
       
                         newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
-                        newState.artworkOnDisplay = artworkOnDisplay
+                        newState.artworkOnDisplay = this.state.artworkOnDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
                         resolve()
@@ -2518,8 +2522,19 @@ export class Provider extends React.Component{
             ])
             .then(res => {
                 console.log("_________________________________________________")
-                console.log(JSON.stringify(newState))
-                axios.post(`/staticState`, newState)
+                // console.log(newState.artworkOnDisplay)
+                // console.log(JSON.stringify(newState))
+
+
+                // const newStaticState = `const staticState = {}; export default staticState`
+                
+                const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
+
+
+                // const newStaticState = `const staticState = ${JSON.stringify(newState)}; export default staticState`
+
+                axios.post(`/staticState`, newStaticState)
+                // axios.post(`/staticState`, newState)
                     .then(res => { 
                         console.log("file writen")
                         console.log(res)
@@ -2619,6 +2634,7 @@ export class Provider extends React.Component{
             Promise.all([Categories, ArtworkInfo, Themes, ServerFiles])
                 .then(res => {
                     newState.showModal = false
+                    newState.staticState = staticState
                     this.setState(newState)
                 })
                 .catch(err => {console.log(err); document.location.reload(true)})
@@ -2650,7 +2666,8 @@ export class Provider extends React.Component{
             addNew: this.addNew,
             deleteTheme: this.deleteTheme,
             staticState: this.staticState,
-            inputFamilyDescription: this.inputFamilyDescription
+            inputFamilyDescription: this.inputFamilyDescription,
+            setArtworkOnDisplay: this.setArtworkOnDisplay
 
             } }>
         {this.props.children}
