@@ -548,7 +548,8 @@ font-family: 'Times New Roman', Times, serif;
 .ArtworkInfo-container{
     display: flex;
     justify-content: flex-end;
-    transform: translateY(100%);
+    transform: translateY(0);
+    // transform: translateY(100%);
     transition: 0.2s all !important;
     position: absolute;
     border-top: 1px solid black;

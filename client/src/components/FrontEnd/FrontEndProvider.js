@@ -588,9 +588,10 @@ export class Provider extends React.Component{
 
       if(ArtworkInfo && ArtworkInfo.classList.contains("info-up")){
         ArtworkInfo.classList.remove("info-up")
+        ArtworkInfo.style.transform = "translateY(0)"
         // if(ArtworkInfo)ArtworkInfo.classList.remove("show")
-        if(!clearAll)
-        return
+        // if(!clearAll)
+        // return
       }
       if(!clearAll){
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
@@ -1121,11 +1122,13 @@ export class Provider extends React.Component{
 
 
     this.showInfo = (e) => {
+      
       e.stopPropagation()
       if(this.state.enlarge && !this.state.enlarge.open){
         return
       }
       console.log("run show info")
+      console.log(e)
 
       const info = document.getElementById("ArtworkInfo")
       if(info.classList.contains("info-up")){

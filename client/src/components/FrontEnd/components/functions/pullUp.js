@@ -35,36 +35,66 @@ const pullUp = (options) => {
 
             if(endPositionY){
                 transformValue = -endPositionY - diff
+                // console.log("endPositionY")
+                // console.log(endPositionY)
             }
             if(-transformValue >= child.clientHeight){
+                // console.log("transformValue >= child.clientHeight")
                 return
             }
             if(transformValue > 0){
-                transformValue = 0
+                // console.log("transformValue > 0")
+                return
             }
+            if(endPositionY){
+                if(-transformValue < 10){
+                    transformValue = 0
+                }
+            }
+            if(-transformValue >= child.clientHeight - 20){
+                transformValue = -child.clientHeight
+            }
+            // console.log("transformValue")
+            // console.log(transformValue)
+            
+            transformValue = Math.round(transformValue)
+                            // console.log("transformValue")
+                            // console.log(transformValue)
+            
 
             child.style.transform = `translateY(${transformValue}px)`
         }
     }
 
     const startEvent = (e) => {
-        drag = true
-        if(e.touches){
-            startPositionY = e.touches[0].clientY
-            parent.addEventListener("touchmove", e => {
-                moveEvent(e)
-            })
-        }
-        else{
-            startPositionY = e.clientY
-            parent.addEventListener("mousemove", e => {
-                moveEvent(e)
-            })
-        }
+        drag = true       
+            if(e.touches){
+                startPositionY = e.touches[0].clientY
+                parent.addEventListener("touchmove", e => {
+                    moveEvent(e)
+                })
+            }
+            else{
+                startPositionY = e.clientY
+                parent.addEventListener("mousemove", e => {
+                    moveEvent(e)
+                })
+            }
     }
 
     const endEvent = (e) => {
-        endPositionY = childPositionY()
+
+        endPositionY = Math.round(childPositionY() - 50)
+        // if(endPositionY >= 0){
+        //     endPositionY = null
+        // }
+        if(endPositionY <= 0){
+            child.classList.remove("info-up")
+        }
+        else{
+            child.classList.add("info-up")
+        }
+        // console.log(`endposition ${endPositionY}`)
         drag = false
     }
 
