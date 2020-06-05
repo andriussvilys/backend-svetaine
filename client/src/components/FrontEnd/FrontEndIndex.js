@@ -46,11 +46,11 @@ export default class FrontEndIndex extends React.Component{
                             context={this.context}
                             categoriesData={this.context.state.categoriesData}
                         />
-                        {this.context.state.mobile ? 
+                        {/* {this.context.state.mobile ? 
                         <TopBar 
                             context={this.context}
                         /> : null
-                        }
+                        } */}
 
                         <div 
                         id="images" 

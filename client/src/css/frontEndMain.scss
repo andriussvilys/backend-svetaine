@@ -564,9 +564,6 @@ font-family: 'Times New Roman', Times, serif;
     padding: 10px 0px 20px 20px;
     height: 100%;
 }
-.info-up{
-    transform: translateY(-100%);
-}
 .ArtworkInfo-preview-container{
     height: 75px;
     z-index: 11;
@@ -947,6 +944,7 @@ font-family: 'Times New Roman', Times, serif;
         display: flex;
         height: 100%;
         width: 100%;
+        border-top: 1px solid black;
     }
     #foreground{
         mix-blend-mode: unset;
@@ -1063,6 +1061,8 @@ font-family: 'Times New Roman', Times, serif;
     .frontEndIndex-container{
         grid-template-columns: 100%;
         grid-template-rows: min-content 1fr;
+        // border-left: 1px solid black;
+        border: 1px solid black;
         // grid-template-rows: 60px 1fr 60px;
     }
     .TagsMenu-container{
@@ -1134,7 +1134,7 @@ font-family: 'Times New Roman', Times, serif;
         display: flex;
         justify-content: space-between;
         bottom: 0;
-        border-top: 1px solid black;
+        border-top: none;
     }
     .controls-button{
         border: none;
@@ -1147,7 +1147,8 @@ font-family: 'Times New Roman', Times, serif;
     .info-up{
         display: initial;
         border-left: none;
-        border-bottom: 1px solid black;
+        border-top: 1px solid;
+        // transform: translateY(-100%);
     }
     .enlarge-scroll-down{
         // transform: translateY(0px);
