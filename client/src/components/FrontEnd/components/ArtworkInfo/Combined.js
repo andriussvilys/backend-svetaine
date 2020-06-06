@@ -12,7 +12,7 @@ const Combined = (props) => {
         return letters
     }
     return(
-        <div className="enlarge-info">
+        <div className="enlarge-info" id="enlarge-info">
             {
                 props.context.state.enlarge && props.context.state.enlarge.foreground  ? 
                 <Fragment>

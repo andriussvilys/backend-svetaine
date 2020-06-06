@@ -4,7 +4,7 @@ ul{
 .FilterTree-container{
     height: 100%;
     width: 300px;
-    overflow-y: scroll;
+    overflow: visible;
     font-family: 'Courier New', Courier, monospace;
     z-index: 99;
     background-color: white;
@@ -225,7 +225,24 @@ ul{
 .TagsMen-yearLocation-dropdown{
     padding-top: 0;
 }
+.FilterTree-container-buttons{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+.hamburger{
+    position: absolute;
+    border-right: 1px solid black;
+    border-bottom: 1px solid black;
+    background-color: white;
+    height: 50px;
+    width: 51px;
+    right: -52px;
+}
 @media only screen and (max-width: 720px) {
+    .FilterTree-wrapper{
+        margin: 4px !important;
+    }
     .FilterTree-container{
         // height: calc(100% - 90px);
         position: absolute;
@@ -233,10 +250,10 @@ ul{
         width: calc(100% - 50px);
         transform: translateX(-100%);
         transition: transform 0.2s !important;
+        border: 0;
         border-right: 1px solid black;
         grid-row-start: 2;
         grid-row-end: 3;
-        width: 80%;
     }
     .show-menu{
         transform: translateX(0);

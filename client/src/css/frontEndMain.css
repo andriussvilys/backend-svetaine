@@ -5,7 +5,7 @@ ul {
 .FilterTree-container {
   height: 100%;
   width: 300px;
-  overflow-y: scroll;
+  overflow: visible;
   font-family: 'Courier New', Courier, monospace;
   z-index: 99;
   background-color: white;
@@ -292,7 +292,26 @@ ul {
   padding-top: 0;
 }
 
+.FilterTree-container-buttons {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+.hamburger {
+  position: absolute;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: white;
+  height: 50px;
+  width: 51px;
+  right: -52px;
+}
+
 @media only screen and (max-width: 720px) {
+  .FilterTree-wrapper {
+    margin: 4px !important;
+  }
   .FilterTree-container {
     position: absolute;
     height: 100%;
@@ -303,11 +322,11 @@ ul {
     transition: -webkit-transform 0.2s !important;
     transition: transform 0.2s !important;
     transition: transform 0.2s, -webkit-transform 0.2s !important;
+    border: 0;
     border-right: 1px solid black;
     -ms-grid-row: 2;
         grid-row-start: 2;
     grid-row-end: 3;
-    width: 80%;
   }
   .show-menu {
     -webkit-transform: translateX(0);
@@ -325,12 +344,16 @@ ul {
 }
 
 .mobileBar {
-  width: 100%;
   height: 50px;
+  width: 50px;
   border: 2px solid;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  overflow: hidden;
+  position: absolute;
+  z-index: 9;
+  background-color: white;
 }
 
 .menu-button {
@@ -1111,11 +1134,6 @@ label {
   height: 100%;
 }
 
-.info-up {
-  -webkit-transform: translateY(-100%);
-          transform: translateY(-100%);
-}
-
 .ArtworkInfo-preview-container {
   height: 75px;
   z-index: 11;
@@ -1597,6 +1615,7 @@ label {
     display: flex;
     height: 100%;
     width: 100%;
+    border-top: 1px solid black;
   }
   #foreground {
     mix-blend-mode: unset;
@@ -1744,6 +1763,7 @@ label {
     -ms-grid-rows: min-content 1fr;
         grid-template-rows: -webkit-min-content 1fr;
         grid-template-rows: min-content 1fr;
+    border: 1px solid black;
   }
   .TagsMenu-container {
     -ms-grid-row: 1;
@@ -1836,7 +1856,7 @@ label {
         -ms-flex-pack: justify;
             justify-content: space-between;
     bottom: 0;
-    border-top: 1px solid black;
+    border-top: none;
   }
   .controls-button {
     border: none;
@@ -1849,7 +1869,7 @@ label {
   .info-up {
     display: initial;
     border-left: none;
-    border-bottom: 1px solid black;
+    border-top: 1px solid;
   }
   .enlarge-scroll-down {
     -webkit-transform: translateY(100%);
