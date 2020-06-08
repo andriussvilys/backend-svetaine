@@ -83,82 +83,78 @@ export default class EditDetailContainer extends React.Component{
     render(){
         if(this.state.orderedList){
             return(
-                <div 
-                id={'familyContainer'}
-                className={"EditDetailContainer"}
-                >
+                <Fragment>
+                    <div>
                     <Button
-                        onClick={() => {
+                            onClick={() => {
 
-                            let artworkOnDisplay = {}
-                            this.state.selectedFiles.forEach(fileName => {
-                                artworkOnDisplay[fileName] = this.state.fileList[fileName]
-                            })
+                                let artworkOnDisplay = {}
+                                this.state.selectedFiles.forEach(fileName => {
+                                    artworkOnDisplay[fileName] = this.state.fileList[fileName]
+                                })
 
-                            this.props.context.setArtworkOnDisplay(artworkOnDisplay)
-                            let newState = {...this.state}
-                            newState.showModal = true
-                            newState.modalMessage = "Saved"
-                            this.setState()
-                        }}
-                    >Save
-                    </Button>
-                    <Button
-                        onClick={() => {
-                            this.setState({selectedFiles: []})
-                        }}
-                    >Unselect All
-                    </Button>
-                    <div className="familyPicker">
-                        <button
-                            // size="sm"
-                            // variant="primary"
-                            className={"btn-sm btn-primary familyPicker-reload"}
-                            onClick={this.reloadAll}
-                        >
-                            reload file list
-                        </button>
-                        <Accordion
-                            title={"filter by family"}
-                        >
-                            <SelectFamily 
-                                context={this.props.context}
-                                onChange={this.filterByFamily}
-                                uncontrolled
-                                radio
-                            />
-                        </Accordion>
+                                this.props.context.setArtworkOnDisplay(artworkOnDisplay)
+                                let newState = {...this.state}
+                                newState.showModal = true
+                                newState.modalMessage = "Saved"
+                                this.setState(newState)
+                            }}
+                        >Save
+                        </Button>
+                        <Button
+                            onClick={() => {
+                                this.setState({selectedFiles: []})
+                            }}
+                        >Unselect All
+                        </Button>
                     </div>
+
                     <div 
-                    className={"grid-wrapper"}
+                    id={'familyContainer'}
+                    className={"EditDetailContainer"}
                     >
-                        {
-                            this.state.orderedList.map(fileName => {
-                                return this.EditDetail(this.props.state.artworkInfoData[fileName])
-                            })
+
+                        <div className="familyPicker">
+                            <button
+                                // size="sm"
+                                // variant="primary"
+                                className={"btn-sm btn-primary familyPicker-reload"}
+                                onClick={this.reloadAll}
+                            >
+                                reload file list
+                            </button>
+                            <Accordion
+                                title={"filter by family"}
+                            >
+                                <SelectFamily 
+                                    context={this.props.context}
+                                    onChange={this.filterByFamily}
+                                    uncontrolled
+                                    radio
+                                />
+                            </Accordion>
+                        </div>
+                        <div 
+                        className={"grid-wrapper"}
+                        >
+                            {
+                                this.state.orderedList.map(fileName => {
+                                    return this.EditDetail(this.props.state.artworkInfoData[fileName])
+                                })
+                            }
+                        </div>
+                        {this.state.showModal ?                     
+                            <BootstrapModal 
+                                showModal={this.state.showModal}
+                                // onClose={this.onClose}
+                                onClose={() => {this.setState({showModal:false})}}
+                            >
+                                {this.state.modalMessage}
+                            </BootstrapModal> :
+                            null
                         }
                     </div>
-                    {this.state.showModal ?                     
-                        <BootstrapModal 
-                            confirm={this.state.modalConfirm}
-                            showModal={this.state.showModal}
-                            onClose={this.onClose}
-                            confirmedAction={() => this.deletePromise(this.state.fileToDelete.fileName, this.state.fileToDelete.artworkFamily)}
-                        >
-                            {/* <div>
-                                <p>{this.state.modalMessage}</p>
-                                {this.state.fileToDelete ? 
-                                    <FilePreview 
-                                        file={this.state.fileToDelete}
-                                    /> :
-                                    null
-                                }
-                            </div> */}
-                            {this.state.modalMessage}
-                        </BootstrapModal> :
-                        null
-                    }
-                </div>
+                </Fragment>
         )
         }
         else return null

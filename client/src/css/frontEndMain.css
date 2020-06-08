@@ -1064,25 +1064,6 @@ label {
   border-top: 1px solid black;
 }
 
-.previewBubble-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  position: absolute;
-  z-index: 9999;
-  background-color: white;
-  width: 100%;
-  height: 100%;
-  border-left: 0;
-  border-bottom: 0;
-}
-
 .previewBubble-wrapper {
   padding: 0 5px 0 0;
   display: -webkit-box;
@@ -1114,8 +1095,8 @@ label {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  -webkit-transform: translateY(100%);
-          transform: translateY(100%);
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
   -webkit-transition: 0.2s all !important;
   transition: 0.2s all !important;
   position: absolute;
@@ -1130,8 +1111,8 @@ label {
 .ArtworkInfo-wrapper {
   width: 100%;
   max-width: 600px;
-  padding: 10px 0px 20px 20px;
   height: 100%;
+  padding-top: 10px;
 }
 
 .ArtworkInfo-preview-container {
@@ -1616,6 +1597,7 @@ label {
     height: 100%;
     width: 100%;
     border-top: 1px solid black;
+    position: relative;
   }
   #foreground {
     mix-blend-mode: unset;
@@ -1670,7 +1652,7 @@ label {
     height: 100%;
   }
   .controls-button {
-    height: 100%;
+    height: 50px;
     width: 50px;
     background-color: white;
     cursor: pointer;
@@ -1686,13 +1668,8 @@ label {
   }
   .previewBubble-container {
     position: relative;
-    -webkit-box-flex: 1;
-        -ms-flex: 1;
-            flex: 1;
     height: 100%;
     border: none;
-    flex: 1;
-    max-width: calc(100% - 50px);
   }
   .previewBubble-wrapper {
     position: initial;
@@ -2023,11 +2000,21 @@ label {
   -webkit-box-pack: start;
       -ms-flex-pack: start;
           justify-content: start;
-  padding-left: 20px;
+  padding: 8px;
+  width: 50px;
 }
 
 .previewCounter span {
-  font-size: 18px;
+  font-size: 12px;
+}
+
+.ArtworkInfo-Title {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .enlargeContainer {

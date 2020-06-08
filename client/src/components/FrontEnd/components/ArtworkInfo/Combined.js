@@ -3,6 +3,7 @@ import ArtworkInfo from './ArtworkInfo'
 import PreviewBubbles from './PreviewBubble'
 import Controls from './Controls'
 import PreviewCounter from './PreviewCounter'
+import ArtworkTitle from './ArtworkInfo/ArtworkTitle'
 
 const Combined = (props) => {
     const spreadLetters = (title) => {
@@ -31,13 +32,18 @@ const Combined = (props) => {
                             enlarge={props.context.loadEnlarge}
                             context={props.context}
                         /> */}
-                        <PreviewCounter 
+
+                        {/* <PreviewCounter 
                             relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
                             file={props.context.state.enlarge}
-                        />
-                        {props.context.state.mobile ? 
+                        /> */}
+
+                        {/* <ArtworkTitle 
+                            file={props.context.state.enlarge}
+                        /> */}
+                        {/* {props.context.state.mobile ? 
                             <div 
-                            className="controls-button" >
+                            className="controls-button controls-info" >
                                 <img 
                                 alt="info icon" 
                                 src="icons/svg/info.svg" 
@@ -45,7 +51,7 @@ const Combined = (props) => {
                                 /> 
                             </div>
                             : null
-                        }
+                        } */}
                     </div>
                 </Fragment> : null
             }
