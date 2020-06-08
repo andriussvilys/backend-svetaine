@@ -146,6 +146,17 @@ const pullUp = (options) => {
     initialX = currentX;
     initialY = currentY;
 
+    console.log("currentY on rag end")
+    console.log(currentY)
+    if(currentY => 0){
+        console.log("add")
+        dragItem.classList.add("info-up")
+    }
+    else{
+        console.log("remove")
+        dragItem.classList.remove("info-up")
+    }
+
     active = false;
     }
 
