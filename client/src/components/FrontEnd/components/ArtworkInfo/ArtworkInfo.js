@@ -3,6 +3,7 @@ import FilePreview from '../FilePreview'
 import Tags from './Tags'
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import PreviewCounter from './PreviewCounter'
+import ArtworkTitle from './ArtworkInfo/ArtworkTitle'
 
 
 const ArtworkInfo = (props) => {
@@ -102,36 +103,30 @@ const ArtworkInfo = (props) => {
             }
 
             const artworkTitle = () => {
-                return <div>
-                    <PreviewCounter 
-                        relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
-                        file={props.context.state.enlarge}
-                    />
-                    {props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em> : null}
-                </div>
-                // if(props.file.foreground.artworkTitle){
-                //     return <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em>
-                // }
-                // else{return null}
+                return <div>                 
+                        {props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em> : null}
+                        </div>
             }
                 return (
                     <div className="ArtworkInfo-Title">
-                        {/* <PreviewCounter 
+                        <PreviewCounter 
                             relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
                             file={props.context.state.enlarge}
-                        /> */}
-                        <div style={{flex: 1}}>
-                            {artworkTitle()}
-                            {artworkFamily()}
-                            {locationAndYear()}
-                        </div>
-                        <div 
-                        className="controls-button controls-info" >
-                            <img 
-                            alt="info icon" 
-                            src="icons/svg/info.svg" 
-                            onClick={(e) => props.context.showInfo(e)}
-                            /> 
+                        />
+                        <div style={{flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <div>
+                                {artworkTitle()}
+                                {artworkFamily()}
+                                {locationAndYear()}
+                            </div>
+                            <div 
+                            className="controls-button controls-info" >
+                                <img 
+                                alt="info icon" 
+                                src="icons/svg/info.svg" 
+                                onClick={(e) => props.context.showInfo(e)}
+                                /> 
+                            </div>
                         </div>
                     </div>
                 )
@@ -146,18 +141,30 @@ const ArtworkInfo = (props) => {
         )
     }
 
+    const titleHeight = () => {
+        let height = 36
+        const ArtworkInfoTitle = document.getElementById("ArtworkInfo-Title")
+        if(ArtworkInfoTitle){
+            height = ArtworkInfoTitle.offsetHeight
+        }
+        return height+40
+    }
+
     return(
         <div 
             className={"ArtworkInfo-container"}
-
             id="ArtworkInfo" 
-            // style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
+            // style={{transform: `translateY(${-titleHeight()}px)`}}
         >   
             <div key={"ArtworkInfo-wrapper"} className="ArtworkInfo-wrapper">
-                <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >
-                    {artworkTitle()}
+                {/* <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" > */}
+                    {/* {artworkTitle()} */}
+                    <ArtworkTitle 
+                        file={props.file}
+                        context={props.context}                        
+                    />
                     {descriptions()}          
-                </div>
+                {/* </div> */}
                 {<Tags 
                     file={props.file.foreground}
                     context={props.context}

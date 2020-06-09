@@ -1,0 +1,29 @@
+.legacyStyle-List{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+    margin: 0;
+    margin: 5px;
+    padding: 0;
+    border-bottom: 1px dotted black;
+}
+.FilterTree-container{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 14px;
+    width: 170px;
+}
+.legacyStyle-List-listItem{
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+    input{
+        margin: 0 4px;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    .FilterTree-container{
+        width:220px;
+        font-size: 16px;
+    }
+}

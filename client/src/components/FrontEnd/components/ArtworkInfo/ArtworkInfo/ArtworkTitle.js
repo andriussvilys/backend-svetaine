@@ -1,4 +1,5 @@
 import React from 'react'
+import PreviewCounter from '../PreviewCounter'
 // import FilePreview from '../FilePreview'
 // import Tags from './Tags'
 // import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -14,25 +15,41 @@ const ArtworkTitle = props => {
                             "ArtworkInfo_artworkFamily" :
                             "ArtworkInfo_artworkTitle"
                             }
-                            >
-                                
-                            {!props.file.foreground.artworkTitle ? null : <span>part of </span> }
-                            <em className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em>
+                        >        
+                            <div>
+                                {!props.file.foreground.artworkTitle ? null : <span>part of </span> }
+                                <em className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em>
+                            </div>
                         </div>
             // }
         }
-    
+
         const artworkTitle = () => {
-            if(props.file.foreground.artworkTitle){
-                return <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em>
-            }
-            else{return null}
+            return <div style={{marginLeft: "-7px"}}>                 
+                    {props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em> : null}
+                    </div>
         }
             return (
-                <div className="ArtworkInfo-Title">
-                    {artworkTitle()}
-                    {artworkFamily()}
-                    {locationAndYear()}
+                <div className="ArtworkInfo-Title" id="ArtworkInfo-Title">
+                    <PreviewCounter 
+                        relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
+                        file={props.context.state.enlarge}
+                    />
+                    <div style={{flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                        <div>
+                            {artworkTitle()}
+                            {artworkFamily()}
+                            {locationAndYear()}
+                        </div>
+                        <div 
+                        className="controls-button controls-info" >
+                            <img 
+                            alt="info icon" 
+                            src="icons/svg/info.svg" 
+                            onClick={(e) => props.context.showInfo(e)}
+                            /> 
+                        </div>
+                    </div>
                 </div>
             )
     }

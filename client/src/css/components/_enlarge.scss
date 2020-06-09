@@ -17,7 +17,7 @@
     border-left: 1px solid black;
 }
 .enlarge-bar{
-    height: 50px;
+    // height: 50px;
     border-bottom: 1px solid black;
     .controls-exitButton{
         img{
@@ -28,10 +28,11 @@
 .controls-exitButton{
     position: absolute;
     z-index: 9;
-    height: 50px;
+    // height: 50px;
     right: 0;
-    width: 50px;
+    // width: 50px;
     background-color: unset;
+    margin-top: 7px;
 }
 .controls-slideButton{
     border-left: 1px solid;
