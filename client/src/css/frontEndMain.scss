@@ -98,7 +98,6 @@ $border-main-color: #bbb;
     // border-right: $border-light;
     border-bottom: $border-light;
     overflow-y: auto;
-    transition: 0.2s all;
     overflow-x: hidden;
 }
 .TagsMenu-checkbox{
@@ -261,9 +260,6 @@ font-family: 'Times New Roman', Times, serif;
     position: absolute;
     border-left: $border-dark;
     transform: translateX(0);
-    *{
-        transition: 0s all !important;
-    }
 }
 .Nav-button{
     width: 4vw;
@@ -299,7 +295,6 @@ font-family: 'Times New Roman', Times, serif;
     position: relative;
     width: 100%;
     height: 100%;
-    transition: 0.2s all;
 }
 
 .FilePreview--imageContainer{
@@ -307,8 +302,6 @@ font-family: 'Times New Roman', Times, serif;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    transition: 0.2s all;
-    transition: 0 opacity;
     z-index: 2;
     overflow: hidden;
     position: sticky;
@@ -319,8 +312,6 @@ font-family: 'Times New Roman', Times, serif;
     min-width: 59px;
 }
 .FilePreview--imageContainer__empty{
-    transition: 0.2s all;
-    transition: 0 opacity;
     overflow: hidden;
     position: sticky;
     top: 0;
@@ -356,12 +347,11 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     max-height: 100%;
 }
-.foreground-transition{
-    transition: height 0.2s, width 0.2s, opacity 0.4s;
-}
+// .foreground-transition{
+//     transition: height 0.2s, width 0.2s, opacity 0.4s;
+// }
 
 .imageSelect-FilePreview{
-    transition: 0.2s all;
     object-fit: contain;
     align-self: flex-end;
     transform-origin: bottom;
@@ -547,8 +537,6 @@ font-family: 'Times New Roman', Times, serif;
     display: flex;
     justify-content: flex-end;
     transform: translateY(0);
-    // transform: translateY(100%);
-    transition: 0.2s all !important;
     position: absolute;
     border-top: 1px solid black;
     background-color: white;
@@ -561,7 +549,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
-    max-width: 600px;
     height: 100%;
     padding: 0 2vw;
 }
@@ -578,11 +565,9 @@ font-family: 'Times New Roman', Times, serif;
     height: 100%;
     object-fit: cover;
     opacity: 0.4;
-    transition: 0.2s all;
     opacity: 1;
 }
 .ArtworkInfo-preview:hover{
-    transition: none;
     opacity: 1;
 }
 .ArtworkInfo-seeAlso-container{
@@ -618,10 +603,10 @@ font-family: 'Times New Roman', Times, serif;
 .ArtworkInfo--descriptions{
     margin: 1vw 0;
     font-size: 14px;    
+    max-width: 600px;
 }
 .ArtworkInfo--descriptions_instance{
-    text-indent: 15px;
-    margin-top: 10px;
+    text-indent: 10px;
     padding-left: 32px;
     font-size: 12px;
 }
@@ -727,7 +712,6 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    transition: 0.2s transform, 0.2s opacity;
     overflow: hidden;
     position: absolute;
     bottom: 0;
@@ -743,7 +727,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 .TagsMenu-listitem{
     z-index: 7;
-    transition: 0.2s all;
     overflow: hidden;
     position: absolute;
     bottom: 0;
@@ -832,7 +815,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 
 .fade-out{
-    transition: 0.2s opacity !important;
     opacity: 0 !important;
     mix-blend-mode: luminosity;
 }
@@ -912,7 +894,6 @@ font-family: 'Times New Roman', Times, serif;
     align-items: center;
 }
 .pinch-to-zoom-area{
-    transition: height 0.2s !important;
     height: 100%;
     max-height: 100%;
     display: flex !important;
@@ -955,9 +936,6 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ArtworkInfo--descriptions_instance{
         padding-left: 0;
-    }
-    .ArtworkInfo-container{
-        transition: 0.2s all !important;
     }
     .imageInfo-nav{
         z-index: 9;
@@ -1081,7 +1059,6 @@ font-family: 'Times New Roman', Times, serif;
         z-index: 9999;
 
         transform: translateY(-100%);
-        transition: 0.2s all;
         border-right: 1px solid;
         max-height: calc(100vh - 144px);
         border-bottom: none;
@@ -1239,6 +1216,7 @@ font-family: 'Times New Roman', Times, serif;
     .ArtworkInfo--descriptions{
         font-size: 12px;
         margin: 4vw 8vw;
+        margin-top: 0;
         margin-left: 50px;
     }
     .ArtworkInfo_locationYear{
@@ -1260,9 +1238,6 @@ font-family: 'Times New Roman', Times, serif;
     }
     .hide-imageSelect{
         transform: translateY(100%)
-    }
-    .foreground-transition{
-        transition: opacity 0.4s, height 0.2s, width 0.2s;
     }
     #themes-subcategories{
         max-height: 40vh;
@@ -1290,9 +1265,9 @@ font-family: 'Times New Roman', Times, serif;
         background-color: white;
         width: 100%;
         position: absolute;
-        bottom: 100%;
+        bottom: 99%;
         left: 0;
-        padding: 20px 0 10px 10px;
+        padding: 10px 0 20px 15px;
         border-top: 1px solid black;
   }
 

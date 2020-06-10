@@ -15,6 +15,7 @@ import TopBar from './components/Nav/MobileBars/TopBar'
 import BottomBar from './components/Nav/MobileBars/BottomBar'
 
 import List from './components/TagsMenu/legacy-style/List'
+import pullUp from './components/functions/pullUp'
 
 // import '../../css/frontEndMain.css'
 
@@ -34,6 +35,10 @@ export default class FrontEndIndex extends React.Component{
             return <div key={`${title}-leter-${index}`} className="title-letter white-font">{letter}</div>
         })
         return letters
+    }
+
+    componentDidMount(){
+        // pullUp({parentId: "enlargeContainer", childId: "TagsMenu", horizontal: true, requireActive: true})
     }
     
     render(){

@@ -145,7 +145,10 @@ export class Provider extends React.Component{
 
     }
     this.subcategoryChecked = (category, subcategory) => {
-        let onDisplay = false
+      let onDisplay = false
+        if(!this.state.compoundFilters){
+          return onDisplay
+        }
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
             const file = this.state.artworkOnDisplay[fileName]
             if(file.category[category]){
@@ -409,7 +412,7 @@ export class Provider extends React.Component{
       })
       return onDisplay.length > 0
 
-  }
+    }
 
     this.themeChecked = (theme) => {
       let onDisplay = []
@@ -603,34 +606,20 @@ export class Provider extends React.Component{
         const delay = this.hideArtworkInfo()
         setTimeout(() => {
           const enlargeContainer = document.getElementById('enlargeContainer')
-
-          //if mobile
-          // if(this.state.mobile){
-          //   document.getElementById('imageSelect').classList.remove("side-scroll")
-          //   setTimeout(() => {
-          //     enlargeContainer.classList.remove("enlarge-scroll-down")
-          //     // if(ArtworkInfo){
-          //     //   ArtworkInfo.classList.remove("show")
-          //     // }
-          //   }, 400);
-          // }
-          //if dekstop
             document.getElementById('imageSelect').style.width = `100%`
 
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-opacity")
               setTimeout(() => {
                 enlargeContainer.classList.remove("enlarge-scroll-left")
-              }, 400);
-            }, 200);
-          
-
+              }, 50);
+            }, 50);
           if(!clearAll){
             const enlarge = {...this.state.enlarge}
             enlarge.open = false
             this.setState({enlarge})
           }
-        }, delay);
+        }, 50);
     }
     this.viewNext = (direction) => {
       console.log("__________________________")
@@ -785,6 +774,10 @@ export class Provider extends React.Component{
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.remove("show-menu")
       }
+      const artworkInfo = document.getElementById("ArtworkInfo")
+      if(artworkInfo && artworkInfo.classList.contains("info-up")){
+        this.showInfo()
+      }
 
       const background = document.getElementById("background")
       const foreground = document.getElementById("foreground")
@@ -850,30 +843,13 @@ export class Provider extends React.Component{
 
                   foreground.classList.add("fade-out")
                   let scrollToDelay = 0
-                  //APPLY SIZE CHANGES
-                  //MOBILE
-                  // if(this.state.mobile){
-                  //   if(!container.classList.contains("enlarge-scroll-down")){
-                  //     container.style.height = `${images.clientHeight}px`
-                  //     // container.style.height = `${images.clientHeight - 90}px`
-                  //     container.classList.add("enlarge-scroll-down")
-                  //     scrollToDelay = 400
-                  //     // setTimeout(() => {
-                  //     //     imageSelect.classList.add("side-scroll")
-                  //     // }, 200);
-                  //   }
-                  // }
-                  //DESKTOP
-                    //if enlarge not been opened
+
                     if(!container.classList.contains("enlarge-scroll-left")){
                       container.classList.add("enlarge-scroll-left")
                       container.style.width = `${futureSize.width}px`
                       setTimeout(() => {
-                        container.classList.add("enlarge-opacity")
-                      }, 200);
-                      setTimeout(() => {
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                      }, 600);
+                      }, 50);
                     }
                     else{
                       //if enlargeContainer will shrink
@@ -883,7 +859,7 @@ export class Provider extends React.Component{
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                         setTimeout(() => {
                           container.style.width = `${futureSize.width}px`
-                        }, 400);
+                        }, 50);
                       }
                       //
                       else{
@@ -896,7 +872,7 @@ export class Provider extends React.Component{
                         container.style.width = `${futureSize.width}px`
                         setTimeout(() => {
                           imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                        }, delay);
+                        }, 50);
                       }
                     }
                     document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
@@ -965,7 +941,8 @@ export class Provider extends React.Component{
                           console.log(rej)
                         })
                         this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-                        pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo"})
+                        pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
+                        // pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo", vertical: true})
 
 
                      }, 200);
@@ -1090,54 +1067,29 @@ export class Provider extends React.Component{
 
       return this.animateEnlarge(file, options)
     }
-
-
     this.showInfo = (e) => {
-      
-      e.stopPropagation()
       if(this.state.enlarge && !this.state.enlarge.open){
         return
       }
-      console.log("run show info")
-      console.log(e)
+      if(e){
+        e.stopPropagation()
+        console.log("run show info")
+        console.log(e)
+      }
+      // if(e.touches){return}
 
       const info = document.getElementById("ArtworkInfo")
       if(info.classList.contains("info-up")){
+        info.classList.remove("info-up")
         info.style.transform = "translateY(0)"
       }
       else{
-        info.style.transform = "translateY(-100%)"
+        info.classList.add("info-up")
+        info.style.transform = `translateY(-${info.clientHeight}px)`
       }
-      // info.classList.add("info-up")
 
-      info.classList.toggle("info-up")
-      // if(!info.classList.contains("info-up")){
-      //   info.classList.add("info-up")
-      // }
-      // else info.classList.remove("info-up")
+      // info.classList.toggle("info-up")
       return
-      // if(!this.state.mobile && !info.classList.contains("info-up")){
-      //   if(!info.classList.contains("info-up")){
-      //     info.classList.add("info-up")
-      //   }
-      //   else info.classList.remove("info-up")
-      //   return
-      // }
-      // if(!info.classList.contains('show')){
-      //   let counter = 1
-      //   if(this.state.mobile){
-      //     if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-      //       this.showMenu(e)
-      //       counter = 1
-      //     }
-      //   }
-      //   setTimeout(() => {
-      //     setTimeout(() => {
-      //       info.classList.add('info-up')
-      //     }, 100);
-      //     info.classList.add('show')
-      //   }, counter);
-      // }
     }
     this.toggleMobile = () => {
       const container = document.getElementById("enlargeContainer")
@@ -1302,7 +1254,9 @@ export class Provider extends React.Component{
               })
       }) 
     }
-
+    this.compoundFilters = () => {
+      this.setState({compoundFilters: !this.state.compoundFilters})
+    }
 
 }//END OF CONTSTRUCTOR
   componentDidMount(){
@@ -1311,6 +1265,8 @@ export class Provider extends React.Component{
         console.log(staticState)
         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
         newState.mobile = this.toggleMobile()
+        newState.compoundFilters = false
+        // newState.enlarge = {}
         this.setState(newState)
   }
 
@@ -1356,6 +1312,7 @@ export class Provider extends React.Component{
             changeFileName: this.changeFileName,
             onChange: this.onChange,
             addNew: this.addNew,
+            compoundFilters: this.compoundFilters
 
             } }>
         {this.props.children}

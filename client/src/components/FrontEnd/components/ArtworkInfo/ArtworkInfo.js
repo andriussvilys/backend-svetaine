@@ -8,6 +8,8 @@ import ArtworkTitle from './ArtworkInfo/ArtworkTitle'
 
 const ArtworkInfo = (props) => {
 
+    const enlarge = props.context.state.enlarge
+
     let singleContainerCounter = null
     
     const seeAlso = () => {
@@ -124,7 +126,7 @@ const ArtworkInfo = (props) => {
                                 <img 
                                 alt="info icon" 
                                 src="icons/svg/info.svg" 
-                                onClick={(e) => props.context.showInfo(e)}
+                                // onClick={(e) => props.context.showInfo(e)}
                                 /> 
                             </div>
                         </div>
@@ -151,6 +153,7 @@ const ArtworkInfo = (props) => {
     }
 
     return(
+        props.file && props.file.foreground ? 
         <div 
             className={"ArtworkInfo-container"}
             id="ArtworkInfo" 
@@ -175,7 +178,7 @@ const ArtworkInfo = (props) => {
                     {seeAlso()}
                 </div>
             </div>
-        </div>
+        </div> : null
     )
 }
 

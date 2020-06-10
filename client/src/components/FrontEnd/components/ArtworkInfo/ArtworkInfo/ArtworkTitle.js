@@ -42,11 +42,13 @@ const ArtworkTitle = props => {
                             {locationAndYear()}
                         </div>
                         <div 
-                        className="controls-button controls-info" >
+                        className="controls-button controls-info" 
+                        id="show-info-button"
+                        // onClick={(e) => props.context.showInfo(e)}
+                        >
                             <img 
                             alt="info icon" 
                             src="icons/svg/info.svg" 
-                            onClick={(e) => props.context.showInfo(e)}
                             /> 
                         </div>
                     </div>

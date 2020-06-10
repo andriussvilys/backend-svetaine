@@ -275,7 +275,6 @@ label{
             .collapsing{
                 height: 0;
                 display: none;
-                transition: 0s all;
             }
             .collapse{
                 min-height: 0;
@@ -303,7 +302,6 @@ label{
             .collapsing{
                 height: 0;
                 display: none;
-                transition: 0s all;
             }
             .collapse{
                 min-height: 0;
@@ -431,7 +429,6 @@ textarea{
 }
 .themes-list--selected{
     background-color: #c9eec9 !important;
-    transition: all 0.2s;
 }
 .FamilyList--container{
     width: 100%;
@@ -689,8 +686,6 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: flex-end;
     align-items: center;
     justify-content: center;
-    transition: 0.4s all;
-    transition: 0 opacity;
     z-index: 2;
     overflow: hidden;
     // max-height: 200px;
