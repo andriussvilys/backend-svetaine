@@ -98,7 +98,6 @@ $border-main-color: #bbb;
     // border-right: $border-light;
     border-bottom: $border-light;
     overflow-y: auto;
-    transition: 0.2s all;
     overflow-x: hidden;
 }
 .TagsMenu-checkbox{
@@ -261,9 +260,6 @@ font-family: 'Times New Roman', Times, serif;
     position: absolute;
     border-left: $border-dark;
     transform: translateX(0);
-    *{
-        transition: 0s all !important;
-    }
 }
 .Nav-button{
     width: 4vw;
@@ -299,7 +295,6 @@ font-family: 'Times New Roman', Times, serif;
     position: relative;
     width: 100%;
     height: 100%;
-    transition: 0.2s all;
 }
 
 .FilePreview--imageContainer{
@@ -307,8 +302,6 @@ font-family: 'Times New Roman', Times, serif;
     flex-direction: column;
     justify-content: flex-end;
     align-items: center;
-    transition: 0.2s all;
-    transition: 0 opacity;
     z-index: 2;
     overflow: hidden;
     position: sticky;
@@ -319,8 +312,6 @@ font-family: 'Times New Roman', Times, serif;
     min-width: 59px;
 }
 .FilePreview--imageContainer__empty{
-    transition: 0.2s all;
-    transition: 0 opacity;
     overflow: hidden;
     position: sticky;
     top: 0;
@@ -356,12 +347,11 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     max-height: 100%;
 }
-.foreground-transition{
-    transition: height 0.2s, width 0.2s, opacity 0.4s;
-}
+// .foreground-transition{
+//     transition: height 0.2s, width 0.2s, opacity 0.4s;
+// }
 
 .imageSelect-FilePreview{
-    transition: 0.2s all;
     object-fit: contain;
     align-self: flex-end;
     transform-origin: bottom;
@@ -453,7 +443,7 @@ font-family: 'Times New Roman', Times, serif;
 .Tags-item_wrapper{
     display: flex;
     flex-wrap: wrap;
-    margin: 20px;
+    margin: 20px 0;
     justify-content: flex-end;
     
 }
@@ -506,26 +496,24 @@ font-family: 'Times New Roman', Times, serif;
     min-width: 45px;
 }
 .enlarge-info{
-    // position: absolute;
-    height: 50px;
     width: 100%;
     bottom: 0;
     background-color: white;
     position: relative;
     border-top: 1px solid black;
 }
-.previewBubble-container{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    position: absolute;
-    z-index: 9999;
-    background-color: white;
-    width: 100%;
-    height: 100%;
-    border-left: 0;
-    border-bottom: 0;
-}
+// .previewBubble-container{
+//     display: flex;
+//     justify-content: flex-end;
+//     align-items: center;
+//     position: absolute;
+//     z-index: 9999;
+//     background-color: white;
+//     width: 100%;
+//     height: 100%;
+//     border-left: 0;
+//     border-bottom: 0;
+// }
 .previewBubble-wrapper{
     padding: 0 5px 0 0;
     display: flex;
@@ -549,21 +537,20 @@ font-family: 'Times New Roman', Times, serif;
     display: flex;
     justify-content: flex-end;
     transform: translateY(0);
-    // transform: translateY(100%);
-    transition: 0.2s all !important;
     position: absolute;
     border-top: 1px solid black;
     background-color: white;
     width: 100% !important;
     max-height: calc(100vh - 59px);
-    overflow-y: auto;
+    // overflow-y: auto;
     z-index: 2;
+    padding-bottom: 20px;
+    top: 100%;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
-    max-width: 600px;
-    padding: 10px 0px 20px 20px;
     height: 100%;
+    padding: 0 2vw;
 }
 .ArtworkInfo-preview-container{
     height: 75px;
@@ -578,11 +565,9 @@ font-family: 'Times New Roman', Times, serif;
     height: 100%;
     object-fit: cover;
     opacity: 0.4;
-    transition: 0.2s all;
     opacity: 1;
 }
 .ArtworkInfo-preview:hover{
-    transition: none;
     opacity: 1;
 }
 .ArtworkInfo-seeAlso-container{
@@ -599,7 +584,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 
 .ArtworkInfo-container_seealso{
-    padding-right: 20px;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -617,12 +601,14 @@ font-family: 'Times New Roman', Times, serif;
     white-space: nowrap;
 }
 .ArtworkInfo--descriptions{
-    margin: 1vw 2vw;
+    margin: 1vw 0;
     font-size: 14px;    
+    max-width: 600px;
 }
 .ArtworkInfo--descriptions_instance{
-    text-indent: 15px;
-    margin-top: 10px;
+    text-indent: 10px;
+    padding-left: 32px;
+    font-size: 12px;
 }
 .ArtworkInfo_artworkFamily{
     font-size: 12px;
@@ -726,7 +712,6 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    transition: 0.2s transform, 0.2s opacity;
     overflow: hidden;
     position: absolute;
     bottom: 0;
@@ -742,7 +727,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 .TagsMenu-listitem{
     z-index: 7;
-    transition: 0.2s all;
     overflow: hidden;
     position: absolute;
     bottom: 0;
@@ -831,7 +815,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 
 .fade-out{
-    transition: 0.2s opacity !important;
     opacity: 0 !important;
     mix-blend-mode: luminosity;
 }
@@ -911,7 +894,6 @@ font-family: 'Times New Roman', Times, serif;
     align-items: center;
 }
 .pinch-to-zoom-area{
-    transition: height 0.2s !important;
     height: 100%;
     max-height: 100%;
     display: flex !important;
@@ -931,21 +913,36 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: flex-end;
 }
 
+.controls-button{
+    // height: 100%;
+    height: 35px;
+    width: 35px;
+    background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 7px 0 7px;
+    img{
+        height: 100%;
+    }
+}
+
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     $hovercolor: white !important;
     .TagsMenu-category-title:hover *{
         color: black;
     }
-    .ArtworkInfo-container{
-        transition: 0.2s all !important;
+    .ArtworkInfo--descriptions_instance{
+        padding-left: 0;
     }
     .imageInfo-nav{
         z-index: 9;
         display: flex;
         height: 100%;
         width: 100%;
-        border-top: 1px solid black;
+        position: relative;
     }
     #foreground{
         mix-blend-mode: unset;
@@ -989,22 +986,10 @@ font-family: 'Times New Roman', Times, serif;
         display: flex;
         height: 100%;
     }
-    .controls-button{
-        height: 100%;
-        width: 50px;
-        background-color: white;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
     .previewBubble-container{
         position: relative;
-        flex: 1;
         height: 100%;
         border: none;
-        flex: 1;
-        max-width: calc(100% - 50px);
     }
     .previewBubble-wrapper{
         position: initial;
@@ -1074,7 +1059,6 @@ font-family: 'Times New Roman', Times, serif;
         z-index: 9999;
 
         transform: translateY(-100%);
-        transition: 0.2s all;
         border-right: 1px solid;
         max-height: calc(100vh - 144px);
         border-bottom: none;
@@ -1140,10 +1124,6 @@ font-family: 'Times New Roman', Times, serif;
     .controls-button{
         border: none;
         float: right;
-        padding: 7px;
-        img{
-            height: 100%;
-        }
     }
     .info-up{
         display: initial;
@@ -1235,6 +1215,9 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
+        margin: 4vw 8vw;
+        margin-top: 0;
+        margin-left: 50px;
     }
     .ArtworkInfo_locationYear{
         font-size: 10px;
@@ -1256,9 +1239,6 @@ font-family: 'Times New Roman', Times, serif;
     .hide-imageSelect{
         transform: translateY(100%)
     }
-    .foreground-transition{
-        transition: opacity 0.4s, height 0.2s, width 0.2s;
-    }
     #themes-subcategories{
         max-height: 40vh;
         overflow-y: auto;
@@ -1273,12 +1253,25 @@ font-family: 'Times New Roman', Times, serif;
   }
   .previewCounter{
       justify-content: start;
-      padding-left: 20px;
+      width: 50px;
       span{
-          font-size: 18px;
+          font-size: 12px;
       }
   }
+  .ArtworkInfo-Title{
+      display: flex;
+      justify-content: space-between;
+        position: absolute;
+        background-color: white;
+        width: 100%;
+        position: absolute;
+        bottom: 99%;
+        left: 0;
+        padding: 10px 0 20px 15px;
+        border-top: 1px solid black;
+  }
 
-  @import './components/enlarge'
+  @import './components/enlarge';
+  @import './components/List';
 
 //   *{transition: 0s all !important;}

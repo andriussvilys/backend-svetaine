@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import FilePreview from '../FilePreview'
 import Tags from './Tags'
 import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import PreviewCounter from './PreviewCounter'
+import ArtworkTitle from './ArtworkInfo/ArtworkTitle'
 
 
 const ArtworkInfo = (props) => {
+
+    const enlarge = props.context.state.enlarge
 
     let singleContainerCounter = null
     
@@ -93,8 +97,7 @@ const ArtworkInfo = (props) => {
                                 "ArtworkInfo_artworkFamily" :
                                 "ArtworkInfo_artworkTitle"
                                 }
-                                >
-                                    
+                            >        
                                 {!props.file.foreground.artworkTitle ? null : <span>part of </span> }
                                 <em className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em>
                             </div>
@@ -102,16 +105,31 @@ const ArtworkInfo = (props) => {
             }
 
             const artworkTitle = () => {
-                if(props.file.foreground.artworkTitle){
-                    return <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em>
-                }
-                else{return null}
+                return <div>                 
+                        {props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em> : null}
+                        </div>
             }
                 return (
                     <div className="ArtworkInfo-Title">
-                        {artworkTitle()}
-                        {artworkFamily()}
-                        {locationAndYear()}
+                        <PreviewCounter 
+                            relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
+                            file={props.context.state.enlarge}
+                        />
+                        <div style={{flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center"}}>
+                            <div>
+                                {artworkTitle()}
+                                {artworkFamily()}
+                                {locationAndYear()}
+                            </div>
+                            <div 
+                            className="controls-button controls-info" >
+                                <img 
+                                alt="info icon" 
+                                src="icons/svg/info.svg" 
+                                // onClick={(e) => props.context.showInfo(e)}
+                                /> 
+                            </div>
+                        </div>
                     </div>
                 )
         }
@@ -125,18 +143,31 @@ const ArtworkInfo = (props) => {
         )
     }
 
+    const titleHeight = () => {
+        let height = 36
+        const ArtworkInfoTitle = document.getElementById("ArtworkInfo-Title")
+        if(ArtworkInfoTitle){
+            height = ArtworkInfoTitle.offsetHeight
+        }
+        return height+40
+    }
+
     return(
+        props.file && props.file.foreground ? 
         <div 
             className={"ArtworkInfo-container"}
-
             id="ArtworkInfo" 
-            // style={{width: `${props.mobile ? `100%` : `${props.file.currentWidth}px`}`}}
+            // style={{transform: `translateY(${-titleHeight()}px)`}}
         >   
             <div key={"ArtworkInfo-wrapper"} className="ArtworkInfo-wrapper">
-                <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >
-                    {artworkTitle()}
-                    {descriptions()}
-                </div>
+                {/* <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" > */}
+                    {/* {artworkTitle()} */}
+                    <ArtworkTitle 
+                        file={props.file}
+                        context={props.context}                        
+                    />
+                    {descriptions()}          
+                {/* </div> */}
                 {<Tags 
                     file={props.file.foreground}
                     context={props.context}
@@ -147,7 +178,7 @@ const ArtworkInfo = (props) => {
                     {seeAlso()}
                 </div>
             </div>
-        </div>
+        </div> : null
     )
 }
 

@@ -14,6 +14,9 @@ import Menu from './components/TagsMenu/v2/Menu';
 import TopBar from './components/Nav/MobileBars/TopBar'
 import BottomBar from './components/Nav/MobileBars/BottomBar'
 
+import List from './components/TagsMenu/legacy-style/List'
+import pullUp from './components/functions/pullUp'
+
 // import '../../css/frontEndMain.css'
 
 Array.from(document.getElementsByTagName("h4")).forEach(item => {
@@ -33,6 +36,10 @@ export default class FrontEndIndex extends React.Component{
         })
         return letters
     }
+
+    componentDidMount(){
+        // pullUp({parentId: "enlargeContainer", childId: "TagsMenu", horizontal: true, requireActive: true})
+    }
     
     render(){
         return(
@@ -42,15 +49,15 @@ export default class FrontEndIndex extends React.Component{
                         <div 
                             className="frontEndIndex-container"
                         >
-                        <Menu
+                        {/* <Menu
                             context={this.context}
                             categoriesData={this.context.state.categoriesData}
-                        />
-                        {/* {this.context.state.mobile ? 
-                        <TopBar 
+                        /> */}
+
+                        <List 
                             context={this.context}
-                        /> : null
-                        } */}
+                            data={this.context.state.categoriesData}
+                        />
 
                         <div 
                         id="images" 

@@ -9,7 +9,7 @@ import FilePreview from '../FilePreview'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
 import Accordion from '../Accordion';
 
-export default class FileUpdate extends React.Component{
+export default class EditDetailContainer extends React.Component{
 
     constructor(props){
         super(props);

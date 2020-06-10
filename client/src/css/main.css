@@ -108,8 +108,6 @@
 
 .themes-list--selected {
   background-color: #c9eec9;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
 }
 
 .themes-list--selected:hover {
@@ -864,8 +862,6 @@ label {
 .EditDetailContainer .accordion .card .collapsing {
   height: 0;
   display: none;
-  -webkit-transition: 0s all;
-  transition: 0s all;
 }
 
 .EditDetailContainer .accordion .card .collapse {
@@ -905,8 +901,6 @@ label {
 .EditDetailContainer .accordion .card .collapsing {
   height: 0;
   display: none;
-  -webkit-transition: 0s all;
-  transition: 0s all;
 }
 
 .EditDetailContainer .accordion .card .collapse {
@@ -1085,8 +1079,6 @@ textarea {
 
 .themes-list--selected {
   background-color: #c9eec9 !important;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
 }
 
 .FamilyList--container {
@@ -1462,10 +1454,6 @@ h5 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-transition: 0.4s all;
-  transition: 0.4s all;
-  -webkit-transition: 0 opacity;
-  transition: 0 opacity;
   z-index: 2;
   overflow: hidden;
   height: 120px;

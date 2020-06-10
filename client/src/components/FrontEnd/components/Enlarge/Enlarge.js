@@ -4,6 +4,7 @@ import Combined from '../ArtworkInfo/Combined'
 import CloseBar from './Bars/CloseBar'
 import CloseButton from './Bars/CloseButton'
 import pullUp from '../functions/pullUp'
+import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
 
 
 export default class Enlarge extends React.Component{
@@ -27,11 +28,9 @@ export default class Enlarge extends React.Component{
                             context={this.props.context}
                         /> : null
                     } */}
-                    {this.props.context.state.mobile ? 
                         <CloseButton
                             context={this.props.context}
-                        /> : null
-                    }
+                        />
                     <PinchToZoom 
                         className="pinchContainer"
                         panEvent={{
@@ -52,10 +51,16 @@ export default class Enlarge extends React.Component{
                             <img  alt={this.props.context.state.enlarge ? this.props.context.state.enlarge.fileName : "background"} id="background-img" src={"#"} className={`enlarge-preview`} />
                         </div>
                     </PinchToZoom>
-                    <Combined 
+                    <ArtworkInfo 
                         context={this.props.context}
                         mobile={this.props.mobile}
+                        file={this.props.context.state.enlarge}
+                        artworkInfoData={this.props.context.state.artworkInfoData}
                     />
+                    {/* <Combined 
+                        context={this.props.context}
+                        mobile={this.props.mobile}
+                    /> */}
                 </div>
         )
     }

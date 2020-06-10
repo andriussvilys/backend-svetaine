@@ -3,8 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-    const jsonString = JSON.stringify(req.body)
-    fs.writeFile("client/public/static-state/filename.json", jsonString, () => {
+    fs.writeFile("client/src/components/FrontEnd/staticState.js", req.body.string, () => {
         res.send(true)
     })
 })

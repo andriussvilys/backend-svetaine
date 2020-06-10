@@ -88,6 +88,8 @@ const FilterTree = (props) => {
     })
     return tree
     }
+    console.log("FILTER TREE PORPS")
+    console.log(props)
 return(
     <div 
     className="FilterTree-wrapper"

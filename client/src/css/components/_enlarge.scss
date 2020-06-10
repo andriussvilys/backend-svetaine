@@ -4,7 +4,6 @@
     position: absolute;
     max-width: 100%;
     opacity: 1;
-    transition: 0.4s all;
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
@@ -15,9 +14,10 @@
     grid-template-columns: 100%;
     grid-template-rows: 1fr 50px;
     border-left: 1px solid black;
+    overflow: hidden;
 }
 .enlarge-bar{
-    height: 50px;
+    // height: 50px;
     border-bottom: 1px solid black;
     .controls-exitButton{
         img{
@@ -28,10 +28,11 @@
 .controls-exitButton{
     position: absolute;
     z-index: 9;
-    height: 50px;
+    // height: 50px;
     right: 0;
-    width: 50px;
+    // width: 50px;
     background-color: unset;
+    margin-top: 7px;
 }
 .controls-slideButton{
     border-left: 1px solid;
@@ -41,8 +42,6 @@
     .enlargeContainer{
         background-color: white !important;
         width: 100% !important;
-        opacity: 0;
-        transition: opacity 0.4s;
         max-height: none;
         justify-content: center;
         z-index: 999;

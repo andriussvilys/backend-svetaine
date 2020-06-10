@@ -5,11 +5,12 @@ ul{
     height: 100%;
     width: 300px;
     overflow: visible;
-    font-family: 'Courier New', Courier, monospace;
+    // font-family: 'Courier New', Courier, monospace;
     z-index: 99;
     background-color: white;
     border: 1px solid black;
     border-right: 0;
+    border-bottom: 0;
 }
 .FilterTree-container_main{
     border: 1px solid black;

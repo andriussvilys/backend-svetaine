@@ -12,6 +12,7 @@ import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo'
 import Themes from './components/Filters/subcomponents/Themes'
 import Categories from './components/Filters/subcomponents/Categories'
+import ArtworkOnDisplay from './components/Create/ArtworkOnDisplay'
 
 export default class Edit extends Component{
     static contextType = Context;
@@ -217,6 +218,14 @@ export default class Edit extends Component{
                                                       </Tab>
                                                     </Tabs>
                                                   </div>
+                                                </Tab>
+                                                <Tab eventKey="artworkOnDisplay" title="Select Artwork on Display">
+                                                  <ArtworkOnDisplay 
+                                                    context={this.context}
+                                                    state={this.context.state}
+                                                    familySetupMethods={this.context.familySetupMethods}
+                                                    highlightRef={Object.keys(this.context.state.staticState.artworkOnDisplay)}
+                                                  />
                                                 </Tab>
                                             </Tabs>
                                           </div>

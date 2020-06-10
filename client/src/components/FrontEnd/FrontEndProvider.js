@@ -145,7 +145,10 @@ export class Provider extends React.Component{
 
     }
     this.subcategoryChecked = (category, subcategory) => {
-        let onDisplay = false
+      let onDisplay = false
+        if(!this.state.compoundFilters){
+          return onDisplay
+        }
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
             const file = this.state.artworkOnDisplay[fileName]
             if(file.category[category]){
@@ -409,7 +412,7 @@ export class Provider extends React.Component{
       })
       return onDisplay.length > 0
 
-  }
+    }
 
     this.themeChecked = (theme) => {
       let onDisplay = []
@@ -603,34 +606,20 @@ export class Provider extends React.Component{
         const delay = this.hideArtworkInfo()
         setTimeout(() => {
           const enlargeContainer = document.getElementById('enlargeContainer')
-
-          //if mobile
-          // if(this.state.mobile){
-          //   document.getElementById('imageSelect').classList.remove("side-scroll")
-          //   setTimeout(() => {
-          //     enlargeContainer.classList.remove("enlarge-scroll-down")
-          //     // if(ArtworkInfo){
-          //     //   ArtworkInfo.classList.remove("show")
-          //     // }
-          //   }, 400);
-          // }
-          //if dekstop
             document.getElementById('imageSelect').style.width = `100%`
 
             setTimeout(() => {
               enlargeContainer.classList.remove("enlarge-opacity")
               setTimeout(() => {
                 enlargeContainer.classList.remove("enlarge-scroll-left")
-              }, 400);
-            }, 200);
-          
-
+              }, 50);
+            }, 50);
           if(!clearAll){
             const enlarge = {...this.state.enlarge}
             enlarge.open = false
             this.setState({enlarge})
           }
-        }, delay);
+        }, 50);
     }
     this.viewNext = (direction) => {
       console.log("__________________________")
@@ -653,31 +642,27 @@ export class Provider extends React.Component{
           if(direction > 0){
             //if last in currentSequence reached
             if(familyIndex+1 > familySequence.length-1){
-                const artworkOnDisplay = this.state.artworkOnDisplay
-                let nextPicName = commonSequence.find(fileName => {
-                  if(artworkOnDisplay[fileName].artworkFamily !== familyName){
-                    if(commonSequence.indexOf(fileName) > commonIndex){
-                      return commonSequence.indexOf(fileName)
-                    }
-                  }
-                  return
-                  })
+              //   const artworkOnDisplay = this.state.artworkOnDisplay
+              //   let nextPicName = commonSequence.find(fileName => {
+              //     if(artworkOnDisplay[fileName].artworkFamily !== familyName){
+              //       if(commonSequence.indexOf(fileName) > commonIndex){
+              //         return commonSequence.indexOf(fileName)
+              //       }
+              //     }
+              //     return
+              //     })
               
-                  if(!nextPicName){
-                    nextPicName = commonSequence[0]
-                  }
+              //     if(!nextPicName){
+              //       nextPicName = commonSequence[0]
+              //     }
+              // let nextPic = this.state.artworkInfoData[nextPicName]
 
-              // options.state.enlarge.familySequence.commonIndex = commonSequence.indexOf(nextPicName)
-              let nextPic = this.state.artworkInfoData[nextPicName]
-
-              console.log("nextPicName")
-              console.log(nextPicName)
-
-
-              options = this.createFamilySequence(nextPic)
-              // sequence = options.state.enlarge.familySequence.familySequence
-              sequence = commonSequence
-              nextIndex = commonSequence.indexOf(nextPicName)
+              // options = this.createFamilySequence(nextPic)
+              // sequence = commonSequence
+              // nextIndex = commonSequence.indexOf(nextPicName)
+              nextIndex = 0
+              options.state.enlarge.familySequence.familyIndex = 0
+              sequence = options.state.enlarge.familySequence.familySequence
             }
             else{
               nextIndex = familyIndex+1
@@ -687,59 +672,34 @@ export class Provider extends React.Component{
           }
           //VIEW PREVIOUS
           else{
-            //if current image is the first in the familySequence
             if(familyIndex-1 < 0 ){
-              let prevPicName = null
-              const artworkOnDisplay = this.state.artworkOnDisplay
-              if(commonIndex === 0){
-                prevPicName = commonSequence[commonSequence.length-1]
-              }
-              else{
-                prevPicName = commonSequence[commonIndex-1]
-              }
+            //   let prevPicName = null
+            //   const artworkOnDisplay = this.state.artworkOnDisplay
+            //   if(commonIndex === 0){
+            //     prevPicName = commonSequence[commonSequence.length-1]
+            //   }
+            //   else{
+            //     prevPicName = commonSequence[commonIndex-1]
+            //   }
+            // console.log(prevPicName)
+            // console.log("prevPicName")
 
+            // let prevPic = this.state.artworkInfoData[prevPicName]
 
-              // else{
-              //   const filteredSequence = commonSequence.filter(fileName => {
-              //       if(fileName === file.fileName || artworkOnDisplay[fileName].artworkFamily !== familyName){
-              //         return fileName
-              //       }
-              //   })
+            // const familyArray = this.state.relatedArtwork[prevPic.artworkFamily].column.fileIds
+            // const lastOfFamilyFile = this.state.artworkInfoData[prevPicName]
+            //   options = this.createFamilySequence(lastOfFamilyFile)
 
-              //   const nextFileIndex = filteredSequence.indexOf(file.fileName)-1
-              //   prevPicName = filteredSequence[nextFileIndex]
-
-              // }
-              
-              // if(!prevPicName){
-              //   prevPicName = commonSequence[commonSequence.length-1]
-              // }
-
-            // options.state.enlarge.familySequence.commonIndex = commonSequence.indexOf(prevPicName)
-            console.log(prevPicName)
-            console.log("prevPicName")
-
-            let prevPic = this.state.artworkInfoData[prevPicName]
-
-            const familyArray = this.state.relatedArtwork[prevPic.artworkFamily].column.fileIds
-            // const lastOfFamilyName = familyArray[familyArray.length-1]
-            const lastOfFamilyFile = this.state.artworkInfoData[prevPicName]
-
-              // options = this.createFamilySequence(prevPic)
-              options = this.createFamilySequence(lastOfFamilyFile)
-
-              sequence = options.state.enlarge.familySequence.familySequence
-              nextIndex = sequence.indexOf(lastOfFamilyFile.fileName)
-              // nextIndex = sequence.indexOf(prevPicName)
-
-              // nextIndex = sequence.length-1
-              options.reverse = true
+            //   sequence = options.state.enlarge.familySequence.familySequence
+            //   nextIndex = sequence.indexOf(lastOfFamilyFile.fileName)
+            //   options.reverse = true
+            nextIndex = options.state.enlarge.familySequence.familySequence.length-1
+            options.state.enlarge.familySequence.familyIndex = options.state.enlarge.familySequence.familySequence.length-1
+            sequence = options.state.enlarge.familySequence.familySequence
+            options.reverse = true
             }
             else{
               nextIndex = familyIndex-1
-              // const prevPicName = familySequence[nextIndex]
-              // const prevPic = this.state.artworkInfoData[prevPicName]
-              // options = this.createFamilySequence(prevPic)
               options.state.enlarge.familySequence.familyIndex -= 1
               sequence = options.state.enlarge.familySequence.familySequence
               options.reverse = true
@@ -814,6 +774,10 @@ export class Provider extends React.Component{
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.remove("show-menu")
       }
+      const artworkInfo = document.getElementById("ArtworkInfo")
+      if(artworkInfo && artworkInfo.classList.contains("info-up")){
+        this.showInfo()
+      }
 
       const background = document.getElementById("background")
       const foreground = document.getElementById("foreground")
@@ -879,30 +843,13 @@ export class Provider extends React.Component{
 
                   foreground.classList.add("fade-out")
                   let scrollToDelay = 0
-                  //APPLY SIZE CHANGES
-                  //MOBILE
-                  // if(this.state.mobile){
-                  //   if(!container.classList.contains("enlarge-scroll-down")){
-                  //     container.style.height = `${images.clientHeight}px`
-                  //     // container.style.height = `${images.clientHeight - 90}px`
-                  //     container.classList.add("enlarge-scroll-down")
-                  //     scrollToDelay = 400
-                  //     // setTimeout(() => {
-                  //     //     imageSelect.classList.add("side-scroll")
-                  //     // }, 200);
-                  //   }
-                  // }
-                  //DESKTOP
-                    //if enlarge not been opened
+
                     if(!container.classList.contains("enlarge-scroll-left")){
                       container.classList.add("enlarge-scroll-left")
                       container.style.width = `${futureSize.width}px`
                       setTimeout(() => {
-                        container.classList.add("enlarge-opacity")
-                      }, 200);
-                      setTimeout(() => {
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                      }, 600);
+                      }, 50);
                     }
                     else{
                       //if enlargeContainer will shrink
@@ -912,7 +859,7 @@ export class Provider extends React.Component{
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                         setTimeout(() => {
                           container.style.width = `${futureSize.width}px`
-                        }, 400);
+                        }, 50);
                       }
                       //
                       else{
@@ -925,7 +872,7 @@ export class Provider extends React.Component{
                         container.style.width = `${futureSize.width}px`
                         setTimeout(() => {
                           imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
-                        }, delay);
+                        }, 50);
                       }
                     }
                     document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
@@ -994,7 +941,8 @@ export class Provider extends React.Component{
                           console.log(rej)
                         })
                         this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-                        pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo"})
+                        pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
+                        // pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo", vertical: true})
 
 
                      }, 200);
@@ -1119,54 +1067,29 @@ export class Provider extends React.Component{
 
       return this.animateEnlarge(file, options)
     }
-
-
     this.showInfo = (e) => {
-      
-      e.stopPropagation()
       if(this.state.enlarge && !this.state.enlarge.open){
         return
       }
-      console.log("run show info")
-      console.log(e)
+      if(e){
+        e.stopPropagation()
+        console.log("run show info")
+        console.log(e)
+      }
+      // if(e.touches){return}
 
       const info = document.getElementById("ArtworkInfo")
       if(info.classList.contains("info-up")){
+        info.classList.remove("info-up")
         info.style.transform = "translateY(0)"
       }
       else{
-        info.style.transform = "translateY(-100%)"
+        info.classList.add("info-up")
+        info.style.transform = `translateY(-${info.clientHeight}px)`
       }
-      // info.classList.add("info-up")
 
-      info.classList.toggle("info-up")
-      // if(!info.classList.contains("info-up")){
-      //   info.classList.add("info-up")
-      // }
-      // else info.classList.remove("info-up")
+      // info.classList.toggle("info-up")
       return
-      // if(!this.state.mobile && !info.classList.contains("info-up")){
-      //   if(!info.classList.contains("info-up")){
-      //     info.classList.add("info-up")
-      //   }
-      //   else info.classList.remove("info-up")
-      //   return
-      // }
-      // if(!info.classList.contains('show')){
-      //   let counter = 1
-      //   if(this.state.mobile){
-      //     if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-      //       this.showMenu(e)
-      //       counter = 1
-      //     }
-      //   }
-      //   setTimeout(() => {
-      //     setTimeout(() => {
-      //       info.classList.add('info-up')
-      //     }, 100);
-      //     info.classList.add('show')
-      //   }, counter);
-      // }
     }
     this.toggleMobile = () => {
       const container = document.getElementById("enlargeContainer")
@@ -1331,7 +1254,9 @@ export class Provider extends React.Component{
               })
       }) 
     }
-
+    this.compoundFilters = () => {
+      this.setState({compoundFilters: !this.state.compoundFilters})
+    }
 
 }//END OF CONTSTRUCTOR
   componentDidMount(){
@@ -1340,6 +1265,8 @@ export class Provider extends React.Component{
         console.log(staticState)
         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
         newState.mobile = this.toggleMobile()
+        newState.compoundFilters = false
+        // newState.enlarge = {}
         this.setState(newState)
   }
 
@@ -1385,6 +1312,7 @@ export class Provider extends React.Component{
             changeFileName: this.changeFileName,
             onChange: this.onChange,
             addNew: this.addNew,
+            compoundFilters: this.compoundFilters
 
             } }>
         {this.props.children}
