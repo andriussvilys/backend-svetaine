@@ -20,9 +20,9 @@ const pullUp = (options, offsetCallback) => {
         container.addEventListener("touchend", dragEnd, false);
         container.addEventListener("touchmove", drag, false);
     
-        container.addEventListener("mousedown", dragStart, false);
-        container.addEventListener("mouseup", dragEnd, false);
-        container.addEventListener("mousemove", drag, false);
+        // container.addEventListener("mousedown", dragStart, false);
+        // container.addEventListener("mouseup", dragEnd, false);
+        // container.addEventListener("mousemove", drag, false);
 
         // function click(e) {
         //     console.log("CLICKED")

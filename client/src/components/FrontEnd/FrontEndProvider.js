@@ -85,6 +85,7 @@ export class Provider extends React.Component{
       return new Promise ((res, rej) => {
           let newDisplay = {}
           let zeroDisplay = {}
+          let newState = {...this.state}
 
           if(hideAll){
             Object.keys(this.state.visibleArtwork).forEach(fileName => {
@@ -100,7 +101,7 @@ export class Provider extends React.Component{
           }
 
           //ON UN-CHECK
-          if(this.subcategoryChecked(category, subcategory)){
+          if(this.isFilterChecked("subcategory", subcategory)){
               Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
                   const file = this.state.artworkOnDisplay[fileName]
                   if(file.category[category]){
@@ -119,14 +120,14 @@ export class Provider extends React.Component{
               Object.keys(zeroDisplay).forEach(id => {
                   document.getElementById(id).classList.add('image-hide')
               })
-              setTimeout(() => {
-                return this.setState({artworkOnDisplay: newDisplay})
-              }, 200);
           }
           //ON CHECK
           else{
               newDisplay={...this.state.artworkOnDisplay}
+              newState.filters = this.toggleFilter("subcategory", subcategory)
 
+              console.log("filters")
+              console.log(newState.filters)
               Object.keys(this.state.artworkInfoData).forEach(fileName => {
                   const file = this.state.artworkInfoData[fileName]
                   if(file.displayTriggers.subcategory.includes(subcategory)){
@@ -136,48 +137,21 @@ export class Provider extends React.Component{
               Object.keys(newDisplay).forEach(id => {
                   document.getElementById(id).classList.remove('image-hide')
               })
-
-              setTimeout(() => {
-                return this.setState({artworkOnDisplay: newDisplay})
-              }, 200);
+              newState.artworkOnDisplay = newDisplay
+              newState.filters = this.toggleFilter("subcategory", subcategory)
           }
+          newState.artworkOnDisplay = newDisplay
+          newState.filters = this.toggleFilter("subcategory", subcategory)
+          this.setState(newState)
       })
 
-    }
-    this.subcategoryChecked = (category, subcategory) => {
-      let onDisplay = false
-        if(!this.state.compoundFilters){
-          return onDisplay
-        }
-        Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
-            const file = this.state.artworkOnDisplay[fileName]
-            if(file.category[category]){
-                if(Object.keys(file.category[category]).includes(subcategory)){
-                    onDisplay = true
-                }
-            }
-        })
-        return onDisplay
-    }
-    this.listitemChecked = (category, subcategory, listitem) => {
-        let onDisplay = false
-        Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
-            const file = this.state.artworkOnDisplay[fileName]
-            if(file.category[category]){
-              if(file.category[category][subcategory]){
-                if(file.category[category][subcategory].includes(listitem)){
-                  return onDisplay = true
-                }
-              }
-            }
-        })
-        return onDisplay
     }
     this.filterByListitem = (e, category, subcategory, listitem, hideAll) => {
       e.stopPropagation()
       return new Promise ((res, rej) => {
         let newDisplay = {}
         let zeroDisplay = {}
+        let newState = {...this.state}
 
         if(hideAll){
           Object.keys(this.state.visibleArtwork).forEach(fileName => {
@@ -218,29 +192,67 @@ export class Provider extends React.Component{
             Object.keys(zeroDisplay).forEach(id => {
                 document.getElementById(id).classList.add('image-hide')
             })
-            setTimeout(() => {
-              return this.setState({artworkOnDisplay: newDisplay})
-            }, 200);
-        }
-        //ON CHECK
-        else{
+          }
+          //ON CHECK
+          else{
             newDisplay={...this.state.artworkOnDisplay}
             Object.keys(this.state.artworkInfoData).forEach(fileName => {
-                const file = this.state.artworkInfoData[fileName]
-                  if(file.displayTriggers.listitems.includes(listitem)){
+              const file = this.state.artworkInfoData[fileName]
+              if(file.displayTriggers.listitems.includes(listitem)){
                     newDisplay = {...newDisplay, [fileName]: file}
                   }
             })
             Object.keys(newDisplay).forEach(id => {
                 document.getElementById(id).classList.remove('image-hide')
             })
-            setTimeout(() => {
-              return this.setState({artworkOnDisplay: newDisplay})
-            }, 200);
-        }
+          }
+        newState.artworkOnDisplay = newDisplay
+        newState.filters = this.toggleFilter("listitems", listitem)
+        console.log("newstate LISTITEM")
+        console.log(newState.filters)
+        return this.setState(newState)
       })
 
     }
+    this.toggleFilter = (filterName, value) => {
+      let newState = {...this.state}
+      let filters = newState.filters
+      let newFilters = newState.filters
+
+      if(filters.onDisplay[filterName].includes(value)){
+        newFilters.onDisplay[filterName] = filters.onDisplay[filterName].filter(name => name !== value)
+        console.log("NEW FILTERS ON UNCHECK")
+        console.log(newFilters)
+      }
+      else{
+        console.log("NEW FILTERS ON CHECK")
+        newFilters.onDisplay[filterName] = [...filters.onDisplay[filterName], value]
+      }
+      newFilters.empty = {...this.state.filters.empty}
+      return newFilters
+    }
+
+    this.isFilterChecked = (filterName, value) => {
+      let onDisplay = false
+        onDisplay = this.state.filters.onDisplay[filterName].indexOf(value) > 0
+        console.log(`filterNAme: ${filterName}_________value: ${value}_____${onDisplay ? "CHECKED" : "NOT"}`)
+        return onDisplay
+    }
+    this.listitemChecked = (category, subcategory, listitem) => {
+        let onDisplay = false
+        Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
+            const file = this.state.artworkOnDisplay[fileName]
+            if(file.category[category]){
+              if(file.category[category][subcategory]){
+                if(file.category[category][subcategory].includes(listitem)){
+                  return onDisplay = true
+                }
+              }
+            }
+        })
+        return onDisplay
+    }
+
     /**
      * @param: e
      * @param: theme
@@ -334,11 +346,16 @@ export class Provider extends React.Component{
       themes = Array.from(new Set(themes))
 
       if(hide){
+        let newState = {...this.state}
         Object.keys(this.state.artworkOnDisplay).forEach(id => {
             document.getElementById(id).classList.add('image-hide')
         })
-        setTimeout(() => {
-          return this.setState({artworkOnDisplay: {}})
+        newState.artworkOnDisplay = {}
+        // newState.filters.onDisplay = newState.filters.empty
+        newState.filters.onDisplay = {...newState.filters.empty}
+        return setTimeout(() => {
+          this.setState(newState)
+          // return this.setState({artworkOnDisplay: {}})
         }, 200);
       }
       else{
@@ -1258,6 +1275,8 @@ export class Provider extends React.Component{
       this.setState({compoundFilters: !this.state.compoundFilters})
     }
 
+
+
 }//END OF CONTSTRUCTOR
   componentDidMount(){
         let newState = staticState
@@ -1266,6 +1285,84 @@ export class Provider extends React.Component{
         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
         newState.mobile = this.toggleMobile()
         newState.compoundFilters = false
+        newState.filters = {}
+        newState.filters.onDisplay = {
+          category: [],
+          subcategory: [],
+          listitems: [],
+          themes: [],
+          year: [],
+          location: []
+        }
+        newState.filters.allFilters = {
+          category: [],
+          subcategory: [],
+          listitems: [],
+          themes: [],
+          year: [],
+          location: []
+        }
+        newState.filters.empty = {
+          category: [],
+          subcategory: [],
+          listitems: [],
+          themes: [],
+          year: [],
+          location: []
+        }
+
+        const checkFilters = (artworkCollection, propName) => {
+          Object.keys(artworkCollection).forEach(fileName => {
+            const fileFilters = artworkCollection[fileName].displayTriggers
+  
+            Object.keys(fileFilters).forEach(filterName => {
+              if(typeof fileFilters[filterName] === "object"){
+  
+                fileFilters[filterName].forEach(content => {
+                  if(newState.filters[propName][filterName].indexOf(content) < 0){
+                    newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
+                  }
+                })
+              }
+              else{
+                if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
+                  if(fileFilters[filterName].length > 0){
+                    newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+                  }
+                }
+              }
+            })
+          })
+        }
+
+        checkFilters(newState.artworkOnDisplay, "onDisplay")
+        checkFilters(newState.visibleArtwork, "allFilters")
+
+
+
+        // Object.keys(newState.artworkOnDisplay).forEach(fileName => {
+        //   const fileFilters = newState.artworkOnDisplay[fileName].displayTriggers
+
+        //   Object.keys(fileFilters).forEach(filterName => {
+        //     if(typeof fileFilters[filterName] === "object"){
+
+        //       fileFilters[filterName].forEach(content => {
+        //         if(newState.filters.onDisplay[filterName].indexOf(content) < 0){
+        //           newState.filters.onDisplay[filterName] = [...newState.filters.onDisplay[filterName], content]
+        //         }
+        //       })
+        //     }
+        //     else{
+        //       if(newState.filters.onDisplay[filterName].indexOf(fileFilters[filterName]) < 0){
+        //         if(fileFilters[filterName].length > 0){
+        //           newState.filters.onDisplay[filterName] = [...newState.filters.onDisplay[filterName], fileFilters[filterName]]
+        //         }
+        //       }
+        //     }
+        //   })
+        // })
+
+
         // newState.enlarge = {}
         this.setState(newState)
   }
@@ -1312,6 +1409,7 @@ export class Provider extends React.Component{
             changeFileName: this.changeFileName,
             onChange: this.onChange,
             addNew: this.addNew,
+            isFilterChecked: this.isFilterChecked,
             compoundFilters: this.compoundFilters
 
             } }>
