@@ -11,6 +11,7 @@ ul {
   border: 1px solid black;
   border-right: 0;
   border-bottom: 0;
+  overflow-x: visible;
 }
 
 .FilterTree-container_main {
@@ -294,18 +295,21 @@ ul {
 
 .FilterTree-container-buttons {
   overflow-y: scroll;
-  overflow-x: hidden;
   height: 100%;
 }
 
 .hamburger {
   position: absolute;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
   background-color: white;
   height: 50px;
   width: 51px;
   right: -52px;
+  padding: 5px;
+}
+
+.hamburger img {
+  height: 100%;
+  width: 100%;
 }
 
 @media only screen and (max-width: 720px) {
@@ -963,7 +967,7 @@ label {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin: 20px 0;
+  margin: 20px 0 0 0;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -1067,6 +1071,10 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -1079,12 +1087,15 @@ label {
   max-height: calc(100vh - 59px);
   z-index: 2;
   top: 100%;
-  padding: 0 3vw 40px 3vw;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 }
 
 .ArtworkInfo-wrapper {
   width: 100%;
   height: 100%;
+  padding: 0 3vw 15px 3vw;
+  background-color: white;
 }
 
 .ArtworkInfo-preview-container {
@@ -1786,9 +1797,17 @@ label {
             flex-direction: column;
     overflow-x: auto;
     border-top: 1px solid;
-    height: 90px;
+    height: 60px;
     overflow-y: hidden;
     border-top: 0;
+    top: 0;
+    bottom: unset;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
+    border-top: 1px solid black;
+  }
+  .side-scroll img {
+    height: 100%;
   }
   .enlarge-info {
     display: -webkit-box;
@@ -1808,6 +1827,12 @@ label {
     display: initial;
     border-left: none;
     border-top: 1px solid;
+    -webkit-transform: translateY(-100%) !important;
+            transform: translateY(-100%) !important;
+  }
+  .ArtworkInfo-toggleTags {
+    -webkit-transform: translateY(-60px);
+            transform: translateY(-60px);
   }
   .enlarge-scroll-down {
     -webkit-transform: translateY(100%);
@@ -1929,9 +1954,6 @@ label {
     height: 100% !important;
     min-width: 0 !important;
   }
-  .side-scroll img {
-    height: 90px;
-  }
   .side-scroll .FilePreview--imageContainer {
     width: initial;
     left: initial;
@@ -2007,6 +2029,7 @@ label {
       grid-template-rows: 1fr 50px;
   border-left: 1px solid black;
   overflow: hidden;
+  z-index: 99;
 }
 
 .enlarge-bar {
@@ -2040,7 +2063,6 @@ label {
     z-index: 999;
     border-top: none;
     border-bottom: none;
-    z-index: 1;
     border-left: none;
     -webkit-transform: none;
             transform: none;
@@ -2079,7 +2101,6 @@ label {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 14px;
   width: 170px;
-  overflow-x: hidden;
 }
 
 .legacyStyle-List-listItem {

@@ -235,7 +235,6 @@ export class Provider extends React.Component{
     this.isFilterChecked = (filterName, value) => {
       let onDisplay = false
         onDisplay = this.state.filters.onDisplay[filterName].indexOf(value) > 0
-        console.log(`filterNAme: ${filterName}_________value: ${value}_____${onDisplay ? "CHECKED" : "NOT"}`)
         return onDisplay
     }
     this.listitemChecked = (category, subcategory, listitem) => {
@@ -1097,12 +1096,16 @@ export class Provider extends React.Component{
 
       const info = document.getElementById("ArtworkInfo")
       if(info.classList.contains("info-up")){
+        document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
         info.classList.remove("info-up")
         info.style.transform = "translateY(0)"
       }
       else{
         info.classList.add("info-up")
         info.style.transform = `translateY(-${info.clientHeight}px)`
+      }
+      if(info.classList.contains("dragged")){
+        info.classList.remove("dragged")
       }
 
       // info.classList.toggle("info-up")
