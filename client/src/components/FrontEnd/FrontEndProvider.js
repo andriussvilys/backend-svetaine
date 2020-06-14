@@ -790,10 +790,10 @@ export class Provider extends React.Component{
       if(document.getElementById("TagsMenu").classList.contains("show-menu")){
         document.getElementById("TagsMenu").classList.remove("show-menu")
       }
-      const artworkInfo = document.getElementById("ArtworkInfo")
-      if(artworkInfo && artworkInfo.classList.contains("info-up")){
-        this.showInfo()
-      }
+      // const artworkInfo = document.getElementById("ArtworkInfo")
+      // if(artworkInfo && artworkInfo.classList.contains("info-up")){
+      //   this.showInfo()
+      // }
 
       const background = document.getElementById("background")
       const foreground = document.getElementById("foreground")
@@ -1074,8 +1074,8 @@ export class Provider extends React.Component{
     }
 
     this.loadEnlarge = (e, id) => {
-      console.log("load enlarge")
       e.stopPropagation()
+      console.log("load enlarge")
 
       const file = this.state.artworkInfoData[id]
 
@@ -1096,9 +1096,14 @@ export class Provider extends React.Component{
 
       const info = document.getElementById("ArtworkInfo")
       if(info.classList.contains("info-up")){
-        document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
+        // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
         info.classList.remove("info-up")
         info.style.transform = "translateY(0)"
+        return
+      }
+      if(document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
+        document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
+        return
       }
       else{
         info.classList.add("info-up")

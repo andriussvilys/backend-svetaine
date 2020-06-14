@@ -227,7 +227,7 @@ const ArtworkInfo = (props) => {
     >
       <div
         key={"ArtworkInfo-wrapper"}
-        className="ArtworkInfo-wrapper"
+        className="ArtworkInfo-wrapper info-up"
         id="ArtworkInfo"
       >
         {/* <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" > */}

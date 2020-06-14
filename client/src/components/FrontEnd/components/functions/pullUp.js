@@ -16,12 +16,19 @@ const pullUp = (options, offsetCallback) => {
 
   // infoButton.addEventListener("click", click)
 
-  container.addEventListener("touchstart", dragStart, false);
-  container.addEventListener("touchend", dragEnd, false);
-  container.addEventListener("touchmove", drag, false);
+  dragItem.addEventListener("touchstart", dragStart, false);
+  dragItem.addEventListener("touchend", dragEnd, false);
+  dragItem.addEventListener("touchmove", drag, false);
+
+//   container.addEventListener("touchstart", dragStart, false);
+//   container.addEventListener("touchend", dragEnd, false);
+//   container.addEventListener("touchmove", drag, false);
 
   function dragStart(e) {
     e.stopPropagation()
+
+    console.log("previousY")
+    console.log(previousY)
 
     // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags");
         if (e.type === "touchstart") {
@@ -49,13 +56,16 @@ const pullUp = (options, offsetCallback) => {
 
     xOffset = currentX;
     yOffset = currentY;
-    if (currentY > -20) {
-      dragItem.classList.remove("info-up");
-      dragItem.classList.remove("dragged");
-    document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags");
-    dragItem.style.transform = "translateY(0)"
-      currentY = 0;
-    }
+
+    previousY = currentY
+
+    // if (currentY > -20) {
+    // //   dragItem.classList.remove("info-up");
+    // //   dragItem.classList.remove("dragged");
+    // // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags");
+    // // dragItem.style.transform = "translateY(0)"
+    //   currentY = 0;
+    // }
     if (currentY < 0) {
       dragItem.classList.add("dragged");
     }
