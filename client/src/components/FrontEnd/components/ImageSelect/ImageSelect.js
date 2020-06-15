@@ -34,8 +34,9 @@ const ImageSelect = (props) => {
               }
             })
             return <div 
-                      id="imageSelect"
-                      className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null}`}
+                      // id="imageSelect"
+                      id={props.customId || "imageSelect"}
+                      className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.customClass}`}
                       onClick={(e) => {
                         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
                           props.context.showMenu(e)

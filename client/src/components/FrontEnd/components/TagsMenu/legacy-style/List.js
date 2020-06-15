@@ -20,7 +20,9 @@ const List = (props) => {
                 onClick={(e) => {
                     props.context.showMenu(e)
                 }}
-            ></div>
+            >
+                <img alt="hamburger icon" src="icons/hamburger.png" />
+            </div>
             <ClearAll
                 context={props.context}
             />

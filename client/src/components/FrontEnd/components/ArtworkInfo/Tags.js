@@ -21,9 +21,9 @@ const Tags = (props) => {
             scrollToId = newImg
         }
         let infoUpDelay = 0
-        if(!document.getElementById("ArtworkInfo").classList.contains("ArtworkInfo-toggleTags")){
+        if(!document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
             infoUpDelay = 200;
-            document.getElementById("ArtworkInfo").classList.add("ArtworkInfo-toggleTags")
+            document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
         }
         setTimeout(() => {
             filterFunc

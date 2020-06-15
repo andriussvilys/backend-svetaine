@@ -1,7 +1,6 @@
 .enlargeContainer{
     height: 100% !important;
     width: 1px;
-    position: absolute;
     max-width: 100%;
     opacity: 1;
     transform-origin: right;
@@ -15,6 +14,7 @@
     grid-template-rows: 1fr 50px;
     border-left: 1px solid black;
     overflow: hidden;
+    z-index: 99;
 }
 .enlarge-bar{
     // height: 50px;
@@ -47,7 +47,6 @@
         z-index: 999;
         border-top: none;
         border-bottom: none;
-        z-index:1;
         border-left: none;
         transform: none;
         overflow: hidden;

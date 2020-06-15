@@ -7,7 +7,7 @@ const PreviewCounter = (props) => {
         const famArray = props.relatedArtwork
         const currentIndex = props.relatedArtwork.indexOf(file.background.fileName)+1
         const counter = <div className="previewBubble-container previewCounter">
-            <span>
+            <span className={"ArtworkInfo_artworkTitle_secondary"}>
                 {`${currentIndex} / ${famArray.length}`}
             </span>
         </div>

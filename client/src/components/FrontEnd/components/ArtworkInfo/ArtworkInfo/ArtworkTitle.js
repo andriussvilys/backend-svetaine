@@ -17,8 +17,9 @@ const ArtworkTitle = props => {
                             }
                         >        
                             <div>
-                                {!props.file.foreground.artworkTitle ? null : <span>part of </span> }
-                                <em className="ArtworkInfo_artworkFamily_variable">{props.file.foreground.artworkFamily}</em>
+                                <span className={"ArtworkInfo_artworkTitle_secondary"}>part of </span>
+                                {/* {!props.file.foreground.artworkTitle ? null : <span>part of </span> } */}
+                                <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{props.file.foreground.artworkFamily}</em>
                             </div>
                         </div>
             // }
@@ -26,7 +27,7 @@ const ArtworkTitle = props => {
 
         const artworkTitle = () => {
             return <div style={{marginLeft: "-7px"}}>                 
-                    {props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em> : null}
+                    {props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{props.file.foreground.artworkTitle}</em> : <em className={"ArtworkInfo_artworkTitle_secondary"}>–</em>}
                     </div>
         }
             return (
@@ -44,7 +45,7 @@ const ArtworkTitle = props => {
                         <div 
                         className="controls-button controls-info" 
                         id="show-info-button"
-                        // onClick={(e) => props.context.showInfo(e)}
+                        onClick={(e) => props.context.showInfo(e)}
                         >
                             <img 
                             alt="info icon" 
