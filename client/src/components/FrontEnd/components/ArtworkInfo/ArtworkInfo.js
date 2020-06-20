@@ -9,6 +9,8 @@ import ReactHtmlParser, {
 import PreviewCounter from "./PreviewCounter";
 import ArtworkTitle from "./ArtworkInfo/ArtworkTitle";
 import ImageSelect from "../ImageSelect/ImageSelect";
+import Controls from './Controls'
+import ViewControls from "./ViewControls";
 
 const ArtworkInfo = (props) => {
   const enlarge = props.context.state.enlarge;
@@ -160,6 +162,9 @@ const ArtworkInfo = (props) => {
     };
     return (
       <div className="ArtworkInfo-Title">
+          <ViewControls 
+            context={props.context}
+          />
         <PreviewCounter
           relatedArtwork={
             props.context.state.enlarge
@@ -225,6 +230,7 @@ const ArtworkInfo = (props) => {
       id="ArtworkInfo-container"
       // style={{transform: `translateY(${-titleHeight()}px)`}}
     >
+
       <div
         key={"ArtworkInfo-wrapper"}
         className="ArtworkInfo-wrapper info-up"
@@ -232,6 +238,9 @@ const ArtworkInfo = (props) => {
       >
         {/* <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" > */}
         {/* {artworkTitle()} */}
+        {/* <ViewControls 
+            context={props.context}
+        /> */}
         <ArtworkTitle file={props.file} context={props.context} />
         {descriptions()}
         {/* </div> */}

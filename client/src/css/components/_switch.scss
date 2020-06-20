@@ -3,6 +3,7 @@ $toggle-size: 14px;
 $padding: 6px;
 .switch-container{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-around;
     margin: 4px !important;
 }

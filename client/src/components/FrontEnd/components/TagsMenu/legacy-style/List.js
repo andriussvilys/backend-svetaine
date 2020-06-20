@@ -25,24 +25,37 @@ export class List extends React.Component{
     }
     render(){
         return(<div id="TagsMenu" className="FilterTree-container">
-                <div className={`hamburger ${this.state.opened ? 'hamburger-open' : ""}`}
+                {/* <div className={`hamburger ${this.state.opened ? 'hamburger-open' : ""}`}
                     onClick={(e) => {
                         this.props.context.showMenu(e)
                         this.setState({opened: !this.state.opened})
                     }}
                 >
                     <img alt="hamburger icon" src={!this.state.opened ? "icons/hamburger.png" : "icons/close.png"} />
-                </div>
+                </div> */}
                 {/* <ClearAll
                     context={this.props.context}
                 /> */}
+
+                {this.props.context.state.mobile?                
+                    <button
+                        className={"List-closeButton"}
+                        onClick={(e) => {
+                            this.props.context.showMenu(e)
+                        }}      
+                    >
+                        <img className={"List-closeButton_img"} src="icons/svg/view-right.svg" alt="close icon"/>
+                        <span>close</span>
+                    </button> : null
+                }
+
                 <ViewHide 
                     context={this.props.context}
                 />
+                {this.props.data ? this.createList(this.props.data) : null}
                 <Switch 
                     context={this.props.context}
                 />
-                {this.props.data ? this.createList(this.props.data) : null}
             </div>
         )
     }

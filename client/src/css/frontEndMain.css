@@ -8,7 +8,6 @@ ul {
   overflow: visible;
   z-index: 99;
   background-color: white;
-  border: 1px solid black;
   border-right: 0;
   border-bottom: 0;
   overflow-x: visible;
@@ -302,7 +301,7 @@ ul {
   position: absolute;
   border-right: 1px solid black;
   border-bottom: 1px solid black;
-  background-color: grey;
+  background-color: white;
   height: 50px;
   width: 51px;
   right: -52px;
@@ -316,7 +315,6 @@ ul {
 
 .hamburger-open {
   padding: 8px;
-  background-color: #a0a0a0;
 }
 
 .hamburger-open img {
@@ -343,7 +341,6 @@ ul {
     transition: transform 0.2s !important;
     transition: transform 0.2s, -webkit-transform 0.2s !important;
     border: 0;
-    border-right: 1px solid black;
     -ms-grid-row: 2;
         grid-row-start: 2;
     grid-row-end: 3;
@@ -427,6 +424,10 @@ ul {
   white-space: normal;
 }
 
+button {
+  background-color: white;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -491,6 +492,7 @@ label {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  border: 1px solid black;
 }
 
 * {
@@ -687,17 +689,15 @@ label {
   -ms-grid-columns: min-content 1fr;
       grid-template-columns: -webkit-min-content 1fr;
       grid-template-columns: min-content 1fr;
-  background-color: grey;
+  background-color: white;
   position: relative;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
 }
 
 .imageSelect-container {
   height: 100%;
   width: 100%;
   overflow-x: hidden;
-  background-color: grey;
+  background-color: white;
   overflow-y: auto;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1731,7 +1731,6 @@ label {
     -ms-grid-rows: min-content 1fr;
         grid-template-rows: -webkit-min-content 1fr;
         grid-template-rows: min-content 1fr;
-    border: 1px solid black;
   }
   .TagsMenu-container {
     -ms-grid-row: 1;
@@ -2039,8 +2038,8 @@ label {
   display: grid;
   -ms-grid-columns: 100%;
       grid-template-columns: 100%;
-  -ms-grid-rows: 1fr 50px;
-      grid-template-rows: 1fr 50px;
+  -ms-grid-rows: 30px 1fr 89px;
+      grid-template-rows: 30px 1fr 89px;
   border-left: 1px solid black;
   overflow: hidden;
   z-index: 99;
@@ -2054,16 +2053,71 @@ label {
   height: 100%;
 }
 
+.enlarge-closeButton-container {
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  height: 30px;
+  width: 100%;
+  border-bottom: 1px solid black;
+}
+
+.enlarge-closeButton-button {
+  height: 29px;
+  margin-bottom: 10px;
+  position: absolute;
+  right: 10px;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
 .controls-exitButton {
   position: absolute;
   z-index: 9;
   right: 0;
   background-color: unset;
   margin-top: 7px;
+  height: 30px;
+  width: 30px;
 }
 
 .controls-slideButton {
   border-left: 1px solid;
+}
+
+.viewControls {
+  width: 100%;
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  background-color: white;
+  height: 30px;
+}
+
+.viewControls div {
+  height: 100%;
+  position: absolute;
+  right: 0;
+}
+
+.viewControls div button {
+  height: 100%;
+  border-left: 1px solid black;
+}
+
+.viewControls div button img {
+  height: 28px;
+  width: 28px;
 }
 
 @media only screen and (max-width: 720px) {
@@ -2086,6 +2140,10 @@ label {
             transform: translateX(100%);
     display: -ms-grid;
     display: grid;
+  }
+  .enlarge-closeButton-button {
+    right: unset;
+    left: 10px;
   }
 }
 
@@ -2115,6 +2173,7 @@ label {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 14px;
   width: 170px;
+  position: relative;
 }
 
 .legacyStyle-List-listItem {
@@ -2129,6 +2188,89 @@ label {
 
 .legacyStyle-List-listItem input {
   margin: 0 4px;
+}
+
+.MobileNav-container {
+  position: relative;
+  height: 30px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  border-bottom: 1px solid black;
+}
+
+.Mobilenav-button {
+  overflow: hidden;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  border-left: 1px solid black;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.Mobilenav-button:first-of-type {
+  border-left: none;
+}
+
+.Mobilenav-button-close {
+  position: absolute;
+  top: 30px;
+  height: 100%;
+  width: 100%;
+  border: none;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: start;
+}
+
+.Mobilenav-button-close img {
+  margin: 0 40px;
+  height: 20px;
+  width: 20px;
+}
+
+.Mobilenav-button-close_enabled {
+  top: 0;
+}
+
+.List-closeButton {
+  height: 30px;
+  width: 100%;
+  border-top: 1px solid black;
+  margin-bottom: 10px;
+  position: absolute;
+  bottom: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.List-closeButton_img {
+  height: 20px;
+  width: 20px;
 }
 
 @media only screen and (max-width: 720px) {
@@ -2180,14 +2322,12 @@ label {
   border-left: 4px solid #494949;
 }
 
-.FilterTree-container {
-  background-color: #a0a0a0;
-}
-
 .switch-container {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
   -ms-flex-pack: distribute;
       justify-content: space-around;
   margin: 4px !important;

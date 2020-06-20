@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import PreviewCounter from '../PreviewCounter'
+import ViewControls from '../ViewControls'
 // import FilePreview from '../FilePreview'
 // import Tags from './Tags'
 // import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
@@ -32,6 +33,9 @@ const ArtworkTitle = props => {
         }
             return (
                 <div className="ArtworkInfo-Title" id="ArtworkInfo-Title">
+                    <ViewControls 
+                        context={props.context}
+                    />
                     <PreviewCounter 
                         relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
                         file={props.context.state.enlarge}
@@ -72,7 +76,9 @@ const ArtworkTitle = props => {
     }
     return(
         // <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >
-            artworkTitle()
+            <Fragment>
+                {artworkTitle()}
+            </Fragment>
         // </div>
     )
 }

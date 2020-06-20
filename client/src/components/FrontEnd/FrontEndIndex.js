@@ -14,6 +14,7 @@ import Menu from './components/TagsMenu/v2/Menu';
 import TopBar from './components/Nav/MobileBars/TopBar'
 import BottomBar from './components/Nav/MobileBars/BottomBar'
 
+import MobileNav from './components/TagsMenu/legacy-style/MobileNav'
 import List from './components/TagsMenu/legacy-style/List'
 import pullUp from './components/functions/pullUp'
 
@@ -54,6 +55,12 @@ export default class FrontEndIndex extends React.Component{
                             categoriesData={this.context.state.categoriesData}
                         /> */}
 
+                        {this.context.state.mobile ? 
+                            <MobileNav 
+                                context={this.context}
+                            /> : null
+                        }
+
                         <List 
                             context={this.context}
                             data={this.context.state.categoriesData}
@@ -75,6 +82,21 @@ export default class FrontEndIndex extends React.Component{
                                     lazyLoad: this.context.lazyLoadImages
                                 }}
                             />
+                            {!this.context.state.mobile ?                             
+                                <Enlarge 
+                                    nextEnlarge={this.context.state.nextEnlarge}
+                                    file={this.context.state.enlarge}
+                                    onClick={this.context.closeEnlarge}
+                                    artworkInfoData={this.context.state.artworkInfoData}
+                                    loadEnlarge={this.context.loadEnlarge}
+                                    closeEnlarge={this.context.closeEnlarge}
+                                    hideArtworkInfo={this.context.hideArtworkInfo}
+                                    context={this.context}
+                                    mobile={this.context.state.mobile}
+                                /> : null
+                            }
+                        </div>
+                        {this.context.state.mobile ?                             
                             <Enlarge 
                                 nextEnlarge={this.context.state.nextEnlarge}
                                 file={this.context.state.enlarge}
@@ -85,8 +107,8 @@ export default class FrontEndIndex extends React.Component{
                                 hideArtworkInfo={this.context.hideArtworkInfo}
                                 context={this.context}
                                 mobile={this.context.state.mobile}
-                            />
-                        </div>
+                            /> : null
+                        }
                     </div>
                     )
                 }}

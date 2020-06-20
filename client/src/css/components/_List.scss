@@ -11,6 +11,7 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 14px;
     width: 170px;
+    position: relative;
 }
 .legacyStyle-List-listItem{
     display: flex;
@@ -19,6 +20,63 @@
     input{
         margin: 0 4px;
     }
+}
+
+
+.MobileNav-container{
+    position: relative;
+    height: 30px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+.Mobilenav-button{
+    overflow: hidden;
+    flex: 1;
+    border-left:1px solid black;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.Mobilenav-button:first-of-type{
+    border-left: none;
+}
+.Mobilenav-button-close{
+    position: absolute;
+    top: 30px;
+    height: 100%;
+    width: 100%;
+    border: none;
+    justify-content: start;
+    img{
+        margin: 0 40px;
+        height: 20px;
+        width: 20px;
+    }
+}
+.Mobilenav-button-close_enabled{
+    top: 0;
+}
+.List-closeButton{
+    height: 30px;
+    width: 100%;
+    border-top: 1px solid black;
+    margin-bottom: 10px;
+    position: absolute;
+    bottom: 0;
+    text-transform: uppercase;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.List-closeButton_img{
+    height: 20px;
+    width: 20px;
 }
 
 @media only screen and (max-width: 720px) {

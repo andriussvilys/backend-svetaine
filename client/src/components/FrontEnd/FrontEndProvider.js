@@ -37,7 +37,7 @@ export class Provider extends React.Component{
                 onDisplay = true
             }
         })
-        // console.log(`${category} is checked: ${onDisplay}`)
+        // 
         return onDisplay
     }
 
@@ -99,16 +99,16 @@ export class Provider extends React.Component{
       let newState = {...this.state}
       let newArtworkonDisplay = {}
 
-      console.log("COMPOUND FILTERS")
+      
       let newOnDisplay = {...newState.filters.empty}
-      console.log("this.state.filters.onDisplay.subcategory.indexOf(subcategory)")
-      console.log(this.state.filters.onDisplay[displayTrigger].indexOf(value))
+      
+      
       if(this.state.filters.onDisplay[displayTrigger].indexOf(value) >= 0){
-        console.log("remove")
+        
         newOnDisplay[displayTrigger] = []
       }
       else{
-        console.log("add")
+        
         newOnDisplay[displayTrigger] = [value]
 
         Object.keys(this.state.visibleArtwork).forEach(artworkName => {
@@ -118,8 +118,8 @@ export class Provider extends React.Component{
           }
         })
       }
-      console.log("newOnDisplay")
-      console.log(newOnDisplay)
+      
+      
 
       newState.artworkOnDisplay = newArtworkonDisplay
       newState.filters.onDisplay = newOnDisplay
@@ -135,7 +135,7 @@ export class Provider extends React.Component{
       newFilters.onDisplay = {...newFilters.empty}
       //IF WILL UNCHECK
       if(checked){
-        console.log("WILL UNCHECK")
+        
         newArtworkOnDisplay = {}
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
           if(this.state.artworkOnDisplay[fileName].displayTriggers[displayTrigger].indexOf(value) < 0){
@@ -145,7 +145,7 @@ export class Provider extends React.Component{
       }
       //IF WILL CHECK
       else{
-        console.log("Will BE CHECKED")
+        
         newArtworkOnDisplay = {...this.state.artworkOnDisplay}
         Object.keys(this.state.visibleArtwork).forEach(fileName => {
           if(this.state.visibleArtwork[fileName].displayTriggers[displayTrigger].indexOf(value) >= 0){
@@ -154,8 +154,8 @@ export class Provider extends React.Component{
         })
       }
 
-      console.log("newArtworkOnDisplay")
-      console.log(newArtworkOnDisplay)
+      
+      
 
       if(Object.keys(newArtworkOnDisplay).length > 0){
         Object.keys(newArtworkOnDisplay).forEach(artworkName => {
@@ -174,12 +174,12 @@ export class Provider extends React.Component{
         newFilters.onDisplay[filterName] = Array.from(newFilters.onDisplay[filterName])
       })
       newState.filters = newFilters
-      console.log("NEWSTATE COMPONUDED FILTERS_________________")
-      console.log(newState)
+      
+      
       return this.setState(newState)
     }
     this.filterBySubcategory = (e, category, subcategory, hideAll) => {
-      console.log(e.target)
+      
       e.stopPropagation()
       return new Promise ((res, rej) => {
           let newDisplay = {}
@@ -201,7 +201,7 @@ export class Provider extends React.Component{
           }
 
           if(!this.state.compoundFilters){
-            console.log("COMPOUND FILTERS")
+            
             return this.filter("subcategory", subcategory)
           }
           else{
@@ -235,7 +235,7 @@ export class Provider extends React.Component{
         return this.setState({artworkOnDisplay: newDisplay}, () => {res('fitlered by listitem')})
         }
         if(!this.state.compoundFilters){
-          console.log("COMPOUND FILTERS")
+          
           return this.filter("listitems", listitem)
         }
         // if(this.state.compoundFilters){
@@ -289,8 +289,8 @@ export class Provider extends React.Component{
         //   }
         // newState.artworkOnDisplay = newDisplay
         // newState.filters = this.toggleFilter("listitems", listitem)
-        // console.log("newstate LISTITEM")
-        // console.log(newState.filters)
+        // 
+        // 
         // return this.setState(newState)
       })
 
@@ -302,11 +302,11 @@ export class Provider extends React.Component{
 
       if(filters.onDisplay[filterName].includes(value)){
         newFilters.onDisplay[filterName] = filters.onDisplay[filterName].filter(name => name !== value)
-        console.log("NEW FILTERS ON UNCHECK")
-        console.log(newFilters)
+        
+        
       }
       else{
-        console.log("NEW FILTERS ON CHECK")
+        
         newFilters.onDisplay[filterName] = [...filters.onDisplay[filterName], value]
       }
       newFilters.empty = {...this.state.filters.empty}
@@ -351,7 +351,7 @@ export class Provider extends React.Component{
         }, () => visibleThemesList = Array.from(new Set(visibleThemesList)))
 
         if(hideAll){
-          console.log('on theme check')
+          
           let all = this.state.artworkInfoData
           let allNames = Object.keys(this.state.artworkInfoData)
           let artworkOnDisplay = {}
@@ -376,7 +376,7 @@ export class Provider extends React.Component{
         //ON UN-CHECK
         // if(!checkbox.checked){
         if(this.themeChecked(theme)){
-          console.log('on theme uncheck')
+          
           toggleArtwork.forEach(item => {
             document.getElementById(item).classList.add("image-hide")
           })
@@ -388,7 +388,7 @@ export class Provider extends React.Component{
         }
 
         else{
-          console.log('on theme check')
+          
           let all = this.state.artworkInfoData
           let allNames = Object.keys(this.state.artworkInfoData)
 
@@ -592,11 +592,11 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
-      console.log("run show menu")
+      
       if(this.state.mobile){
         const images = document.getElementById("imageSelect")
         // const images = document.getElementById("images")
-        console.log("show menu MOBILE")
+        
         let delay = 1
         // if(document.getElementById("ArtworkInfo")){
         //   if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
@@ -607,7 +607,7 @@ export class Provider extends React.Component{
         // }
         //if menu is open
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-          console.log("menu is open")
+          
           //if listitem drawer is open
           if(document.getElementsByClassName("scroll-down-listitem").length > 0){
             document.getElementsByClassName("scroll-down-listitem")[0].classList.remove("scroll-down-listitem")
@@ -627,14 +627,14 @@ export class Provider extends React.Component{
         }
         //if menu is closed
         else{
-          console.log("menu is close")
+          
           document.getElementById("TagsMenu").classList.add("show-menu")
         }
         return images.classList.toggle("explorer-view")
       }
       //DESKTOP
       else{
-        console.log("show menu desktop")
+        
         if(this.state.enlarge && this.state.enlarge.open){
           //if menu closed
           if(document.getElementById("TagsMenu").classList.contains("show-menu-desktop")){
@@ -721,8 +721,8 @@ export class Provider extends React.Component{
         }, 50);
     }
     this.viewNext = (direction) => {
-      console.log("__________________________")
-      console.log("view next")
+      
+      
       if(!this.state.enlarge){
         return
       }
@@ -780,8 +780,8 @@ export class Provider extends React.Component{
             //   else{
             //     prevPicName = commonSequence[commonIndex-1]
             //   }
-            // console.log(prevPicName)
-            // console.log("prevPicName")
+            // 
+            // 
 
             // let prevPic = this.state.artworkInfoData[prevPicName]
 
@@ -808,14 +808,14 @@ export class Provider extends React.Component{
 
         findNextIndex()
         const nextPicName = sequence[nextIndex]
-        console.log("sequence")
-        console.log(sequence)
-        console.log("nextIndex")
-        console.log(nextIndex)
+        
+        
+        
+        
         const nextPic = this.state.artworkInfoData[nextPicName]
 
         if(!options.state.enlarge.familySequence.commonSequence.includes(nextPicName)){
-          console.log("will not scroll")
+          
           options.scroll = false
         }
 
@@ -824,13 +824,13 @@ export class Provider extends React.Component{
 
 
     this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile, options) => {
-      console.log("countWidth")
+      
       let tagsMenuWidth = document.getElementById("TagsMenu").offsetWidth
       const imageNavWidth = document.querySelector(".Navbar") ? document.querySelector(".Navbar").offsetWidth : 0
-      console.log("tagsMenuWidth")
-      console.log(tagsMenuWidth)
-      console.log("imageNavWidth")
-      console.log(imageNavWidth)
+      
+      
+      
+      
       if(options && options.tagsMenuClosed){
         tagsMenuWidth = 0
       }
@@ -852,10 +852,13 @@ export class Provider extends React.Component{
         return {width: futureWidth, height: futureHeight}
 
       }
-      const sizeRatio = naturalHeight / containerHeight
+      let sizeRatio = naturalHeight / containerHeight
 
+      if(!mobile){
+        sizeRatio = naturalHeight / (containerHeight - 120)
+      }
       let futureWidth = Math.round(naturalWidth / sizeRatio)
-      let futureHeight = Math.round(futureWidth / naturalRatio) - 50
+      let futureHeight = Math.round(futureWidth / naturalRatio)
 
       if(futureWidth > maxWidth){
         futureWidth = maxWidth
@@ -919,7 +922,7 @@ export class Provider extends React.Component{
                   //DESKTOP
                   if(!this.state.mobile){
                     if(background.style.width !== "100%" || background.style.height !== "100%"){
-                      console.log("reset desktop enlarge")
+                      
                       document.getElementById('background').style.width = "100%"
                       document.getElementById('foreground').style.width = "100%"
                       document.getElementById('background').style.height = "100%"
@@ -953,7 +956,7 @@ export class Provider extends React.Component{
                     else{
                       //if enlargeContainer will shrink
                       if(this.state.enlarge.currentWidth && this.state.enlarge.currentWidth > futureSize.width && this.state.enlarge.open){
-                        console.log("enlargeContainer will shrink")
+                        
 
                         imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
                         setTimeout(() => {
@@ -962,12 +965,12 @@ export class Provider extends React.Component{
                       }
                       //
                       else{
-                        console.log("enlargeContainer will GROW")
+                        
                         const momentum = futureSize.width / container.offsetWidth
-                        console.log("mmentum")
+                        
                         let delay = 300 * momentum
                         delay = delay.toFixed(3)
-                        console.log(delay)
+                        
                         container.style.width = `${futureSize.width}px`
                         setTimeout(() => {
                           imageSelect.style.width = `${images.clientWidth - futureSize.width}px`
@@ -1010,7 +1013,7 @@ export class Provider extends React.Component{
                     this.setState(newState)
 
                      const loadForeground = () => {
-                      console.log("loadForeground")
+                      
                        return new Promise((res, rej) => {
                          document.querySelector("#foreground-img").src= fgSrc
                          document.querySelector("#foreground-img").addEventListener('load', () => {
@@ -1032,8 +1035,8 @@ export class Provider extends React.Component{
                         //  document.getElementById("ArtworkInfo").classList.add("show")
                         })
                         .catch(rej => {
-                          console.log("enlarge.fgLoaded")
-                          console.log(rej)
+                          
+                          
                         })
                         this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
                         pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
@@ -1044,7 +1047,7 @@ export class Provider extends React.Component{
                      return
           })
           .catch(rej => {
-            console.log(rej)
+            
             return
           })
     }
@@ -1053,7 +1056,7 @@ export class Provider extends React.Component{
       // let scrollTo = {}
       let scrollTo = {behavior: 'smooth'}
       if(!document.getElementById(parent_id)){
-        console.log(`${parent_id} was not found`)
+        
         return
       }
       if(!id){
@@ -1070,8 +1073,8 @@ export class Provider extends React.Component{
             if(document.getElementById(parent_id).scrollLeft > 0){
               scrollTo.left += document.getElementById(parent_id).scrollLeft
             }
-            console.log("scrollTo.left")
-            console.log(scrollTo.left)
+            
+            
             document.getElementById(parent_id).scrollTo(scrollTo)
           }
         }, scrollDelay);
@@ -1132,11 +1135,11 @@ export class Provider extends React.Component{
         }
       }
 
-      // console.log("recordedSequence")
-      // console.log(recordedSequence)
+      // 
+      // 
 
-      // console.log("newFamilySequence")
-      // console.log(newFamilySequence)
+      // 
+      // 
 
 
 
@@ -1154,7 +1157,7 @@ export class Provider extends React.Component{
 
     this.loadEnlarge = (e, id) => {
       e.stopPropagation()
-      console.log("load enlarge")
+      
 
       const file = this.state.artworkInfoData[id]
 
@@ -1168,22 +1171,23 @@ export class Provider extends React.Component{
       }
       if(e){
         e.stopPropagation()
-        console.log("run show info")
-        console.log(e)
+        
+        
       }
       // if(e.touches){return}
 
       const info = document.getElementById("ArtworkInfo")
+      if(document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
+        document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
+        return
+      }
       if(info.classList.contains("info-up")){
         // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
         info.classList.remove("info-up")
         info.style.transform = "translateY(0)"
         return
       }
-      if(document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
-        document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
-        return
-      }
+
       else{
         info.classList.add("info-up")
         info.style.transform = `translateY(-${info.clientHeight}px)`
@@ -1207,7 +1211,7 @@ export class Provider extends React.Component{
         document.getElementById("background").style.height = "auto"
       }
       // else{
-      //   console.log("width/height 100%")
+      //   
       //   document.getElementById('background').style.width = "100%"
       //   document.getElementById('foreground').style.width = "100%"
       //   document.getElementById('background').style.height = "100%"
@@ -1298,13 +1302,13 @@ export class Provider extends React.Component{
                           resolve(databaseFiles)
                       })
                       .catch(err => {
-                        console.log("getArtworkInfo err")
-                        console.log(err)
+                        
+                        
                       })
               })   
               .catch(err => {
-                console.log("fetch images err")
-                console.log(err)
+                
+                
               })
       })
     }
@@ -1367,8 +1371,8 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
   componentDidMount(){
         let newState = staticState
-        console.log("staticState")
-        console.log(staticState)
+        
+        
         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
         newState.mobile = this.toggleMobile()
         newState.compoundFilters = false
