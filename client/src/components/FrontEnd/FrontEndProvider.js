@@ -839,7 +839,7 @@ export class Provider extends React.Component{
       const naturalRatio = naturalWidth / naturalHeight
       if(mobile){
         maxWidth = document.getElementById("images").clientWidth
-        const maxHeight = document.getElementById("images").clientHeight - 70
+        const maxHeight = document.getElementById("images").clientHeight - 90
 
         let futureWidth = maxWidth
         let futureHeight = Math.round(futureWidth / naturalRatio)
