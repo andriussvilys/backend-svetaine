@@ -228,7 +228,6 @@ const ArtworkInfo = (props) => {
     <div
       className={"ArtworkInfo-container"}
       id="ArtworkInfo-container"
-      // style={{transform: `translateY(${-titleHeight()}px)`}}
     >
 
       <div
@@ -236,14 +235,8 @@ const ArtworkInfo = (props) => {
         className="ArtworkInfo-wrapper info-up"
         id="ArtworkInfo"
       >
-        {/* <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" > */}
-        {/* {artworkTitle()} */}
-        {/* <ViewControls 
-            context={props.context}
-        /> */}
         <ArtworkTitle file={props.file} context={props.context} />
         {descriptions()}
-        {/* </div> */}
         <div
           key={"ArtworkInfo-container_seealso"}
           className="ArtworkInfo-container_seealso"

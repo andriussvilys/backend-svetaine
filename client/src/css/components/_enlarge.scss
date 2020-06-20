@@ -76,6 +76,9 @@
         }
     }
 }
+.viewControls-button-disabled{
+    opacity: 0.3;
+}
 
 @media only screen and (max-width: 720px) {
     .enlargeContainer{

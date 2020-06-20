@@ -1,9 +1,6 @@
 import React, { Fragment } from 'react'
 import PreviewCounter from '../PreviewCounter'
 import ViewControls from '../ViewControls'
-// import FilePreview from '../FilePreview'
-// import Tags from './Tags'
-// import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 const ArtworkTitle = props => {
     const artworkTitle = () => {
@@ -75,11 +72,9 @@ const ArtworkTitle = props => {
         else{ return null}
     }
     return(
-        // <div key={"ArtworkInfo-container_text"} className="ArtworkInfo-container_text" >
             <Fragment>
                 {artworkTitle()}
             </Fragment>
-        // </div>
     )
 }
 export default ArtworkTitle
