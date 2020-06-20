@@ -1171,11 +1171,7 @@ export class Provider extends React.Component{
       }
       if(e){
         e.stopPropagation()
-        
-        
       }
-      // if(e.touches){return}
-
       const info = document.getElementById("ArtworkInfo")
       if(document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
         document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")

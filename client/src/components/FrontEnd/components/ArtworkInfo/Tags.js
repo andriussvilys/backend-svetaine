@@ -21,9 +21,11 @@ const Tags = (props) => {
             scrollToId = newImg
         }
         let infoUpDelay = 0
-        if(!document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
-            infoUpDelay = 200;
-            document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
+        if(props.context.state.mobile){
+            if(!document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
+                infoUpDelay = 200;
+                document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
+            }
         }
         setTimeout(() => {
             filterFunc
@@ -51,6 +53,9 @@ const Tags = (props) => {
                 key={`tag-${tag}${index}`}
                 className="Tags-item_container"
                 onClick={(e) => {e.stopPropagation(); 
+                    if(props.tagsTrigger){
+                        props.tagsTrigger()
+                    }
                     animateFilter(tag.onClick(e, tag.title, true))
                 }}
                 >
@@ -72,6 +77,9 @@ const Tags = (props) => {
             key={`category-${tag.title}${index}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
+                if(props.tagsTrigger){
+                    props.tagsTrigger()
+                }
                 animateFilter(tag.onClick(e, tag.title, true))
             }}
             >
@@ -99,6 +107,9 @@ const Tags = (props) => {
             key={`subcategory-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
+                if(props.tagsTrigger){
+                    props.tagsTrigger()
+                }
                 animateFilter(tag.onClick(e, tag.category, tag.title, true))
             }}
             >
@@ -126,6 +137,9 @@ const Tags = (props) => {
             key={`listitem-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
+                if(props.tagsTrigger){
+                    props.tagsTrigger()
+                }
                 animateFilter(tag.onClick(e,tag.category, tag.subcategory, tag.title, true))
             }}
             >
