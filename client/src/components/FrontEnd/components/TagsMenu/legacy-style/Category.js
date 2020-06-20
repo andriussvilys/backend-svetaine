@@ -10,7 +10,7 @@ const Category = (props) => {
                 key={`${data.category}-${subcategoryName}`}
                 title={subcategoryName}
                 onChange={(e) => props.context.filterBySubcategory(e, data.category, subcategoryName)}
-                isChecked={props.context.isFilterChecked("subcategory", subcategoryName)}
+                isChecked={props.context.state.filters.onDisplay.subcategory.indexOf(subcategoryName) >= 0 ? true : false}
                 // isChecked={props.context.subcategoryChecked(data.category, subcategoryName)}
             />
             const getListItems = () => {
@@ -24,7 +24,8 @@ const Category = (props) => {
                     key={`${data.category}-${listItemObj.subcategory}-${listItemObj.title}`}
                     title={listItemObj.title}
                     onChange={(e) => props.context.filterByListitem(e, data.category, listItemObj.subcategory, listItemObj.title)}
-                    isChecked={props.context.isFilterChecked("listitems", listItemObj.title)}
+                    isChecked={props.context.state.filters.onDisplay.listitems.indexOf(listItemObj.title) >= 0 ? true : false}
+                    // isChecked={props.context.isFilterChecked("listitems", listItemObj.title)}
                     // isChecked={props.context.listitemChecked(data.category, listItemObj.subcategory, listItemObj.title)}
                 />
             })
