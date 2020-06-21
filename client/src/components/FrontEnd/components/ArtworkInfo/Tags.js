@@ -5,7 +5,7 @@ const Tags = (props) => {
      * 
      * @param filterFunc takes a Promise function
      */
-    const animateFilter = (e, filterFunc) => {
+    const animateFilter = (filterFunc) => {
         const artworkOnDisplay = props.context.state.artworkOnDisplay
         let enlargeImg = props.file
         let scrollToId = props.file.fileName
@@ -26,7 +26,6 @@ const Tags = (props) => {
                 infoUpDelay = 200;
                 document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
             }
-            props.context.showInfo(e, {toggleTags: true})
         }
         setTimeout(() => {
             filterFunc
@@ -53,12 +52,11 @@ const Tags = (props) => {
                 return <div 
                 key={`tag-${tag}${index}`}
                 className="Tags-item_container"
-                onClick={(e) => {
-                    e.stopPropagation(); 
+                onClick={(e) => {e.stopPropagation(); 
                     if(props.tagsTrigger){
                         props.tagsTrigger()
                     }
-                    animateFilter(e, tag.onClick(e, tag.title, true))
+                    animateFilter(tag.onClick(e, tag.title, true))
                 }}
                 >
                     <p className="Tags-item_text">{tag.title}</p>
@@ -82,7 +80,7 @@ const Tags = (props) => {
                 if(props.tagsTrigger){
                     props.tagsTrigger()
                 }
-                animateFilter(e, tag.onClick(e, tag.title, true))
+                animateFilter(tag.onClick(e, tag.title, true))
             }}
             >
                 <p className="Tags-item_text">{tag.title}</p>
@@ -112,7 +110,7 @@ const Tags = (props) => {
                 if(props.tagsTrigger){
                     props.tagsTrigger()
                 }
-                animateFilter(e, tag.onClick(e, tag.category, tag.title, true))
+                animateFilter(tag.onClick(e, tag.category, tag.title, true))
             }}
             >
                 <p className="Tags-item_text">{tag.title}</p>
@@ -142,7 +140,7 @@ const Tags = (props) => {
                 if(props.tagsTrigger){
                     props.tagsTrigger()
                 }
-                animateFilter(e, tag.onClick(e,tag.category, tag.subcategory, tag.title, true))
+                animateFilter(tag.onClick(e,tag.category, tag.subcategory, tag.title, true))
             }}
             >
                 <p className="Tags-item_text">{tag.title}</p>

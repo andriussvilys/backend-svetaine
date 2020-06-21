@@ -336,12 +336,15 @@ font-family: 'Times New Roman', Times, serif;
     height: 100%;
     opacity: 1;
     max-height: 100%;
+    display: none;
 }
 #background{
+    display: flex;
+    justify-content: center;
     z-index: 1;
     position: absolute;
     height: 100%;
-    width: 100%;
+    // width: 100%;
     max-height: 100%;
 }
 // .foreground-transition{
@@ -441,7 +444,7 @@ font-family: 'Times New Roman', Times, serif;
 .Tags-item_wrapper{
     display: flex;
     flex-wrap: wrap;
-    margin: 20px 0 0 0;
+    margin: 20px 0 10px 0;
     justify-content: flex-end;
     
 }
@@ -468,9 +471,8 @@ font-family: 'Times New Roman', Times, serif;
     width: 0;
 }
 .enlarge-preview{
-    // object-fit: contain;
     height: 100%;
-    width: 100%;
+    // width: 100%;
 }
 .about-container{
     width: 100%;
@@ -535,8 +537,6 @@ font-family: 'Times New Roman', Times, serif;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    transform: translateY(0);
-    position: absolute;
     border-top: 1px solid black;
     background-color: white;
     width: 100% !important;
@@ -548,8 +548,8 @@ font-family: 'Times New Roman', Times, serif;
 }
 .ArtworkInfo-wrapper{
     width: 100%;
-    height: 100%;
-    padding: 0 3vw 15px 3vw;
+    // height: 100%;
+    height: 0;
     background-color: white;
 }
 .ArtworkInfo-preview-container{
@@ -932,7 +932,11 @@ font-family: 'Times New Roman', Times, serif;
         height: 100%;
     }
 }
-
+.info-up{
+    display: initial;
+    height: 100%;
+    overflow: hidden;
+}
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     $hovercolor: white !important;
@@ -1117,11 +1121,9 @@ font-family: 'Times New Roman', Times, serif;
         height: 60px;
         overflow-y: hidden;
         border-top: 0;
-        // position: static;
-        top: 0;
         bottom: unset;
-        // position: unset;
         border-top: 1px solid black;
+        left: 0;
         img{
             height: 100%;
         }
@@ -1142,9 +1144,12 @@ font-family: 'Times New Roman', Times, serif;
     }
     .info-up{
         display: initial;
-        border-left: none;
-        border-top: 1px solid;
-        transform: translateY(-100%) !important;
+        // border-left: none;
+        // border-top: 1px solid;
+        // transform: translateY(-100%) !important;
+        height: 100%;
+        overflow: hidden;
+        padding: 0 3vw 0 3vw;
     }
     .ArtworkInfo-toggleTags{
         transform: translateY(-60px);
@@ -1199,9 +1204,9 @@ font-family: 'Times New Roman', Times, serif;
         height: 75%;
     }
     .imageSelect-FilePreview{
-        align-self: flex-start;
-        object-position: bottom left;
-        width: auto;
+        // align-self: flex-start;
+        // object-position: bottom left;
+        // width: auto;
         max-width: 100%;
     }
     .side-scroll .imageSelect-FilePreview{
@@ -1223,9 +1228,6 @@ font-family: 'Times New Roman', Times, serif;
     .image-hide{
         display: none;
     }
-    .FilePreview--imageContainer{
-        // flex: 1 1 50%;
-    }
     .FilePreview--imageContainer__empty{
         height: 0 !important;
         width: 0 !important;
@@ -1234,7 +1236,6 @@ font-family: 'Times New Roman', Times, serif;
     .ArtworkInfo--descriptions{
         font-size: 12px;
         margin: 8px 8vw;
-        margin-top: 0;
         margin-left: 50px;
     }
     .ArtworkInfo_locationYear{
@@ -1277,16 +1278,12 @@ font-family: 'Times New Roman', Times, serif;
       }
   }
   .ArtworkInfo-Title{
-      display: flex;
+      position: relative;
+    //   display: flex;
+    //   padding: 8px 3vw 5px 3vw;
       justify-content: space-between;
-        position: absolute;
         background-color: white;
         width: 100%;
-        position: absolute;
-        bottom: 99%;
-        left: 0;
-        padding: 8px 3vw 5px 3vw;
-        border-top: 1px solid black;
   }
 
   @import './components/enlarge';

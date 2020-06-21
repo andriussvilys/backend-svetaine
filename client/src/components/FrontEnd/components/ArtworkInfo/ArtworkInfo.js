@@ -101,7 +101,6 @@ export default class ArtworkInfo extends React.Component{
         </div>
       );
     };
-  
      this.locationAndYear = () => {
       let location = this.props.file.foreground.location
         ? this.props.file.foreground.location
@@ -131,7 +130,6 @@ export default class ArtworkInfo extends React.Component{
         return null;
       }
     };
-  
      this.artworkTitle = () => {
       const artworkFamily = () => {
         if (this.props.file.foreground.artworkFamily !== "none")
@@ -200,7 +198,6 @@ export default class ArtworkInfo extends React.Component{
         </div>
       );
     };
-  
      this.descriptions = () => {
       return (
         <div className="ArtworkInfo--descriptions">
@@ -217,7 +214,6 @@ export default class ArtworkInfo extends React.Component{
         </div>
       );
     };
-  
      this.titleHeight = () => {
       let height = 36;
       const ArtworkInfoTitle = document.getElementById("ArtworkInfo-Title");
@@ -234,37 +230,17 @@ export default class ArtworkInfo extends React.Component{
         this.setState({infoUp: !this.state.infoUp})
       }
       this.props.context.showInfo(e)
-    }
-  }
-
-  render(){
-    return this.props.file && this.props.file.foreground ? (
-      <div
-        className={"ArtworkInfo-container"}
-        id="ArtworkInfo-container"
-      >
-  
-        <div
-          key={"ArtworkInfo-wrapper"}
-          className="ArtworkInfo-wrapper"
-          id="ArtworkInfo"
-        >
-          <ArtworkTitle 
-            file={this.props.file} 
-            context={this.props.context} 
-            showInfo={
-              (e) => this.showInfo(e)
-            }
-            infoUp={this.state.infoUp}
-          />
-          {this.descriptions()}
+    };
+    this.secondaryInfo = () => {
+      return <Fragment>
+                  {this.descriptions()}
           <div
             key={"ArtworkInfo-container_seealso"}
             className="ArtworkInfo-container_seealso"
           >
             {this.seeAlso()}
           </div>
-          {<Tags 
+          <Tags 
             file={this.props.file.foreground} 
             context={this.props.context} 
             tagsTrigger={() => {
@@ -275,25 +251,48 @@ export default class ArtworkInfo extends React.Component{
             }
             }
           />
-          }
+      </Fragment>
+    }
+  }
+
+  render(){
+    return this.props.file && this.props.file.foreground ? (
+      <div
+        className={"ArtworkInfo-container"}
+        id="ArtworkInfo-container"
+      >
+          <ArtworkTitle 
+            file={this.props.file} 
+            context={this.props.context} 
+            showInfo={
+              (e) => this.showInfo(e)
+            }
+            infoUp={this.state.infoUp}
+          />
+          <div className=""
+                    key={"ArtworkInfo-wrapper"}
+                    className="ArtworkInfo-wrapper secondaryInfo"
+                    id="ArtworkInfo"
+          >
+            {this.secondaryInfo()}
+            {this.props.context.state.mobile ? 
+              <ImageSelect
+                customClass={"side-scroll"}
+                customId="ImageSelect-info"
+                data={this.props.context.state.artworkInfoData}
+                mobile={this.props.context.state.mobile}
+                state={this.props.context.state}
+                context={this.props.context}
+                methods={{
+                  enlarge: this.props.context.enlarge,
+                  loadEnlarge: this.props.context.loadEnlarge,
+                  toggleMobile: this.props.context.toggleMobile,
+                  lazyLoad: this.props.context.lazyLoadImages,
+                }}
+              /> : null
+            }
+          </div>
         </div>
-        {this.props.context.state.mobile ? 
-          <ImageSelect
-            customClass={"side-scroll"}
-            customId="ImageSelect-info"
-            data={this.props.context.state.artworkInfoData}
-            mobile={this.props.context.state.mobile}
-            state={this.props.context.state}
-            context={this.props.context}
-            methods={{
-              enlarge: this.props.context.enlarge,
-              loadEnlarge: this.props.context.loadEnlarge,
-              toggleMobile: this.props.context.toggleMobile,
-              lazyLoad: this.props.context.lazyLoadImages,
-            }}
-          /> : null
-        }
-      </div>
     ) : null;
   }
 };

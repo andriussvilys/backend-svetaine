@@ -819,13 +819,19 @@ label {
   height: 100%;
   opacity: 1;
   max-height: 100%;
+  display: none;
 }
 
 #background {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   z-index: 1;
   position: absolute;
   height: 100%;
-  width: 100%;
   max-height: 100%;
 }
 
@@ -984,7 +990,7 @@ label {
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin: 20px 0 0 0;
+  margin: 20px 0 10px 0;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -1021,7 +1027,6 @@ label {
 
 .enlarge-preview {
   height: 100%;
-  width: 100%;
 }
 
 .about-container {
@@ -1095,9 +1100,6 @@ label {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  -webkit-transform: translateY(0);
-          transform: translateY(0);
-  position: absolute;
   border-top: 1px solid black;
   background-color: white;
   width: 100% !important;
@@ -1108,8 +1110,7 @@ label {
 
 .ArtworkInfo-wrapper {
   width: 100%;
-  height: 100%;
-  padding: 0 3vw 15px 3vw;
+  height: 0;
   background-color: white;
 }
 
@@ -1590,6 +1591,12 @@ label {
   height: 100%;
 }
 
+.info-up {
+  display: initial;
+  height: 100%;
+  overflow: hidden;
+}
+
 @media only screen and (max-width: 720px) {
   .TagsMenu-category-title:hover * {
     color: black;
@@ -1821,9 +1828,9 @@ label {
     height: 60px;
     overflow-y: hidden;
     border-top: 0;
-    top: 0;
     bottom: unset;
     border-top: 1px solid black;
+    left: 0;
   }
   .side-scroll img {
     height: 100%;
@@ -1848,10 +1855,9 @@ label {
   }
   .info-up {
     display: initial;
-    border-left: none;
-    border-top: 1px solid;
-    -webkit-transform: translateY(-100%) !important;
-            transform: translateY(-100%) !important;
+    height: 100%;
+    overflow: hidden;
+    padding: 0 3vw 0 3vw;
   }
   .ArtworkInfo-toggleTags {
     -webkit-transform: translateY(-60px);
@@ -1923,11 +1929,6 @@ label {
     height: 75%;
   }
   .imageSelect-FilePreview {
-    -ms-flex-item-align: start;
-        align-self: flex-start;
-    -o-object-position: bottom left;
-       object-position: bottom left;
-    width: auto;
     max-width: 100%;
   }
   .side-scroll .imageSelect-FilePreview {
@@ -1961,7 +1962,6 @@ label {
   .ArtworkInfo--descriptions {
     font-size: 12px;
     margin: 8px 8vw;
-    margin-top: 0;
     margin-left: 50px;
   }
   .ArtworkInfo_locationYear {
@@ -2008,20 +2008,12 @@ label {
 }
 
 .ArtworkInfo-Title {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  position: relative;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  position: absolute;
   background-color: white;
   width: 100%;
-  position: absolute;
-  bottom: 99%;
-  left: 0;
-  padding: 8px 3vw 5px 3vw;
-  border-top: 1px solid black;
 }
 
 .enlargeContainer {
@@ -2043,8 +2035,9 @@ label {
   display: grid;
   -ms-grid-columns: 100%;
       grid-template-columns: 100%;
-  -ms-grid-rows: 30px 1fr 89px;
-      grid-template-rows: 30px 1fr 89px;
+  -ms-grid-rows: 30px 1fr min-content;
+      grid-template-rows: 30px 1fr -webkit-min-content;
+      grid-template-rows: 30px 1fr min-content;
   border-left: 1px solid black;
   overflow: hidden;
   z-index: 99;
@@ -2102,10 +2095,8 @@ label {
 
 .viewControls {
   width: 100%;
-  position: absolute;
   bottom: 100%;
   right: 0;
-  border-top: 1px solid black;
   border-bottom: 1px solid black;
   background-color: white;
   height: 30px;
