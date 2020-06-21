@@ -1139,9 +1139,9 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   width: 100%;
   overflow: hidden;
 }
@@ -1151,7 +1151,7 @@ label {
 }
 
 .SeeAlso-related {
-  margin-right: 20px;
+  margin-right: 3px;
 }
 
 .ArtworkInfo-container_seealso {
@@ -1184,11 +1184,10 @@ label {
   margin: 1vw 0;
   font-size: 14px;
   max-width: 600px;
+  margin-left: 50px;
 }
 
 .ArtworkInfo--descriptions_instance {
-  text-indent: 10px;
-  padding-left: 32px;
   font-size: 12px;
 }
 
@@ -1659,6 +1658,15 @@ label {
     position: relative;
     height: 100%;
     border: none;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
   }
   .previewBubble-wrapper {
     position: initial;
@@ -1953,7 +1961,7 @@ label {
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;
-    margin: 4vw 8vw;
+    margin: 8px 8vw;
     margin-top: 0;
     margin-left: 50px;
   }
@@ -2013,7 +2021,7 @@ label {
   position: absolute;
   bottom: 99%;
   left: 0;
-  padding: 10px 3vw 20px 3vw;
+  padding: 8px 3vw 5px 3vw;
   border-top: 1px solid black;
 }
 
@@ -2110,6 +2118,15 @@ label {
 
 .viewControls div {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .viewControls-button {

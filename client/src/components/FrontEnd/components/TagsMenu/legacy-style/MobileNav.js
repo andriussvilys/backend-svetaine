@@ -45,16 +45,13 @@ export default class MobileNav extends React.Component {
                     this.props.context.loadEnlarge(e, "portrait.jpg");
                     this.setState({openTab: "About"})
                 }}    
-            ><span>About</span></button>
-            <button className={"Mobilenav-button"}><span>Contact</span></button>
-            {/* <button 
-                className={`Mobilenav-button Mobilenav-button-close ${this.state.openTab ? "Mobilenav-button-close_enabled"  : ''}`}
-                // onClick={(e) => this.state.closeTabMethod(e)}
-                onClick={e => this.closeFunction(e)}
             >
-                <img src="icons/svg/view-right.svg" alt="close icon"/>
-                <span>close</span>
-            </button> */}
+                <span>About</span>
+            </button>
+            <button 
+            className={"Mobilenav-button"}>
+                <span style={{textDecoration: "line-through solid black"}}>Contact</span>
+            </button>
         </nav>)
     }
 }

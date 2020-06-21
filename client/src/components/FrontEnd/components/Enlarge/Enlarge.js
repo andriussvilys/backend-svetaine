@@ -12,9 +12,9 @@ export default class Enlarge extends React.Component{
                 <div 
                 className="enlargeContainer" id="enlargeContainer"
                 >
-                        <CloseButton
-                            context={this.props.context}
-                        />
+                    <CloseButton
+                        context={this.props.context}
+                    />
                     <PinchToZoom 
                         className="pinchContainer"
                         panEvent={{
@@ -40,6 +40,7 @@ export default class Enlarge extends React.Component{
                         mobile={this.props.mobile}
                         file={this.props.context.state.enlarge}
                         artworkInfoData={this.props.context.state.artworkInfoData}
+                        info={this.props.context.state.info}
                     />
                 </div>
         )

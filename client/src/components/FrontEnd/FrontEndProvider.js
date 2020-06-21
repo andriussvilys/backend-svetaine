@@ -8,7 +8,9 @@ export const Context = React.createContext();
 export class Provider extends React.Component{
   constructor(props){
     super(props);
-  this.state = {}
+  this.state = {
+    info: {infoUp: false, toggleTags: false},
+  }
 
   this.enlarge = {}
 
@@ -598,13 +600,6 @@ export class Provider extends React.Component{
         // const images = document.getElementById("images")
         
         let delay = 1
-        // if(document.getElementById("ArtworkInfo")){
-        //   if(document.getElementById("ArtworkInfo").classList.contains("info-up")){
-        //     // this.showInfo()
-        //     document.getElementById("ArtworkInfo").classList.remove("info-up")
-        //     delay += 100
-        //   }
-        // }
         //if menu is open
         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
           
@@ -688,21 +683,7 @@ export class Provider extends React.Component{
       }
       const ArtworkInfo = document.getElementById("ArtworkInfo")
 
-      if(ArtworkInfo && ArtworkInfo.classList.contains("info-up")){
-        ArtworkInfo.classList.remove("info-up")
-        ArtworkInfo.style.transform = "translateY(0)"
-        // if(ArtworkInfo)ArtworkInfo.classList.remove("show")
-        // if(!clearAll)
-        // return
-      }
-      // if(!clearAll){
-      //   if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-      //     this.showMenu(e)
-      //     return
-      //   }
-      // }
-      // if(ArtworkInfo)ArtworkInfo.classList.remove("show")
-        const delay = this.hideArtworkInfo()
+
         setTimeout(() => {
           const enlargeContainer = document.getElementById('enlargeContainer')
             document.getElementById('imageSelect').style.width = `100%`
@@ -823,7 +804,7 @@ export class Provider extends React.Component{
     }
 
 
-    this.countWidth = (containerHeight, naturalHeight, naturalWidth, mobile, options) => {
+    this.countWidth = (file, containerHeight, naturalHeight, naturalWidth, mobile, options) => {
       
       let tagsMenuWidth = document.getElementById("TagsMenu").offsetWidth
       const imageNavWidth = document.querySelector(".Navbar") ? document.querySelector(".Navbar").offsetWidth : 0
@@ -855,7 +836,8 @@ export class Provider extends React.Component{
       let sizeRatio = naturalHeight / containerHeight
 
       if(!mobile){
-        sizeRatio = naturalHeight / (containerHeight - 120)
+        let withArtworkFamily = file.artoworkTitle
+        sizeRatio = naturalHeight / (containerHeight - 150)
       }
       let futureWidth = Math.round(naturalWidth / sizeRatio)
       let futureHeight = Math.round(futureWidth / naturalRatio)
@@ -872,14 +854,6 @@ export class Provider extends React.Component{
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
       let fgLoaded = null
-
-      // if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-      //   document.getElementById("TagsMenu").classList.remove("show-menu")
-      // }
-      // const artworkInfo = document.getElementById("ArtworkInfo")
-      // if(artworkInfo && artworkInfo.classList.contains("info-up")){
-      //   this.showInfo()
-      // }
 
       const background = document.getElementById("background")
       const foreground = document.getElementById("foreground")
@@ -928,11 +902,11 @@ export class Provider extends React.Component{
                       document.getElementById('background').style.height = "100%"
                       document.getElementById('foreground').style.height = "100%"
                     }
-                    futureSize = this.countWidth(container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
+                    futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
                   }
                   //MOBILES**************************************************************************************
                   else{
-                    futureSize = this.countWidth(container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
+                    futureSize = this.countWidth(file, container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
 
                     background.style.height = `${futureSize.height}px`
                     foreground.style.height = `${futureSize.height}px`
@@ -1039,8 +1013,7 @@ export class Provider extends React.Component{
                           
                         })
                         this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-                        pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
-                        // pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo", vertical: true})
+                        // pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
 
 
                      }, 200);
@@ -1165,28 +1138,43 @@ export class Provider extends React.Component{
 
       return this.animateEnlarge(file, options)
     }
-    this.showInfo = (e) => {
+
+    this.showInfo = (e, options) => {
       if(this.state.enlarge && !this.state.enlarge.open){
         return
       }
       if(e){
         e.stopPropagation()
       }
+
+      let newState = {...this.state}
       const info = document.getElementById("ArtworkInfo")
+
+      if(options && options.toggleTags){
+        newState.info.toggleTags = true
+        this.setState(newState)
+        return
+      }
       if(document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
         document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
+        newState.info.toggleTags = false
+        this.setState(newState)
         return
       }
       if(info.classList.contains("info-up")){
         // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
         info.classList.remove("info-up")
         info.style.transform = "translateY(0)"
+        newState.info.infoUp = false
+        this.setState(newState)
         return
       }
-
       else{
         info.classList.add("info-up")
-        info.style.transform = `translateY(-${info.clientHeight}px)`
+        info.style.transform = `translateY(-100%)`
+        // info.style.transform = `translateY(-${info.clientHeight}px)`
+        newState.info.infoUp = true
+        this.setState(newState)
       }
       if(info.classList.contains("dragged")){
         info.classList.remove("dragged")

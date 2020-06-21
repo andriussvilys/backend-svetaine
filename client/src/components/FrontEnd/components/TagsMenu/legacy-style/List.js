@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import Category from './Category'
 import ClearAll from '../../ClearAll'
 import CompoundFilters from '../../CoumpoundFilters'
@@ -25,17 +25,6 @@ export class List extends React.Component{
     }
     render(){
         return(<div id="TagsMenu" className="FilterTree-container">
-                {/* <div className={`hamburger ${this.state.opened ? 'hamburger-open' : ""}`}
-                    onClick={(e) => {
-                        this.props.context.showMenu(e)
-                        this.setState({opened: !this.state.opened})
-                    }}
-                >
-                    <img alt="hamburger icon" src={!this.state.opened ? "icons/hamburger.png" : "icons/close.png"} />
-                </div> */}
-                {/* <ClearAll
-                    context={this.props.context}
-                /> */}
 
                 {this.props.context.state.mobile?                
                     <button
@@ -46,13 +35,32 @@ export class List extends React.Component{
                     >
                         <img className={"List-closeButton_img"} src="icons/svg/view-right.svg" alt="close icon"/>
                         <span>close</span>
-                    </button> : null
+                    </button> :             
+                    <Fragment>
+                        <div style={{borderBottom: "2px solid black", padding: "10px"}}>
+                            <button 
+                                className={"Mobilenav-button"}
+                                onClick={(e) => {
+                                    this.props.context.loadEnlarge(e, "portrait.jpg");
+                                }}    
+                            >
+                                <span>About</span>
+                            </button>
+                            <button 
+                                style={{border: "0 !important"}}
+                                disabled
+                                className={"Mobilenav-button"}
+                            >
+                                <span style={{textDecoration: "line-through solid black"}}>Contact</span>
+                            </button>
+                        </div>
+                    </Fragment>
                 }
 
+                {this.props.data ? this.createList(this.props.data) : null}
                 <ViewHide 
                     context={this.props.context}
                 />
-                {this.props.data ? this.createList(this.props.data) : null}
                 <Switch 
                     context={this.props.context}
                 />

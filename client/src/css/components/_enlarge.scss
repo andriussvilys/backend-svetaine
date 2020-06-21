@@ -66,6 +66,9 @@
     justify-content: flex-end;
     div{
         height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }
 .viewControls-button{

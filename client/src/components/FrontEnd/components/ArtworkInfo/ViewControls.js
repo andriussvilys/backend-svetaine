@@ -1,11 +1,9 @@
 import React from 'react'
+import PreviewCounter from './PreviewCounter'
 
 const ViewControls = props => {
     const disabled = props.context.state.enlarge.familySequence ? props.context.state.enlarge.familySequence.familySequence.length < 2 : true
     const artworkInfo = document.getElementById("ArtworkInfo")
-    
-    console.log(`DISABLED? ${disabled}`)
-    console.log(props.context.state.enlarge.familySequence.familySequence)
     return(
         <div className={"viewControls"}>
             <div 
@@ -13,7 +11,7 @@ const ViewControls = props => {
             >
                 <button
                     disabled={disabled}
-                    onClick={() => props.context.viewNext(+1)}
+                    onClick={() => props.context.viewNext(-1)}
                     className={"viewControls-button"}
                 >
                     <img 
@@ -21,9 +19,13 @@ const ViewControls = props => {
                     alt="view next" 
                     src="icons/svg/view-right.svg" />
                 </button>
+                <PreviewCounter 
+                    relatedArtwork={props.context.state.enlarge ? props.context.state.enlarge.familySequence.familySequence : []}
+                    file={props.context.state.enlarge}
+                />
                 <button
                     disabled={disabled}
-                    onClick={() => props.context.viewNext(-1)}
+                    onClick={() => props.context.viewNext(+1)}
                     className={"viewControls-button"}
                 >
                     <img 
@@ -39,13 +41,8 @@ const ViewControls = props => {
                     className={"viewControls-button viewControls-button-info"}
                     onClick={e => props.showInfo(e)}
                 >
-                    {/* {props.showInfoText} */}
                     <img className={"viewControls-showInfo-infoIcon"} alt="info icon" src="icons/svg/info.svg"></img>
                     <span>{props.infoUp ? "Less Info" : "More info"}</span>
-                    {/* {props.infoUp ? 
-                        <img className={"viewControls-viewNext"} alt="info icon" src="icons/svg/view-down.svg"></img> :
-                        <img className={"viewControls-viewNext"} alt="info icon" src="icons/svg/view-up.svg"></img>
-                    } */}
                 </button>
             </div>
 

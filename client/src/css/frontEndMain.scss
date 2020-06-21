@@ -570,7 +570,8 @@ font-family: 'Times New Roman', Times, serif;
 }
 .ArtworkInfo-seeAlso-container{
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    // justify-content: space-between;
     width: 100%;
     overflow: hidden;
 }
@@ -578,7 +579,7 @@ font-family: 'Times New Roman', Times, serif;
     max-width: 50%;
 }
 .SeeAlso-related{
-    margin-right: 20px;
+    margin-right: 3px;
 }
 
 .ArtworkInfo-container_seealso{
@@ -602,10 +603,11 @@ font-family: 'Times New Roman', Times, serif;
     margin: 1vw 0;
     font-size: 14px;    
     max-width: 600px;
+    margin-left: 50px;
 }
 .ArtworkInfo--descriptions_instance{
-    text-indent: 10px;
-    padding-left: 32px;
+    // text-indent: 10px;
+    // padding-left: 32px;
     font-size: 12px;
 }
 .ArtworkInfo_artworkFamily{
@@ -991,6 +993,9 @@ font-family: 'Times New Roman', Times, serif;
         position: relative;
         height: 100%;
         border: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     .previewBubble-wrapper{
         position: initial;
@@ -1226,7 +1231,7 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ArtworkInfo--descriptions{
         font-size: 12px;
-        margin: 4vw 8vw;
+        margin: 8px 8vw;
         margin-top: 0;
         margin-left: 50px;
     }
@@ -1278,7 +1283,7 @@ font-family: 'Times New Roman', Times, serif;
         position: absolute;
         bottom: 99%;
         left: 0;
-        padding: 10px 3vw 20px 3vw;
+        padding: 8px 3vw 5px 3vw;
         border-top: 1px solid black;
   }
 

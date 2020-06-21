@@ -44,9 +44,46 @@ export default class ArtworkTitle extends React.Component{
             }
     
             const artworkTitle = () => {
-                return <div style={{marginLeft: "-7px"}}>                 
-                        {this.props.file.foreground.artworkTitle ? <em className="ArtworkInfo_artworkTitle">{this.props.file.foreground.artworkTitle}</em> : <em className={"ArtworkInfo_artworkTitle_secondary"}>–</em>}
+
+                let artworkFamily = this.props.file.foreground.artworkFamily
+                if(artworkFamily === "none"){
+                    artworkFamily = "–"
+                }
+                if(artworkFamily === "Poilsis"){
+                    artworkFamily = "Daiktai sandėlyje"
+                }
+
+                let artworkTitle = this.props.file.foreground.artworkTitle
+                if(!artworkTitle){
+                    artworkTitle = artworkFamily
+                }
+
+                // if(this.props.file.foreground.artworkTitle){
+                    return <Fragment>
+                        <div style={{marginLeft: "-7px"}}>    
+                        <em className="ArtworkInfo_artworkTitle">{artworkTitle}</em>
                         </div>
+                        <div 
+                            className={
+                            this.props.file.foreground.artworkTitle ? 
+                            "ArtworkInfo_artworkFamily" :
+                            "ArtworkInfo_artworkTitle"
+                            }
+                        >        
+                            <div>
+                                {this.props.file.foreground.artworkTitle && this.props.file.foreground.artworkFamily !== "none" ? 
+                                    <Fragment>
+                                        <span className={"ArtworkInfo_artworkTitle_secondary"}>part of </span>
+                                        <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{artworkFamily}</em>
+                                    </Fragment> :
+                                    <Fragment>
+                                        <span className={"ArtworkInfo_artworkTitle_secondary"}></span>
+                                        <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary"></em>
+                                    </Fragment>
+                                }
+                            </div>
+                        </div>
+                    </Fragment>
             }
                 return (
                     <div className="ArtworkInfo-Title" id="ArtworkInfo-Title">
@@ -56,26 +93,11 @@ export default class ArtworkTitle extends React.Component{
                             showInfo={this.props.showInfo}
                             infoUp={this.props.infoUp}
                         />
-                        <PreviewCounter 
-                            relatedArtwork={this.props.context.state.enlarge ? this.props.context.state.enlarge.familySequence.familySequence : []}
-                            file={this.props.context.state.enlarge}
-                        />
-                        <div style={{flex: 1, display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-                            <div>
+                        <div className={"ArtworkInfo--descriptions"}>
+
                                 {artworkTitle()}
-                                {artworkFamily()}
                                 {this.locationAndYear()}
-                            </div>
-                            {/* <div 
-                            className="controls-button controls-info" 
-                            id="show-info-button"
-                            onClick={(e) => this.props.context.showInfo(e)}
-                            >
-                                <img 
-                                alt="info icon" 
-                                src="icons/svg/info.svg" 
-                                /> 
-                            </div> */}
+
                         </div>
                     </div>
                 )

@@ -79,7 +79,8 @@ export default class ArtworkInfo extends React.Component{
         );
       }
       let combined = [DOMS];
-      combined = [seeAlsos, ...combined];
+      // combined = [seeAlsos, ...combined];
+      combined = [seeAlsos];
       const singleContainer = () => {
         if (Array.isArray(DOMS) || Array.isArray(seeAlsos)) {
           return true;
