@@ -1608,11 +1608,6 @@ h5 {
   opacity: 0 !important;
 }
 
-.enlarge-scroll-left {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-}
-
 .year-tag {
   -webkit-box-flex: 1 !important;
       -ms-flex: 1 1 40% !important;

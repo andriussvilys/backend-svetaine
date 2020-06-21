@@ -4,14 +4,14 @@ const Selector = (props) => {
     return(
         <li className="legacyStyle-List-listItem">
             <label 
-                // className={`FilterTree-title`}
-                htmlFor={`FilterTree-checkbox-${props.title}`}
+                htmlFor={`FilterTree-checkbox-${props.id}`}
+                // htmlFor={`FilterTree-checkbox-${props.title}`}
                 >
                 {props.title}
             </label>
                 <input 
-                // className={`styledCheckbox-checkbox`}
-                id={`FilterTree-checkbox-${props.title}`} 
+                id={`FilterTree-checkbox-${props.id}`} 
+                // id={`FilterTree-checkbox-${props.title}`} 
                 type="checkbox" 
                 checked={props.isChecked}
                 onChange={props.onChange}

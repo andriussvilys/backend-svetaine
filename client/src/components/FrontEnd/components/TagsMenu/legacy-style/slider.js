@@ -7,7 +7,9 @@ const Switch = (props) => {
             <label className="switch">
                 <input type="checkbox" 
                     id="slider"
-                    onChange={() => props.context.compoundFiltersSwitch()}
+                    onChange={() => {
+                        // props.context.resetAll(true)
+                        props.context.compoundFiltersSwitch()}}
                 />
                 <span className="slider round"></span>
             </label>

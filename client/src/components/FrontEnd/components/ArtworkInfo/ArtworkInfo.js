@@ -277,20 +277,22 @@ export default class ArtworkInfo extends React.Component{
           />
           }
         </div>
-        <ImageSelect
-          customClass={"side-scroll"}
-          customId="ImageSelect-info"
-          data={this.props.context.state.artworkInfoData}
-          mobile={this.props.context.state.mobile}
-          state={this.props.context.state}
-          context={this.props.context}
-          methods={{
-            enlarge: this.props.context.enlarge,
-            loadEnlarge: this.props.context.loadEnlarge,
-            toggleMobile: this.props.context.toggleMobile,
-            lazyLoad: this.props.context.lazyLoadImages,
-          }}
-        />
+        {this.props.context.state.mobile ? 
+          <ImageSelect
+            customClass={"side-scroll"}
+            customId="ImageSelect-info"
+            data={this.props.context.state.artworkInfoData}
+            mobile={this.props.context.state.mobile}
+            state={this.props.context.state}
+            context={this.props.context}
+            methods={{
+              enlarge: this.props.context.enlarge,
+              loadEnlarge: this.props.context.loadEnlarge,
+              toggleMobile: this.props.context.toggleMobile,
+              lazyLoad: this.props.context.lazyLoadImages,
+            }}
+          /> : null
+        }
       </div>
     ) : null;
   }

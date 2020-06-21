@@ -14,10 +14,15 @@
     position: relative;
 }
 .legacyStyle-List-listItem{
+    user-select: none;
     display: flex;
     align-items: center;
     padding: 0 3px;
+    label{
+        cursor: pointer;
+    }
     input{
+        cursor: pointer;
         margin: 0 4px;
     }
 }

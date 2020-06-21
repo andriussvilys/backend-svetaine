@@ -780,8 +780,11 @@ label {
   top: 0;
   text-indent: -100%;
   overflow: hidden;
-  height: 200px;
+  -webkit-box-flex: 1;
+      -ms-flex: 1 1 19%;
+          flex: 1 1 19%;
   min-width: 59px;
+  max-height: 200px;
 }
 
 .FilePreview--imageContainer__empty {
@@ -837,6 +840,7 @@ label {
           transform: translateY(0);
   cursor: pointer;
   height: 100%;
+  width: 100%;
 }
 
 .zero-width {
@@ -1949,11 +1953,6 @@ label {
   .image-hide {
     display: none;
   }
-  .FilePreview--imageContainer {
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 50%;
-            flex: 1 1 50%;
-  }
   .FilePreview--imageContainer__empty {
     height: 0 !important;
     width: 0 !important;
@@ -2049,6 +2048,8 @@ label {
   border-left: 1px solid black;
   overflow: hidden;
   z-index: 99;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 }
 
 .enlarge-bar {
@@ -2197,10 +2198,8 @@ label {
             transform: translateX(100%);
     display: -ms-grid;
     display: grid;
-  }
-  .enlarge-closeButton-button {
-    right: unset;
-    left: 10px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all;
   }
   .viewControls {
     -webkit-box-pack: justify;
@@ -2249,6 +2248,10 @@ label {
 }
 
 .legacyStyle-List-listItem {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2258,7 +2261,12 @@ label {
   padding: 0 3px;
 }
 
+.legacyStyle-List-listItem label {
+  cursor: pointer;
+}
+
 .legacyStyle-List-listItem input {
+  cursor: pointer;
   margin: 0 4px;
 }
 

@@ -15,6 +15,7 @@
     border-left: 1px solid black;
     overflow: hidden;
     z-index: 99;
+    transition: 0.2s all;
 }
 .enlarge-bar{
     border-bottom: 1px solid black;
@@ -116,11 +117,12 @@
         display: initial;
         transform: translateX(100%);
         display: grid;
+        transition: 0.2s all;
     }
-    .enlarge-closeButton-button{
-        right: unset;
-        left: 10px;
-    }
+    // .enlarge-closeButton-button{
+    //     right: unset;
+    //     left: 10px;
+    // }
     .viewControls{
         justify-content: space-between;
     }

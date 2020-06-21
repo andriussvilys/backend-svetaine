@@ -303,9 +303,10 @@ font-family: 'Times New Roman', Times, serif;
     top: 0;
     text-indent: -100%;
     overflow: hidden;
-    // flex: 1 1 19%;
-    height: 200px;
+    flex: 1 1 19%;
+    // height: 200px;
     min-width: 59px;
+    max-height: 200px;
 }
 .FilePreview--imageContainer__empty{
     overflow: hidden;
@@ -354,6 +355,7 @@ font-family: 'Times New Roman', Times, serif;
     transform: translateY(0);
     cursor: pointer;
     height: 100%;
+    width: 100%;
 }
 .zero-width{
     height: 0;
@@ -1222,7 +1224,7 @@ font-family: 'Times New Roman', Times, serif;
         display: none;
     }
     .FilePreview--imageContainer{
-        flex: 1 1 50%;
+        // flex: 1 1 50%;
     }
     .FilePreview--imageContainer__empty{
         height: 0 !important;
