@@ -58,9 +58,11 @@ export class List extends React.Component{
                 }
 
                 {this.props.data ? this.createList(this.props.data) : null}
+                {this.props.context.state.artworkOnDisplay ?                 
                 <ViewHide 
                     context={this.props.context}
-                />
+                /> : null
+                }
                 <Switch 
                     context={this.props.context}
                 />

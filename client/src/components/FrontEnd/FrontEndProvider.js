@@ -130,7 +130,6 @@ export class Provider extends React.Component{
       this.setState(newState)
       return
     }
-
     this.compoundFilter = (displayTrigger, value) => {
       let newState = {...this.state}
       const checked = this.state.filters.onDisplay[displayTrigger].indexOf(value) >= 0
@@ -880,7 +879,7 @@ export class Provider extends React.Component{
                   let newState = options && options.state ? options.state : {...this.state}
                   newState.enlarge = enlarge
 
-                  foreground.classList.add("fade-out")
+                  // foreground.classList.add("fade-out")
                   let scrollToDelay = 0
 
                     if(!container.classList.contains("enlarge-scroll-left")){
@@ -914,7 +913,7 @@ export class Provider extends React.Component{
                         }, 50);
                       }
                     }
-                    document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
+                    // document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
                   
                   if(options){
                     const familySequence = options.state.enlarge.familySequence
@@ -949,41 +948,43 @@ export class Provider extends React.Component{
 
                     this.setState(newState)
 
-                     const loadForeground = () => {
+                    document.querySelector("#foreground-img").src= fgSrc
+
+
+                    //  const loadForeground = () => {
                       
-                       return new Promise((res, rej) => {
-                         document.querySelector("#foreground-img").src= fgSrc
-                         document.querySelector("#foreground-img").addEventListener('load', () => {
-                           if(!fgLoaded){
-                             foreground.classList.remove("fade-out")
-                             this.enlarge.loaded = false
-                              fgLoaded = true
-                            res("finished")
-                           }
-                           else{rej(fgLoaded)}
-                         });
-                       })
-                     }
+                    //    return new Promise((res, rej) => {
+                    //      document.querySelector("#foreground-img").src= fgSrc
+                    //      document.querySelector("#foreground-img").addEventListener('load', () => {
+                    //        if(!fgLoaded){
+                    //          foreground.classList.remove("fade-out")
+                    //          this.enlarge.loaded = false
+                    //           fgLoaded = true
+                    //         res("finished")
+                    //        }
+                    //        else{rej(fgLoaded)}
+                    //      });
+                    //    })
+                    //  }
 
-                     setTimeout(() => {
+                    //  setTimeout(() => {
 
-                       loadForeground()
-                       .then(res => {
-                        //  document.getElementById("ArtworkInfo").classList.add("show")
-                        })
-                        .catch(rej => {
+                    //    loadForeground()
+                    //    .then(res => {
+                    //     //  document.getElementById("ArtworkInfo").classList.add("show")
+                    //     })
+                    //     .catch(rej => {
                           
                           
-                        })
-                        this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-                        // pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
+                    //     })
+                    //     this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
+                    //     // pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
 
 
-                     }, 200);
+                    //  }, 200);
                      return
           })
           .catch(rej => {
-            
             return
           })
     }
@@ -1352,28 +1353,32 @@ export class Provider extends React.Component{
           year: [],
           location: []
         }
-
         const checkFilters = (artworkCollection, propName) => {
           Object.keys(artworkCollection).forEach(fileName => {
             const fileFilters = artworkCollection[fileName].displayTriggers
-  
-            Object.keys(fileFilters).forEach(filterName => {
-              if(typeof fileFilters[filterName] === "object"){
-  
-                fileFilters[filterName].forEach(content => {
-                  if(newState.filters[propName][filterName].indexOf(content) < 0){
-                    newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
+
+              Object.keys(fileFilters).forEach(filterName => {
+                if(typeof fileFilters[filterName] === "object"){
+                  if(fileFilters[filterName]){
+
+                    fileFilters[filterName].forEach(content => {
+                      if(newState.filters[propName][filterName].indexOf(content) < 0){
+                        newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
+                      }
+                    })
                   }
-                })
-              }
-              else{
-                if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
-                  if(fileFilters[filterName].length > 0){
-                    newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+                  
+                }
+                //if filter is year or location - ie string
+                else{
+                   console.log(`filtername ${filterName} !== object`)
+                  if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
+                    if(fileFilters[filterName].length > 0){
+                      newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+                    }
                   }
                 }
-              }
-            })
+              })
           })
         }
 

@@ -6,19 +6,20 @@ export default class ViewHide extends React.Component{
       this.state = {view: true}
     }
     render(){
+        const onDisplay = Object.keys(this.props.context.state.artworkOnDisplay)
         return(
             <div className="button_legacy-style--container">
                 <button
-                    disabled={this.props.context.state.showAll}
-                    className={`button_legacy-style ${!this.props.context.state.showAll ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
+                    disabled={onDisplay.length > 0}
+                    className={`button_legacy-style ${!onDisplay.length > 0 ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
                     // className={`button_legacy-style ${!this.state.view ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
                     onClick={() => {
                         this.setState({view: !this.state.view})
                         this.props.context.resetAll()}}
                 >View all</button>
                 <button
-                    disabled={!this.props.context.state.showAll}
-                    className={`button_legacy-style ${this.props.context.state.showAll ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
+                    disabled={!onDisplay.length > 0}
+                    className={`button_legacy-style ${onDisplay.length > 0 ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
                     // className={`button_legacy-style ${this.state.view ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
                     onClick={() => {
                         this.setState({view: !this.state.view})

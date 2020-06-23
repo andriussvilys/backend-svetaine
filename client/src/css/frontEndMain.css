@@ -1595,6 +1595,7 @@ label {
   display: initial;
   height: 100%;
   overflow: hidden;
+  padding: 0 3vw 0 3vw;
 }
 
 @media only screen and (max-width: 720px) {
@@ -2477,5 +2478,10 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+* {
+  -webkit-transition: 0s all !important;
+  transition: 0s all !important;
 }
 /*# sourceMappingURL=frontEndMain.css.map */

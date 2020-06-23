@@ -49,9 +49,9 @@ export default class NewSingleFile extends React.Component {
         }
       }
     render(){
-        // if(!this.props.file){
-        //     return null
-        // }
+        if(!this.props.file){
+            return null
+        }
         return(
         <div className="FileInfo-container SingleFile-container">
             <div className="FileInfo-preview">
@@ -105,7 +105,7 @@ export default class NewSingleFile extends React.Component {
                         <ArtworkInfo 
                             file={this.props.file}
                             fileName={this.props.file.fileName}
-                            onChange={this.props.context.fileDataMethods.onChange}
+                            onChange={this.props.context.onChange}
                             state={this.props.context.state}
                             context={this.props.context}
                         />

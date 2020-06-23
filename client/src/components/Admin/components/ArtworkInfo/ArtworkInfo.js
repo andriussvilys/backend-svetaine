@@ -15,7 +15,7 @@ const ArtworkInfo = (props) => {
                     />
                 </div>
 
-                <div className="imageInfo--box">
+                <div className="imageInfo--box imageInfo--box-displayMain">
                 <span>display on main page:</span>
                 <form className="artworkinfo--form">
                     <div className="container-radio">
@@ -26,7 +26,7 @@ const ArtworkInfo = (props) => {
                         checked={props.state.fileData.files[props.file.fileName].displayMain}
                         name="mainDisplayIndex" 
                         id="mainDisplayIndex__yes" 
-                        value="yes" 
+                        value={"yes"} 
                         onChange={(e)=>{props.onChange(e, "displayMain", props.file.fileName)}}
                         />
                     </div>
@@ -37,7 +37,7 @@ const ArtworkInfo = (props) => {
                         type="radio" 
                         name="mainDisplayIndex" 
                         id="mainDisplayIndex__no" 
-                        value="no" 
+                        value={"no"} 
                         onChange={(e)=>{props.onChange(e, "displayMain", props.file.fileName)}}
                         />
                     </div>

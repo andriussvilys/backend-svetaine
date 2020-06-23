@@ -48,6 +48,16 @@
   padding: 5px 0;
 }
 
+.imageInfo--box-displayMain {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
 .imageInfo--fileUpload {
   width: 85px;
   position: absolute;

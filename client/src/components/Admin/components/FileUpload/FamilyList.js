@@ -79,29 +79,8 @@ export default class FamilyList extends React.Component{
             <div className="FamilyList--main">
                 <div className="FamilyList--familyName">
                     <div className="FamilyList--familyName__text">Family name: {this.props.familyName ? this.props.familyName : "none"}</div>
-                    {/* <h5 className="FamilyList--familyName__text">Family name: {this.props.familyName ? this.props.familyName : "none"}</h5> */}
                 </div>
                 {this.renderList(this.props.files, this.props)}
-                {/* <div style={{display: "flex", justifyContent: "center", padding: "5px 0"}}>  
-                <Button
-                            variant="success"
-                            className="custom-button"
-                            onClick={() => {
-                                const verification = this.props.context.verify()
-                                if(!verification.verified){
-                                    return this.setState({showModal: true, modalMessage: verification.modalMessage})
-                                }
-                                this.setState({showModal: true})
-                                this.postAll(this.props.familyName)
-                                    .then(res => {
-                                        this.setState({modalMessage: res})
-                                    })
-                                    .catch(rej => this.setState({modalMessage: rej}))
-                            }}
-                        >
-                            Submit ALL to server
-                </Button>
-                </div> */}
                 <BootstrapModal 
                     showModal={this.state.showModal}
                     message={this.state.modalMessage}

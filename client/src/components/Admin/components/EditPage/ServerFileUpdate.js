@@ -108,7 +108,8 @@ export default class FileInfo extends React.Component {
                         <ArtworkInfo 
                             file={this.props.file}
                             fileName={this.props.file.fileName}
-                            onChange={this.props.context.fileDataMethods.onChange}
+                            // onChange={this.props.context.fileDataMethods.onChange}
+                            onChange={this.props.context.onChange}
                             state={this.props.context.state}
                             context={this.props.context}
                         />

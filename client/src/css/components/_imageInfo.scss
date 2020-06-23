@@ -12,6 +12,10 @@
     flex-wrap: wrap;
     padding: 5px 0;
 }
+.imageInfo--box-displayMain{
+    flex-direction: column;
+    align-items: flex-start;
+}
 .imageInfo--fileUpload{
     width: 85px;
     position: absolute;

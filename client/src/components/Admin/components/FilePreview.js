@@ -9,10 +9,10 @@ export default class FilePreview extends React.Component{
     fileContainer = (fileType, file) => {
 
         //files in server dont have 'preview' property, and files in state dont have filePath
-        const previewSource = file.filePath ? file.mobilePath : file.preview
+        const previewSource = file.filePath ? `/${file.mobilePath}` : file.preview
 
         if(fileType.match('image')){
-            return <img className="ImagesPreview--image" alt={file.fileName} src={`/${previewSource}`} />
+            return <img className="ImagesPreview--image" alt={file.fileName} src={previewSource} />
           
         }
         if(fileType.match('video')){

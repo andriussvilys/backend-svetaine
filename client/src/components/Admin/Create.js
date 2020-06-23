@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Context } from '../Provider';
-import { ProgressBar } from 'react-bootstrap'
+import { ProgressBar, Spinner } from 'react-bootstrap'
 
 import BootstrapModal from './components/BootstrapModal'
 import { Tabs, Tab } from 'react-bootstrap'
@@ -242,6 +242,15 @@ componentDidMount(){
                       </Tab>
                       <Tab eventKey="record_state" title="Write state">
                         <button onClick={() => {
+                          this.setState({
+                            showModal: true,
+                            modalMessage: <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
+                              <Spinner animation="border" variant="success" />
+                              <span style={{marginLeft: "20px"}}>Creating new database...</span>
+                              </div>
+                          }, () => {
+                            
+                          })
                           this.context.staticState()
                         }}>
                           WRITE NEW STAIC STATE

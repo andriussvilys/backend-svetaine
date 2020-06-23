@@ -53,6 +53,8 @@ export class Provider extends React.Component{
     this.onChange = (e, key, fileName) => {
         console.log("onchange")
         console.log(e.target.value ? e.target.value : e.target.innerHTML)
+
+        console.log(`value - ${e.target.value}`)
         let target = null
         let newState = {...this.state}
         if(fileName){
@@ -66,7 +68,15 @@ export class Provider extends React.Component{
         if(!target[key]){
             target[key] = []
         }
-        const inputValue = e.target.value ? e.target.value : e.target.textContent
+        let inputValue = e.target.value ? e.target.value : e.target.textContent
+        if(key === "displayMain"){
+            if(e.target.value === "yes"){
+                inputValue = true
+            }
+            else{
+                inputValue = false
+            }
+        }
         // target[key] = [...target[key], inputValue]
         target[key] = inputValue
         this.setState(newState)
@@ -2281,10 +2291,6 @@ export class Provider extends React.Component{
         let relatedArtwork = {}
         //get all records from the selected family from database
         return new Promise((resolve, reject) => {
-            // if(this.state.relatedArtwork[value]){
-            //     relatedArtwork = {...this.state.relatedArtwork}
-            // }
-    
             axios.get(`/api/artworkInfo/${artworkFamily}`)
                 .then(res =>{
     
@@ -2314,7 +2320,6 @@ export class Provider extends React.Component{
                     let finalRelatedArtwork = {
                             files: relatedArtwork,
                             column: {
-                                // fileIds: Object.keys(relatedArtwork).map(objName => objName),
                                 fileIds,
                                 id: `${artworkFamily}-relatedArtworks`
                             },
@@ -2413,6 +2418,23 @@ export class Provider extends React.Component{
                         console.log(res)
                         newState.artworkInfoData = res
                         let onDisplay = {}
+                        // Object.keys(res).forEach(fileName => {
+                        //     const displayTrigerNames = Object.keys(res[fileName].displayTriggers)
+                        //     let isOnDisplay = null
+                        //     displayTrigerNames.forEach(trigger => {
+                        //         console.log(res[fileName].displayTriggers[trigger])
+                        //         console.log("_____________________________________________________")
+                        //         if(res[fileName].displayTriggers[trigger]){
+                        //             if(res[fileName].displayTriggers[trigger].length > 0){
+                        //                 isOnDisplay = true
+                        //             }
+                        //         }
+                        //     })
+                        //     if(isOnDisplay){
+                        //         onDisplay = {...onDisplay, [fileName]: res[fileName]}
+                        //     }
+                        // })
+                        
                         Object.keys(res).forEach(fileName => {
                           if(res[fileName].displayMain){
                             onDisplay = {...onDisplay, [fileName]: res[fileName]}
@@ -2443,21 +2465,22 @@ export class Provider extends React.Component{
                           })
                         })
       
-                        let artworkOnDisplay = {}
-                        let displayThemes = ["metal", "social", "tools", "cloud"]
-                        let hideThemes = ["celestial body"]
-                        let artworkNames = Object.keys(onDisplay)
-                        artworkNames.forEach(fileName => {
-                          displayThemes.forEach(theme => {
-                            if(onDisplay[fileName].themes.includes(theme)){
-                              hideThemes.forEach(hideTheme => {
-                                if(!onDisplay[fileName].themes.includes(hideTheme)){
-                                  artworkOnDisplay[fileName] = onDisplay[fileName]
-                                }
-                              })
-                            }
-                          })
-                        })
+                        let artworkOnDisplay = onDisplay
+                        // let artworkOnDisplay = {}
+                        // let displayThemes = ["metal", "social", "tools", "cloud"]
+                        // let hideThemes = ["celestial body"]
+                        // let artworkNames = Object.keys(onDisplay)
+                        // artworkNames.forEach(fileName => {
+                        //   displayThemes.forEach(theme => {
+                        //     if(onDisplay[fileName].themes.includes(theme)){
+                        //       hideThemes.forEach(hideTheme => {
+                        //         if(!onDisplay[fileName].themes.includes(hideTheme)){
+                        //           artworkOnDisplay[fileName] = onDisplay[fileName]
+                        //         }
+                        //       })
+                        //     }
+                        //   })
+                        // })
       
                         let years = []
                         let locations = []
@@ -2493,7 +2516,8 @@ export class Provider extends React.Component{
                         const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
       
                         newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
-                        newState.artworkOnDisplay = this.state.artworkOnDisplay
+                        newState.artworkOnDisplay = artworkOnDisplay
+                        // newState.artworkOnDisplay = this.state.artworkOnDisplay
                         newState.visibleArtwork = onDisplay
                         newState.themesOnDisplay = artworkByTheme
                         resolve()
@@ -2521,20 +2545,9 @@ export class Provider extends React.Component{
               // Themes, 
             ])
             .then(res => {
-                console.log("_________________________________________________")
-                // console.log(newState.artworkOnDisplay)
-                // console.log(JSON.stringify(newState))
-
-
-                // const newStaticState = `const staticState = {}; export default staticState`
                 
                 const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
-
-
-                // const newStaticState = `const staticState = ${JSON.stringify(newState)}; export default staticState`
-
                 axios.post(`/staticState`, newStaticState)
-                // axios.post(`/staticState`, newState)
                     .then(res => { 
                         console.log("file writen")
                         console.log(res)
