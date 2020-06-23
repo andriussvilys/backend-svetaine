@@ -821,13 +821,13 @@ export class Provider extends React.Component{
                   //COUNT FUTURE SIZES
                   //DESKTOP
                   if(!this.state.mobile){
-                    // if(background.style.width !== "100%" || background.style.height !== "100%"){
+                    if(background.style.width !== "100%" || background.style.height !== "100%"){
                       
-                    //   document.getElementById('background').style.width = "100%"
-                    //   document.getElementById('foreground').style.width = "100%"
-                    //   document.getElementById('background').style.height = "100%"
-                    //   document.getElementById('foreground').style.height = "100%"
-                    // }
+                      document.getElementById('background').style.width = "100%"
+                      document.getElementById('foreground').style.width = "100%"
+                      document.getElementById('background').style.height = "100%"
+                      document.getElementById('foreground').style.height = "100%"
+                    }
                     futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
                   }
                   //MOBILES**************************************************************************************

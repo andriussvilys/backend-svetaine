@@ -88,10 +88,14 @@ export default class EditDetailContainer extends React.Component{
     deletePromise = (fileName, artworkFamily) => {
         return new Promise((resolve, reject) => {
             this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
-                .then(res => {resolve({
-                        modalMessage: res,
-                        modalConfirm: false
-                    })
+                .then(res => {
+                    console.log("deletePromiseResovle")
+                    console.log(res)
+                        let newState = {...this.state}
+                        newState.modalMessage = res.modalMessage
+                        newState.modalConfirm = false
+                        this.setState(newState)
+                    resolve()
                 })
                 .catch(err => {reject({
                         modalMessage: err,

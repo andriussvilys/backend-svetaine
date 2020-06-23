@@ -1,8 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import BootstrapModal from './Admin/components/BootstrapModal'
 import auth from './Auth'
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 import staticState from './FrontEnd/staticState'
 // import FilePreview from './FilePreview'
 
@@ -2236,6 +2234,9 @@ export class Provider extends React.Component{
         else if (!options){return {verified: true}}
     }
     this.staticState = () => {
+        console.log("write static state runs")
+        let newState = {}
+
         const getArtworkInfo = () => {
             return new Promise((resolve, rej) => {
       
@@ -2286,79 +2287,102 @@ export class Provider extends React.Component{
                     })
             })
         }
-        const getRelatedArtwork = (artworkFamily, newState) => {
-    
-        let relatedArtwork = {}
-        //get all records from the selected family from database
-        return new Promise((resolve, reject) => {
-            axios.get(`/api/artworkInfo/${artworkFamily}`)
-                .then(res =>{
-    
-                //for each fileData object in res.data array 
-                    res.data.forEach((obj, index) => {
-                    //paste all properties of this file object unto relatedArtwork object
-                    Object.keys(obj).forEach(property => {
-                            relatedArtwork = {
-                                ...relatedArtwork,
-                                    [obj.fileName]: {
-                                        ...relatedArtwork[obj.fileName],
-                                        [property]: obj[property]
-                                    }
-                                }
-                        })
-                    })        
-                    let fileIds = Object.keys(relatedArtwork).map(obj => null)
-                    Object.keys(relatedArtwork).forEach(fileName => {
-                        if(relatedArtwork[fileName].familyDisplayIndex < 0){
-                            fileIds.push(fileName)
-                        }
-                        else{
-                            fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
-                        }
-                    })
-                    fileIds = fileIds.filter(fileName => fileName !== null || false)
-                    let finalRelatedArtwork = {
-                            files: relatedArtwork,
-                            column: {
-                                fileIds,
-                                id: `${artworkFamily}-relatedArtworks`
-                            },
-                            columnOrder: [`${artworkFamily}-relatedArtworks`]
-                    };
-                    
-                    
-                    resolve(finalRelatedArtwork)
+
+        const serverFiles = () => {
+            return new Promise ((resolve, rej) => {
+                console.log("read server files")
+                axios.get('/fetchimages')
+                .then(res => {
+                    newState.serverData = res
+                    resolve(res)
                 })
-        }) 
+                .catch(err => rej(err))
+            })
+        }
+
+        const getRelatedArtwork = (artworkFamily, filesData) => {
+
+            return new Promise((resolve, reject) => {
+                let relatedArtwork = {} 
+                    axios.get(`/api/artworkInfo/${artworkFamily}`)
+                    .then(res =>{
+                        res.data.forEach((obj, index) => {
+                            const dir = "uploads/thumbnails/"
+                            const thumbnailPath = obj.thumbnailPath
+                            const thumbnailFileName = thumbnailPath.slice(dir.length, thumbnailPath.length)
+                            if(filesData.indexOf(thumbnailFileName) > -1 ){
+                                relatedArtwork[obj.fileName] = obj
+                            }
+                        })
+                    
+                        //paste all properties of this file object unto relatedArtwork object
+                        // Object.keys(obj).forEach(property => {
+                        //     // console.log(obj.fileName)
+                        //     if(filesData.indexOf(obj.fileName) > -1 ){
+                        //         relatedArtwork = {
+                        //             ...relatedArtwork,
+                        //                 [obj.fileName]: {
+                        //                     ...relatedArtwork[obj.fileName],
+                        //                     [property]: obj[property]
+                        //                 }
+                        //             }
+                        //     }
+                        //     })
+                        // })        
+                        let fileIds = Object.keys(relatedArtwork).map(obj => null)
+                        Object.keys(relatedArtwork).forEach(fileName => {
+                            if(relatedArtwork[fileName].familyDisplayIndex < 0){
+                                fileIds.push(fileName)
+                            }
+                            else{
+                                fileIds[relatedArtwork[fileName].familyDisplayIndex] = fileName
+                            }
+                        })
+                        fileIds = fileIds.filter(fileName => fileName !== null || false)
+                        let finalRelatedArtwork = {
+                                files: relatedArtwork,
+                                column: {
+                                    fileIds,
+                                    id: `${artworkFamily}-relatedArtworks`
+                                },
+                                columnOrder: [`${artworkFamily}-relatedArtworks`]
+                        };
+                        resolve(finalRelatedArtwork)
+                    })
+                    .catch(err => {
+                        console.log("axios.get(`/api/artworkInfo/${artworkFamily}`) FAILED")
+                        console.log(err)
+                        reject(err)
+                    })
+            })
+        //get all records from the selected family from database
         }
       
-            console.log("write static state runs")
-            let newState = {}
-
-            let FamilyList = new Promise ((resolve, rej) => {
-                axios.get('/api/familySetup')
-                .then(res => {
-                    let familyList = Object.keys(res.data).map(obj => {
-                        return res.data[obj].artworkFamily
-                    })
-                    let familiesData = {}
-                    Object.keys(res.data).forEach(obj => {
-                        familiesData[res.data[obj].artworkFamily] = res.data[obj]
-                    })
-                    newState.familiesData = familiesData
-                    newState.artworkFamilyList = familyList
-                    console.log("Families loaded")
-                    console.log(res)
-                    resolve()
+        const FamilyList = new Promise ((resolve, rej) => {
+            axios.get('/api/familySetup')
+            .then(res => {
+                let familyList = Object.keys(res.data).map(obj => {
+                    return res.data[obj].artworkFamily
                 })
-                .catch(err => {
-                     rej(err)
-                     console.log("family list laod error")
-                    // document.location.reload(true)
+                let familiesData = {}
+                Object.keys(res.data).forEach(obj => {
+                    familiesData[res.data[obj].artworkFamily] = res.data[obj]
                 })
+                newState.familiesData = familiesData
+                newState.artworkFamilyList = familyList
+                console.log("Families loaded")
+                console.log(res)
+                resolve()
             })
-      
-            let Categories = new Promise ((resolve, rej) => {
+            .catch(err => {
+                    rej(err)
+                    console.log("family list laod error")
+                // document.location.reload(true)
+            })
+        })
+    
+        const Categories = (serverFiles) => {
+            return new Promise ((resolve, rej) => {
                 FamilyList
                 .then(res => {
                         axios.get('/api/categories')
@@ -2378,174 +2402,137 @@ export class Provider extends React.Component{
                             const progressLength = newState.artworkFamilyList.length
                             let counter = 0
                             newState.artworkFamilyList.forEach(familyName => {
-                                getRelatedArtwork(familyName, newState)
+                                getRelatedArtwork(familyName, serverFiles)
                                 .then(res => {
-                                  if(!newState.relatedArtwork){
+                                    if(!newState.relatedArtwork){
                                     newState.relatedArtwork = {}
-                                  }
-                                  newState.relatedArtwork[familyName] = res
-                                  counter += 1
-                                  if(counter === progressLength){
+                                    }
+                                    newState.relatedArtwork[familyName] = res
+                                    counter += 1
+                                    if(counter === progressLength){
                                     resolve()
-                                  }
+                                    }
                                 })
                                 .catch(err => {
-                                  console.log("getrelated artwork err")
-                                  console.log(err)
-                                  rej("getrelated artwork err")
+                                    console.log("get related artwork err")
+                                    console.log(err)
+                                    rej("getrelated artwork err")
                                 })
                             })
                             // resolve()
                         })
                         .catch(err => {
-                             console.log("get categories err")
-                             console.log(err)
-                             rej("get categories err")
+                                console.log("get categories err")
+                                console.log(err)
+                                rej("get categories err")
                             // document.location.reload(true)
                         })
                 })
                 .catch(err => {
-                  console.log("categories error")
-                  console.log(err)
-                  rej(err)
+                    console.log("categories error")
+                    console.log(err)
+                    rej(err)
                 })
             }) 
-      
-            let ArtworkInfo = new Promise ((resolve, rej) => {
-                getArtworkInfo()
-                    .then(res => {
-                        console.log("this.getArtworkInfo res")
-                        console.log(res)
-                        newState.artworkInfoData = res
-                        let onDisplay = {}
-                        // Object.keys(res).forEach(fileName => {
-                        //     const displayTrigerNames = Object.keys(res[fileName].displayTriggers)
-                        //     let isOnDisplay = null
-                        //     displayTrigerNames.forEach(trigger => {
-                        //         console.log(res[fileName].displayTriggers[trigger])
-                        //         console.log("_____________________________________________________")
-                        //         if(res[fileName].displayTriggers[trigger]){
-                        //             if(res[fileName].displayTriggers[trigger].length > 0){
-                        //                 isOnDisplay = true
-                        //             }
-                        //         }
-                        //     })
-                        //     if(isOnDisplay){
-                        //         onDisplay = {...onDisplay, [fileName]: res[fileName]}
-                        //     }
-                        // })
-                        
-                        Object.keys(res).forEach(fileName => {
-                          if(res[fileName].displayMain){
-                            onDisplay = {...onDisplay, [fileName]: res[fileName]}
-                          }
-                        })
-                        
-                        let allThemes = []
-                        Object.keys(res).forEach(objName => {
-                            allThemes = [...allThemes, ...res[objName].themes]
-                        })
-                        let allThemesSet = new Set(allThemes)
-                        allThemesSet = Array.from(allThemesSet)
-      
-                        let artworkByTheme = {}
-      
-                        let themesArr = Object.keys(res).map(name => res[name])
-      
-                        allThemesSet.forEach(theme => {
-                          themesArr.forEach(obj => {
-                            if(obj.themes.includes(theme)){
-                              if(!artworkByTheme[theme]){
-                                artworkByTheme[theme] = []
-                              }
-                              if(obj.displayTriggers.themes && obj.displayTriggers.themes.includes(theme)){
-                                artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
-                              }
-                            }
-                          })
-                        })
-      
-                        let artworkOnDisplay = onDisplay
-                        // let artworkOnDisplay = {}
-                        // let displayThemes = ["metal", "social", "tools", "cloud"]
-                        // let hideThemes = ["celestial body"]
-                        // let artworkNames = Object.keys(onDisplay)
-                        // artworkNames.forEach(fileName => {
-                        //   displayThemes.forEach(theme => {
-                        //     if(onDisplay[fileName].themes.includes(theme)){
-                        //       hideThemes.forEach(hideTheme => {
-                        //         if(!onDisplay[fileName].themes.includes(hideTheme)){
-                        //           artworkOnDisplay[fileName] = onDisplay[fileName]
-                        //         }
-                        //       })
-                        //     }
-                        //   })
-                        // })
-      
-                        let years = []
-                        let locations = []
-                        let artworkByYear = {}
-                        let artworkByLocation = {}
-                    
-                        const allFiles = Object.keys(res)
-                    
-                        allFiles.forEach(fileName => {
-                            const file = res[fileName]
-                            if(file.year){
-                                years = [...years, file.year]
-                                if(!artworkByYear[file.year]){
-                                  artworkByYear[file.year] = []
-                                }
-                                artworkByYear = {...artworkByYear, [file.year]: [...artworkByYear[file.year], fileName]}
-                            }
-                            if(file.location){
-                                locations = [...locations, file.location]
-                                if(!artworkByLocation[file.location]){
-                                  artworkByLocation[file.location] = []
-                                }
-                                artworkByLocation = {...artworkByLocation, [file.location]: [...artworkByLocation[file.location], fileName]}
-                            }
-                        })
-                    
-                        years = new Set(years)
-                        years = Array.from(years).sort()
-                    
-                        locations = new Set(locations)
-                        locations = Array.from(locations).sort()
-      
-                        const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
-      
-                        newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
-                        newState.artworkOnDisplay = artworkOnDisplay
-                        // newState.artworkOnDisplay = this.state.artworkOnDisplay
-                        newState.visibleArtwork = onDisplay
-                        newState.themesOnDisplay = artworkByTheme
-                        resolve()
-                    })
-                    .catch(err => {
-                      console.log("getArtworkInfo err")
-                      console.log(err)
-                      rej(err)
-                    })
-            })
-      
-            let serverFiles = new Promise ((resolve, rej) => {
-              axios.get('/fetchimages')
+        }
+        
+    
+        const ArtworkInfo = new Promise ((resolve, rej) => {
+            getArtworkInfo()
                 .then(res => {
-                  newState.serverData = res
-                  resolve()
+                    console.log("this.getArtworkInfo res")
+                    console.log(res)
+                    newState.artworkInfoData = res
+                    let onDisplay = {}
+                    
+                    Object.keys(res).forEach(fileName => {
+                        if(res[fileName].displayMain){
+                        onDisplay = {...onDisplay, [fileName]: res[fileName]}
+                        }
+                    })
+                    
+                    let allThemes = []
+                    Object.keys(res).forEach(objName => {
+                        allThemes = [...allThemes, ...res[objName].themes]
+                    })
+                    let allThemesSet = new Set(allThemes)
+                    allThemesSet = Array.from(allThemesSet)
+    
+                    let artworkByTheme = {}
+    
+                    let themesArr = Object.keys(res).map(name => res[name])
+    
+                    allThemesSet.forEach(theme => {
+                        themesArr.forEach(obj => {
+                        if(obj.themes.includes(theme)){
+                            if(!artworkByTheme[theme]){
+                            artworkByTheme[theme] = []
+                            }
+                            if(obj.displayTriggers.themes && obj.displayTriggers.themes.includes(theme)){
+                            artworkByTheme[theme] = [...artworkByTheme[theme], obj.fileName]
+                            }
+                        }
+                        })
+                    })
+    
+                    let artworkOnDisplay = this.state.artworkOnDisplay
+    
+                    let years = []
+                    let locations = []
+                    let artworkByYear = {}
+                    let artworkByLocation = {}
+                
+                    const allFiles = Object.keys(res)
+                
+                    allFiles.forEach(fileName => {
+                        const file = res[fileName]
+                        if(file.year){
+                            years = [...years, file.year]
+                            if(!artworkByYear[file.year]){
+                                artworkByYear[file.year] = []
+                            }
+                            artworkByYear = {...artworkByYear, [file.year]: [...artworkByYear[file.year], fileName]}
+                        }
+                        if(file.location){
+                            locations = [...locations, file.location]
+                            if(!artworkByLocation[file.location]){
+                                artworkByLocation[file.location] = []
+                            }
+                            artworkByLocation = {...artworkByLocation, [file.location]: [...artworkByLocation[file.location], fileName]}
+                        }
+                    })
+                
+                    years = new Set(years)
+                    years = Array.from(years).sort()
+                
+                    locations = new Set(locations)
+                    locations = Array.from(locations).sort()
+    
+                    const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
+    
+                    newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
+                    newState.artworkOnDisplay = artworkOnDisplay
+                    // newState.artworkOnDisplay = this.state.artworkOnDisplay
+                    newState.visibleArtwork = onDisplay
+                    newState.themesOnDisplay = artworkByTheme
+                    resolve()
                 })
-                .catch(err => rej(err))
-            })
-      
+                .catch(err => {
+                    console.log("getArtworkInfo err")
+                    console.log(err)
+                    rej(err)
+                })
+        })
+    
+        serverFiles()
+        .then(res => {
             Promise.all([
-              serverFiles,
-              Categories, 
+            //   serverFiles,
+              Categories(res.data), 
               ArtworkInfo, 
               // Themes, 
             ])
             .then(res => {
-                
                 const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
                 axios.post(`/staticState`, newStaticState)
                     .then(res => { 
@@ -2561,6 +2548,22 @@ export class Provider extends React.Component{
                   console.log("promise all err")
                   console.log(err)
             })
+            // .then(res => {
+            //     console.log("Promis all finished")
+            //     console.log(newState)
+    
+            // })
+            // .catch(err => {
+            //     console.log("Promis all ERR")
+            //     console.log(err)
+            // })
+        })
+        .catch(err => {
+            console.log("server files runs err")
+            console.log(err)
+        })
+      
+
     }
 
 }//END OF CONTSTRUCTOR
