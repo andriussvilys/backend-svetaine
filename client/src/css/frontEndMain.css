@@ -2487,9 +2487,4 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-* {
-  -webkit-transition: 0s all !important;
-  transition: 0s all !important;
-}
 /*# sourceMappingURL=frontEndMain.css.map */
