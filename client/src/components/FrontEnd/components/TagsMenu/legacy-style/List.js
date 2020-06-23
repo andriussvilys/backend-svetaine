@@ -1,8 +1,5 @@
 import React, { Fragment } from 'react'
 import Category from './Category'
-import ClearAll from '../../ClearAll'
-import CompoundFilters from '../../CoumpoundFilters'
-import pullUp from '../../functions/pullUp'
 import ViewHide from './ViewHide'
 import Switch from './slider'
 

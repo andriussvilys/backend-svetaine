@@ -192,24 +192,25 @@ export class Provider extends React.Component{
     this.filterBySubcategory = (e, category, subcategory, hideAll) => {
       
       e.stopPropagation()
+      console.log(" FILTER BY SUB")
       return new Promise ((res, rej) => {
           let newDisplay = {}
           let zeroDisplay = {}
           let newState = {...this.state}
           let newFilters = {...newState.filters}
 
-          if(hideAll){
-            Object.keys(this.state.visibleArtwork).forEach(fileName => {
-              const file = this.state.visibleArtwork[fileName]
-              if(file.category[category] && file.category[category][subcategory]){
-                return newDisplay = {...newDisplay, [fileName]: file}
-              }
-              else{
-                  zeroDisplay ={...zeroDisplay, [fileName]: file}
-              }
-          })
-          return this.setState({artworkOnDisplay: newDisplay}, () => res('filtered by subcategory'))
-          }
+          // if(hideAll){
+          //   Object.keys(this.state.visibleArtwork).forEach(fileName => {
+          //     const file = this.state.visibleArtwork[fileName]
+          //     if(file.category[category] && file.category[category][subcategory]){
+          //       return newDisplay = {...newDisplay, [fileName]: file}
+          //     }
+          //     else{
+          //         zeroDisplay ={...zeroDisplay, [fileName]: file}
+          //     }
+          // })
+          // return this.setState({artworkOnDisplay: newDisplay}, () => res('filtered by subcategory'))
+          // }
 
           if(!this.state.compoundFilters){
             
@@ -229,25 +230,24 @@ export class Provider extends React.Component{
         let zeroDisplay = {}
         let newState = {...this.state}
 
-        if(hideAll){
-          Object.keys(this.state.visibleArtwork).forEach(fileName => {
-            const file = this.state.visibleArtwork[fileName]
-            if(file.category[category] && file.category[category][subcategory]){
-              if(file.category[category][subcategory].includes(listitem)){
-                return newDisplay = {...newDisplay, [fileName]: file}
-              }
-              else{
-                zeroDisplay ={...zeroDisplay, [fileName]: file}
-              }
-            }
-            else{
-                zeroDisplay ={...zeroDisplay, [fileName]: file}
-            }
-        })
-        return this.setState({artworkOnDisplay: newDisplay}, () => {res('fitlered by listitem')})
-        }
+        // if(hideAll){
+        //   Object.keys(this.state.visibleArtwork).forEach(fileName => {
+        //     const file = this.state.visibleArtwork[fileName]
+        //     if(file.category[category] && file.category[category][subcategory]){
+        //       if(file.category[category][subcategory].includes(listitem)){
+        //         return newDisplay = {...newDisplay, [fileName]: file}
+        //       }
+        //       else{
+        //         zeroDisplay ={...zeroDisplay, [fileName]: file}
+        //       }
+        //     }
+        //     else{
+        //         zeroDisplay ={...zeroDisplay, [fileName]: file}
+        //     }
+        // })
+        // return this.setState({artworkOnDisplay: newDisplay}, () => {res('fitlered by listitem')})
+        // }
         if(!this.state.compoundFilters){
-          
           return this.filter("listitems", listitem)
         }
         else{
@@ -594,9 +594,7 @@ export class Provider extends React.Component{
           if(document.getElementById("TagsMenu").classList.contains("show-menu-desktop")){
             if(this.state.enlarge && this.state.enlarge.open){
               document.getElementById("TagsMenu").classList.remove("show-menu-desktop")
-              // setTimeout(() => {
-              //   this.animateEnlarge(this.state.enlarge.background)
-              // }, 200);
+
               this.animateEnlarge(this.state.enlarge.background)
             }
             else{
@@ -612,9 +610,6 @@ export class Provider extends React.Component{
 
                 imageSelect.style.width = "auto"
                 document.getElementById("TagsMenu").classList.add("show-menu-desktop")
-                // setTimeout(() => {
-                //   this.animateEnlarge(this.state.enlarge.background)
-                // }, 200);
                 this.animateEnlarge(this.state.enlarge.background)
               }
               else{
@@ -681,24 +676,6 @@ export class Provider extends React.Component{
           if(direction > 0){
             //if last in currentSequence reached
             if(familyIndex+1 > familySequence.length-1){
-              //   const artworkOnDisplay = this.state.artworkOnDisplay
-              //   let nextPicName = commonSequence.find(fileName => {
-              //     if(artworkOnDisplay[fileName].artworkFamily !== familyName){
-              //       if(commonSequence.indexOf(fileName) > commonIndex){
-              //         return commonSequence.indexOf(fileName)
-              //       }
-              //     }
-              //     return
-              //     })
-              
-              //     if(!nextPicName){
-              //       nextPicName = commonSequence[0]
-              //     }
-              // let nextPic = this.state.artworkInfoData[nextPicName]
-
-              // options = this.createFamilySequence(nextPic)
-              // sequence = commonSequence
-              // nextIndex = commonSequence.indexOf(nextPicName)
               nextIndex = 0
               options.state.enlarge.familySequence.familyIndex = 0
               sequence = options.state.enlarge.familySequence.familySequence
@@ -712,26 +689,6 @@ export class Provider extends React.Component{
           //VIEW PREVIOUS
           else{
             if(familyIndex-1 < 0 ){
-            //   let prevPicName = null
-            //   const artworkOnDisplay = this.state.artworkOnDisplay
-            //   if(commonIndex === 0){
-            //     prevPicName = commonSequence[commonSequence.length-1]
-            //   }
-            //   else{
-            //     prevPicName = commonSequence[commonIndex-1]
-            //   }
-            // 
-            // 
-
-            // let prevPic = this.state.artworkInfoData[prevPicName]
-
-            // const familyArray = this.state.relatedArtwork[prevPic.artworkFamily].column.fileIds
-            // const lastOfFamilyFile = this.state.artworkInfoData[prevPicName]
-            //   options = this.createFamilySequence(lastOfFamilyFile)
-
-            //   sequence = options.state.enlarge.familySequence.familySequence
-            //   nextIndex = sequence.indexOf(lastOfFamilyFile.fileName)
-            //   options.reverse = true
             nextIndex = options.state.enlarge.familySequence.familySequence.length-1
             options.state.enlarge.familySequence.familyIndex = options.state.enlarge.familySequence.familySequence.length-1
             sequence = options.state.enlarge.familySequence.familySequence
@@ -796,9 +753,6 @@ export class Provider extends React.Component{
 
       if(!mobile){
         let withArtworkFamily = file.artoworkTitle
-        console.log("containerHeight")
-        console.log(containerHeight - 130)
-        console.log(containerHeight)
         sizeRatio = naturalHeight / (containerHeight - 130)
       }
       let futureWidth = Math.round(naturalWidth / sizeRatio)
@@ -813,9 +767,19 @@ export class Provider extends React.Component{
 
       return {width: futureWidth, height: futureHeight}
     }
+
+
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
       let fgLoaded = null
+
+      // if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+      //   document.getElementById("TagsMenu").classList.remove("show-menu")
+      // }
+      // const artworkInfo = document.getElementById("ArtworkInfo")
+      // if(artworkInfo && artworkInfo.classList.contains("info-up")){
+      //   this.showInfo()
+      // }
 
       const background = document.getElementById("background")
       const foreground = document.getElementById("foreground")
@@ -831,7 +795,7 @@ export class Provider extends React.Component{
       let fgSrc = null
 
       if(this.state.mobile){
-        bgSrc = file.mobilePath
+        bgSrc = file.thumbnailPath
         fgSrc = file.mobilePath
       }
       else{
@@ -857,29 +821,32 @@ export class Provider extends React.Component{
                   //COUNT FUTURE SIZES
                   //DESKTOP
                   if(!this.state.mobile){
-                    if(background.style.width !== "100%" || background.style.height !== "100%"){
+                    // if(background.style.width !== "100%" || background.style.height !== "100%"){
                       
-                      document.getElementById('background').style.width = "100%"
-                      document.getElementById('foreground').style.width = "100%"
-                      document.getElementById('background').style.height = "100%"
-                      document.getElementById('foreground').style.height = "100%"
-                    }
+                    //   document.getElementById('background').style.width = "100%"
+                    //   document.getElementById('foreground').style.width = "100%"
+                    //   document.getElementById('background').style.height = "100%"
+                    //   document.getElementById('foreground').style.height = "100%"
+                    // }
                     futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
                   }
                   //MOBILES**************************************************************************************
                   else{
                     futureSize = this.countWidth(file, container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
-
-                    background.style.height = `${futureSize.height}px`
-                    foreground.style.height = `${futureSize.height}px`
-                    background.style.width = `${futureSize.width}px`
-                    foreground.style.width = `${futureSize.width}px`
                   }
+
+                  console.log(`${futureSize.width} x ${futureSize.height}`)
+
+                  background.style.height = `${futureSize.height}px`
+                  foreground.style.height = `${futureSize.height}px`
+                  background.style.width = `${futureSize.width}px`
+                  foreground.style.width = `${futureSize.width}px`
+                  container.style.width = `${futureSize.width}px`
 
                   let newState = options && options.state ? options.state : {...this.state}
                   newState.enlarge = enlarge
 
-                  // foreground.classList.add("fade-out")
+                  foreground.classList.add("fade-out")
                   let scrollToDelay = 0
 
                     if(!container.classList.contains("enlarge-scroll-left")){
@@ -913,7 +880,7 @@ export class Provider extends React.Component{
                         }, 50);
                       }
                     }
-                    // document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
+                    document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
                   
                   if(options){
                     const familySequence = options.state.enlarge.familySequence
@@ -948,47 +915,45 @@ export class Provider extends React.Component{
 
                     this.setState(newState)
 
-                    document.querySelector("#foreground-img").src= fgSrc
-
-
-                    //  const loadForeground = () => {
+                     const loadForeground = () => {
                       
-                    //    return new Promise((res, rej) => {
-                    //      document.querySelector("#foreground-img").src= fgSrc
-                    //      document.querySelector("#foreground-img").addEventListener('load', () => {
-                    //        if(!fgLoaded){
-                    //          foreground.classList.remove("fade-out")
-                    //          this.enlarge.loaded = false
-                    //           fgLoaded = true
-                    //         res("finished")
-                    //        }
-                    //        else{rej(fgLoaded)}
-                    //      });
-                    //    })
-                    //  }
+                       return new Promise((res, rej) => {
+                         document.querySelector("#foreground-img").src= fgSrc
+                         document.querySelector("#foreground-img").addEventListener('load', () => {
+                           if(!fgLoaded){
+                             foreground.classList.remove("fade-out")
+                             this.enlarge.loaded = false
+                              fgLoaded = true
+                            res("finished")
+                           }
+                           else{rej(fgLoaded)}
+                         });
+                       })
+                     }
 
-                    //  setTimeout(() => {
+                     setTimeout(() => {
 
-                    //    loadForeground()
-                    //    .then(res => {
-                    //     //  document.getElementById("ArtworkInfo").classList.add("show")
-                    //     })
-                    //     .catch(rej => {
+                       loadForeground()
+                       .then(res => {
+                        //  document.getElementById("ArtworkInfo").classList.add("show")
+                        })
+                        .catch(rej => {
                           
                           
-                    //     })
-                    //     this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-                    //     // pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
+                        })
+                        this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
+                        pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
+                        // pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo", vertical: true})
 
 
-                    //  }, 200);
+                     }, 200);
                      return
           })
           .catch(rej => {
+            
             return
           })
     }
-
     this.scrollToHorizontal = (id, parent_id, options) => {
       // let scrollTo = {}
       let scrollTo = {behavior: 'smooth'}
@@ -1369,9 +1334,7 @@ export class Provider extends React.Component{
                   }
                   
                 }
-                //if filter is year or location - ie string
                 else{
-                   console.log(`filtername ${filterName} !== object`)
                   if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
                     if(fileFilters[filterName].length > 0){
                       newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
