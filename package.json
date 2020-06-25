@@ -11,7 +11,7 @@
     "client": "npm start --prefix client",
     "build-prod": "npm run-script build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "test-page": "start test-page.html"
+    "test-page": "npm start test-page.html"
   },
   "repository": {
     "type": "git",
