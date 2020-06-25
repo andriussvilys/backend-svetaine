@@ -23,6 +23,10 @@ app.use(bodyParser.json());
 
 const port = process.env.PORT || 5000;
 
+app.use(express.static('client/build'));
+
+app.get('*', (req, res) => res.sendFile(path.resolve('client', 'build', 'index.html')));
+
 app.listen(port, () => {console.log(`server started on port ${port}`)});
 
 //DB config
@@ -61,11 +65,6 @@ app.use('/imagemin', imagemin);
 app.use((err, req, res, next) => {
     res.status(500).send({error: err})
 })
-
-app.use(express.static('client/build'));
-
-app.get('*', (req, res) => res.sendFile(path.resolve('client', 'build', 'index.html')));
-
 
 if(process.env.NODE_ENV === "production"){
     app.use(express.static('client/build'))
