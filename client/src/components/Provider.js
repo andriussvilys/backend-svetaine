@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import auth from './Auth'
 import staticState from './FrontEnd/staticState'
+import { runInThisContext } from 'vm';
 // import FilePreview from './FilePreview'
 
 export const Context = React.createContext();
@@ -765,31 +766,77 @@ export class Provider extends React.Component{
                     "thumbnailPath": `file.thumbnailPath`,
                     "desktopPath": `file.desktopPath`
                 }
-                axios.delete(`/api/artworkInfo/delete/${fileName}`)
-                    .then(res => {
-                        axios.delete(`/deleteImage/delete/${fileName}`, paths)
-                        .then(res => {
-                            let relatedArtwork = {...this.state.relatedArtwork}
-                            delete relatedArtwork[artworkFamily].files[fileName]
-                            const fileIds = relatedArtwork[artworkFamily].column.fileIds
-                            let newFileIds = fileIds.filter(name => name !== fileName)
-                            relatedArtwork[artworkFamily].column.fileIds = newFileIds
-                            let artworkOnDisplay = this.state.artworkOnDisplay
-                            delete artworkOnDisplay[fileName]
-                            let artworkInfoData = this.state.artworkInfoData
-                            delete artworkInfoData[fileName]
-                            this.setState({relatedArtwork, artworkInfoData, artworkOnDisplay}
-                                , () => {
-                                    res.modalMessage = "File and its DB record deleted"
-                                    resolve(res)
+
+                let newState = {...this.state}
+                
+                const unlinkSeeAlso = () => {
+                    return new Promise((resolve, reject) => {
+                        const allFiles = {...this.state.artworkInfoData}
+                        const fileToDelete = allFiles[fileName]
+                        console.log("FILE TO DELETE")
+                        console.log(fileToDelete)
+                        const progressLength = fileToDelete.seeAlso.length
+                        let progress = 0
+                        if(!progressLength > 0){
+                            resolve()
+                        }
+
+                        
+                        fileToDelete.seeAlso.forEach(fileToUnlink => {
+                            console.log("FILE TO UNLINK")
+                            console.log(newState.artworkInfoData[fileToUnlink])
+                            newState.artworkInfoData[fileToUnlink].seeAlso = newState.artworkInfoData[fileToUnlink].seeAlso.filter(fileName => fileName !== fileToDelete.fileName)
+                            console.log(newState.artworkInfoData[fileToUnlink].seeAlso)
+    
+                            this.fileDataMethods.updateArtworkInfo(newState.artworkInfoData[fileToUnlink])
+                            .then(res => {
+                                progress++
+                                console.log(`${progress} / ${progressLength}`)
+                                if(progress === progressLength){
+                                    resolve()
                                 }
-                                )
+                            })
+                            .catch(rej => {
+                                console.log("ERROR")
+                                reject()
+                            })
                         })
-                        .catch(err => {
-                            console.log(err)})
                     })
-                    .catch(err => console.log(err))
-            })
+                }
+
+
+                unlinkSeeAlso()
+                    .then(res => {
+                            //delete from mongo
+                            axios.delete(`/api/artworkInfo/delete/${fileName}`)
+                                .then(res => {
+                                    //delete image files from server
+                                    axios.delete(`/deleteImage/delete/${fileName}`, paths)
+                                    //remove from state
+                                    .then(res => {
+                                        let relatedArtwork = {...this.state.relatedArtwork}
+                                        delete relatedArtwork[artworkFamily].files[fileName]
+                                        const fileIds = relatedArtwork[artworkFamily].column.fileIds
+                                        let newFileIds = fileIds.filter(name => name !== fileName)
+                                        relatedArtwork[artworkFamily].column.fileIds = newFileIds
+                                        let artworkOnDisplay = {...this.state.artworkOnDisplay}
+                                        delete artworkOnDisplay[fileName]
+                                        let artworkInfoData = newState.artworkInfoData
+                                        delete artworkInfoData[fileName]
+                                        this.setState({relatedArtwork, artworkInfoData, artworkOnDisplay}
+                                            , () => {
+                                                res.modalMessage = "File and its DB record deleted"
+                                                resolve(res)
+                                            }
+                                            )
+                                    })
+                                    .catch(err => {
+                                        console.log(err)})
+                                })
+                                .catch(err => console.log(err))
+                        })
+                    })
+                    .catch(rej => console.log("ERROR"))
         },
         serverFileToState: (file) => {
             return new Promise((resolve, reject) => {
@@ -1335,25 +1382,35 @@ export class Provider extends React.Component{
     
                 const fd = new FormData();
                 fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
-    
-                axios.post('/api/artworkInfo/imageUpload', fd)
-                    .then(res => {
-                        console.log("og image uploaded")
-                        axios.post(`/resize/${fileName}`)
-                        .then(res => { 
-                            this.readImageDir()
-                                .then(res => {
-                                    return resolve("uploads folder successfully read")
-                                })
-                        })
-                        .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
-                    })
-            })
 
-            //     if(this.state.serverFileDir.includes(fileName)){
-            //         resolve()
-            //     }
-            // })
+                // const popImage = () => {
+                //     return new Promise((res, rej) => {
+                //         let newState = {...this.state}
+                //         delete newState.fileData.files[fileName]
+                //         this.setState(newState, resolve())
+                //     })
+                // }
+
+                    axios.post('/api/artworkInfo/imageUpload', fd)
+                        .then(res => {
+                            console.log("og image uploaded")
+                            axios.post(`/resize/${fileName}`)
+                            .then(res => { 
+                                this.readImageDir()
+                                .then(res => {
+                                    console.log("read image dir res")
+                                    console.log(res)
+                                    // popImage.then(res => resolve())
+                                    resolve()
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    reject()
+                                })
+                            })
+                            .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
+                        })
+                })
         },
         //Removes selected file from state and thus DOM
         removeFile: (fileName, familyName) => {
@@ -1464,7 +1521,8 @@ export class Provider extends React.Component{
                             console.log(res.data[0].familyDisplayIndex)
                             if(res.data[0].familyDisplayIndex === currentFamilyDisplayIndex){
                                 console.log("fam index not changed")
-                                const fileData = this.state.fileData.files[file.fileName]
+                                const fileData = file
+                                // const fileData = this.state.fileData.files[file.fileName]
                                 this.fileDataMethods.relateSeeAlso(file)
                                 .then(res => { 
                                     axios.put(`/api/artworkInfo/update/${file.fileName}`, fileData)
@@ -1630,8 +1688,8 @@ export class Provider extends React.Component{
                                     .then( res => { 
                                             this.fileDataMethods.uploadFile(file.fileName)
                                                 .then(res => {
-                                                    let newState = {...this.state}
-                                                    delete newState.fileData.files[file.fileName]
+                                                    // let newState = {...this.state}
+                                                    // delete newState.fileData.files[file.fileName]
                                                     resolve("file uploaded")
                                                 })
                                                 .catch(err => {
@@ -2314,21 +2372,6 @@ export class Provider extends React.Component{
                                 relatedArtwork[obj.fileName] = obj
                             }
                         })
-                    
-                        //paste all properties of this file object unto relatedArtwork object
-                        // Object.keys(obj).forEach(property => {
-                        //     // console.log(obj.fileName)
-                        //     if(filesData.indexOf(obj.fileName) > -1 ){
-                        //         relatedArtwork = {
-                        //             ...relatedArtwork,
-                        //                 [obj.fileName]: {
-                        //                     ...relatedArtwork[obj.fileName],
-                        //                     [property]: obj[property]
-                        //                 }
-                        //             }
-                        //     }
-                        //     })
-                        // })        
                         let fileIds = Object.keys(relatedArtwork).map(obj => null)
                         Object.keys(relatedArtwork).forEach(fileName => {
                             if(relatedArtwork[fileName].familyDisplayIndex < 0){
@@ -2475,8 +2518,6 @@ export class Provider extends React.Component{
                         })
                     })
     
-                    let artworkOnDisplay = this.state.artworkOnDisplay
-    
                     let years = []
                     let locations = []
                     let artworkByYear = {}
@@ -2511,8 +2552,8 @@ export class Provider extends React.Component{
                     const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
     
                     newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
-                    newState.artworkOnDisplay = artworkOnDisplay
-                    // newState.artworkOnDisplay = this.state.artworkOnDisplay
+
+                    newState.artworkOnDisplay = {...this.state.artworkOnDisplay}
                     newState.visibleArtwork = onDisplay
                     newState.themesOnDisplay = artworkByTheme
                     resolve()
@@ -2524,46 +2565,55 @@ export class Provider extends React.Component{
                 })
         })
     
-        serverFiles()
-        .then(res => {
-            Promise.all([
-            //   serverFiles,
-              Categories(res.data), 
-              ArtworkInfo, 
-              // Themes, 
-            ])
+        return new Promise((resolve, reject) => {
+            serverFiles()
             .then(res => {
-                const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
-                axios.post(`/staticState`, newStaticState)
-                    .then(res => { 
-                        console.log("file writen")
-                        console.log(res)
-                    })
-                    .catch(err => {
-                        console.log("write staticstate file error")
-                        console.log(err)
-                    })
+                Promise.all([
+                //   serverFiles,
+                  Categories(res.data), 
+                  ArtworkInfo, 
+                  // Themes, 
+                ])
+                .then(res => {
+                    const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
+                    axios.post(`/staticState`, newStaticState)
+                        .then(res => { 
+                            console.log("file writen")
+                            resolve()
+                        })
+                        .catch(err => {
+                            console.log("write staticstate file error")
+                            console.log(err)
+                            reject()
+                        })
+                })
+                .catch(err => {
+                      console.log("promise all err")
+                      console.log(err)
+                      reject()
+                })
             })
             .catch(err => {
-                  console.log("promise all err")
-                  console.log(err)
+                console.log("server files runs err")
+                console.log(err)
+                reject()
             })
-            // .then(res => {
-            //     console.log("Promis all finished")
-            //     console.log(newState)
-    
-            // })
-            // .catch(err => {
-            //     console.log("Promis all ERR")
-            //     console.log(err)
-            // })
-        })
-        .catch(err => {
-            console.log("server files runs err")
-            console.log(err)
         })
       
 
+    }
+    this.buildProd = () => {
+        return new Promise((resolve, reject) => {
+            axios.get('/build-prod')
+            .then(res => {
+                console.log("production build created")
+                resolve("production build created")
+            })
+            .catch(err => {
+                console.log("build failed")
+                reject("build failed")
+            })
+        })
     }
 
 }//END OF CONTSTRUCTOR
@@ -2682,6 +2732,7 @@ export class Provider extends React.Component{
             addNew: this.addNew,
             deleteTheme: this.deleteTheme,
             staticState: this.staticState,
+            buildProd: this.buildProd,
             inputFamilyDescription: this.inputFamilyDescription,
             setArtworkOnDisplay: this.setArtworkOnDisplay
 

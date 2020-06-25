@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import pullUp from './components/functions/pullUp'
 import staticState from './staticState'
+// import staticState from '../../../public/static-state/staticState'
 
 export const Context = React.createContext();
 
@@ -194,10 +195,10 @@ export class Provider extends React.Component{
       e.stopPropagation()
       console.log(" FILTER BY SUB")
       return new Promise ((res, rej) => {
-          let newDisplay = {}
-          let zeroDisplay = {}
-          let newState = {...this.state}
-          let newFilters = {...newState.filters}
+          // let newDisplay = {}
+          // let zeroDisplay = {}
+          // let newState = {...this.state}
+          // let newFilters = {...newState.filters}
 
           // if(hideAll){
           //   Object.keys(this.state.visibleArtwork).forEach(fileName => {
@@ -226,9 +227,9 @@ export class Provider extends React.Component{
       console.log("FILTER BY LIST ITEM")
       e.stopPropagation()
       return new Promise ((res, rej) => {
-        let newDisplay = {}
-        let zeroDisplay = {}
-        let newState = {...this.state}
+        // let newDisplay = {}
+        // let zeroDisplay = {}
+        // let newState = {...this.state}
 
         // if(hideAll){
         //   Object.keys(this.state.visibleArtwork).forEach(fileName => {

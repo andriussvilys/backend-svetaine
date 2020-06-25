@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Context } from '../Provider';
-import { ProgressBar, Spinner } from 'react-bootstrap'
+import { ProgressBar, Spinner, Button } from 'react-bootstrap'
 
 import BootstrapModal from './components/BootstrapModal'
 import { Tabs, Tab } from 'react-bootstrap'
@@ -241,20 +241,64 @@ componentDidMount(){
                       </div>
                       </Tab>
                       <Tab eventKey="record_state" title="Write state">
-                        <button onClick={() => {
+                        <Button 
+                        variant="primary" 
+                        style={{margin: "10px"}}
+                        onClick={() => 
+                        {
                           this.setState({
                             showModal: true,
                             modalMessage: <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
                               <Spinner animation="border" variant="success" />
-                              <span style={{marginLeft: "20px"}}>Creating new database...</span>
+                              <span style={{marginLeft: "20px"}}>Overwriting static database...</span>
                               </div>
                           }, () => {
                             
                           })
                           this.context.staticState()
+                            .then(res => {
+                              let newState = {...this.state}
+                              newState.modalMessage = "Succes"
+                              this.setState(newState)
+                            })
+                            .catch(rej => {
+                              let newState = {...this.state}
+                              newState.modalMessage = "Error"
+                              this.setState(newState)
+                            })
                         }}>
                           WRITE NEW STAIC STATE
-                        </button>
+                        </Button>
+                        <br/>
+                        <Button 
+                        variant="success" 
+                        style={{margin: "10px"}}
+                        onClick={() => 
+                        {
+                          this.setState({
+                            showModal: true,
+                            modalMessage: <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
+                              <Spinner animation="border" variant="success" />
+                              <span style={{marginLeft: "20px"}}>Building production directory...</span>
+                              </div>
+                          }, () => {
+                            
+                          })
+                          this.context.buildProd()
+                            .then(res => {
+                              let newState = {...this.state}
+                              newState.modalMessage = "Success"
+                              this.setState(newState)
+                            })
+                            .catch(rej => {
+                              let newState = {...this.state}
+                              newState.modalMessage = rej
+                              this.setState(newState)
+                            })
+                        }}>
+                          Create production build
+                        </Button>
+                        <br/>
                         <UpdateAllArtworkInfo />
                       </Tab>
                     </Tabs>

@@ -57,7 +57,7 @@ export default class EditDetailContainer extends React.Component{
                 newRenderList = {...newRenderList, [objName]: obj}
             }
         })
-        this.setState({fileList: newRenderList}, () => {console.log('filter done'); console.log(this.state)})
+        this.setState({fileList: newRenderList})
     }
 
     reloadAll = () => {
