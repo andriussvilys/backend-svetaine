@@ -27,9 +27,10 @@ const Login = (props) => {
                                 e.preventDefault()
                                 const username = document.getElementById("uname").value
                                 const password = document.getElementById("psw").value
-                                console.log(username, password)
                                 axios.get(`/api/users/${username}`)
                                     .then(res => {
+                                        console.log(`api/users/${username} response`)
+                                        console.log(res)
                                         if(res.data.password && res.data.password === password){
                                             if(res.data.username === "guest"){
                                             // if(username === "guest"){
@@ -44,6 +45,7 @@ const Login = (props) => {
                                         else{
                                             if(!res.data.username){
                                                 console.log("res.data.username !== username")
+                                                console.log(res.data)
                                                 userBgColor = wrongInput
                                             }
                                             passwordBgColor = wrongInput
@@ -51,10 +53,22 @@ const Login = (props) => {
                                             document.getElementById("psw").value = ""
                                         }
                                     })
+                                    .catch(err => {
+                                        console.log("login error")
+                                        console.log(err)
+                                    })
                             }
                         }
                     >
                         Log In
+                    </Button>
+                    <Button 
+                        variant="success"
+                        onClick={() => {
+                            props.history.push('/')
+                        }}
+                    >
+                        Home
                     </Button>
                 </form>
             </div>
