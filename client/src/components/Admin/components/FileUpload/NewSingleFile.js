@@ -75,21 +75,23 @@ export default class NewSingleFile extends React.Component {
                             if(!verification.verified){
                                 return this.setState({showModal: true, modalMessage: verification.modalMessage})
                             }
-                            this.setState({
-                                showModal: true,
-                                modalMessage: "loading..."
-                            })
+                            // this.setState({
+                            //     showModal: true,
+                            //     modalMessage: "loading..."
+                            // })
                             const postRes = this.props.context.fileDataMethods.postArtworkInfo(this.props.file)
                             postRes
                             .then( res => {
-                                this.setState({
-                                    modalMessage: res
-                                })
+                                console.log("postRes result")
+                                console.log(res)
+                                // this.setState({
+                                //     modalMessage: res
+                                // })
                             })
                             .catch(err => {
-                                this.setState({
-                                    modalMessage: err
-                                })
+                                // this.setState({
+                                //     modalMessage: err
+                                // })
                             })
                         }
                         }
@@ -111,7 +113,6 @@ export default class NewSingleFile extends React.Component {
                         />
                     </Tab>
                     <Tab eventKey="familyInfo" title="Edit Artwork Family Info">
-                    <h3>{this.props.file.fileName}</h3>
                         <EditFamilyInfo 
                             context={this.props.context}
                             fileName={this.props.file.fileName}
@@ -131,12 +132,14 @@ export default class NewSingleFile extends React.Component {
                         />
                     </Tab>
                     <Tab eventKey="seeAlso" title="See Alsos">
-                        <SeeAlsoPicker 
-                            context={this.props.context}
-                            directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
-                            initialData={this.props.context.state.artworkInfoData}
-                            parent={this.props.file}
-                        />
+                        {this.props.context.state.fileData.files[this.props.file.fileName] ?                         
+                            <SeeAlsoPicker 
+                                context={this.props.context}
+                                directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
+                                initialData={this.props.context.state.artworkInfoData}
+                                parent={this.props.file}
+                            /> : null
+                        }
                     </Tab>
                 </Tabs>
             </div>
@@ -144,7 +147,7 @@ export default class NewSingleFile extends React.Component {
             <BootstrapModal 
                 showModal={this.state.showModal}
                 message={this.state.modalMessage}
-                onClose={() => {this.setState({showModal: false})}}
+                onClose={() => {console.log("clicked on close"); this.setState({showModal: false})}}
             />
     
         </div>

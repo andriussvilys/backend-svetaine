@@ -22,11 +22,32 @@ $border-main:  4px solid white;
 $border-gutter: none;
 $border-main-color: #bbb;
 
+@mixin common-border {
+    border: 2px solid #b5b5b5;
+    padding: 3px;
+    border-radius: 6px;
+}
+
 *{
     margin:0;
     padding: 0;
     white-space: normal;
     color: black;
+}
+.admin-content{
+    textarea, input{
+        @include common-border()
+    }
+}
+.fileUploadMessage{
+    font-size: 14px;
+}
+.fail{
+    color: red;
+}
+.success{
+    color: #28a745;
+    font-weight: bold;
 }
 
 html, body, #root, .app-container, .admin-container{
@@ -101,7 +122,7 @@ form{
 .Tabs-container{
     display: grid;
     grid-template-rows: min-content 1fr;
-    // height: 100%;
+    height: 100%;
 }
 .tab-pane{
     padding-top: 3px;
@@ -110,9 +131,6 @@ form{
 .card-header-tabs{
     margin-top: 10px;
 }
-// .nav{
-//     height: 45px;
-// }
 .nav-link{
     background-color: rgb(228, 228, 228);
     margin-right: 3px;
@@ -122,7 +140,8 @@ form{
     border-top: 0;
     border-bottom: 0;
     padding: 0 5px;
-    overflow-y: hidden;
+    overflow: auto;
+    // overflow-y: hidden;
     // .active{
     //     display: grid;
     //     grid-template-rows: min-content 1fr;
@@ -138,12 +157,11 @@ label{
 .FileUpload-container{
     height: 100%;
     overflow-y: auto;
-    display: grid;
-    grid-template-rows: min-content 1fr;
 }
 //___________________________________________________________________
 .FileInfo-container{
     width: 100%;
+    height: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -154,15 +172,14 @@ label{
 .SingleFile-container{
     height: initial;
     width: initial;
-    // margin: 10px;
-    border: 1px solid;
     border-left: 0;
     border-right: 0;
-    padding: 5px;
-    margin-bottom: 10px;
+    border-bottom: 5px solid black;
+}
+.SingleFile-container:last-of-type{
+    border-bottom: 0;
 }
 .FileInfo-preview{
-    border-right: 1px solid #dee2e6;
     margin-right: 3px;
     width: 200px;
     padding: 5px;
@@ -186,16 +203,13 @@ label{
 //___________________________________________________________________
 .familyPicker{
     position: relative;
-    border: 2px solid;
-    padding: 4px 0 0 0;
-    .grid-wrapper{
-        max-height: 50vh;
-    }
+    margin-top: 6px;
+    @include common-border;
 }
 .familyPicker-reload{
     border: 0;
     position: absolute;
-    top: 7px;
+    top: 3px;
     right: 3px;
     z-index: 2;
     text-transform: uppercase;
@@ -249,6 +263,8 @@ label{
     margin: 2px 1px 0 1px;
 }
 .grid-wrapper{
+    // margin-top: 6px;
+    padding: 6px 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, auto));
     grid-gap: 4px;
@@ -439,6 +455,7 @@ textarea{
     display: flex;
     justify-content: center;
     background-color: black;
+    height: 30px;
 }
 .FamilyList--familyName__text{
     color: white;
@@ -448,13 +465,17 @@ textarea{
 }
 .FamilyList--main{
     border: 5px solid;
+    // @include common-border;
+    border-width: 5px;
+    border-radius: 12px;
     border-top: 0;
     padding: 0 !important;
     margin: 0;
     width: auto !important;
     overflow: auto;
-    display: grid;
-    grid-template-rows: repeat(auto-fill, min-content);
+    // display: grid;
+    // grid-template-rows: repeat(auto-fill, 30px 1fr);
+
 }
 .FamilyList--detail{
     display: flex;
@@ -479,13 +500,15 @@ textarea{
     max-height: 300px;
     display: flex;
     flex-direction: column;
+    border-radius: 6px;
 }
 .imageBox__text{
     width: 100%;
-    margin: 4px 0;
     font-size: 12px;
-    padding: 4px;
-    border-top: 1px solid black;
+    padding: 6px;
+    button{
+        margin-top: 6px !important;
+    }
 }
 .serverFileUpdate-imageBox{
     margin: 0;
@@ -802,8 +825,27 @@ font-family: 'Times New Roman', Times, serif;
     right: 30px;
     overflow: visible;
 }
+.descriptionPreview--container{
+    border: 2px solid #b5b5b5;
+    padding: 3px;
+    border-radius: 6px;
+}
+.descriptionPreview--headline{
+    margin: 0;
+    padding: 5px;
+    border-bottom: 1px dotted black;
+}
+.descriptionPreview--content{
+    margin: 10px;
+}
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
+    .admin-container{
+        padding: 5px;
+    }
+    .familyPicker-reload{
+        top: unset;
+    }
     .ServerFileUpdate-preview{
         width: 100%;
     }
@@ -827,6 +869,7 @@ font-family: 'Times New Roman', Times, serif;
         display:block;
     }
     .admin-nav-list{
+        flex-wrap: nowrap;
         li{
             flex: 1;
             button{
@@ -895,21 +938,42 @@ font-family: 'Times New Roman', Times, serif;
         display: none;
     }
     .ImagesPreview--imageContainer{
-        // width: 50%;
         min-height: 90px;
         flex: 1 1 50%;
-        // border: 1px solid red;
     }
-    // .info-up{
-    //     opacity: 1;
-    //     transform: translateY(0);
-    //     border-top: 1px solid black;
-    // }
-    // .show{
-    //     display: flex;
-    // }
     .hide-imageSelect{
         transform: translateY(100%)
     }
-    
+    .btn, .nav-link{
+        padding: 2px !important;
+    }
+    .SingleFile-container{
+        flex-direction: column;
+        .FileInfo-preview{
+            width: 100%;
+        }
+    }
+    .FileInfo-preview{
+        border-right: 2px solid black;
+    }
+    .grid-wrapper{
+        grid-template-columns: repeat(auto-fill, minmax(100px, 49%));
+        grid-gap: 4px;
+        width: unset;
+        .imageBox__wrapper{
+            width: unset;
+            margin: 0; 
+            padding: 0;
+        }
+    }
+    .list-group, .tab-content{
+        margin: 0;
+        padding: 0;
+    }
+    .Tabs-container{
+        border-top: 2px solid black;
+    }
+    .list-group-category{
+        max-width: 49%;
+    }
   }

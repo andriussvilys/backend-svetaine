@@ -1,8 +1,7 @@
 import React from 'react';
 import axios from 'axios';
-import auth from './Auth'
-import staticState from './FrontEnd/staticState'
-// import FilePreview from './FilePreview'
+import auth from './Auth';
+import { Spinner } from 'react-bootstrap'
 
 export const Context = React.createContext();
 
@@ -37,6 +36,12 @@ export class Provider extends React.Component{
         artworkFamilyList: [],
         serverFileDir: [],
         showModal: false,
+        modal: {
+            showModal: false,
+            modalMessage: null,
+            onClose: () => this.toggleModal(),
+            parentModal: false
+        }
     }
         
     this.changeFileName = (e) => {
@@ -765,31 +770,81 @@ export class Provider extends React.Component{
                     "thumbnailPath": `file.thumbnailPath`,
                     "desktopPath": `file.desktopPath`
                 }
-                axios.delete(`/api/artworkInfo/delete/${fileName}`)
-                    .then(res => {
-                        axios.delete(`/deleteImage/delete/${fileName}`, paths)
-                        .then(res => {
-                            let relatedArtwork = {...this.state.relatedArtwork}
-                            delete relatedArtwork[artworkFamily].files[fileName]
-                            const fileIds = relatedArtwork[artworkFamily].column.fileIds
-                            let newFileIds = fileIds.filter(name => name !== fileName)
-                            relatedArtwork[artworkFamily].column.fileIds = newFileIds
-                            let artworkOnDisplay = this.state.artworkOnDisplay
-                            delete artworkOnDisplay[fileName]
-                            let artworkInfoData = this.state.artworkInfoData
-                            delete artworkInfoData[fileName]
-                            this.setState({relatedArtwork, artworkInfoData, artworkOnDisplay}
-                                , () => {
-                                    res.modalMessage = "File and its DB record deleted"
-                                    resolve(res)
+
+                let newState = {...this.state}
+                
+                const unlinkSeeAlso = () => {
+                    return new Promise((resolve, reject) => {
+                        const allFiles = {...this.state.artworkInfoData}
+                        const fileToDelete = allFiles[fileName]
+                        console.log("FILE TO DELETE")
+                        console.log(fileToDelete)
+                        const progressLength = fileToDelete.seeAlso.length
+                        let progress = 0
+                        if(!progressLength > 0){
+                            resolve()
+                        }
+
+                        
+                        fileToDelete.seeAlso.forEach(fileToUnlink => {
+                            console.log("FILE TO UNLINK")
+                            if(!newState.artworkInfoData[fileToUnlink]){
+                                console.log(`${fileToUnlink} not found. Check ${fileName} "seeAlso" record in the database`)
+                                return
+                            }
+                            console.log(newState.artworkInfoData[fileToUnlink])
+                            newState.artworkInfoData[fileToUnlink].seeAlso = newState.artworkInfoData[fileToUnlink].seeAlso.filter(fileName => fileName !== fileToDelete.fileName)
+                            console.log(newState.artworkInfoData[fileToUnlink].seeAlso)
+    
+                            this.fileDataMethods.updateArtworkInfo(newState.artworkInfoData[fileToUnlink])
+                            .then(res => {
+                                progress++
+                                console.log(`${progress} / ${progressLength}`)
+                                if(progress === progressLength){
+                                    resolve()
                                 }
-                                )
+                            })
+                            .catch(rej => {
+                                console.log("ERROR")
+                                reject()
+                            })
                         })
-                        .catch(err => {
-                            console.log(err)})
                     })
-                    .catch(err => console.log(err))
-            })
+                }
+
+
+                unlinkSeeAlso()
+                    .then(res => {
+                            //delete from mongo
+                            axios.delete(`/api/artworkInfo/delete/${fileName}`)
+                                .then(res => {
+                                    //delete image files from server
+                                    axios.delete(`/deleteImage/delete/${fileName}`, paths)
+                                    //remove from state
+                                    .then(res => {
+                                        let relatedArtwork = {...this.state.relatedArtwork}
+                                        delete relatedArtwork[artworkFamily].files[fileName]
+                                        const fileIds = relatedArtwork[artworkFamily].column.fileIds
+                                        let newFileIds = fileIds.filter(name => name !== fileName)
+                                        relatedArtwork[artworkFamily].column.fileIds = newFileIds
+                                        let artworkOnDisplay = {...this.state.artworkOnDisplay}
+                                        delete artworkOnDisplay[fileName]
+                                        let artworkInfoData = newState.artworkInfoData
+                                        delete artworkInfoData[fileName]
+                                        this.setState({relatedArtwork, artworkInfoData, artworkOnDisplay}
+                                            , () => {
+                                                res.modalMessage = "File and its DB record deleted"
+                                                resolve(res)
+                                            }
+                                            )
+                                    })
+                                    .catch(err => {
+                                        console.log(err)})
+                                })
+                                .catch(err => console.log(err))
+                        })
+                    })
+                    .catch(rej => console.log("ERROR"))
         },
         serverFileToState: (file) => {
             return new Promise((resolve, reject) => {
@@ -1201,9 +1256,19 @@ export class Provider extends React.Component{
         addFileToState: (e) => {
 
             return new Promise((resolve, reject) => {
+
+
                 const fileInput = e.target.files
                 const fileCount = fileInput.length
                 let filename = null
+
+                let modalState = {...this.state}
+                modalState.modal.showModal = true
+                modalState.modal.parentModal = true
+                modalState.modal.blockClose = true
+                let messageText = fileCount > 1 ? "Fetching files..." : "Fetching file..."
+                modalState.modal.modalMessage = this.loadingMessage(messageText)
+                this.setState(modalState)
     
                 let obj = {
                     files: {},
@@ -1221,37 +1286,43 @@ export class Provider extends React.Component{
 
                         const fileList = Array.from(fileInput)
                         let filteredList = []
+                        //fail cases
                         fileList.forEach(file => {
+                            console.log("file__________________________________________________")
+                            console.log(file)
                             if(this.state.fileData.column.fileIds.includes(file.name)){
-                                console.log("error")
-                                messages = {...messages, [file.name]: `Fail (already selected)`}
+                                messages = {...messages, [file.name]: {message:`Fail (already selected)`, type: "fail"}}
                             }
                             else if(this.state.serverFileDir.includes(file.name)){
-                                console.log("error")
-                                messages = {...messages, [file.name]: `Fail (already uploaded)`}
+                                messages = {...messages, [file.name]: {message:`Fail (already uploaded)`, type: "fail"}}
                             }
                             else if(file.name.includes(" ") || file.name.includes("/")){
-                                console.log("error")
-                               messages = {...messages, [file.name]: "Fail (File name cannot contain spaces or '/')"}
+                               messages = {...messages, [file.name]: {message: "Fail (File name cannot contain spaces or '/')", type: "fail"}}
                             }
                             else if(file.type.match("application/pdf")){
                                 console.log("error")
-                                messages = {...messages, [file.name]: 'Fail (PDF not supported yet)'}
+                                messages = {...messages, [file.name]: {message: 'Fail (PDF not supported yet)', type: "fail"}}
+                            }
+                            else if(file.type.indexOf("image")){
+                                console.log("error")
+                                messages = {...messages, [file.name]: {message: 'Fail (only image files are supported)', type: "fail"}}
                             }
                             else{
                                 filteredList = [...filteredList, file]
                             }
                         })
 
-                        if(filteredList.length < 1){
+                        if(!filteredList.length > 0){
                             let modalMessages = Object.keys(messages).map(fileName => {
-                                return <div key={`fileUpload-${fileName}`}>
-                                            <em>{fileName}</em>
-                                            <p>{messages[fileName]}</p>
+                                return <div key={`fileUpload-${fileName}`} className={"fileUploadMessage"}>
+                                            <span>{fileName}: </span> <span className={"fail"}>{messages[fileName].message}</span>
                                         </div>
                             })
                             document.getElementById("uploadFileInput").value = ""
-                            reject(modalMessages)
+                            modalState = {...this.state}
+                            modalState.modal.blockClose = false
+                            modalState.modal.modalMessage = modalMessages
+                            this.setState(modalState, () => reject())
                         }
                         
                         filteredList.forEach((file, index) => {
@@ -1265,54 +1336,62 @@ export class Provider extends React.Component{
                                     image.onload = () => {
                                         let naturalSize = {naturalHeight: image.naturalHeight, naturalWidth: image.naturalWidth}
 
-                                        obj.files[file.name] = {                    
-                                            preview: reader.result,
-                                            file: fileInput[index],
-                                            fileName: file.name, 
-                                            fileType: file.type,
-                                            familyDisplayIndex: null,
-                                            src: `uploads/${file.name}`,
-                                            themes: [],
-                                            seeAlso: [],
-                                            category: {"studio": {"misc": []}},
-                                            displayTriggers: {"category": [], "subcategory": [], "listitems": []},
-                                            artworkFamily: "none",
-                                            naturalSize
-                                        }    
-        
-                                        newState = {
-                                            ...this.state, 
-                                            fileData: {
-                                                ...this.state.fileData,
-                                                files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
-                                                column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
-                                            },
-                                            relatedArtwork: {
-                                                ...this.state.relatedArtwork,
-                                                "none": {
-                                                    ...this.state.relatedArtwork.none,
-                                                    files: {...newState.relatedArtwork.none.files, [file.name]: obj.files[file.name]},
-                                                    column: {...newState.relatedArtwork.none.column, fileIds: [...newState.relatedArtwork.none.column.fileIds, file.name]}
+                                        modalState = {...this.state}
+                                        modalState.modal.blockClose = false
+                                        modalState.modal.modalMessage = this.loadingMessage(`Parsing ${file.name}`)
+                                        this.setState(modalState, () => {
+                                            obj.files[file.name] = {                    
+                                                preview: reader.result,
+                                                file: fileInput[index],
+                                                fileName: file.name, 
+                                                fileType: file.type,
+                                                familyDisplayIndex: null,
+                                                src: `uploads/${file.name}`,
+                                                themes: [],
+                                                seeAlso: [],
+                                                category: {"studio": {"misc": []}},
+                                                displayTriggers: {"category": [], "subcategory": [], "listitems": []},
+                                                artworkFamily: "none",
+                                                naturalSize
+                                            }    
+            
+                                            newState = {
+                                                ...this.state, 
+                                                fileData: {
+                                                    ...this.state.fileData,
+                                                    files: {...newState.fileData.files, [file.name]: obj.files[file.name]},
+                                                    column: {...newState.fileData.column, fileIds: [...newState.fileData.column.fileIds, file.name]}
+                                                },
+                                                relatedArtwork: {
+                                                    ...this.state.relatedArtwork,
+                                                    "none": {
+                                                        ...this.state.relatedArtwork.none,
+                                                        files: {...newState.relatedArtwork.none.files, [file.name]: obj.files[file.name]},
+                                                        column: {...newState.relatedArtwork.none.column, fileIds: [...newState.relatedArtwork.none.column.fileIds, file.name]}
+                                                    }
                                                 }
+                                            } 
+    
+                                            newState.artworkInfoData = {...newState.artworkInfoData, [file.name]: obj.files[file.name]}
+                                            messages =  {...messages, [file.name]: {message: "Success", type: "success"}}
+                                            objCounter += 1    
+                                            console.log("objCounter")
+                                            console.log(objCounter)
+                                            if(objCounter === filteredList.length){
+                                                console.log("objCounter === fileCount")
+                                                let modalMessages = Object.keys(messages).map(fileName => {
+                                                    return <div key={`fileUpload-${fileName}`} className={"fileUploadMessage"}>
+                                                                <span>{fileName}: </span><span className={`${messages[fileName].type}`}>{messages[fileName].message}</span>
+                                                            </div>
+                                                })
+                                                modalState = {...this.state}
+                                                modalState.modal.blockClose = false
+                                                modalState.modal.modalMessage = modalMessages
+                                                this.setState(modalState, () => resolve())
+                                                // resolve(messages)
                                             }
-                                        } 
+                                        }) 
 
-                                        newState.artworkInfoData = {...newState.artworkInfoData, [file.name]: obj.files[file.name]}
-                                        messages =  {...messages, [file.name]: "Success"}
-                                        objCounter += 1    
-                                        console.log("objCounter")
-                                        console.log(objCounter)
-                                        if(objCounter === filteredList.length){
-                                            console.log("objCounter === fileCount")
-                                            let modalMessages = Object.keys(messages).map(fileName => {
-                                                return <div key={`fileUpload-${fileName}`}>
-                                                            <strong>{fileName}:</strong>
-                                                            <p className="subtitle">{messages[fileName]}</p>
-                                                        </div>
-                                            })
-                                            resolve(modalMessages)
-                                            // resolve(messages)
-                                        }
                                     }
                             }       
                             
@@ -1333,27 +1412,39 @@ export class Provider extends React.Component{
             return new Promise((resolve, reject) => {
                 const fileData = this.state.fileData.files
     
+                let modalState = {...this.state}
+                modalState.modal.showModal = true
+                modalState.modal.parentModal = true
+                modalState.modal.blockClose = true
+                modalState.modal.modalMessage = this.loadingMessage(`Uploading ${fileName} to server`)
+                this.setState(modalState)
                 const fd = new FormData();
                 fd.append('artworkImage', fileData[fileName].file, fileData[fileName].artwrokTitle || fileData[fileName].fileName)
-    
-                axios.post('/api/artworkInfo/imageUpload', fd)
-                    .then(res => {
-                        console.log("og image uploaded")
-                        axios.post(`/resize/${fileName}`)
-                        .then(res => { 
-                            this.readImageDir()
+                    axios.post('/api/artworkInfo/imageUpload', fd)
+                        .then(res => {
+                            console.log("og image uploaded")
+                            axios.post(`/resize/${fileName}`)
+                            .then(res => { 
+                                this.readImageDir()
                                 .then(res => {
-                                    return resolve("uploads folder successfully read")
-                                })
-                        })
-                        .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
-                    })
-            })
+                                    console.log("read image dir res")
+                                    console.log(res)
+                                    // popImage.then(res => resolve())
 
-            //     if(this.state.serverFileDir.includes(fileName)){
-            //         resolve()
-            //     }
-            // })
+                                    modalState.modal.blockClose = false
+                                    modalState.modal.modalMessage = "Image Uploaded"
+                                    this.setState(modalState, () => resolve())
+
+                                    // resolve()
+                                })
+                                .catch(err => {
+                                    console.log(err)
+                                    reject()
+                                })
+                            })
+                            .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
+                        })
+                })
         },
         //Removes selected file from state and thus DOM
         removeFile: (fileName, familyName) => {
@@ -1464,7 +1555,8 @@ export class Provider extends React.Component{
                             console.log(res.data[0].familyDisplayIndex)
                             if(res.data[0].familyDisplayIndex === currentFamilyDisplayIndex){
                                 console.log("fam index not changed")
-                                const fileData = this.state.fileData.files[file.fileName]
+                                const fileData = file
+                                // const fileData = this.state.fileData.files[file.fileName]
                                 this.fileDataMethods.relateSeeAlso(file)
                                 .then(res => { 
                                     axios.put(`/api/artworkInfo/update/${file.fileName}`, fileData)
@@ -1630,8 +1722,8 @@ export class Provider extends React.Component{
                                     .then( res => { 
                                             this.fileDataMethods.uploadFile(file.fileName)
                                                 .then(res => {
-                                                    let newState = {...this.state}
-                                                    delete newState.fileData.files[file.fileName]
+                                                    // let newState = {...this.state}
+                                                    // delete newState.fileData.files[file.fileName]
                                                     resolve("file uploaded")
                                                 })
                                                 .catch(err => {
@@ -2314,21 +2406,6 @@ export class Provider extends React.Component{
                                 relatedArtwork[obj.fileName] = obj
                             }
                         })
-                    
-                        //paste all properties of this file object unto relatedArtwork object
-                        // Object.keys(obj).forEach(property => {
-                        //     // console.log(obj.fileName)
-                        //     if(filesData.indexOf(obj.fileName) > -1 ){
-                        //         relatedArtwork = {
-                        //             ...relatedArtwork,
-                        //                 [obj.fileName]: {
-                        //                     ...relatedArtwork[obj.fileName],
-                        //                     [property]: obj[property]
-                        //                 }
-                        //             }
-                        //     }
-                        //     })
-                        // })        
                         let fileIds = Object.keys(relatedArtwork).map(obj => null)
                         Object.keys(relatedArtwork).forEach(fileName => {
                             if(relatedArtwork[fileName].familyDisplayIndex < 0){
@@ -2475,8 +2552,6 @@ export class Provider extends React.Component{
                         })
                     })
     
-                    let artworkOnDisplay = this.state.artworkOnDisplay
-    
                     let years = []
                     let locations = []
                     let artworkByYear = {}
@@ -2511,8 +2586,8 @@ export class Provider extends React.Component{
                     const yearLocOnDisplay = {years: artworkByYear, locations: artworkByLocation}
     
                     newState.yearLocation = {years, locations, "visible": yearLocOnDisplay, "all": yearLocOnDisplay}
-                    newState.artworkOnDisplay = artworkOnDisplay
-                    // newState.artworkOnDisplay = this.state.artworkOnDisplay
+
+                    newState.artworkOnDisplay = {...this.state.artworkOnDisplay}
                     newState.visibleArtwork = onDisplay
                     newState.themesOnDisplay = artworkByTheme
                     resolve()
@@ -2524,136 +2599,204 @@ export class Provider extends React.Component{
                 })
         })
     
-        serverFiles()
-        .then(res => {
-            Promise.all([
-            //   serverFiles,
-              Categories(res.data), 
-              ArtworkInfo, 
-              // Themes, 
-            ])
+        return new Promise((resolve, reject) => {
+            serverFiles()
             .then(res => {
-                const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
-                axios.post(`/staticState`, newStaticState)
-                    .then(res => { 
-                        console.log("file writen")
-                        console.log(res)
-                    })
-                    .catch(err => {
-                        console.log("write staticstate file error")
-                        console.log(err)
-                    })
+                Promise.all([
+                //   serverFiles,
+                  Categories(res.data), 
+                  ArtworkInfo, 
+                  // Themes, 
+                ])
+                .then(res => {
+                    const newStaticStateJSON = JSON.stringify(newState)
+                    const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
+                    console.log("_____________________________________________")
+                    const reqBody = {"JSON": newStaticStateJSON, "jsImport": newStaticState}
+                    console.log(reqBody)
+                    axios.post(`/staticState`, reqBody)
+                        .then(res => { 
+                            console.log("file writen")
+                            resolve()
+                        })
+                        .catch(err => {
+                            console.log("write staticstate file error")
+                            console.log(err)
+                            reject()
+                        })
+                })
+                .catch(err => {
+                      console.log("promise all err")
+                      console.log(err)
+                      reject()
+                })
             })
             .catch(err => {
-                  console.log("promise all err")
-                  console.log(err)
+                console.log("server files runs err")
+                console.log(err)
+                reject()
             })
-            // .then(res => {
-            //     console.log("Promis all finished")
-            //     console.log(newState)
-    
-            // })
-            // .catch(err => {
-            //     console.log("Promis all ERR")
-            //     console.log(err)
-            // })
-        })
-        .catch(err => {
-            console.log("server files runs err")
-            console.log(err)
         })
       
 
+    }
+    this.buildProd = () => {
+        return new Promise((resolve, reject) => {
+            axios.get('/build-prod')
+            .then(res => {
+                console.log("production build created")
+                resolve("production build created")
+            })
+            .catch(err => {
+                console.log("build failed")
+                reject("build failed")
+            })
+        })
+    }
+    this.toggleModal = () => {
+        let modal = {...this.state.modal}
+        modal.showModal = false
+        modal.parentModal = false
+        modal.modalMessage = null
+        modal.progress = null
+        this.setState({modal})
+    }
+    this.loadingMessage = (MessageText) => {
+        return <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center", marginBottom: "15px"}}>
+                    <Spinner animation="border" variant="success" />
+                    <span style={{marginLeft: "20px"}}>{MessageText}</span>
+                </div>
     }
 
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
-            console.log('backend provider mount')
-            let newState = {...this.state}
+        console.log('backend provider mount')
+        let newState = {...this.state}
 
-            this.setState({showModal: true})
-
-            let Themes = new Promise((resolve, rej) => {
-                axios.get('/api/themes')
-                    .then( res => {
-                    newState.themesData = res.data.list
-                    resolve()
-                    })
-            }) 
-            
-            let FamilyList = new Promise ((resolve, rej) => {
-                axios.get('/api/familySetup')
-                    .then(res => {
-                        let familyList = Object.keys(res.data).map(obj => {
-                            return res.data[obj].artworkFamily
-                        })
-                        newState.artworkFamilyList = familyList
-                        resolve()
-                    })
-            })    
-
-            let Categories = new Promise ((resolve, rej) => {
-                FamilyList.then(res => {
-                    axios.get('/api/categories')
-                        .then(res => {
-
-                                let categoryNames = Object.values(res.data).map(obj => obj.category)
-                                let categoryObj = {}
-                                categoryNames.forEach(categoryName => {
-                                    const currentObj = res.data.find(item => item.category === categoryName)
-                                    return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
-                                })
-
-                            newState.categoriesData = res.data
-                            newState.categoriesOptionList = {}
-                            newState.categoriesOptionList.data = categoryObj
-
-                            newState.artworkFamilyList.forEach(familyName => {
-                                this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => {
-                                    newState.relatedArtwork[familyName] = res
-                                }
-                                )
-                            })
-                            resolve()
-                        })
-                        .catch(err => {
-                        })
+        let Themes = new Promise((resolve, rej) => {
+            axios.get('/api/themes')
+                .then( res => {
+                newState.themesData = res.data.list
+                resolve()
                 })
-            })
-                
-            let ArtworkInfo = new Promise((resolve, rej) => {
-                console.log("artwork info gather runs")
-                this.familySetupMethods.getArtworkInfo()
-                    .then(res => {
-                        console.log(res)
-                        newState.artworkInfoData = res
-                        newState.artworkOnDisplay = res
-                        resolve()
-                    })
-            }) 
-
-            let ServerFiles = new Promise((resolve, rej) => {
-                axios.get('/fetchImages')
-                    .then(res => {
-                        const serverFileDir = res.data.map(name => {
-                            return name.replace("-thumbnail", "")
-                        })
-                        newState.serverFileDir = serverFileDir
-                        // newState.serverFileDir = res.data; 
-                        resolve()
-                    })
-            }) 
-
-            // let RenderAllFiles = this.familySetupMethods.renderAllFiles(this.state.familySetupData.seeAlso)
-
-            Promise.all([Categories, ArtworkInfo, Themes, ServerFiles])
+        }) 
+        
+        let FamilyList = new Promise ((resolve, rej) => {
+            axios.get('/api/familySetup')
                 .then(res => {
-                    newState.showModal = false
-                    newState.staticState = staticState
-                    this.setState(newState)
+                    let familyList = Object.keys(res.data).map(obj => {
+                        return res.data[obj].artworkFamily
+                    })
+                    newState.artworkFamilyList = familyList
+                    resolve()
                 })
-                .catch(err => {console.log(err); document.location.reload(true)})
+        })    
+
+        let Categories = new Promise ((resolve, rej) => {
+            FamilyList.then(res => {
+                axios.get('/api/categories')
+                    .then(res => {
+
+                            let categoryNames = Object.values(res.data).map(obj => obj.category)
+                            let categoryObj = {}
+                            categoryNames.forEach(categoryName => {
+                                const currentObj = res.data.find(item => item.category === categoryName)
+                                return categoryObj = {...categoryObj, [categoryName]: Object.keys(currentObj.subcategory)}
+                            })
+
+                        newState.categoriesData = res.data
+                        newState.categoriesOptionList = {}
+                        newState.categoriesOptionList.data = categoryObj
+
+                        newState.artworkFamilyList.forEach(familyName => {
+                            this.familySetupMethods.getRelatedArtwork(familyName, newState).then(res => {
+                                newState.relatedArtwork[familyName] = res
+                            }
+                            )
+                        })
+                        resolve()
+                    })
+                    .catch(err => {
+                    })
+            })
+        })
+            
+        let ArtworkInfo = new Promise((resolve, rej) => {
+            console.log("artwork info gather runs")
+            this.familySetupMethods.getArtworkInfo()
+                .then(res => {
+                    console.log(res)
+                    newState.artworkInfoData = res
+                    resolve()
+                })
+        }) 
+
+        let ServerFiles = new Promise((resolve, rej) => {
+            axios.get('/fetchImages')
+                .then(res => {
+                    const serverFileDir = res.data.map(name => {
+                        return name.replace("-thumbnail", "")
+                    })
+                    newState.serverFileDir = serverFileDir
+                    // newState.serverFileDir = res.data; 
+                    resolve()
+                })
+        }) 
+
+        let stateCopy = {...this.state}
+        stateCopy.modal.showModal = true
+        stateCopy.modal.parentModal = true
+        stateCopy.modal.blockClose = true
+        stateCopy.modal.modalMessage = this.loadingMessage("Initializing app...")
+
+        function allProgress(proms, promNames, progress_cb) {
+            let d = 0;
+            let lastPromName = null
+            progress_cb(0, lastPromName);
+            for (const p of proms) {
+                p.then(()=> {    
+                    lastPromName = promNames[d]
+                //   console.log(`last prom name: ${lastPromName}`)
+                d ++;
+
+                progress_cb( (d * 100) / proms.length, lastPromName );
+                });
+            }
+            return Promise.all(proms)              
+            }
+
+        this.setState(stateCopy, () => {
+            console.log("STATE COPY FORE MODAL"); console.log(this.state)
+            
+                allProgress([Categories, ArtworkInfo, Themes, ServerFiles],
+                [`Categories`, `ArtworkInfo`, `Themes`, `ServerFiles`],
+                    (p, lastPromName) => {
+
+                        let progress = p.toFixed(2) - 10 
+                        console.log("progress")
+                        console.log(progress)
+                        if(progress < 0){progress = 0}
+                        let messageText = `Loading "${lastPromName}"`
+                        if(!lastPromName){messageText = `Initializing app...`}
+                        const modalMessage = this.loadingMessage(messageText)
+
+                        this.setState({modal: {...this.state.modal, progress, modalMessage}})
+                    }
+                )
+                .then(res => {
+                    axios.get('/staticState').then(res => {
+                        newState.staticState = res.data
+                        newState.modal.modalMessage = "Data Loaded"
+                        newState.modal.progress = 100
+                        newState.modal.blockClose = false
+                        newState.artworkOnDisplay = res.data.artworkOnDisplay
+                        this.setState(newState)
+                    })
+                })
+                .catch(err => {console.log(err); 
+                });
+        })
     }
 
     render(){
@@ -2682,38 +2825,13 @@ export class Provider extends React.Component{
             addNew: this.addNew,
             deleteTheme: this.deleteTheme,
             staticState: this.staticState,
+            buildProd: this.buildProd,
             inputFamilyDescription: this.inputFamilyDescription,
-            setArtworkOnDisplay: this.setArtworkOnDisplay
+            setArtworkOnDisplay: this.setArtworkOnDisplay,
+            toggleModal: this.toggleModal
 
             } }>
         {this.props.children}
-
-        {/* <BootstrapModal 
-            showModal={this.state.showModal}
-            message={this.state.modalMessage}
-            onClose={() => {this.setState({showModal: false})}}
-            confirm={this.state.confirm || false}
-            confirmedAction={() => {
-            this.state.confirmedAction()
-                .then(res => {
-                this.setState({
-                    confirm: res.confirm,
-                    modalMessage: res.modalMessage
-                })
-                })
-                .catch(err => {
-                this.setState({
-                    confirm: err.confirm,
-                    modalMessage: err.modalMessage
-                })
-                })
-            }}
-        >
-            {this.state.progress ?
-            <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :
-            null
-            }
-        </BootstrapModal> */}
 
         </Context.Provider>
     )

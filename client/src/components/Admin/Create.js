@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { Context } from '../Provider';
-import { ProgressBar, Spinner } from 'react-bootstrap'
+import { ProgressBar, Spinner, Button } from 'react-bootstrap'
 
 import BootstrapModal from './components/BootstrapModal'
 import { Tabs, Tab } from 'react-bootstrap'
@@ -21,8 +21,11 @@ export default class Create extends Component{
   constructor(props){
     super(props);
     this.state = {
+      showModal: null,
+      modalMessage: null,
       submitButtons: null,
-      confirmedAction: null
+      confirmedAction: null,
+      blockClose: false
     }
   }
 
@@ -160,21 +163,24 @@ componentDidMount(){
                                 onChange={(e) => {
                                   const event = e
                                   this.context.addFileToState(event)
-                                  .then(res => this.setState({
-                                    modalMessage: res
-                                  }))
+                                  .then(res => {
+                                    // this.setState({
+                                    // modalMessage: res
+                                    // })
+                                  }
+                                  )
                                   .catch(err => {
-                                    this.setState({
-                                      modalMessage: err
-                                    })
+                                    // this.setState({
+                                    //   modalMessage: err
+                                    // })
                                   })
 
-                                  this.setState({
-                                    showModal: true,
-                                    modalMessage: "uploading File(-s)"
-                                  }, () => {
+                                  // this.setState({
+                                  //   showModal: true,
+                                  //   modalMessage: "Reading files"
+                                  // }, () => {
                                     
-                                  })
+                                  // })
                                   
                                   }} />
                                 <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
@@ -241,28 +247,81 @@ componentDidMount(){
                       </div>
                       </Tab>
                       <Tab eventKey="record_state" title="Write state">
-                        <button onClick={() => {
+                        <Button 
+                        variant="primary" 
+                        style={{margin: "10px"}}
+                        onClick={() => 
+                        {
                           this.setState({
                             showModal: true,
                             modalMessage: <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
                               <Spinner animation="border" variant="success" />
-                              <span style={{marginLeft: "20px"}}>Creating new database...</span>
+                              <span style={{marginLeft: "20px"}}>Overwriting static database...</span>
                               </div>
                           }, () => {
                             
                           })
                           this.context.staticState()
+                            .then(res => {
+                              let newState = {...this.state}
+                              newState.modalMessage = "Succes"
+                              this.setState(newState)
+                            })
+                            .catch(rej => {
+                              let newState = {...this.state}
+                              newState.modalMessage = "Error"
+                              this.setState(newState)
+                            })
                         }}>
                           WRITE NEW STAIC STATE
-                        </button>
+                        </Button>
+                        <br/>
+                        <Button 
+                        variant="success" 
+                        style={{margin: "10px"}}
+                        onClick={() => 
+                        {
+                          this.setState({
+                            showModal: true,
+                            modalMessage: <div style={{display: "flex", justifyContent: "flex-start", alignItems: "center"}}>
+                              <Spinner animation="border" variant="success" />
+                              <span style={{marginLeft: "20px"}}>Building production directory...</span>
+                              </div>
+                          }, () => {
+                            
+                          })
+                          this.context.buildProd()
+                            .then(res => {
+                              let newState = {...this.state}
+                              newState.modalMessage = "Success"
+                              this.setState(newState)
+                            })
+                            .catch(rej => {
+                              let newState = {...this.state}
+                              newState.modalMessage = rej
+                              this.setState(newState)
+                            })
+                        }}>
+                          Create production build
+                        </Button>
+                        <br/>
                         <UpdateAllArtworkInfo />
                       </Tab>
                     </Tabs>
                   </div>
                   <BootstrapModal 
-                  showModal={this.state.showModal || this.context.state.showModal}
-                  message={this.state.modalMessage}
-                  onClose={() => {this.setState({showModal: false})}}
+                  showModal={this.context.state.modal.showModal || this.state.showModal}
+                  message={this.context.state.modal.modalMessage || this.state.modalMessage}
+                  blockClose={this.context.state.modal.blockClose || this.state.blockClose}
+                  onClose={() => {
+                    if(this.context.state.modal.parentModal){
+                      console.log("parentModal: ON")
+                      this.context.state.modal.onClose()
+                      return
+                    }
+                    console.log("close modal from 'Create' ")
+                    this.setState({showModal: false})
+                  }}
                   confirm={this.state.confirm || false}
                   confirmedAction={() => {
                     this.state.confirmedAction()
@@ -282,6 +341,12 @@ componentDidMount(){
                 >
                   {this.state.progress ?
                     <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :
+                    this.context.state.modal.progress ? 
+                    <Fragment>
+                      <ProgressBar now={this.context.state.modal.progress ? this.context.state.modal.progress : 100} />
+                  <p>{this.context.state.modal.progress}%</p>
+                    </Fragment>
+                     :
                     null
                   }
               </BootstrapModal>

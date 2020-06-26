@@ -136,7 +136,7 @@ const Categories = (props) => {
                 })
             }
             return (
-            <div key={obj.category} className="list-group">
+            <div key={obj.category} className="list-group list-group-category">
                 <ul id={obj.category} className="list--category"> 
                     <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category) ? "themes-list--selected themes-list" : "themes-list"}>
                         {props.allowDelete ?                         

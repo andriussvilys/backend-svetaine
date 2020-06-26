@@ -44,7 +44,7 @@ export default class Admin extends React.Component{
                                 </li>
                                 {!auth.guest ? <li>
                                             <Link to="/admin/delete">
-                                                <Button variant="danger">
+                                                <Button disabled variant="danger">
                                                     Delete 
                                                 </Button>
                                             </Link>
