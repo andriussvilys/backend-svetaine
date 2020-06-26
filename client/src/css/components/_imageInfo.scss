@@ -6,11 +6,13 @@
 }
 .imageInfo--box{
     display: flex;
-    justify-content: space-between;
     position: relative;
     align-items: center;
     flex-wrap: wrap;
     padding: 5px 0;
+    flex-direction: column;
+    width: 100%;
+    align-items: baseline;
 }
 .imageInfo--box-displayMain{
     flex-direction: column;
@@ -70,7 +72,14 @@
     background-color: #c9eec9;
 }
 .themes-list--selected:hover{
-    background-color: #fdd5c2 !important;
+    background-color: #fdd5c2;
+    // background-color: #fdd5c2 !important;
+}
+.themes-list--selected:focus{
+    background-color: #c9eec9;
+}
+.themes-list:focus{
+    background-color: #f5fff5;
 }
 .themes-span{
     margin: 0 8px 0 0;

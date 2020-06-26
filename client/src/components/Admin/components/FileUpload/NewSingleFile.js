@@ -113,7 +113,6 @@ export default class NewSingleFile extends React.Component {
                         />
                     </Tab>
                     <Tab eventKey="familyInfo" title="Edit Artwork Family Info">
-                    <h3>{this.props.file.fileName}</h3>
                         <EditFamilyInfo 
                             context={this.props.context}
                             fileName={this.props.file.fileName}
@@ -148,7 +147,7 @@ export default class NewSingleFile extends React.Component {
             <BootstrapModal 
                 showModal={this.state.showModal}
                 message={this.state.modalMessage}
-                onClose={() => {this.setState({showModal: false})}}
+                onClose={() => {console.log("clicked on close"); this.setState({showModal: false})}}
             />
     
         </div>

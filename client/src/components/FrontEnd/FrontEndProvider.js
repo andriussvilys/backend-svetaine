@@ -1288,71 +1288,79 @@ export class Provider extends React.Component{
 
 }//END OF CONTSTRUCTOR
   componentDidMount(){
-        let newState = staticState
-        
-        
-        window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-        newState.mobile = this.toggleMobile()
-        newState.compoundFilters = false
-        newState.filters = {}
-        newState.filters.onDisplay = {
-          category: [],
-          subcategory: [],
-          listitems: [],
-          themes: [],
-          year: [],
-          location: []
-        }
-        newState.filters.allFilters = {
-          category: [],
-          subcategory: [],
-          listitems: [],
-          themes: [],
-          year: [],
-          location: []
-        }
-        newState.filters.empty = {
-          category: [],
-          subcategory: [],
-          listitems: [],
-          themes: [],
-          year: [],
-          location: []
-        }
-        const checkFilters = (artworkCollection, propName) => {
-          Object.keys(artworkCollection).forEach(fileName => {
-            const fileFilters = artworkCollection[fileName].displayTriggers
+        // let newState = staticState
+        console.log("GET STATIC STATE")
+        axios.get('/staticState')
+        .then(res => {
+          console.log(res)
+          let newState = {}
+          newState = res.data
 
-              Object.keys(fileFilters).forEach(filterName => {
-                if(typeof fileFilters[filterName] === "object"){
-                  if(fileFilters[filterName]){
-
-                    fileFilters[filterName].forEach(content => {
-                      if(newState.filters[propName][filterName].indexOf(content) < 0){
-                        newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
-                      }
-                    })
+          window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+          newState.mobile = this.toggleMobile()
+          newState.compoundFilters = false
+          newState.filters = {}
+          newState.filters.onDisplay = {
+            category: [],
+            subcategory: [],
+            listitems: [],
+            themes: [],
+            year: [],
+            location: []
+          }
+          newState.filters.allFilters = {
+            category: [],
+            subcategory: [],
+            listitems: [],
+            themes: [],
+            year: [],
+            location: []
+          }
+          newState.filters.empty = {
+            category: [],
+            subcategory: [],
+            listitems: [],
+            themes: [],
+            year: [],
+            location: []
+          }
+          const checkFilters = (artworkCollection, propName) => {
+            Object.keys(artworkCollection).forEach(fileName => {
+              const fileFilters = artworkCollection[fileName].displayTriggers
+  
+                Object.keys(fileFilters).forEach(filterName => {
+                  if(typeof fileFilters[filterName] === "object"){
+                    if(fileFilters[filterName]){
+  
+                      fileFilters[filterName].forEach(content => {
+                        if(newState.filters[propName][filterName].indexOf(content) < 0){
+                          newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
+                        }
+                      })
+                    }
+                    
                   }
-                  
-                }
-                else{
-                  if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
-                    if(fileFilters[filterName].length > 0){
-                      newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+                  else{
+                    if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
+                      if(fileFilters[filterName].length > 0){
+                        newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+                      }
                     }
                   }
-                }
-              })
-          })
-        }
-
-        checkFilters(newState.artworkOnDisplay, "onDisplay")
-        checkFilters(newState.visibleArtwork, "allFilters")
-
-        newState.initialOnDisplay = newState.artworkOnDisplay
-        newState.filters.initialOnDisplay = newState.filters.onDisplay
-
-        this.setState(newState)
+                })
+            })
+          }
+  
+          checkFilters(newState.artworkOnDisplay, "onDisplay")
+          checkFilters(newState.visibleArtwork, "allFilters")
+  
+          newState.initialOnDisplay = newState.artworkOnDisplay
+          newState.filters.initialOnDisplay = newState.filters.onDisplay
+  
+          this.setState(newState)
+        })
+        
+        
   }
 
     render(){

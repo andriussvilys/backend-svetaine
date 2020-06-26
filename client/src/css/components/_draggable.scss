@@ -5,6 +5,8 @@
 .draggable-container{
     // display: flex;
     border: 2px solid;
+    border-radius: 12px;
+    overflow: hidden;
     margin-bottom: 8px;
     background-color: rgb(194, 194, 194);
 }

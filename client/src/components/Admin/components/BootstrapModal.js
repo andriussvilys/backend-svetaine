@@ -45,10 +45,13 @@ export default class BootstrapModal extends Component {
                             Confirm
                     </Button> :
                     null  
-                    }
-                    <Button variant={this.props.confirm ? "danger" : "success"} onClick={ () => {this.props.onClose()}}>
-                        {this.props.confirm ? "Cancel" : "Okay"}
-                    </Button>
+                    }                 
+                        <Button 
+                        disabled={this.props.blockClose ? true : false} 
+                        variant={this.props.confirm ? "danger" : "success"} onClick={ () => {this.props.onClose()}}>
+                            {this.props.confirm ? "Cancel" : "Okay"}
+                        </Button>
+                        
                 </Modal.Footer>
 
             </Modal>

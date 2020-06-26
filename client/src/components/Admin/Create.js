@@ -21,8 +21,11 @@ export default class Create extends Component{
   constructor(props){
     super(props);
     this.state = {
+      showModal: null,
+      modalMessage: null,
       submitButtons: null,
-      confirmedAction: null
+      confirmedAction: null,
+      blockClose: false
     }
   }
 
@@ -160,21 +163,24 @@ componentDidMount(){
                                 onChange={(e) => {
                                   const event = e
                                   this.context.addFileToState(event)
-                                  .then(res => this.setState({
-                                    modalMessage: res
-                                  }))
+                                  .then(res => {
+                                    // this.setState({
+                                    // modalMessage: res
+                                    // })
+                                  }
+                                  )
                                   .catch(err => {
-                                    this.setState({
-                                      modalMessage: err
-                                    })
+                                    // this.setState({
+                                    //   modalMessage: err
+                                    // })
                                   })
 
-                                  this.setState({
-                                    showModal: true,
-                                    modalMessage: "uploading File(-s)"
-                                  }, () => {
+                                  // this.setState({
+                                  //   showModal: true,
+                                  //   modalMessage: "Reading files"
+                                  // }, () => {
                                     
-                                  })
+                                  // })
                                   
                                   }} />
                                 <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
@@ -304,9 +310,18 @@ componentDidMount(){
                     </Tabs>
                   </div>
                   <BootstrapModal 
-                  showModal={this.state.showModal || this.context.state.showModal}
-                  message={this.state.modalMessage}
-                  onClose={() => {this.setState({showModal: false})}}
+                  showModal={this.context.state.modal.showModal || this.state.showModal}
+                  message={this.context.state.modal.modalMessage || this.state.modalMessage}
+                  blockClose={this.context.state.modal.blockClose || this.state.blockClose}
+                  onClose={() => {
+                    if(this.context.state.modal.parentModal){
+                      console.log("parentModal: ON")
+                      this.context.state.modal.onClose()
+                      return
+                    }
+                    console.log("close modal from 'Create' ")
+                    this.setState({showModal: false})
+                  }}
                   confirm={this.state.confirm || false}
                   confirmedAction={() => {
                     this.state.confirmedAction()
@@ -326,6 +341,12 @@ componentDidMount(){
                 >
                   {this.state.progress ?
                     <ProgressBar now={this.state.progress ? this.state.progress : 100} /> :
+                    this.context.state.modal.progress ? 
+                    <Fragment>
+                      <ProgressBar now={this.context.state.modal.progress ? this.context.state.modal.progress : 100} />
+                  <p>{this.context.state.modal.progress}%</p>
+                    </Fragment>
+                     :
                     null
                   }
               </BootstrapModal>
