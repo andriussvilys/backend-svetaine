@@ -13,13 +13,11 @@ export default class MobileNav extends React.Component {
                 return
             }
             if(this.state.openTab === "Filters" && trigger !== "Filters"){
-                console.log("CLOSE FUNCTION")
                 if(document.getElementById("TagsMenu").classList.contains("show-menu")){
                     this.props.context.showMenu(e)
                 }
             }
             if(this.state.openTab === "About" && trigger !== "About"){
-                console.log("CLOSE FUNCTION")
                 this.props.context.closeEnlarge(e)
             }
             return
@@ -37,7 +35,7 @@ export default class MobileNav extends React.Component {
                     let newState = {...this.state}
                     newState.openTab = "Filters"
                     newState.closeTabMethod = this.props.context.showMenu
-                    this.setState({openTab: "Filters"}, () => {console.log(this.props.context.showMenu)})
+                    this.setState({openTab: "Filters"})
                 }}
                 >
                     <span>Filters</span>

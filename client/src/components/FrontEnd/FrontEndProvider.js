@@ -11,7 +11,8 @@ export class Provider extends React.Component{
     super(props);
   this.state = {
     info: {infoUp: false, toggleTags: false},
-    showAll: true
+    showAll: true,
+    
   }
 
   this.enlarge = {}
@@ -587,14 +588,6 @@ export class Provider extends React.Component{
           
           document.getElementById("TagsMenu").classList.add("show-menu")
         }
-        // const toggleImageViewerSize = () => {
-        //   let delay = 0
-        //   if(!images.classList.contains("explorer-view")){delay = 200}
-        //     setTimeout(() => {
-        //       images.classList.toggle("explorer-view")
-        //     }, delay)
-        // }
-        // return (toggleImageViewerSize())
       }
       //DESKTOP
       else{
@@ -732,9 +725,6 @@ export class Provider extends React.Component{
         this.animateEnlarge(nextPic, options)
     }
     this.countWidth = (file, containerHeight, naturalHeight, naturalWidth, mobile, options) => {
-
-      console.log("title content on countr width")
-      console.log(document.querySelector(".ArtworkInfo--descriptions").firstChild.firstChild.textContent)
       
       let tagsMenuWidth = document.getElementById("TagsMenu").offsetWidth
       const imageNavWidth = document.querySelector(".Navbar") ? document.querySelector(".Navbar").offsetWidth : 0
@@ -784,13 +774,27 @@ export class Provider extends React.Component{
 
       return {width: futureWidth, height: futureHeight}
     }
-    this.toggleExplorer = () => {
-      this.setState({showExplorer: !this.state.showExplorer}, () => {
-        const explorer = document.getElementById("imageSelect")
-        const container = document.getElementById("enlargeContainer")
-        // explorer.classList.toggle("explorer-view")
-        container.style.width = `${container.clientWidth - 120}px`
-      })
+    this.toggleExplorer = (options) => {
+      const container = document.getElementById("enlargeContainer")
+      const images = document.getElementById("images")
+
+      if(options && options.close){
+        console.log("CLOSE TAGS")
+        this.setState({showExplorer: false}, () => {
+          if(!this.state.mobile){
+            container.style.width = `${images.clientWidth + 120}px`
+          }
+        })
+        return
+      }
+      if(!this.state.showExplorer){
+        console.log("OPEN TAGS")
+        this.setState({showExplorer: true}, () => {
+          if(!this.state.mobile){
+            container.style.width = `${images.clientWidth - 120}px`
+          }
+        })
+      }
     }
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
@@ -830,25 +834,18 @@ export class Provider extends React.Component{
           else{rej("alraedy laoded")}
         })
 
-        backgroundLoad
+        let newState = options && options.state ? options.state : {...this.state}
+        newState.enlarge = enlarge
+        newState.enlarge.foreground = enlarge.background
+        newState.enlarge.open = true
+
+
+        this.setState(newState, () => {
+          backgroundLoad
           .then(res => {
             container.classList.add("enlarge-scroll-left")
-            console.log(res)
             let futureSize = null
-
-            console.log("CURRENT ENLARE")
-            console.log(enlarge)
-
-
-            let newState = options && options.state ? options.state : {...this.state}
-            console.log(newState)
-            newState.enlarge = enlarge
-            newState.enlarge.foreground = enlarge.background
-            newState.enlarge.open = true
-
-
-            this.setState(newState, () => {
-              console.log("newstate set")
+            
               //COUNT FUTURE SIZES
               //DESKTOP
               if(!this.state.mobile){
@@ -909,20 +906,14 @@ export class Provider extends React.Component{
                 }, scrollToDelay);
   
               }
-              else{
-                document.getElementById("ImageSelect-info").scrollTo({left:0})
-              }
-              // setTimeout(() => {
-              //   this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-              //   // pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
-              //   // pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo", vertical: true})
-              // }, 200);
               return
-            })
           })
           .catch(rej => {
             return
           })
+        })
+
+
     }
     this.scrollToHorizontal = (id, parent_id, options) => {
       // let scrollTo = {}
@@ -991,10 +982,6 @@ export class Provider extends React.Component{
 
         const recordedSequence = this.state.relatedArtwork[familyName].column.fileIds
         const familyIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(currentImage)
-
-        // let newFamilySequence_start = recordedSequence.slice(0, familyIndex)
-        // let newFamilySequence_end = recordedSequence.slice(familyIndex)
-        // let newFamilySequence = [...newFamilySequence_end, ...newFamilySequence_start]
         let newFamilySequence = recordedSequence
 
 
@@ -1006,15 +993,6 @@ export class Provider extends React.Component{
           "commonIndex": commonIndex
         }
       }
-
-      // 
-      // 
-
-      // 
-      // 
-
-
-
       if(!newState.enlarge){
         newState.enlarge = {}
       }
@@ -1047,39 +1025,28 @@ export class Provider extends React.Component{
       }
 
       let newState = {...this.state}
-      const info = document.getElementById("ArtworkInfo")
+      newState.info.infoUp = !newState.info.infoUp
+      this.setState(newState)
+      // if(info.classList.contains("info-up")){
+      //   // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
+      //   info.classList.remove("info-up")
+      //   // info.style.transform = "translateY(0)"
+      //   newState.info.infoUp = false
+      //   this.setState(newState)
+      //   return
+      // }
+      // else{
+      //   info.classList.add("info-up")
+      //   // info.style.transform = `translateY(-100%)`
+      //   // info.style.transform = `translateY(-${info.clientHeight}px)`
+      //   newState.info.infoUp = true
+      //   this.setState(newState)
+      // }
+      // if(info.classList.contains("dragged")){
+      //   info.classList.remove("dragged")
+      // }
 
-      if(options && options.toggleTags){
-        newState.info.toggleTags = true
-        this.setState(newState)
-        return
-      }
-      if(document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
-        document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
-        newState.info.toggleTags = false
-        this.setState(newState)
-        return
-      }
-      if(info.classList.contains("info-up")){
-        // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
-        info.classList.remove("info-up")
-        // info.style.transform = "translateY(0)"
-        newState.info.infoUp = false
-        this.setState(newState)
-        return
-      }
-      else{
-        info.classList.add("info-up")
-        // info.style.transform = `translateY(-100%)`
-        // info.style.transform = `translateY(-${info.clientHeight}px)`
-        newState.info.infoUp = true
-        this.setState(newState)
-      }
-      if(info.classList.contains("dragged")){
-        info.classList.remove("dragged")
-      }
-
-      // info.classList.toggle("info-up")
+      // // info.classList.toggle("info-up")
       return
     }
     this.toggleMobile = () => {

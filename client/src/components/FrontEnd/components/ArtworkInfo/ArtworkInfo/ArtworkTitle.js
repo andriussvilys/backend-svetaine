@@ -25,24 +25,6 @@ export default class ArtworkTitle extends React.Component{
         }
         this.artworkTitle = () => {
     
-            const artworkFamily = () => {
-                if(this.props.file.background.artworkFamily !== "none")
-                    return <div 
-                            className={
-                                this.props.file.background.artworkTitle ? 
-                                "ArtworkInfo_artworkFamily" :
-                                "ArtworkInfo_artworkTitle"
-                                }
-                            >        
-                                <div>
-                                    <span className={"ArtworkInfo_artworkTitle_secondary"}>part of </span>
-                                    {/* {!this.props.file.background.artworkTitle ? null : <span>part of </span> } */}
-                                    <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{this.props.file.background.artworkFamily}</em>
-                                </div>
-                            </div>
-                // }
-            }
-    
             const artworkTitle = () => {
 
                 let artworkFamily = this.props.file.background.artworkFamily
@@ -95,8 +77,8 @@ export default class ArtworkTitle extends React.Component{
                         />
                         <div className={"ArtworkInfo--descriptions"}>
 
-                                {artworkTitle()}
-                                {this.locationAndYear()}
+                            {artworkTitle()}
+                            {this.locationAndYear()}
 
                         </div>
                     </div>
@@ -104,9 +86,6 @@ export default class ArtworkTitle extends React.Component{
         }
     }
     render(){
-        console.log("aARTWORK TITLE")
-        console.log("component did mount")
-        console.log(this.props)
         return(
                 <Fragment>
                     {this.artworkTitle()}

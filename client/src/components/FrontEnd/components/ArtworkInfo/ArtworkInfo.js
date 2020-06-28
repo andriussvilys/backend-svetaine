@@ -191,7 +191,6 @@ export default class ArtworkInfo extends React.Component{
               <img
                 alt="info icon"
                 src="icons/svg/info.svg"
-                // onClick={(e) => this.props.context.showInfo(e)}
               />
             </div>
           </div>
@@ -223,13 +222,26 @@ export default class ArtworkInfo extends React.Component{
       return height + 40;
     };
     this.showInfo = (e) => {
-      if(this.state.tagsTrigger){
-        this.setState({tagsTrigger: false})
+      if(this.props.context.state.mobile){
+        if(this.props.context.state.showExplorer || this.state.tagsTrigger){
+          console.log("mobile close")
+          this.props.context.toggleExplorer({close: true})
+          this.setState({tagsTrigger: false})
+          return
+        }
+        else{
+          this.setState({infoUp: !this.state.infoUp}, () => {
+            this.props.context.showInfo(e)
+          })
+        }
       }
       else{
-        this.setState({infoUp: !this.state.infoUp})
+        // this.props.context.toggleExplorer({close: true})
+        this.setState({infoUp: !this.state.infoUp}, () => {
+          this.props.context.showInfo(e)
+        })
+        return
       }
-      this.props.context.showInfo(e)
     };
     this.secondaryInfo = () => {
       return <Fragment>
@@ -244,12 +256,15 @@ export default class ArtworkInfo extends React.Component{
               file={this.props.file.foreground} 
               context={this.props.context} 
               tagsTrigger={() => {
-                if(this.props.context.state.mobile){
-                  this.setState({tagsTrigger: true})
-                }
-                else{return}
-              }
-              }
+                this.setState({tagsTrigger: true}, () => {
+                  this.props.context.toggleExplorer()
+                })
+              }}
+              onClose={() => {
+                this.setState({tagsTrigger: false}, () => {
+                  this.props.context.toggleExplorer({close: true})
+                })
+              }}
             />
       </Fragment>
     }
@@ -275,49 +290,10 @@ export default class ArtworkInfo extends React.Component{
   }
 
   render(){
-    // return this.props.file && this.props.file.foreground ? (
-    //   <div
-    //     className={"ArtworkInfo-container"}
-    //     id="ArtworkInfo-container"
-    //   >
-    //       <ArtworkTitle 
-    //         file={this.props.file || {foreground: null}} 
-    //         context={this.props.context} 
-    //         showInfo={
-    //           (e) => this.showInfo(e)
-    //         }
-    //         infoUp={this.state.infoUp}
-    //       />
-    //       <div className=""
-    //                 key={"ArtworkInfo-wrapper"}
-    //                 className="ArtworkInfo-wrapper secondaryInfo"
-    //                 id="ArtworkInfo"
-    //       >
-    //         {this.props.file && this.props.file.foreground ? 
-    //           this.secondaryInfo() : null
-    //         }
-    //         {this.props.context.state.mobile ? 
-    //           <ImageSelect
-    //               customClass={"side-scroll"}
-    //               customId="ImageSelect-info"
-    //               data={this.props.context.state.artworkInfoData}
-    //               mobile={this.props.context.state.mobile}
-    //               state={this.props.context.state}
-    //               context={this.props.context}
-    //               methods={{
-    //                 enlarge: this.props.context.enlarge,
-    //                 loadEnlarge: this.props.context.loadEnlarge,
-    //                 toggleMobile: this.props.context.toggleMobile,
-    //                 lazyLoad: this.props.context.lazyLoadImages,
-    //               }}
-    //             /> : null
-    //           }
-    //       </div>
-    //     </div>
-    // ) : null;
     return(
       <div
-        className={"ArtworkInfo-container"}
+        // className={"ArtworkInfo-container"}
+        className={`ArtworkInfo-container ${this.props.context.state.mobile && this.state.tagsTrigger ? "ArtworkInfo-toggleTags" : ""}`}
         id="ArtworkInfo-container"
       >
           <ArtworkTitle 
@@ -330,7 +306,7 @@ export default class ArtworkInfo extends React.Component{
           />
           <div className=""
                     key={"ArtworkInfo-wrapper"}
-                    className="ArtworkInfo-wrapper secondaryInfo"
+                    className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
                     id="ArtworkInfo"
           >
             {this.props.file && this.props.file.background ? 

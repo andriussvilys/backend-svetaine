@@ -9,9 +9,9 @@ const Tags = (props) => {
         const artworkOnDisplay = props.context.state.artworkOnDisplay
         let enlargeImg = props.file
         let scrollToId = props.file.fileName
-        if(!props.context.state.mobile && !props.context.state.showExplorer){
-            props.context.toggleExplorer()
-        }
+        // if(!props.context.state.showExplorer){
+        //     props.context.toggleExplorer()
+        // }
         if(!Object.keys(artworkOnDisplay).includes(scrollToId)){
             let newImg = null
             Object.keys(artworkOnDisplay).forEach(objName => {
@@ -23,12 +23,12 @@ const Tags = (props) => {
             scrollToId = newImg
         }
         let infoUpDelay = 0
-        if(props.context.state.mobile){
-            if(!document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
-                infoUpDelay = 200;
-                document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
-            }
-        }
+        // if(props.context.state.mobile){
+        //     if(!document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
+        //         infoUpDelay = 200;
+        //         document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
+        //     }
+        // }
         setTimeout(() => {
             filterFunc
                 .then(res => {
@@ -51,7 +51,7 @@ const Tags = (props) => {
                 }
             })
             DOMthemes = themes.map((tag, index) => {
-                return <div 
+                return <button 
                 key={`tag-${tag}${index}`}
                 className="Tags-item_container"
                 onClick={(e) => {e.stopPropagation(); 
@@ -61,8 +61,8 @@ const Tags = (props) => {
                     animateFilter(tag.onClick(e, tag.title, true))
                 }}
                 >
-                    <p className="Tags-item_text">{tag.title}</p>
-                </div> 
+                    <span className="Tags-item_text">{tag.title}</span>
+                </button> 
             })
         }
 
@@ -75,7 +75,7 @@ const Tags = (props) => {
             }
         })
         const DOMcategories = categories.map((tag, index) => {
-            return <div 
+            return <button 
             key={`category-${tag.title}${index}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
@@ -85,8 +85,8 @@ const Tags = (props) => {
                 animateFilter(tag.onClick(e, tag.title, true))
             }}
             >
-                <p className="Tags-item_text">{tag.title}</p>
-            </div>            
+                <span className="Tags-item_text">{tag.title}</span>
+            </button>            
         })
 
         let subcategories = []
@@ -105,7 +105,7 @@ const Tags = (props) => {
             if(tag.title === "studio"){
                 return
             }
-            return <div 
+            return <button 
             key={`subcategory-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
@@ -115,8 +115,8 @@ const Tags = (props) => {
                 animateFilter(tag.onClick(e, tag.category, tag.title, true))
             }}
             >
-                <p className="Tags-item_text">{tag.title}</p>
-            </div>
+                <span className="Tags-item_text">{tag.title}</span>
+            </button>
         })
 
         let listItems = []
@@ -135,7 +135,7 @@ const Tags = (props) => {
             })
         })
         const DOMlistItems = listItems.map(tag => {
-            return <div 
+            return <button 
             key={`listitem-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
@@ -145,8 +145,8 @@ const Tags = (props) => {
                 animateFilter(tag.onClick(e,tag.category, tag.subcategory, tag.title, true))
             }}
             >
-                <p className="Tags-item_text">{tag.title}</p>
-            </div>
+                <span className="Tags-item_text">{tag.title}</span>
+            </button>
         })
         let DOMtags = []
         DOMtags = [...DOMthemes, ...DOMsubcategories, ...DOMcategories, ...DOMlistItems]
@@ -154,7 +154,23 @@ const Tags = (props) => {
     }
     return(
         <div  className="Tags-item_wrapper">
-            {tags(props.file)}
+            <div 
+                className={"Tags-item_selectors"}
+            style={{display: "flex"}}>
+                {tags(props.file)}  
+            </div>
+            <div 
+                className={`Tags-item_container-closeButton ${props.context.state.showExplorer ? "Tags-item_container-closeButton_open" : "Tags-item_container-closeButton_closed"}`}
+            >
+                <button 
+                    className="Tags-item_container"
+                    onClick={() => {
+                        props.onClose()
+                    }}
+                >
+                    <span className="Tags-item_text">Close</span>
+                </button>
+            </div>
         </div>
     )
 }
