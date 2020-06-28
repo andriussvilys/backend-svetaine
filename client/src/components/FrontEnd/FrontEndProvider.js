@@ -777,6 +777,8 @@ export class Provider extends React.Component{
     this.toggleExplorer = (options) => {
       const container = document.getElementById("enlargeContainer")
       const images = document.getElementById("images")
+      const imageSelect = document.getElementById("imageSelect")
+      const filters = document.getElementById("TagsMenu")
 
       if(options && options.close){
         console.log("CLOSE TAGS")
