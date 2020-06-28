@@ -50,7 +50,10 @@ export default class FilePreview extends React.Component{
         }
         else{
             return(
-            <div className="ImagesPreview--imageContainer">
+            <div 
+                className="ImagesPreview--imageContainer"
+                onClick={() => this.props.onClick()}
+            >
                 {this.fileContainer(this.props.file.fileType, this.props.file)}
                 {/* <input
                 type="text" 

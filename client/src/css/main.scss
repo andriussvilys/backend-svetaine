@@ -34,6 +34,7 @@ $border-main-color: #bbb;
     white-space: normal;
     color: black;
 }
+
 .admin-content{
     textarea, input{
         @include common-border()
@@ -185,7 +186,6 @@ label{
     padding: 5px;
     background-color: #dee2e6;
     .imageBox__wrapper{
-    // .FileInfo-imageBox{
         width: 100%;
         margin: 0;
         padding: 0;
@@ -273,32 +273,6 @@ label{
 }
 .EditDetailContainer{
     height: 100%;
-    display: grid;
-    grid-template-rows: minmax(min-content, 50px) minmax(300px, min-content);
-    .themeSelector{
-        max-height: 50vh;
-    }
-    .accordion{
-        overflow: hidden;
-        height: 100%;
-        .card{
-            height: 100%;
-            overflow: hidden;
-            display: grid;
-            grid-template-rows: [button]min-content min-content;
-            .collapsing{
-                height: 0;
-                display: none;
-            }
-            .collapse{
-                min-height: 0;
-                overflow-y: auto;
-            }
-        }
-    }
-}
-.EditDetailContainer{
-    height: 100%;
     overflow-y: auto;
     display: grid;
     grid-template-rows: minmax(min-content, 50px) minmax(300px, min-content);
@@ -323,6 +297,9 @@ label{
             }
         }
     }
+}
+.EditDetailContainer-artworkOnDisplay{
+
 }
 .create-createFamily{
     display: flex;
@@ -408,6 +385,8 @@ Button{
 }
 .btn{
     border: none !important;
+    max-width: 100%;
+    font-size: unset !important;
 }
 .btn:hover{
     border: 0px !important;
@@ -493,23 +472,26 @@ textarea{
 
 }
 .imageBox__wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 4px;
     width: 200px;
     margin: 4px;
     border: 1px solid rgb(136, 136, 136);
     max-height: 300px;
-    display: flex;
-    flex-direction: column;
     border-radius: 6px;
 }
 .imageBox__text{
     width: 100%;
     font-size: 12px;
     padding: 6px;
-    button{
-        margin-top: 6px !important;
-    }
 }
+.imageBox__text__info{
+    .btn{
+        font-size: 12px !important;
+    }
+} 
 .serverFileUpdate-imageBox{
     margin: 0;
     border: none;
@@ -595,10 +577,12 @@ h5{
 }
 .EditDetailContainer--button-wrapper{
     border: 1px solid grey;
-    padding: 2px;
+    padding: 4px;
+    margin: 4px 0;
     display: flex;
     justify-content: space-between;
     width: 100%;
+    @include common-border;
 }
 .delete-button{
     background-color: white !important;
@@ -709,13 +693,9 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: center;
     z-index: 2;
     overflow: hidden;
-    // max-height: 200px;
-    height: 120px;
     top: 0;
     text-indent: -100%;
     overflow: hidden;
-    flex: 1 1 25%;
-    min-width: 90px;
 }
 .ImagesPreview--image{
     max-height: 120px;
@@ -832,14 +812,23 @@ font-family: 'Times New Roman', Times, serif;
 }
 .descriptionPreview--headline{
     margin: 0;
-    padding: 5px;
-    border-bottom: 1px dotted black;
 }
 .descriptionPreview--content{
-    margin: 10px;
+    min-height: 50px;
 }
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
+    .EditDetailContainer-artworkOnDisplay{
+        .grid-wrapper{
+            grid-template-columns: repeat(auto-fill, minmax(auto, calc(25% - 4px)));
+        }
+        .imageBox__wrapper{
+            padding: 6px !important;
+        }
+        .btn{
+            padding: 4px;
+        }
+    }
     .admin-container{
         padding: 5px;
     }
@@ -875,6 +864,9 @@ font-family: 'Times New Roman', Times, serif;
             button{
                 width: 100%;
             }
+        }
+        .btn{
+            padding: 2px !important;
         }
     }
     .imageBox__wrapper{
@@ -938,13 +930,11 @@ font-family: 'Times New Roman', Times, serif;
         display: none;
     }
     .ImagesPreview--imageContainer{
-        min-height: 90px;
-        flex: 1 1 50%;
     }
     .hide-imageSelect{
         transform: translateY(100%)
     }
-    .btn, .nav-link{
+    .nav-link{
         padding: 2px !important;
     }
     .SingleFile-container{

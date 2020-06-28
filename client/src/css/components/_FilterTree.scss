@@ -1,17 +1,17 @@
 ul{
     list-style: none;
 }
-.FilterTree-container{
-    height: 100%;
-    width: 300px;
-    overflow: visible;
-    z-index: 99;
-    background-color: white;
-    // border: 1px solid black;
-    border-right: 0;
-    border-bottom: 0;
-    overflow-x: visible;
-}
+// .FilterTree-container{
+//     height: 100%;
+//     width: 300px;
+//     overflow: visible;
+//     z-index: 99;
+//     background-color: white;
+//     // border: 1px solid black;
+//     border-right: 0;
+//     border-bottom: 0;
+//     overflow-x: visible;
+// }
 .FilterTree-container_main{
     border: 1px solid black;
     border-top: 0;
@@ -262,15 +262,15 @@ ul{
         margin: 4px !important;
     }
     .FilterTree-container{
-        position: absolute;
-        height: 100%;
-        width: calc(100% - 50px);
-        transform: translateX(-100%);
-        transition: transform 0.2s !important;
-        border: 0;
-        // border-right: 1px solid black;
-        grid-row-start: 2;
-        grid-row-end: 3;
+        // position: absolute;
+        // height: 100%;
+        // width: calc(100% - 50px);
+        // transform: translateX(-100%);
+        // transition: transform 0.2s !important;
+        // border: 0;
+        // // border-right: 1px solid black;
+        // grid-row-start: 2;
+        // grid-row-end: 3;
     }
     .show-menu{
         transform: translateX(0);

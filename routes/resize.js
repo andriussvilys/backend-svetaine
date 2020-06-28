@@ -52,17 +52,20 @@ router.post("/:fileName", (req, res, next) => {
             image
             .quality(90)
             .resize(desktopSize.width, desktopSize.height)
-            .write(`./client/public/uploads/desktop/${newName}-desktop${fileExtension}`, () => {
+            // .write(`./client/public/uploads/desktop/${newName}-desktop${fileExtension}`, () => {
+            .write(`./client/build/uploads/desktop/${newName}-desktop${fileExtension}`, () => {
 
                 image
                     .quality(90)
                     .resize(mobileSize.width, mobileSize.height)
-                    .write(`./client/public/uploads/mobile/${newName}-mob${fileExtension}`, () => {
+                    // .write(`./client/public/uploads/mobile/${newName}-mob${fileExtension}`, () => {
+                    .write(`./client/build/uploads/mobile/${newName}-mob${fileExtension}`, () => {
                     
                 image
                     .quality(90)
                     .resize(thumbnailSize.width, thumbnailSize.height)
-                    .write(`./client/public/uploads/thumbnails/${newName}-thumbnail${fileExtension}`, () => {
+                    // .write(`./client/public/uploads/thumbnails/${newName}-thumbnail${fileExtension}`, () => {
+                    .write(`./client/build/uploads/thumbnails/${newName}-thumbnail${fileExtension}`, () => {
                         return res.json(`${req.params.fileName} resized`)
                     })
                 })

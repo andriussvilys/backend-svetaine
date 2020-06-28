@@ -585,21 +585,28 @@ export class Provider extends React.Component{
           
           document.getElementById("TagsMenu").classList.add("show-menu")
         }
-        return images.classList.toggle("explorer-view")
+        const toggleImageViewerSize = () => {
+          let delay = 0
+          if(!images.classList.contains("explorer-view")){delay = 200}
+            setTimeout(() => {
+              images.classList.toggle("explorer-view")
+            }, delay)
+        }
+        return (toggleImageViewerSize())
       }
       //DESKTOP
       else{
         
         if(this.state.enlarge && this.state.enlarge.open){
           //if menu closed
-          if(document.getElementById("TagsMenu").classList.contains("show-menu-desktop")){
+          if(document.getElementById("TagsMenu").classList.contains("show-menu")){
             if(this.state.enlarge && this.state.enlarge.open){
-              document.getElementById("TagsMenu").classList.remove("show-menu-desktop")
+              document.getElementById("TagsMenu").classList.remove("show-menu")
 
               this.animateEnlarge(this.state.enlarge.background)
             }
             else{
-              document.getElementById("TagsMenu").classList.remove("show-menu-desktop")
+              document.getElementById("TagsMenu").classList.remove("show-menu")
               document.getElementById("imageSelect").style.width = "100%"
             }
             return
@@ -610,7 +617,7 @@ export class Provider extends React.Component{
                 const imageSelect = document.getElementById("imageSelect")
 
                 imageSelect.style.width = "auto"
-                document.getElementById("TagsMenu").classList.add("show-menu-desktop")
+                document.getElementById("TagsMenu").classList.add("show-menu")
                 this.animateEnlarge(this.state.enlarge.background)
               }
               else{
@@ -618,7 +625,7 @@ export class Provider extends React.Component{
               }
           }
         }
-        else document.getElementById("TagsMenu").classList.toggle("show-menu-desktop")
+        else document.getElementById("TagsMenu").classList.toggle("show-menu")
       }
     }
     this.hideArtworkInfo = (e) => {
@@ -733,7 +740,8 @@ export class Provider extends React.Component{
         tagsMenuWidth = 0
       }
 
-      let maxWidth = document.getElementById("images").parentNode.offsetWidth - tagsMenuWidth - imageNavWidth - 120
+      let maxWidth = document.getElementById("images").parentNode.offsetWidth - tagsMenuWidth - imageNavWidth
+      // let maxWidth = document.getElementById("images").parentNode.offsetWidth - tagsMenuWidth - imageNavWidth - 120
       const naturalRatio = naturalWidth / naturalHeight
       if(mobile){
         maxWidth = document.getElementById("images").clientWidth
@@ -943,7 +951,7 @@ export class Provider extends React.Component{
                           
                         })
                         this.scrollToHorizontal(`previewBubble-${file.fileName}`, "previewBubble-wrapper", {increment: 50})
-                        pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
+                        // pullUp({parentId: "ArtworkInfo", childId: "ArtworkInfo", vertical: true})
                         // pullUp({parentId: "enlargeContainer", childId: "ArtworkInfo", vertical: true})
 
 

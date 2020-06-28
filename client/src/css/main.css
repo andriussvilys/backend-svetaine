@@ -499,7 +499,7 @@
   border: 2px solid;
   border-radius: 12px;
   overflow: hidden;
-  margin-bottom: 8px;
+  margin: 0 8px 8px 4px;
   background-color: #c2c2c2;
 }
 
@@ -873,44 +873,6 @@ label {
 
 .EditDetailContainer {
   height: 100%;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: minmax(min-content, 50px) minmax(300px, min-content);
-      grid-template-rows: minmax(-webkit-min-content, 50px) minmax(300px, -webkit-min-content);
-      grid-template-rows: minmax(min-content, 50px) minmax(300px, min-content);
-}
-
-.EditDetailContainer .themeSelector {
-  max-height: 50vh;
-}
-
-.EditDetailContainer .accordion {
-  overflow: hidden;
-  height: 100%;
-}
-
-.EditDetailContainer .accordion .card {
-  height: 100%;
-  overflow: hidden;
-  display: -ms-grid;
-  display: grid;
-  -ms-grid-rows: [button] min-content min-content;
-      grid-template-rows: [button] -webkit-min-content -webkit-min-content;
-      grid-template-rows: [button] min-content min-content;
-}
-
-.EditDetailContainer .accordion .card .collapsing {
-  height: 0;
-  display: none;
-}
-
-.EditDetailContainer .accordion .card .collapse {
-  min-height: 0;
-  overflow-y: auto;
-}
-
-.EditDetailContainer {
-  height: 100%;
   overflow-y: auto;
   display: -ms-grid;
   display: grid;
@@ -1074,6 +1036,8 @@ Button {
 
 .btn {
   border: none !important;
+  max-width: 100%;
+  font-size: unset !important;
 }
 
 .btn:hover {
@@ -1189,11 +1153,6 @@ textarea {
 }
 
 .imageBox__wrapper {
-  padding: 4px;
-  width: 200px;
-  margin: 4px;
-  border: 1px solid #888888;
-  max-height: 300px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1201,6 +1160,14 @@ textarea {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding: 4px;
+  width: 200px;
+  margin: 4px;
+  border: 1px solid #888888;
+  max-height: 300px;
   border-radius: 6px;
 }
 
@@ -1210,8 +1177,8 @@ textarea {
   padding: 6px;
 }
 
-.imageBox__text button {
-  margin-top: 6px !important;
+.imageBox__text__info .btn {
+  font-size: 12px !important;
 }
 
 .serverFileUpdate-imageBox {
@@ -1351,7 +1318,8 @@ h5 {
 
 .EditDetailContainer--button-wrapper {
   border: 1px solid grey;
-  padding: 2px;
+  padding: 4px;
+  margin: 4px 0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1359,6 +1327,9 @@ h5 {
       -ms-flex-pack: justify;
           justify-content: space-between;
   width: 100%;
+  border: 2px solid #b5b5b5;
+  padding: 3px;
+  border-radius: 6px;
 }
 
 .delete-button {
@@ -1497,14 +1468,9 @@ h5 {
           justify-content: center;
   z-index: 2;
   overflow: hidden;
-  height: 120px;
   top: 0;
   text-indent: -100%;
   overflow: hidden;
-  -webkit-box-flex: 1;
-      -ms-flex: 1 1 25%;
-          flex: 1 1 25%;
-  min-width: 90px;
 }
 
 .ImagesPreview--image {
@@ -1674,15 +1640,23 @@ h5 {
 
 .descriptionPreview--headline {
   margin: 0;
-  padding: 5px;
-  border-bottom: 1px dotted black;
 }
 
 .descriptionPreview--content {
-  margin: 10px;
+  min-height: 50px;
 }
 
 @media only screen and (max-width: 720px) {
+  .EditDetailContainer-artworkOnDisplay .grid-wrapper {
+    -ms-grid-columns: (minmax(auto, calc(25% - 4px)))[auto-fill];
+        grid-template-columns: repeat(auto-fill, minmax(auto, calc(25% - 4px)));
+  }
+  .EditDetailContainer-artworkOnDisplay .imageBox__wrapper {
+    padding: 6px !important;
+  }
+  .EditDetailContainer-artworkOnDisplay .btn {
+    padding: 4px;
+  }
   .admin-container {
     padding: 5px;
   }
@@ -1729,6 +1703,9 @@ h5 {
   }
   .admin-nav-list li button {
     width: 100%;
+  }
+  .admin-nav-list .btn {
+    padding: 2px !important;
   }
   .imageBox__wrapper {
     width: 170px;
@@ -1796,17 +1773,11 @@ h5 {
   .image-hide {
     display: none;
   }
-  .ImagesPreview--imageContainer {
-    min-height: 90px;
-    -webkit-box-flex: 1;
-        -ms-flex: 1 1 50%;
-            flex: 1 1 50%;
-  }
   .hide-imageSelect {
     -webkit-transform: translateY(100%);
             transform: translateY(100%);
   }
-  .btn, .nav-link {
+  .nav-link {
     padding: 2px !important;
   }
   .SingleFile-container {

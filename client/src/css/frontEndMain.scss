@@ -1,4 +1,4 @@
-@import './components/FilterTree';
+// @import './components/FilterTree';
 @import './components/mobileBars';
 
 *{
@@ -9,6 +9,10 @@
 }
 button{
     background-color: white;
+}
+.frontEndIndex-container button, label{
+       font-family: 'Times New Roman', Times, serif !important;
+       text-transform: uppercase;
 }
 body{
     font-family: Arial, Helvetica, sans-serif;
@@ -239,22 +243,28 @@ font-family: 'Times New Roman', Times, serif;
 .frontEndIndex-container{
     height: 100%;
     width: 100%;
-    display: grid;
+    // display: grid;
     grid-template-columns: min-content 1fr;
     background-color: $background-color;
     position: relative;
 }
 .imageSelect-container{
-    height: 100%;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    max-height: 100%;
     width: 100%;
     overflow-x: hidden;
     background-color: $background-color;
     overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
-    position: absolute;
-    border-left: $border-dark;
+    // position: absolute;
     transform: translateX(0);
+}
+.imageSelect-buffer{
+    height: 100%;
+    width: 100%;
+    background-color: white;
 }
 .Nav-button{
     width: 4vw;
@@ -290,6 +300,8 @@ font-family: 'Times New Roman', Times, serif;
     position: relative;
     width: 100%;
     height: 100%;
+    display: grid;
+    grid-template-columns: min-content 1fr;
 }
 
 .FilePreview--imageContainer{
@@ -307,6 +319,10 @@ font-family: 'Times New Roman', Times, serif;
     // height: 200px;
     min-width: 59px;
     max-height: 200px;
+    border-top: 9px solid red;
+    // border-left: 1px solid red;
+    // border-right: 1px solid red;
+    // border-bottom: 1px solid red;
 }
 .FilePreview--imageContainer__empty{
     overflow: hidden;
@@ -314,6 +330,8 @@ font-family: 'Times New Roman', Times, serif;
     top: 0;
     z-index: -9999;
     height: 0;
+    border-top: 4px solid red;
+    border-bottom: 5px solid red;
 }
 .FilePreview--imageContainer__empty > *{
     transform: translateY(200px) !important;
@@ -355,7 +373,7 @@ font-family: 'Times New Roman', Times, serif;
     transform-origin: bottom;
     transform: translateY(0);
     cursor: pointer;
-    height: 100%;
+    max-height: 100%;
     width: 100%;
 }
 .zero-width{
@@ -462,12 +480,12 @@ font-family: 'Times New Roman', Times, serif;
     white-space: nowrap;
 }
 .full-height{
-    height: 100% !important;
+    // height: 100% !important;
 }
-.show-menu-desktop{
-    transform: translateX(-100%);
-    width: 0;
-}
+// .show-menu-desktop{
+//     transform: translateX(-100%);
+//     width: 0;
+// }
 .enlarge-preview{
     height: 100%;
     // width: 100%;
@@ -1090,24 +1108,20 @@ font-family: 'Times New Roman', Times, serif;
         font-size: 12px;
     }
     .images-container{
-        position: absolute;
+        // position: absolute;
         display: grid;
-        grid-template-columns: 100%;
         grid-template-rows: min-content 1fr;
         overflow: hidden;
         grid-row-start: 2;
         grid-row-end: 3;
     }
     .imageSelect-container{
-        grid-column-start: 1;
-        grid-column-end: 2;
         bottom: 0;
         z-index: 999;
         width: 100% !important;
         border-right: none;
         border-left: none;
         border-top: none;
-        height: 100%;
         z-index: 0;
     }
     .imageSelect-slide{
@@ -1123,13 +1137,19 @@ font-family: 'Times New Roman', Times, serif;
         bottom: unset;
         border-top: 1px solid black;
         left: 0;
+        *{
+            border: 0;
+        }
+        .imageSelect-buffer{
+            display: none;
+        }
         img{
             height: 100%;
         }
     }
     .explorer-view{
         right: 0;
-        width: calc(100% - 220px) !important;
+        // width: calc(100% - 220px) !important;
     }
     .enlarge-info{
         display: flex;
@@ -1200,9 +1220,6 @@ font-family: 'Times New Roman', Times, serif;
         height: 75%;
     }
     .imageSelect-FilePreview{
-        // align-self: flex-start;
-        // object-position: bottom left;
-        // width: auto;
         max-width: 100%;
     }
     .side-scroll .imageSelect-FilePreview{

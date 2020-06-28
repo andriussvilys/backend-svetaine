@@ -43,46 +43,65 @@ export default class FrontEndIndex extends React.Component{
     }
     
     render(){
-        return(
-            <Context.Consumer>
-                {() => {
-                    return (
-                        <div 
-                            className="frontEndIndex-container"
-                        >
-                        {/* <Menu
-                            context={this.context}
-                            categoriesData={this.context.state.categoriesData}
-                        /> */}
-
-                        {this.context.state.mobile ? 
-                            <MobileNav 
-                                context={this.context}
-                            /> : null
-                        }
-
-                        <List 
-                            context={this.context}
-                            data={this.context.state.categoriesData}
-                        />
-
-                        <div 
-                        id="images" 
-                        className={this.context.state.mobile ? "images-container"  : "images-container images-grid" }
-                        >
-                            <ImageSelect 
-                                data={this.context.state.artworkInfoData} 
-                                mobile={this.context.state.mobile}
-                                state={this.context.state}
-                                context={this.context}
-                                methods={{
-                                    enlarge: this.context.enlarge,
-                                    loadEnlarge: this.context.loadEnlarge,
-                                    toggleMobile: this.context.toggleMobile,
-                                    lazyLoad: this.context.lazyLoadImages
-                                }}
-                            />
-                            {!this.context.state.mobile ?                             
+            return(
+                <Context.Consumer>
+                    {() => {
+                        return (
+                            <div 
+                                className="frontEndIndex-container"
+                            >
+    
+                            {/* {this.context.state.mobile ? 
+                                <MobileNav 
+                                    context={this.context}
+                                /> : null
+                            } */}
+                                <MobileNav 
+                                    context={this.context}
+                                />
+    
+                            {/* {this.context.state.categoriesData ?                             
+                                <List 
+                                    context={this.context}
+                                    data={this.context.state.categoriesData}
+                                /> : null
+                            } */}
+    
+                            <div 
+                            id="images" 
+                            className={"images-container"}
+                            >
+                                <List 
+                                    context={this.context}
+                                    data={this.context.state.categoriesData}
+                                />
+                                <ImageSelect 
+                                    data={this.context.state.artworkInfoData} 
+                                    mobile={this.context.state.mobile}
+                                    state={this.context.state}
+                                    context={this.context}
+                                    methods={{
+                                        enlarge: this.context.enlarge,
+                                        loadEnlarge: this.context.loadEnlarge,
+                                        toggleMobile: this.context.toggleMobile,
+                                        lazyLoad: this.context.lazyLoadImages
+                                    }}
+                                />
+                                {!this.context.state.mobile ?                             
+                                    <Enlarge 
+                                        nextEnlarge={this.context.state.nextEnlarge}
+                                        file={this.context.state.enlarge}
+                                        onClick={this.context.closeEnlarge}
+                                        artworkInfoData={this.context.state.artworkInfoData}
+                                        loadEnlarge={this.context.loadEnlarge}
+                                        closeEnlarge={this.context.closeEnlarge}
+                                        hideArtworkInfo={this.context.hideArtworkInfo}
+                                        context={this.context}
+                                        mobile={this.context.state.mobile}
+                                    /> : null
+                                }
+                            </div>
+                            {this.context.state.mobile ?                             
                                 <Enlarge 
                                     nextEnlarge={this.context.state.nextEnlarge}
                                     file={this.context.state.enlarge}
@@ -96,23 +115,9 @@ export default class FrontEndIndex extends React.Component{
                                 /> : null
                             }
                         </div>
-                        {this.context.state.mobile ?                             
-                            <Enlarge 
-                                nextEnlarge={this.context.state.nextEnlarge}
-                                file={this.context.state.enlarge}
-                                onClick={this.context.closeEnlarge}
-                                artworkInfoData={this.context.state.artworkInfoData}
-                                loadEnlarge={this.context.loadEnlarge}
-                                closeEnlarge={this.context.closeEnlarge}
-                                hideArtworkInfo={this.context.hideArtworkInfo}
-                                context={this.context}
-                                mobile={this.context.state.mobile}
-                            /> : null
-                        }
-                    </div>
-                    )
-                }}
-            </Context.Consumer>
-        )
+                        )
+                    }}
+                </Context.Consumer>
+            )
     }
 }

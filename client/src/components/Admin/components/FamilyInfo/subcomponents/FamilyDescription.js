@@ -23,11 +23,11 @@ const FamilyDescription = (props) => {
             }
             style={{width: "100%"}}
         ></textarea>
-        <div className="descriptionPreview--container">
-            <h5 className="descriptionPreview--headline">Preview:
+        {/* <div className="descriptionPreview--container"> */}
+        <div>
+            <p className="descriptionPreview--headline">Preview:</p>
             <p className="subtitle">(parsed HTML)</p>
-            </h5>
-            <div className="descriptionPreview--content">
+            <div className="descriptionPreview--content descriptionPreview--container">
                 {
                     target.familyDescription ? 
                         target.familyDescription ? <div>{ ReactHtmlParser(target.familyDescription)}</div> : ""

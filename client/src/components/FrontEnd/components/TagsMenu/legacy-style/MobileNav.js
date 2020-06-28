@@ -1,4 +1,5 @@
 import React from 'react'
+import List from '../legacy-style/List'
 
 export default class MobileNav extends React.Component {
     constructor(props){
@@ -52,6 +53,10 @@ export default class MobileNav extends React.Component {
             className={"Mobilenav-button"}>
                 <span style={{textDecoration: "line-through solid black"}}>Contact</span>
             </button>
+            {/* <List 
+                context={this.props.context}
+                data={this.props.context.state.categoriesData}
+            /> */}
         </nav>)
     }
 }

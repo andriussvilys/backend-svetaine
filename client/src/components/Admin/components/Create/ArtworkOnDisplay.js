@@ -27,6 +27,8 @@ export default class EditDetailContainer extends React.Component{
                     file={file}
                     key={`${file.fileName}-detail`}
                     directory={this.state.selectedFiles}
+                    toggleShowInfo={true}
+                    hideInfo={true}
                 >
                     <Button
                         onClick={() => {
@@ -109,7 +111,7 @@ export default class EditDetailContainer extends React.Component{
 
                     <div 
                     id={'familyContainer'}
-                    className={"EditDetailContainer"}
+                    className={"EditDetailContainer EditDetailContainer-artworkOnDisplay"}
                     >
 
                         <div className="familyPicker">

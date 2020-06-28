@@ -5,8 +5,8 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
     destination: function(req, file, cb){
-        cb(null, './client/public/uploads')
-        // cb(null, './uploads')
+        cb(null, './client/build/uploads')
+        // cb(null, './client/public/uploads')
     },
     filename: (req, file, cb) => {
         cb(null, file.originalname)
@@ -50,10 +50,11 @@ router.get('/fileName/:fileName', (req, res) => {
 router.post('/create', 
 upload.single('artworkImage'), 
 (req, res, rej) => {
+    console.log("file uploaded?")
     console.log(req.body.fileName)
     ArtworkInfo.create(req.body)
     .then((artwork)=>{res.send(artwork)})
-    .catch(err => res.status(500).send(err))
+    .catch(err => {console.log(`req.body.fileName ${failed}`); res.status(500).send(err)})
 })
 
 router.post('/imageUpload', 

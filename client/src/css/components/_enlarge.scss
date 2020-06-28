@@ -6,6 +6,7 @@
     transform-origin: right;
     transform: translateX(100%);
     right: 0;
+    top: 0;
     background-color: white;
     justify-content: center;
     position: absolute;
@@ -16,6 +17,7 @@
     overflow: hidden;
     z-index: 99;
     transition: 0.2s all;
+    width: 100% !important;
 }
 .enlarge-bar{
     border-bottom: 1px solid black;

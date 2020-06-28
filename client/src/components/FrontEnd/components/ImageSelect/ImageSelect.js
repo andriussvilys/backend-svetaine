@@ -49,7 +49,8 @@ const ImageSelect = (props) => {
                           {setTimeout(() => {
                             lazyLoadImages()
                           }, 50)}
-
+                    
+                    <div className={"imageSelect-buffer"}></div>
                     </div>
         }
         else{return null}  

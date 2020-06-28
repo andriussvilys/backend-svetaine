@@ -1733,6 +1733,7 @@ export class Provider extends React.Component{
                                         })
                                     .catch(err => {
                                         console.log(err); 
+                                        console.log("artworkInfo/create fail")
                                         reject("error")
                                     })
                                 })

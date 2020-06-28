@@ -1,32 +1,55 @@
 import React from 'react'
 import FilePreview from '../FilePreview'
 
-const ImageBox = (props) => {
-    const highlighter = (fileName) => {
-        return props.directory ? props.directory.includes(fileName) : false
+export default class ImageBox extends React.Component{
+    constructor(props){
+        super(props)
+        this.state={
+            showInfo: null,
+            toggleShowInfo: null
+        }
+        this.highlighter = (fileName) => {
+            return props.directory ? props.directory.includes(fileName) : false
+        }
     }
-    return(
-        <div 
-        // className="imageBox" 
-        className={`imageBox__wrapper ${props.customClass ? props.customClass : ""} ${highlighter(props.file.fileName)? 'themes-list--selected' : 'notSelected'}`}>
-        <FilePreview 
-            file={props.file}
-        >
-        </FilePreview>
-        <div className="imageBox__text">
-            <div className="">
-                <p className="title">File Name:</p> 
-                <p>{props.file.fileName}</p>
-            </div>
-
-            <div>
-                <p className="title">Artwork Family:</p> 
-                <p>{props.file.artworkFamily}</p>
-            </div>
-            {props.children}    
+    componentDidMount(){
+        this.setState({showInfo: !this.props.hideInfo, toggleShowInfo: this.props.toggleShowInfo})
+    }
+    render(){
+        return(
+            <div 
+                className={`imageBox__wrapper ${this.props.customClass ? this.props.customClass : ""} ${this.highlighter(this.props.file.fileName)? 'themes-list--selected' : 'notSelected'}`}
+            >
+            <FilePreview 
+                file={this.props.file}
+                onClick={e => {
+                    if(this.state.toggleShowInfo){
+                        this.setState({showInfo: !this.state.showInfo})
+                    }
+                    else{return}
+                }}
+            >
+            </FilePreview>
+            {this.state.showInfo ?             
+                <div 
+                    className="imageBox__text display-no"
+                    className={`imageBox__text`}
+                >
+                    <div className="imageBox__text__info">
+                        <div className="">
+                            <p className="title">File Name:</p> 
+                            <p>{this.props.file.fileName}</p>
+                        </div>
+        
+                        <div>
+                            <p className="title">Artwork Family:</p> 
+                            <p>{this.props.file.artworkFamily}</p>
+                        </div>
+                    </div>
+                    {this.props.children}    
+                </div> : null
+            }
         </div>
-    </div>
-    )
+        )
+    }
 }
-
-export default ImageBox

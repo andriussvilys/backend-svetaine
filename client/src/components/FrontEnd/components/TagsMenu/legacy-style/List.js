@@ -23,7 +23,7 @@ export class List extends React.Component{
     render(){
         return(<div id="TagsMenu" className="FilterTree-container">
 
-                {this.props.context.state.mobile?                
+                {/* {this.props.context.state.mobile?                
                     <button
                         className={"List-closeButton"}
                         onClick={(e) => {
@@ -52,17 +52,19 @@ export class List extends React.Component{
                             </button>
                         </div>
                     </Fragment>
-                }
+                } */}
 
-                {this.props.data ? this.createList(this.props.data) : null}
-                {this.props.context.state.artworkOnDisplay ?                 
-                <ViewHide 
-                    context={this.props.context}
-                /> : null
-                }
-                <Switch 
-                    context={this.props.context}
-                />
+                <div className={"FilterTree-wrapper"}>
+                    {this.props.data ? this.createList(this.props.data) : null}
+                    {this.props.context.state.artworkOnDisplay ?                 
+                    <ViewHide 
+                        context={this.props.context}
+                    /> : null
+                    }
+                    <Switch 
+                        context={this.props.context}
+                    />
+                </div>
             </div>
         )
     }

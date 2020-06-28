@@ -230,7 +230,7 @@ export default class TagsMenu extends React.Component{
             `TagsMenu-collapsed
             ${
                 !this.props.context.state.mobile ? 
-                    `TagsMenu-container show-menu-desktop` :
+                    `TagsMenu-container` :
                     this.props.context.state.enlarge && this.props.context.state.enlarge.open ?
                     `TagsMenu-container TagsMenu-max` : 
                 `TagsMenu-container`
