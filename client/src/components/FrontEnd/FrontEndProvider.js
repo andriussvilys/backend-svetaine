@@ -782,7 +782,14 @@ export class Provider extends React.Component{
         console.log("CLOSE TAGS")
         this.setState({showExplorer: false}, () => {
           if(!this.state.mobile){
-            container.style.width = `${images.clientWidth + 120}px`
+            let enlargeContainerWidth = images.clientWidth
+            if(!this.state.showExplorer){
+              enlargeContainerWidth += imageSelect.clientWidth
+            }
+            if(!this.state.showFilters){
+              enlargeContainerWidth += filters.clientWidth
+            }
+            container.style.width = `${enlargeContainerWidth}px`
           }
         })
         return
@@ -791,7 +798,14 @@ export class Provider extends React.Component{
         console.log("OPEN TAGS")
         this.setState({showExplorer: true}, () => {
           if(!this.state.mobile){
-            container.style.width = `${images.clientWidth - 120}px`
+            let enlargeContainerWidth = images.clientWidth
+            if(this.state.showExplorer){
+              enlargeContainerWidth -= imageSelect.clientWidth
+            }
+            if(this.state.showFilters){
+              enlargeContainerWidth -= filters.clientWidth
+            }
+            container.style.width = `${enlargeContainerWidth}px`
           }
         })
       }
