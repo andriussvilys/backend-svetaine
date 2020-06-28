@@ -10,7 +10,7 @@
 button{
     background-color: white;
 }
-.frontEndIndex-container button, label{
+.frontEndIndex-container button,.frontEndIndex-container label{
        font-family: 'Times New Roman', Times, serif !important;
        text-transform: uppercase;
 }
@@ -245,6 +245,7 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     // display: grid;
     grid-template-columns: min-content 1fr;
+    grid-template-rows: min-content 1fr;
     background-color: $background-color;
     position: relative;
 }
@@ -253,13 +254,19 @@ font-family: 'Times New Roman', Times, serif;
     grid-column-end: 3;
     max-height: 100%;
     width: 100%;
-    overflow-x: hidden;
     background-color: $background-color;
+    // overflow-x: hidden;
+    // overflow-y: auto;
+    // display: flex;
+    // flex-wrap: wrap;
+    transform: translateX(0);
+}
+.imageSelect-wrapper{
+    overflow-x: hidden;
     overflow-y: auto;
     display: flex;
     flex-wrap: wrap;
-    // position: absolute;
-    transform: translateX(0);
+    max-height: 100%;
 }
 .imageSelect-buffer{
     height: 100%;
@@ -302,6 +309,9 @@ font-family: 'Times New Roman', Times, serif;
     height: 100%;
     display: grid;
     grid-template-columns: min-content 1fr;
+    grid-template-rows: 100%;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 .FilePreview--imageContainer{
@@ -488,7 +498,8 @@ font-family: 'Times New Roman', Times, serif;
 // }
 .enlarge-preview{
     height: 100%;
-    // width: 100%;
+    width: 100%;
+    object-fit: contain;
 }
 .about-container{
     width: 100%;
@@ -909,7 +920,7 @@ font-family: 'Times New Roman', Times, serif;
     color: red !important;
 }
 .pinch-to-zoom-container{
-    height: 100% !important;
+    // height: 100% !important;
     width: 100%;
     display: flex !important;
     align-items: center;
@@ -953,6 +964,10 @@ font-family: 'Times New Roman', Times, serif;
     height: 100%;
     overflow: hidden;
     padding: 0 3vw 0 3vw;
+}
+.explorer-view{
+    // right: 0;
+    width: 120px !important;
 }
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
@@ -1108,9 +1123,6 @@ font-family: 'Times New Roman', Times, serif;
         font-size: 12px;
     }
     .images-container{
-        // position: absolute;
-        display: grid;
-        grid-template-rows: min-content 1fr;
         overflow: hidden;
         grid-row-start: 2;
         grid-row-end: 3;
@@ -1148,8 +1160,7 @@ font-family: 'Times New Roman', Times, serif;
         }
     }
     .explorer-view{
-        right: 0;
-        // width: calc(100% - 220px) !important;
+        // right: 0;
     }
     .enlarge-info{
         display: flex;
@@ -1303,3 +1314,41 @@ font-family: 'Times New Roman', Times, serif;
   @import './components/List';
   @import './components/viewhide';
   @import './components/switch';
+
+
+  $navHeight_desktop: 20px;
+  .enlargeContainer{
+    overflow: visible;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr min-content;
+    height: calc(100% - 20px) !important;
+  }
+  .full-width{
+      width: 100% !important;
+  }
+  .enlarge-closeButton-container{
+      height: $navHeight_desktop;
+      top: -$navHeight_desktop;
+  }
+  .MobileNav-container{
+      height: $navHeight_desktop;
+  }
+
+
+  @media only screen and (max-width: 720px) {
+    $navHeight_mobile: 30px;
+    .MobileNav-container, .enlarge-closeButton-container{
+        height: $navHeight_mobile;
+    }
+    .enlarge-closeButton-container{
+        position: initial;
+    }
+    .imageSelect-container.side-scroll{
+        position: absolute;
+    }
+    .enlargeContainer{
+        height: 100% !important;
+        grid-template-rows: min-content 1fr min-content;
+    }
+  }

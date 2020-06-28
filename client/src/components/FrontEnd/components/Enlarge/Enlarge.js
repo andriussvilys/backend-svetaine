@@ -12,10 +12,13 @@ export default class Enlarge extends React.Component{
                 <div 
                 className="enlargeContainer" id="enlargeContainer"
                 >
-                    <CloseButton
-                        context={this.props.context}
-                    />
+                    {!this.props.context.state.enlarge || !this.props.context.state.enlarge.open ? null :                     
+                        <CloseButton
+                            context={this.props.context}
+                        />
+                    }
                     <PinchToZoom 
+                        id="pinchContainer"
                         className="pinchContainer"
                         panEvent={{
                             viewNext: this.props.context.viewNext, 
@@ -27,9 +30,6 @@ export default class Enlarge extends React.Component{
                         state={this.props.context.state}
                         mobile={this.props.mobile}
                     >
-                        <div id="foreground" className="foreground-transition">
-                            <img alt={this.props.context.state.enlarge ? this.props.context.state.enlarge.fileName : "foreground"} id="foreground-img" src={"#"} className={`enlarge-preview`} />
-                        </div>
 
                         <div id="background" className="foreground-transition">
                             <img  alt={this.props.context.state.enlarge ? this.props.context.state.enlarge.fileName : "background"} id="background-img" src={"#"} className={`enlarge-preview`} />

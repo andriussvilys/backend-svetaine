@@ -10,14 +10,14 @@
     background-color: white;
     justify-content: center;
     position: absolute;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: 30px 1fr min-content;
+    // display: grid;
+    // grid-template-columns: 100%;
+    // grid-template-rows: 30px 1fr min-content;
     border-left: 1px solid black;
     overflow: hidden;
     z-index: 99;
-    transition: 0.2s all;
-    width: 100% !important;
+    transition: transform 0.2s;
+    // width: 100% !important;
 }
 .enlarge-bar{
     border-bottom: 1px solid black;
@@ -28,16 +28,15 @@
     }
 }
 .enlarge-closeButton-container{
-    grid-row-start: 1;
-    height: 30px;
-    width: 100%;
     border-bottom: 1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    position: absolute;
+    right: 0;
 }
 .enlarge-closeButton-button{
-    height: 29px;
-    margin-bottom: 10px;
-    position: absolute;
-    right: 10px;
+    height: 100%;
     text-transform: uppercase;
     font-weight: bold;
     display: flex;
@@ -65,6 +64,7 @@
     height: 30px;
     display: flex;
     justify-content: flex-end;
+    overflow: hidden;
     div{
         height: 100%;
         display: flex;
@@ -77,6 +77,9 @@
     align-items: center;
     justify-content: center;
     height: 100%;
+    span{
+        white-space: nowrap;
+    }
 }
 .viewControls-button-disabled{
     opacity: 0.3;

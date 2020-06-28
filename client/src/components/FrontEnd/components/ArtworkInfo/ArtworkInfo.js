@@ -233,36 +233,95 @@ export default class ArtworkInfo extends React.Component{
     };
     this.secondaryInfo = () => {
       return <Fragment>
-                  {this.descriptions()}
+          {this.descriptions()}
           <div
             key={"ArtworkInfo-container_seealso"}
             className="ArtworkInfo-container_seealso"
           >
             {this.seeAlso()}
-          </div>
-          <Tags 
-            file={this.props.file.foreground} 
-            context={this.props.context} 
-            tagsTrigger={() => {
-              if(this.props.context.state.mobile){
-                this.setState({tagsTrigger: true})
+          </div>         
+            <Tags 
+              file={this.props.file.foreground} 
+              context={this.props.context} 
+              tagsTrigger={() => {
+                if(this.props.context.state.mobile){
+                  this.setState({tagsTrigger: true})
+                }
+                else{return}
               }
-              else{return}
-            }
-            }
-          />
+              }
+            />
       </Fragment>
+    }
+    this.placeholder = {
+      artworkDescription: "PLACEHOLDER",
+      artworkFamily: "PLACEHOLDER",
+      artworkTitle: "PLACEHOLDER",
+      desktopPath: "uploads/desktop/malonioji_1-desktop.jpg",
+      displayMain: true,
+      familyDescription: "PLACEHOLDER",
+      familyDisplayIndex: 2,
+      fileName: "malonioji_1.jpg",
+      filePath: "/uploads/malonioji_1.jpg",
+      fileType: "image/jpeg",
+      location: "Vilnius, Lithuania",
+      mobilePath: "uploads/mobile/malonioji_1-mob.jpg",
+      naturalSize: {naturalWidth: 721, naturalHeight: 1080},
+      seeAlso: [],
+      themes: [],
+      thumbnailPath: "uploads/thumbnails/malonioji_1-thumbnail.jpg",
+      year: "2015",
     }
   }
 
   render(){
-    return this.props.file && this.props.file.foreground ? (
+    // return this.props.file && this.props.file.foreground ? (
+    //   <div
+    //     className={"ArtworkInfo-container"}
+    //     id="ArtworkInfo-container"
+    //   >
+    //       <ArtworkTitle 
+    //         file={this.props.file || {foreground: null}} 
+    //         context={this.props.context} 
+    //         showInfo={
+    //           (e) => this.showInfo(e)
+    //         }
+    //         infoUp={this.state.infoUp}
+    //       />
+    //       <div className=""
+    //                 key={"ArtworkInfo-wrapper"}
+    //                 className="ArtworkInfo-wrapper secondaryInfo"
+    //                 id="ArtworkInfo"
+    //       >
+    //         {this.props.file && this.props.file.foreground ? 
+    //           this.secondaryInfo() : null
+    //         }
+    //         {this.props.context.state.mobile ? 
+    //           <ImageSelect
+    //               customClass={"side-scroll"}
+    //               customId="ImageSelect-info"
+    //               data={this.props.context.state.artworkInfoData}
+    //               mobile={this.props.context.state.mobile}
+    //               state={this.props.context.state}
+    //               context={this.props.context}
+    //               methods={{
+    //                 enlarge: this.props.context.enlarge,
+    //                 loadEnlarge: this.props.context.loadEnlarge,
+    //                 toggleMobile: this.props.context.toggleMobile,
+    //                 lazyLoad: this.props.context.lazyLoadImages,
+    //               }}
+    //             /> : null
+    //           }
+    //       </div>
+    //     </div>
+    // ) : null;
+    return(
       <div
         className={"ArtworkInfo-container"}
         id="ArtworkInfo-container"
       >
           <ArtworkTitle 
-            file={this.props.file} 
+            file={this.props.file ? this.props.file : {background: this.placeholder}} 
             context={this.props.context} 
             showInfo={
               (e) => this.showInfo(e)
@@ -274,25 +333,27 @@ export default class ArtworkInfo extends React.Component{
                     className="ArtworkInfo-wrapper secondaryInfo"
                     id="ArtworkInfo"
           >
-            {this.secondaryInfo()}
+            {this.props.file && this.props.file.background ? 
+              this.secondaryInfo() : null
+            }
             {this.props.context.state.mobile ? 
               <ImageSelect
-                customClass={"side-scroll"}
-                customId="ImageSelect-info"
-                data={this.props.context.state.artworkInfoData}
-                mobile={this.props.context.state.mobile}
-                state={this.props.context.state}
-                context={this.props.context}
-                methods={{
-                  enlarge: this.props.context.enlarge,
-                  loadEnlarge: this.props.context.loadEnlarge,
-                  toggleMobile: this.props.context.toggleMobile,
-                  lazyLoad: this.props.context.lazyLoadImages,
-                }}
-              /> : null
-            }
+                  customClass={"side-scroll"}
+                  customId="ImageSelect-info"
+                  data={this.props.context.state.artworkInfoData}
+                  mobile={this.props.context.state.mobile}
+                  state={this.props.context.state}
+                  context={this.props.context}
+                  methods={{
+                    enlarge: this.props.context.enlarge,
+                    loadEnlarge: this.props.context.loadEnlarge,
+                    toggleMobile: this.props.context.toggleMobile,
+                    lazyLoad: this.props.context.lazyLoadImages,
+                  }}
+                /> : null
+              }
           </div>
         </div>
-    ) : null;
+    )
   }
 };

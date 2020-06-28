@@ -1,7 +1,7 @@
-$filtersWidth_desktop: 320px;
+$filtersWidth_desktop: 220px;
 .legacyStyle-List{
-    display: flex;
-    flex-wrap: wrap;
+    // display: flex;
+    // flex-wrap: wrap;
     max-width: 100%;
     margin: 0;
     margin: 5px;
@@ -13,7 +13,7 @@ $filtersWidth_desktop: 320px;
     grid-column-start: 1;
     grid-column-end: 2;
     top: 30px;
-    overflow: hidden;
+    overflow-y: scroll;
     height: 100%;
     width: 0;
     font-family: Georgia, 'Times New Roman', Times, serif;
@@ -21,11 +21,15 @@ $filtersWidth_desktop: 320px;
     background-color: white;
     border-right: 1px solid black;
 
+    padding-bottom: 50px;
+
     // transform: translateX(-100%);
     // transition: width 0.2s;
 }
 .FilterTree-wrapper{
     width: $filtersWidth_desktop;
+    height: 100%;
+    padding-bottom: 50px;
 }
 
 .show-menu{
@@ -58,19 +62,21 @@ $filtersWidth_desktop: 320px;
     justify-content: space-between;
     border-bottom: 1px solid black;
 }
+.MobileNav-wrapper{
+    width: 360px;
+    display: flex;
+    justify-content: space-between;
+}
 .Mobilenav-button{
     overflow: hidden;
     flex: 1;
-    border-left:1px solid black;
+    border-right:1px solid black;
     font-family: 'Times New Roman', Times, serif;
     font-weight: bold;
     text-transform: uppercase;
     display: flex;
     align-items: center;
     justify-content: center;
-}
-.Mobilenav-button:first-of-type{
-    border-left: none;
 }
 .Mobilenav-button-close{
     position: absolute;
@@ -115,6 +121,9 @@ $filtersWidth_desktop: 320px;
     .FilterTree-wrapper{
         padding: 6px;
         width: $filtersWidth_mobile;
+    }
+    .Mobilenav-button:last-of-type{
+        border-right: none;
     }
     .show-menu{
         width:$filtersWidth_mobile;

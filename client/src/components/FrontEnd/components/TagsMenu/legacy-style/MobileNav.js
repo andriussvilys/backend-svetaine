@@ -28,35 +28,35 @@ export default class MobileNav extends React.Component {
     }
     render(){
         return(<nav className={"MobileNav-container"}>
-            <button 
-            className={"Mobilenav-button"}
-            onClick={(e) => {
-                this.closePrev(e, "Filters")
-                this.props.context.showMenu(e)
-                let newState = {...this.state}
-                newState.openTab = "Filters"
-                newState.closeTabMethod = this.props.context.showMenu
-                this.setState({openTab: "Filters"}, () => {console.log(this.props.context.showMenu)})
-            }}
-            ><span>Filters</span></button>
-            <button 
+            <div className={"MobileNav-wrapper"}>
+                <button 
                 className={"Mobilenav-button"}
                 onClick={(e) => {
-                    this.closePrev(e, "About")
-                    this.props.context.loadEnlarge(e, "portrait.jpg");
-                    this.setState({openTab: "About"})
-                }}    
-            >
-                <span>About</span>
-            </button>
-            <button 
-            className={"Mobilenav-button"}>
-                <span style={{textDecoration: "line-through solid black"}}>Contact</span>
-            </button>
-            {/* <List 
-                context={this.props.context}
-                data={this.props.context.state.categoriesData}
-            /> */}
+                    // this.closePrev(e, "Filters")
+                    this.props.context.showMenu(e)
+                    let newState = {...this.state}
+                    newState.openTab = "Filters"
+                    newState.closeTabMethod = this.props.context.showMenu
+                    this.setState({openTab: "Filters"}, () => {console.log(this.props.context.showMenu)})
+                }}
+                >
+                    <span>Filters</span>
+                </button>
+                <button 
+                    className={"Mobilenav-button"}
+                    onClick={(e) => {
+                        // this.closePrev(e, "About")
+                        this.props.context.loadEnlarge(e, "portrait.jpg");
+                        this.setState({openTab: "About"})
+                    }}    
+                >
+                    <span>About</span>
+                </button>
+                <button 
+                className={"Mobilenav-button"}>
+                    <span style={{textDecoration: "line-through solid black"}}>Contact</span>
+                </button>
+            </div>
         </nav>)
     }
 }

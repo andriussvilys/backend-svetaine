@@ -9,7 +9,9 @@ const Tags = (props) => {
         const artworkOnDisplay = props.context.state.artworkOnDisplay
         let enlargeImg = props.file
         let scrollToId = props.file.fileName
-
+        if(!props.context.state.mobile && !props.context.state.showExplorer){
+            props.context.toggleExplorer()
+        }
         if(!Object.keys(artworkOnDisplay).includes(scrollToId)){
             let newImg = null
             Object.keys(artworkOnDisplay).forEach(objName => {

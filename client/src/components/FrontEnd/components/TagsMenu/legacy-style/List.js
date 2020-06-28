@@ -22,38 +22,6 @@ export class List extends React.Component{
     }
     render(){
         return(<div id="TagsMenu" className="FilterTree-container">
-
-                {/* {this.props.context.state.mobile?                
-                    <button
-                        className={"List-closeButton"}
-                        onClick={(e) => {
-                            this.props.context.showMenu(e)
-                        }}      
-                    >
-                        <img className={"List-closeButton_img"} src="icons/svg/view-right.svg" alt="close icon"/>
-                        <span>close</span>
-                    </button> :             
-                    <Fragment>
-                        <div style={{borderBottom: "2px solid black", padding: "10px"}}>
-                            <button 
-                                className={"Mobilenav-button"}
-                                onClick={(e) => {
-                                    this.props.context.loadEnlarge(e, "portrait.jpg");
-                                }}    
-                            >
-                                <span>About</span>
-                            </button>
-                            <button 
-                                style={{border: "0 !important"}}
-                                disabled
-                                className={"Mobilenav-button"}
-                            >
-                                <span style={{textDecoration: "line-through solid black"}}>Contact</span>
-                            </button>
-                        </div>
-                    </Fragment>
-                } */}
-
                 <div className={"FilterTree-wrapper"}>
                     {this.props.data ? this.createList(this.props.data) : null}
                     {this.props.context.state.artworkOnDisplay ?                 

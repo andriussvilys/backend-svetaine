@@ -36,7 +36,11 @@ const ImageSelect = (props) => {
             return <div 
                       // id="imageSelect"
                       id={props.customId || "imageSelect"}
-                      className={`imageSelect-container ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.customClass}`}
+                      className={
+                        `imageSelect-container 
+                        ${props.customClass}
+                        ${props.context.state.showExplorer ? "explorer-view" : ""}
+                        `}
                       onClick={(e) => {
                         if(document.getElementById("TagsMenu").classList.contains("show-menu")){
                           props.context.showMenu(e)
@@ -44,12 +48,13 @@ const ImageSelect = (props) => {
                         return
                       }}
                       >
+                        <div className={`imageSelect-wrapper ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.customClass}`}>
                           {previews}
                           {props.mobile ? <div id="spanner" style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
                           {setTimeout(() => {
                             lazyLoadImages()
                           }, 50)}
-                    
+                        </div>
                     <div className={"imageSelect-buffer"}></div>
                     </div>
         }

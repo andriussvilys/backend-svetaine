@@ -10,8 +10,8 @@ export default class ArtworkTitle extends React.Component{
             infoUp: false
         }
         this.locationAndYear = () => {
-            let location = this.props.file.foreground.location ? this.props.file.foreground.location : null
-            let year = this.props.file.foreground.year ? this.props.file.foreground.year: null
+            let location = this.props.file.background.location ? this.props.file.background.location : null
+            let year = this.props.file.background.year ? this.props.file.background.year: null
             if(location && year){
                 return <div key={"location/year"} className="ArtworkInfo_locationYear">({location}. {year})</div>
             }
@@ -26,18 +26,18 @@ export default class ArtworkTitle extends React.Component{
         this.artworkTitle = () => {
     
             const artworkFamily = () => {
-                if(this.props.file.foreground.artworkFamily !== "none")
+                if(this.props.file.background.artworkFamily !== "none")
                     return <div 
                             className={
-                                this.props.file.foreground.artworkTitle ? 
+                                this.props.file.background.artworkTitle ? 
                                 "ArtworkInfo_artworkFamily" :
                                 "ArtworkInfo_artworkTitle"
                                 }
                             >        
                                 <div>
                                     <span className={"ArtworkInfo_artworkTitle_secondary"}>part of </span>
-                                    {/* {!this.props.file.foreground.artworkTitle ? null : <span>part of </span> } */}
-                                    <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{this.props.file.foreground.artworkFamily}</em>
+                                    {/* {!this.props.file.background.artworkTitle ? null : <span>part of </span> } */}
+                                    <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{this.props.file.background.artworkFamily}</em>
                                 </div>
                             </div>
                 // }
@@ -45,7 +45,7 @@ export default class ArtworkTitle extends React.Component{
     
             const artworkTitle = () => {
 
-                let artworkFamily = this.props.file.foreground.artworkFamily
+                let artworkFamily = this.props.file.background.artworkFamily
                 if(artworkFamily === "none"){
                     artworkFamily = "–"
                 }
@@ -53,25 +53,25 @@ export default class ArtworkTitle extends React.Component{
                     artworkFamily = "Daiktai sandėlyje"
                 }
 
-                let artworkTitle = this.props.file.foreground.artworkTitle
+                let artworkTitle = this.props.file.background.artworkTitle
                 if(!artworkTitle){
                     artworkTitle = artworkFamily
                 }
 
-                // if(this.props.file.foreground.artworkTitle){
+                // if(this.props.file.background.artworkTitle){
                     return <Fragment>
                         <div style={{marginLeft: "-7px"}}>    
                         <em className="ArtworkInfo_artworkTitle">{artworkTitle}</em>
                         </div>
                         <div 
                             className={
-                            this.props.file.foreground.artworkTitle ? 
+                            this.props.file.background.artworkTitle ? 
                             "ArtworkInfo_artworkFamily" :
                             "ArtworkInfo_artworkTitle"
                             }
                         >        
                             <div>
-                                {this.props.file.foreground.artworkTitle && this.props.file.foreground.artworkFamily !== "none" ? 
+                                {this.props.file.background.artworkTitle && this.props.file.background.artworkFamily !== "none" ? 
                                     <Fragment>
                                         <span className={"ArtworkInfo_artworkTitle_secondary"}>part of </span>
                                         <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{artworkFamily}</em>
@@ -104,6 +104,9 @@ export default class ArtworkTitle extends React.Component{
         }
     }
     render(){
+        console.log("aARTWORK TITLE")
+        console.log("component did mount")
+        console.log(this.props)
         return(
                 <Fragment>
                     {this.artworkTitle()}
