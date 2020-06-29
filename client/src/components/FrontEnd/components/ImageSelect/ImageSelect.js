@@ -41,14 +41,8 @@ const ImageSelect = (props) => {
                         ${props.customClass}
                         ${props.context.state.showExplorer ? "explorer-view" : ""}
                         `}
-                      // onClick={(e) => {
-                      //   if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-                      //     props.context.showMenu(e)
-                      //   }
-                      //   return
-                      // }}
                       >
-                        <div className={`imageSelect-wrapper ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.customClass}`}>
+                        <div className={`imageSelect-wrapper ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.sideScroll ? "side-scroll" : ""}`}>
                           {previews}
                           {props.mobile ? <div id="spanner" style={{width: "calc(100% - 15vw)", flex: "1 1 100%"}}></div> : null}
                           {setTimeout(() => {

@@ -40,7 +40,7 @@ export default class ArtworkInfo extends React.Component{
             key={"SeeAlso-related"}
             className="SeeAlso-related SeeAlso-wrapper"
           >
-            <div className="subtitle subtitle_seeAlso">see also:</div>
+            <div className="subtitle_seeAlso">see also:</div>
             <div className="SeeAlso-related_images">{seeAlsos}</div>
           </div>
         );
@@ -73,7 +73,7 @@ export default class ArtworkInfo extends React.Component{
             key={"SeeAlso-previous"}
             className="SeeAlso-previous SeeAlso-wrapper"
           >
-            <div className="subtitle subtitle_seeAlso">related:</div>
+            <div className="subtitle_seeAlso">related:</div>
             <div className="SeeAlso-related_images">{DOMS}</div>
           </div>
         );
@@ -296,7 +296,7 @@ export default class ArtworkInfo extends React.Component{
     return(
       <div
         // className={"ArtworkInfo-container"}
-        className={`ArtworkInfo-container ${this.props.context.state.mobile && this.props.context.state.showExplorer && this.props.context.state.info.infoUp ? "ArtworkInfo-toggleTags" : ""}`}
+        className={`ArtworkInfo-container`}
         id="ArtworkInfo-container"
       >
           <ArtworkTitle 
@@ -317,8 +317,10 @@ export default class ArtworkInfo extends React.Component{
             }
             {this.props.context.state.mobile ? 
               <ImageSelect
-                  customClass={"side-scroll"}
+                  // customClass={`side-scroll ${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
+                  customClass={`${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
                   customId="ImageSelect-info"
+                  sideScroll
                   data={this.props.context.state.artworkInfoData}
                   mobile={this.props.context.state.mobile}
                   state={this.props.context.state}

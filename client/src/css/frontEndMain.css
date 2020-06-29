@@ -719,10 +719,11 @@ label {
 }
 
 .Tags-item_container-closeButton_open {
-  width: 80px;
+  min-width: 60px;
   color: white;
   font-weight: bold;
   text-transform: uppercase !important;
+  margin-left: 6px;
 }
 
 .Tags-item_container-closeButton_open .Tags-item_text {
@@ -734,7 +735,9 @@ label {
   width: 100%;
   background-color: red;
   border: none;
-  border: 1px solid red;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: 0;
 }
 
 .enlarge-preview {
@@ -867,7 +870,7 @@ label {
 }
 
 .SeeAlso-wrapper {
-  max-width: 50%;
+  max-width: 100%;
 }
 
 .SeeAlso-related {
@@ -888,6 +891,9 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   max-height: 90px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -896,8 +902,9 @@ label {
 .subtitle_seeAlso {
   margin-bottom: 3px;
   border-bottom: 1px solid;
-  opacity: 0.5;
   white-space: nowrap;
+  text-align: end;
+  font-size: 14px;
 }
 
 .ArtworkInfo--descriptions {
@@ -1347,6 +1354,9 @@ label {
   .ArtworkInfo-preview-container {
     height: 60px;
   }
+  .SeeAlso-related {
+    margin: 0;
+  }
   .SeeAlso-related_images {
     max-height: 70px;
   }
@@ -1536,7 +1546,6 @@ label {
     overflow-y: hidden;
     border-top: 0;
     bottom: unset;
-    border-top: 1px solid black;
     left: 0;
   }
   .side-scroll * {
@@ -1566,11 +1575,7 @@ label {
     display: initial;
     height: 100%;
     overflow: hidden;
-    padding: 0 3vw 0 3vw;
-  }
-  .ArtworkInfo-toggleTags {
-    -webkit-transform: translateY(-60px);
-            transform: translateY(-60px);
+    padding: 0;
   }
   .enlarge-scroll-down {
     -webkit-transform: translateY(100%);
@@ -1702,6 +1707,27 @@ label {
   }
   .pinch-to-zoom-container {
     display: inline-block !important;
+  }
+  .ArtworkInfo-container_seealso {
+    padding: 0 20px 0 50px;
+  }
+  .Tags-item_wrapper {
+    padding: 0 20px;
+    margin-top: 2px;
+  }
+  .ArtworkInfo-container .imageSelect-container {
+    height: 0;
+  }
+  .ArtworkInfo-toggleTags {
+    border-top: 1px solid black;
+    height: 60px !important;
+  }
+  .ArtworkInfo-toggleTags {
+    margin-top: 6px;
+  }
+  .Tags-item_container {
+    margin: 3px 0 0 6px !important;
+    padding: 2px 5px 2px 5px !important;
   }
 }
 
@@ -2258,9 +2284,6 @@ input:checked + .slider:before {
   }
   .enlarge-closeButton-container {
     position: initial;
-  }
-  .imageSelect-container.side-scroll {
-    position: absolute;
   }
   .enlargeContainer {
     height: 100% !important;
