@@ -10,7 +10,11 @@ export default class Enlarge extends React.Component{
     render(){
         return(
                 <div 
-                className="enlargeContainer" id="enlargeContainer"
+                    className={`enlargeContainer 
+                    ${!this.props.context.state.mobile && this.props.context.state.showLess ? "full-width" : ""}
+                    ${this.props.context.state.enlarge && this.props.context.state.enlarge.open ? "enlarge-scroll-left" : ""}
+                    `}
+                    id="enlargeContainer"
                 >
                     {!this.props.context.state.enlarge || !this.props.context.state.enlarge.open ? null :                     
                         <CloseButton

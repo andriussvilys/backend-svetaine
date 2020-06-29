@@ -368,7 +368,7 @@ label {
 .imageSelect-buffer {
   height: 100%;
   width: 100%;
-  background-color: white;
+  background-color: red;
 }
 
 .Nav-button {
@@ -1957,7 +1957,7 @@ label {
 
 .FilterTree-wrapper {
   width: 220px;
-  height: 100%;
+  max-height: 100%;
   padding-bottom: 50px;
   padding-right: 20px;
 }
@@ -2088,11 +2088,14 @@ label {
     padding: 6px;
     width: 220px;
   }
-  .Mobilenav-button:last-of-type {
-    border-right: none;
-  }
   .show-menu {
     width: 220px;
+  }
+}
+
+@media only screen and (max-width: 360px) {
+  .Mobilenav-button:last-of-type {
+    border-right: none;
   }
 }
 
@@ -2147,6 +2150,7 @@ label {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   margin: 4px !important;
+  margin-bottom: 50px !important;
 }
 
 .switch {
