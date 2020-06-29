@@ -1,8 +1,8 @@
-$switch-length: 80px;
+$switch-length: 180px;
+
 $toggle-size: 14px;
 $padding: 6px;
 .switch-container{
-    display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     margin: 4px !important;
@@ -13,13 +13,14 @@ $padding: 6px;
     display: inline-block;
     width: $switch-length;
     height: $toggle-size + $padding * 2;
+    margin-top: 10px;
   }
   .switch::before{
       content:"on";
       position: absolute;
-      top: $toggle-size + $padding;
+      top: $toggle-size;
       font-size: 12px;
-      right: $padding*2;
+      right: $padding;
       color: rgb(68, 68, 68);
       text-transform: uppercase;
       font-weight: 600;
@@ -27,9 +28,9 @@ $padding: 6px;
   .switch::after{
       content:"off";
       position: absolute;
-      top: $toggle-size + $padding;
+      top: $toggle-size;
       font-size: 12px;
-      left: $padding;
+      left: 0;
       color: rgb(68, 68, 68);
       text-transform: uppercase;
       font-weight: 600;
@@ -50,7 +51,8 @@ $padding: 6px;
     left: 0;
     right: $padding;
     bottom: $padding;
-    background-color: rgb(117, 117, 117);
+    background-color: black;
+    height: 2px;
   }
   
   .slider:before {
@@ -58,23 +60,20 @@ $padding: 6px;
     content: "";
     height: $toggle-size;
     width: $toggle-size;
+    // left: $padding/2;
+    // bottom: $padding/2;
+    bottom: -6px;
     left: $padding/2;
-    bottom: $padding/2;
-    background-color: rgb(144, 11, 11);
+    background-color: red;
+    border: 1px solid;
     transition: .2s;
   }
   
-//   input:checked + .slider {
-//     background-color: #2196F3;
-//   }
-  
-//   input:focus + .slider {
-//     box-shadow: 0 0 1px #2196F3;
-//   }
-  
   input:checked + .slider:before {
     background-color: lime;
-    transform: translateX($switch-length - $toggle-size - $padding*2);
+    transform: translateX($switch-length - $toggle-size -$toggle-size);
+    // transform: translateX($switch-length - ($toggle-size * 2));
+    // transform: translateX($switch-length - $toggle-size - $padding*2);
   }
   
   /* Rounded sliders */

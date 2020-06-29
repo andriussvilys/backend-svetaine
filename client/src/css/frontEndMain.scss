@@ -493,7 +493,7 @@ font-family: 'Times New Roman', Times, serif;
     white-space: nowrap;
 }
 .Tags-item_container-closeButton{
-    transition: width 0.2s, $background-color 0.2s;
+    transition: width 0.2s;
     width: 0;
     display: flex;
     justify-content: center;

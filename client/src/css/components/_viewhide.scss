@@ -1,5 +1,5 @@
-$border-dark: 4px solid rgb(73, 73, 73);
-$border-light: 4px solid rgb(187, 187, 187);
+$border-dark: 3px solid rgb(73, 73, 73);
+$border-light: 3px solid rgb(187, 187, 187);
 .button_legacy-style--container{
     display: flex;
     margin-top: 4px;
@@ -22,12 +22,14 @@ $border-light: 4px solid rgb(187, 187, 187);
     border-right: $border-dark;
     border-bottom: $border-dark;
     border-left: $border-light;
-    background-color: rgb(160, 160, 160);
-    color: lime;
+    font-size: 14px;
+    color: black;
+    background-color: rgb(245, 245, 245);
 }
 .button_legacy-style_enable{
-    background-color: rgb(128, 128, 128);
-    color:  rgb(73, 73, 73);
+    font-size: 14px;
+    background-color: rgb(170, 170, 170);
+    color:  rgb(128, 128, 128);
     border-top: $border-dark;;
     border-right: $border-light;
     border-bottom: $border-light;
