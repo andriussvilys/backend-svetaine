@@ -71,7 +71,7 @@ export default class ArtworkTitle extends React.Component{
                     <div className="ArtworkInfo-Title" id="ArtworkInfo-Title">
                         <ViewControls 
                             context={this.props.context}
-                            showInfoText={this.state.infoUp ? "Show less" : "Show more"}
+                            showInfoText={this.props.context.state.info.infoUp ? "Show less" : "Show more"}
                             showInfo={this.props.showInfo}
                             infoUp={this.props.infoUp}
                         />

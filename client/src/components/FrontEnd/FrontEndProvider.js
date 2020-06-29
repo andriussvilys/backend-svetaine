@@ -1,6 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-import pullUp from './components/functions/pullUp'
 import staticState from './staticState'
 // import staticState from '../../../public/static-state/staticState'
 
@@ -19,8 +18,6 @@ export class Provider extends React.Component{
 
     this.resetAll = (hide) => {
       let newState = {...this.state}
-      const artworkOnDisplay = {...this.state.artworkOnDisplay}
-      const allArtworkNames = {...this.state.visibleArtwork}
       //If VIEW ALL
       if(hide){
         newState.filters.onDisplay = newState.filters.empty
@@ -780,8 +777,15 @@ export class Provider extends React.Component{
       const imageSelect = document.getElementById("imageSelect")
       const filters = document.getElementById("TagsMenu")
 
+      let enlargeContainerWidth = images.clientWidth
+
       if(options && options.close){
         console.log("CLOSE TAGS")
+        // if(!this.state.mobile && this.state.info.infoUp){
+        //   enlargeContainerWidth += imageSelect.clientWidth
+        //   container.style.width = `${enlargeContainerWidth}px`
+        //   return
+        // }
         this.setState({showExplorer: false}, () => {
           if(!this.state.mobile){
             let enlargeContainerWidth = images.clientWidth
@@ -800,7 +804,6 @@ export class Provider extends React.Component{
         console.log("OPEN TAGS")
         this.setState({showExplorer: true}, () => {
           if(!this.state.mobile){
-            let enlargeContainerWidth = images.clientWidth
             if(this.state.showExplorer){
               enlargeContainerWidth -= imageSelect.clientWidth
             }
@@ -812,6 +815,7 @@ export class Provider extends React.Component{
         })
       }
     }
+
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
 
@@ -1039,36 +1043,37 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
-
+      const container = document.getElementById("enlargeContainer")
+      const images = document.getElementById("images")
+      const imageSelect = document.getElementById("imageSelect")
       let newState = {...this.state}
-      newState.info.infoUp = !newState.info.infoUp
-      this.setState(newState)
-      // if(info.classList.contains("info-up")){
-      //   // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags")
-      //   info.classList.remove("info-up")
-      //   // info.style.transform = "translateY(0)"
-      //   newState.info.infoUp = false
-      //   this.setState(newState)
-      //   return
-      // }
-      // else{
-      //   info.classList.add("info-up")
-      //   // info.style.transform = `translateY(-100%)`
-      //   // info.style.transform = `translateY(-${info.clientHeight}px)`
-      //   newState.info.infoUp = true
-      //   this.setState(newState)
-      // }
-      // if(info.classList.contains("dragged")){
-      //   info.classList.remove("dragged")
-      // }
 
-      // // info.classList.toggle("info-up")
+      if(this.state.info.infoUp){
+        newState.info.infoUp = false
+        if(!this.state.mobile){
+          let enlargeContainerWidth = images.clientWidth
+          enlargeContainerWidth += imageSelect.clientWidth
+          container.style.width = `${enlargeContainerWidth}px`
+        }
+        this.setState(newState, () => {
+          // this.toggleExplorer({close:true})
+        })
+      }
+
+      else{
+        newState.info.infoUp = true
+        if(!this.state.mobile && this.state.showExplorer){
+          let enlargeContainerWidth = images.clientWidth
+          enlargeContainerWidth -= imageSelect.clientWidth
+          container.style.width = `${enlargeContainerWidth}px`
+        }
+        this.setState(newState)
+      }
       return
     }
     this.toggleMobile = () => {
       const container = document.getElementById("enlargeContainer")
       const images = document.getElementById("images")
-      const imageSelect = document.getElementById("imageSelect")
       let mobile = null
       if(document.documentElement.clientWidth < 721){
         mobile = true

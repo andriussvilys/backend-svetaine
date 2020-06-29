@@ -223,10 +223,13 @@ export default class ArtworkInfo extends React.Component{
     };
     this.showInfo = (e) => {
       if(this.props.context.state.mobile){
+        if(this.state.infoUp){
+        }
         if(this.props.context.state.showExplorer || this.state.tagsTrigger){
           console.log("mobile close")
-          this.props.context.toggleExplorer({close: true})
-          this.setState({tagsTrigger: false})
+          this.props.context.showInfo(e)
+          // this.props.context.toggleExplorer({close: true})
+          // this.setState({tagsTrigger: false})
           return
         }
         else{
@@ -236,13 +239,13 @@ export default class ArtworkInfo extends React.Component{
         }
       }
       else{
-        // this.props.context.toggleExplorer({close: true})
         this.setState({infoUp: !this.state.infoUp}, () => {
           this.props.context.showInfo(e)
         })
         return
       }
     };
+
     this.secondaryInfo = () => {
       return <Fragment>
           {this.descriptions()}
@@ -293,7 +296,7 @@ export default class ArtworkInfo extends React.Component{
     return(
       <div
         // className={"ArtworkInfo-container"}
-        className={`ArtworkInfo-container ${this.props.context.state.mobile && this.state.tagsTrigger ? "ArtworkInfo-toggleTags" : ""}`}
+        className={`ArtworkInfo-container ${this.props.context.state.mobile && this.props.context.state.showExplorer && this.props.context.state.info.infoUp ? "ArtworkInfo-toggleTags" : ""}`}
         id="ArtworkInfo-container"
       >
           <ArtworkTitle 
