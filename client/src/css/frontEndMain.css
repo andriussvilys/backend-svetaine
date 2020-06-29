@@ -692,7 +692,7 @@ label {
   font-family: 'Courier New', Courier, monospace !important;
   border: 1px solid black;
   padding: 2px 7px 2px 7px !important;
-  margin: 2px 3px !important;
+  margin: 2px 0px 2px 8px !important;
   cursor: pointer;
   text-transform: unset !important;
 }
@@ -711,19 +711,22 @@ label {
 .Tags-item_container-closeButton {
   -webkit-transition: width 0.2s, white 0.2s;
   transition: width 0.2s, white 0.2s;
-}
-
-.Tags-item_container-closeButton_closed {
   width: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   overflow: hidden;
 }
 
 .Tags-item_container-closeButton_open {
-  min-width: 60px;
+  width: 60px;
   color: white;
   font-weight: bold;
   text-transform: uppercase !important;
-  margin-left: 6px;
+  border: none;
 }
 
 .Tags-item_container-closeButton_open .Tags-item_text {
@@ -732,12 +735,9 @@ label {
 }
 
 .Tags-item_container-closeButton_open button {
-  width: 100%;
   background-color: red;
+  width: 100%;
   border: none;
-  padding: 0 !important;
-  margin: 0 !important;
-  border: 0;
 }
 
 .enlarge-preview {
@@ -871,10 +871,6 @@ label {
 
 .SeeAlso-wrapper {
   max-width: 100%;
-}
-
-.SeeAlso-related {
-  margin-right: 3px;
 }
 
 .ArtworkInfo-container_seealso {
@@ -1354,9 +1350,6 @@ label {
   .ArtworkInfo-preview-container {
     height: 60px;
   }
-  .SeeAlso-related {
-    margin: 0;
-  }
   .SeeAlso-related_images {
     max-height: 70px;
   }
@@ -1728,6 +1721,9 @@ label {
   .Tags-item_container {
     margin: 3px 0 0 6px !important;
     padding: 2px 5px 2px 5px !important;
+  }
+  .Tags-item_container-closeButton_open {
+    height: 32px;
   }
 }
 

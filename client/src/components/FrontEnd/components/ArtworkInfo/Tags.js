@@ -160,7 +160,7 @@ const Tags = (props) => {
                 {tags(props.file)}  
             </div>
             <div 
-                className={`Tags-item_container-closeButton ${props.context.state.showExplorer ? "Tags-item_container-closeButton_open" : "Tags-item_container-closeButton_closed"}`}
+                className={`Tags-item_container-closeButton ${props.context.state.showExplorer ? " Tags-item_container-closeButton_open" : ""}`}
             >
                 <button 
                     className="Tags-item_container"

@@ -326,13 +326,9 @@ font-family: 'Times New Roman', Times, serif;
     text-indent: -100%;
     overflow: hidden;
     flex: 1 1 19%;
-    // height: 200px;
     min-width: 59px;
     max-height: 200px;
     border-top: 9px solid red;
-    // border-left: 1px solid red;
-    // border-right: 1px solid red;
-    // border-bottom: 1px solid red;
 }
 .FilePreview--imageContainer__empty{
     overflow: hidden;
@@ -483,7 +479,7 @@ font-family: 'Times New Roman', Times, serif;
     font-family: 'Courier New', Courier, monospace !important;
     border: 1px solid black;
     padding: 2px 7px 2px 7px !important;
-    margin: 2px 3px !important;
+    margin: 2px 0px 2px 8px !important;
     cursor: pointer;
     text-transform: unset !important;
 }
@@ -498,28 +494,25 @@ font-family: 'Times New Roman', Times, serif;
 }
 .Tags-item_container-closeButton{
     transition: width 0.2s, $background-color 0.2s;
-}
-.Tags-item_container-closeButton_closed{
     width: 0;
+    display: flex;
+    justify-content: center;
     overflow: hidden;
 }
 .Tags-item_container-closeButton_open{
-    min-width: 60px;
+    width: 60px;
     color: white;
     font-weight: bold;
     text-transform: uppercase !important;
-    margin-left: 6px;
+    border: none;
     .Tags-item_text{
         color: white;
         font-weight: unset;
     }
     button{
-        width: 100%;
         background-color: red;
+        width: 100%;
         border: none;
-        padding: 0 !important;
-        margin: 0 !important;
-        border: 0;
     }
 }
 .enlarge-preview{
@@ -633,10 +626,6 @@ font-family: 'Times New Roman', Times, serif;
 .SeeAlso-wrapper{
     max-width: 100%;
 }
-.SeeAlso-related{
-    margin-right: 3px;
-}
-
 .ArtworkInfo-container_seealso{
     display: flex;
     justify-content: space-between;
@@ -718,13 +707,6 @@ font-family: 'Times New Roman', Times, serif;
     position: initial;
     margin-left: 5px;
 }
-// .TagsMenu-Accordion-label{
-//     display: flex !important;
-//     justify-content: space-between !important;
-//     border: 1px solid black;
-//     margin: 3px;
-//     flex: 1 1 48%;
-// }
 .TagsMenu-Accordion-label.category{
     height: 40px;
 }
@@ -813,8 +795,6 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
 }
 .scroll-down-listitem{
-    // height: auto;
-    // padding: 4px 24px;
     transform: translateY(100%);
     opacity: 1 !important;
 }
@@ -893,41 +873,12 @@ font-family: 'Times New Roman', Times, serif;
     right: 30px;
     overflow: visible;
 }
-// .styledCheckbox-container{
-//     display: block;
-//     position: relative;
-//     margin-bottom: 12px;
-//     cursor: pointer;
-//     font-size: 22px;
-//     // user-select: none;
-//     overflow: hidden;
-//     border-left: 1px solid black;
-//     background-color: white;
-// }
 .styledCheckbox-container_large{
     padding-left: 40px;
 }
 .styledCheckbox-container_small{
     padding-left: 18px;
 }
-// .styledCheckbox-checkbox{
-//     position: absolute;
-//     opacity: 0;
-//     cursor: pointer;
-//     height: 0;
-//     width: 0;
-//     right: 0;
-// }
-// .styleCheckbox-checkmark{
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     height: 100%;
-//     width: 100%;
-//     border: solid black;
-//     border-radius: 99px;
-//     border-width: 2px;
-// }
 .styledCheckbox-container_large .styleCheckbox-checkmark{
     left: calc(50% - 10px);
     top: calc(50% - 10px);
@@ -1027,9 +978,6 @@ font-family: 'Times New Roman', Times, serif;
     }
     .ArtworkInfo-preview-container{
         height: 60px;
-    }
-    .SeeAlso-related{
-        margin: 0;
     }
     .SeeAlso-related_images{
         max-height: 70px;
@@ -1339,6 +1287,9 @@ font-family: 'Times New Roman', Times, serif;
     .Tags-item_container{
         margin: 3px 0 0 6px !important;
         padding: 2px 5px 2px 5px !important;
+    }
+    .Tags-item_container-closeButton_open{
+        height: 32px;
     }
   }
 

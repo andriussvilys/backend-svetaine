@@ -17,6 +17,7 @@ const ImageSelect = (props) => {
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
                         mobile={props.mobile}
+                        // id={`${props.customClass}-${data[objName]}`}
                         />
               }
               else{
@@ -30,11 +31,11 @@ const ImageSelect = (props) => {
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
                         mobile={props.mobile}
+                        // id={`${props.customClass}-${data[objName]}`}
                         />
               }
             })
             return <div 
-                      // id="imageSelect"
                       id={props.customId || "imageSelect"}
                       className={
                         `imageSelect-container 
