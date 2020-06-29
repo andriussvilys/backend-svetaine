@@ -1946,21 +1946,20 @@ label {
   -ms-grid-column: 1;
       grid-column-start: 1;
   grid-column-end: 2;
-  top: 30px;
   overflow-y: scroll;
   height: 100%;
-  width: 0;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 14px;
   background-color: white;
   border-right: 1px solid black;
-  padding-bottom: 50px;
+  width: 0;
 }
 
 .FilterTree-wrapper {
   width: 220px;
   height: 100%;
   padding-bottom: 50px;
+  padding-right: 20px;
 }
 
 .show-menu {

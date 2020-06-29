@@ -547,78 +547,81 @@ export class Provider extends React.Component{
       })
       return onDisplay.length > 0
     }
+    this.enlargeWidth = () => {
+      if(!this.state.mobile){
+        console.log("ENLARGE SIZE")
+        const container = document.getElementById("enlargeContainer")
+        const images = document.getElementById("images")
+        const imageSelect = document.getElementById("imageSelect")
+        const filters = document.getElementById("TagsMenu")
+        let enlargeContainerWidth = images.offsetWidth
+        console.log(`ENLARGE WIDTH ON START ${enlargeContainerWidth}px`)
+        //check explorer
+        if(this.state.showExplorer){
+          console.log("MINUS EXPLORER")
+          enlargeContainerWidth -= imageSelect.offsetWidth
+          console.log(`${enlargeContainerWidth}px`)
+        }
+        if(!this.state.info.infoUp && this.state.showExplorer){
+          enlargeContainerWidth += imageSelect.offsetWidth
+        }
+        //check filters
+        if(this.state.showFilters){
+          console.log("MINUS FILTERS")
+          enlargeContainerWidth -= filters.offsetWidth
+          console.log(`${enlargeContainerWidth}px`)
+        }
+        //set enlargeContainer size
+        console.log(`NEW WIDTH ${enlargeContainerWidth}px`)
+        container.style.width = `${enlargeContainerWidth}px`
+        return 
+      }
+      else{return}
+    }
     this.showMenu = (e) => {
       //Mobile
       if(e){
         e.stopPropagation()
       }
 
-      this.setState({showFilters: !this.state.showFilters})
-      
-      if(this.state.mobile){
-        const images = document.getElementById("imageSelect")
-        // const images = document.getElementById("images")
-        
-        let delay = 1
-        //if menu is open
-        if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-          
-          //if listitem drawer is open
-          if(document.getElementsByClassName("scroll-down-listitem").length > 0){
-            document.getElementsByClassName("scroll-down-listitem")[0].classList.remove("scroll-down-listitem")
-            delay += 100
+      this.setState({showFilters: !this.state.showFilters}, () => {
+          if(this.state.mobile){
+            // const images = document.getElementById("imageSelect")
+            // // const images = document.getElementById("images")
+            
+            // let delay = 1
+            // //if menu is open
+            // if(document.getElementById("TagsMenu").classList.contains("show-menu")){
+              
+            //   //if listitem drawer is open
+            //   if(document.getElementsByClassName("scroll-down-listitem").length > 0){
+            //     document.getElementsByClassName("scroll-down-listitem")[0].classList.remove("scroll-down-listitem")
+            //     delay += 100
+            //   }
+    
+            //   setTimeout(() => {
+            //     if(document.getElementsByClassName("scroll-down").length > 0){
+            //       document.getElementsByClassName("scroll-down")[0].classList.remove("scroll-down")
+            //       delay += 50
+            //     }
+            //     setTimeout(() => {
+            //       document.getElementById("TagsMenu").classList.remove("show-menu")
+            //     }, delay);
+            //   }, delay);
+    
+            // }
+            // //if menu is closed
+            // else{
+              
+            //   document.getElementById("TagsMenu").classList.add("show-menu")
+            // }
           }
-
-          setTimeout(() => {
-            if(document.getElementsByClassName("scroll-down").length > 0){
-              document.getElementsByClassName("scroll-down")[0].classList.remove("scroll-down")
-              delay += 50
-            }
-            setTimeout(() => {
-              document.getElementById("TagsMenu").classList.remove("show-menu")
-            }, delay);
-          }, delay);
-
-        }
-        //if menu is closed
-        else{
-          
-          document.getElementById("TagsMenu").classList.add("show-menu")
-        }
-      }
-      //DESKTOP
-      else{
-        
-        if(this.state.enlarge && this.state.enlarge.open){
-          //if menu closed
-          if(document.getElementById("TagsMenu").classList.contains("show-menu")){
-            if(this.state.enlarge && this.state.enlarge.open){
-              document.getElementById("TagsMenu").classList.remove("show-menu")
-
-              this.animateEnlarge(this.state.enlarge.background)
-            }
-            else{
-              document.getElementById("TagsMenu").classList.remove("show-menu")
-              document.getElementById("imageSelect").style.width = "100%"
-            }
-            return
-          }
-          //if menu open
+          //DESKTOP
           else{
-              if(this.state.enlarge.open){
-                const imageSelect = document.getElementById("imageSelect")
-
-                // imageSelect.style.width = "auto"
-                document.getElementById("TagsMenu").classList.add("show-menu")
-                this.animateEnlarge(this.state.enlarge.background)
-              }
-              else{
-                document.getElementById("imageSelect").style.width = "100%"
-              }
+            this.enlargeWidth()
           }
-        }
-        else document.getElementById("TagsMenu").classList.toggle("show-menu")
-      }
+      })
+      
     }
     this.hideArtworkInfo = (e) => {
       if(e){
@@ -772,45 +775,22 @@ export class Provider extends React.Component{
       return {width: futureWidth, height: futureHeight}
     }
     this.toggleExplorer = (options) => {
-      const container = document.getElementById("enlargeContainer")
-      const images = document.getElementById("images")
-      const imageSelect = document.getElementById("imageSelect")
-      const filters = document.getElementById("TagsMenu")
-
-      let enlargeContainerWidth = images.clientWidth
 
       if(options && options.close){
         console.log("CLOSE TAGS")
-        // if(!this.state.mobile && this.state.info.infoUp){
-        //   enlargeContainerWidth += imageSelect.clientWidth
-        //   container.style.width = `${enlargeContainerWidth}px`
-        //   return
-        // }
         this.setState({showExplorer: false}, () => {
           if(!this.state.mobile){
-            let enlargeContainerWidth = images.clientWidth
-            if(!this.state.showExplorer){
-              enlargeContainerWidth += imageSelect.clientWidth
-            }
-            if(!this.state.showFilters){
-              enlargeContainerWidth += filters.clientWidth
-            }
-            container.style.width = `${enlargeContainerWidth}px`
+            this.enlargeWidth()
+            return 
           }
         })
-        return
       }
       if(!this.state.showExplorer){
         console.log("OPEN TAGS")
         this.setState({showExplorer: true}, () => {
           if(!this.state.mobile){
-            if(this.state.showExplorer){
-              enlargeContainerWidth -= imageSelect.clientWidth
-            }
-            if(this.state.showFilters){
-              enlargeContainerWidth -= filters.clientWidth
-            }
-            container.style.width = `${enlargeContainerWidth}px`
+            this.enlargeWidth()
+            return 
           }
         })
       }
@@ -886,12 +866,12 @@ export class Provider extends React.Component{
               let scrollToDelay = 0
 
               if(!this.state.mobile){
-                let enlargeContainerWidth = images.clientWidth
+                let enlargeContainerWidth = images.offsetWidth
                 if(this.state.showExplorer){
-                  enlargeContainerWidth -= imageSelect.clientWidth
+                  enlargeContainerWidth -= imageSelect.offsetWidth
                 }
                 if(this.state.showFilters){
-                  enlargeContainerWidth -= filters.clientWidth
+                  enlargeContainerWidth -= filters.offsetWidth
                 }
                 container.style.width = `${enlargeContainerWidth}px`
               }
@@ -1043,32 +1023,20 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
-      const container = document.getElementById("enlargeContainer")
-      const images = document.getElementById("images")
-      const imageSelect = document.getElementById("imageSelect")
       let newState = {...this.state}
 
       if(this.state.info.infoUp){
         newState.info.infoUp = false
-        if(!this.state.mobile){
-          let enlargeContainerWidth = images.clientWidth
-          enlargeContainerWidth += imageSelect.clientWidth
-          container.style.width = `${enlargeContainerWidth}px`
-        }
-        this.setState(newState, () => {
-          // this.toggleExplorer({close:true})
-        })
       }
 
       else{
         newState.info.infoUp = true
-        if(!this.state.mobile && this.state.showExplorer){
-          let enlargeContainerWidth = images.clientWidth
-          enlargeContainerWidth -= imageSelect.clientWidth
-          container.style.width = `${enlargeContainerWidth}px`
-        }
-        this.setState(newState)
       }
+      this.setState(newState, () => {
+        if(!this.state.mobile){
+            this.enlargeWidth()
+          }
+        })
       return
     }
     this.toggleMobile = () => {

@@ -21,7 +21,10 @@ export class List extends React.Component{
       }
     }
     render(){
-        return(<div id="TagsMenu" className="FilterTree-container">
+        return(<div id="TagsMenu" 
+        className="FilterTree-container"
+        className={`FilterTree-container ${this.props.context.state.showFilters ? "show-menu" : ""}`}
+        >
                 <div className={"FilterTree-wrapper"}>
                     {this.props.data ? this.createList(this.props.data) : null}
                     {this.props.context.state.artworkOnDisplay ?                 
