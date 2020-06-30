@@ -67,15 +67,16 @@ export class Provider extends React.Component{
           newState.filters.onDisplay = {...newState.filters.empty}
           if(nestOfLastValue){
             newState.filters.onDisplay[nestOfLastValue] = [lastValue]
-            newState.artworkOnDisplay = this.filter(nestOfLastValue, lastValue).artworkOnDisplayS
+            newState.artworkOnDisplay = this.filter(nestOfLastValue, lastValue).artworkOnDisplay
           }
-          return newState.filters
         }
 
         else{
           newState.filters.onDisplay = {...newState.filters.empty}
-          return newState.filters
         }
+        console.log("checFilters STATE")
+        console.log(newState.filters)
+        return newState.filters
       }
 
       //IF SWITCHING COMPOUND FILTERS ON
