@@ -1646,6 +1646,10 @@ h5 {
   min-height: 50px;
 }
 
+.ImageBox_artworkOnDisplay {
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 720px) {
   .EditDetailContainer-artworkOnDisplay .grid-wrapper {
     -ms-grid-columns: (minmax(auto, calc(25% - 4px)))[auto-fill];

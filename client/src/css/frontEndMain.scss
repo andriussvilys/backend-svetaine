@@ -465,7 +465,9 @@ font-family: 'Times New Roman', Times, serif;
     animation-timing-function: ease-out;
 }
 .Tags-item_wrapper{
-    display: flex;
+    // display: flex;
+    display: grid;
+    grid-template-columns: 1fr min-content;
     margin: 20px 0 10px 0;
     justify-content: flex-end;
     
