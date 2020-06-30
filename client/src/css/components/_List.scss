@@ -16,6 +16,7 @@ $filtersWidth_desktop: 220px;
     background-color: white;
     border-right: 1px solid black;
     width: 0;
+    padding-top: 20px;
 }
 .FilterTree-wrapper{
     width: $filtersWidth_desktop;
@@ -106,6 +107,7 @@ $filtersWidth_desktop: 220px;
 @media only screen and (max-width: 720px) {
     $filtersWidth_mobile: 220px;
     .FilterTree-container{
+        padding-top: 0;
         font-size: 16px;
         border-right: 1px solid black;
     }

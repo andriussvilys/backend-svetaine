@@ -67,7 +67,7 @@ export class Provider extends React.Component{
           newState.filters.onDisplay = {...newState.filters.empty}
           if(nestOfLastValue){
             newState.filters.onDisplay[nestOfLastValue] = [lastValue]
-            newState.artworkOnDisplay = this.filter(nestOfLastValue, lastValue).artworkOnDisplay
+            newState.artworkOnDisplay = this.filter(nestOfLastValue, lastValue).artworkOnDisplayS
           }
           return newState.filters
         }
@@ -708,6 +708,11 @@ export class Provider extends React.Component{
       const container = document.getElementById("enlargeContainer")
       let newState = {...this.state}
       newState.showFilters = !this.state.showFilters
+      if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
+        if(newState.showFilters){
+          newState.showExplorer = true
+        }
+      }
       this.setState(newState, () => {
           if(this.state.mobile){
           }

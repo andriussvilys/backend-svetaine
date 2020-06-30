@@ -84,3 +84,24 @@ $padding: 6px;
   .slider.round:before {
     border-radius: 50%;
   }
+  
+.combineFilters-form{
+  display: block;
+}
+.combineFilters-title{
+  font-weight: bold;
+}
+.combineFilters-label{
+  margin-right: 10px;
+  cursor: pointer;
+  flex: 1;
+  font-size: 12px;
+}
+.combineFilters-inputContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3px;
+  border: 1px solid black;
+  padding: 3px;
+}
