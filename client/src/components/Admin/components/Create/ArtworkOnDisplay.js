@@ -19,6 +19,20 @@ export default class EditDetailContainer extends React.Component{
             allFiles: this.props.state.artworkInfoData
         }
     }
+
+    selectImage = (file) => {
+        const selected = this.state.selectedFiles.includes(file.fileName)
+        let newState = {...this.state}
+        let selectedFiles = []
+        if(selected){
+            selectedFiles = newState.selectedFiles.filter(fileName => fileName !== file.fileName)
+        }
+        else{
+            selectedFiles = [...newState.selectedFiles, file.fileName]
+        }
+        newState.selectedFiles = selectedFiles
+        this.setState(newState)
+    }
     
     EditDetail = (file) => {
         if(!file){return}
@@ -27,8 +41,10 @@ export default class EditDetailContainer extends React.Component{
                     file={file}
                     key={`${file.fileName}-detail`}
                     directory={this.state.selectedFiles}
-                    toggleShowInfo={true}
+                    // toggleShowInfo={true}
+                    onImageClick={() => this.selectImage(file)}
                     hideInfo={true}
+                    customClass={"ImageBox_artworkOnDisplay"}
                 >
                     <Button
                         onClick={() => {

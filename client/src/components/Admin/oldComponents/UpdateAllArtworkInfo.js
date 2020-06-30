@@ -86,6 +86,7 @@ const UpdateAllArtworkInfo = (props) => {
     
     return(
         <Button
+            disabled={props.disabled}
             onClick={() => {
                 commenceUpdate()
             }}

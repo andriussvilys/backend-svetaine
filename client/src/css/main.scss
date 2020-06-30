@@ -816,6 +816,9 @@ font-family: 'Times New Roman', Times, serif;
 .descriptionPreview--content{
     min-height: 50px;
 }
+.ImageBox_artworkOnDisplay{
+    cursor: pointer;
+}
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     .EditDetailContainer-artworkOnDisplay{

@@ -9,7 +9,8 @@ export default class ImageBox extends React.Component{
             toggleShowInfo: null
         }
         this.highlighter = (fileName) => {
-            return props.directory ? props.directory.includes(fileName) : false
+            // console.log(`${fileName} IS SELECTED: ${this.props.directory.includes(fileName)}`)
+            return this.props.directory ? this.props.directory.includes(fileName) : false
         }
     }
     componentDidMount(){
@@ -19,6 +20,11 @@ export default class ImageBox extends React.Component{
         return(
             <div 
                 className={`imageBox__wrapper ${this.props.customClass ? this.props.customClass : ""} ${this.highlighter(this.props.file.fileName)? 'themes-list--selected' : 'notSelected'}`}
+                onClick={() => {
+                    if(this.props.onImageClick){
+                        this.props.onImageClick()
+                    }
+                }}
             >
             <FilePreview 
                 file={this.props.file}

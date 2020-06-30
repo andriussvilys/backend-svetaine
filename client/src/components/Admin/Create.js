@@ -273,12 +273,13 @@ componentDidMount(){
                               this.setState(newState)
                             })
                         }}>
-                          WRITE NEW STAIC STATE
+                          WRITE NEW STATIC STATE
                         </Button>
                         <br/>
                         <Button 
                         variant="success" 
                         style={{margin: "10px"}}
+                        disabled
                         onClick={() => 
                         {
                           this.setState({
@@ -305,7 +306,9 @@ componentDidMount(){
                           Create production build
                         </Button>
                         <br/>
-                        <UpdateAllArtworkInfo />
+                        <UpdateAllArtworkInfo 
+                          disabled
+                        />
                       </Tab>
                     </Tabs>
                   </div>
