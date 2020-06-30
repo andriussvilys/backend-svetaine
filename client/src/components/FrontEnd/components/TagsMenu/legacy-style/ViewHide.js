@@ -12,7 +12,6 @@ export default class ViewHide extends React.Component{
                 <button
                     disabled={onDisplay.length > 0}
                     className={`button_legacy-style ${!onDisplay.length > 0 ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
-                    // className={`button_legacy-style ${!this.state.view ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
                     onClick={() => {
                         this.setState({view: !this.state.view})
                         this.props.context.resetAll()}}
@@ -20,7 +19,6 @@ export default class ViewHide extends React.Component{
                 <button
                     disabled={!onDisplay.length > 0}
                     className={`button_legacy-style ${onDisplay.length > 0 ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
-                    // className={`button_legacy-style ${this.state.view ? `button_legacy-style_disable` : `button_legacy-style_enable`}`}
                     onClick={() => {
                         this.setState({view: !this.state.view})
                         this.props.context.resetAll(true)}}
