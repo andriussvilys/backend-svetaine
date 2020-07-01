@@ -277,6 +277,7 @@ componentDidMount(){
                         </Button>
                         <br/>
                         <Button
+                          disabled
                           onClick={() => {
                             this.context.buildProd()
                           }}

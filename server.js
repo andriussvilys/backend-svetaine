@@ -56,7 +56,7 @@ app.use('/fetchImages', fetchImages);
 app.use('/deleteImage', deleteImage);
 
 app.use('/staticState', staticState);
-app.use('/build-prod', buildProd);
+app.use('/buildProd', buildProd);
 app.use('/resize', resize);
 app.use('/imagemin', imagemin);
 // this uses a folder inside the server
@@ -66,8 +66,8 @@ app.use((err, req, res, next) => {
     res.status(500).send({error: err})
 })
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//   });
