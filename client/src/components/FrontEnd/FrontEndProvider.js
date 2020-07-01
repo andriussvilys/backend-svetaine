@@ -946,11 +946,11 @@ export class Provider extends React.Component{
         newState.enlarge.foreground = enlarge.background
         newState.enlarge.open = true
 
-
+            container.classList.add("enlarge-scroll-left")
         this.setState(newState, () => {
           backgroundLoad
           .then(res => {
-            container.classList.add("enlarge-scroll-left")
+            // container.classList.add("enlarge-scroll-left")
             let futureSize = null
             
               //COUNT FUTURE SIZES
