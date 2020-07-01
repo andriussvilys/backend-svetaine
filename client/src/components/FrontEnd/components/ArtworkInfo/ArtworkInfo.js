@@ -258,11 +258,11 @@ export default class ArtworkInfo extends React.Component{
             <Tags 
               file={this.props.file.foreground} 
               context={this.props.context} 
-              tagsTrigger={() => {
-                this.setState({tagsTrigger: true}, () => {
-                  this.props.context.toggleExplorer()
-                })
-              }}
+              // tagsTrigger={() => {
+              //   this.setState({tagsTrigger: true}, () => {
+              //     this.props.context.toggleExplorer()
+              //   })
+              // }}
               onClose={() => {
                 this.setState({tagsTrigger: false}, () => {
                   this.props.context.toggleExplorer({close: true})

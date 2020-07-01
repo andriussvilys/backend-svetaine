@@ -47,7 +47,7 @@ const Tags = (props) => {
             themes = themes.map(theme => {return {
                 "type": "theme", 
                 "title": theme, 
-                "onClick": props.context.filterByTheme
+                "onClick": props.context.tagFilter
                 }
             })
             DOMthemes = themes.map((tag, index) => {
@@ -55,10 +55,11 @@ const Tags = (props) => {
                 key={`tag-${tag}${index}`}
                 className="Tags-item_container"
                 onClick={(e) => {e.stopPropagation(); 
-                    if(props.tagsTrigger){
-                        props.tagsTrigger()
-                    }
-                    animateFilter(tag.onClick(e, tag.title, true))
+                    // if(props.tagsTrigger){
+                    //     props.tagsTrigger()
+                    // }
+                    // animateFilter(tag.onClick(e, tag.title, true))
+                    animateFilter(tag.onClick("themes", tag.title))
                 }}
                 >
                     <span className="Tags-item_text">{tag.title}</span>
@@ -71,7 +72,7 @@ const Tags = (props) => {
             return {
                 "type": "category", 
                 "title": category, 
-                "onClick": props.context.filterByCategory
+                "onClick": props.context.tagFilter
             }
         })
         const DOMcategories = categories.map((tag, index) => {
@@ -79,10 +80,11 @@ const Tags = (props) => {
             key={`category-${tag.title}${index}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
-                if(props.tagsTrigger){
-                    props.tagsTrigger()
-                }
-                animateFilter(tag.onClick(e, tag.title, true))
+                // if(props.tagsTrigger){
+                //     props.tagsTrigger()
+                // }
+                // animateFilter(tag.onClick(e, tag.title, true))
+                animateFilter(tag.onClick("category", tag.title))
             }}
             >
                 <span className="Tags-item_text">{tag.title}</span>
@@ -97,7 +99,7 @@ const Tags = (props) => {
                     "type": "subcategory", 
                     "title": subcategory, 
                     "category": category.title, 
-                    "onClick": props.context.filterBySubcategory
+                    "onClick": props.context.tagFilter
                 }
             })
         })
@@ -109,10 +111,11 @@ const Tags = (props) => {
             key={`subcategory-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
-                if(props.tagsTrigger){
-                    props.tagsTrigger()
-                }
-                animateFilter(tag.onClick(e, tag.category, tag.title, true))
+                // if(props.tagsTrigger){
+                //     props.tagsTrigger()
+                // }
+                // animateFilter(tag.onClick(e, tag.category, tag.title, {tagFilter: true}))
+                animateFilter(tag.onClick("subcategory", tag.title))
             }}
             >
                 <span className="Tags-item_text">{tag.title}</span>
@@ -129,7 +132,7 @@ const Tags = (props) => {
                     "title": listItem,
                     "category": category.title,
                     "subcategory": subcategory,
-                    "onClick": props.context.filterByListitem
+                    "onClick": props.context.tagFilter
                 }
             })
             })
@@ -139,10 +142,12 @@ const Tags = (props) => {
             key={`listitem-${tag.title}`}
             className="Tags-item_container"
             onClick={(e) => {e.stopPropagation(); 
-                if(props.tagsTrigger){
-                    props.tagsTrigger()
-                }
-                animateFilter(tag.onClick(e,tag.category, tag.subcategory, tag.title, true))
+                // if(props.tagsTrigger){
+                //     props.tagsTrigger()
+                // }
+                // animateFilter(tag.onClick(e,tag.category, tag.subcategory, tag.title, {tagFilter: true}))
+                // this.tagFilter = (displayTrigger, value)
+                animateFilter(tag.onClick("listitems", tag.title))
             }}
             >
                 <span className="Tags-item_text">{tag.title}</span>

@@ -280,6 +280,12 @@ export class Provider extends React.Component{
         })
       newState.artworkOnDisplay = newArtworkonDisplay
       newState.filters.onDisplay = newOnDisplay
+      
+      // if(this.state.compoundFilters){
+      //   newState.filters = this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
+      //   console.log("CHACK FILTERS WITH COMBINE FILTERS")
+      //   console.log(newState)
+      // }
 
       //toggle show explorer if enlarge.open on DESKTOP
       if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
@@ -288,6 +294,18 @@ export class Provider extends React.Component{
       newState.filters.lastValue = value
       // return this.setState(newState, () => {this.enlargeWidth()})
       return newState
+    }
+    this.tagFilter = (displayTrigger, value) => {
+      return new Promise((resolve, reject) => {
+        console.log("run tag filters")
+        let newState = {...this.filter(displayTrigger, value)}
+        newState.filters = this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
+        console.log(newState)
+        return this.setState(newState, () => {
+          this.enlargeWidth()
+          resolve()
+        })
+      })
     }
     this.compoundFilter = (displayTrigger, value) => {
       let newState = {...this.state}
@@ -346,13 +364,11 @@ export class Provider extends React.Component{
       }
       return this.setState(newState, () => {this.enlargeWidth()})
     }
-    this.filterBySubcategory = (e, category, subcategory, hideAll) => {
+    this.filterBySubcategory = (e, category, subcategory, options) => {
       e.stopPropagation()
       console.log(" FILTER BY SUB")
       return new Promise ((res, rej) => {
-          if(!this.state.compoundFilters){
-
-            // return this.filter("subcategory", subcategory)
+          if(!this.state.compoundFilters || options && options.tagFilter){
             let newState = this.filter("subcategory", subcategory)
             return this.setState(newState, () => {this.enlargeWidth()})
           }
@@ -361,13 +377,11 @@ export class Provider extends React.Component{
           }
       })
     }
-    this.filterByListitem = (e, category, subcategory, listitem, hideAll) => {
+    this.filterByListitem = (e, category, subcategory, listitem, options) => {
       console.log("FILTER BY LIST ITEM")
       e.stopPropagation()
       return new Promise ((res, rej) => {
-        if(!this.state.compoundFilters){
-          // let newState = {...this.state}
-          // newState.filters = this.filter("listitems", listitem)
+        if(!this.state.compoundFilters || options && options.tagFilter){
           let newState = this.filter("listitems", listitem)
           return this.setState(newState, () => {this.enlargeWidth()})
         }
@@ -706,14 +720,20 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
-      const container = document.getElementById("enlargeContainer")
       let newState = {...this.state}
-      newState.showFilters = !this.state.showFilters
-      if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
-        if(newState.showFilters){
-          newState.showExplorer = true
+      if(this.state.showLess){
+        newState.showLess = false
+      }
+      
+      else{
+        newState.showFilters = !this.state.showFilters
+        if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
+          if(newState.showFilters){
+            newState.showExplorer = true
+          }
         }
       }
+
       this.setState(newState, () => {
           if(this.state.mobile){
           }
@@ -743,24 +763,10 @@ export class Provider extends React.Component{
       document.getElementById('imageSelect').style.width = `100%`   
       enlargeContainer.classList.remove("enlarge-scroll-left")
 
-        // setTimeout(() => {
-        //   const enlargeContainer = document.getElementById('enlargeContainer')
-        //     document.getElementById('imageSelect').style.width = `100%`
-
-        //     setTimeout(() => {
-        //       enlargeContainer.classList.remove("enlarge-opacity")
-        //       setTimeout(() => {
-        //         enlargeContainer.classList.remove("enlarge-scroll-left")
-        //       }, 50);
-        //     }, 50);
-        //   if(!clearAll){
-            let newState = {...this.state}
-            // const enlarge = {...this.state.enlarge}
-            newState.enlarge.open = false
-            newState.showExplorer = false
-            this.setState(newState)
-        //   }
-        // }, 50);
+      let newState = {...this.state}
+      newState.enlarge.open = false
+      newState.showExplorer = false
+      this.setState(newState)
     }
     this.viewNext = (direction) => {
       
@@ -1423,7 +1429,8 @@ export class Provider extends React.Component{
             addNew: this.addNew,
             isFilterChecked: this.isFilterChecked,
             compoundFiltersSwitch: this.compoundFiltersSwitch,
-            resetAll: this.resetAll
+            resetAll: this.resetAll,
+            tagFilter: this.tagFilter
 
             } }>
         {this.props.children}
