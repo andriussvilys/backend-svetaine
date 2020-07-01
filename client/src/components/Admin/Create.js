@@ -276,6 +276,13 @@ componentDidMount(){
                           WRITE NEW STATIC STATE
                         </Button>
                         <br/>
+                        <Button
+                          onClick={() => {
+                            this.context.buildProd()
+                          }}
+                        >
+                          BUILD PROD
+                        </Button>
                         <Button 
                         variant="success" 
                         style={{margin: "10px"}}

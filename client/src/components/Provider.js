@@ -2673,6 +2673,19 @@ export class Provider extends React.Component{
                     <span style={{marginLeft: "20px"}}>{MessageText}</span>
                 </div>
     }
+    this.buildProd = () => {
+        console.log("BUILD PROD LAUNCHED IN PROVIDER")
+        axios.post('/buildProd')
+            .then(res => {
+                console.log("BUILD PROD RES")
+                console.log(res)
+            })
+            .catch(err => {
+                console.log("BUILD PROD ERROR")
+                console.log(err)
+            })
+            
+    }
 
 }//END OF CONTSTRUCTOR
 
@@ -2834,7 +2847,8 @@ export class Provider extends React.Component{
             buildProd: this.buildProd,
             inputFamilyDescription: this.inputFamilyDescription,
             setArtworkOnDisplay: this.setArtworkOnDisplay,
-            toggleModal: this.toggleModal
+            toggleModal: this.toggleModal,
+            buildProd: this.buildProd
 
             } }>
         {this.props.children}

@@ -4,7 +4,7 @@ const {exec} = require('child_process')
 
 router.post('/', (req, res) => {
         // exec('npm run build-prod')
-
+        console.log("run buil prod")
         exec("npm run build-prod", (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
@@ -19,6 +19,18 @@ router.post('/', (req, res) => {
 
         // res.send(true)
 })
+
+// exec("npm run build-prod", (error, stdout, stderr) => {
+//     if (error) {
+//         console.log(`error: ${error.message}`);
+//         return;
+//     }
+//     if (stderr) {
+//         console.log(`stderr: ${stderr}`);
+//         return;
+//     }
+//     console.log(`stdout: ${stdout}`);
+// });
 
 
 
