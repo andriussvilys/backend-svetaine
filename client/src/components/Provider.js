@@ -1442,8 +1442,13 @@ export class Provider extends React.Component{
                                     reject()
                                 })
                             })
-                            .catch(err => {console.log("upload file fail"); console.log(err); reject(err)})
+                            .catch(err => {console.log("resize"); console.log(err); reject(err)})
                         })
+                        .catcg(err => {
+                            console.log("/api/artworkInfo/imageUpload")
+                            console.log(err)
+                            reject(err)
+                        }) 
                 })
         },
         //Removes selected file from state and thus DOM

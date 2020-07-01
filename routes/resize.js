@@ -4,7 +4,7 @@ const Jimp = require('jimp')
 
 
 router.post("/:fileName", (req, res, next) => {
-    Jimp.read(`./client/public/uploads/${req.params.fileName}`)
+    Jimp.read(`./client/build/uploads/${req.params.fileName}`)
     .then(image => {
             const newName = req.params.fileName.slice(0, req.params.fileName.indexOf("."))
             const fileExtension = req.params.fileName.slice(req.params.fileName.indexOf("."), req.params.fileName.length)
