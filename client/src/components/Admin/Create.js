@@ -164,23 +164,10 @@ componentDidMount(){
                                   const event = e
                                   this.context.addFileToState(event)
                                   .then(res => {
-                                    // this.setState({
-                                    // modalMessage: res
-                                    // })
                                   }
                                   )
                                   .catch(err => {
-                                    // this.setState({
-                                    //   modalMessage: err
-                                    // })
                                   })
-
-                                  // this.setState({
-                                  //   showModal: true,
-                                  //   modalMessage: "Reading files"
-                                  // }, () => {
-                                    
-                                  // })
                                   
                                   }} />
                                 <p className="subtitle">The name of uploaded file cannot contain spaces or any special characters except for "-"</p>
@@ -277,7 +264,6 @@ componentDidMount(){
                         </Button>
                         <br/>
                         <Button
-                          disabled
                           onClick={() => {
                             this.context.buildProd()
                           }}

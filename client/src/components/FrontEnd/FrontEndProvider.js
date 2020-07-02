@@ -884,7 +884,6 @@ export class Provider extends React.Component{
     this.toggleExplorer = (options) => {
 
       if(options && options.close){
-        console.log("CLOSE TAGS")
         this.setState({showExplorer: false}, () => {
           if(!this.state.mobile){
             this.enlargeWidth()
@@ -893,7 +892,6 @@ export class Provider extends React.Component{
         })
       }
       if(!this.state.showExplorer){
-        console.log("OPEN TAGS")
         this.setState({showExplorer: true}, () => {
           if(!this.state.mobile){
             this.enlargeWidth()
@@ -967,9 +965,6 @@ export class Provider extends React.Component{
               else{
                 futureSize = this.countWidth(file, container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
               }
-              console.log("futureSize")
-              console.log(futureSize)
-              console.log(`${futureSize.width} x ${futureSize.height}`)
               let scrollToDelay = 0
 
               if(!this.state.mobile){

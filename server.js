@@ -56,9 +56,10 @@ app.use('/fetchImages', fetchImages);
 app.use('/deleteImage', deleteImage);
 
 app.use('/staticState', staticState);
-app.use('/buildProd', buildProd);
+// app.use('/buildProd', buildProd);
 app.use('/resize', resize);
 app.use('/imagemin', imagemin);
+
 // this uses a folder inside the server
 // app.use(express.static('files'))
 

@@ -18,8 +18,6 @@ export default class Admin extends React.Component{
         }
     }
     render(){
-        console.log("auth in Admin")
-        console.log(auth)
         return(    
             <BrowserRouter>
                 <Provider>

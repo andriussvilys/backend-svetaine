@@ -29,23 +29,17 @@ const Login = (props) => {
                                 const password = document.getElementById("psw").value
                                 axios.get(`/api/users/${username}`)
                                     .then(res => {
-                                        console.log(`api/users/${username} response`)
-                                        console.log(res)
                                         if(res.data.password && res.data.password === password){
                                             if(res.data.username === "guest"){
                                             // if(username === "guest"){
-                                                console.log("LOGGED IN AS GUEST")
                                                 auth.login( () => props.history.push('/admin/create'), {guest: true})
                                             }
                                             else{
-                                                console.log("LOGGED IN AS ------------------ADMIN")
                                                 auth.login( () => props.history.push('/admin/create'), {guest: false})
                                             }
                                         }
                                         else{
                                             if(!res.data.username){
-                                                console.log("res.data.username !== username")
-                                                console.log(res.data)
                                                 userBgColor = wrongInput
                                             }
                                             passwordBgColor = wrongInput

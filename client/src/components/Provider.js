@@ -54,15 +54,12 @@ export class Provider extends React.Component{
         this.setState(newState)
     }
     this.onChange = (e, key, fileName) => {
-        console.log("onchange")
-        console.log(e.target.value ? e.target.value : e.target.innerHTML)
 
         console.log(`value - ${e.target.value}`)
         let target = null
         let newState = {...this.state}
         if(fileName){
             target = newState.fileData.files[fileName]
-            console.log(newState.fileData.files[fileName])
         }
         else{
             target = newState.familySetupData
@@ -98,10 +95,6 @@ export class Provider extends React.Component{
 
             const newAddition = document.getElementById(id).value;
             if(!this.verify().verified){
-                console.log("requestKey")
-                console.log(requestKey)
-                console.log("stateKey")
-                console.log(stateKey)
                 let newState = {...this.state}
                 if(newState[stateKey].includes(newAddition)){
                     return reject()
@@ -112,11 +105,8 @@ export class Provider extends React.Component{
             }
             if(requestKey === "artworkFamily"){
                 // promise = 
-                console.log(requestKey)
                     axios.post(router, {[requestKey]: newAddition})
                     .then( res => {
-                        console.log("res")
-                        console.log(res)
                         let addition = res.data[requestKey]
                           if(callback){
                               callback("Successfully recored")
@@ -146,9 +136,6 @@ export class Provider extends React.Component{
                 // promise = 
                     axios.put(router, {[requestKey]: newAddition})
                     .then( res => {
-                        console.log("______________________________")
-                        console.log(res)
-                        console.log("______________________________")
                         this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
                           if(callback){
                               callback(res.data)
@@ -176,7 +163,6 @@ export class Provider extends React.Component{
     }
 
     this.deleteTheme = (theme) => {
-        console.log("deleteTheme runs")
         return new Promise((resolve, reject) => {
             if(!this.verify().verified){
                 console.log("NOT verified")
@@ -185,8 +171,6 @@ export class Provider extends React.Component{
                 this.setState(newState, () => resolve({modalMessage: "State updated."}))
             }
             else{
-                console.log("run api/themes/delte")
-                console.log(`theme: ${theme}`)
                 axios.put('/api/themes/delete', {"list": theme})
                     .then(res => {
                         console.log("themee deleted")
@@ -211,7 +195,6 @@ export class Provider extends React.Component{
         return new Promise ((resolve, reject) => {
             axios.get('/fetchImages')
             .then(res => {
-                console.log(res)
                 resolve(res)
                 // this.setState({serverFileDir: res.data})
             })
@@ -246,7 +229,6 @@ export class Provider extends React.Component{
         
             if(document.getElementById("add-category").value){
                 if(Object.keys(this.state.categoriesOptionList.data).includes(document.getElementById("add-category").value)){
-                    console.log('input has value')
                     let selectedCategory = document.getElementById("add-category").value;
     
                     subCategoryDomList = this.state.categoriesOptionList.data[selectedCategory].map(subcategory => {
@@ -264,7 +246,6 @@ export class Provider extends React.Component{
                     </optgroup>
                 })
             }
-            console.log(optGroups)
             newState.categoriesOptionList.DOM.subCategories = subCategoryDomList
             if(optGroups){
                 newState.categoriesOptionList.DOM.subCategories = optGroups
@@ -275,7 +256,6 @@ export class Provider extends React.Component{
 
         submitNewCategory: () => {
             return new Promise((resolve, reject) => {
-                console.log("submitNew")
     
                 const categoryInput = document.getElementById("add-category")
                 const subcategoryInput = document.getElementById("add-subcategory")
@@ -297,9 +277,6 @@ export class Provider extends React.Component{
                     else{
                         reqBody.subcategory[subcategoryInput.value] = []
                     }
-
-                    console.log("reqBody")
-                    console.log(reqBody)
 
                     if(!this.verify({customGuestMessage: true}).verified){
                         let newState = {...this.state}
@@ -777,8 +754,6 @@ export class Provider extends React.Component{
                     return new Promise((resolve, reject) => {
                         const allFiles = {...this.state.artworkInfoData}
                         const fileToDelete = allFiles[fileName]
-                        console.log("FILE TO DELETE")
-                        console.log(fileToDelete)
                         const progressLength = fileToDelete.seeAlso.length
                         let progress = 0
                         if(!progressLength > 0){
@@ -787,19 +762,15 @@ export class Provider extends React.Component{
 
                         
                         fileToDelete.seeAlso.forEach(fileToUnlink => {
-                            console.log("FILE TO UNLINK")
                             if(!newState.artworkInfoData[fileToUnlink]){
                                 console.log(`${fileToUnlink} not found. Check ${fileName} "seeAlso" record in the database`)
                                 return
                             }
-                            console.log(newState.artworkInfoData[fileToUnlink])
                             newState.artworkInfoData[fileToUnlink].seeAlso = newState.artworkInfoData[fileToUnlink].seeAlso.filter(fileName => fileName !== fileToDelete.fileName)
-                            console.log(newState.artworkInfoData[fileToUnlink].seeAlso)
     
                             this.fileDataMethods.updateArtworkInfo(newState.artworkInfoData[fileToUnlink])
                             .then(res => {
                                 progress++
-                                console.log(`${progress} / ${progressLength}`)
                                 if(progress === progressLength){
                                     resolve()
                                 }
@@ -982,8 +953,6 @@ export class Provider extends React.Component{
 
         },
         onChangeDisplayTriggers: (value, string, fileName, familySetup, cb) => {
-            console.log("familySetup")
-            console.log(familySetup)
 
             let nestType = () => {
                 if(string !== "year" && string !== "location"){
@@ -1444,7 +1413,7 @@ export class Provider extends React.Component{
                             })
                             .catch(err => {console.log("resize"); console.log(err); reject(err)})
                         })
-                        .catcg(err => {
+                        .catch(err => {
                             console.log("/api/artworkInfo/imageUpload")
                             console.log(err)
                             reject(err)
@@ -1760,8 +1729,6 @@ export class Provider extends React.Component{
         },
         relateSeeAlso: (file) => {
             const fileName = file.fileName
-            console.log("relate see also init _____________________________________")
-            console.log(file)
             const makeSet = (array) => {
                 let newArray = new Set(array)
                 newArray = [...newArray]
@@ -1827,11 +1794,8 @@ export class Provider extends React.Component{
                                 })
                             })
                         })
-                        
-                        console.log("pre Promise all")
                         Promise.all([removeSeeAlsos, addSeeAlsos])
                         .then(res => {
-                            console.log("Promise All resolve")
                             resolve()
                         })
                         .catch(err => {
@@ -1877,10 +1841,6 @@ export class Provider extends React.Component{
             // if(!parent || !newValue){
             //     return
             // }
-            console.log("newValue")
-            console.log(newValue)
-            console.log("Parent")
-            console.log(parent)
             let target = null
             let newState = {...this.state}
             if(parent){
@@ -1934,8 +1894,6 @@ export class Provider extends React.Component{
                                 .then(res => {
                                     let databaseFiles = {}
                                     let usedNames = []
-                                    console.log()
-                                    console.log(res.data)
                                     //check that a record has a file in the server
                                     serverFileNames.forEach(fileName => {
                                         res.data.forEach(obj => {
@@ -2040,11 +1998,6 @@ export class Provider extends React.Component{
             } 
         },
         getFamilySetup: (value, string, fileName) => {
-            console.log("getFamilySetup runs")
-            console.log("value")
-            console.log(value)
-            console.log("fileName")
-            console.log(fileName)
             return new Promise((resolve, reject) => {
                 axios.get(`/api/familySetup/${value}`)
                 .then( res => {
@@ -2159,8 +2112,6 @@ export class Provider extends React.Component{
         },
         createFamilySetup: () => {
 
-            console.log('create family setup runs')
-
             const artworkFamily = this.state.familySetupData.artworkFamily;
             const category = this.state.familySetupData.category ? this.state.familySetupData.category : {};
             const familyDescription = this.state.familySetupData.familyDescription ? this.state.familySetupData.familyDescription : "";
@@ -2186,8 +2137,6 @@ export class Provider extends React.Component{
                 }
                 axios.post('/api/familySetup/create', requestBody)
                     .then( res => {
-                        console.log("create fam succes")
-                        console.log(res)
                         resolve("create fam succes")
                     })
                     .catch(err => {
@@ -2225,10 +2174,8 @@ export class Provider extends React.Component{
             return new Promise((resolve, reject) => {
                 axios.put(`/api/familySetup/update/${familyName}`, requestBody)
                     .then( res => { 
-                        console.log(res)
                         this.fileDataMethods.updateArtworkByFamily(familyName)
                         .then(res => {
-                            console.log("FIELS UPDATES")
                             resolve(`Artwork Family ${familyName} succesfully updated`)
                         })
                         .catch(err => {
@@ -2332,7 +2279,6 @@ export class Provider extends React.Component{
         else if (!options){return {verified: true}}
     }
     this.staticState = () => {
-        console.log("write static state runs")
         let newState = {}
 
         const getArtworkInfo = () => {
@@ -2388,7 +2334,6 @@ export class Provider extends React.Component{
 
         const serverFiles = () => {
             return new Promise ((resolve, rej) => {
-                console.log("read server files")
                 axios.get('/fetchimages')
                 .then(res => {
                     newState.serverData = res
@@ -2453,8 +2398,6 @@ export class Provider extends React.Component{
                 })
                 newState.familiesData = familiesData
                 newState.artworkFamilyList = familyList
-                console.log("Families loaded")
-                console.log(res)
                 resolve()
             })
             .catch(err => {
@@ -2523,8 +2466,6 @@ export class Provider extends React.Component{
         const ArtworkInfo = new Promise ((resolve, rej) => {
             getArtworkInfo()
                 .then(res => {
-                    console.log("this.getArtworkInfo res")
-                    console.log(res)
                     newState.artworkInfoData = res
                     let onDisplay = {}
                     
@@ -2617,12 +2558,9 @@ export class Provider extends React.Component{
                 .then(res => {
                     const newStaticStateJSON = JSON.stringify(newState)
                     const newStaticState = {string: `const staticState = ${JSON.stringify(newState)}; export default staticState`}
-                    console.log("_____________________________________________")
                     const reqBody = {"JSON": newStaticStateJSON, "jsImport": newStaticState}
-                    console.log(reqBody)
                     axios.post(`/staticState`, reqBody)
                         .then(res => { 
-                            console.log("file writen")
                             resolve()
                         })
                         .catch(err => {
@@ -2690,7 +2628,6 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
 
     componentDidMount(){
-        console.log('backend provider mount')
         let newState = {...this.state}
 
         let Themes = new Promise((resolve, rej) => {
@@ -2742,10 +2679,8 @@ export class Provider extends React.Component{
         })
             
         let ArtworkInfo = new Promise((resolve, rej) => {
-            console.log("artwork info gather runs")
             this.familySetupMethods.getArtworkInfo()
                 .then(res => {
-                    console.log(res)
                     newState.artworkInfoData = res
                     resolve()
                 })
@@ -2786,15 +2721,12 @@ export class Provider extends React.Component{
             }
 
         this.setState(stateCopy, () => {
-            console.log("STATE COPY FORE MODAL"); console.log(this.state)
             
                 allProgress([Categories, ArtworkInfo, Themes, ServerFiles],
                 [`Categories`, `ArtworkInfo`, `Themes`, `ServerFiles`],
                     (p, lastPromName) => {
 
                         let progress = p.toFixed(2) - 10 
-                        console.log("progress")
-                        console.log(progress)
                         if(progress < 0){progress = 0}
                         let messageText = `Loading "${lastPromName}"`
                         if(!lastPromName){messageText = `Initializing app...`}

@@ -87,7 +87,6 @@ export default class EditDetailContainer extends React.Component{
         const selectedFiles = this.props.highlightRef
         const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
         const orderedList = [...selectedFiles, ...withoutSelected]
-        console.log(orderedList)
         const newState = {...this.state}
         newState.orderedList = orderedList
         newState.fileList = this.props.state.artworkInfoData
