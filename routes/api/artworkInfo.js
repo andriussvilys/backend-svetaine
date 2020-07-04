@@ -24,8 +24,7 @@ router.get('/', (req, res) => {
 })
 
 router.delete('/delete/:fileName', (req, res) => {
-    ArtworkInfo.deleteOne({ "fileName": req.params.fileName }
-      )
+    ArtworkInfo.deleteOne({ "fileName": req.params.fileName })
       .then(result => {res.json(result); console.log(res)})
       .catch(err => {res.json(err); console.log(err)})
 })
@@ -47,15 +46,46 @@ router.get('/fileName/:fileName', (req, res) => {
 //@route post api/artworkInfo
 //@description add a new artwork
 //@access Public
-router.post('/create', 
-upload.single('artworkImage'), 
-(req, res, rej) => {
-    console.log("file uploaded?")
-    console.log(req.body.fileName)
-    ArtworkInfo.create(req.body)
-    .then((artwork)=>{res.send(artwork)})
-    .catch(err => {console.log(`req.body.fileName ${failed}`); res.status(500).send(err)})
-})
+    router.post('/create', 
+    (req, res, next) => {
+        console.log("CREATE ARTWORK INFO _____________________________________________")
+        ArtworkInfo.create(req.body)
+        .then((artwork)=>{
+            res.send(artwork)
+        })
+        .catch(err => {
+            // console.log(`req.body.fileName ${failed}`); 
+            // res.status(500).send(err); 
+            // next
+            res.json(err)
+            // next(err)
+        })
+    })
+
+// router.post('/create', upload.single('artworkImage'), (req, res, next) => {
+//     const file = req.file
+//     if (!file) {
+//         console.log("multer fail no file")
+//       const error = new Error('Please upload a file')
+//       error.httpStatusCode = 400
+//       return next(error)
+//     }
+//     else{
+//         console.log("multer upload")
+//         ArtworkInfo.create(req.body)
+//         .then((artwork)=>{res.send(artwork)})
+//         .catch(err => {
+//             console.log(`req.body.fileName ${failed}`); 
+//             // res.status(500).send(err); 
+//             // next
+//             rej(next)
+//         })
+//     }
+    
+//   })
+
+
+
 
 router.post('/imageUpload', 
 upload.single('artworkImage'), 

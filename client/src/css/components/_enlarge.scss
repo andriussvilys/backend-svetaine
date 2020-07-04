@@ -10,14 +10,10 @@
     background-color: white;
     justify-content: center;
     position: absolute;
-    // display: grid;
-    // grid-template-columns: 100%;
-    // grid-template-rows: 30px 1fr min-content;
     border-left: 1px solid black;
     overflow: hidden;
     z-index: 99;
-    transition: transform 0.2s;
-    // width: 100% !important;
+    transition: transform 0.3s;
 }
 .enlarge-bar{
     border-bottom: 1px solid black;

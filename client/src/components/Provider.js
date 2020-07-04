@@ -1257,8 +1257,6 @@ export class Provider extends React.Component{
                         let filteredList = []
                         //fail cases
                         fileList.forEach(file => {
-                            console.log("file__________________________________________________")
-                            console.log(file)
                             if(this.state.fileData.column.fileIds.includes(file.name)){
                                 messages = {...messages, [file.name]: {message:`Fail (already selected)`, type: "fail"}}
                             }
@@ -1291,7 +1289,7 @@ export class Provider extends React.Component{
                             modalState = {...this.state}
                             modalState.modal.blockClose = false
                             modalState.modal.modalMessage = modalMessages
-                            this.setState(modalState, () => reject())
+                            this.setState(modalState, () => resolve())
                         }
                         
                         filteredList.forEach((file, index) => {
@@ -1407,6 +1405,7 @@ export class Provider extends React.Component{
                                     // resolve()
                                 })
                                 .catch(err => {
+                                    console.log("readImageDir FAILED")
                                     console.log(err)
                                     reject()
                                 })
@@ -1612,17 +1611,6 @@ export class Provider extends React.Component{
                                     console.log(`progress: ${progress}/${updateLength}`)
                                     if(progress === updateLength){
                                         resolve()
-                                        // axios.get(`/api/artworkInfo/${familyName}`)
-                                        //     .then(res => {
-                                        //         console.log("artworks updated")
-                                        //         console.log(res)
-                                        //         resolve(res)
-                                        //     })
-                                        //     .catch(rej => {
-                                        //         console.log("error")
-                                        //         console.log(rej)
-                                        //         reject(rej)
-                                        //     })
                                     }
                                 })
                                 .catch(rej => {
@@ -1640,83 +1628,90 @@ export class Provider extends React.Component{
         postArtworkInfo: (file) => {
             console.log('post artwork info RUNS with')
             console.log(file)
-            this.setState({showModal: true})
+            this.showModal("Uploading file")
             return new Promise((resolve, reject) => {
                 if(this.state.serverFileDir.includes(file.fileName)){
-                    reject('A file with the same name has been registered before. To update it, select "EDIT" tab')
+                    this.showModal('A file with the same name has been registered before. To update it, select "EDIT" tab')
+                    reject()
                 }
 
                 if(!file.category || !Object.keys(file.category).length > 0 ){
-                    reject('To submit, select categories for this file')
+                    this.showModal('To submit, select categories for this file')
+                    reject()
                 }
 
                 const artworkFamily = file.artworkFamily || "none"
 
-                        const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
-                        let fileData = null
+                    const familyIndex = this.state.relatedArtwork[artworkFamily].column.fileIds.indexOf(file.fileName)
+                    let fileData = null
+                    
+                    if(this.state.serverFileDir.includes(file.fileName)){
+                        this.showModal(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
+                        reject()
+                    }
+        
+                    else{
+                        console.log("all good")
+                        fileData = this.state.fileData.files[file.fileName]
+
+                        const newName = fileData.fileName.slice(0, fileData.fileName.indexOf("."))
+                        const fileExtension = fileData.fileName.slice(fileData.fileName.indexOf("."), fileData.fileName.length)
                         
-                        if(this.state.serverFileDir.includes(file.fileName)){
-                            reject(`file ${file.fileName} already exists on the server. Choose a different name, file, or edit records`)
+            
+                        let fileDataObject = {                                                 
+                        category: fileData.category ? fileData.category : null,
+                        displayTriggers: fileData.displayTriggers,
+                        filePath: `uploads/${fileData.fileName}`,
+                        thumbnailPath: `uploads/thumbnails/${newName}-thumbnail${fileExtension}`,
+                        mobilePath: `uploads/mobile/${newName}-mob${fileExtension}`,
+                        desktopPath: `uploads/desktop/${newName}-desktop${fileExtension}`,
+                        fileName: fileData.fileName,
+                        fileType: fileData.fileType,
+                        artworkFamily: artworkFamily ?  artworkFamily : null,
+                        familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
+                        artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
+                        artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
+                        themes: fileData.themes ?  fileData.themes : null,
+                        seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
+                        location: fileData.location ?  fileData.location : null,
+                        year: fileData.year ? fileData.year : null,
+                        naturalSize: fileData.naturalSize, 
+                        displayMain: fileData.displayMain ? fileData.displayMain : null
                         }
             
-                        else{
-                            
-                            fileData = this.state.fileData.files[file.fileName]
+                        fileDataObject.familyDisplayIndex = familyIndex
 
-                            const newName = fileData.fileName.slice(0, fileData.fileName.indexOf("."))
-                            const fileExtension = fileData.fileName.slice(fileData.fileName.indexOf("."), fileData.fileName.length)
-                            
-                
-                            let fileDataObject = {                                                 
-                            category: fileData.category ? fileData.category : null,
-                            displayTriggers: fileData.displayTriggers,
-                            filePath: `uploads/${fileData.fileName}`,
-                            thumbnailPath: `uploads/thumbnails/${newName}-thumbnail${fileExtension}`,
-                            mobilePath: `uploads/mobile/${newName}-mob${fileExtension}`,
-                            desktopPath: `uploads/desktop/${newName}-desktop${fileExtension}`,
-                            fileName: fileData.fileName,
-                            fileType: fileData.fileType,
-                            artworkFamily: artworkFamily ?  artworkFamily : null,
-                            familyDescription: fileData.familyDescription ?  fileData.familyDescription : null,
-                            artworkTitle: fileData.artworkTitle ?  fileData.artworkTitle : null,
-                            artworkDescription: fileData.artworkDescription ?  fileData.artworkDescription : null,
-                            themes: fileData.themes ?  fileData.themes : null,
-                            seeAlso: fileData.seeAlso ?  fileData.seeAlso : null,
-                            location: fileData.location ?  fileData.location : null,
-                            year: fileData.year ? fileData.year : null,
-                            naturalSize: fileData.naturalSize, 
-                            displayMain: fileData.displayMain ? fileData.displayMain : null
-                            }
-                
-                            fileDataObject.familyDisplayIndex = familyIndex
-
-                            this.fileDataMethods.relateSeeAlso(file)
-                                .then(res => {
-                                    axios.post('/api/artworkInfo/create', fileDataObject)
-                                    .then( res => { 
-                                            this.fileDataMethods.uploadFile(file.fileName)
-                                                .then(res => {
-                                                    // let newState = {...this.state}
-                                                    // delete newState.fileData.files[file.fileName]
-                                                    resolve("file uploaded")
-                                                })
-                                                .catch(err => {
-                                                    console.log(err); 
-                                                    reject("error")
-                                                })
-                                        })
-                                    .catch(err => {
-                                        console.log(err); 
-                                        console.log("artworkInfo/create fail")
-                                        reject("error")
+                        this.fileDataMethods.relateSeeAlso(file)
+                            .then(res => {
+                                console.log("run artworkInfo/create")
+                                axios.post('/api/artworkInfo/create', fileDataObject)
+                                .then( res => { 
+                                        this.fileDataMethods.uploadFile(file.fileName)
+                                            .then(res => {
+                                                // let newState = {...this.state}
+                                                // delete newState.fileData.files[file.fileName]
+                                                console.log("file uplaoded")
+                                                resolve("file uploaded")
+                                            })
+                                            .catch(err => {
+                                                console.log(err); 
+                                                reject("error")
+                                            })
                                     })
-                                })
                                 .catch(err => {
-                                    console.log("relateSeeAlso singleFileUpload error")
-                                    console.log(err)
-                                    reject(err)
+                                    console.log(err); 
+                                    console.log("artworkInfo/create fail")
+                                    this.showModal("artworkInfo/create fail")
+                                    reject("error")
                                 })
-                        }
+                            })
+                            .catch(err => {
+                                console.log("relateSeeAlso singleFileUpload error")
+                                console.log(err)
+                                this.showModal("relateSeeAlso singleFileUpload error")
+                                reject(err)
+                            })
+                    }
             })
 
         },
@@ -1728,6 +1723,7 @@ export class Provider extends React.Component{
             this.setState(newState)
         },
         relateSeeAlso: (file) => {
+            console.log("RUN RELATE see also")
             const fileName = file.fileName
             const makeSet = (array) => {
                 let newArray = new Set(array)
@@ -1796,9 +1792,11 @@ export class Provider extends React.Component{
                         })
                         Promise.all([removeSeeAlsos, addSeeAlsos])
                         .then(res => {
+                            console.log("relateSeeAlso finished")
                             resolve()
                         })
                         .catch(err => {
+                            console.log("relateSeeAlso FAILED")
                             console.log(err);
                             //  document.location.reload(true)
                             reject()
@@ -2602,6 +2600,14 @@ export class Provider extends React.Component{
         modal.showModal = false
         modal.parentModal = false
         modal.modalMessage = null
+        modal.progress = null
+        this.setState({modal})
+    }
+    this.showModal = (modalMessage) => {
+        let modal = {...this.state.modal}
+        modal.showModal = true
+        modal.parentModal = true
+        modal.modalMessage = modalMessage || ""
         modal.progress = null
         this.setState({modal})
     }

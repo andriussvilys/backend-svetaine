@@ -36,7 +36,7 @@ mongoose.connect(db)
     .catch(err => console.log(err));
 
 const MongoClient = require('mongodb').MongoClient;
-const client = new MongoClient(db, { useNewUrlParser: true });
+const client = new MongoClient(db, { useNewUrlParser: true, useUnifiedTopology: true });
 
 client.connect(err => {
     const collection = client.db("test").collection("devices");
@@ -67,8 +67,8 @@ app.use((err, req, res, next) => {
     res.status(500).send({error: err})
 })
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-  });
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+//   });
