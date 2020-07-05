@@ -46,46 +46,16 @@ router.get('/fileName/:fileName', (req, res) => {
 //@route post api/artworkInfo
 //@description add a new artwork
 //@access Public
-    router.post('/create', 
-    (req, res, next) => {
-        console.log("CREATE ARTWORK INFO _____________________________________________")
-        ArtworkInfo.create(req.body)
-        .then((artwork)=>{
-            res.send(artwork)
-        })
-        .catch(err => {
-            // console.log(`req.body.fileName ${failed}`); 
-            // res.status(500).send(err); 
-            // next
-            res.json(err)
-            // next(err)
-        })
+router.post('/create', 
+(req, res, next) => {
+    ArtworkInfo.create(req.body)
+    .then((artwork)=>{
+        res.send(artwork)
     })
-
-// router.post('/create', upload.single('artworkImage'), (req, res, next) => {
-//     const file = req.file
-//     if (!file) {
-//         console.log("multer fail no file")
-//       const error = new Error('Please upload a file')
-//       error.httpStatusCode = 400
-//       return next(error)
-//     }
-//     else{
-//         console.log("multer upload")
-//         ArtworkInfo.create(req.body)
-//         .then((artwork)=>{res.send(artwork)})
-//         .catch(err => {
-//             console.log(`req.body.fileName ${failed}`); 
-//             // res.status(500).send(err); 
-//             // next
-//             rej(next)
-//         })
-//     }
-    
-//   })
-
-
-
+    .catch(err => {
+        res.json(err)
+    })
+})
 
 router.post('/imageUpload', 
 upload.single('artworkImage'), 

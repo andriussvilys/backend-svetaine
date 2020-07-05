@@ -202,18 +202,24 @@ label{
 }
 //___________________________________________________________________
 .familyPicker{
-    position: relative;
-    margin-top: 6px;
+    height: 100%;
+    overflow-y: auto;
+    width: 200px;
     @include common-border;
+    display: grid;
+    grid-template-rows: min-content 1fr min-content;
+}
+.familyPicker_closed{
+    width: 50px;
 }
 .familyPicker-reload{
     border: 0;
-    position: absolute;
     top: 3px;
     right: 3px;
     z-index: 2;
     text-transform: uppercase;
     font-weight: bold;
+    margin-top: 5px !important;
 }
 .themeSelector{
     overflow-y: auto;
@@ -263,11 +269,16 @@ label{
     margin: 2px 1px 0 1px;
 }
 .grid-wrapper{
-    // margin-top: 6px;
-    padding: 6px 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, auto));
-    grid-gap: 4px;
+    grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
+    grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
+    width: 100%;
+    overflow-y: auto;
+}
+.grid-wrapper_filters{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
+    grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
     width: 100%;
     overflow-y: auto;
 }
@@ -275,7 +286,8 @@ label{
     height: 100%;
     overflow-y: auto;
     display: grid;
-    grid-template-rows: minmax(min-content, 50px) minmax(300px, min-content);
+    grid-template-rows: 100%;
+    grid-template-columns: min-content 1fr;
     .themeSelector{
         max-height: 50vh;
     }
@@ -301,6 +313,11 @@ label{
 .EditDetailContainer-artworkOnDisplay{
 
 }
+.artworkOnDisplay-images{
+    display: grid;
+    grid-template-rows: min-content 1fr;
+}
+
 .create-createFamily{
     display: flex;
     flex-wrap: wrap;
@@ -325,7 +342,8 @@ label{
     margin:0;
     flex-wrap: wrap; 
     justify-content: flex-end;
-    padding: 0 !important;
+    // padding: 0 !important;
+    padding: 3px;
     li{
         margin-left: 3px;
     }
@@ -476,7 +494,6 @@ textarea{
     flex-direction: column;
     justify-content: space-between;
     padding: 4px;
-    width: 200px;
     margin: 4px;
     border: 1px solid rgb(136, 136, 136);
     max-height: 300px;
@@ -950,7 +967,7 @@ font-family: 'Times New Roman', Times, serif;
         border-right: 2px solid black;
     }
     .grid-wrapper{
-        grid-template-columns: repeat(auto-fill, minmax(100px, 49%));
+        grid-template-columns: repeat(auto-fill, minmax(125px, 49%));
         grid-gap: 4px;
         width: unset;
         .imageBox__wrapper{

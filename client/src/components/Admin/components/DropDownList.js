@@ -180,7 +180,7 @@ deletePromise = (string, theme) => {
 
     render(){
         return(
-            <div className="grid-wrapper">
+            <div className={`${this.props.containerModifier ? this.props.containerModifier : "grid-wrapper"}`}>
                 {this.createDropDownList(this.props.array, this.props.string, this.props.state, this.props.fileName)}
                 <AddNew 
                     addNew={this.props.addNew}

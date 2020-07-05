@@ -15,6 +15,7 @@ const SelectFamily = (props) => {
             string={"artworkFamily"}
             id="List-of-artwork-families"
             highlighted={props.highlighted}
+            containerModifier={props.containerModifier}
 
             router={'/api/familySetup/create'}
             addNewTarget={'artworkFamilyList'}

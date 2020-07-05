@@ -115,7 +115,13 @@ export default class EditDetailContainer extends React.Component{
                 id={'familyContainer'}
                 className={"EditDetailContainer"}
                 >
-                    <div className="familyPicker">
+                    {/* <div className="familyPicker">
+                        <SelectFamily 
+                            context={this.props.context}
+                            onChange={this.filterByFamily}
+                            uncontrolled
+                            radio
+                        />
                         <button
                             // size="sm"
                             // variant="primary"
@@ -124,17 +130,38 @@ export default class EditDetailContainer extends React.Component{
                         >
                             reload file list
                         </button>
-                        <Accordion
-                            title={"filter by family"}
-                        >
+                    </div> */}
+
+                        <div className="familyPicker">
+                            <div className="familyPicker-toggleContainer">
+                                <div className="familyPicker-toggleContainer-icons">
+                                    <img 
+                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                        alt="view next" 
+                                        src="icons/svg/view-right.svg" 
+                                    />
+                                    <img 
+                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                        alt="view next" 
+                                        src="icons/svg/filter.svg" 
+                                    />
+                                </div>
+                            </div>
+
                             <SelectFamily 
                                 context={this.props.context}
                                 onChange={this.filterByFamily}
                                 uncontrolled
                                 radio
+                                containerModifier="grid-wrapper_filters"
                             />
-                        </Accordion>
-                    </div>
+                            <button
+                                className={"btn-sm btn-primary familyPicker-reload"}
+                                onClick={this.reloadAll}
+                            >
+                                reload file list
+                            </button>
+                        </div>
 
 
                     <div 

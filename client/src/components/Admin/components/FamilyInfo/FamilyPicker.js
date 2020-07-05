@@ -76,20 +76,31 @@ export default class FileUpdate extends React.Component{
                     className={"EditDetailContainer"}
                     >
                         <div className="familyPicker">
+                            <div className="familyPicker-toggleContainer">
+                                <div className="familyPicker-toggleContainer-icons">
+                                    <img 
+                                        className={`viewControls-viewNext ${disabled ? "viewControls-button-disabled" : ''}`}
+                                        alt="view next" 
+                                        src="icons/svg/view-right.svg" 
+                                    />
+                                    <img 
+                                        className={`viewControls-viewNext ${disabled ? "viewControls-button-disabled" : ''}`}
+                                        alt="view next" 
+                                        src="icons/svg/filters.svg" 
+                                    />
+                                </div>
+                            </div>
+
+                            <SelectFamily 
+                                context={this.props.context}
+                                onChange={this.filterByFamily}
+                            />
                             <button
                                 className={"btn-sm btn-primary familyPicker-reload"}
                                 onClick={this.reloadAll}
                             >
                                 reload file list
                             </button>
-                            <Accordion
-                                title={"filter by family"}
-                            >
-                                <SelectFamily 
-                                    context={this.props.context}
-                                    onChange={this.filterByFamily}
-                                />
-                            </Accordion>
                         </div>
     
     

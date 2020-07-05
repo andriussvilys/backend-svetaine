@@ -5,18 +5,20 @@ import Button from 'react-bootstrap/Button';
 import BootstrapModal from '../BootstrapModal';
 import ImageBox from '../ImageBox/ImageBox';
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
-import Accordion from '../Accordion';
 
 export default class EditDetailContainer extends React.Component{
 
     constructor(props){
         super(props);
         this.state = {
+            open: false,
             showModal: false,
             modalMessage: null,
             modalConfirm: true,
-            fileList: this.props.state.artworkInfoData,
-            allFiles: this.props.state.artworkInfoData
+            // fileList: this.props.state.artworkInfoData,
+            // allFiles: this.props.state.artworkInfoData
+            fileList: null,
+            allFiles: null
         }
     }
 
@@ -66,6 +68,7 @@ export default class EditDetailContainer extends React.Component{
     }
 
     filterByFamily = (value) => {
+        console.log("FILTER BY FAMILY ARTOWKRONDISPLAY")
         let newRenderList = {}
         const data = this.state.allFiles
         const list = Object.keys(this.state.allFiles)
@@ -75,11 +78,23 @@ export default class EditDetailContainer extends React.Component{
                 newRenderList = {...newRenderList, [objName]: obj}
             }
         })
-        this.setState({fileList: newRenderList})
+        const selectedFiles = this.props.highlightRef
+        const newSelected = Object.keys(newRenderList).filter(fileName => selectedFiles.includes(fileName))
+        const withoutSelected = Object.keys(newRenderList).filter(fileName => !selectedFiles.includes(fileName))
+        const orderedList = [...newSelected, ...withoutSelected]
+        console.log(newRenderList)
+        // this.setState({fileList: newRenderList})
+        this.setState({orderedList: orderedList})
+
     }
 
     reloadAll = () => {
-        this.setState({fileList: this.state.allFiles})
+        // this.setState({fileList: this.state.allFiles})
+        const allFileNames = Object.keys(this.props.state.artworkInfoData)
+        const selectedFiles = this.props.highlightRef
+        const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
+        const orderedList = [...selectedFiles, ...withoutSelected]        
+        this.setState({orderedList: orderedList})
     }
 
     componentDidMount(){
@@ -90,6 +105,7 @@ export default class EditDetailContainer extends React.Component{
         const newState = {...this.state}
         newState.orderedList = orderedList
         newState.fileList = this.props.state.artworkInfoData
+        newState.allFiles = this.props.state.artworkInfoData
         newState.selectedFiles = this.props.highlightRef
         this.setState(newState)
         // this.setState({fileList: this.props.state.artworkInfoData})
@@ -99,65 +115,87 @@ export default class EditDetailContainer extends React.Component{
         if(this.state.orderedList){
             return(
                 <Fragment>
-                    <div>
-                    <Button
-                            onClick={() => {
-
-                                let artworkOnDisplay = {}
-                                this.state.selectedFiles.forEach(fileName => {
-                                    artworkOnDisplay[fileName] = this.state.fileList[fileName]
-                                })
-
-                                this.props.context.setArtworkOnDisplay(artworkOnDisplay)
-                                let newState = {...this.state}
-                                newState.showModal = true
-                                newState.modalMessage = "Saved"
-                                this.setState(newState)
-                            }}
-                        >Save
-                        </Button>
-                        <Button
-                            onClick={() => {
-                                this.setState({selectedFiles: []})
-                            }}
-                        >Unselect All
-                        </Button>
-                    </div>
-
                     <div 
                     id={'familyContainer'}
                     className={"EditDetailContainer EditDetailContainer-artworkOnDisplay"}
                     >
+                        <div className={`familyPicker ${this.state.open ? "" : "familyPicker_closed"}`}>
+                            <div className="familyPicker-toggleContainer">
+                                <div className="familyPicker-toggleContainer-icons">
+                                    <img 
+                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                        alt="view next" 
+                                        src="icons/svg/view-right.svg" 
+                                        onClick={() => {
+                                            this.setState({open: !this.state.open})
+                                        }}
+                                    />
+                                    <img 
+                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                        alt="view next" 
+                                        src="icons/svg/filter.svg" 
+                                    />
+                                </div>
+                            </div>
+                            {this.state.open ?     
+                                <Fragment>
+                                    <SelectFamily 
+                                        context={this.props.context}
+                                        onChange={this.filterByFamily}
+                                        uncontrolled
+                                        radio
+                                        parent="artworkOnDisplay"
+                                        containerModifier="grid-wrapper_filters"
+                                    />
+                                    <button
+                                        className={"btn-sm btn-primary familyPicker-reload"}
+                                        onClick={this.reloadAll}
+                                    >
+                                        reload file list
+                                    </button> 
+                                </Fragment>                       
+                                : null
+                            }            
+                        </div>
+                      
+                            <div className={"artworkOnDisplay-images"}>
+                                <div>
+                                    <Button
+                                        onClick={() => {
 
-                        <div className="familyPicker">
-                            <button
-                                // size="sm"
-                                // variant="primary"
-                                className={"btn-sm btn-primary familyPicker-reload"}
-                                onClick={this.reloadAll}
-                            >
-                                reload file list
-                            </button>
-                            <Accordion
-                                title={"filter by family"}
-                            >
-                                <SelectFamily 
-                                    context={this.props.context}
-                                    onChange={this.filterByFamily}
-                                    uncontrolled
-                                    radio
-                                />
-                            </Accordion>
-                        </div>
-                        <div 
-                        className={"grid-wrapper"}
-                        >
-                            {
-                                this.state.orderedList.map(fileName => {
-                                    return this.EditDetail(this.props.state.artworkInfoData[fileName])
-                                })
-                            }
-                        </div>
+                                            let artworkOnDisplay = {}
+                                            this.state.selectedFiles.forEach(fileName => {
+                                                artworkOnDisplay[fileName] = this.state.fileList[fileName]
+                                            })
+
+                                            this.props.context.setArtworkOnDisplay(artworkOnDisplay)
+                                            let newState = {...this.state}
+                                            newState.showModal = true
+                                            newState.modalMessage = "Saved"
+                                            this.setState(newState)
+                                        }}
+                                    >
+                                        Save
+                                    </Button>
+                                    <Button
+                                        onClick={() => {
+                                            this.setState({selectedFiles: []})
+                                        }}
+                                    >
+                                        Unselect All
+                                    </Button>
+                                </div>
+
+                                <div 
+                                className={"grid-wrapper"}
+                                >
+                                    {
+                                        this.state.orderedList.map(fileName => {
+                                            return this.EditDetail(this.props.state.artworkInfoData[fileName])
+                                        })
+                                    }
+                                </div>
+                            </div>
                         {this.state.showModal ?                     
                             <BootstrapModal 
                                 showModal={this.state.showModal}
