@@ -772,6 +772,18 @@ label {
   -ms-grid-rows: min-content 1fr min-content;
       grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
       grid-template-rows: min-content 1fr min-content;
+  margin-right: 5px;
+}
+
+.familyPicker-toggleContainer-icons {
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.familyPicker-toggleContainer-icons img {
+  height: 20px;
 }
 
 .familyPicker_closed {
@@ -790,7 +802,7 @@ label {
 
 .themeSelector {
   overflow-y: auto;
-  height: 100%;
+  max-height: 100%;
 }
 
 .themeSelector .accordion {
@@ -876,11 +888,13 @@ label {
   -ms-grid-columns: (minmax(min-content, 200px))[auto-fill];
       grid-template-columns: repeat(auto-fill, minmax(-webkit-min-content, 200px));
       grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
-  -ms-grid-rows: (minmax(min-content, 150px))[auto-fill];
-      grid-template-rows: repeat(auto-fill, minmax(-webkit-min-content, 150px));
-      grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
+  -ms-grid-rows: min-content;
+      grid-template-rows: -webkit-min-content;
+      grid-template-rows: min-content;
+  grid-gap: 4px;
   width: 100%;
   overflow-y: auto;
+  padding-top: 5px;
 }
 
 .grid-wrapper_filters {
@@ -894,6 +908,12 @@ label {
       grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
   width: 100%;
   overflow-y: auto;
+  border: 2px solid black;
+}
+
+.grid-wrapper_filters .dropdown-container {
+  border: 0;
+  border-right: 1px solid black;
 }
 
 .EditDetailContainer {
@@ -1199,7 +1219,6 @@ textarea {
       -ms-flex-pack: justify;
           justify-content: space-between;
   padding: 4px;
-  margin: 4px;
   border: 1px solid #888888;
   max-height: 300px;
   border-radius: 6px;
@@ -1353,7 +1372,7 @@ h5 {
 .EditDetailContainer--button-wrapper {
   border: 1px solid grey;
   padding: 4px;
-  margin: 4px 0;
+  margin-top: 4px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1510,6 +1529,9 @@ h5 {
 .ImagesPreview--image {
   max-height: 120px;
   max-width: 100%;
+  height: 100%;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .enlarge-border {
@@ -1685,10 +1707,6 @@ h5 {
 }
 
 @media only screen and (max-width: 720px) {
-  .EditDetailContainer-artworkOnDisplay .grid-wrapper {
-    -ms-grid-columns: (minmax(auto, calc(25% - 4px)))[auto-fill];
-        grid-template-columns: repeat(auto-fill, minmax(auto, calc(25% - 4px)));
-  }
   .EditDetailContainer-artworkOnDisplay .imageBox__wrapper {
     padding: 6px !important;
   }
@@ -1744,9 +1762,6 @@ h5 {
   }
   .admin-nav-list .btn {
     padding: 2px !important;
-  }
-  .imageBox__wrapper {
-    width: 170px;
   }
   body {
     overscroll-behavior: contain;
@@ -1836,8 +1851,8 @@ h5 {
     grid-gap: 4px;
     width: unset;
   }
-  .grid-wrapper .imageBox__wrapper {
-    width: unset;
+  .grid-wrapper grid-wrapper_filters
+.imageBox__wrapper {
     margin: 0;
     padding: 0;
   }

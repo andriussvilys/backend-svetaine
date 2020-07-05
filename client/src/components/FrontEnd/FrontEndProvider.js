@@ -208,7 +208,6 @@ export class Provider extends React.Component{
         // 
         return onDisplay
     }
-
     this.filterByCategory = (e, category, hideAll) => {
       e.stopPropagation()
       return new Promise((res,rej) => {
@@ -272,6 +271,8 @@ export class Provider extends React.Component{
         
         newOnDisplay[displayTrigger] = [value]
 
+        // Object.keys(this.state.visibleArtwork).forEach(artworkName => {
+        //   const artwork = this.state.visibleArtwork[artworkName]
         Object.keys(this.state.visibleArtwork).forEach(artworkName => {
           const artwork = this.state.visibleArtwork[artworkName]
           if(artwork.displayTriggers[displayTrigger].indexOf(value) >= 0){
@@ -427,7 +428,6 @@ export class Provider extends React.Component{
         })
         return onDisplay
     }
-
     /**
      * @param: e
      * @param: theme
@@ -533,9 +533,6 @@ export class Provider extends React.Component{
         }, 200);
       }
       else{
-        // Object.keys(this.state.visibleArtwork).forEach(id => {
-        //     document.getElementById(id).classList.remove('image-hide')
-        // })
         Object.keys(this.state.artworkInfoData).forEach(id => {
             document.getElementById(id).classList.remove('image-hide')
             document.getElementById(id).classList.remove('FilePreview--imageContainer__empty')

@@ -2471,6 +2471,9 @@ export class Provider extends React.Component{
                         if(res[fileName].displayMain){
                         onDisplay = {...onDisplay, [fileName]: res[fileName]}
                         }
+                        // if(res[fileName].artworkFamily !== "_archive"){
+                        //     onDisplay = {...onDisplay, [fileName]: res[fileName]}
+                        // }
                     })
                     
                     let allThemes = []

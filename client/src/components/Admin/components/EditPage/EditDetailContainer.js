@@ -115,52 +115,52 @@ export default class EditDetailContainer extends React.Component{
                 id={'familyContainer'}
                 className={"EditDetailContainer"}
                 >
-                    {/* <div className="familyPicker">
-                        <SelectFamily 
-                            context={this.props.context}
-                            onChange={this.filterByFamily}
-                            uncontrolled
-                            radio
-                        />
-                        <button
-                            // size="sm"
-                            // variant="primary"
-                            className={"btn-sm btn-primary familyPicker-reload"}
-                            onClick={this.reloadAll}
-                        >
-                            reload file list
-                        </button>
-                    </div> */}
 
-                        <div className="familyPicker">
+                        <div className={`familyPicker ${this.state.open ? "" : "familyPicker_closed"}`}>
                             <div className="familyPicker-toggleContainer">
-                                <div className="familyPicker-toggleContainer-icons">
+                                <div 
+                                    className="familyPicker-toggleContainer-icons"
+                                    onClick={() => {
+                                        this.setState({open: !this.state.open})
+                                    }}    
+                                >
+                                    {this.state.open ?                                     
+                                        <img 
+                                            alt="view next" 
+                                            src="/icons/svg/view-right.svg" 
+
+                                        /> : null
+                                    }
                                     <img 
-                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
                                         alt="view next" 
-                                        src="icons/svg/view-right.svg" 
+                                        src="/icons/svg/filter.svg" 
                                     />
-                                    <img 
-                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
-                                        alt="view next" 
-                                        src="icons/svg/filter.svg" 
-                                    />
+                                    {!this.state.open ?                                     
+                                        <img 
+                                            alt="view next" 
+                                            src="/icons/svg/view-left.svg" 
+                                        /> : null
+                                    }
                                 </div>
                             </div>
-
-                            <SelectFamily 
-                                context={this.props.context}
-                                onChange={this.filterByFamily}
-                                uncontrolled
-                                radio
-                                containerModifier="grid-wrapper_filters"
-                            />
-                            <button
-                                className={"btn-sm btn-primary familyPicker-reload"}
-                                onClick={this.reloadAll}
-                            >
-                                reload file list
-                            </button>
+                            {this.state.open ?     
+                                <Fragment>
+                                    <SelectFamily 
+                                        context={this.props.context}
+                                        onChange={this.filterByFamily}
+                                        uncontrolled
+                                        radio
+                                        containerModifier="grid-wrapper_filters"
+                                    />
+                                    <button
+                                        className={"btn-sm btn-primary familyPicker-reload"}
+                                        onClick={this.reloadAll}
+                                    >
+                                        reload file list
+                                    </button> 
+                                </Fragment>                       
+                                : null
+                            }            
                         </div>
 
 

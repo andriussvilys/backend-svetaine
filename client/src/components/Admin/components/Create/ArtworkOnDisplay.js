@@ -121,20 +121,32 @@ export default class EditDetailContainer extends React.Component{
                     >
                         <div className={`familyPicker ${this.state.open ? "" : "familyPicker_closed"}`}>
                             <div className="familyPicker-toggleContainer">
-                                <div className="familyPicker-toggleContainer-icons">
+                                <div 
+                                    className="familyPicker-toggleContainer-icons"
+                                    onClick={() => {
+                                        this.setState({open: !this.state.open})
+                                    }}    
+                                >
+                                    {this.state.open ?                                     
+                                        <img 
+                                            // className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                            alt="view next" 
+                                            src="/icons/svg/view-right.svg" 
+
+                                        /> : null
+                                    }
                                     <img 
-                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                        // className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
                                         alt="view next" 
-                                        src="icons/svg/view-right.svg" 
-                                        onClick={() => {
-                                            this.setState({open: !this.state.open})
-                                        }}
+                                        src="/icons/svg/filter.svg" 
                                     />
-                                    <img 
-                                        className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
-                                        alt="view next" 
-                                        src="icons/svg/filter.svg" 
-                                    />
+                                    {!this.state.open ?                                     
+                                        <img 
+                                            // className={`viewControls-viewNext ${this.props.disabled ? "viewControls-button-disabled" : ''}`}
+                                            alt="view next" 
+                                            src="/icons/svg/view-left.svg" 
+                                        /> : null
+                                    }
                                 </div>
                             </div>
                             {this.state.open ?     

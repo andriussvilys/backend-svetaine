@@ -208,6 +208,14 @@ label{
     @include common-border;
     display: grid;
     grid-template-rows: min-content 1fr min-content;
+    margin-right: 5px;
+}
+.familyPicker-toggleContainer-icons{
+    cursor: pointer;
+    display: flex;
+}
+.familyPicker-toggleContainer-icons img{
+    height: 20px;
 }
 .familyPicker_closed{
     width: 50px;
@@ -223,7 +231,7 @@ label{
 }
 .themeSelector{
     overflow-y: auto;
-    height: 100%;
+    max-height: 100%;
     .accordion{
         width: 100%;
     }
@@ -271,9 +279,13 @@ label{
 .grid-wrapper{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(min-content, 200px));
-    grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
+    // grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
+    // grid-template-rows: repeat(auto-fill, minmax(100px, auto));
+    grid-template-rows: min-content;
+    grid-gap: 4px;
     width: 100%;
     overflow-y: auto;
+    padding-top: 5px;
 }
 .grid-wrapper_filters{
     display: grid;
@@ -281,6 +293,14 @@ label{
     grid-template-rows: repeat(auto-fill, minmax(min-content, 150px));
     width: 100%;
     overflow-y: auto;
+    border: 2px solid black;
+    .dropdown-container{
+        border:0;
+        border-right: 1px solid black;
+    }
+    // .dropdown-container:last-of-type{
+    //     border-bottom: 1px solid black;
+    // }
 }
 .EditDetailContainer{
     height: 100%;
@@ -494,7 +514,6 @@ textarea{
     flex-direction: column;
     justify-content: space-between;
     padding: 4px;
-    margin: 4px;
     border: 1px solid rgb(136, 136, 136);
     max-height: 300px;
     border-radius: 6px;
@@ -595,7 +614,7 @@ h5{
 .EditDetailContainer--button-wrapper{
     border: 1px solid grey;
     padding: 4px;
-    margin: 4px 0;
+    margin-top: 4px;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -717,6 +736,8 @@ font-family: 'Times New Roman', Times, serif;
 .ImagesPreview--image{
     max-height: 120px;
     max-width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 .enlarge-border{
     position: absolute;
@@ -839,9 +860,6 @@ font-family: 'Times New Roman', Times, serif;
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     .EditDetailContainer-artworkOnDisplay{
-        .grid-wrapper{
-            grid-template-columns: repeat(auto-fill, minmax(auto, calc(25% - 4px)));
-        }
         .imageBox__wrapper{
             padding: 6px !important;
         }
@@ -888,9 +906,6 @@ font-family: 'Times New Roman', Times, serif;
         .btn{
             padding: 2px !important;
         }
-    }
-    .imageBox__wrapper{
-        width: 170px;
     }
     body{
         overscroll-behavior: contain;
@@ -949,8 +964,6 @@ font-family: 'Times New Roman', Times, serif;
     .image-hide{
         display: none;
     }
-    .ImagesPreview--imageContainer{
-    }
     .hide-imageSelect{
         transform: translateY(100%)
     }
@@ -969,9 +982,8 @@ font-family: 'Times New Roman', Times, serif;
     .grid-wrapper{
         grid-template-columns: repeat(auto-fill, minmax(125px, 49%));
         grid-gap: 4px;
-        width: unset;
+        width: unset;grid-wrapper_filters
         .imageBox__wrapper{
-            width: unset;
             margin: 0; 
             padding: 0;
         }
