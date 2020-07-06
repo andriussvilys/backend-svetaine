@@ -88,7 +88,11 @@ export default class EditDetailContainer extends React.Component{
 
     }
 
-    reloadAll = () => {
+    reloadAll = (e) => {
+        const allInputs = Array.from(e.target.parentNode.querySelectorAll("input"))
+        let selectedInput = allInputs.find(input => input.checked)
+        selectedInput.checked = false
+
         // this.setState({fileList: this.state.allFiles})
         const allFileNames = Object.keys(this.props.state.artworkInfoData)
         const selectedFiles = this.props.highlightRef
@@ -161,7 +165,7 @@ export default class EditDetailContainer extends React.Component{
                                     />
                                     <button
                                         className={"btn-sm btn-primary familyPicker-reload"}
-                                        onClick={this.reloadAll}
+                                        onClick={e => this.reloadAll(e)}
                                     >
                                         reload file list
                                     </button> 

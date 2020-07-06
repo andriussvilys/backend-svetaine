@@ -81,7 +81,10 @@ export default class EditDetailContainer extends React.Component{
         this.setState({fileList: newRenderList}, () => {console.log('filter done'); console.log(this.state)})
     }
 
-    reloadAll = () => {
+    reloadAll = (e) => {
+        const allInputs = Array.from(e.target.parentNode.querySelectorAll("input"))
+        let selectedInput = allInputs.find(input => input.checked)
+        selectedInput.checked = false
         this.setState({fileList: this.state.allFiles})
     }
 
@@ -89,8 +92,6 @@ export default class EditDetailContainer extends React.Component{
         return new Promise((resolve, reject) => {
             this.props.context.fileDataMethods.deleteDBrecord(fileName, artworkFamily)
                 .then(res => {
-                    console.log("deletePromiseResovle")
-                    console.log(res)
                         let newState = {...this.state}
                         newState.modalMessage = res.modalMessage
                         newState.modalConfirm = false
@@ -154,7 +155,7 @@ export default class EditDetailContainer extends React.Component{
                                     />
                                     <button
                                         className={"btn-sm btn-primary familyPicker-reload"}
-                                        onClick={this.reloadAll}
+                                        onClick={e => this.reloadAll(e)}
                                     >
                                         reload file list
                                     </button> 

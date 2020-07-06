@@ -127,13 +127,13 @@ deletePromise = (string, theme) => {
                             id={`${string}-${listItem}-${this.props.fileName || this.props.parent}`}
                             className="themes-checkbox" 
                             type={ !this.props.checkbox ? "radio" : "checkbox"}
-                            // checked={highlighter(string, listItem)}
                             value={listItem}
                             name={string}
                             onChange={(e) => {
-                                // e.target.parentNode.classList.toggle("themes-list--selected")
-                                // this.props.onChange(e.target.value, e.target.checked, string)
-                                this.props.onChange(e.target.value, string, fileName)
+                                console.log("event in dropdownlist")
+                                console.log("checked")
+                                console.log(e.target.checked)
+                                this.props.onChange(e.target.value, string, fileName, e.target.checked)
                                 return
                             }}
                         />
