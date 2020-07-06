@@ -735,7 +735,6 @@ label {
 }
 
 .FileInfo-preview {
-  margin-right: 3px;
   width: 200px;
   padding: 5px;
   background-color: #dee2e6;
@@ -1707,14 +1706,33 @@ h5 {
 }
 
 @media only screen and (max-width: 720px) {
+  .admin-container {
+    -ms-grid-rows: [navigation] min-content [content] 1fr;
+        grid-template-rows: [navigation] -webkit-min-content [content] 1fr;
+        grid-template-rows: [navigation] min-content [content] 1fr;
+  }
+  .admin-content {
+    overflow-y: scroll;
+  }
+  .FileInfo-container {
+    display: unset;
+  }
+  .FileInfo-container .FileInfo-preview {
+    border: 0;
+    width: unset;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+  }
+  .FileInfo-container .FileInfo-preview .FamilyList--submit-delete-container {
+    margin: 0;
+    padding: 0;
+  }
   .EditDetailContainer-artworkOnDisplay .imageBox__wrapper {
     padding: 6px !important;
   }
   .EditDetailContainer-artworkOnDisplay .btn {
     padding: 4px;
-  }
-  .admin-container {
-    padding: 5px;
   }
   .familyPicker-reload {
     top: unset;

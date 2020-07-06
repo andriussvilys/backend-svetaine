@@ -181,7 +181,7 @@ label{
     border-bottom: 0;
 }
 .FileInfo-preview{
-    margin-right: 3px;
+    // margin-right: 3px;
     width: 200px;
     padding: 5px;
     background-color: #dee2e6;
@@ -859,6 +859,25 @@ font-family: 'Times New Roman', Times, serif;
 }
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
+    .admin-container{
+        grid-template-rows: [navigation] min-content [content] 1fr;
+    }
+    .admin-content{
+        overflow-y: scroll;
+    }
+    .FileInfo-container{
+        display: unset;
+
+        .FileInfo-preview{
+            border: 0;
+            width: unset;
+            display: flex;
+            .FamilyList--submit-delete-container{
+                margin: 0;
+                padding: 0;
+            }
+        }
+    }
     .EditDetailContainer-artworkOnDisplay{
         .imageBox__wrapper{
             padding: 6px !important;
@@ -867,9 +886,9 @@ font-family: 'Times New Roman', Times, serif;
             padding: 4px;
         }
     }
-    .admin-container{
-        padding: 5px;
-    }
+    // .admin-container{
+    //     padding: 5px;
+    // }
     .familyPicker-reload{
         top: unset;
     }

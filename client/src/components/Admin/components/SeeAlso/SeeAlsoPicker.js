@@ -42,6 +42,7 @@ export default class SeeAlsoPicker extends React.Component{
         this.props.context.fileDataMethods.updateSeeAlso(fileName, parent)
     }
     EditDetail = (file) => {
+        if(!file){return null}
         return <SeeAlso 
                     key={`seeAlso-${file.fileName}`}
                     file={file}
@@ -101,7 +102,9 @@ export default class SeeAlsoPicker extends React.Component{
     }
 
     componentDidMount(){
-
+        if(!this.props.state){
+            return null
+        }
         const allFileNames = Object.keys(this.props.state.artworkInfoData)
         const selectedFiles = this.props.highlightRef
         const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
@@ -115,7 +118,7 @@ export default class SeeAlsoPicker extends React.Component{
     }
 
     render(){
-        if(this.state.orderedList){
+        if(this.props.state && this.state.orderedList){
             return(
                     <div 
                     id={'familyContainer-seeAlso'}
