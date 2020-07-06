@@ -108,7 +108,6 @@ export default class FileInfo extends React.Component {
                         <ArtworkInfo 
                             file={this.props.file}
                             fileName={this.props.file.fileName}
-                            // onChange={this.props.context.fileDataMethods.onChange}
                             onChange={this.props.context.onChange}
                             state={this.props.context.state}
                             context={this.props.context}
@@ -134,10 +133,19 @@ export default class FileInfo extends React.Component {
                     </Tab>
                     <Tab eventKey="seeAlso" title="See Alsos">
                         <SeeAlsoPicker 
-                            context={this.props.context}
+                            // context={this.props.context}
                             directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
                             initialData={this.props.context.state.artworkInfoData}
                             parent={this.props.file}
+
+                            file={this.props.file}
+                            fileName={this.props.file.fileName}
+                            onChange={this.props.context.onChange}
+                            state={this.props.context.state}
+                            context={this.props.context}
+
+                            familySetupMethods={this.props.context.familySetupMethods}
+                            highlightRef={this.props.context.state.staticState.artworkInfoData[this.props.file.fileName].seeAlso}
                         />
                     </Tab>
                 </Tabs>
