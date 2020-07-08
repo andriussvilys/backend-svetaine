@@ -75,23 +75,14 @@ export default class NewSingleFile extends React.Component {
                             if(!verification.verified){
                                 return this.setState({showModal: true, modalMessage: verification.modalMessage})
                             }
-                            // this.setState({
-                            //     showModal: true,
-                            //     modalMessage: "loading..."
-                            // })
                             const postRes = this.props.context.fileDataMethods.postArtworkInfo(this.props.file)
                             postRes
                             .then( res => {
                                 console.log("postRes result")
                                 console.log(res)
-                                // this.setState({
-                                //     modalMessage: res
-                                // })
                             })
                             .catch(err => {
-                                // this.setState({
-                                //     modalMessage: err
-                                // })
+                                console.log("ERROR")
                             })
                         }
                         }
@@ -132,14 +123,20 @@ export default class NewSingleFile extends React.Component {
                         />
                     </Tab>
                     <Tab eventKey="seeAlso" title="See Alsos">
-                        {this.props.context.state.fileData.files[this.props.file.fileName] ?                         
-                            <SeeAlsoPicker 
-                                context={this.props.context}
-                                directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
-                                initialData={this.props.context.state.artworkInfoData}
-                                parent={this.props.file}
-                            /> : null
-                        }
+                        <SeeAlsoPicker 
+                            context={this.props.context}
+                            state={this.props.context.state}
+                            directory={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
+                            initialData={this.props.context.state.artworkInfoData}
+                            parent={this.props.file}
+
+                            file={this.props.file}
+                            fileName={this.props.file.fileName}
+                            onChange={this.props.context.onChange}
+
+                            familySetupMethods={this.props.context.familySetupMethods}
+                            highlightRef={this.props.context.state.fileData.files[this.props.file.fileName].seeAlso}
+                        />
                     </Tab>
                 </Tabs>
             </div>
