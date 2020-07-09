@@ -889,6 +889,9 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
   max-height: 90px;
   overflow-x: auto;
   overflow-y: hidden;
