@@ -9,9 +9,6 @@ const Tags = (props) => {
         const artworkOnDisplay = props.context.state.artworkOnDisplay
         let enlargeImg = props.file
         let scrollToId = props.file.fileName
-        // if(!props.context.state.showExplorer){
-        //     props.context.toggleExplorer()
-        // }
         if(!Object.keys(artworkOnDisplay).includes(scrollToId)){
             let newImg = null
             Object.keys(artworkOnDisplay).forEach(objName => {
@@ -23,12 +20,6 @@ const Tags = (props) => {
             scrollToId = newImg
         }
         let infoUpDelay = 0
-        // if(props.context.state.mobile){
-        //     if(!document.getElementById("ArtworkInfo-container").classList.contains("ArtworkInfo-toggleTags")){
-        //         infoUpDelay = 200;
-        //         document.getElementById("ArtworkInfo-container").classList.add("ArtworkInfo-toggleTags")
-        //     }
-        // }
         setTimeout(() => {
             filterFunc
                 .then(res => {

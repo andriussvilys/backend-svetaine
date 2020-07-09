@@ -266,34 +266,29 @@ export class Provider extends React.Component{
       let newState = {...this.state}
       let newArtworkonDisplay = {}
 
-      
+      console.log("displayTrigger")
+      console.log(displayTrigger)
+      console.log("value")
+      console.log(value)
+
       let newOnDisplay = {...newState.filters.empty}
         
         newOnDisplay[displayTrigger] = [value]
 
-        // Object.keys(this.state.visibleArtwork).forEach(artworkName => {
-        //   const artwork = this.state.visibleArtwork[artworkName]
         Object.keys(this.state.visibleArtwork).forEach(artworkName => {
           const artwork = this.state.visibleArtwork[artworkName]
-          if(artwork.displayTriggers[displayTrigger].indexOf(value) >= 0){
+          if(artwork.displayTriggers[displayTrigger] && artwork.displayTriggers[displayTrigger].indexOf(value) >= 0){
             newArtworkonDisplay[artworkName] = artwork
           }
         })
       newState.artworkOnDisplay = newArtworkonDisplay
       newState.filters.onDisplay = newOnDisplay
-      
-      // if(this.state.compoundFilters){
-      //   newState.filters = this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
-      //   console.log("CHACK FILTERS WITH COMBINE FILTERS")
-      //   console.log(newState)
-      // }
 
       //toggle show explorer if enlarge.open on DESKTOP
       if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
         newState.showExplorer = true 
       }
       newState.filters.lastValue = value
-      // return this.setState(newState, () => {this.enlargeWidth()})
       return newState
     }
     this.tagFilter = (displayTrigger, value) => {
