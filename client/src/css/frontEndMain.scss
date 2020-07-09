@@ -607,6 +607,8 @@ font-family: 'Times New Roman', Times, serif;
     align-content: center;
     align-items: center;
     display: flex;
+    width: 100%;
+    justify-content: flex-end;
     // max-width: 25%;
 }
 .ArtworkInfo-preview{
@@ -635,7 +637,6 @@ font-family: 'Times New Roman', Times, serif;
 }
 .SeeAlso-related_images{
     display: flex;
-    justify-content: flex-end;
     max-height: 90px;
     overflow-x: auto;  
     overflow-y: hidden;
