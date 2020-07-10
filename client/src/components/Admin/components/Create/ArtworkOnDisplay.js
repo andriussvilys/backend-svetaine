@@ -99,7 +99,7 @@ export default class ArtworkOnDisplay extends React.Component{
         const selectedFiles = this.props.highlightRef
         const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
         const orderedList = [...selectedFiles, ...withoutSelected]        
-        this.setState({orderedList: orderedList})
+        this.setState({orderedList: this.props.context.state.displayOrder.general})
     }
 
     componentDidMount(){
@@ -130,7 +130,8 @@ export default class ArtworkOnDisplay extends React.Component{
         const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
         const orderedList = [...selectedFiles, ...withoutSelected]
         const newState = {...this.state}
-        newState.orderedList = orderedList
+        // newState.orderedList = orderedList
+        newState.orderedList = this.props.context.state.displayOrder.general
         newState.fileList = this.props.state.artworkInfoData
         newState.allFiles = this.props.state.artworkInfoData
         newState.selectedFiles = this.props.highlightRef
@@ -240,6 +241,7 @@ export default class ArtworkOnDisplay extends React.Component{
                                 >
                                     {
                                         this.state.orderedList.map(fileName => {
+                                        // this.props.context.state.displayOrder.general.map(fileName => {
                                             return this.EditDetail(this.props.state.artworkInfoData[fileName])
                                         })
                                     }

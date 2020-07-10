@@ -77,6 +77,7 @@ export default class FrontEndIndex extends React.Component{
                                 />
                                 <ImageSelect 
                                     data={this.context.state.artworkInfoData} 
+                                    // data={this.context.state.displayOrder && this.context.state.displayOrder.general ? this.context.state.displayOrder.general : null } 
                                     mobile={this.context.state.mobile}
                                     state={this.context.state}
                                     context={this.context}

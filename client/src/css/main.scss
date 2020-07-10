@@ -459,7 +459,9 @@ textarea{
     background-color: red;
 }
 .themes-list--selected{
-    background-color: #c9eec9 !important;
+    background-color: lime !important;
+    // background-color: #c9eec9 !important;
+    opacity: 1 !important;
 }
 .FamilyList--container{
     width: 100%;
@@ -855,6 +857,7 @@ font-family: 'Times New Roman', Times, serif;
     min-height: 50px;
 }
 .ImageBox_artworkOnDisplay{
+    opacity: 0.4;
     cursor: pointer;
 }
 // .draggable--original{

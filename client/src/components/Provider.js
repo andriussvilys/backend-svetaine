@@ -48,6 +48,9 @@ export class Provider extends React.Component {
         onClose: () => this.toggleModal(),
         parentModal: false,
       },
+      displayOrder: {
+        general: []
+      }
     };
 
     this.changeFileName = (e) => {

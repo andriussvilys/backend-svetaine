@@ -1136,7 +1136,8 @@ textarea {
 }
 
 .themes-list--selected {
-  background-color: #c9eec9 !important;
+  background-color: lime !important;
+  opacity: 1 !important;
 }
 
 .FamilyList--container {
@@ -1702,6 +1703,7 @@ h5 {
 }
 
 .ImageBox_artworkOnDisplay {
+  opacity: 0.4;
   cursor: pointer;
 }
 
