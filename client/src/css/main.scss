@@ -857,6 +857,21 @@ font-family: 'Times New Roman', Times, serif;
 .ImageBox_artworkOnDisplay{
     cursor: pointer;
 }
+// .draggable--original{
+//     background-color: red !important;
+// }
+.draggable-source--is-dragging{
+    background-color: lime !important;
+    *{
+        opacity: 0;
+    }
+}
+.draggable-mirror{
+    opacity: 0.8;
+    background-color: white !important;
+    position: absolute;
+    z-index: 9999;
+}
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {
     .admin-container{

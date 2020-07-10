@@ -1,12 +1,12 @@
 import React, { Fragment } from 'react';
-
+import { Swappable, Sortable, Plugins } from '@shopify/draggable';
 import Button from 'react-bootstrap/Button';
 
 import BootstrapModal from '../BootstrapModal';
 import ImageBox from '../ImageBox/ImageBox';
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
 
-export default class EditDetailContainer extends React.Component{
+export default class ArtworkOnDisplay extends React.Component{
 
     constructor(props){
         super(props);
@@ -47,6 +47,7 @@ export default class EditDetailContainer extends React.Component{
                     onImageClick={() => this.selectImage(file)}
                     hideInfo={true}
                     customClass={"ImageBox_artworkOnDisplay"}
+                    draggable={true}
                 >
                     <Button
                         onClick={() => {
@@ -102,6 +103,28 @@ export default class EditDetailContainer extends React.Component{
     }
 
     componentDidMount(){
+
+        const makeSwappable = () => {
+            console.log("componenet did mount")
+            const containerSelector = '#ArtworkOnDisplay';
+            const containers = document.querySelectorAll(containerSelector);
+
+            const sortable = new Sortable(containers, {
+                delay:200,
+                draggable: '.ImageBox_artworkOnDisplay',
+                mirror: {
+                  constrainDimensions: true,
+                },
+              });
+
+            sortable.on('sortable:start', () => {});
+            sortable.on('sortable:swapped', () => {});
+            sortable.on('sortable:stop', () => {});
+
+            return sortable
+        }
+
+
         const allFileNames = Object.keys(this.props.state.artworkInfoData)
         const selectedFiles = this.props.highlightRef
         const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
@@ -111,7 +134,9 @@ export default class EditDetailContainer extends React.Component{
         newState.fileList = this.props.state.artworkInfoData
         newState.allFiles = this.props.state.artworkInfoData
         newState.selectedFiles = this.props.highlightRef
-        this.setState(newState)
+        this.setState(newState, () => {
+            makeSwappable()
+        })
         // this.setState({fileList: this.props.state.artworkInfoData})
     }
 
@@ -183,9 +208,16 @@ export default class EditDetailContainer extends React.Component{
                                             this.state.selectedFiles.forEach(fileName => {
                                                 artworkOnDisplay[fileName] = this.state.fileList[fileName]
                                             })
+                                            const imgArray = Array.from(document.getElementById("ArtworkOnDisplay").querySelectorAll('.ImageBox_artworkOnDisplay img'))
 
-                                            this.props.context.setArtworkOnDisplay(artworkOnDisplay)
+                                            const imgOrder = imgArray.map(img => img.getAttribute("alt"))
+
                                             let newState = {...this.state}
+                                            newState.displayOrder = {}
+                                            newState.displayOrder.general = imgOrder
+                                            console.log("newState SAVE ")
+                                            console.log(newState)
+                                            this.props.context.setArtworkOnDisplay({list:artworkOnDisplay, order: {...newState.displayOrder}})
                                             newState.showModal = true
                                             newState.modalMessage = "Saved"
                                             this.setState(newState)
@@ -203,6 +235,7 @@ export default class EditDetailContainer extends React.Component{
                                 </div>
 
                                 <div 
+                                id={"ArtworkOnDisplay"}
                                 className={"grid-wrapper"}
                                 >
                                     {

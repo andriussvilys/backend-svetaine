@@ -20,6 +20,7 @@ export default class ImageBox extends React.Component{
         return(
             <div 
                 className={`imageBox__wrapper ${this.props.customClass ? this.props.customClass : ""} ${this.highlighter(this.props.file.fileName)? 'themes-list--selected' : 'notSelected'}`}
+                draggable={this.props.draggable}
                 onClick={() => {
                     if(this.props.onImageClick){
                         this.props.onImageClick()

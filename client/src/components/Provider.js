@@ -59,9 +59,12 @@ export class Provider extends React.Component {
         filePath: `uploads/${nameWithFileType}`,
       });
     };
-    this.setArtworkOnDisplay = (list) => {
+    this.setArtworkOnDisplay = (options) => {
+      console.log("setartworkondisplay options")
+      console.log(options)
       let newState = { ...this.state };
-      newState.artworkOnDisplay = list;
+      newState.artworkOnDisplay = options.list;
+      newState.displayOrder = options.order
       this.setState(newState);
     };
     this.onChange = (e, key, fileName) => {
@@ -3063,6 +3066,9 @@ export class Provider extends React.Component {
               // Themes,
             ])
               .then((res) => {
+                newState.displayOrder = {...this.state.displayOrder}
+                console.log("Create static state newState")
+                console.log(newState)
                 const newStaticStateJSON = JSON.stringify(newState);
                 const newStaticState = {
                   string: `const staticState = ${JSON.stringify(
@@ -3158,7 +3164,7 @@ export class Provider extends React.Component {
   } //END OF CONTSTRUCTOR
 
   componentDidMount() {
-    let newState = { ...this.state };
+    let newState = { ...this.state};
 
     let Themes = new Promise((resolve, rej) => {
       axios.get("/api/themes").then((res) => {
@@ -3280,6 +3286,7 @@ export class Provider extends React.Component {
             newState.modal.progress = 100;
             newState.modal.blockClose = false;
             newState.artworkOnDisplay = res.data.artworkOnDisplay;
+            newState.displayOrder = {...res.data.displayOrder}
             this.setState(newState);
           });
         })
