@@ -11,11 +11,20 @@ export class List extends React.Component{
       }
       this.createList = (data) => {
           const list = data.map(categoryObj => {
-              return <Category 
-                          key={categoryObj.category}
-                          data={categoryObj}
-                          context={this.props.context}
-                      />
+              const isOnDisplay = () => {
+                if(this.props.context.state.categoriesOnDisplay.category[categoryObj.category]){
+                    return this.props.context.state.categoriesOnDisplay.category[categoryObj.category].display
+                }
+                else{ return false}
+              } 
+              if(isOnDisplay()){
+                  return <Category 
+                              key={categoryObj.category}
+                              data={categoryObj}
+                              context={this.props.context}
+                          />
+              }
+              else{return null}
                   })
           return list
       }
