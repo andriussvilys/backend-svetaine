@@ -339,7 +339,18 @@ export class Provider extends React.Component{
           const filterNames = Object.keys(newFilters.onDisplay)
           filterNames.forEach(filterName => {
             if(newArtworkOnDisplay[artworkName]){
+              if(!newArtworkOnDisplay[artworkName].displayTriggers || !newArtworkOnDisplay[artworkName].displayTriggers[filterName]){
+                console.log("FAILE")
+                console.log(artworkName)
+                console.log(newArtworkOnDisplay[artworkName])
+                console.log(filterName)
+                return
+              }
             const dataToAdd = newArtworkOnDisplay[artworkName].displayTriggers[filterName]
+            // if(typeof dataToAdd === "string"){
+            //   console.log("string")
+            //   return null
+            // }
               newFilters.onDisplay[filterName] = [...newFilters.onDisplay[filterName], ...dataToAdd]
             }
           })
