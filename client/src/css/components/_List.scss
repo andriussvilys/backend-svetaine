@@ -1,10 +1,21 @@
 $filtersWidth_desktop: 220px;
 .legacyStyle-List{
     max-width: 100%;
-    margin: 0;
-    margin: 5px;
     padding: 0;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    margin-bottom: 5px;
     border-bottom: 1px dotted black;
+    text-decoration: none;
+    list-style: none;
+    .listItem{
+        // margin-left: 8px;
+    }
+}
+.legacyStyle-List-categoryTitle{
+    text-transform: uppercase;
+    color: #bdbdbd;
+    display: none;
 }
 .FilterTree-container{
     grid-column-start: 1;
@@ -16,7 +27,7 @@ $filtersWidth_desktop: 220px;
     background-color: white;
     border-right: 1px solid black;
     width: 0;
-    padding-top: 20px;
+    padding-top: 10px;
 }
 .FilterTree-wrapper{
     width: $filtersWidth_desktop;
@@ -35,7 +46,6 @@ $filtersWidth_desktop: 220px;
     user-select: none;
     display: flex;
     align-items: baseline;
-    padding: 0 3px;
     label{
         cursor: pointer;
         order: 2;

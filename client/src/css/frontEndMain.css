@@ -1961,10 +1961,19 @@ label {
 
 .legacyStyle-List {
   max-width: 100%;
-  margin: 0;
-  margin: 5px;
   padding: 0;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  margin-bottom: 5px;
   border-bottom: 1px dotted black;
+  text-decoration: none;
+  list-style: none;
+}
+
+.legacyStyle-List-categoryTitle {
+  text-transform: uppercase;
+  color: #bdbdbd;
+  display: none;
 }
 
 .FilterTree-container {
@@ -1978,7 +1987,7 @@ label {
   background-color: white;
   border-right: 1px solid black;
   width: 0;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .FilterTree-wrapper {
@@ -2005,7 +2014,6 @@ label {
   -webkit-box-align: baseline;
       -ms-flex-align: baseline;
           align-items: baseline;
-  padding: 0 3px;
 }
 
 .legacyStyle-List-listItem label {

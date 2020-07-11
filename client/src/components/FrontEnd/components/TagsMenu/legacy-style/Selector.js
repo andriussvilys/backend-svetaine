@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 
 const Selector = (props) => {
     return(
-        <li className="legacyStyle-List-listItem">
+        <li className={`legacyStyle-List-listItem ${props.customClass ? props.customClass : ""}`}>
             <label 
                 htmlFor={`FilterTree-checkbox-${props.id}`}
                 // htmlFor={`FilterTree-checkbox-${props.title}`}
