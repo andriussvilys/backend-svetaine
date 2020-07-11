@@ -5,7 +5,8 @@ const ImageSelect = (props) => {
 
     const createPreviewsALL = (data) => {
         if(data){
-            let previews = Object.keys(data).map((objName) => {
+            // let previews = Object.keys(data).map((objName) => {
+            let previews = props.state.displayOrder.general.map((objName) => {
             // let previews = data.map((objName) => {
               //check if width < height 
               //if true, add half-size class

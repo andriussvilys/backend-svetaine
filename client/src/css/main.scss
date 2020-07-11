@@ -37,6 +37,7 @@ $border-main-color: #bbb;
 
 .admin-content{
     textarea, input{
+        max-width: 100%;
         @include common-border()
     }
 }
@@ -454,12 +455,13 @@ Button{
 textarea{
     font-size: 13px;
     padding: 15px;
+    max-width: 100%;
 }
 .themes-list > input:checked{
     background-color: red;
 }
 .themes-list--selected{
-    background-color: lime !important;
+    background-color: rgb(192, 255, 192) !important;
     // background-color: #c9eec9 !important;
     opacity: 1 !important;
 }

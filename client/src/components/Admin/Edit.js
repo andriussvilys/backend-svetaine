@@ -12,6 +12,7 @@ import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
 import SubmitFamilyInfo from './components/FamilyInfo/subcomponents/SubmitFamilyInfo'
 import Themes from './components/Filters/subcomponents/Themes'
 import Categories from './components/Filters/subcomponents/Categories'
+import CategoriesOnDisplay from './components/Filters/subcomponents/categoriesOnDisplay/CategoriesOnDisplay'
 import ArtworkOnDisplay from './components/Create/ArtworkOnDisplay'
 
 export default class Edit extends Component{
@@ -219,7 +220,13 @@ export default class Edit extends Component{
                                                     </Tabs>
                                                   </div>
                                                 </Tab>
-                                                <Tab eventKey="artworkOnDisplay" title="Select Artwork on Display">
+                                                <Tab eventKey="DisplayFilters" title="Select displayed filters">
+                                                  <CategoriesOnDisplay 
+                                                    context={this.context}
+                                                    modalInvoke={this.modalInvoke}
+                                                  />
+                                                </Tab>
+                                                <Tab eventKey="artworkOnDisplay" title="Arrange Artwork on Display">
                                                   <ArtworkOnDisplay 
                                                     context={this.context}
                                                     state={this.context.state}

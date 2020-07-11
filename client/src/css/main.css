@@ -107,6 +107,7 @@
       -ms-flex-align: center;
           align-items: center;
   min-height: 19px;
+  width: 100%;
 }
 
 .themes-list label {
@@ -135,6 +136,43 @@
 
 .themes-list:focus {
   background-color: #f5fff5;
+}
+
+.displayCategory-title {
+  display: block;
+}
+
+.displayCategory-checkbox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border-bottom: 1px dotted;
+}
+
+.displayCategory-altName {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.displayCategory-altName label {
+  color: #5c5c5c;
+  font-size: 12px;
+  font-weight: unset;
+}
+
+.displayCategory-altName input {
+  text-transform: uppercase;
+  height: 24px;
+  font-size: 14px;
 }
 
 .themes-span {
@@ -414,10 +452,6 @@
 
 .list--subcategory > div {
   border: 1px solid rgba(0, 0, 0, 0.2);
-  height: 40px;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -546,6 +580,7 @@
 }
 
 .admin-content textarea, .admin-content input {
+  max-width: 100%;
   border: 2px solid #b5b5b5;
   padding: 3px;
   border-radius: 6px;
@@ -1129,6 +1164,7 @@ Button {
 textarea {
   font-size: 13px;
   padding: 15px;
+  max-width: 100%;
 }
 
 .themes-list > input:checked {
@@ -1136,7 +1172,7 @@ textarea {
 }
 
 .themes-list--selected {
-  background-color: lime !important;
+  background-color: #c0ffc0 !important;
   opacity: 1 !important;
 }
 

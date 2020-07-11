@@ -244,7 +244,6 @@ export class Provider extends React.Component {
         newState.categoriesOptionList.DOM.categories = categoryDomList;
         this.setState(newState);
       },
-
       getSubcategoryNames: () => {
         let newState = { ...this.state };
 
@@ -301,7 +300,6 @@ export class Provider extends React.Component {
         }
         this.setState(newState);
       },
-
       submitNewCategory: () => {
         return new Promise((resolve, reject) => {
           const categoryInput = document.getElementById("add-category");
@@ -888,6 +886,55 @@ export class Provider extends React.Component {
             return;
         }
       },
+      displayCategory: (displayTrigger, value) => {
+        // categoriesOnDisplay
+        return new Promise((resolve, reject) => {
+          const emptyTemplate = {"category":{},"subcategory":{},"listitems":{},"themes":{},"year":{},"location":{}}
+          console.log(`displayTrigger ${displayTrigger}`)
+          console.log(`value ${value}`)
+          let newState = {...this.state}
+          let categoriesOnDisplay = {...this.state.categoriesOnDisplay}
+          //IF CHECKED
+          const newObj = (name, altName, display) => {
+            return {altName: altName, name: name, display: display}
+          }
+  
+          if(!categoriesOnDisplay[displayTrigger][value]){
+            categoriesOnDisplay[displayTrigger][value] = newObj(value, null, null)
+          }
+          const altName = categoriesOnDisplay[displayTrigger][value].altName
+          
+          if(categoriesOnDisplay[displayTrigger][value].display){
+            categoriesOnDisplay[displayTrigger] = {...categoriesOnDisplay[displayTrigger], [value]:newObj(value, altName, null)}
+          }
+          else{
+            categoriesOnDisplay[displayTrigger] = {...categoriesOnDisplay[displayTrigger], [value]:newObj(value, altName, true)}
+          }
+          newState.categoriesOnDisplay = {...categoriesOnDisplay}
+          // newState.categoriesOnDisplay = {...emptyTemplate}
+          this.setState(newState, () => resolve())
+        })
+      },
+    displayCategoryAltName: (displayTrigger, parent, value) => {
+
+      const checkParent = () => {
+        return new Promise((resolve, reject) => {
+          if(!this.state.categoriesOnDisplay[displayTrigger][parent]){
+            this.categoryMethods.displayCategory(displayTrigger, parent)
+              .then(res => resolve())
+          }
+          else{resolve()}
+        }) 
+      }
+      checkParent()
+        .then(res => {
+          let altName = {...this.state.categoriesOnDisplay[displayTrigger][parent].altName}
+          altName = value
+          let newState = {...this.state}
+          newState.categoriesOnDisplay[displayTrigger][parent].altName = altName
+          this.setState(newState)
+        })
+    }
     };
     //this deal with file input uploads and uploads to server
     this.fileDataMethods = {
@@ -3070,8 +3117,8 @@ export class Provider extends React.Component {
             ])
               .then((res) => {
                 newState.displayOrder = {...this.state.displayOrder}
-                console.log("Create static state newState")
-                console.log(newState)
+                newState.categoriesOnDisplay = {}
+                newState.categoriesOnDisplay = {...this.state.categoriesOnDisplay}
                 const newStaticStateJSON = JSON.stringify(newState);
                 const newStaticState = {
                   string: `const staticState = ${JSON.stringify(
@@ -3245,6 +3292,7 @@ export class Provider extends React.Component {
     stateCopy.modal.parentModal = true;
     stateCopy.modal.blockClose = true;
     stateCopy.modal.modalMessage = this.loadingMessage("Initializing app...");
+    // stateCopy.categoriesOnDisplay = {...this.state.staticState.categoriesOnDisplay}
 
     function allProgress(proms, promNames, progress_cb) {
       let d = 0;
@@ -3290,6 +3338,7 @@ export class Provider extends React.Component {
             newState.modal.blockClose = false;
             newState.artworkOnDisplay = res.data.artworkOnDisplay;
             newState.displayOrder = {...res.data.displayOrder}
+            newState.categoriesOnDisplay = {...res.data.categoriesOnDisplay}
             this.setState(newState);
           });
         })

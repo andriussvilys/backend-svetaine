@@ -57,6 +57,7 @@
     justify-content: space-between;
     align-items: center;
     min-height: 19px;
+    width: 100%;
     label{
         margin-bottom: 0 !important;
         margin-right: 10px;
@@ -80,6 +81,29 @@
 }
 .themes-list:focus{
     background-color: #f5fff5;
+}
+.displayCategory-title{
+    display: block;
+}
+.displayCategory-checkbox{
+    display: flex;
+    align-items: center;
+    border-bottom: 1px dotted;
+}
+.displayCategory-altName{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    label{
+        color: rgb(92, 92, 92);
+        font-size: 12px;
+        font-weight: unset;
+    }
+    input{
+        text-transform: uppercase;
+        height: 24px;
+        font-size: 14px;
+    }
 }
 .themes-span{
     margin: 0 8px 0 0;

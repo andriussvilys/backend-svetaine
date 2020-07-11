@@ -1303,93 +1303,15 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
 
 //ASYNC VERSION
-  // componentDidMount(){
-  //       // let newState = staticState
-  //       console.log("state before loading static state")
-  //       console.log(this.state)
-  //       console.log("GET STATIC STATE")
-  //       axios.get('/staticState')
-  //       .then(res => {
-  //         console.log(res)
-  //         let newState = {}
-  //         newState = res.data
-
-  //         console.log(newState)
-
-  //         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-  //         newState.mobile = this.toggleMobile()
-  //         newState.compoundFilters = false
-  //         newState.filters = {}
-  //         newState.filters.onDisplay = {
-  //           category: [],
-  //           subcategory: [],
-  //           listitems: [],
-  //           themes: [],
-  //           year: [],
-  //           location: []
-  //         }
-  //         newState.filters.allFilters = {
-  //           category: [],
-  //           subcategory: [],
-  //           listitems: [],
-  //           themes: [],
-  //           year: [],
-  //           location: []
-  //         }
-  //         newState.filters.empty = {
-  //           category: [],
-  //           subcategory: [],
-  //           listitems: [],
-  //           themes: [],
-  //           year: [],
-  //           location: []
-  //         }
-  //         // const checkFilters = (artworkCollection, propName) => {
-  //         //   Object.keys(artworkCollection).forEach(fileName => {
-  //         //     const fileFilters = artworkCollection[fileName].displayTriggers
-  
-  //         //       Object.keys(fileFilters).forEach(filterName => {
-  //         //         if(typeof fileFilters[filterName] === "object"){
-  //         //           if(fileFilters[filterName]){
-  
-  //         //             fileFilters[filterName].forEach(content => {
-  //         //               if(newState.filters[propName][filterName].indexOf(content) < 0){
-  //         //                 newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
-  //         //               }
-  //         //             })
-  //         //           }
-                    
-  //         //         }
-  //         //         else{
-  //         //           if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
-  //         //             if(fileFilters[filterName].length > 0){
-  //         //               newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
-  //         //             }
-  //         //           }
-  //         //         }
-  //         //       })
-  //         //   })
-  //         // }
-  
-  //         // checkFilters(newState.artworkOnDisplay, "onDisplay")
-  //         // checkFilters(newState.visibleArtwork, "allFilters")
-  
-  //         newState.initialOnDisplay = newState.artworkOnDisplay
-  //         newState.filters.initialOnDisplay = newState.filters.onDisplay
-  
-  //         this.setState(newState)
-  //       })
-        
-        
-  // }
-
   componentDidMount(){
-    let newState = {...staticState}
-    console.log("staticState on FE-Provider")
-    console.log(newState)
-    window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-    newState.mobile = this.toggleMobile()
-        newState.compoundFilters = false
+        axios.get('/staticState')
+        .then(res => {
+          let newState = {}
+          newState = res.data
+
+          window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+          newState.mobile = this.toggleMobile()
+          newState.compoundFilters = false
           newState.filters = {}
           newState.filters.onDisplay = {
             category: [],
@@ -1415,63 +1337,134 @@ export class Provider extends React.Component{
             year: [],
             location: []
           }
-    newState.initialOnDisplay = {...newState.artworkOnDisplay}
-    newState.filters.initialOnDisplay = newState.filters.onDisplay
-    this.setState(newState)
+          // const checkFilters = (artworkCollection, propName) => {
+          //   Object.keys(artworkCollection).forEach(fileName => {
+          //     const fileFilters = artworkCollection[fileName].displayTriggers
+  
+          //       Object.keys(fileFilters).forEach(filterName => {
+          //         if(typeof fileFilters[filterName] === "object"){
+          //           if(fileFilters[filterName]){
+  
+          //             fileFilters[filterName].forEach(content => {
+          //               if(newState.filters[propName][filterName].indexOf(content) < 0){
+          //                 newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
+          //               }
+          //             })
+          //           }
+                    
+          //         }
+          //         else{
+          //           if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
+          //             if(fileFilters[filterName].length > 0){
+          //               newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+          //             }
+          //           }
+          //         }
+          //       })
+          //   })
+          // }
+  
+          // checkFilters(newState.artworkOnDisplay, "onDisplay")
+          // checkFilters(newState.visibleArtwork, "allFilters")
+  
+          newState.initialOnDisplay = newState.artworkOnDisplay
+          newState.filters.initialOnDisplay = newState.filters.onDisplay
+  
+          this.setState(newState)
+        })
+        
+        
   }
 
+  // componentDidMount(){
+  //   let newState = {...staticState}
+  //   console.log("staticState on FE-Provider")
+  //   console.log(newState)
+  //   window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+  //   newState.mobile = this.toggleMobile()
+  //       newState.compoundFilters = false
+  //         newState.filters = {}
+  //         newState.filters.onDisplay = {
+  //           category: [],
+  //           subcategory: [],
+  //           listitems: [],
+  //           themes: [],
+  //           year: [],
+  //           location: []
+  //         }
+  //         newState.filters.allFilters = {
+  //           category: [],
+  //           subcategory: [],
+  //           listitems: [],
+  //           themes: [],
+  //           year: [],
+  //           location: []
+  //         }
+  //         newState.filters.empty = {
+  //           category: [],
+  //           subcategory: [],
+  //           listitems: [],
+  //           themes: [],
+  //           year: [],
+  //           location: []
+  //         }
+  //   newState.initialOnDisplay = {...newState.artworkOnDisplay}
+  //   newState.filters.initialOnDisplay = newState.filters.onDisplay
+  //   this.setState(newState)
+  // }
+
     render(){
-    return(
-        <Context.Provider value={ {
-            state: this.state,
+      return(
+          <Context.Provider value={ {
+              state: this.state,
 
-            filterByCategory: this.filterByCategory,
-            filterBySubcategory: this.filterBySubcategory,
-            filterByListitem: this.filterByListitem,
-            categoryChecked: this.categoryChecked,
-            subcategoryChecked: this.subcategoryChecked,
-            listitemChecked: this.listitemChecked,
+              filterByCategory: this.filterByCategory,
+              filterBySubcategory: this.filterBySubcategory,
+              filterByListitem: this.filterByListitem,
+              categoryChecked: this.categoryChecked,
+              subcategoryChecked: this.subcategoryChecked,
+              listitemChecked: this.listitemChecked,
 
-            enlarge: this.enlarge,
-            loadEnlarge: this.loadEnlarge,
-            closeEnlarge: this.closeEnlarge,
-            hideArtworkInfo: this.hideArtworkInfo,
+              enlarge: this.enlarge,
+              loadEnlarge: this.loadEnlarge,
+              closeEnlarge: this.closeEnlarge,
+              hideArtworkInfo: this.hideArtworkInfo,
 
-            viewNext: this.viewNext,
-            viewPrev: this.viewPrev,
+              viewNext: this.viewNext,
+              viewPrev: this.viewPrev,
 
-            showInfo: this.showInfo,
+              showInfo: this.showInfo,
 
-            filterAllThemes: this.filterAllThemes,
-            filterByTheme: this.filterByTheme,
-            themeChecked: this.themeChecked,
+              filterAllThemes: this.filterAllThemes,
+              filterByTheme: this.filterByTheme,
+              themeChecked: this.themeChecked,
 
-            filterByYear: this.filterByYear,
-            yearChecked: this.yearChecked,
-            filterByLocation: this.filterByLocation,
-            locationChecked: this.locationChecked,
+              filterByYear: this.filterByYear,
+              yearChecked: this.yearChecked,
+              filterByLocation: this.filterByLocation,
+              locationChecked: this.locationChecked,
 
-            showMenu: this.showMenu,
-            toggleExplorer: this.toggleExplorer,
-            toggleMobile: this.toggleMobile,
-            onTouchStart: this.onTouchStart,
+              showMenu: this.showMenu,
+              toggleExplorer: this.toggleExplorer,
+              toggleMobile: this.toggleMobile,
+              onTouchStart: this.onTouchStart,
 
-            lazyLoadImages: this.lazyLoadImages,
-            scrollToHorizontal: this.scrollToHorizontal,
+              lazyLoadImages: this.lazyLoadImages,
+              scrollToHorizontal: this.scrollToHorizontal,
 
-            readImageDir: this.readImageDir,
-            changeFileName: this.changeFileName,
-            onChange: this.onChange,
-            addNew: this.addNew,
-            isFilterChecked: this.isFilterChecked,
-            compoundFiltersSwitch: this.compoundFiltersSwitch,
-            resetAll: this.resetAll,
-            tagFilter: this.tagFilter
+              readImageDir: this.readImageDir,
+              changeFileName: this.changeFileName,
+              onChange: this.onChange,
+              addNew: this.addNew,
+              isFilterChecked: this.isFilterChecked,
+              compoundFiltersSwitch: this.compoundFiltersSwitch,
+              resetAll: this.resetAll,
+              tagFilter: this.tagFilter
 
-            } }>
-        {this.props.children}
-        </Context.Provider>
-    )
+              } }>
+          {this.props.children}
+          </Context.Provider>
+      )
     }
 
 }
