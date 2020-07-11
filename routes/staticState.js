@@ -11,6 +11,9 @@ router.post('/', (req, res) => {
     fs.writeFileSync("client/build/static-state/staticState.js", req.body.jsImport.string)
     fs.writeFileSync("client/build/static-state/staticState.json", req.body.JSON)
 
+    fs.writeFileSync("client/src/components/FrontEnd/staticState.js", req.body.jsImport.string)
+    fs.writeFileSync("client/src/components/FrontEnd/staticState.json", req.body.JSON)
+
         res.send(true)
 })
 

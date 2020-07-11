@@ -1,7 +1,6 @@
 import React from 'react';
 import axios from 'axios';
 import staticState from './staticState'
-// import staticState from '../../../public/static-state/staticState'
 
 export const Context = React.createContext();
 
@@ -17,12 +16,12 @@ export class Provider extends React.Component{
 
     this.resetAll = (hide) => {
       let newState = {...this.state}
-      //If VIEW ALL
+      //If Hide ALL
       if(hide){
         newState.filters.onDisplay = {...newState.filters.empty}
         newState.artworkOnDisplay = {}
       }
-      //IF HIDE ALL
+      //IF View ALL
       else{
         console.log("this.state.compoundFilters")
         console.log(this.state.compoundFilters)
@@ -340,17 +339,13 @@ export class Provider extends React.Component{
           filterNames.forEach(filterName => {
             if(newArtworkOnDisplay[artworkName]){
               if(!newArtworkOnDisplay[artworkName].displayTriggers || !newArtworkOnDisplay[artworkName].displayTriggers[filterName]){
-                console.log("FAILE")
-                console.log(artworkName)
-                console.log(newArtworkOnDisplay[artworkName])
-                console.log(filterName)
+                // console.log("FAILE")
+                // console.log(artworkName)
+                // console.log(newArtworkOnDisplay[artworkName])
+                // console.log(filterName)
                 return
               }
             const dataToAdd = newArtworkOnDisplay[artworkName].displayTriggers[filterName]
-            // if(typeof dataToAdd === "string"){
-            //   console.log("string")
-            //   return null
-            // }
               newFilters.onDisplay[filterName] = [...newFilters.onDisplay[filterName], ...dataToAdd]
             }
           })
@@ -1306,22 +1301,95 @@ export class Provider extends React.Component{
 
 
 }//END OF CONTSTRUCTOR
+
+//ASYNC VERSION
+  // componentDidMount(){
+  //       // let newState = staticState
+  //       console.log("state before loading static state")
+  //       console.log(this.state)
+  //       console.log("GET STATIC STATE")
+  //       axios.get('/staticState')
+  //       .then(res => {
+  //         console.log(res)
+  //         let newState = {}
+  //         newState = res.data
+
+  //         console.log(newState)
+
+  //         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+  //         newState.mobile = this.toggleMobile()
+  //         newState.compoundFilters = false
+  //         newState.filters = {}
+  //         newState.filters.onDisplay = {
+  //           category: [],
+  //           subcategory: [],
+  //           listitems: [],
+  //           themes: [],
+  //           year: [],
+  //           location: []
+  //         }
+  //         newState.filters.allFilters = {
+  //           category: [],
+  //           subcategory: [],
+  //           listitems: [],
+  //           themes: [],
+  //           year: [],
+  //           location: []
+  //         }
+  //         newState.filters.empty = {
+  //           category: [],
+  //           subcategory: [],
+  //           listitems: [],
+  //           themes: [],
+  //           year: [],
+  //           location: []
+  //         }
+  //         // const checkFilters = (artworkCollection, propName) => {
+  //         //   Object.keys(artworkCollection).forEach(fileName => {
+  //         //     const fileFilters = artworkCollection[fileName].displayTriggers
+  
+  //         //       Object.keys(fileFilters).forEach(filterName => {
+  //         //         if(typeof fileFilters[filterName] === "object"){
+  //         //           if(fileFilters[filterName]){
+  
+  //         //             fileFilters[filterName].forEach(content => {
+  //         //               if(newState.filters[propName][filterName].indexOf(content) < 0){
+  //         //                 newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
+  //         //               }
+  //         //             })
+  //         //           }
+                    
+  //         //         }
+  //         //         else{
+  //         //           if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
+  //         //             if(fileFilters[filterName].length > 0){
+  //         //               newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
+  //         //             }
+  //         //           }
+  //         //         }
+  //         //       })
+  //         //   })
+  //         // }
+  
+  //         // checkFilters(newState.artworkOnDisplay, "onDisplay")
+  //         // checkFilters(newState.visibleArtwork, "allFilters")
+  
+  //         newState.initialOnDisplay = newState.artworkOnDisplay
+  //         newState.filters.initialOnDisplay = newState.filters.onDisplay
+  
+  //         this.setState(newState)
+  //       })
+        
+        
+  // }
+
   componentDidMount(){
-        // let newState = staticState
-        console.log("state before loading static state")
-        console.log(this.state)
-        console.log("GET STATIC STATE")
-        axios.get('/staticState')
-        .then(res => {
-          console.log(res)
-          let newState = {}
-          newState = res.data
-
-          console.log(newState)
-
-          window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-          newState.mobile = this.toggleMobile()
-          newState.compoundFilters = false
+    let newState = {...staticState}
+    console.log("staticState on FE-Provider")
+    console.log(newState)
+    window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+    newState.mobile = this.toggleMobile()
+        newState.compoundFilters = false
           newState.filters = {}
           newState.filters.onDisplay = {
             category: [],
@@ -1347,43 +1415,9 @@ export class Provider extends React.Component{
             year: [],
             location: []
           }
-          // const checkFilters = (artworkCollection, propName) => {
-          //   Object.keys(artworkCollection).forEach(fileName => {
-          //     const fileFilters = artworkCollection[fileName].displayTriggers
-  
-          //       Object.keys(fileFilters).forEach(filterName => {
-          //         if(typeof fileFilters[filterName] === "object"){
-          //           if(fileFilters[filterName]){
-  
-          //             fileFilters[filterName].forEach(content => {
-          //               if(newState.filters[propName][filterName].indexOf(content) < 0){
-          //                 newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
-          //               }
-          //             })
-          //           }
-                    
-          //         }
-          //         else{
-          //           if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
-          //             if(fileFilters[filterName].length > 0){
-          //               newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
-          //             }
-          //           }
-          //         }
-          //       })
-          //   })
-          // }
-  
-          // checkFilters(newState.artworkOnDisplay, "onDisplay")
-          // checkFilters(newState.visibleArtwork, "allFilters")
-  
-          newState.initialOnDisplay = newState.artworkOnDisplay
-          newState.filters.initialOnDisplay = newState.filters.onDisplay
-  
-          this.setState(newState)
-        })
-        
-        
+    newState.initialOnDisplay = {...newState.artworkOnDisplay}
+    newState.filters.initialOnDisplay = newState.filters.onDisplay
+    this.setState(newState)
   }
 
     render(){
