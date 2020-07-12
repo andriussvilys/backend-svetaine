@@ -26,10 +26,6 @@ export default class FrontEndIndex extends React.Component{
         })
         return letters
     }
-
-    componentDidMount(){
-        // pullUp({parentId: "enlargeContainer", childId: "TagsMenu", horizontal: true, requireActive: true})
-    }
     
     render(){
             return(

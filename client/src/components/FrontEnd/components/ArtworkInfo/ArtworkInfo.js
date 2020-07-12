@@ -302,7 +302,7 @@ export default class ArtworkInfo extends React.Component{
             file={this.props.file ? this.props.file : {background: this.placeholder}} 
             context={this.props.context} 
             showInfo={
-              (e) => this.showInfo(e)
+              () => this.showInfo()
             }
             infoUp={this.state.infoUp}
           />

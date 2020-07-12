@@ -1766,7 +1766,6 @@ label {
       -ms-flex-pack: center;
           justify-content: center;
   position: absolute;
-  border-left: 1px solid black;
   overflow: hidden;
   z-index: 99;
   -webkit-transition: -webkit-transform 0.3s;
@@ -1985,7 +1984,6 @@ label {
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 14px;
   background-color: white;
-  border-right: 1px solid black;
   width: 0;
   padding-top: 10px;
 }
@@ -2124,7 +2122,6 @@ label {
   .FilterTree-container {
     padding-top: 0;
     font-size: 16px;
-    border-right: 1px solid black;
   }
   .FilterTree-wrapper {
     padding: 6px;
