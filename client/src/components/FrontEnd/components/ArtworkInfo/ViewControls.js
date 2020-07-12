@@ -6,7 +6,6 @@ const ViewControls = props => {
         return null
     }
     const disabled = props.context.state.enlarge && props.context.state.enlarge.familySequence ? props.context.state.enlarge.familySequence.familySequence.length < 2 : true
-    const artworkInfo = document.getElementById("ArtworkInfo")
     return(
         <div className={"viewControls"}>
             <div 

@@ -4,19 +4,8 @@ import { Context } from './FrontEndProvider';
 import TagsMenu from './components/TagsMenu'
 import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
-import Nav from './components/Nav/Nav'
-import PreviewBubbles from './components/ArtworkInfo/PreviewBubble'
-import Controls from './components/ArtworkInfo/Controls'
-
-import FilterTree from './components/TagsMenu/v2/FilterTree'
-import Menu from './components/TagsMenu/v2/Menu';
-
-import TopBar from './components/Nav/MobileBars/TopBar'
-import BottomBar from './components/Nav/MobileBars/BottomBar'
-
 import MobileNav from './components/TagsMenu/legacy-style/MobileNav'
 import List from './components/TagsMenu/legacy-style/List'
-import pullUp from './components/functions/pullUp'
 
 // import '../../css/frontEndMain.css'
 
@@ -50,22 +39,9 @@ export default class FrontEndIndex extends React.Component{
                             <div 
                                 className="frontEndIndex-container"
                             >
-    
-                            {/* {this.context.state.mobile ? 
-                                <MobileNav 
-                                    context={this.context}
-                                /> : null
-                            } */}
-                                <MobileNav 
-                                    context={this.context}
-                                />
-    
-                            {/* {this.context.state.categoriesData ?                             
-                                <List 
-                                    context={this.context}
-                                    data={this.context.state.categoriesData}
-                                /> : null
-                            } */}
+                            <MobileNav 
+                                context={this.context}
+                            />
     
                             <div 
                             id="images" 

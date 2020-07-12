@@ -1,7 +1,5 @@
 const pullUp = (options, offsetCallback) => {
-  const container = document.getElementById(options.parentId);
   const dragItem = document.getElementById(options.childId);
-  const infoButton = document.getElementById("show-info-button");
 
   var active = false;
   var currentX;
@@ -14,15 +12,9 @@ const pullUp = (options, offsetCallback) => {
   let previousY = 0
   const maxY = dragItem.clientHeight;
 
-  // infoButton.addEventListener("click", click)
-
   dragItem.addEventListener("touchstart", dragStart, false);
   dragItem.addEventListener("touchend", dragEnd, false);
   dragItem.addEventListener("touchmove", drag, false);
-
-//   container.addEventListener("touchstart", dragStart, false);
-//   container.addEventListener("touchend", dragEnd, false);
-//   container.addEventListener("touchmove", drag, false);
 
   function dragStart(e) {
     e.stopPropagation()
@@ -30,7 +22,6 @@ const pullUp = (options, offsetCallback) => {
     console.log("previousY")
     console.log(previousY)
 
-    // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags");
         if (e.type === "touchstart") {
           if (e.touches.length > 1) {
             return;
@@ -58,14 +49,6 @@ const pullUp = (options, offsetCallback) => {
     yOffset = currentY;
 
     previousY = currentY
-
-    // if (currentY > -20) {
-    // //   dragItem.classList.remove("info-up");
-    // //   dragItem.classList.remove("dragged");
-    // // document.getElementById("ArtworkInfo-container").classList.remove("ArtworkInfo-toggleTags");
-    // // dragItem.style.transform = "translateY(0)"
-    //   currentY = 0;
-    // }
     if (currentY < 0) {
       dragItem.classList.add("dragged");
     }
@@ -74,7 +57,6 @@ const pullUp = (options, offsetCallback) => {
 
   function drag(e) {
     if (active) {
-      // e.preventDefault();
 
       if (e.type === "touchmove") {
         dragItem.classList.remove("info-up")
@@ -94,10 +76,8 @@ const pullUp = (options, offsetCallback) => {
       if (-currentY > dragItem.clientHeight) {
         currentY = -dragItem.clientHeight;
         dragItem.classList.add("info-up")
-        // return
       }
       if (currentY > 0) {
-        // return
         currentY = 0;
       }
       if(currentY !== 0){

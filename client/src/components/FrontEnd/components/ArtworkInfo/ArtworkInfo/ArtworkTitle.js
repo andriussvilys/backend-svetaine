@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react'
-import PreviewCounter from '../PreviewCounter'
 import ViewControls from '../ViewControls'
 
 export default class ArtworkTitle extends React.Component{

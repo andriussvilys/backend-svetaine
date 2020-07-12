@@ -50,6 +50,7 @@ const Category = (props) => {
                 })
                 return [title, ...listItemSelectors]
             }
+            else{return null}
         })
         return (
             <ul className={"legacyStyle-List"}>

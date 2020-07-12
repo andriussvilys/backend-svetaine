@@ -132,11 +132,12 @@ export default class TagsMenu extends React.Component{
                     showContent={this.onSubcategoriesClick}
                     />
 
-                        { if(obj.subcategory[subcategory].length > 0)
+                        if(obj.subcategory[subcategory].length > 0){
                             listItems = [...listItems, 
                                 this.createListItems(obj.subcategory[subcategory], subcategory, obj.category) 
                             ]
                         }
+                        
                     return button
                 
             })

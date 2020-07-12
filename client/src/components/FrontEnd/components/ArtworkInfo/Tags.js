@@ -96,7 +96,7 @@ const Tags = (props) => {
         })
         const DOMsubcategories = subcategories.map(tag => {
             if(tag.title === "studio"){
-                return
+                return null
             }
             return <button 
             key={`subcategory-${tag.title}`}

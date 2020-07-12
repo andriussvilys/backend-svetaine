@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import PinchToZoom from 'react-pinch-and-zoom'
 import CloseButton from './Bars/CloseButton'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'

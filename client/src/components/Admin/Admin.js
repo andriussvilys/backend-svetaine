@@ -4,7 +4,7 @@ import { Provider } from '../Provider';
 import { BrowserRouter,  Link } from 'react-router-dom';
 import Create from './Create';
 import Edit from './Edit'
-import Delete from './oldComponents/Delete'
+import Delete from './Delete'
 import {PrivateRoute} from '../PrivateRoute'
 
 import auth from '../Auth'

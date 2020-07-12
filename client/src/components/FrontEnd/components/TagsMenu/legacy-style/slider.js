@@ -20,13 +20,10 @@ const Switch = (props) => {
                         className="combineFilters-label"
                     >yes</label>
                         <input 
-                        checked={props.context.state.compoundFilters}
                         name="compoundFilters"
                         id="compoundFilters-yes"
                         type="radio"
                         onChange={(e) => {
-                            // e.preventDefault()
-                            // props.context.resetAll(true)
                             props.context.compoundFiltersSwitch()}}
                         value="no"
                         />
@@ -38,15 +35,13 @@ const Switch = (props) => {
                         className="combineFilters-label"
                     >no</label>
                         <input 
-                        checked={!props.context.state.compoundFilters}
                         name="compoundFilters"
                         id="compoundFilters-no"
                         type="radio"
                         onChange={(e) => {
-                            // e.preventDefault()
-                            // props.context.resetAll(true)
                             props.context.compoundFiltersSwitch()}}
                         value={"yes"}
+                        defaultChecked
                         />
                 </div>                
             </form>

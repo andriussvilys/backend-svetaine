@@ -29,13 +29,12 @@ const DisplayTriggerList = (props) => {
         if(!data){return}
         if(data.length <= 0){return}
         let list = data.map(item => {
-            if(item === "" || item === " "){return}
+            if(item === "" || item === " "){return null}
             return <li key={`trigger-${title}-${item}`} className={`themes-list ${isChecked(props.title, props.file, item) ? "themes-list--selected" : ""}`}>
                         <label htmlFor={`displayTriggers-${title}-${item}`}>{item}</label>
                         <input 
                             id={`displayTriggers-${title}-${item}`}
                             type="checkbox"
-                            onChange={() => {}}
                             checked={isChecked(props.title, props.file, item)}
                             onChange={() => props.onChange(item, title, fileName, familySetup)}
                         />

@@ -1,8 +1,7 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Draggable } from 'react-beautiful-dnd';
 
 import FilePreview from '../../FilePreview'
-import ImageBox from '../../ImageBox/ImageBox'
 
 const DnDListDraggable = (props) => {
     if(!props.file){

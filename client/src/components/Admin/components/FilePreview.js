@@ -2,10 +2,6 @@ import React from 'react';
 
 export default class FilePreview extends React.Component{
 
-    constructor(props){
-        super(props)
-    }
-
     fileContainer = (fileType, file) => {
 
         //files in server dont have 'preview' property, and files in state dont have filePath
@@ -39,7 +35,11 @@ export default class FilePreview extends React.Component{
         }
         if(fileType.match("application/pdf")){
             return(
-                    <iframe src={previewSource} style={{width: "100%"}}></iframe>
+                    <iframe 
+                    src={previewSource} 
+                    style={{width: "100%"}}
+                    title={`iframe-${this.props.file.fileName}`}
+                    ></iframe>
             )
         }
     }
@@ -55,12 +55,6 @@ export default class FilePreview extends React.Component{
                 onClick={() => this.props.onClick()}
             >
                 {this.fileContainer(this.props.file.fileType, this.props.file)}
-                {/* <input
-                type="text" 
-                className="ImagesPreview--fileName"
-                placeholder={this.props.file.fileName}
-                >
-                </input> */}
             </div>
             )
         }

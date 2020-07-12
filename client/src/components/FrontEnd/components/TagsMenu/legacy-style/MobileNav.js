@@ -1,5 +1,4 @@
 import React from 'react'
-import List from '../legacy-style/List'
 
 export default class MobileNav extends React.Component {
     constructor(props){

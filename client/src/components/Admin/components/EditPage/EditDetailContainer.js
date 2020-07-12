@@ -1,13 +1,10 @@
 import React, { Fragment } from 'react';
 
-import Button from 'react-bootstrap/Button';
-
 import BootstrapModal from '../BootstrapModal';
 import ImageBox from '../ImageBox/ImageBox';
 import EditFileButtons from '../ImageBox/optionalComponents/EditFileButtons'
 import FilePreview from '../FilePreview'
 import SelectFamily from '../FamilyInfo/subcomponents/SelectFamily'
-import Accordion from '../Accordion';
 
 export default class EditDetailContainer extends React.Component{
 

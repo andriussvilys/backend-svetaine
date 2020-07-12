@@ -23,8 +23,6 @@ export class Provider extends React.Component{
       }
       //IF View ALL
       else{
-        console.log("this.state.compoundFilters")
-        console.log(this.state.compoundFilters)
         newState.artworkOnDisplay = {...newState.initialOnDisplay}
         if(!this.state.compoundFilters){
           newState.filters.onDisplay = {...newState.filters.empty}
@@ -42,12 +40,8 @@ export class Provider extends React.Component{
       let newState = {...this.state}
       newState.compoundFilters = !this.state.compoundFilters
       newState.showAll = false
-      console.log("compoundFiltersSwitch STATE")
-      console.log(newState)
       newState.filters =  this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
       // let checkedFilters =  this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
-      // console.log("checkedFilters")
-      // console.log(checkedFilters)
       this.setState(newState)
       // this.setState({compoundFilters: !this.state.compoundFilters})
     }
@@ -73,15 +67,11 @@ export class Provider extends React.Component{
         else{
           newState.filters.onDisplay = {...newState.filters.empty}
         }
-        console.log("checFilters STATE")
-        console.log(newState.filters)
         return newState.filters
       }
 
       //IF SWITCHING COMPOUND FILTERS ON
       else{
-        console.log("NEW STATE INSIDE CHECK FILTERS")
-        console.log(newState)
   
         Object.keys(artworkCollection).forEach(fileName => {
           const fileFilters = artworkCollection[fileName].displayTriggers
@@ -108,8 +98,6 @@ export class Provider extends React.Component{
               }
             })
           })
-          console.log("newState.filters")
-          console.log(newState.filters)
           return newState.filters
       }
     }
@@ -147,7 +135,6 @@ export class Provider extends React.Component{
       newFilters.onDisplay = {...newFilters.empty}
       //IF WILL UNCHECK
       if(checked){
-        console.log("WILL UNCHECK")
         newArtworkOnDisplay = {}
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
           if(this.state.artworkOnDisplay[fileName]){
@@ -191,7 +178,6 @@ export class Provider extends React.Component{
       newState.filters = newFilters
 
       if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
-        console.log("TURN ON SHOW EXPLORER")
         newState.showExplorer = true 
       }
       return this.setState(newState, () => {this.enlargeWidth()})
@@ -265,11 +251,6 @@ export class Provider extends React.Component{
       let newState = {...this.state}
       let newArtworkonDisplay = {}
 
-      console.log("displayTrigger")
-      console.log(displayTrigger)
-      console.log("value")
-      console.log(value)
-
       let newOnDisplay = {...newState.filters.empty}
         
         newOnDisplay[displayTrigger] = [value]
@@ -292,10 +273,8 @@ export class Provider extends React.Component{
     }
     this.tagFilter = (displayTrigger, value) => {
       return new Promise((resolve, reject) => {
-        console.log("run tag filters")
         let newState = {...this.filter(displayTrigger, value)}
         newState.filters = this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
-        console.log(newState)
         return this.setState(newState, () => {
           this.enlargeWidth()
           resolve()
@@ -310,7 +289,6 @@ export class Provider extends React.Component{
       newFilters.onDisplay = {...newFilters.empty}
       //IF WILL UNCHECK
       if(checked){
-        console.log("WILL UNCHECK")
         newArtworkOnDisplay = {}
         Object.keys(this.state.artworkOnDisplay).forEach(fileName => {
           if(this.state.artworkOnDisplay[fileName]){
@@ -339,10 +317,6 @@ export class Provider extends React.Component{
           filterNames.forEach(filterName => {
             if(newArtworkOnDisplay[artworkName]){
               if(!newArtworkOnDisplay[artworkName].displayTriggers || !newArtworkOnDisplay[artworkName].displayTriggers[filterName]){
-                // console.log("FAILE")
-                // console.log(artworkName)
-                // console.log(newArtworkOnDisplay[artworkName])
-                // console.log(filterName)
                 return
               }
             const dataToAdd = newArtworkOnDisplay[artworkName].displayTriggers[filterName]
@@ -361,16 +335,14 @@ export class Provider extends React.Component{
       newState.filters = newFilters
 
       if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
-        console.log("TURN ON SHOW EXPLORER")
         newState.showExplorer = true 
       }
       return this.setState(newState, () => {this.enlargeWidth()})
     }
     this.filterBySubcategory = (e, category, subcategory, options) => {
       e.stopPropagation()
-      console.log(" FILTER BY SUB")
       return new Promise ((res, rej) => {
-          if(!this.state.compoundFilters || options && options.tagFilter){
+          if(!this.state.compoundFilters || (options && options.tagFilter)){
             let newState = this.filter("subcategory", subcategory)
             return this.setState(newState, () => {this.enlargeWidth()})
           }
@@ -380,10 +352,9 @@ export class Provider extends React.Component{
       })
     }
     this.filterByListitem = (e, category, subcategory, listitem, options) => {
-      console.log("FILTER BY LIST ITEM")
       e.stopPropagation()
       return new Promise ((res, rej) => {
-        if(!this.state.compoundFilters || options && options.tagFilter){
+        if(!this.state.compoundFilters || (options && options.tagFilter)){
           let newState = this.filter("listitems", listitem)
           return this.setState(newState, () => {this.enlargeWidth()})
         }
@@ -608,7 +579,7 @@ export class Provider extends React.Component{
       const artworkOnDisplay = {...this.state.artworkOnDisplay}
       onDisplay = Object.keys(artworkOnDisplay).filter(fileName => {
         if(!artworkOnDisplay[fileName].displayTriggers.themes){
-          return
+          return null
         }
         return artworkOnDisplay[fileName].displayTriggers.themes.includes(theme) === true
       })
@@ -756,7 +727,6 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
-      const ArtworkInfo = document.getElementById("ArtworkInfo")
       const enlargeContainer = document.getElementById('enlargeContainer')
       document.getElementById('imageSelect').style.width = `100%`   
       enlargeContainer.classList.remove("enlarge-scroll-left")
@@ -775,11 +745,11 @@ export class Provider extends React.Component{
         const file = this.state.enlarge.background
         let options = this.createFamilySequence(file)
 
-        const familyName = options.state.enlarge.familySequence.familyName
+        // const familyName = options.state.enlarge.familySequence.familyName
+        // const commonSequence = options.state.enlarge.familySequence.commonSequence
+        // const commonIndex = options.state.enlarge.familySequence.commonIndex
         const familySequence = options.state.enlarge.familySequence.familySequence
         const familyIndex = options.state.enlarge.familySequence.familyIndex
-        const commonSequence = options.state.enlarge.familySequence.commonSequence
-        const commonIndex = options.state.enlarge.familySequence.commonIndex
         let sequence = null
         let nextIndex = null
         const findNextIndex = () => {
@@ -863,9 +833,7 @@ export class Provider extends React.Component{
       let sizeRatio = naturalHeight / containerHeight
 
       if(!mobile){
-        let withArtworkFamily = file.artoworkTitle
         sizeRatio = naturalHeight / (containerHeight - ArtworkTitle.clientHeight)
-        // sizeRatio = naturalHeight / (containerHeight - 130)
       }
       let futureWidth = Math.round(naturalWidth / sizeRatio)
       let futureHeight = Math.round(futureWidth / naturalRatio)
@@ -917,12 +885,10 @@ export class Provider extends React.Component{
 
       if(this.state.mobile){
         bgSrc = file.mobilePath
-        // bgSrc = file.thumbnailPath
         fgSrc = file.mobilePath
       }
       else{
         bgSrc = file.desktopPath
-        // bgSrc = file.mobilePath
         fgSrc = file.desktopPath
       }
 
@@ -990,12 +956,20 @@ export class Provider extends React.Component{
                 }
                 //if currentFile is not visible in imageSelector
                 else{
-                  scrollToId = Object.keys(artworkOnDisplay).find(fileName => {
-                    if(artworkOnDisplay[fileName].artworkFamily === file.artworkFamily){
-                      if(familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex){
-                        return fileName
-                      }
+                  scrollToId = null
+                  Object.keys(artworkOnDisplay).forEach(fileName => {
+                    if(
+                      artworkOnDisplay[fileName].artworkFamily === file.artworkFamily &&
+                      familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex
+                    ){
+                      return scrollToId = fileName
                     }
+                    // if(artworkOnDisplay[fileName].artworkFamily === file.artworkFamily){
+                    //   if(familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex){
+                    //     return fileName
+                    //   }
+                    // }
+                    // else{return null}
                   })
                   if(!scrollToId){
                     scrollToId = familySequence.commonSequence[familySequence.commonIndex]
@@ -1081,10 +1055,7 @@ export class Provider extends React.Component{
       else{
 
         const recordedSequence = this.state.relatedArtwork[familyName].column.fileIds
-        const familyIndex = this.state.relatedArtwork[familyName].column.fileIds.indexOf(currentImage)
         let newFamilySequence = recordedSequence
-
-
         familySequence = {
           "familyName": familyName,
           "familySequence": newFamilySequence,
@@ -1126,7 +1097,6 @@ export class Provider extends React.Component{
       let newState = {...this.state}
 
       if(this.state.info.infoUp){
-        console.log("show less")
         newState.info.infoUp = false
         newState.showLess = true
       }
@@ -1303,86 +1273,15 @@ export class Provider extends React.Component{
 }//END OF CONTSTRUCTOR
 
 //ASYNC VERSION
-  componentDidMount(){
-        axios.get('/staticState')
-        .then(res => {
-          let newState = {}
-          newState = res.data
-
-          window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-          newState.mobile = this.toggleMobile()
-          newState.compoundFilters = false
-          newState.filters = {}
-          newState.filters.onDisplay = {
-            category: [],
-            subcategory: [],
-            listitems: [],
-            themes: [],
-            year: [],
-            location: []
-          }
-          newState.filters.allFilters = {
-            category: [],
-            subcategory: [],
-            listitems: [],
-            themes: [],
-            year: [],
-            location: []
-          }
-          newState.filters.empty = {
-            category: [],
-            subcategory: [],
-            listitems: [],
-            themes: [],
-            year: [],
-            location: []
-          }
-          // const checkFilters = (artworkCollection, propName) => {
-          //   Object.keys(artworkCollection).forEach(fileName => {
-          //     const fileFilters = artworkCollection[fileName].displayTriggers
-  
-          //       Object.keys(fileFilters).forEach(filterName => {
-          //         if(typeof fileFilters[filterName] === "object"){
-          //           if(fileFilters[filterName]){
-  
-          //             fileFilters[filterName].forEach(content => {
-          //               if(newState.filters[propName][filterName].indexOf(content) < 0){
-          //                 newState.filters[propName][filterName] = [...newState.filters[propName][filterName], content]
-          //               }
-          //             })
-          //           }
-                    
-          //         }
-          //         else{
-          //           if(newState.filters[propName][filterName].indexOf(fileFilters[filterName]) < 0){
-          //             if(fileFilters[filterName].length > 0){
-          //               newState.filters[propName][filterName] = [...newState.filters[propName][filterName], fileFilters[filterName]]
-          //             }
-          //           }
-          //         }
-          //       })
-          //   })
-          // }
-  
-          // checkFilters(newState.artworkOnDisplay, "onDisplay")
-          // checkFilters(newState.visibleArtwork, "allFilters")
-  
-          newState.initialOnDisplay = newState.artworkOnDisplay
-          newState.filters.initialOnDisplay = newState.filters.onDisplay
-  
-          this.setState(newState)
-        })
-        
-        
-  }
-
   // componentDidMount(){
-  //   let newState = {...staticState}
-  //   console.log("staticState on FE-Provider")
-  //   console.log(newState)
-  //   window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
-  //   newState.mobile = this.toggleMobile()
-  //       newState.compoundFilters = false
+  //       axios.get('/staticState')
+  //       .then(res => {
+  //         let newState = {}
+  //         newState = res.data
+
+  //         window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+  //         newState.mobile = this.toggleMobile()
+  //         newState.compoundFilters = false
   //         newState.filters = {}
   //         newState.filters.onDisplay = {
   //           category: [],
@@ -1408,10 +1307,50 @@ export class Provider extends React.Component{
   //           year: [],
   //           location: []
   //         }
-  //   newState.initialOnDisplay = {...newState.artworkOnDisplay}
-  //   newState.filters.initialOnDisplay = newState.filters.onDisplay
-  //   this.setState(newState)
+  
+  //         newState.initialOnDisplay = newState.artworkOnDisplay
+  //         newState.filters.initialOnDisplay = newState.filters.onDisplay
+  
+  //         this.setState(newState)
+  //       })
+        
+        
   // }
+
+  componentDidMount(){
+    let newState = {...staticState}
+    window.addEventListener("resize", ()=>{this.setState({mobile: this.toggleMobile()})})
+    newState.mobile = this.toggleMobile()
+        newState.compoundFilters = false
+          newState.filters = {}
+          newState.filters.onDisplay = {
+            category: [],
+            subcategory: [],
+            listitems: [],
+            themes: [],
+            year: [],
+            location: []
+          }
+          newState.filters.allFilters = {
+            category: [],
+            subcategory: [],
+            listitems: [],
+            themes: [],
+            year: [],
+            location: []
+          }
+          newState.filters.empty = {
+            category: [],
+            subcategory: [],
+            listitems: [],
+            themes: [],
+            year: [],
+            location: []
+          }
+    newState.initialOnDisplay = {...newState.artworkOnDisplay}
+    newState.filters.initialOnDisplay = newState.filters.onDisplay
+    this.setState(newState)
+  }
 
     render(){
       return(

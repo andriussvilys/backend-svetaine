@@ -6,9 +6,9 @@ import Button from 'react-bootstrap/Button';
 
 const Categories = (props) => {
 
-    const target = props.fileName ? 
-                props.context.state.fileData.files[props.fileName] :
-                props.context.state.familySetupdata
+    // const target = props.fileName ? 
+    //             props.context.state.fileData.files[props.fileName] :
+    //             props.context.state.familySetupdata
 
     const deletePromise = (recordToDelete) => {
         return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ const Categories = (props) => {
             }
             props.context.categoryMethods.deleteCategory(categoryName, newCategoryObject, recordToDelete)
                 .then(res => {
-                    res.modalMessage = res.modalMessage
+                    // res.modalMessage = res.modalMessage
                     res.confirm = false
                     resolve(res)
                 })

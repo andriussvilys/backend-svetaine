@@ -119,17 +119,10 @@ export class Provider extends React.Component {
           axios
             .post(router, { [requestKey]: newAddition })
             .then((res) => {
-              let addition = res.data[requestKey];
               if (callback) {
                 callback("Successfully recored");
               }
-              // this.setState({ [stateKey]: [...this.state[stateKey], newAddition]}, () => {
-              //   if(callback){
-              //       callback("Successfully recored")
-              //   }
               let newState = { ...this.state };
-              // newState[stateKey] = [...newState[stateKey], newAddition]
-              // newState.artworkFamilyList = [...newState.artworkFamilyList, newAddition]
               newState.familySetupData.artworkFamily = newAddition;
               this.setState(newState, () => resolve());
             })
@@ -889,7 +882,6 @@ export class Provider extends React.Component {
       displayCategory: (displayTrigger, value) => {
         // categoriesOnDisplay
         return new Promise((resolve, reject) => {
-          const emptyTemplate = {"category":{},"subcategory":{},"listitems":{},"themes":{},"year":{},"location":{}}
           console.log(`displayTrigger ${displayTrigger}`)
           console.log(`value ${value}`)
           let newState = {...this.state}
@@ -911,7 +903,6 @@ export class Provider extends React.Component {
             categoriesOnDisplay[displayTrigger] = {...categoriesOnDisplay[displayTrigger], [value]:newObj(value, altName, true)}
           }
           newState.categoriesOnDisplay = {...categoriesOnDisplay}
-          // newState.categoriesOnDisplay = {...emptyTemplate}
           this.setState(newState, () => resolve())
         })
       },
@@ -939,13 +930,13 @@ export class Provider extends React.Component {
     //this deal with file input uploads and uploads to server
     this.fileDataMethods = {
       deleteImage: (fileName) => {
-        axios.delete(`/deleteImage`, fileName).then((res) => {
+        axios.delete(`/deleteImage`, fileName)
+        .then((res) => {
           alert(res);
         });
       },
       deleteDBrecord: (fileName, artworkFamily, cb) => {
         return new Promise((resolve, rej) => {
-          const file = this.state.artworkInfoData[fileName];
           const paths = {
             mobilePath: `file.mobilePath`,
             thumbnailPath: `file.thumbnailPath`,
@@ -1065,18 +1056,6 @@ export class Provider extends React.Component {
        * @returns updated context state
        */
       onChange: (value, string, fileName, cb) => {
-        let nestType = () => {
-          if (string === "themes") {
-            return "array";
-          }
-          if (string !== "year" && string !== "location") {
-            return "category";
-          } else {
-            return "string";
-          }
-        };
-
-        let nestTypeResult = nestType();
 
         let newState = { ...this.state };
 
@@ -1468,7 +1447,6 @@ export class Provider extends React.Component {
         return new Promise((resolve, reject) => {
           const fileInput = e.target.files;
           const fileCount = fileInput.length;
-          let filename = null;
 
           let modalState = { ...this.state };
           modalState.modal.showModal = true;
@@ -2140,7 +2118,7 @@ export class Provider extends React.Component {
       initialIndex: () => {
         let newState = { ...this.state };
         this.state.fileData.column.fileIds.forEach((fileName, index) => {
-          this.state.fileData.files[fileName].familyDisplayIndex = index;
+          newState.fileData.files[fileName].familyDisplayIndex = index;
         });
         this.setState(newState);
       },
@@ -2544,7 +2522,6 @@ export class Provider extends React.Component {
                   ...newState,
                   relatedArtwork: { ...newState.relatedArtwork, [value]: res },
                 };
-                let fileIds = Object.keys(res);
                 this.setState(newState, () => resolve(res));
               });
             })
@@ -2553,18 +2530,18 @@ export class Provider extends React.Component {
             });
         });
       },
-      restoreFamilySetup: (fileName) => {
-        let newState = {
-          ...this.state,
-          fileData: {
-            ...this.state.fileData,
-            files: {
-              ...this.state.fileData.files,
-              [fileName]: {},
-            },
-          },
-        };
-      },
+      // restoreFamilySetup: (fileName) => {
+      //   let newState = {
+      //     ...this.state,
+      //     fileData: {
+      //       ...this.state.fileData,
+      //       files: {
+      //         ...this.state.fileData.files,
+      //         [fileName]: {},
+      //       },
+      //     },
+      //   };
+      // },
       useFamilySetup: (value) => {
         let newState = {
           ...this.state,
@@ -2906,7 +2883,7 @@ export class Provider extends React.Component {
             })
             .catch((err) => {
               console.log(
-                "axios.get(`/api/artworkInfo/${artworkFamily}`) FAILED"
+                "axios.get(/api/artworkInfo/artworkFamily) FAILED"
               );
               console.log(err);
               reject(err);
@@ -3296,15 +3273,14 @@ export class Provider extends React.Component {
 
     function allProgress(proms, promNames, progress_cb) {
       let d = 0;
-      let lastPromName = null;
-      progress_cb(0, lastPromName);
+      let prevPromiseName = null;
+      progress_cb(0, prevPromiseName);
       for (const p of proms) {
         p.then(() => {
-          lastPromName = promNames[d];
-          //   console.log(`last prom name: ${lastPromName}`)
+          prevPromiseName = promNames[d];
           d++;
 
-          progress_cb((d * 100) / proms.length, lastPromName);
+          progress_cb((d * 100) / proms.length, prevPromiseName);
         });
       }
       return Promise.all(proms);
@@ -3379,7 +3355,6 @@ export class Provider extends React.Component {
           inputFamilyDescription: this.inputFamilyDescription,
           setArtworkOnDisplay: this.setArtworkOnDisplay,
           toggleModal: this.toggleModal,
-          buildProd: this.buildProd,
         }}
       >
         {this.props.children}

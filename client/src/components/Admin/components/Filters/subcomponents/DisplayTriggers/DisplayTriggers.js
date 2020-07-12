@@ -23,12 +23,12 @@ const DisplayTriggers = (props) => {
         })
         return listItems
     }
-    const getYearLocation = (file) => {
-        let array = []
-        if(file.year){array = [...array, file.year]}
-        if(file.location){array = [...array, file.location]}
-        return array
-    }
+    // const getYearLocation = (file) => {
+    //     let array = []
+    //     if(file.year){array = [...array, file.year]}
+    //     if(file.location){array = [...array, file.location]}
+    //     return array
+    // }
     
     return(
         <div className="imageInfo--box">
@@ -74,7 +74,7 @@ const DisplayTriggers = (props) => {
                                 <span>{props.file.year}</span>
                                 <input 
                                     type="checkbox"
-                                    checked={props.file.displayTriggers && props.file.displayTriggers["year"] === props.file.year || false}
+                                    checked={props.file.displayTriggers && props.file.displayTriggers["year"] ? true : false}
                                     onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.year, "year", props.file.fileName, props.familySetup)}
                                 />
                             </li>
@@ -86,7 +86,7 @@ const DisplayTriggers = (props) => {
                                 <span>{props.file.location}</span>
                                 <input 
                                     type="checkbox"
-                                    checked={props.file.displayTriggers && props.file.displayTriggers["location"] === props.file.location || false}
+                                    checked={props.file.displayTriggers && props.file.displayTriggers["location"] ? true : false}
                                     onChange={() => props.context.fileDataMethods.onChangeDisplayTriggers(props.file.location, "location", props.file.fileName, props.familySetup)}
                                 />
                             </li>

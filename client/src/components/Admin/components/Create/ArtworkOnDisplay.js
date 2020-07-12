@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Swappable, Sortable, Plugins } from '@shopify/draggable';
+import { Sortable } from '@shopify/draggable';
 import Button from 'react-bootstrap/Button';
 
 import BootstrapModal from '../BootstrapModal';
@@ -95,10 +95,10 @@ export default class ArtworkOnDisplay extends React.Component{
         selectedInput.checked = false
 
         // this.setState({fileList: this.state.allFiles})
-        const allFileNames = Object.keys(this.props.state.artworkInfoData)
-        const selectedFiles = this.props.highlightRef
-        const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
-        const orderedList = [...selectedFiles, ...withoutSelected]        
+        // const allFileNames = Object.keys(this.props.state.artworkInfoData)
+        // const selectedFiles = this.props.highlightRef
+        // const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
+        // const orderedList = [...selectedFiles, ...withoutSelected]        
         this.setState({orderedList: this.props.context.state.displayOrder.general})
     }
 
@@ -125,10 +125,10 @@ export default class ArtworkOnDisplay extends React.Component{
         }
 
 
-        const allFileNames = Object.keys(this.props.state.artworkInfoData)
-        const selectedFiles = this.props.highlightRef
-        const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
-        const orderedList = [...selectedFiles, ...withoutSelected]
+        // const allFileNames = Object.keys(this.props.state.artworkInfoData)
+        // const selectedFiles = this.props.highlightRef
+        // const withoutSelected = allFileNames.filter(fileName => !selectedFiles.includes(fileName))
+        // const orderedList = [...selectedFiles, ...withoutSelected]
         const newState = {...this.state}
         // newState.orderedList = orderedList
         newState.orderedList = this.props.context.state.displayOrder.general

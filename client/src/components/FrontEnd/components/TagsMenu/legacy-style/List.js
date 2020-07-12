@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import Category from './Category'
 import ViewHide from './ViewHide'
 import Switch from './slider'
@@ -31,7 +31,6 @@ export class List extends React.Component{
     }
     render(){
         return(<div id="TagsMenu" 
-        className="FilterTree-container"
         className={`FilterTree-container ${this.props.context.state.showFilters ? "show-menu" : ""}`}
         >
                 <div className={"FilterTree-wrapper"}>

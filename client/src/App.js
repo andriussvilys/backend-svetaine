@@ -7,10 +7,8 @@ import FrontEndContext from './components/FrontEnd/FrontEndContext'
 import Create from './components/Admin/Create';
 import Admin from './components/Admin/Admin'
 import Edit from './components/Admin/Edit'
-import Delete from './components/Admin/oldComponents/Delete'
+import Delete from './components/Admin/Delete'
 import Login from './components/Login'
-
-import test from './components/test'
 
 import "bootstrap/dist/css/bootstrap.min.css";
 // import './css/main.css';
@@ -24,8 +22,6 @@ export default class App extends Component{
 
               <Switch>
                 <Route  path="/" exact component={FrontEndContext} />
-                <Route  path="/test" exact component={test} />
-                {/* <Route  path="/" exact component={FrontEndIndex} /> */}
                 <Route  path="/admin/login" exact component={Login} />
                 <PrivateRoute  path="/admin"  component={Admin} />
                 <PrivateRoute  path="/admin/create" component={Create} />

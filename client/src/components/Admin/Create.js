@@ -44,7 +44,6 @@ modalInvoke = (options, callbackPromise) => {
       }
 
       this.setState(newState, () => {
-          let action = null
           if(!options || !options.requireActionConfirm){
             callbackPromise
             .then(res => {

@@ -4,35 +4,33 @@ import Button from 'react-bootstrap/Button'
 
 const UpdateAllArtworkInfo = (props) => {
 
-    const getSubcategories = (file) => {
-        let categories = Object.keys(file.category)
-        let subcategories = []
-        categories.forEach(category => {
-            subcategories = [...subcategories, ...Object.keys(file.category[category])]
-        })
-        return subcategories
-    }
-    const getListitems = (file) => {
-        const categories = Object.keys(file.category)
-        let listItems = []
-        categories.forEach(category => {
-            let subcategories = Object.keys(file.category[category])
-            subcategories.forEach(sub => {
-                if(!file.category[category][sub].length > 0){return}
-                listItems = [...listItems, ...file.category[category][sub]]
-            })
-        })
-        return listItems
-    }
+    // const getSubcategories = (file) => {
+    //     let categories = Object.keys(file.category)
+    //     let subcategories = []
+    //     categories.forEach(category => {
+    //         subcategories = [...subcategories, ...Object.keys(file.category[category])]
+    //     })
+    //     return subcategories
+    // }
+    // const getListitems = (file) => {
+    //     const categories = Object.keys(file.category)
+    //     let listItems = []
+    //     categories.forEach(category => {
+    //         let subcategories = Object.keys(file.category[category])
+    //         subcategories.forEach(sub => {
+    //             if(!file.category[category][sub].length > 0){return}
+    //             listItems = [...listItems, ...file.category[category][sub]]
+    //         })
+    //     })
+    //     return listItems
+    // }
 
     const commenceUpdate = () => {
-        // const allDocuments = props.context.state.artworkInfoData
         
         const allDocuments = axios.get('/api/artworkInfo')
         
         allDocuments.then(res => {
             const allDocumentNames = Object.keys(res.data)
-            // const allFamNames = res.data.map(obj => obj.artworkFamily)
             
             let progressCount = 0
             let updateLength = allDocumentNames.length

@@ -1,9 +1,7 @@
 import React from 'react'
 
-import Button from 'react-bootstrap/Button'
 import BootstrapModal from '../BootstrapModal'
 import ProgressBar from 'react-bootstrap/ProgressBar'
-import EditArtwork from '../EditArtwork/EditArtwork'
 import NewSingleFile from './NewSingleFile'
 
 

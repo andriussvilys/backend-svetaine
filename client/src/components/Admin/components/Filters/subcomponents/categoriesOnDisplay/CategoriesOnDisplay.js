@@ -1,9 +1,4 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import DisplayTriggers from '../DisplayTriggers/DisplayTriggers';
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import '../css/components/navigationInfo.css';
-// import '../css/components/imageInfo.css';
 
 const CategoriesOnDisplay = (props) => {
     const isChecked = (displayTrigger, value) => {
@@ -29,18 +24,7 @@ const CategoriesOnDisplay = (props) => {
                             <li key={`${listitem}${index}}`} 
                             className={
                             `list--listitem list-group-item themes-list
-                            ${props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem) ? "themes-list--selected" : null}`}>
-                                {/* <label htmlFor={`filters-${obj.category}-${subcategory}-${listitem}-displayCategory`}>{listitem}</label>  
-                                <input 
-                                id={`filters-${obj.category}-${subcategory}-${listitem}-displayCategory`}
-                                className="navigation-input listitem" 
-                                type="checkbox" 
-                                value={listitem} 
-                                // id={listitem} 
-                                onChange={(e) => props.context.categoryMethods.displayCategory("listitems", listitem)} 
-                                // checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem)}
-                                checked={props.context.state.categoriesOnDisplay.listitems[listitem]}
-                                /> */}
+                            ${props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory, listitem) ? "themes-list--selected" : ""}`}>
                                 <div 
                                     className={`themes-list displayCategory-title ${isChecked("listitems", listitem) ? "themes-list--selected themes-list" : ""}`}>                       
                                     <div className={"displayCategory-checkbox"}>
@@ -51,7 +35,6 @@ const CategoriesOnDisplay = (props) => {
                                             type="checkbox" 
                                             value={listitem} 
                                             onChange={(e) => props.context.categoryMethods.displayCategory("listitems", listitem)} 
-                                            // checked={props.context.state.categoriesOnDisplay.category[obj.category]}
                                             checked={isChecked("listitems", listitem)}
                                         /> 
                                     </div>
@@ -84,19 +67,6 @@ const CategoriesOnDisplay = (props) => {
                     
                     return(
                     <ul key={subcategory} id={subcategory} className="list--subcategory list-group list-group-item">
-                        {/* <div className={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory) ? "themes-list--selected themes-list " : "themes-list "}>
-                            <label htmlFor={`filters-${obj.category}-${subcategory}-displayCategory`}>{subcategory}</label>
-                            <input 
-                            id={`filters-${obj.category}-${subcategory}-displayCategory`}
-                            className="navigation-input subcategory" 
-                            type="checkbox" 
-                            value={subcategory} 
-                            // onChange={(e) => props.context.onCheck(e, props.fileName)} 
-                            onChange={(e) => props.context.categoryMethods.displayCategory("subcategory", subcategory)} 
-                            // checked={props.context.categoryMethods.autoCheckCategories(props.fileName, obj.category, subcategory)}
-                            checked={props.context.state.categoriesOnDisplay.subcategory[subcategory]}
-                            />
-                        </div> */}
                         <div 
                             className={`themes-list displayCategory-title ${isChecked("subcategory", subcategory) ? "themes-list--selected themes-list" : ""}`}>                       
                             <div className={"displayCategory-checkbox"}>
@@ -107,7 +77,6 @@ const CategoriesOnDisplay = (props) => {
                                     type="checkbox" 
                                     value={subcategory} 
                                     onChange={(e) => props.context.categoryMethods.displayCategory("subcategory", subcategory)} 
-                                    // checked={props.context.state.categoriesOnDisplay.category[obj.category]}
                                     checked={isChecked("subcategory", subcategory)}
                                 /> 
                             </div>
@@ -151,7 +120,6 @@ const CategoriesOnDisplay = (props) => {
                                 type="checkbox" 
                                 value={obj.category} 
                                 onChange={(e) => props.context.categoryMethods.displayCategory("category", obj.category)} 
-                                // checked={props.context.state.categoriesOnDisplay.category[obj.category]}
                                 checked={isChecked("category", obj.category)}
                             /> 
                         </div>

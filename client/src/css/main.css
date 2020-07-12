@@ -515,7 +515,7 @@
           flex-direction: column;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
-          justify-content: end;
+          justify-content: flex-end;
 }
 
 .navigation--addNew_title {
@@ -1379,9 +1379,6 @@ h5 {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  -webkit-box-align: start;
-      -ms-flex-align: start;
-          align-items: start;
   padding-top: 7%;
 }
 
@@ -1394,6 +1391,15 @@ h5 {
       -ms-flex-direction: column;
           flex-direction: column;
   width: '300px';
+}
+
+.Login-form input {
+  border: 1px solid black;
+  border-radius: 6px;
+}
+
+.Login-form button {
+  margin-top: 10px !important;
 }
 
 .Login-input {

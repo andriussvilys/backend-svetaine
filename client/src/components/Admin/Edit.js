@@ -5,7 +5,6 @@ import { Context } from '../Provider';
 import { Tab, Tabs } from 'react-bootstrap'
 import EditDetailContainer from './components/EditPage/EditDetailContainer';
 import ServerFileUpdate from './components/EditPage/ServerFileUpdate';
-import Accordion from './components/Accordion';
 import BootstrapModal from './components/BootstrapModal';
 import Filters from './components/Filters/Filters';
 import EditFamilyInfo from './components/FamilyInfo/EditFamilyInfo'
@@ -139,7 +138,6 @@ export default class Edit extends Component{
       }
 
       this.setState(newState, () => {
-          let action = null
           if(!options || !options.requireActionConfirm){
             // callbackPromise
             options.confirmedAction

@@ -9,7 +9,6 @@ import ReactHtmlParser, {
 import PreviewCounter from "./PreviewCounter";
 import ArtworkTitle from "./ArtworkInfo/ArtworkTitle";
 import ImageSelect from "../ImageSelect/ImageSelect";
-import Controls from './Controls'
 import ViewControls from "./ViewControls";
 
 export default class ArtworkInfo extends React.Component{
@@ -88,7 +87,7 @@ export default class ArtworkInfo extends React.Component{
           return false;
         }
       };
-      let singleContainerCounter = singleContainer();
+      // let singleContainerCounter = singleContainer();
       return (
         <div
           className={
@@ -307,10 +306,10 @@ export default class ArtworkInfo extends React.Component{
             }
             infoUp={this.state.infoUp}
           />
-          <div className=""
-                    key={"ArtworkInfo-wrapper"}
-                    className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
-                    id="ArtworkInfo"
+          <div
+            key={"ArtworkInfo-wrapper"}
+            className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
+            id="ArtworkInfo"
           >
             {this.props.file && this.props.file.background ? 
               this.secondaryInfo() : null

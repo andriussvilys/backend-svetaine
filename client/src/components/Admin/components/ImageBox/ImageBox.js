@@ -39,7 +39,7 @@ export default class ImageBox extends React.Component{
             </FilePreview>
             {this.state.showInfo ?             
                 <div 
-                    className="imageBox__text display-no"
+                    // className="imageBox__text display-no"
                     className={`imageBox__text`}
                 >
                     <div className="imageBox__text__info">
