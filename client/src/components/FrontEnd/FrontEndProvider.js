@@ -870,7 +870,6 @@ export class Provider extends React.Component{
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
 
-      const background = document.getElementById("background")
       const container = document.getElementById("enlargeContainer")
       const imageSelect = document.getElementById("imageSelect")
       const images = document.getElementById("images")
@@ -892,37 +891,24 @@ export class Provider extends React.Component{
         fgSrc = file.desktopPath
       }
 
-        // const backgroundLoad = new Promise ((res, rej) => {
-        //   if(!this.enlarge.loaded){
-        //     document.querySelector("#background-img").src= bgSrc
-        //     document.querySelector("#background-img").addEventListener('load', () => {
-        //       this.enlarge.loaded = true
-        //       res("background loaded")
-        //     })
-        //   }
-        //   else{rej("alraedy laoded")}
-        // })
-
         let newState = options && options.state ? options.state : {...this.state}
         newState.enlarge = enlarge
         newState.enlarge.foreground = enlarge.background
         newState.enlarge.open = true
 
-            container.classList.add("enlarge-scroll-left")
+            // container.classList.add("enlarge-scroll-left")
         this.setState(newState, () => {
-          backgroundLoad
-          .then(res => {
             // container.classList.add("enlarge-scroll-left")
             let futureSize = null
             
               //COUNT FUTURE SIZES
               //DESKTOP
               if(!this.state.mobile){
-                if(background.style.width !== "100%" || background.style.height !== "100%"){
+                // if(background.style.width !== "100%" || background.style.height !== "100%"){
                   
-                  document.getElementById('background').style.width = "100%"
-                  document.getElementById('background').style.height = "100%"
-                }
+                //   document.getElementById('background').style.width = "100%"
+                //   document.getElementById('background').style.height = "100%"
+                // }
                 futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
               }
               //MOBILES**************************************************************************************
@@ -942,9 +928,9 @@ export class Provider extends React.Component{
                 container.style.width = `${enlargeContainerWidth}px`
               }
   
-                if(!container.classList.contains("enlarge-scroll-left")){
-                  container.classList.add("enlarge-scroll-left")
-                }
+                // if(!container.classList.contains("enlarge-scroll-left")){
+                //   container.classList.add("enlarge-scroll-left")
+                // }
                 // document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
               
               if(options){
@@ -975,16 +961,12 @@ export class Provider extends React.Component{
                     scrollToId = familySequence.commonSequence[familySequence.commonIndex]
                   }
                 }
-                setTimeout(() => {
-                  this.scrollToHorizontal(scrollToId, "imageSelect")
-                }, scrollToDelay);
+                // setTimeout(() => {
+                //   this.scrollToHorizontal(scrollToId, "imageSelect")
+                // }, scrollToDelay);
   
               }
               return
-          })
-          .catch(rej => {
-            return
-          })
         })
 
 
