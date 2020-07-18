@@ -958,9 +958,12 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: center;
     background-color: black;
     *{
-        width: 100%;
+        // width: 100%;
         height: 100%;
         max-width: 100%;
+    }
+    .carousel{
+        width: 100%
     }
     .carousel-indicators{
         margin: 0 !important;
@@ -970,6 +973,9 @@ font-family: 'Times New Roman', Times, serif;
     }
     .carousel-indicators{
         height: initial !important;
+    }
+    .carousel-control-next span, carousel-control-prev span{
+        height: 20px;
     }
 }
 //MEDIA QUERY MOBILE *************************************************************************************************************
