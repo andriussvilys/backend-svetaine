@@ -892,16 +892,16 @@ export class Provider extends React.Component{
         fgSrc = file.desktopPath
       }
 
-        const backgroundLoad = new Promise ((res, rej) => {
-          if(!this.enlarge.loaded){
-            document.querySelector("#background-img").src= bgSrc
-            document.querySelector("#background-img").addEventListener('load', () => {
-              this.enlarge.loaded = true
-              res("background loaded")
-            })
-          }
-          else{rej("alraedy laoded")}
-        })
+        // const backgroundLoad = new Promise ((res, rej) => {
+        //   if(!this.enlarge.loaded){
+        //     document.querySelector("#background-img").src= bgSrc
+        //     document.querySelector("#background-img").addEventListener('load', () => {
+        //       this.enlarge.loaded = true
+        //       res("background loaded")
+        //     })
+        //   }
+        //   else{rej("alraedy laoded")}
+        // })
 
         let newState = options && options.state ? options.state : {...this.state}
         newState.enlarge = enlarge
@@ -1120,7 +1120,7 @@ export class Provider extends React.Component{
       if(document.documentElement.clientWidth < 721){
         mobile = true
         container.style.height = `${images.clientHeight - 90}px`
-        document.getElementById("background").style.height = "auto"
+        // document.getElementById("background").style.height = "auto"
       }
       if(this.state.enlarge && this.state.enlarge.open){
         let newState = {...this.state}
