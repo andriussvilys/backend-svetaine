@@ -1353,7 +1353,7 @@ label {
   height: initial !important;
 }
 
-.carousel-wrapper .carousel-control-next span, .carousel-wrapper carousel-control-prev span {
+.carousel-wrapper .carousel-control-next span, .carousel-wrapper .carousel-control-prev span {
   height: 20px;
 }
 
