@@ -1,6 +1,7 @@
 .enlargeContainer{
     height: 100% !important;
-    width: 1px;
+    // width: 1px;
+    width: 100%;
     max-width: 100%;
     opacity: 1;
     transform-origin: right;
@@ -135,6 +136,7 @@
 }
 .enlarge-scroll-left{
     transform: translateX(0);
+    width: 100%;
 }
 .enlarge-opacity{
     opacity: 1;

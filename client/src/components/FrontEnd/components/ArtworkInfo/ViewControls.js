@@ -41,7 +41,7 @@ const ViewControls = props => {
             >
                 <button
                     className={"viewControls-button viewControls-button-info"}
-                    onClick={e => props.showInfo(e)}
+                    onClick={e => {e.stopPropagation(); props.showInfo(e)}}
                 >
                     <img className={"viewControls-showInfo-infoIcon"} alt="info icon" src="icons/svg/info.svg"></img>
                     <span>{props.showInfoText}</span>

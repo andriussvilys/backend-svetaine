@@ -20,8 +20,8 @@ export default class ArtworkInfo extends React.Component{
     }
      this.seeAlso = () => {
       let seeAlsos = [];
-      if (this.props.file.foreground.seeAlso.length > 0) {
-        seeAlsos = this.props.file.foreground.seeAlso.map((fileName) => {
+      if (this.props.file.seeAlso.length > 0) {
+        seeAlsos = this.props.file.seeAlso.map((fileName) => {
           return (
             <FilePreview
               loadbydefault={"true"}
@@ -46,13 +46,13 @@ export default class ArtworkInfo extends React.Component{
       }
       let DOMS = [];
       if (
-        this.props.context.state.relatedArtwork[this.props.file.foreground.artworkFamily]
+        this.props.context.state.relatedArtwork[this.props.file.artworkFamily]
           .column.fileIds.length > 1
       ) {
         let otherInFam = this.props.context.state.relatedArtwork[
-          this.props.file.foreground.artworkFamily
+          this.props.file.artworkFamily
         ].column.fileIds.filter(
-          (fileName) => fileName !== this.props.file.foreground.fileName
+          (fileName) => fileName !== this.props.file.fileName
         );
         DOMS = otherInFam.map((fileName) => {
           return (
@@ -101,10 +101,10 @@ export default class ArtworkInfo extends React.Component{
       );
     };
      this.locationAndYear = () => {
-      let location = this.props.file.foreground.location
-        ? this.props.file.foreground.location
+      let location = this.props.file.location
+        ? this.props.file.location
         : null;
-      let year = this.props.file.foreground.year ? this.props.file.foreground.year : null;
+      let year = this.props.file.year ? this.props.file.year : null;
       if (location && year) {
         return (
           <div key={"location/year"} className="ArtworkInfo_locationYear">
@@ -131,18 +131,18 @@ export default class ArtworkInfo extends React.Component{
     };
      this.artworkTitle = () => {
       const artworkFamily = () => {
-        if (this.props.file.foreground.artworkFamily !== "none")
+        if (this.props.file.artworkFamily !== "none")
           return (
             <div
               className={
-                this.props.file.foreground.artworkTitle
+                this.props.file.artworkTitle
                   ? "ArtworkInfo_artworkFamily"
                   : "ArtworkInfo_artworkTitle"
               }
             >
-              {!this.props.file.foreground.artworkTitle ? null : <span>part of </span>}
+              {!this.props.file.artworkTitle ? null : <span>part of </span>}
               <em className="ArtworkInfo_artworkFamily_variable">
-                {this.props.file.foreground.artworkFamily}
+                {this.props.file.artworkFamily}
               </em>
             </div>
           );
@@ -152,9 +152,9 @@ export default class ArtworkInfo extends React.Component{
       const artworkTitle = () => {
         return (
           <div>
-            {this.props.file.foreground.artworkTitle ? (
+            {this.props.file.artworkTitle ? (
               <em className="ArtworkInfo_artworkTitle">
-                {this.props.file.foreground.artworkTitle}
+                {this.props.file.artworkTitle}
               </em>
             ) : null}
           </div>
@@ -199,14 +199,14 @@ export default class ArtworkInfo extends React.Component{
      this.descriptions = () => {
       return (
         <div className="ArtworkInfo--descriptions">
-          {this.props.file.foreground.artworkDescription ? (
+          {this.props.file.artworkDescription ? (
             <div className="ArtworkInfo--artworkDescription ArtworkInfo--descriptions_instance">
-              {ReactHtmlParser(this.props.file.foreground.artworkDescription)}
+              {ReactHtmlParser(this.props.file.artworkDescription)}
             </div>
           ) : null}
-          {this.props.file.foreground.familyDescription ? (
+          {this.props.file.familyDescription ? (
             <div className="ArtworkInfo--familyDescription ArtworkInfo--descriptions_instance">
-              {ReactHtmlParser(this.props.file.foreground.familyDescription)}
+              {ReactHtmlParser(this.props.file.familyDescription)}
             </div>
           ) : null}
         </div>
@@ -255,7 +255,7 @@ export default class ArtworkInfo extends React.Component{
             {this.seeAlso()}
           </div>         
             <Tags 
-              file={this.props.file.foreground} 
+              file={this.props.file} 
               context={this.props.context} 
               tagsTrigger={() => {
                 this.setState({tagsTrigger: true}, () => {
@@ -311,9 +311,12 @@ export default class ArtworkInfo extends React.Component{
             className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
             id="ArtworkInfo"
           >
-            {this.props.file && this.props.file.background ? 
+            {/* {this.props.file && this.props.file.background ? 
               this.secondaryInfo() : null
-            }
+            } */}
+              {this.props.file ? 
+                this.secondaryInfo() : null
+              }   
             {this.props.context.state.mobile ? 
               <ImageSelect
                   // customClass={`side-scroll ${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}

@@ -11,29 +11,31 @@ import 'keen-slider/keen-slider.min.css'
 
 const EnlargeKeenSlide = (props) => {
     console.log("enlarge keen slide runs")
-    // console.log(props.file.background.fileName)
-    // console.log(props.file.familySequence.familySequence)
-    // console.log(`index of file ${props.file.background.fileName} ${props.file.familySequence.familySequence.indexOf(props.file.background.fileName)}`)
-    // const slider = new KeenSlider("#keen-slider-1")
-    const [currentSlide, setCurrentSlide] = React.useState(0);
+    let currentIndex = props.file.familySequence.familySequence.indexOf(props.file.background.fileName)
+
+    const [currentSlide, setCurrentSlide, currentArtwork, setCurrentArtwork] = React.useState(0);
     const [sliderRef, slider] = useKeenSlider({
         // loop: true
-        initial: props.file.familySequence.familySequence.indexOf(props.file.background.fileName),
+        initial: currentIndex,
+        // centered: true,
         rubberband: true,
         slideChanged(s) {
+            console.log("s")
+            console.log(s)
+            // console.log("s.details()")
+            // console.log(s.details())
+            currentIndex += s.details().direction
+            console.log(`current index after slide ${currentIndex}`)
+            console.log(props.context.state.enlarge.familySequence.familySequence[currentIndex-1])
             setCurrentSlide(s.details().relativeSlide);
+            // s.resize()
           }
     })
 
-    // console.log("sliderRef")
-    // console.log(sliderRef)
-    // console.log("enlarge keen slide props")
-    // console.log(props)
-
     const renderFile = (fileSequence) => {
         if(fileSequence){
-            // console.log("props.file.familySequence.familySequence")
-            // console.log(fileSequence)
+
+            const artwork = fileSequence[currentIndex]
             const carouselItems = fileSequence.map((fileName, index) => {
                 // console.log(fileName)
                 return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
@@ -87,6 +89,16 @@ const EnlargeKeenSlide = (props) => {
                                 </div>
                             )}
                         </div>
+
+                        <ArtworkInfo 
+                            context={props.context}
+                            mobile={props.context.state.mobile}
+                            // file={props.context.state.enlarge}
+                            // file={props.context.state.artworkInfoData[fileSequence[currentIndex]]}
+                            file={props.context.state.artworkInfoData[fileSequence[currentIndex]]}
+                            artworkInfoData={props.context.state.artworkInfoData}
+                            info={props.context.state.info}
+                        />
                 </Fragment>
             // return carouselItems
         }
@@ -101,13 +113,6 @@ const EnlargeKeenSlide = (props) => {
                 />
             }
                 {renderFile(props.context.state.enlarge.familySequence.familySequence)}
-                <ArtworkInfo 
-                    context={props.context}
-                    mobile={props.context.state.mobile}
-                    file={props.context.state.enlarge}
-                    artworkInfoData={props.context.state.artworkInfoData}
-                    info={props.context.state.info}
-                />
         </Fragment>
     )
 }

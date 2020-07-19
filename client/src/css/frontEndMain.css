@@ -1824,7 +1824,7 @@ label {
 
 .enlargeContainer {
   height: 100% !important;
-  width: 1px;
+  width: 100%;
   max-width: 100%;
   opacity: 1;
   -webkit-transform-origin: right;
@@ -2024,6 +2024,7 @@ label {
 .enlarge-scroll-left {
   -webkit-transform: translateX(0);
           transform: translateX(0);
+  width: 100%;
 }
 
 .enlarge-opacity {
