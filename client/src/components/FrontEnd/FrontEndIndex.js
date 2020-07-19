@@ -5,6 +5,7 @@ import TagsMenu from './components/TagsMenu'
 import ImageSelect from './components/ImageSelect/ImageSelect'
 import Enlarge from './components/Enlarge/Enlarge'
 import EnlargeAlt from './components/Enlarge/EnlargeAlt'
+import EnlargeKeenSlide from './components/Enlarge/EnlargeKeenSlide'
 import ArtworkInfo from './components/ArtworkInfo/ArtworkInfo'
 
 import MobileNav from './components/TagsMenu/legacy-style/MobileNav'
@@ -75,7 +76,7 @@ export default class FrontEndIndex extends React.Component{
                                             this.context.state && this.context.state.enlarge && this.context.state.enlarge.familySequence ?                           
                                             <Fragment>
 
-                                                <EnlargeAlt
+                                                <EnlargeKeenSlide
                                                     nextEnlarge={this.context.state.nextEnlarge}
                                                     file={this.context.state.enlarge}
                                                     onClick={this.context.closeEnlarge}
@@ -86,31 +87,20 @@ export default class FrontEndIndex extends React.Component{
                                                     context={this.context}
                                                     mobile={this.context.state.mobile}
                                                 /> 
-                                                <ArtworkInfo 
+                                                {/* <ArtworkInfo 
                                                     context={this.context}
                                                     mobile={this.context.state.mobile}
                                                     file={this.context.state.enlarge}
                                                     artworkInfoData={this.context.state.artworkInfoData}
                                                     info={this.context.state.info}
-                                                />
+                                                /> */}
                                             </Fragment> : null
                                         }
                                 </div>
                                 : null
                                 }
                             </div>
-                            {this.context.state.mobile ?                             
-                                // <Enlarge 
-                                //     nextEnlarge={this.context.state.nextEnlarge}
-                                //     file={this.context.state.enlarge}
-                                //     onClick={this.context.closeEnlarge}
-                                //     artworkInfoData={this.context.state.artworkInfoData}
-                                //     loadEnlarge={this.context.loadEnlarge}
-                                //     closeEnlarge={this.context.closeEnlarge}
-                                //     hideArtworkInfo={this.context.hideArtworkInfo}
-                                //     context={this.context}
-                                //     mobile={this.context.state.mobile}
-                                // /> : null
+                            {this.context.state.mobile ?     
                                 <div 
                                     className={`enlargeContainer 
                                     ${!this.context.state.mobile && this.context.state.showLess ? "full-width" : ""}
@@ -118,28 +108,10 @@ export default class FrontEndIndex extends React.Component{
                                     `}
                                     id="enlargeContainer"
                                 >
-                                {/* <EnlargeAlt
-                                    nextEnlarge={this.context.state.nextEnlarge}
-                                    file={this.context.state.enlarge}
-                                    onClick={this.context.closeEnlarge}
-                                    artworkInfoData={this.context.state.artworkInfoData}
-                                    loadEnlarge={this.context.loadEnlarge}
-                                    closeEnlarge={this.context.closeEnlarge}
-                                    hideArtworkInfo={this.context.hideArtworkInfo}
-                                    context={this.context}
-                                    mobile={this.context.state.mobile}
-                                /> 
-                                <ArtworkInfo 
-                                    context={this.context}
-                                    mobile={this.context.state.mobile}
-                                    file={this.context.state.enlarge}
-                                    artworkInfoData={this.context.state.artworkInfoData}
-                                    info={this.context.state.info}
-                                /> */}
                                 {this.context.state && this.context.state.enlarge && this.context.state.enlarge.familySequence ?                           
                                     <Fragment>
 
-                                        <EnlargeAlt
+                                        <EnlargeKeenSlide
                                             nextEnlarge={this.context.state.nextEnlarge}
                                             file={this.context.state.enlarge}
                                             onClick={this.context.closeEnlarge}
@@ -150,13 +122,13 @@ export default class FrontEndIndex extends React.Component{
                                             context={this.context}
                                             mobile={this.context.state.mobile}
                                         /> 
-                                        <ArtworkInfo 
+                                        {/* <ArtworkInfo 
                                             context={this.context}
                                             mobile={this.context.state.mobile}
                                             file={this.context.state.enlarge}
                                             artworkInfoData={this.context.state.artworkInfoData}
                                             info={this.context.state.info}
-                                        />
+                                        /> */}
                                     </Fragment> : null
                                 }
                                 </div>

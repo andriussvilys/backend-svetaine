@@ -1248,6 +1248,7 @@ label {
 }
 
 .pinch-to-zoom-container {
+  height: 100%;
   width: 100%;
   display: -webkit-box !important;
   display: -ms-flexbox !important;
@@ -1355,6 +1356,42 @@ label {
 
 .carousel-wrapper .carousel-control-next span, .carousel-wrapper .carousel-control-prev span {
   height: 20px;
+}
+
+.foreground-transition {
+  height: 100%;
+}
+
+.keen-slider__slide {
+  min-width: 100%;
+  max-width: 100%;
+}
+
+.dots {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.dot {
+  background-color: red;
+  height: 10px;
+  width: 10px;
+  border-radius: 10px;
+  margin: 0 2px 4px 2px !important;
+}
+
+.dot.active {
+  background-color: lime;
 }
 
 @media only screen and (max-width: 720px) {

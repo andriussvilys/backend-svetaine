@@ -903,6 +903,7 @@ font-family: 'Times New Roman', Times, serif;
 }
 .pinch-to-zoom-container{
     // height: 100% !important;
+    height: 100%;
     width: 100%;
     display: flex !important;
     align-items: center;
@@ -977,6 +978,31 @@ font-family: 'Times New Roman', Times, serif;
     .carousel-control-next span, .carousel-control-prev span{
         height: 20px;
     }
+}
+.foreground-transition{
+    height: 100%;
+}
+.keen-slider__slide{
+    min-width: 100%;
+    max-width: 100%;
+}
+.dots{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.dot{
+    background-color: red;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    margin: 0 2px 4px 2px !important;
+}
+.dot.active{
+    background-color: lime;
 }
 //MEDIA QUERY MOBILE *************************************************************************************************************
 @media only screen and (max-width: 720px) {

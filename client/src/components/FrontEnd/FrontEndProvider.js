@@ -744,10 +744,6 @@ export class Provider extends React.Component{
       }
         const file = this.state.enlarge.background
         let options = this.createFamilySequence(file)
-
-        // const familyName = options.state.enlarge.familySequence.familyName
-        // const commonSequence = options.state.enlarge.familySequence.commonSequence
-        // const commonIndex = options.state.enlarge.familySequence.commonIndex
         const familySequence = options.state.enlarge.familySequence.familySequence
         const familyIndex = options.state.enlarge.familySequence.familyIndex
         let sequence = null
@@ -866,7 +862,6 @@ export class Provider extends React.Component{
         })
       }
     }
-
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
 
@@ -896,78 +891,80 @@ export class Provider extends React.Component{
         newState.enlarge.foreground = enlarge.background
         newState.enlarge.open = true
 
-            // container.classList.add("enlarge-scroll-left")
-        this.setState(newState, () => {
-            // container.classList.add("enlarge-scroll-left")
-            let futureSize = null
-            
-              //COUNT FUTURE SIZES
-              //DESKTOP
-              if(!this.state.mobile){
-                // if(background.style.width !== "100%" || background.style.height !== "100%"){
-                  
-                //   document.getElementById('background').style.width = "100%"
-                //   document.getElementById('background').style.height = "100%"
-                // }
-                futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
-              }
-              //MOBILES**************************************************************************************
-              else{
-                futureSize = this.countWidth(file, container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
-              }
-              let scrollToDelay = 0
+        this.setState(newState)
 
-              if(!this.state.mobile){
-                let enlargeContainerWidth = images.offsetWidth
-                if(this.state.showExplorer){
-                  enlargeContainerWidth -= imageSelect.offsetWidth
-                }
-                if(this.state.showFilters){
-                  enlargeContainerWidth -= filters.offsetWidth
-                }
-                container.style.width = `${enlargeContainerWidth}px`
-              }
+            // container.classList.add("enlarge-scroll-left")
+        // this.setState(newState, () => {
+        //     // container.classList.add("enlarge-scroll-left")
+        //     let futureSize = null
+            
+        //       //COUNT FUTURE SIZES
+        //       //DESKTOP
+        //       if(!this.state.mobile){
+        //         // if(background.style.width !== "100%" || background.style.height !== "100%"){
+                  
+        //         //   document.getElementById('background').style.width = "100%"
+        //         //   document.getElementById('background').style.height = "100%"
+        //         // }
+        //         futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
+        //       }
+        //       //MOBILES**************************************************************************************
+        //       else{
+        //         futureSize = this.countWidth(file, container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
+        //       }
+        //       let scrollToDelay = 0
+
+        //       if(!this.state.mobile){
+        //         let enlargeContainerWidth = images.offsetWidth
+        //         if(this.state.showExplorer){
+        //           enlargeContainerWidth -= imageSelect.offsetWidth
+        //         }
+        //         if(this.state.showFilters){
+        //           enlargeContainerWidth -= filters.offsetWidth
+        //         }
+        //         container.style.width = `${enlargeContainerWidth}px`
+        //       }
   
-                // if(!container.classList.contains("enlarge-scroll-left")){
-                //   container.classList.add("enlarge-scroll-left")
-                // }
-                // document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
+        //         // if(!container.classList.contains("enlarge-scroll-left")){
+        //         //   container.classList.add("enlarge-scroll-left")
+        //         // }
+        //         // document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
               
-              if(options){
-                const familySequence = options.state.enlarge.familySequence
-                const artworkOnDisplay = this.state.artworkOnDisplay
-                let scrollToId = null
-                if(artworkOnDisplay[file.fileName]){
-                  scrollToId = file.fileName
-                }
-                //if currentFile is not visible in imageSelector
-                else{
-                  scrollToId = null
-                  Object.keys(artworkOnDisplay).forEach(fileName => {
-                    if(
-                      artworkOnDisplay[fileName].artworkFamily === file.artworkFamily &&
-                      familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex
-                    ){
-                      return scrollToId = fileName
-                    }
-                    // if(artworkOnDisplay[fileName].artworkFamily === file.artworkFamily){
-                    //   if(familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex){
-                    //     return fileName
-                    //   }
-                    // }
-                    // else{return null}
-                  })
-                  if(!scrollToId){
-                    scrollToId = familySequence.commonSequence[familySequence.commonIndex]
-                  }
-                }
-                // setTimeout(() => {
-                //   this.scrollToHorizontal(scrollToId, "imageSelect")
-                // }, scrollToDelay);
+        //       if(options){
+        //         const familySequence = options.state.enlarge.familySequence
+        //         const artworkOnDisplay = this.state.artworkOnDisplay
+        //         let scrollToId = null
+        //         if(artworkOnDisplay[file.fileName]){
+        //           scrollToId = file.fileName
+        //         }
+        //         //if currentFile is not visible in imageSelector
+        //         else{
+        //           scrollToId = null
+        //           Object.keys(artworkOnDisplay).forEach(fileName => {
+        //             if(
+        //               artworkOnDisplay[fileName].artworkFamily === file.artworkFamily &&
+        //               familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex
+        //             ){
+        //               return scrollToId = fileName
+        //             }
+        //             // if(artworkOnDisplay[fileName].artworkFamily === file.artworkFamily){
+        //             //   if(familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex){
+        //             //     return fileName
+        //             //   }
+        //             // }
+        //             // else{return null}
+        //           })
+        //           if(!scrollToId){
+        //             scrollToId = familySequence.commonSequence[familySequence.commonIndex]
+        //           }
+        //         }
+        //         // setTimeout(() => {
+        //         //   this.scrollToHorizontal(scrollToId, "imageSelect")
+        //         // }, scrollToDelay);
   
-              }
-              return
-        })
+        //       }
+        //       return
+        // })
 
 
     }
@@ -1060,8 +1057,6 @@ export class Provider extends React.Component{
 
     this.loadEnlarge = (e, id) => {
       e.stopPropagation()
-      
-
       const file = this.state.artworkInfoData[id]
 
       const options = this.createFamilySequence(file)
