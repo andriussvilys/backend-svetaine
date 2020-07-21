@@ -292,6 +292,8 @@ export default class ArtworkInfo extends React.Component{
   }
 
   render(){
+  console.log("FILE / CURRENTARTWORK IN ARTWORKINFO COMPONENT")
+  console.log(this.props.file)
     return(
       <div
         // className={"ArtworkInfo-container"}

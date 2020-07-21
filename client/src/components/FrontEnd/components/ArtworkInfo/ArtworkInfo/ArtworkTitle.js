@@ -74,12 +74,14 @@ export default class ArtworkTitle extends React.Component{
                             showInfo={this.props.showInfo}
                             infoUp={this.props.infoUp}
                         />
-                        <div className={"ArtworkInfo--descriptions"}>
+                        {this.props.file ? 
+                            <div className={"ArtworkInfo--descriptions"}>
 
-                            {artworkTitle()}
-                            {this.locationAndYear()}
+                                {artworkTitle()}
+                                {this.locationAndYear()}
 
-                        </div>
+                            </div>
+                            : null}
                     </div>
                 )
         }
