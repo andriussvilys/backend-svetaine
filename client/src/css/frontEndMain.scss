@@ -5,6 +5,7 @@
     margin:0;
     padding: 0;
     white-space: normal;
+    outline: none;
     // user-select: none;
 }
 button{
@@ -857,7 +858,18 @@ font-family: 'Times New Roman', Times, serif;
     width: 100%;
     margin: 20px 0 20px 20px !important;
 }
-
+.slick-slider,.slick-slider *{
+    outline: none;
+    // user-select: none;
+    // border: 0 !important;
+}
+.slick-list,.slick-track,.slick-track div,.slick-track div div{
+    height: 100%;
+}
+.slick-dots{
+    bottom: 0 !important;
+    z-index: 999 !important;
+}
 .fade-out{
     opacity: 0 !important;
     mix-blend-mode: luminosity;
@@ -989,10 +1001,11 @@ font-family: 'Times New Roman', Times, serif;
     justify-content: center;
     div{
         height: 100% !important;
-        width: 100% !important;
+        // width: 100% !important;
     }
     img{
         height: 100% !important;
+        width: auto !important;
         object-fit: contain;
     }
 }

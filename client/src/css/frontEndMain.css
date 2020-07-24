@@ -66,6 +66,7 @@
   margin: 0;
   padding: 0;
   white-space: normal;
+  outline: none;
 }
 
 button {
@@ -1189,6 +1190,19 @@ label {
   margin: 20px 0 20px 20px !important;
 }
 
+.slick-slider, .slick-slider * {
+  outline: none;
+}
+
+.slick-list, .slick-track, .slick-track div, .slick-track div div {
+  height: 100%;
+}
+
+.slick-dots {
+  bottom: 0 !important;
+  z-index: 999 !important;
+}
+
 .fade-out {
   opacity: 0 !important;
   mix-blend-mode: luminosity;
@@ -1375,11 +1389,11 @@ label {
 
 .foreground-transition div {
   height: 100% !important;
-  width: 100% !important;
 }
 
 .foreground-transition img {
   height: 100% !important;
+  width: auto !important;
   -o-object-fit: contain;
      object-fit: contain;
 }
