@@ -81,6 +81,16 @@ $filtersWidth_desktop: 220px;
     display: flex;
     align-items: center;
     justify-content: center;
+    span{
+        line-height: 100%;
+    }
+}
+.Mobilenav-contact{
+    cursor: initial;
+    span{
+        cursor: initial;
+       text-decoration: line-through;
+    }
 }
 .Mobilenav-button-close{
     position: absolute;

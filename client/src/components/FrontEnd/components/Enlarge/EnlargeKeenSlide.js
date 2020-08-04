@@ -31,37 +31,52 @@ const EnlargeKeenSlide = (props) => {
                 return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
                             <div 
                                 className="foreground-transition"
-                            >
-                                <ReactImageMagnify {...{
-                                    enlargedImagePosition: 'over',
-                                    // enlargedImageContainerDimensions: {
-                                    //     width: 20,
-                                    //     height: 20
-                                    // },
-                                    isEnlargedImagePortalEnabledForTouch: true,
-                                    shouldUsePositiveSpaceLens: false,
-                                        smallImage: {
-                                            alt: `${props.context.state.artworkInfoData[fileName].fileName}-${index}`,
-                                            isFluidWidth: true,
-                                            // width: props.context.state.artworkInfoData[fileName].naturalSize.naturalWidth,
-                                            // height: props.context.state.artworkInfoData[fileName].naturalSize.naturalHeight,
-                                            src: props.context.state.artworkInfoData[fileName].mobilePath,
-                                        },
-                                        largeImage: {
-                                            src: props.context.state.artworkInfoData[fileName].desktopPath,
-                                            // isFluidWidth: true,
-                                            // width: props.context.state.artworkInfoData[fileName].naturalSize.naturalWidth,
-                                            // height: props.context.state.artworkInfoData[fileName].naturalSize.naturalHeight,
-                                            // width: '200%',
-                                            // height: '200%'
-                                            width: 1000,
-                                            height: 1000
-                                        },
-                                    
-                                    }} />
+                            >    
+                        {/* <PinchToZoom 
+                            // id="pinchContainer"
+                            className="pinchContainer"
+                            panEvent={{
+                                viewNext: this.props.context.viewNext, 
+                                viewPrev: this.props.context.viewNext,
+                                showMenu: this.props.context.showMenu,
+                                showInfo: this.props.context.showInfo,
+                                closeEnlarge: this.props.context.closeEnlarge
+                            }}
+                            state={this.props.context.state}
+                            mobile={this.props.mobile}
+                        > */}
+                        <div 
+                        // id="background" 
+                        className="foreground-transition"
+                        >
+                                <img  
+                                    alt={fileName | "background"} 
+                                    // id="background-img" 
+                                    src={props.context.state.artworkInfoData[fileName].desktopPath} 
+                                    // src={"#"} 
+                                    // src={"#"} 
+                                    className={`enlarge-preview`} />
+                            </div>
+                        {/* </PinchToZoom>       */}
+                                {/* <ReactImageMagnify {...{
+                                // enlargedImagePosition: 'over',
+                                isEnlargedImagePortalEnabledForTouch: true,
+                                shouldUsePositiveSpaceLens: false,
+                                    smallImage: {
+                                        alt: `${props.context.state.artworkInfoData[fileName].fileName}-${index}`,
+                                        isFluidWidth: true,
+                                        src: props.context.state.artworkInfoData[fileName].mobilePath,
+                                    },
+                                    largeImage: {
+                                        src: props.context.state.artworkInfoData[fileName].desktopPath,
+                                        width: 1000,
+                                        height: 1000
+                                    },
+                                
+                                }} /> */}
                                     {/* <Zoom 
                                         img={props.context.state.artworkInfoData[fileName].desktopPath}
-                                        zoomScale={1.8}
+                                        zoomScale={3}
                                         width={600}
                                         height={600}
                                     /> */}

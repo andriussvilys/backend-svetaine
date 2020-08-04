@@ -15,10 +15,13 @@
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
     "react-image-magnify": "^2.7.4",
+    "react-img-zoom": "^0.1.0",
     "react-pinch-and-zoom": "^1.2.5",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.1",
-    "react-swipeable": "^5.5.1"
+    "react-slick": "^0.27.2",
+    "react-swipeable": "^5.5.1",
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -50,8 +50,8 @@ export default class MobileNav extends React.Component {
                     <span>About</span>
                 </button>
                 <button 
-                className={"Mobilenav-button"}>
-                    <span style={{textDecoration: "line-through solid black"}}>Contact</span>
+                className={"Mobilenav-button Mobilenav-contact"}>
+                    <span>Contact</span>
                 </button>
             </div>
         </nav>)
