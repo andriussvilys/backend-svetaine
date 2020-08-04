@@ -8,7 +8,7 @@ const ViewControls = props => {
     const disabled = props.context.state.enlarge && props.context.state.enlarge.familySequence ? props.context.state.enlarge.familySequence.familySequence.length < 2 : true
     return(
         <div className={"viewControls"}>
-            <div 
+            {/* <div 
                 className={"viewControls-viewNext-container"}
             >
                 <button
@@ -35,7 +35,7 @@ const ViewControls = props => {
                         alt="view next" 
                         src="icons/svg/view-left.svg" />
                 </button>
-            </div>
+            </div> */}
             <div 
                 className={"viewControls-info-container"}
             >
