@@ -1449,6 +1449,9 @@ font-family: 'Times New Roman', Times, serif;
         height: 100% !important;
         grid-template-rows: min-content 1fr min-content;
     }
+    .slick-next, .slick-prev{
+        display: none !important;
+    }
   }
 
   .slick-prev{

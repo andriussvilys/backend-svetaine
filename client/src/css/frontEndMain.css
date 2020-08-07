@@ -2059,11 +2059,6 @@ label {
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
   }
-  .viewControls {
-    -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
-  }
   .viewControls-viewNext-container {
     -webkit-box-ordinal-group: 2;
         -ms-flex-order: 1;
@@ -2478,6 +2473,9 @@ input:checked + .slider:before {
     -ms-grid-rows: min-content 1fr min-content;
         grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
         grid-template-rows: min-content 1fr min-content;
+  }
+  .slick-next, .slick-prev {
+    display: none !important;
   }
 }
 

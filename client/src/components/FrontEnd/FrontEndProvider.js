@@ -732,6 +732,10 @@ export class Provider extends React.Component{
       enlargeContainer.classList.remove("enlarge-scroll-left")
 
       let newState = {...this.state}
+      const enlargeCopy = {...this.state.enlarge}
+      Object.keys(enlargeCopy).forEach(key => {
+        newState.enlarge[key] = {}
+      })
       newState.enlarge.open = false
       newState.showExplorer = false
       this.setState(newState)

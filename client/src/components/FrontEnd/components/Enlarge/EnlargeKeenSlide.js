@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import PinchToZoom from 'react-pinch-and-zoom'
 import CloseButton from './Bars/CloseButton'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
@@ -17,69 +17,30 @@ import "slick-carousel/slick/slick-theme.css";
 
 const EnlargeKeenSlide = (props) => {
     console.log("enlarge keen slide runs")
-    let currentIndex = props.file.familySequence.familySequence.indexOf(props.file.background.fileName)
+    // let currentIndex = props.file.familySequence.familySequence.indexOf(props.file.background.fileName)
 
     let [currentSlide, setCurrentSlide] = React.useState(0);
     const [currentArtwork, setCurrentArtwork] = React.useState(null)
 
     const renderFile = (fileSequence) => {
+        console.log("RENDER FILE")
         if(fileSequence){
 
-            const artwork = fileSequence[currentIndex]
+            const artwork = props.file.background.fileName
+
             const carouselItems = fileSequence.map((fileName, index) => {
-                // console.log(fileName)
                 return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
                             <div 
                                 className="foreground-transition"
                             >    
-                        {/* <PinchToZoom 
-                            // id="pinchContainer"
-                            className="pinchContainer"
-                            panEvent={{
-                                viewNext: this.props.context.viewNext, 
-                                viewPrev: this.props.context.viewNext,
-                                showMenu: this.props.context.showMenu,
-                                showInfo: this.props.context.showInfo,
-                                closeEnlarge: this.props.context.closeEnlarge
-                            }}
-                            state={this.props.context.state}
-                            mobile={this.props.mobile}
-                        > */}
                         <div 
-                        // id="background" 
                         className="foreground-transition"
                         >
                                 <img  
                                     alt={fileName | "background"} 
-                                    // id="background-img" 
                                     src={props.context.state.artworkInfoData[fileName].desktopPath} 
-                                    // src={"#"} 
-                                    // src={"#"} 
                                     className={`enlarge-preview`} />
                             </div>
-                        {/* </PinchToZoom>       */}
-                                {/* <ReactImageMagnify {...{
-                                // enlargedImagePosition: 'over',
-                                isEnlargedImagePortalEnabledForTouch: true,
-                                shouldUsePositiveSpaceLens: false,
-                                    smallImage: {
-                                        alt: `${props.context.state.artworkInfoData[fileName].fileName}-${index}`,
-                                        isFluidWidth: true,
-                                        src: props.context.state.artworkInfoData[fileName].mobilePath,
-                                    },
-                                    largeImage: {
-                                        src: props.context.state.artworkInfoData[fileName].desktopPath,
-                                        width: 1000,
-                                        height: 1000
-                                    },
-                                
-                                }} /> */}
-                                    {/* <Zoom 
-                                        img={props.context.state.artworkInfoData[fileName].desktopPath}
-                                        zoomScale={3}
-                                        width={600}
-                                        height={600}
-                                    /> */}
                             </div>
                 </div>
             })
@@ -89,9 +50,17 @@ const EnlargeKeenSlide = (props) => {
                 infinite: true,
                 speed: 500,
                 slidesToShow: 1,
-                slidesToScroll: 1
+                slidesToScroll: 1,
+                afterChange: index => {
+                    console.log(`index ${index}`)
+                    setCurrentArtwork(props.file.familySequence.familySequence[index])
+                    console.log(currentArtwork)
+                },
+                initialSlide: props.file.background.familyDisplayIndex
               };
-            //   setCurrentArtwork(props.context.state.artworkInfoData[artwork])
+
+              console.log(`slidrr option initial slide ${sliderOptions.initialSlide}`)
+              console.log(`familyIndex ${props.file.background.familyDisplayIndex} of ${props.file.background.fileName}`)
             return <Fragment>
                     <Slider {...sliderOptions}>
                             {carouselItems}
@@ -99,38 +68,50 @@ const EnlargeKeenSlide = (props) => {
                     <ArtworkInfo 
                         context={props.context}
                         mobile={props.context.state.mobile}
-                        // file={props.context.state.enlarge}
-                        // file={props.context.state.artworkInfoData[fileSequence[currentIndex]]}
-                        // file={props.context.state.artworkInfoData[fileSequence[currentIndex]]}
-                        // file={currentArtwork}
-                        file={props.context.state.artworkInfoData[artwork]}
+                        file={props.context.state.artworkInfoData[currentArtwork]}
                         artworkInfoData={props.context.state.artworkInfoData}
                         info={props.context.state.info}
                     />
                 </Fragment>
-            // return carouselItems
         }
         else{ return null}
     }
-    // console.log(slider)
+
+    useEffect(() => {
+        console.log("ENLAEGE MOUNTED")
+        if(!currentArtwork){
+            console.log("NO CURREN~T AR~TWOK")
+            setCurrentArtwork(props.file.background.fileName)
+        }
+        if(props.file.background)
+        console.log("currentArtwork")
+        console.log(currentArtwork)
+    })
+    // console.log(`ENLARGE LOADS WITH `)
+    // console.log(props.file)
+    // console.log(`fam index in slider options: ${sliderOptions.initialSlide}`)
+
     return(
         <Fragment>
-            {!props.context.state.enlarge || !props.context.state.enlarge.open ? null :                     
-                <CloseButton
+                {/* <CloseButton
                     context={props.context}
-                />
-            }
-                {renderFile(props.context.state.enlarge.familySequence.familySequence)}
-                {/* <ArtworkInfo 
-                    context={props.context}
-                    mobile={props.context.state.mobile}
-                    // file={props.context.state.enlarge}
-                    // file={props.context.state.artworkInfoData[fileSequence[currentIndex]]}
-                    // file={props.context.state.artworkInfoData[fileSequence[currentIndex]]}
-                    file={currentArtwork}
-                    artworkInfoData={props.context.state.artworkInfoData}
-                    info={props.context.state.info}
                 /> */}
+                <div 
+                    className={"enlarge-closeButton-container"}
+                >
+                    <button 
+                    className="enlarge-closeButton-button"
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        setCurrentArtwork(null)
+                        props.context.closeEnlarge()
+                    }}
+                    >
+                        <span>close</span>
+                            <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/>
+                    </button>
+                </div>
+                {renderFile(props.context.state.enlarge.familySequence.familySequence)}
         </Fragment>
     )
 }

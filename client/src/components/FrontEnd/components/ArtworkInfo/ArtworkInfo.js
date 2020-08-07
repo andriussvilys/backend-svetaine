@@ -292,8 +292,11 @@ export default class ArtworkInfo extends React.Component{
   }
 
   render(){
-  console.log("FILE / CURRENTARTWORK IN ARTWORKINFO COMPONENT")
-  console.log(this.props.file)
+  // console.log("FILE / CURRENTARTWORK IN ARTWORKINFO COMPONENT")
+  // console.log(this.props.file)
+  // if(!this.props.file){
+  //   return null
+  // }
     return(
       <div
         // className={"ArtworkInfo-container"}
@@ -313,15 +316,11 @@ export default class ArtworkInfo extends React.Component{
             className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
             id="ArtworkInfo"
           >
-            {/* {this.props.file && this.props.file.background ? 
-              this.secondaryInfo() : null
-            } */}
               {this.props.file ? 
                 this.secondaryInfo() : null
               }   
             {this.props.context.state.mobile ? 
               <ImageSelect
-                  // customClass={`side-scroll ${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
                   customClass={`${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
                   customId="ImageSelect-info"
                   sideScroll
