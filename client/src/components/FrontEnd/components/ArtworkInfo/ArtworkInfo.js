@@ -291,12 +291,15 @@ export default class ArtworkInfo extends React.Component{
     }
   }
 
+
+
   render(){
   // console.log("FILE / CURRENTARTWORK IN ARTWORKINFO COMPONENT")
   // console.log(this.props.file)
   // if(!this.props.file){
   //   return null
   // }
+  if(this.props.file){
     return(
       <div
         // className={"ArtworkInfo-container"}
@@ -339,5 +342,9 @@ export default class ArtworkInfo extends React.Component{
           </div>
         </div>
     )
+  }
+  else{
+    return null
+  }
   }
 };

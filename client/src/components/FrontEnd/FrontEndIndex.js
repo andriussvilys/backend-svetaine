@@ -66,16 +66,16 @@ export default class FrontEndIndex extends React.Component{
                                 />
                                 {!this.context.state.mobile ?  
                                     <div 
-                                        className={`enlargeContainer 
+                                        className={`
+                                        enlargeContainer 
                                         ${!this.context.state.mobile && this.context.state.showLess ? "full-width" : ""}
                                         ${this.context.state.enlarge && this.context.state.enlarge.open === true ? "enlarge-scroll-left" : ""}
+                                        ${!this.context.state.mobile && this.context.state.showExplorer }
                                         `}
                                         id="enlargeContainer"
                                     >
                                         {
-                                            this.context.state && this.context.state.enlarge && this.context.state.enlarge.familySequence ?                           
-                                            <Fragment>
-
+                                            this.context.state && this.context.state.enlarge && this.context.state.enlarge.familySequence ? 
                                                 <EnlargeKeenSlide
                                                     nextEnlarge={this.context.state.nextEnlarge}
                                                     file={this.context.state.enlarge}
@@ -86,15 +86,7 @@ export default class FrontEndIndex extends React.Component{
                                                     hideArtworkInfo={this.context.hideArtworkInfo}
                                                     context={this.context}
                                                     mobile={this.context.state.mobile}
-                                                /> 
-                                                {/* <ArtworkInfo 
-                                                    context={this.context}
-                                                    mobile={this.context.state.mobile}
-                                                    file={this.context.state.enlarge}
-                                                    artworkInfoData={this.context.state.artworkInfoData}
-                                                    info={this.context.state.info}
-                                                /> */}
-                                            </Fragment> : null
+                                                /> : null
                                         }
                                 </div>
                                 : null

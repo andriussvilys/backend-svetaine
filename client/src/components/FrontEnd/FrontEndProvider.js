@@ -728,10 +728,12 @@ export class Provider extends React.Component{
       enlargeContainer.classList.remove("enlarge-scroll-left")
 
       let newState = {...this.state}
-      const enlargeCopy = {...this.state.enlarge}
-      Object.keys(enlargeCopy).forEach(key => {
-        newState.enlarge[key] = {}
-      })
+      // const enlargeCopy = {...this.state.enlarge}
+      // Object.keys(enlargeCopy).forEach(key => {
+      //   newState.enlarge[key] = {}
+      // })
+      
+      newState.enlarge.background = null
       newState.enlarge.open = false
       newState.showExplorer = false
       this.setState(newState)
@@ -1056,7 +1058,10 @@ export class Provider extends React.Component{
     }
 
     this.loadEnlarge = (e, id) => {
-      e.stopPropagation()
+      if(this.state.enlarge && this.state.enlarge.background && this.state.enlarge.background.fileName === id)
+      if(e){
+        e.stopPropagation()
+      }
       const file = this.state.artworkInfoData[id]
 
       const options = this.createFamilySequence(file)

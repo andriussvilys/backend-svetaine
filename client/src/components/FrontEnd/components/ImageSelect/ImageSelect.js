@@ -16,7 +16,13 @@ const ImageSelect = (props) => {
                         key={`imageSelect-${objName}`}
                         containerClassName={`FilePreview--imageContainer ${halfSize}`}
                         className="imageSelect-FilePreview loadByDefault" 
-                        onClick={e => props.methods.loadEnlarge(e, objName)}
+                        onClick={e => {
+                          props.methods.loadEnlarge(e, objName)
+                          if(props.callback){
+                            console.log(`IMAGE SELECT ${objName}`)
+                            props.callback(objName)
+                          }
+                        }}
                         file={data[objName]} 
                         mobile={props.mobile}
                         // id={`${props.customClass}-${data[objName]}`}
