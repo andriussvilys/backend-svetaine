@@ -655,14 +655,6 @@ export class Provider extends React.Component{
         const container = document.getElementById("enlargeContainer")
         const images = document.getElementById("images")
         let enlargeContainerWidth = images.offsetWidth
-        //check explorer
-        // if(!this.state.showLess){
-        //   if(!this.state.info.infoUp){
-        //     if(this.state.showFilters || this.state.showExplorer){
-        //       this.setState({showLess: true})
-        //     }
-        //   }
-        // }
         if(options && options.showLess){
           return this.setState({showLess: true})
         }
@@ -696,9 +688,13 @@ export class Provider extends React.Component{
       
       else{
         newState.showFilters = !this.state.showFilters
+        
         if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
-          if(newState.showFilters){
+          if(newState.showFilters ){
             newState.showExplorer = true
+          }
+          else{
+            newState.showExplorer = false
           }
         }
       }

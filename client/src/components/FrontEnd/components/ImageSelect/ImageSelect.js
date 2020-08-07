@@ -39,10 +39,15 @@ const ImageSelect = (props) => {
             })
             return <div 
                       id={props.customId || "imageSelect"}
+                      // className={
+                      //   `imageSelect-container 
+                      //   ${props.customClass}
+                      //   ${props.context.state.showExplorer ? "explorer-view" : ""}
+                      //   `}
                       className={
                         `imageSelect-container 
                         ${props.customClass}
-                        ${props.context.state.showExplorer ? "explorer-view" : ""}
+                        ${props.context.state.enlarge && props.context.state.enlarge.open ? "explorer-view" : ""}
                         `}
                       >
                         <div className={`imageSelect-wrapper ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.sideScroll ? "side-scroll" : ""}`}>

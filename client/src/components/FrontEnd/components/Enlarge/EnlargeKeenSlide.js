@@ -22,9 +22,13 @@ const EnlargeKeenSlide = (props) => {
     let [currentSlide, setCurrentSlide] = React.useState(0);
     const [currentArtwork, setCurrentArtwork] = React.useState(null)
 
+    const sliderRef = React.createRef()
+
     const renderFile = (fileSequence) => {
         console.log("RENDER FILE")
         if(fileSequence){
+            console.log("props.file.background.familyDisplayIndex")
+            console.log(props.file.background.familyDisplayIndex)
 
             const artwork = props.file.background.fileName
 
@@ -33,14 +37,14 @@ const EnlargeKeenSlide = (props) => {
                             <div 
                                 className="foreground-transition"
                             >    
-                        <div 
+                        {/* <div 
                         className="foreground-transition"
-                        >
+                        > */}
                                 <img  
                                     alt={fileName | "background"} 
                                     src={props.context.state.artworkInfoData[fileName].desktopPath} 
                                     className={`enlarge-preview`} />
-                            </div>
+                            {/* </div> */}
                             </div>
                 </div>
             })
@@ -52,17 +56,18 @@ const EnlargeKeenSlide = (props) => {
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 afterChange: index => {
-                    console.log(`index ${index}`)
                     setCurrentArtwork(props.file.familySequence.familySequence[index])
-                    console.log(currentArtwork)
+                    setCurrentSlide(index)
                 },
-                initialSlide: props.file.background.familyDisplayIndex
+                // initialSlide: currentSlide,
+                initialSlide: props.file.background.familyDisplayIndex,
+                // initialSlide: props.file.background.familyDisplayIndex
               };
 
-              console.log(`slidrr option initial slide ${sliderOptions.initialSlide}`)
+            // console.log(`slidrr option initial slide ${sliderOptions.initialSlide}`)
               console.log(`familyIndex ${props.file.background.familyDisplayIndex} of ${props.file.background.fileName}`)
             return <Fragment>
-                    <Slider {...sliderOptions}>
+                    <Slider ref={sliderRef} {...sliderOptions}>
                             {carouselItems}
                     </Slider>
                     <ArtworkInfo 
@@ -83,19 +88,20 @@ const EnlargeKeenSlide = (props) => {
             console.log("NO CURREN~T AR~TWOK")
             setCurrentArtwork(props.file.background.fileName)
         }
-        if(props.file.background)
-        console.log("currentArtwork")
-        console.log(currentArtwork)
+        // setCurrentSlide(props.file.background.familyDisplayIndex)
+        if(sliderRef.current){
+            // console.log(currentSlide)
+            // setCurrentSlide(props.file.background.familyDisplayIndex)
+
+            // sliderRef.current.slickGoTo(currentSlide)
+
+            console.log(sliderRef.current)
+            console.log(props.file.background)
+        }
     })
-    // console.log(`ENLARGE LOADS WITH `)
-    // console.log(props.file)
-    // console.log(`fam index in slider options: ${sliderOptions.initialSlide}`)
 
     return(
         <Fragment>
-                {/* <CloseButton
-                    context={props.context}
-                /> */}
                 <div 
                     className={"enlarge-closeButton-container"}
                 >
@@ -111,6 +117,8 @@ const EnlargeKeenSlide = (props) => {
                             <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/>
                     </button>
                 </div>
+
+
                 {renderFile(props.context.state.enlarge.familySequence.familySequence)}
         </Fragment>
     )
