@@ -1,12 +1,15 @@
 import React, { Fragment, useEffect } from 'react'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
 import Slider from "react-slick";
+import PinchToZoom from 'react-pinch-and-zoom'
+
 
 import 'keen-slider/keen-slider.min.css'
 import 'keen-slider/keen-slider.min.css'
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import Magnifier from './Magnify';
 
 const EnlargeKeenSlide = (props) => {
     // console.log("enlarge keen slide runs")
@@ -38,14 +41,51 @@ const EnlargeKeenSlide = (props) => {
         if(fileSequence){
             return fileSequence.map((fileName, index) => {
                 return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
-                            <div 
+                            {/* <div 
                                 className="foreground-transition"
                             >   
                                 <img  
                                     alt={fileName | "background"} 
                                     src={props.context.state.artworkInfoData[fileName].desktopPath} 
                                     className={`enlarge-preview`} />
+                            </div> */}
+
+
+                        <PinchToZoom 
+                            // id="pinchContainer"
+                            className="pinchContainer"
+                            panEvent={{
+                                viewNext: props.context.viewNext, 
+                                viewPrev: props.context.viewNext,
+                                showMenu: props.context.showMenu,
+                                showInfo: props.context.showInfo,
+                                closeEnlarge: props.context.closeEnlarge
+                            }}
+                            state={props.context.state}
+                            mobile={props.mobile}
+                        >
+                        <div 
+                        // id="background" 
+                        className="foreground-transition">
+                                <img  
+                                    alt={fileName | "background"} 
+                                    // src={props.file.background.desktopPath} 
+                                    src={props.context.state.artworkInfoData[fileName].desktopPath} 
+                                    className={`enlarge-preview`} />
                             </div>
+                        </PinchToZoom>
+
+                        {/* <Magnifier
+                         id={`magnify-image-${props.file.background.fileName}`}
+                        >
+                            <img  
+                                id={`magnify-image-${props.file.background.fileName}`}
+                                alt={fileName | "background"} 
+                                src={props.file.background.desktopPath} 
+                                // src={props.context.state.artworkInfoData[fileName].desktopPath} 
+                                className={`enlarge-preview`} 
+                            />
+                        </Magnifier> */}
                 </div>
             })
         }
