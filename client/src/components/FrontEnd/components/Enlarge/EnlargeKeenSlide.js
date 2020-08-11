@@ -14,12 +14,18 @@ import Magnifier from './Magnify';
 const EnlargeKeenSlide = (props) => {
     // console.log("enlarge keen slide runs")
 
-    let [currentSlide, setCurrentSlide] = React.useState(0);
-    const [currentArtwork, setCurrentArtwork] = React.useState(null)
+    let [currentSlide, setCurrentSlide] = React.useState(props.file.background.familyDisplayIndex);
+    let [currentArtwork, setCurrentArtwork] = React.useState(props.file.background.fileName)
+      
+    // let [counter, setCounter] = React.useState(0)
+
+    // let [currentSlide, setCurrentSlide] = React.useState(0);
+    // const [currentArtwork, setCurrentArtwork] = React.useState(null)
 
     const sliderRef = React.createRef()
 
     var sliderOptions = {
+        lazyLoad: "progressive",
         dots: true,
         infinite: true,
         speed: 500,
@@ -27,12 +33,22 @@ const EnlargeKeenSlide = (props) => {
         slidesToScroll: 1,
         className: "SLIDER",
         afterChange: (index) => {
+            console.log("AFTER CHANGE")
             if(props.file.familySequence.familySequence[index] === currentArtwork)
             {return}
             setCurrentArtwork(props.file.familySequence.familySequence[index])
-            props.context.loadEnlarge(null, props.file.familySequence.familySequence[index])
+            // setCurrentSlide(index)
+            // props.context.loadEnlarge(null, props.file.familySequence.familySequence[index])
         },
-        initialSlide: props.file.background && props.file.background.familyDisplayIndex ? props.file.background.familyDisplayIndex : 0,
+        beforeChange: (oldIndex, newIndex) => {
+            console.log("BEFORE CHANGE")
+            console.log(`oldIndex ${oldIndex}`)
+            console.log(`newIndex ${newIndex}`)
+        },
+        onInit: () => console.log("INIT"),
+        // onReInit: () => console.log("*** RE INIT ***"),
+        initialSlide: currentSlide,
+        // initialSlide: props.file.background.familyDisplayIndex,
       };
 
     // console.log(`INDEX ${sliderOptions.initialSlide} OF ${props.file.background.fileName}`)
@@ -49,8 +65,6 @@ const EnlargeKeenSlide = (props) => {
                                     src={props.context.state.artworkInfoData[fileName].desktopPath} 
                                     className={`enlarge-preview`} />
                             </div> */}
-
-
                         <PinchToZoom 
                             // id="pinchContainer"
                             className="pinchContainer"
@@ -95,13 +109,10 @@ const EnlargeKeenSlide = (props) => {
     }
 
     useEffect(() => {
-        // console.log("USE EFFECT _____________")
-        // if(!props.file.background || props.file.background.fileName){return}
+        // setCurrentSlide(props.file.background.familyDisplayIndex)
+        // console.log(`currentSlide ${currentSlide}`)
         if(sliderRef && props.file.background){
-            if(props.file.background.fileName === currentArtwork){
-                return
-            }
-            // sliderRef.current.slickGoTo(sliderOptions.initialSlide)
+            // if()
             sliderRef.current.slickGoTo(props.file.background.familyDisplayIndex)
         }
     })
@@ -133,8 +144,8 @@ const EnlargeKeenSlide = (props) => {
                     <ArtworkInfo 
                         context={props.context}
                         mobile={props.context.state.mobile}
-                        // file={props.context.state.artworkInfoData[currentArtwork]}
-                        file={props.file.background}
+                        file={props.context.state.artworkInfoData[currentArtwork]}
+                        // file={props.file.background}
                         artworkInfoData={props.context.state.artworkInfoData}
                         info={props.context.state.info}
                     /> 

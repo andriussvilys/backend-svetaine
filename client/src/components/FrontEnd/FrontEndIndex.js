@@ -75,7 +75,7 @@ export default class FrontEndIndex extends React.Component{
                                         id="enlargeContainer"
                                     >
                                         {
-                                            this.context.state && this.context.state.enlarge && this.context.state.enlarge.familySequence ? 
+                                            this.context.state && this.context.state.enlarge && this.context.state.enlarge.background && this.context.state.enlarge.background.fileName ? 
                                                 <EnlargeKeenSlide
                                                     nextEnlarge={this.context.state.nextEnlarge}
                                                     file={this.context.state.enlarge}
