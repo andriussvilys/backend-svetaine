@@ -1,4 +1,5 @@
 # Personal artist website
+![page view](https://i.imgur.com/zbaMZsT.png)
 
 Created Using MERN stack
 
