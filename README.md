@@ -2,9 +2,9 @@
 
 Created Using MERN stack
 
-https://www.andriussvilys.com/
+https://www.andriussvilys.com/<br>
 
-access admin page:
-https://www.andriussvilys.com/admin
-username: guest
-password: guest
+access admin page:<br>
+https://www.andriussvilys.com/admin<br>
+username: guest<br>
+password: guest<br>
