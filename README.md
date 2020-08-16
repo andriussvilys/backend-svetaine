@@ -1,6 +1,10 @@
-# backend-svetaine
-cms with dynamically generated options for a portfolio website
+# Personal artist website
 
-latest live deploy: https://agile-peak-74381.herokuapp.com/
+Created Using MERN stack
 
-MERN stack app
+https://www.andriussvilys.com/
+
+access admin page:
+https://www.andriussvilys.com/admin
+username: guest
+password: guest
