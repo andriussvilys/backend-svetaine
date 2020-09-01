@@ -6,27 +6,28 @@ import PinchToZoom from 'react-pinch-and-zoom'
 
 import 'keen-slider/keen-slider.min.css'
 import 'keen-slider/keen-slider.min.css'
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Magnifier from './Magnify';
 
 const EnlargeKeenSlide = (props) => {
-    // console.log("enlarge keen slide runs")
 
-    let [currentSlide, setCurrentSlide] = React.useState(props.file.background.familyDisplayIndex);
-    let [currentArtwork, setCurrentArtwork] = React.useState(props.file.background.fileName)
+    const file = props.file.background
       
-    // let [counter, setCounter] = React.useState(0)
-
-    // let [currentSlide, setCurrentSlide] = React.useState(0);
-    // const [currentArtwork, setCurrentArtwork] = React.useState(null)
+    let [sliderInfo, setSliderInfo] = React.useState({
+        prevFileName: props.file.background.fileName,
+        fileName: props.file.background.fileName,
+        index: props.file.background.familyDisplayIndex,
+        artworkFamily: props.file.background.artworkFamily,
+        familySequence: props.file.familySequence.familySequence,
+        clicked: true
+    })
 
     const sliderRef = React.createRef()
 
     var sliderOptions = {
         lazyLoad: "progressive",
         dots: true,
+        arrows: !props.mobile,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -34,27 +35,37 @@ const EnlargeKeenSlide = (props) => {
         className: "SLIDER",
         afterChange: (index) => {
             console.log("AFTER CHANGE")
-            setCurrentArtwork(props.file.background.fileName)
-            if(props.file.familySequence.familySequence[index] === currentArtwork)
-            {return}
-            // setCurrentArtwork(props.file.familySequence.familySequence[index])
-            // setCurrentSlide(index)
-            // props.context.loadEnlarge(null, props.file.familySequence.familySequence[index])
+            // console.log(`index ${index}`)
+            // console.log(sliderInfo)
+            // setSliderInfo({
+            //     ...sliderInfo,
+            //     fileName: sliderInfo.familySequence[index],
+            //     index: index,
+            //     clicked: false
+            // })
+            props.loadEnlarge(null, props.file.familySequence.familySequence[index])
         },
+        // onReInit: () => {
+        //     setSliderInfo({
+        //         ...sliderInfo,
+        //         fileName: sliderInfo.familySequence[index],
+        //         index: index
+        //     })
+        // },
         beforeChange: (oldIndex, newIndex) => {
             console.log("BEFORE CHANGE")
             console.log(`oldIndex ${oldIndex}`)
             console.log(`newIndex ${newIndex}`)
         },
         onInit: () => console.log("INIT"),
-        initialSlide: currentSlide,
+        initialSlide: sliderInfo.index,
       };
 
     const sliderItems = (fileSequence) => {
         if(fileSequence){
             return fileSequence.map((fileName, index) => {
                 return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
-                        <PinchToZoom 
+                        {/* <PinchToZoom 
                             className="pinchContainer"
                             panEvent={{
                                 viewNext: props.context.viewNext, 
@@ -71,10 +82,20 @@ const EnlargeKeenSlide = (props) => {
                                 <img  
                                     alt={fileName | "background"} 
                                     // src={props.file.background.desktopPath} 
-                                    src={props.context.state.artworkInfoData[fileName].desktopPath} 
+                                    src={props.mobile ? props.context.state.artworkInfoData[fileName].mobilePath
+                                    : props.context.state.artworkInfoData[fileName].desktopPath } 
                                     className={`enlarge-preview`} />
                             </div>
-                        </PinchToZoom>
+                        </PinchToZoom> */}
+                    <div 
+                    className="foreground-transition">
+                        <img  
+                            alt={fileName | "background"} 
+                            // src={props.file.background.desktopPath} 
+                            src={props.mobile ? props.context.state.artworkInfoData[fileName].mobilePath
+                            : props.context.state.artworkInfoData[fileName].desktopPath } 
+                            className={`enlarge-preview`} />
+                    </div>
                 </div>
             })
         }
@@ -84,6 +105,24 @@ const EnlargeKeenSlide = (props) => {
     }
 
     useEffect(() => {
+        console.log("USE EFFECT")
+        // console.log({...sliderInfo})
+        // console.log(`sliderRef.current.currentArtwork`)
+        // console.log(sliderRef.current)
+        // if(sliderInfo.artworkFamily !== props.file.background.artworkFamily){
+        //     setSliderInfo({
+        //         clicked: true,
+        //         fileName: props.file.background.fileName,
+        //         index: props.file.background.familyDisplayIndex,
+        //         artworkFamily: props.file.background.artworkFamily,
+        //         familySequence: props.file.familySequence.familySequence
+        //     })
+        // }
+        console.log(`GO TO ${props.file.background.familyDisplayIndex}`)
+        sliderRef.current.slickGoTo(props.file.background.familyDisplayIndex)
+        // if(sliderInfo.clicked){
+        //     sliderRef.current.slickGoTo(props.file.background.familyDisplayIndex)
+        // }
     })
 
     return(
@@ -104,8 +143,12 @@ const EnlargeKeenSlide = (props) => {
                     </button>
                 </div>
                 {props.file.background ?   
-                <Fragment>              
-                    <Slider ref={sliderRef} {...sliderOptions} currentArtwork={props.file.background.fileName}>
+                <Fragment>            
+                    <Slider 
+                    ref={sliderRef} {...sliderOptions} 
+                    currentArtwork={props.file.background.fileName}
+                    initialSlide={props.file.background.familyDisplayIndex}
+                    >
 
                         {sliderItems(props.file.familySequence.familySequence)}
 
@@ -113,8 +156,9 @@ const EnlargeKeenSlide = (props) => {
                     <ArtworkInfo 
                         context={props.context}
                         mobile={props.context.state.mobile}
-                        file={props.context.state.artworkInfoData[currentArtwork]}
-                        // file={props.file.background}
+                        // file={props.context.state.artworkInfoData[currentArtwork]}
+                        // file={props.context.state.artworkInfoData[sliderInfo.fileName]}
+                        file={props.file.background}
                         artworkInfoData={props.context.state.artworkInfoData}
                         info={props.context.state.info}
                     /> 

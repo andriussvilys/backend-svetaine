@@ -867,11 +867,6 @@ export class Provider extends React.Component{
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
 
-      const container = document.getElementById("enlargeContainer")
-      const imageSelect = document.getElementById("imageSelect")
-      const images = document.getElementById("images")
-      const filters = document.getElementById("TagsMenu")
-
       let enlarge = this.state.enlarge ? {...this.state.enlarge} : options.state.enlarge
       enlarge.previous = !enlarge.background ? file : enlarge.background
       enlarge.background = file
@@ -894,80 +889,6 @@ export class Provider extends React.Component{
         newState.enlarge.open = true
 
         this.setState(newState)
-
-            // container.classList.add("enlarge-scroll-left")
-        // this.setState(newState, () => {
-        //     // container.classList.add("enlarge-scroll-left")
-        //     let futureSize = null
-            
-        //       //COUNT FUTURE SIZES
-        //       //DESKTOP
-        //       if(!this.state.mobile){
-        //         // if(background.style.width !== "100%" || background.style.height !== "100%"){
-                  
-        //         //   document.getElementById('background').style.width = "100%"
-        //         //   document.getElementById('background').style.height = "100%"
-        //         // }
-        //         futureSize = this.countWidth(file, container.clientHeight, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth)
-        //       }
-        //       //MOBILES**************************************************************************************
-        //       else{
-        //         futureSize = this.countWidth(file, container.clientWidth, file.naturalSize.naturalHeight, file.naturalSize.naturalWidth, true)
-        //       }
-        //       let scrollToDelay = 0
-
-        //       if(!this.state.mobile){
-        //         let enlargeContainerWidth = images.offsetWidth
-        //         if(this.state.showExplorer){
-        //           enlargeContainerWidth -= imageSelect.offsetWidth
-        //         }
-        //         if(this.state.showFilters){
-        //           enlargeContainerWidth -= filters.offsetWidth
-        //         }
-        //         container.style.width = `${enlargeContainerWidth}px`
-        //       }
-  
-        //         // if(!container.classList.contains("enlarge-scroll-left")){
-        //         //   container.classList.add("enlarge-scroll-left")
-        //         // }
-        //         // document.querySelector(".pinch-to-zoom-area").style.height = `${futureSize.height}px`
-              
-        //       if(options){
-        //         const familySequence = options.state.enlarge.familySequence
-        //         const artworkOnDisplay = this.state.artworkOnDisplay
-        //         let scrollToId = null
-        //         if(artworkOnDisplay[file.fileName]){
-        //           scrollToId = file.fileName
-        //         }
-        //         //if currentFile is not visible in imageSelector
-        //         else{
-        //           scrollToId = null
-        //           Object.keys(artworkOnDisplay).forEach(fileName => {
-        //             if(
-        //               artworkOnDisplay[fileName].artworkFamily === file.artworkFamily &&
-        //               familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex
-        //             ){
-        //               return scrollToId = fileName
-        //             }
-        //             // if(artworkOnDisplay[fileName].artworkFamily === file.artworkFamily){
-        //             //   if(familySequence.commonSequence.indexOf(fileName) > familySequence.commonIndex){
-        //             //     return fileName
-        //             //   }
-        //             // }
-        //             // else{return null}
-        //           })
-        //           if(!scrollToId){
-        //             scrollToId = familySequence.commonSequence[familySequence.commonIndex]
-        //           }
-        //         }
-        //         // setTimeout(() => {
-        //         //   this.scrollToHorizontal(scrollToId, "imageSelect")
-        //         // }, scrollToDelay);
-  
-        //       }
-        //       return
-        // })
-
 
     }
     this.scrollToHorizontal = (id, parent_id, options) => {
@@ -1058,15 +979,36 @@ export class Provider extends React.Component{
     }
 
     this.loadEnlarge = (e, id) => {
-      if(this.state.enlarge && this.state.enlarge.background && this.state.enlarge.background.fileName === id)
+      // if(this.state.enlarge && this.state.enlarge.background && this.state.enlarge.background.fileName === id)
       if(e){
         e.stopPropagation()
       }
       const file = this.state.artworkInfoData[id]
-
       const options = this.createFamilySequence(file)
 
-      return this.animateEnlarge(file, options)
+      let enlarge = this.state.enlarge ? {...this.state.enlarge} : options.state.enlarge
+      enlarge.previous = !enlarge.background ? file : enlarge.background
+      enlarge.background = file
+
+      let bgSrc = null
+      let fgSrc = null
+
+      if(this.state.mobile){
+        bgSrc = file.mobilePath
+        fgSrc = file.mobilePath
+      }
+      else{
+        bgSrc = file.desktopPath
+        fgSrc = file.desktopPath
+      }
+
+        let newState = options && options.state ? options.state : {...this.state}
+        newState.enlarge = enlarge
+        newState.enlarge.foreground = enlarge.background
+        newState.enlarge.open = true
+
+        this.setState(newState)
+      // return this.animateEnlarge(file, options)
     }
 
     this.showInfo = (e, options) => {
@@ -1380,7 +1322,7 @@ export class Provider extends React.Component{
               isFilterChecked: this.isFilterChecked,
               compoundFiltersSwitch: this.compoundFiltersSwitch,
               resetAll: this.resetAll,
-              tagFilter: this.tagFilter
+              tagFilter: this.tagFilter,
 
               } }>
           {this.props.children}
