@@ -100,28 +100,18 @@ export default class FrontEndIndex extends React.Component{
                                     `}
                                     id="enlargeContainer"
                                 >
-                                {this.context.state && this.context.state.enlarge && this.context.state.enlarge.familySequence ?                           
-                                    <Fragment>
-
-                                        <EnlargeKeenSlide
-                                            nextEnlarge={this.context.state.nextEnlarge}
-                                            file={this.context.state.enlarge}
-                                            onClick={this.context.closeEnlarge}
-                                            artworkInfoData={this.context.state.artworkInfoData}
-                                            loadEnlarge={this.context.loadEnlarge}
-                                            closeEnlarge={this.context.closeEnlarge}
-                                            hideArtworkInfo={this.context.hideArtworkInfo}
-                                            context={this.context}
-                                            mobile={this.context.state.mobile}
-                                        /> 
-                                        {/* <ArtworkInfo 
-                                            context={this.context}
-                                            mobile={this.context.state.mobile}
-                                            file={this.context.state.enlarge}
-                                            artworkInfoData={this.context.state.artworkInfoData}
-                                            info={this.context.state.info}
-                                        /> */}
-                                    </Fragment> : null
+                                {this.context.state && this.context.state.enlarge && this.context.state.enlarge.background && this.context.state.enlarge.background.fileName ?                          
+                                    <EnlargeKeenSlide
+                                        nextEnlarge={this.context.state.nextEnlarge}
+                                        file={this.context.state.enlarge}
+                                        onClick={this.context.closeEnlarge}
+                                        artworkInfoData={this.context.state.artworkInfoData}
+                                        loadEnlarge={this.context.loadEnlarge}
+                                        closeEnlarge={this.context.closeEnlarge}
+                                        hideArtworkInfo={this.context.hideArtworkInfo}
+                                        context={this.context}
+                                        mobile={this.context.state.mobile}
+                                    />  : null
                                 }
                                 </div>
                                 : null

@@ -34,9 +34,10 @@ const EnlargeKeenSlide = (props) => {
         className: "SLIDER",
         afterChange: (index) => {
             console.log("AFTER CHANGE")
+            setCurrentArtwork(props.file.background.fileName)
             if(props.file.familySequence.familySequence[index] === currentArtwork)
             {return}
-            setCurrentArtwork(props.file.familySequence.familySequence[index])
+            // setCurrentArtwork(props.file.familySequence.familySequence[index])
             // setCurrentSlide(index)
             // props.context.loadEnlarge(null, props.file.familySequence.familySequence[index])
         },
@@ -46,27 +47,14 @@ const EnlargeKeenSlide = (props) => {
             console.log(`newIndex ${newIndex}`)
         },
         onInit: () => console.log("INIT"),
-        // onReInit: () => console.log("*** RE INIT ***"),
         initialSlide: currentSlide,
-        // initialSlide: props.file.background.familyDisplayIndex,
       };
-
-    // console.log(`INDEX ${sliderOptions.initialSlide} OF ${props.file.background.fileName}`)
 
     const sliderItems = (fileSequence) => {
         if(fileSequence){
             return fileSequence.map((fileName, index) => {
                 return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
-                            {/* <div 
-                                className="foreground-transition"
-                            >   
-                                <img  
-                                    alt={fileName | "background"} 
-                                    src={props.context.state.artworkInfoData[fileName].desktopPath} 
-                                    className={`enlarge-preview`} />
-                            </div> */}
                         <PinchToZoom 
-                            // id="pinchContainer"
                             className="pinchContainer"
                             panEvent={{
                                 viewNext: props.context.viewNext, 
@@ -79,7 +67,6 @@ const EnlargeKeenSlide = (props) => {
                             mobile={props.mobile}
                         >
                         <div 
-                        // id="background" 
                         className="foreground-transition">
                                 <img  
                                     alt={fileName | "background"} 
@@ -88,18 +75,6 @@ const EnlargeKeenSlide = (props) => {
                                     className={`enlarge-preview`} />
                             </div>
                         </PinchToZoom>
-
-                        {/* <Magnifier
-                         id={`magnify-image-${props.file.background.fileName}`}
-                        >
-                            <img  
-                                id={`magnify-image-${props.file.background.fileName}`}
-                                alt={fileName | "background"} 
-                                src={props.file.background.desktopPath} 
-                                // src={props.context.state.artworkInfoData[fileName].desktopPath} 
-                                className={`enlarge-preview`} 
-                            />
-                        </Magnifier> */}
                 </div>
             })
         }
@@ -109,12 +84,6 @@ const EnlargeKeenSlide = (props) => {
     }
 
     useEffect(() => {
-        // setCurrentSlide(props.file.background.familyDisplayIndex)
-        // console.log(`currentSlide ${currentSlide}`)
-        if(sliderRef && props.file.background){
-            // if()
-            sliderRef.current.slickGoTo(props.file.background.familyDisplayIndex)
-        }
     })
 
     return(
@@ -136,7 +105,7 @@ const EnlargeKeenSlide = (props) => {
                 </div>
                 {props.file.background ?   
                 <Fragment>              
-                    <Slider ref={sliderRef} {...sliderOptions}>
+                    <Slider ref={sliderRef} {...sliderOptions} currentArtwork={props.file.background.fileName}>
 
                         {sliderItems(props.file.familySequence.familySequence)}
 
