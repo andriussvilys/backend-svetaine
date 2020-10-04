@@ -256,10 +256,6 @@ font-family: 'Times New Roman', Times, serif;
     max-height: 100%;
     width: 100%;
     background-color: $background-color;
-    // overflow-x: hidden;
-    // overflow-y: auto;
-    // display: flex;
-    // flex-wrap: wrap;
     transform: translateX(0);
 }
 .imageSelect-wrapper{
@@ -1422,6 +1418,7 @@ font-family: 'Times New Roman', Times, serif;
     grid-template-columns: 100%;
     grid-template-rows: 1fr min-content;
     height: calc(100% - 20px) !important;
+    transition: 0.2s all;
   }
   .full-width{
       width: 100% !important;
@@ -1432,6 +1429,10 @@ font-family: 'Times New Roman', Times, serif;
   }
   .MobileNav-container{
       height: $navHeight_desktop;
+  }
+  .ArtworkInfo-container{
+      grid-row-start: 2;
+      grid-row-end: 3;
   }
 
 
@@ -1447,7 +1448,7 @@ font-family: 'Times New Roman', Times, serif;
     //     position: absolute;
     // }
     .enlargeContainer{
-        height: 100% !important;
+        height: calc(100%) !important;
         grid-template-rows: min-content 1fr min-content;
     }
     .slick-next, .slick-prev{

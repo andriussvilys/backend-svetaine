@@ -8,34 +8,7 @@ const ViewControls = props => {
     const disabled = props.context.state.enlarge && props.context.state.enlarge.familySequence ? props.context.state.enlarge.familySequence.familySequence.length < 2 : true
     return(
         <div className={"viewControls"}>
-            {/* <div 
-                className={"viewControls-viewNext-container"}
-            >
-                <button
-                    disabled={disabled}
-                    onClick={() => props.context.viewNext(-1)}
-                    className={"viewControls-button"}
-                >
-                    <img 
-                    className={`viewControls-viewNext ${disabled ? "viewControls-button-disabled" : ''}`}
-                    alt="view next" 
-                    src="icons/svg/view-right.svg" />
-                </button>              
-                    <PreviewCounter 
-                        relatedArtwork={props.context.state.enlarge && props.context.state.enlarge.familySequence? props.context.state.enlarge.familySequence.familySequence : []}
-                        file={props.context.state.enlarge}
-                    />
-                <button
-                    disabled={disabled}
-                    onClick={() => props.context.viewNext(+1)}
-                    className={"viewControls-button"}
-                >
-                    <img 
-                        className={`viewControls-viewNext ${disabled ? "viewControls-button-disabled" : ''}`} 
-                        alt="view next" 
-                        src="icons/svg/view-left.svg" />
-                </button>
-            </div> */}
+            {props.children}
             <div 
                 className={"viewControls-info-container"}
             >

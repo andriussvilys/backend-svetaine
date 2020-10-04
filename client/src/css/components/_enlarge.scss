@@ -54,6 +54,7 @@
     border-left: 1px solid;
 }
 .viewControls{
+    padding: 0 10px;
     width: 100%;
     bottom: 100%;
     right: 0;
@@ -61,7 +62,7 @@
     background-color: white;
     height: 30px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     overflow: hidden;
     div{
         height: 100%;
@@ -97,14 +98,14 @@
 .viewControls-button-info{
     margin-right: 10px;
 }
-.viewControls-viewNext-container{
-    display: flex;
-    order: 2;
-}
-.viewControls-info-container{
-    margin-right: 10px;
-    order: 1;
-}
+// .viewControls-viewNext-container{
+//     display: flex;
+//     order: 2;
+// }
+// .viewControls-info-container{
+//     margin-right: 10px;
+//     order: 1;
+// }
 
 @media only screen and (max-width: 720px) {
     .enlargeContainer{
@@ -130,12 +131,12 @@
     // .viewControls{
     //     justify-content: space-between;
     // }
-    .viewControls-viewNext-container{
-        order: 1;
-    }
-    .viewControls-info-container{
-        order: 2;
-    }
+    // .viewControls-viewNext-container{
+    //     order: 1;
+    // }
+    // .viewControls-info-container{
+    //     order: 2;
+    // }
 }
 .enlarge-scroll-left{
     transform: translateX(0);

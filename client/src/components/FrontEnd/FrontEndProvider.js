@@ -8,8 +8,15 @@ export class Provider extends React.Component{
   constructor(props){
     super(props);
   this.state = {
+    // ...staticState,
     info: {infoUp: false, toggleTags: false},
     showAll: true,
+    currentSlide: {index: null, initialTransform: null},
+    images: [1, 2, 3, 4, 5],
+    enlarge: {
+      open: false,
+      file: "portrait.jpg"
+    }
   }
 
   this.enlarge = {}
@@ -795,7 +802,7 @@ export class Provider extends React.Component{
           options.scroll = false
         }
 
-        this.animateEnlarge(nextPic, options)
+        // this.animateEnlarge(nextPic, options)
     }
     this.countWidth = (file, containerHeight, naturalHeight, naturalWidth, mobile, options) => {
       
@@ -978,38 +985,60 @@ export class Provider extends React.Component{
       return options
     }
 
-    this.loadEnlarge = (e, id) => {
-      // if(this.state.enlarge && this.state.enlarge.background && this.state.enlarge.background.fileName === id)
-      if(e){
-        e.stopPropagation()
+    this.loadImage = fileName => {
+      console.log(fileName)
+      const imageIndex = this.state.artworkInfoData[fileName].familyDisplayIndex
+      const artworkFam = this.state.artworkInfoData[fileName].artworkFamily
+      const imageOrder = this.state.relatedArtwork[artworkFam].column.fileIds
+      const imageList = imageOrder.map(imageName => {
+        return this.state.artworkInfoData[imageName].desktopPath
+      })
+      const initialTransform = (100 / imageList.length) * imageIndex
+      let newState = {...this.state}
+      newState.images = imageList
+      newState.currentSlide = {
+        index: imageIndex, 
+        initialTransform: null
       }
-      const file = this.state.artworkInfoData[id]
-      const options = this.createFamilySequence(file)
-
-      let enlarge = this.state.enlarge ? {...this.state.enlarge} : options.state.enlarge
-      enlarge.previous = !enlarge.background ? file : enlarge.background
-      enlarge.background = file
-
-      let bgSrc = null
-      let fgSrc = null
-
-      if(this.state.mobile){
-        bgSrc = file.mobilePath
-        fgSrc = file.mobilePath
+      if(newState.showFilters){
+        newState.showExplorer = true;
       }
-      else{
-        bgSrc = file.desktopPath
-        fgSrc = file.desktopPath
-      }
-
-        let newState = options && options.state ? options.state : {...this.state}
-        newState.enlarge = enlarge
-        newState.enlarge.foreground = enlarge.background
-        newState.enlarge.open = true
-
-        this.setState(newState)
-      // return this.animateEnlarge(file, options)
+      newState.enlarge = {open: true, file: fileName}
+      this.setState(newState)
     }
+
+    // this.loadEnlarge = (e, id) => {
+    //   // if(this.state.enlarge && this.state.enlarge.background && this.state.enlarge.background.fileName === id)
+    //   if(e){
+    //     e.stopPropagation()
+    //   }
+    //   const file = this.state.artworkInfoData[id]
+    //   const options = this.createFamilySequence(file)
+
+    //   let enlarge = this.state.enlarge ? {...this.state.enlarge} : options.state.enlarge
+    //   enlarge.previous = !enlarge.background ? file : enlarge.background
+    //   enlarge.background = file
+
+    //   let bgSrc = null
+    //   let fgSrc = null
+
+    //   if(this.state.mobile){
+    //     bgSrc = file.mobilePath
+    //     fgSrc = file.mobilePath
+    //   }
+    //   else{
+    //     bgSrc = file.desktopPath
+    //     fgSrc = file.desktopPath
+    //   }
+
+    //     let newState = options && options.state ? options.state : {...this.state}
+    //     newState.enlarge = enlarge
+    //     newState.enlarge.foreground = enlarge.background
+    //     newState.enlarge.open = true
+
+    //     this.setState(newState)
+    //   // return this.animateEnlarge(file, options)
+    // }
 
     this.showInfo = (e, options) => {
       if(this.state.enlarge && !this.state.enlarge.open){
@@ -1043,13 +1072,13 @@ export class Provider extends React.Component{
       let mobile = null
       if(document.documentElement.clientWidth < 721){
         mobile = true
-        container.style.height = `${images.clientHeight - 90}px`
+        // container.style.height = `${images.clientHeight - 90}px`
         // document.getElementById("background").style.height = "auto"
       }
       if(this.state.enlarge && this.state.enlarge.open){
         let newState = {...this.state}
         newState.mobile = mobile
-        this.animateEnlarge(this.state.enlarge.background, {state: newState})
+        // this.animateEnlarge(this.state.enlarge.background, {state: newState})
       }
       return mobile
     }
@@ -1289,6 +1318,7 @@ export class Provider extends React.Component{
               listitemChecked: this.listitemChecked,
 
               enlarge: this.enlarge,
+              loadImage: this.loadImage,
               loadEnlarge: this.loadEnlarge,
               closeEnlarge: this.closeEnlarge,
               hideArtworkInfo: this.hideArtworkInfo,

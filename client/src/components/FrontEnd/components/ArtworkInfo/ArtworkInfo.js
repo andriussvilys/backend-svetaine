@@ -29,7 +29,7 @@ export default class ArtworkInfo extends React.Component{
               className="ArtworkInfo-preview"
               containerClassName="ArtworkInfo-preview-container"
               file={this.props.artworkInfoData[fileName]}
-              onClick={(e) => this.props.context.loadEnlarge(e, fileName)}
+              onClick={(e) => this.props.context.loadImage(fileName)}
               id={`seeAlso-${fileName}`}
             />
           );
@@ -306,6 +306,7 @@ export default class ArtworkInfo extends React.Component{
         className={`ArtworkInfo-container`}
         id="ArtworkInfo-container"
       >
+        {this.props.children}
           <ArtworkTitle 
             file={this.props.file ? this.props.file : {background: this.placeholder}} 
             context={this.props.context} 
@@ -313,6 +314,7 @@ export default class ArtworkInfo extends React.Component{
               () => this.showInfo()
             }
             infoUp={this.state.infoUp}
+            dots={this.props.dots}
           />
           <div
             key={"ArtworkInfo-wrapper"}
@@ -333,7 +335,8 @@ export default class ArtworkInfo extends React.Component{
                   context={this.props.context}
                   methods={{
                     enlarge: this.props.context.enlarge,
-                    loadEnlarge: this.props.context.loadEnlarge,
+                    // loadEnlarge: this.props.context.loadEnlarge,
+                    loadImage: this.props.context.loadImage,
                     toggleMobile: this.props.context.toggleMobile,
                     lazyLoad: this.props.context.lazyLoadImages,
                   }}

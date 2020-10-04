@@ -7,21 +7,21 @@ const ImageSelect = (props) => {
         if(data){
             // let previews = Object.keys(data).map((objName) => {
             let previews = props.state.displayOrder.general.map((objName) => {
-            // let previews = data.map((objName) => {
-              //check if width < height 
-              //if true, add half-size class
               const halfSize = props.state.artworkInfoData[objName].naturalSize.naturalWidth < props.state.artworkInfoData[objName].naturalSize.naturalHeight ? "halfSize" : null
               if(props.state.artworkOnDisplay[objName]){
                 return <FilePreview 
                         key={`imageSelect-${objName}`}
                         containerClassName={`FilePreview--imageContainer ${halfSize}`}
                         className="imageSelect-FilePreview loadByDefault" 
+                        // onClick={e => {
+                        //   props.methods.loadEnlarge(e, objName)
+                        //   if(props.callback){
+                        //     console.log(`IMAGE SELECT ${objName}`)
+                        //     props.callback(objName)
+                        //   }
+                        // }}
                         onClick={e => {
-                          props.methods.loadEnlarge(e, objName)
-                          if(props.callback){
-                            console.log(`IMAGE SELECT ${objName}`)
-                            props.callback(objName)
-                          }
+                          props.methods.loadImage(objName)
                         }}
                         file={data[objName]} 
                         mobile={props.mobile}
@@ -45,16 +45,16 @@ const ImageSelect = (props) => {
             })
             return <div 
                       id={props.customId || "imageSelect"}
-                      // className={
-                      //   `imageSelect-container 
-                      //   ${props.customClass}
-                      //   ${props.context.state.showExplorer ? "explorer-view" : ""}
-                      //   `}
                       className={
                         `imageSelect-container 
                         ${props.customClass}
-                        ${props.context.state.enlarge && props.context.state.enlarge.open ? "explorer-view" : ""}
+                        ${props.context.state.showExplorer ? "explorer-view" : ""}
                         `}
+                      // className={
+                      //   `imageSelect-container 
+                      //   ${props.customClass}
+                      //   ${props.context.state.enlarge && props.context.state.enlarge.open ? "explorer-view" : ""}
+                      //   `}
                       >
                         <div className={`imageSelect-wrapper ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.sideScroll ? "side-scroll" : ""}`}>
                           {previews}

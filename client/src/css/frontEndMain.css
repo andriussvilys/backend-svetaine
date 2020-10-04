@@ -1955,6 +1955,7 @@ label {
 }
 
 .viewControls {
+  padding: 0 10px;
   width: 100%;
   bottom: 100%;
   right: 0;
@@ -1964,9 +1965,9 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   overflow: hidden;
 }
 
@@ -2020,22 +2021,6 @@ label {
   margin-right: 10px;
 }
 
-.viewControls-viewNext-container {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-ordinal-group: 3;
-      -ms-flex-order: 2;
-          order: 2;
-}
-
-.viewControls-info-container {
-  margin-right: 10px;
-  -webkit-box-ordinal-group: 2;
-      -ms-flex-order: 1;
-          order: 1;
-}
-
 @media only screen and (max-width: 720px) {
   .enlargeContainer {
     background-color: white !important;
@@ -2058,16 +2043,6 @@ label {
     display: grid;
     -webkit-transition: 0.2s all;
     transition: 0.2s all;
-  }
-  .viewControls-viewNext-container {
-    -webkit-box-ordinal-group: 2;
-        -ms-flex-order: 1;
-            order: 1;
-  }
-  .viewControls-info-container {
-    -webkit-box-ordinal-group: 3;
-        -ms-flex-order: 2;
-            order: 2;
   }
 }
 
@@ -2455,6 +2430,8 @@ input:checked + .slider:before {
       grid-template-rows: 1fr -webkit-min-content;
       grid-template-rows: 1fr min-content;
   height: calc(100% - 20px) !important;
+  -webkit-transition: 0.2s all;
+  transition: 0.2s all;
 }
 
 .full-width {
@@ -2470,6 +2447,12 @@ input:checked + .slider:before {
   height: 20px;
 }
 
+.ArtworkInfo-container {
+  -ms-grid-row: 2;
+      grid-row-start: 2;
+  grid-row-end: 3;
+}
+
 @media only screen and (max-width: 720px) {
   .MobileNav-container, .enlarge-closeButton-container {
     height: 30px;
@@ -2478,7 +2461,7 @@ input:checked + .slider:before {
     position: initial;
   }
   .enlargeContainer {
-    height: 100% !important;
+    height: calc(100%) !important;
     -ms-grid-rows: min-content 1fr min-content;
         grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
         grid-template-rows: min-content 1fr min-content;

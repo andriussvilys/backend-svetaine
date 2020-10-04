@@ -1,13 +1,14 @@
 import React, { Fragment, useEffect } from 'react'
 import ArtworkInfo from '../ArtworkInfo/ArtworkInfo'
-import Slider from "react-slick";
 import PinchToZoom from 'react-pinch-and-zoom'
+import Carousel from './Carousel/Carousel'
 
 
-import 'keen-slider/keen-slider.min.css'
-import 'keen-slider/keen-slider.min.css'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// import Slider from "react-slick";
+// import 'keen-slider/keen-slider.min.css'
+// import 'keen-slider/keen-slider.min.css'
+// import "slick-carousel/slick/slick.css";
+// import "slick-carousel/slick/slick-theme.css";
 
 const EnlargeKeenSlide = (props) => {
 
@@ -64,66 +65,21 @@ const EnlargeKeenSlide = (props) => {
     const sliderItems = (fileSequence) => {
         if(fileSequence){
             return fileSequence.map((fileName, index) => {
-                return <div className={" keen-slider__slide"} key={`keenSlider-${fileName}`}>
-                        {/* <PinchToZoom 
-                            className="pinchContainer"
-                            panEvent={{
-                                viewNext: props.context.viewNext, 
-                                viewPrev: props.context.viewNext,
-                                showMenu: props.context.showMenu,
-                                showInfo: props.context.showInfo,
-                                closeEnlarge: props.context.closeEnlarge
-                            }}
-                            state={props.context.state}
-                            mobile={props.mobile}
-                        >
-                        <div 
-                        className="foreground-transition">
-                                <img  
-                                    alt={fileName | "background"} 
-                                    // src={props.file.background.desktopPath} 
-                                    src={props.mobile ? props.context.state.artworkInfoData[fileName].mobilePath
-                                    : props.context.state.artworkInfoData[fileName].desktopPath } 
-                                    className={`enlarge-preview`} />
-                            </div>
-                        </PinchToZoom> */}
-                    <div 
-                    className="foreground-transition">
-                        <img  
+                return <img  
+                            draggable={false}
+                            key={`enlargeImage-${fileName}${index}`}
                             alt={fileName | "background"} 
                             // src={props.file.background.desktopPath} 
                             src={props.mobile ? props.context.state.artworkInfoData[fileName].mobilePath
                             : props.context.state.artworkInfoData[fileName].desktopPath } 
                             className={`enlarge-preview`} />
-                    </div>
-                </div>
+
             })
         }
         else{
             return null
         }
     }
-
-    useEffect(() => {
-        console.log("USE EFFECT")
-        // console.log({...sliderInfo})
-        // console.log(`sliderRef.current.currentArtwork`)
-        // console.log(sliderRef.current)
-        // if(sliderInfo.artworkFamily !== props.file.background.artworkFamily){
-        //     setSliderInfo({
-        //         clicked: true,
-        //         fileName: props.file.background.fileName,
-        //         index: props.file.background.familyDisplayIndex,
-        //         artworkFamily: props.file.background.artworkFamily,
-        //         familySequence: props.file.familySequence.familySequence
-        //     })
-        // }
-        console.log(`GO TO ${props.file.background.familyDisplayIndex}`)
-        sliderRef.current.slickGoTo(props.file.background.familyDisplayIndex)
-        // if(sliderInfo.clicked){
-        //     sliderRef.current.slickGoTo(props.file.background.familyDisplayIndex)
-        // }
-    })
 
     return(
         <Fragment>
@@ -143,16 +99,10 @@ const EnlargeKeenSlide = (props) => {
                     </button>
                 </div>
                 {props.file.background ?   
-                <Fragment>            
-                    <Slider 
-                    ref={sliderRef} {...sliderOptions} 
-                    currentArtwork={props.file.background.fileName}
-                    initialSlide={props.file.background.familyDisplayIndex}
-                    >
-
+                <Fragment>
+                    <Carousel>
                         {sliderItems(props.file.familySequence.familySequence)}
-
-                    </Slider>
+                    </Carousel>
                     <ArtworkInfo 
                         context={props.context}
                         mobile={props.context.state.mobile}

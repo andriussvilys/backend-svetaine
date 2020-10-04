@@ -70,10 +70,14 @@ export default class ArtworkTitle extends React.Component{
                     <div className="ArtworkInfo-Title" id="ArtworkInfo-Title">
                         <ViewControls 
                             context={this.props.context}
-                            showInfoText={this.props.context.state.info.infoUp ? "Show less" : "Show more"}
+                            showInfoText={this.props.context.state.info.infoUp ? "Less info" : "More info"}
                             showInfo={this.props.showInfo}
                             infoUp={this.props.infoUp}
-                        />
+                            children={this.props.dots}
+                        >
+                            {this.props.dots}
+                        </ViewControls>
+                        {/* {this.props.children} */}
                         {this.props.file ? 
                             <div className={"ArtworkInfo--descriptions"}>
 

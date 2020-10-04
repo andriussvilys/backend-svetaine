@@ -3,6 +3,7 @@ import { Context } from './FrontEndProvider';
 
 import TagsMenu from './components/TagsMenu'
 import ImageSelect from './components/ImageSelect/ImageSelect'
+import Carousel from './components/Enlarge/Carousel/Carousel'
 import Enlarge from './components/Enlarge/Enlarge'
 import EnlargeAlt from './components/Enlarge/EnlargeAlt'
 import EnlargeKeenSlide from './components/Enlarge/EnlargeKeenSlide'
@@ -21,7 +22,7 @@ export default class FrontEndIndex extends React.Component{
     constructor(props){
         super(props)
         this.state = {
-            imgSelectLoaded: document.querySelectorAll(".FilePreview--imageContainer")
+            imgSelectLoaded: document.querySelectorAll(".FilePreview--imageContainer"),
         }
     }
     spreadLetters = (title) => {
@@ -53,18 +54,19 @@ export default class FrontEndIndex extends React.Component{
                                 />
                                 <ImageSelect 
                                     data={this.context.state.artworkInfoData} 
-                                    // data={this.context.state.displayOrder && this.context.state.displayOrder.general ? this.context.state.displayOrder.general : null } 
                                     mobile={this.context.state.mobile}
                                     state={this.context.state}
                                     context={this.context}
                                     methods={{
                                         enlarge: this.context.enlarge,
-                                        loadEnlarge: this.context.loadEnlarge,
+                                        // loadEnlarge: this.context.loadEnlarge,
+                                        loadImage: this.context.loadImage,
                                         toggleMobile: this.context.toggleMobile,
                                         lazyLoad: this.context.lazyLoadImages
                                     }}
                                 />
-                                {!this.context.state.mobile ?  
+                                {!this.context.state.mobile && this.context.state.artworkInfoData ?                                         
+
                                     <div 
                                         className={`
                                         enlargeContainer 
@@ -73,49 +75,67 @@ export default class FrontEndIndex extends React.Component{
                                         ${!this.context.state.mobile && this.context.state.showExplorer }
                                         `}
                                         id="enlargeContainer"
-                                    >
-                                        {
-                                            this.context.state && this.context.state.enlarge && this.context.state.enlarge.background && this.context.state.enlarge.background.fileName ? 
-                                                <EnlargeKeenSlide
-                                                    nextEnlarge={this.context.state.nextEnlarge}
-                                                    file={this.context.state.enlarge}
-                                                    onClick={this.context.closeEnlarge}
-                                                    artworkInfoData={this.context.state.artworkInfoData}
-                                                    loadEnlarge={this.context.loadEnlarge}
-                                                    closeEnlarge={this.context.closeEnlarge}
-                                                    hideArtworkInfo={this.context.hideArtworkInfo}
-                                                    context={this.context}
-                                                    mobile={this.context.state.mobile}
-                                                /> : null
-                                        }
-                                </div>
-                                : null
-                                }
+                                    >             
+                                                    <div 
+                                                        className={"enlarge-closeButton-container"}
+                                                        >
+                                                        <button 
+                                                        className="enlarge-closeButton-button"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation()
+                                                            // setCurrentArtwork(null)
+                                                            this.context.closeEnlarge()
+                                                        }}
+                                                        >
+                                                            <span>close</span>
+                                                                <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/>
+                                                        </button>
+                                                    </div>   
+                                            <Carousel 
+                                                currentSlide={this.context.state.currentSlide.index}
+                                                initialTransform={this.context.state.currentSlide.initialTransform}
+                                                images={this.context.state.images}
+                                                context={this.context}
+                                                file={this.context.state.enlarge.file}
+                                            /> 
+                                        </div>: null
+                                    }                        
+                                    
                             </div>
-                            {this.context.state.mobile ?     
+                            {this.context.state.mobile && this.context.state.artworkInfoData ?                                         
                                 <div 
-                                    className={`enlargeContainer 
+                                    className={`
+                                    enlargeContainer 
                                     ${!this.context.state.mobile && this.context.state.showLess ? "full-width" : ""}
-                                    ${this.context.state.enlarge && this.context.state.enlarge.open ? "enlarge-scroll-left" : ""}
+                                    ${this.context.state.enlarge && this.context.state.enlarge.open === true ? "enlarge-scroll-left" : ""}
+                                    ${!this.context.state.mobile && this.context.state.showExplorer }
                                     `}
                                     id="enlargeContainer"
-                                >
-                                {this.context.state && this.context.state.enlarge && this.context.state.enlarge.background && this.context.state.enlarge.background.fileName ?                          
-                                    <EnlargeKeenSlide
-                                        nextEnlarge={this.context.state.nextEnlarge}
-                                        file={this.context.state.enlarge}
-                                        onClick={this.context.closeEnlarge}
-                                        artworkInfoData={this.context.state.artworkInfoData}
-                                        loadEnlarge={this.context.loadEnlarge}
-                                        closeEnlarge={this.context.closeEnlarge}
-                                        hideArtworkInfo={this.context.hideArtworkInfo}
-                                        context={this.context}
-                                        mobile={this.context.state.mobile}
-                                    />  : null
-                                }
-                                </div>
-                                : null
-                            }
+                                >             
+                                                <div 
+                                                    className={"enlarge-closeButton-container"}
+                                                    >
+                                                    <button 
+                                                    className="enlarge-closeButton-button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation()
+                                                        // setCurrentArtwork(null)
+                                                        this.context.closeEnlarge()
+                                                    }}
+                                                    >
+                                                        <span>close</span>
+                                                            <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/>
+                                                    </button>
+                                                </div>   
+                                        <Carousel 
+                                            currentSlide={this.context.state.currentSlide.index}
+                                            initialTransform={this.context.state.currentSlide.initialTransform}
+                                            images={this.context.state.images}
+                                            context={this.context}
+                                            file={this.context.state.enlarge.file}
+                                        /> 
+                                    </div>: null
+                                }   
                         </div>
                         )
                     }}
