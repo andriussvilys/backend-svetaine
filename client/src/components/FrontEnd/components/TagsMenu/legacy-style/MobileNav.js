@@ -42,10 +42,18 @@ export default class MobileNav extends React.Component {
                 <button 
                     className={"Mobilenav-button"}
                     onClick={(e) => {
+                        let openTab = null;
+                        if(this.state.openTab == "About"){
+                            this.props.context.closeEnlarge();
+                            openTab = null;
+                        }
+                        else{
+                            openTab = "About"  
+                            this.props.context.loadImage("portrait.jpg")
+                        }
                         // this.closePrev(e, "About")
                         // this.props.context.loadEnlarge(e, "portrait.jpg");
-                        this.props.context.loadImage("portrait.jpg")
-                        this.setState({openTab: "About"})
+                        this.setState({openTab: openTab})
                     }}    
                 >
                     <span>About</span>

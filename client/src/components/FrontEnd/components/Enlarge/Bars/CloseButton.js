@@ -13,7 +13,7 @@ const CloseButton = (props) => {
             }}
             >
                 <span>close</span>
-                    <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/>
+                    {/* <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/> */}
             </button>
         </div>
     )

@@ -15,7 +15,8 @@ export class Provider extends React.Component{
     images: [1, 2, 3, 4, 5],
     enlarge: {
       open: false,
-      file: "portrait.jpg"
+      file: null
+      // file: "portrait.jpg"
     }
   }
 
@@ -54,6 +55,7 @@ export class Provider extends React.Component{
     }
     this.checkFilters = (artworkCollection, newState, propName) => {
 
+      newState.showFilters = true
       //IF SWITCHING OFF COMBINE FILTERS
       if(!newState.compoundFilters){
         const lastValue = newState.filters.lastValue
@@ -693,7 +695,7 @@ export class Provider extends React.Component{
         newState.showLess = false
       }
       
-      else{
+      // else{
         newState.showFilters = !this.state.showFilters
         
         if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
@@ -704,7 +706,7 @@ export class Provider extends React.Component{
             newState.showExplorer = false
           }
         }
-      }
+      // }
 
       this.setState(newState, () => {
           if(this.state.mobile){
@@ -743,6 +745,9 @@ export class Provider extends React.Component{
       newState.enlarge.background = null
       newState.enlarge.open = false
       newState.showExplorer = false
+      newState.showFilters = false
+      newState.showLess = true
+      newState.info.infoUp = false
       this.setState(newState)
     }
     this.viewNext = (direction) => {
@@ -855,7 +860,7 @@ export class Provider extends React.Component{
     this.toggleExplorer = (options) => {
 
       if(options && options.close){
-        this.setState({showExplorer: false}, () => {
+        this.setState({showExplorer: false, showFilters: false}, () => {
           if(!this.state.mobile){
             this.enlargeWidth()
             return 
@@ -1004,6 +1009,9 @@ export class Provider extends React.Component{
         newState.showExplorer = true;
       }
       newState.enlarge = {open: true, file: fileName}
+      if(!this.state.enlarge.open){
+        newState.showLess = true
+      }
       this.setState(newState)
     }
 
@@ -1050,6 +1058,8 @@ export class Provider extends React.Component{
       let newState = {...this.state}
 
       if(this.state.info.infoUp){
+        newState.showFilters = false
+        newState.showExplorer = false
         newState.info.infoUp = false
         newState.showLess = true
       }

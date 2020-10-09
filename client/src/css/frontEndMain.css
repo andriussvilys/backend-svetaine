@@ -1,3 +1,4 @@
+@charset "UTF-8";
 * {
   padding: 0;
   margin: 0;
@@ -369,7 +370,6 @@ label {
 .imageSelect-buffer {
   height: 100%;
   width: 100%;
-  background-color: red;
 }
 
 .Nav-button {
@@ -454,7 +454,6 @@ label {
           flex: 1 1 19%;
   min-width: 59px;
   max-height: 200px;
-  border-top: 9px solid red;
   -webkit-user-select: none;
      -moz-user-select: none;
       -ms-user-select: none;
@@ -466,8 +465,6 @@ label {
   top: 0;
   z-index: -9999;
   height: 0;
-  border-top: 4px solid red;
-  border-bottom: 5px solid red;
 }
 
 .FilePreview--imageContainer__empty > * {
@@ -820,7 +817,6 @@ label {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  border-top: 1px solid black;
   background-color: white;
   width: 100% !important;
   max-height: calc(100vh - 59px);
@@ -1788,8 +1784,7 @@ label {
   }
   .ArtworkInfo--descriptions {
     font-size: 12px;
-    margin: 8px 8vw;
-    margin-left: 50px;
+    margin: 10px 20px;
   }
   .ArtworkInfo_locationYear {
     font-size: 10px;
@@ -1907,6 +1902,7 @@ label {
 }
 
 .enlarge-closeButton-container {
+  padding: 0 10px;
   border-bottom: 1px solid black;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -1938,6 +1934,16 @@ label {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  padding-right: 30px;
+  padding-left: 10px;
+}
+
+.enlarge-closeButton-button:after {
+  position: absolute;
+  line-height: 20px;
+  top: calc(50% - 10px);
+  right: 10px;
+  content: ">";
 }
 
 .controls-exitButton {
@@ -1955,13 +1961,13 @@ label {
 }
 
 .viewControls {
-  padding: 0 10px;
   width: 100%;
+  height: 30px;
   bottom: 100%;
   right: 0;
+  border-top: 1px solid black;
   border-bottom: 1px solid black;
   background-color: white;
-  height: 30px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -1984,6 +1990,11 @@ label {
           align-items: center;
 }
 
+.viewControls-button-info {
+  position: relative;
+  padding: 0 10px 0 40px;
+}
+
 .viewControls-button {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -2002,6 +2013,13 @@ label {
   font-weight: bold;
 }
 
+.viewControls-button:after {
+  font-size: 20px;
+  content: "ⓘ";
+  position: absolute;
+  left: 10px;
+}
+
 .viewControls-button-disabled {
   opacity: 0.3;
 }
@@ -2015,10 +2033,6 @@ label {
   height: 20px;
   width: 20px;
   margin-right: 7px;
-}
-
-.viewControls-button-info {
-  margin-right: 10px;
 }
 
 @media only screen and (max-width: 720px) {
@@ -2107,9 +2121,9 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: baseline;
-      -ms-flex-align: baseline;
-          align-items: baseline;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .legacyStyle-List-listItem label {
@@ -2148,6 +2162,7 @@ label {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+  background: white;
 }
 
 .Mobilenav-button {
@@ -2460,6 +2475,9 @@ input:checked + .slider:before {
   .enlarge-closeButton-container {
     position: initial;
   }
+  .enlarge-closeButton-button {
+    padding-right: 0 !important;
+  }
   .enlargeContainer {
     height: calc(100%) !important;
     -ms-grid-rows: min-content 1fr min-content;
@@ -2485,5 +2503,28 @@ input:checked + .slider:before {
 
 .slick-next {
   right: 10px !important;
+}
+
+.legacyStyle-List-listItem:hover, .legacyStyle-List-listItem:focus,
+.viewControls-info-container:hover, .viewControls-info-container:focus,
+.Tags-item_container:hover, .Tags-item_container:focus,
+.enlarge-closeButton-container:hover, .enlarge-closeButton-container:focus,
+.viewControls-button-info:hover, .viewControls-button-info:focus,
+.Mobilenav-button:hover, .Mobilenav-button:focus {
+  background-color: Black !important;
+  color: white !important;
+  outline: none !important;
+}
+
+.legacyStyle-List-listItem:hover *, .legacyStyle-List-listItem:focus *,
+.viewControls-info-container:hover *, .viewControls-info-container:focus *,
+.Tags-item_container:hover *, .Tags-item_container:focus *,
+.enlarge-closeButton-container:hover *, .enlarge-closeButton-container:focus *,
+.viewControls-button-info:hover *, .viewControls-button-info:focus *,
+.Mobilenav-button:hover *, .Mobilenav-button:focus * {
+  background-color: Black !important;
+  color: white !important;
+  border-color: white !important;
+  outline: none !important;
 }
 /*# sourceMappingURL=frontEndMain.css.map */

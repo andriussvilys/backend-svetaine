@@ -45,7 +45,7 @@ $filtersWidth_desktop: 220px;
 .legacyStyle-List-listItem{
     user-select: none;
     display: flex;
-    align-items: baseline;
+    align-items: center;
     label{
         cursor: pointer;
         order: 2;
@@ -70,6 +70,7 @@ $filtersWidth_desktop: 220px;
     width: 360px;
     display: flex;
     justify-content: space-between;
+    background: white;
 }
 .Mobilenav-button{
     overflow: hidden;

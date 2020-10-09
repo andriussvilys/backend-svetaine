@@ -52,7 +52,7 @@
   top: calc(50% - 10px);
   font-size: 35px;
   content: ">";
-  right: 0;
+  right: 5px;
 }
 
 .arrowPrev:after {
@@ -61,7 +61,7 @@
   top: calc(50% - 10px);
   font-size: 35px;
   content: "<";
-  left: 0;
+  left: 5px;
 }
 
 .arrowNext:hover, .arrowPrev:hover {
@@ -161,6 +161,7 @@
 
 .dotList {
   margin: 0;
+  margin-left: 30px;
   padding: 0;
   overflow-x: auto;
   overflow-y: hidden;
@@ -178,18 +179,17 @@
 }
 
 .dot {
-  width: 20px;
-  min-width: 20px;
-  height: 20px;
+  width: 10px;
+  min-width: 10px;
+  height: 10px;
   border-radius: 999px;
-  background: white;
-  border: 3px solid #5f5f5f;
+  border: 1px solid black;
   margin: 5px;
   cursor: pointer;
 }
 
 .dot_active {
-  background: lime;
+  background: black;
 }
 
 .container {
@@ -206,5 +206,11 @@
   -ms-grid-row: 1;
       grid-row-start: 1;
   grid-row-end: 2;
+}
+
+@media only screen and (max-width: 720px) {
+  .dotList {
+    margin: 0 10px;
+  }
 }
 /*# sourceMappingURL=index.module.css.map */

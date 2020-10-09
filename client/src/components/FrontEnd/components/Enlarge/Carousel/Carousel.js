@@ -289,9 +289,10 @@ const Carousel = props => {
     useEffect(() => {
         console.log("PROPS CHANGE")
         if(!slidePosition.file){
-            return setSlidePosition({...slidePosition, file: props.file})
+            return setSlidePosition({...slidePosition, file: props.file, currentSlide: props.currentSlide})
         }
         slideTo(props.currentSlide)
+    //   }, [props.file, props.currentSlide])
       }, [props.file])
 
       useEffect(bind, [bind])
