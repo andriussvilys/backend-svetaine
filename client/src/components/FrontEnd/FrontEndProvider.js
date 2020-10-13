@@ -862,12 +862,22 @@ export class Provider extends React.Component{
       if(options && options.close){
         this.setState({showExplorer: false, showFilters: false}, () => {
           if(!this.state.mobile){
+            setTimeout(() => {this.enlargeWidth()}, 
+            200
+            )
+            return 
+          }
+        })
+      }
+      else if(options && options.open){
+        this.setState({showExplorer: true, showFilters: true}, () => {
+          if(!this.state.mobile){
             this.enlargeWidth()
             return 
           }
         })
       }
-      if(!this.state.showExplorer){
+      else if(!this.state.showExplorer){
         this.setState({showExplorer: true}, () => {
           if(!this.state.mobile){
             this.enlargeWidth()
@@ -1056,8 +1066,14 @@ export class Provider extends React.Component{
         e.stopPropagation()
       }
       let newState = {...this.state}
-
-      if(this.state.info.infoUp){
+      if(options && options.close){
+        console.log(`options.close? ${options.close}`)
+        newState.showFilters = false
+        newState.showExplorer = false
+        newState.info.infoUp = false
+        newState.showLess = true
+      }
+      else if(this.state.info.infoUp){
         newState.showFilters = false
         newState.showExplorer = false
         newState.info.infoUp = false

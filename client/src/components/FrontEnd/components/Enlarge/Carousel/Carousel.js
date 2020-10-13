@@ -35,7 +35,7 @@ const Carousel = props => {
     const slideContainerRef = React.useRef()
 
     const slideTo = (index) => {
-        console.log("SLIDE TO ")
+        // console.log("SLIDE TO ")
         if(!slidePosition.file)return
         let slideToIndex = index;
         if(slideToIndex < 0){
@@ -47,9 +47,9 @@ const Carousel = props => {
         const newTransfrom = -((100 / props.images.length) * slideToIndex)
         let delay = zoom.zoom ? 250 : 0;
         const artworkFam = props.context.state.artworkInfoData[props.file].artworkFamily
-        console.log(artworkFam)
+        // console.log(artworkFam)
         const nextImage = props.context.state.relatedArtwork[artworkFam].column.fileIds[slideToIndex]
-        console.log(nextImage);
+        // console.log(nextImage);
         if(zoom.zoom){
             setZoom({...zoomDefault})
         }
@@ -121,6 +121,8 @@ const Carousel = props => {
                         newScale = newScale > 2 ? 1 : newScale
                         newZoom = newScale === 1 ? false : true
                         const position = newScale === 1 ? {x: 0, y: 0} : zoom.position
+                        // props.context.toggleExplorer({close: newZoom, open: !newZoom})
+                        props.context.showInfo(e, {close: !props.context.state.info.infoUp})
                         setZoom({
                             ...zoom,
                             zoom: newZoom,
@@ -207,9 +209,9 @@ const Carousel = props => {
         return {x: panX, y: panY}
     }
     const zoomPanHandler = (state) => {
-        console.log("move when zoom")
+        // console.log("move when zoom")
         const {x, y} = calcZoomPan(state.xy[0], state.xy[1])
-        console.log({x, y})
+        // console.log({x, y})
         setZoom({
             ...zoom,
             smooth: false,
@@ -243,6 +245,7 @@ const Carousel = props => {
                 })
             },
             onPinch: state => {
+
                 const pinchDistance = state.da[0]
                 let scale = pinchDistance / 100
                 let zoomStatus = true
@@ -251,6 +254,7 @@ const Carousel = props => {
                     zoomStatus = false
                 }
                 const {x, y} = calcZoomPan(state.origin[0], state.origin[1])
+                props.context.toggleExplorer({close: true})
                 setZoom({
                     ...zoom,
                     zoom: zoomStatus,
@@ -272,10 +276,11 @@ const Carousel = props => {
                 moveStartHandeler()
             },
             onWheel: (state) => {
-                // state.event.preventDefault()
+                state.event.preventDefault()
                 moveHandler(state, {moveSpeed: 1.5, direction: -1})
             },
             onWheelEnd: state => {
+                state.event.preventDefault()
                 moveEndHandler(state)
             },
             onMove: state => {
@@ -287,7 +292,7 @@ const Carousel = props => {
     )
 
     useEffect(() => {
-        console.log("PROPS CHANGE")
+        // console.log("PROPS CHANGE")
         if(!slidePosition.file){
             return setSlidePosition({...slidePosition, file: props.file, currentSlide: props.currentSlide})
         }
