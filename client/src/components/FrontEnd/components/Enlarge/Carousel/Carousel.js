@@ -169,21 +169,29 @@ const Carousel = props => {
         if(zoom.zoom){
         return}
 
-        var positionFix = slidePosition.currentTransform;
-        var slideCount = props.images.length;
-        var slideWidth = 100 / slideCount;
-        positionFix = positionFix > 0 ? 0 : positionFix
-        const index = slidePosition.currentSlide
+        slideTo(slidePosition.currentSlide)
 
-        positionFix = (0 - (slideWidth * index))
+        // ...slidePosition,
+        // currentSlide: slideToIndex,
+        // currentTransform: newTransfrom,
+        // prevTransform: newTransfrom,
+        // file: nextImage
 
-        return setSlidePosition({
-            ...slidePosition, 
-            prevTransform: positionFix,
-            currentTransform: positionFix,
-            distance: null,
-            smooth: true
-        })
+        // var positionFix = slidePosition.currentTransform;
+        // var slideCount = props.images.length;
+        // var slideWidth = 100 / slideCount;
+        // positionFix = positionFix > 0 ? 0 : positionFix
+        // const index = slidePosition.currentSlide
+
+        // positionFix = (0 - (slideWidth * index))
+
+        // return setSlidePosition({
+        //     ...slidePosition, 
+        //     prevTransform: positionFix,
+        //     currentTransform: positionFix,
+        //     distance: null,
+        //     smooth: true
+        // })
     }
     const calcZoomPan = (cursorX, cursorY) => {
         const container = containerRef.current
@@ -209,9 +217,7 @@ const Carousel = props => {
         return {x: panX, y: panY}
     }
     const zoomPanHandler = (state) => {
-        // console.log("move when zoom")
         const {x, y} = calcZoomPan(state.xy[0], state.xy[1])
-        // console.log({x, y})
         setZoom({
             ...zoom,
             smooth: false,
@@ -223,6 +229,7 @@ const Carousel = props => {
     const genericOptions = {
         // filterTaps: true,
         domTarget: slideContainerRef,
+        lockDirection: true,
         eventOptions: {
             passive: false
         }
@@ -277,10 +284,17 @@ const Carousel = props => {
             },
             onWheel: (state) => {
                 state.event.preventDefault()
-                moveHandler(state, {moveSpeed: 1.5, direction: -1})
+                // console.log({direction: state.direction});
+                // if(state.direction[1] > 0){
+                //     return props.context.showInfo();
+                // }
+                moveHandler(state, {moveSpeed: 1, direction: -1})
             },
             onWheelEnd: state => {
                 state.event.preventDefault()
+                // if(state.direction[1] > 0){
+                //     return props.context.showInfo();
+                // }
                 moveEndHandler(state)
             },
             onMove: state => {
