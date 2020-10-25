@@ -127,7 +127,10 @@ $filtersWidth_desktop: 220px;
     width: 20px;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 768px) {
+    .MobileNav-wrapper{
+        width: 100%;
+    }
     $filtersWidth_mobile: 220px;
     .FilterTree-container{
         padding-top: 0;

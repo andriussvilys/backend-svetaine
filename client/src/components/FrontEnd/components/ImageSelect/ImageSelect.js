@@ -6,12 +6,12 @@ const ImageSelect = (props) => {
     const createPreviewsALL = (data) => {
         if(data){
             // let previews = Object.keys(data).map((objName) => {
-            let previews = props.state.displayOrder.general.map((objName) => {
+            let previews = props.state.displayOrder.general.map((objName, index) => {
               const halfSize = props.state.artworkInfoData[objName].naturalSize.naturalWidth < props.state.artworkInfoData[objName].naturalSize.naturalHeight ? "halfSize" : null
               if(props.state.artworkOnDisplay[objName]){
                 return <FilePreview 
                         key={`imageSelect-${objName}`}
-                        containerClassName={`FilePreview--imageContainer ${halfSize}`}
+                        containerClassName={`FilePreview--imageContainer ${halfSize} ${index%2 == 0 ? "left-aligned" : "right-aligned"} `}
                         className="imageSelect-FilePreview loadByDefault" 
                         // onClick={e => {
                         //   props.methods.loadEnlarge(e, objName)

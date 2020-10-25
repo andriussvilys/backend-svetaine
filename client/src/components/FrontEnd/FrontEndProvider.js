@@ -667,14 +667,21 @@ export class Provider extends React.Component{
         if(options && options.showLess){
           return this.setState({showLess: true})
         }
+
         else{
           this.setState({showLess: false}, () => {
-            if(this.state.showExplorer){
-              enlargeContainerWidth -= 120
+            if(options && options.filters){
+                enlargeContainerWidth -= 120
+                enlargeContainerWidth -= 220
             }
-            //check filters
-            if(this.state.showFilters){
-              enlargeContainerWidth -= 220
+            else{
+              if(this.state.showExplorer){
+                enlargeContainerWidth -= 120
+              }
+              //check filters
+              if(this.state.showFilters){
+                enlargeContainerWidth -= 220
+              }
             }
             //set enlargeContainer size
             container.style.width = `${enlargeContainerWidth}px`
@@ -1019,10 +1026,18 @@ export class Provider extends React.Component{
         newState.showExplorer = true;
       }
       newState.enlarge = {open: true, file: fileName}
-      if(!this.state.enlarge.open){
-        newState.showLess = true
-      }
-      this.setState(newState)
+      // if(!this.state.enlarge.open){
+      //   newState.showLess = true
+      // }
+      this.enlargeWidth({filters: true})
+      setTimeout(() => {
+        this.setState(newState)
+      }, 300);
+      // this.setState(newState, () => {
+      //   setTimeout(() => {
+      //     this.enlargeWidth()
+      //   }, timeout);
+      // })
     }
 
     // this.loadEnlarge = (e, id) => {
