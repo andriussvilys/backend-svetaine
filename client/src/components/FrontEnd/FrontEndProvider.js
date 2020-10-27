@@ -17,7 +17,10 @@ export class Provider extends React.Component{
       open: false,
       file: null
       // file: "portrait.jpg"
-    }
+    },
+    // showFilters: false,
+    // showExplorer: false,
+    // showLess: false
   }
 
   this.enlarge = {}
@@ -669,7 +672,7 @@ export class Provider extends React.Component{
         }
 
         else{
-          this.setState({showLess: false}, () => {
+          // this.setState({showLess: false}, () => {
             if(options && options.filters){
                 enlargeContainerWidth -= 120
                 enlargeContainerWidth -= 220
@@ -683,10 +686,11 @@ export class Provider extends React.Component{
                 enlargeContainerWidth -= 220
               }
             }
+            console.log(`ENLARGE WIDTH: ${enlargeContainerWidth}`);
             //set enlargeContainer size
             container.style.width = `${enlargeContainerWidth}px`
             return 
-          })
+          // })
         }
       }
 
@@ -752,8 +756,8 @@ export class Provider extends React.Component{
       newState.enlarge.background = null
       newState.enlarge.open = false
       newState.showExplorer = false
-      newState.showFilters = false
-      newState.showLess = true
+      // newState.showFilters = false
+      // newState.showLess = true
       newState.info.infoUp = false
       this.setState(newState)
     }
@@ -1026,52 +1030,11 @@ export class Provider extends React.Component{
         newState.showExplorer = true;
       }
       newState.enlarge = {open: true, file: fileName}
-      // if(!this.state.enlarge.open){
-      //   newState.showLess = true
-      // }
-      this.enlargeWidth({filters: true})
+      this.enlargeWidth({filters: this.state.showFilters})
       setTimeout(() => {
         this.setState(newState)
       }, 300);
-      // this.setState(newState, () => {
-      //   setTimeout(() => {
-      //     this.enlargeWidth()
-      //   }, timeout);
-      // })
     }
-
-    // this.loadEnlarge = (e, id) => {
-    //   // if(this.state.enlarge && this.state.enlarge.background && this.state.enlarge.background.fileName === id)
-    //   if(e){
-    //     e.stopPropagation()
-    //   }
-    //   const file = this.state.artworkInfoData[id]
-    //   const options = this.createFamilySequence(file)
-
-    //   let enlarge = this.state.enlarge ? {...this.state.enlarge} : options.state.enlarge
-    //   enlarge.previous = !enlarge.background ? file : enlarge.background
-    //   enlarge.background = file
-
-    //   let bgSrc = null
-    //   let fgSrc = null
-
-    //   if(this.state.mobile){
-    //     bgSrc = file.mobilePath
-    //     fgSrc = file.mobilePath
-    //   }
-    //   else{
-    //     bgSrc = file.desktopPath
-    //     fgSrc = file.desktopPath
-    //   }
-
-    //     let newState = options && options.state ? options.state : {...this.state}
-    //     newState.enlarge = enlarge
-    //     newState.enlarge.foreground = enlarge.background
-    //     newState.enlarge.open = true
-
-    //     this.setState(newState)
-    //   // return this.animateEnlarge(file, options)
-    // }
 
     this.showInfo = (e, options) => {
       if(this.state.enlarge && !this.state.enlarge.open){
