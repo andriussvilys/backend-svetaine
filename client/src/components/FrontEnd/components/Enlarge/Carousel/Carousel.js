@@ -241,7 +241,7 @@ const Carousel = props => {
                     else{
                         if(state.direction[1] != 0){
                             return verticalMoveHandler(state, 
-                                {direction: -1, speed: 0.5}
+                                {direction: -1, speed: 2}
                                 );
                         }
                     }
