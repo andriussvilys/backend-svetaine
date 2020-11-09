@@ -142,9 +142,10 @@ const Carousel = props => {
     const moveStartHandeler = (state) => {
     }
     const verticalMoveHandler = (state, options) => {
-        console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
+        // console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
+        // console.log({...options})
         // let heightValue = (infoPosition.height + state.xy[1]) / 4;
-        let heightValue = infoPosition.height + state.delta[1] / 3;
+        let heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
         if(heightValue < -100){
             heightValue = -100
         }
@@ -234,11 +235,14 @@ const Carousel = props => {
             },
             onDrag: (state) => {
                 if(state.event.touches){
+                    console.log("touches")
                     if(state.event.touches.length > 1)
                     {return}
                     else{
                         if(state.direction[1] != 0){
-                            return verticalMoveHandler(state);
+                            return verticalMoveHandler(state, 
+                                {direction: -1, speed: 0.5}
+                                );
                         }
                     }
                 }
@@ -285,7 +289,7 @@ const Carousel = props => {
             onWheel: (state) => {
                 state.event.preventDefault()
                 if(state.direction[1] != 0){
-                    return verticalMoveHandler(state);
+                    return verticalMoveHandler(state, {direction: 1, speed: 4});
                 }
                 moveHandler(state, {moveSpeed: 1, direction: -1})
             },
