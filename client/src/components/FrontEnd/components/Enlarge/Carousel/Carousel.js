@@ -145,7 +145,13 @@ const Carousel = props => {
         // console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
         // console.log({...options})
         // let heightValue = (infoPosition.height + state.xy[1]) / 4;
-        let heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
+        let heightValue = null;
+        if(options.mobile){
+            heightValue = (options.direction * (infoPosition.height + state.delta[1])) / options.speed;
+        }
+        else{
+            heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
+        }
         if(heightValue < -100){
             heightValue = -100
         }
@@ -241,7 +247,7 @@ const Carousel = props => {
                     else{
                         if(state.direction[1] != 0){
                             return verticalMoveHandler(state, 
-                                {direction: -1, speed: 2}
+                                {direction: -1, speed: 2, mobile: true}
                                 );
                         }
                     }
