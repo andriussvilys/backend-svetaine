@@ -147,7 +147,7 @@ const Carousel = props => {
         // let heightValue = (infoPosition.height + state.xy[1]) / 4;
         let heightValue = null;
         if(options.mobile){
-            heightValue = (options.direction * (infoPosition.height + state.delta[1])) / options.speed;
+            heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
         }
         else{
             heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
