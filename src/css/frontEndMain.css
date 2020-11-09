@@ -689,7 +689,6 @@ label {
 }
 
 .Tags-item_container {
-  font-family: 'Courier New', Courier, monospace !important;
   border: 1px solid black;
   padding: 2px 7px 2px 7px !important;
   margin: 2px 0px 2px 8px !important;
@@ -703,8 +702,6 @@ label {
 }
 
 .Tags-item_text {
-  font-size: 12px;
-  font-weight: 600;
   white-space: nowrap;
 }
 
@@ -727,7 +724,6 @@ label {
   font-weight: bold;
   text-transform: uppercase !important;
   border: none;
-  display: initial;
   overflow: visible;
 }
 
@@ -1329,7 +1325,6 @@ label {
   display: initial;
   height: 100%;
   overflow: hidden;
-  padding: 0 3vw 0 3vw;
 }
 
 .explorer-view {
@@ -1685,7 +1680,6 @@ label {
     display: initial;
     height: 100%;
     overflow: hidden;
-    padding: 0;
   }
   .enlarge-scroll-down {
     -webkit-transform: translateY(100%);

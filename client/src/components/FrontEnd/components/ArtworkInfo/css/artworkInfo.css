@@ -1,0 +1,24 @@
+.ArtworkInfo-wrapper_main {
+  position: absolute;
+  width: 100%;
+  background-color: white;
+}
+
+.ArtworkInfo-container {
+  position: relative;
+  height: 100px;
+  top: 0;
+}
+
+.ArtworkInfo-Title {
+  height: 100px;
+  position: absolute;
+  top: -100px;
+}
+
+.ArtworkInfo--descriptions,
+.ArtworkInfo-container_seealso,
+.Tags-item_wrapper {
+  padding-right: 20px;
+}
+/*# sourceMappingURL=artworkInfo.css.map */

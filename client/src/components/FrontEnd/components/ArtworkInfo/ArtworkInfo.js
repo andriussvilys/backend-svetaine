@@ -11,6 +11,8 @@ import ArtworkTitle from "./ArtworkInfo/ArtworkTitle";
 import ImageSelect from "../ImageSelect/ImageSelect";
 import ViewControls from "./ViewControls";
 
+import './css/artworkInfo.css';
+
 export default class ArtworkInfo extends React.Component{
   constructor(props){
     super(props)
@@ -306,43 +308,48 @@ export default class ArtworkInfo extends React.Component{
         className={`ArtworkInfo-container`}
         id="ArtworkInfo-container"
       >
-        {this.props.children}
+        <div 
+        className={`ArtworkInfo-wrapper_main`}
+        style={{transform: `translateY(${-this.props.transform}%`}}
+        >
+          {this.props.children}
           <ArtworkTitle 
-            file={this.props.file ? this.props.file : {background: this.placeholder}} 
-            context={this.props.context} 
-            showInfo={
-              () => this.showInfo()
-            }
-            infoUp={this.state.infoUp}
-            dots={this.props.dots}
-          />
-          <div
-            key={"ArtworkInfo-wrapper"}
-            className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
-            id="ArtworkInfo"
-          >
-              {this.props.file ? 
-                this.secondaryInfo() : null
-              }   
-            {this.props.context.state.mobile ? 
-              <ImageSelect
-                  customClass={`${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
-                  customId="ImageSelect-info"
-                  sideScroll
-                  data={this.props.context.state.artworkInfoData}
-                  mobile={this.props.context.state.mobile}
-                  state={this.props.context.state}
-                  context={this.props.context}
-                  methods={{
-                    enlarge: this.props.context.enlarge,
-                    // loadEnlarge: this.props.context.loadEnlarge,
-                    loadImage: this.props.context.loadImage,
-                    toggleMobile: this.props.context.toggleMobile,
-                    lazyLoad: this.props.context.lazyLoadImages,
-                  }}
-                /> : null
+              file={this.props.file ? this.props.file : {background: this.placeholder}} 
+              context={this.props.context} 
+              showInfo={
+                () => this.showInfo()
               }
-          </div>
+              infoUp={this.state.infoUp}
+              dots={this.props.dots}
+            />
+            <div
+              key={"ArtworkInfo-wrapper"}
+              className={`ArtworkInfo-wrapper secondaryInfo ${this.props.context.state.info.infoUp ? "info-up" : ""}`}
+              id="ArtworkInfo"
+            >
+                {this.props.file ? 
+                  this.secondaryInfo() : null
+                }   
+              {this.props.context.state.mobile ? 
+                <ImageSelect
+                    customClass={`${this.props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
+                    customId="ImageSelect-info"
+                    sideScroll
+                    data={this.props.context.state.artworkInfoData}
+                    mobile={this.props.context.state.mobile}
+                    state={this.props.context.state}
+                    context={this.props.context}
+                    methods={{
+                      enlarge: this.props.context.enlarge,
+                      // loadEnlarge: this.props.context.loadEnlarge,
+                      loadImage: this.props.context.loadImage,
+                      toggleMobile: this.props.context.toggleMobile,
+                      lazyLoad: this.props.context.lazyLoadImages,
+                    }}
+                  /> : null
+                }
+            </div>
+        </div>
         </div>
     )
   }

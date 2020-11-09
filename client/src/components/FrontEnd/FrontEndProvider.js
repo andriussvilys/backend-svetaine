@@ -287,6 +287,9 @@ export class Provider extends React.Component{
       return new Promise((resolve, reject) => {
         let newState = {...this.filter(displayTrigger, value)}
         newState.filters = this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
+        newState.showFilters = true;
+        newState.showExplorer = true;
+        newState.showLess = false;
         return this.setState(newState, () => {
           this.enlargeWidth()
           resolve()
@@ -686,7 +689,6 @@ export class Provider extends React.Component{
                 enlargeContainerWidth -= 220
               }
             }
-            console.log(`ENLARGE WIDTH: ${enlargeContainerWidth}`);
             //set enlargeContainer size
             container.style.width = `${enlargeContainerWidth}px`
             return 

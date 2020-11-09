@@ -13,6 +13,9 @@ const Carousel = props => {
         currentTransform: props.initialTransform,
         file: props.file,
     })
+    const [infoPosition, setInfoPosition] = React.useState({
+        height: -100,
+    })
     const zoomDefault =  {
         pinch: null,
         zoom: null,
@@ -136,10 +139,21 @@ const Carousel = props => {
         )
         })
     }
-          
-
-
     const moveStartHandeler = (state) => {
+    }
+    const verticalMoveHandler = (state, options) => {
+        console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
+        // let heightValue = (infoPosition.height + state.xy[1]) / 4;
+        let heightValue = infoPosition.height + state.delta[1] / 3;
+        if(heightValue < -100){
+            heightValue = -100
+        }
+        if(heightValue > 0){
+            heightValue = 0
+        }
+        // const newHeight = `${heightValue}%`
+        console.log({newHeight: heightValue})
+        setInfoPosition({height: heightValue})
     }
     const moveHandler = (state, options) => {
         if(zoom.zoom){
@@ -170,28 +184,6 @@ const Carousel = props => {
         return}
 
         slideTo(slidePosition.currentSlide)
-
-        // ...slidePosition,
-        // currentSlide: slideToIndex,
-        // currentTransform: newTransfrom,
-        // prevTransform: newTransfrom,
-        // file: nextImage
-
-        // var positionFix = slidePosition.currentTransform;
-        // var slideCount = props.images.length;
-        // var slideWidth = 100 / slideCount;
-        // positionFix = positionFix > 0 ? 0 : positionFix
-        // const index = slidePosition.currentSlide
-
-        // positionFix = (0 - (slideWidth * index))
-
-        // return setSlidePosition({
-        //     ...slidePosition, 
-        //     prevTransform: positionFix,
-        //     currentTransform: positionFix,
-        //     distance: null,
-        //     smooth: true
-        // })
     }
     const calcZoomPan = (cursorX, cursorY) => {
         const container = containerRef.current
@@ -241,7 +233,15 @@ const Carousel = props => {
                 moveStartHandeler()
             },
             onDrag: (state) => {
-                if(state.event.touches && state.event.touches.length > 1){return}
+                if(state.event.touches){
+                    if(state.event.touches.length > 1)
+                    {return}
+                    else{
+                        if(state.direction[1] != 0){
+                            return verticalMoveHandler(state);
+                        }
+                    }
+                }
                 moveHandler(state, {moveSpeed: 2, direction: 1})
             },
             onDragEnd: (state) => moveEndHandler(state),
@@ -284,10 +284,9 @@ const Carousel = props => {
             },
             onWheel: (state) => {
                 state.event.preventDefault()
-                // console.log({direction: state.direction});
-                // if(state.direction[1] > 0){
-                //     return props.context.showInfo();
-                // }
+                if(state.direction[1] != 0){
+                    return verticalMoveHandler(state);
+                }
                 moveHandler(state, {moveSpeed: 1, direction: -1})
             },
             onWheelEnd: state => {
@@ -339,11 +338,10 @@ const Carousel = props => {
                     context={props.context}
                     mobile={props.context.state.mobile}
                     file={props.context.state.artworkInfoData[slidePosition.file]}
-                    // file={props.context.state.artworkInfoData[props.context.state.enlarge.file]}
-                    // file={slidePosition.file}
                     artworkInfoData={props.context.state.artworkInfoData}
                     info={props.context.state.info}
                     dots={dots(props.images)}
+                    transform={infoPosition.height}
                 >
                 </ArtworkInfo> 
         </div>

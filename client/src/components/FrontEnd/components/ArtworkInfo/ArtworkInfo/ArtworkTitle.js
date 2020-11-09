@@ -20,7 +20,8 @@ export default class ArtworkTitle extends React.Component{
             if(year){
                 return <div key={"year"} className="ArtworkInfo_locationYear">({year})</div>
             }
-            else{ return null}
+            // else{ return null}
+            else{ return <div key={"location/year"} className="ArtworkInfo_locationYear"></div>}
         }
         this.artworkTitle = () => {
     
