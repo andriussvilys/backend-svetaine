@@ -15,6 +15,7 @@ const Carousel = props => {
     })
     const [infoPosition, setInfoPosition] = React.useState({
         height: -100,
+        direction: null,
     })
     const zoomDefault =  {
         pinch: null,
@@ -66,7 +67,6 @@ const Carousel = props => {
             })
         }, delay);
     }
-
     const dots = (imageList) => {
         if(imageList.length < 2){return <ul className={styles.dotList}></ul>}
         if(!imageList || imageList.length < 0){return}
@@ -99,8 +99,6 @@ const Carousel = props => {
             }}
         ></div>
     }
-
-
     const renderImages = (data) => {
         return data.map((image, index) => {
         return (
@@ -119,6 +117,9 @@ const Carousel = props => {
                     src={image}
                     alt={image}
                     onMouseDown={(e) => {
+                        if(props.context.state.mobile){
+                            return
+                        }
                         let newScale = zoom.scale + 1
                         let newZoom = true
                         newScale = newScale > 2 ? 1 : newScale
@@ -142,29 +143,21 @@ const Carousel = props => {
     const moveStartHandeler = (state) => {
     }
     const verticalMoveHandler = (state, options) => {
+        console.log("VERTICAL HANDLER")
         // console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
-        // console.log({...options})
-        // let heightValue = (infoPosition.height + state.xy[1]) / 4;
         let heightValue = null;
-        if(options.mobile){
-            heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
-        }
-        else{
-            heightValue = (options.direction * (infoPosition.height + state.xy[1])) / options.speed;
-        }
+        heightValue = infoPosition.height + (options.direction * state.delta[1])
         if(heightValue < -100){
             heightValue = -100
         }
         if(heightValue > 0){
             heightValue = 0
         }
-        // const newHeight = `${heightValue}%`
         console.log({newHeight: heightValue})
         setInfoPosition({height: heightValue})
     }
     const moveHandler = (state, options) => {
-        if(zoom.zoom){
-        return}
+        if(zoom.zoom){console.log("ZOOMED"); return}
           const containerWidth = containerRef.current.clientWidth;
           const slideCount = props.images.length
           const slideWidth = 100 / slideCount
@@ -187,9 +180,11 @@ const Carousel = props => {
             })
     }
     const moveEndHandler = (state) => {
-        if(zoom.zoom){
-        return}
-
+        if(zoom.zoom){return}
+        if(infoPosition.direction){
+            console.log("NULL DIRECTION")
+            setInfoPosition({...infoPosition, direction: null});
+        }
         slideTo(slidePosition.currentSlide)
     }
     const calcZoomPan = (cursorX, cursorY) => {
@@ -242,16 +237,35 @@ const Carousel = props => {
             onDrag: (state) => {
                 if(state.event.touches){
                     console.log("touches")
-                    if(state.event.touches.length > 1)
-                    {return}
+                    if(state.event.touches.length > 1){return}
                     else{
-                        if(state.direction[1] != 0){
-                            return verticalMoveHandler(state, 
-                                {direction: -1, speed: 2, mobile: true}
-                                );
+                        if(!infoPosition.direction){
+                            console.log({DIRECTION_Y: state.direction[1], DIRECTION_X: state.direction[0]})
+                            if(state.direction[1] != 0){
+                                console.log("DIRECTION - Y")
+                                return setInfoPosition({...infoPosition, direction:[0,1]});
+                            }
+                            else if(state.direction[0] != 0){
+                                console.log("DIRECTION - X")
+                                return setInfoPosition({...infoPosition, direction:[1, 0]});
+                            }
+                        }
+                        else{
+                            console.log("INFO POSITION LOCKED: ")
+                            console.log(`${infoPosition.direction[0] > 0 ? "X" : "Y"}`)
+                            if(infoPosition.direction[1] > 0){
+                                return verticalMoveHandler(state, 
+                                    {direction: -1, speed: 2, mobile: true}
+                                    );
+                            }
+                            else{
+                                return moveHandler(state, {moveSpeed: 2, direction: 1})
+                            }
                         }
                     }
+                    return
                 }
+                console.log("NOT TOUCHES CODE-----------------------")
                 moveHandler(state, {moveSpeed: 2, direction: 1})
             },
             onDragEnd: (state) => moveEndHandler(state),
