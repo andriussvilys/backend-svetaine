@@ -142,6 +142,29 @@ const Carousel = props => {
     }
     const moveStartHandeler = (state) => {
     }
+    const checkDirection = state => {
+        // if(!infoPosition.direction){
+            console.log(`%cPOSITION FREE {${infoPosition.direction}}`, "color: magenta");
+            console.log({Y: state.direction[1], X: state.direction[0]})
+        //     console.log({DIRECTION_Y: state.direction[1], DIRECTION_X: state.direction[0]})
+        if(Math.abs(state.direction[1]) > Math.abs(state.direction[0])){
+            console.log("DIRECTION - Y")
+            return setInfoPosition({...infoPosition, direction:[0,1]});
+        }
+        else if(Math.abs(state.direction[1]) < Math.abs(state.direction[0])){
+            console.log("DIRECTION - X")
+            return setInfoPosition({...infoPosition, direction:[1, 0]});
+        }
+            // if(state.direction[1] != 0){
+            //     console.log("DIRECTION - Y")
+            //     return setInfoPosition({...infoPosition, direction:[0,1]});
+            // }
+            // else if(state.direction[0] != 0){
+            //     console.log("DIRECTION - X")
+            //     return setInfoPosition({...infoPosition, direction:[1, 0]});
+            // }
+        // }
+    }
     const verticalMoveHandler = (state, options) => {
         console.log("VERTICAL HANDLER")
         // console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
@@ -154,30 +177,40 @@ const Carousel = props => {
             heightValue = 0
         }
         console.log({newHeight: heightValue})
-        setInfoPosition({height: heightValue})
+        setInfoPosition({...infoPosition, height: heightValue})
     }
     const moveHandler = (state, options) => {
         if(zoom.zoom){console.log("ZOOMED"); return}
-          const containerWidth = containerRef.current.clientWidth;
-          const slideCount = props.images.length
-          const slideWidth = 100 / slideCount
-          let  transform = slidePosition.prevTransform + ((state.movement[0] * options.direction * options.moveSpeed * 100 / containerWidth) / slideCount)
-
-        if(transform > 0){
-            transform = 0
+        if(!infoPosition.direction){return checkDirection(state);}
+        console.log(`%cPOSITION LOCKED ${infoPosition.direction[0] > 0 ? "**X**" : "**Y**"}`, "color: red");
+        if(infoPosition.direction[1] > Math.abs(0.5)){
+            return verticalMoveHandler(state, 
+                {direction: options.direction, speed: options.speed}
+                );
         }
-        if(transform < -100 + slideWidth){
-            transform = -100 + slideWidth
+        else if(infoPosition.direction[0] > Math.abs(0.5)){
+            console.log("MOVE HORIZONRAL")
+            const containerWidth = containerRef.current.clientWidth;
+            const slideCount = props.images.length
+            const slideWidth = 100 / slideCount
+            let  transform = slidePosition.prevTransform + ((state.movement[0] * (options.direction * -1) * options.speed * 100 / containerWidth) / slideCount)
+  
+          if(transform > 0){
+              transform = 0
+          }
+          if(transform < -100 + slideWidth){
+              transform = -100 + slideWidth
+          }
+          var index = Math.abs(Math.round(transform/slideWidth))
+          index = index > slideCount - 1 ? slideCount - 1 : index
+  
+            return setSlidePosition({ 
+              ...slidePosition,  
+              currentSlide: index,
+              currentTransform: transform,
+              smooth: false
+              })
         }
-        var index = Math.abs(Math.round(transform/slideWidth))
-        index = index > slideCount - 1 ? slideCount - 1 : index
-
-          return setSlidePosition({ 
-            ...slidePosition,  
-            currentSlide: index,
-            currentTransform: transform,
-            smooth: false
-            })
     }
     const moveEndHandler = (state) => {
         if(zoom.zoom){return}
@@ -235,38 +268,7 @@ const Carousel = props => {
                 moveStartHandeler()
             },
             onDrag: (state) => {
-                if(state.event.touches){
-                    console.log("touches")
-                    if(state.event.touches.length > 1){return}
-                    else{
-                        if(!infoPosition.direction){
-                            console.log({DIRECTION_Y: state.direction[1], DIRECTION_X: state.direction[0]})
-                            if(state.direction[1] != 0){
-                                console.log("DIRECTION - Y")
-                                return setInfoPosition({...infoPosition, direction:[0,1]});
-                            }
-                            else if(state.direction[0] != 0){
-                                console.log("DIRECTION - X")
-                                return setInfoPosition({...infoPosition, direction:[1, 0]});
-                            }
-                        }
-                        else{
-                            console.log("INFO POSITION LOCKED: ")
-                            console.log(`${infoPosition.direction[0] > 0 ? "X" : "Y"}`)
-                            if(infoPosition.direction[1] > 0){
-                                return verticalMoveHandler(state, 
-                                    {direction: -1, speed: 2, mobile: true}
-                                    );
-                            }
-                            else{
-                                return moveHandler(state, {moveSpeed: 2, direction: 1})
-                            }
-                        }
-                    }
-                    return
-                }
-                console.log("NOT TOUCHES CODE-----------------------")
-                moveHandler(state, {moveSpeed: 2, direction: 1})
+                moveHandler(state, {speed: 2, direction: -1})
             },
             onDragEnd: (state) => moveEndHandler(state),
             onPinchStart: state => {
@@ -308,16 +310,10 @@ const Carousel = props => {
             },
             onWheel: (state) => {
                 state.event.preventDefault()
-                if(state.direction[1] != 0){
-                    return verticalMoveHandler(state, {direction: 1, speed: 4});
-                }
-                moveHandler(state, {moveSpeed: 1, direction: -1})
+                moveHandler(state, {speed: 1, direction: 1})
             },
             onWheelEnd: state => {
                 state.event.preventDefault()
-                // if(state.direction[1] > 0){
-                //     return props.context.showInfo();
-                // }
                 moveEndHandler(state)
             },
             onMove: state => {
