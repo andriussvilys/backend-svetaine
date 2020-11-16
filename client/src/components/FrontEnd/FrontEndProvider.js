@@ -9,18 +9,14 @@ export class Provider extends React.Component{
     super(props);
   this.state = {
     // ...staticState,
-    info: {infoUp: false, toggleTags: false},
+    info: {infoUp: false, toggleTags: false, height: -100},
     showAll: true,
     currentSlide: {index: null, initialTransform: null},
     images: [1, 2, 3, 4, 5],
     enlarge: {
       open: false,
       file: null
-      // file: "portrait.jpg"
     },
-    // showFilters: false,
-    // showExplorer: false,
-    // showLess: false
   }
 
   this.enlarge = {}
@@ -873,14 +869,19 @@ export class Provider extends React.Component{
     this.toggleExplorer = (options) => {
 
       if(options && options.close){
-        this.setState({showExplorer: false, showFilters: false}, () => {
-          if(!this.state.mobile){
-            setTimeout(() => {this.enlargeWidth()}, 
-            200
-            )
-            return 
-          }
+        this.setState({showLess: true}, () => {
+          setTimeout(() => {
+            this.setState({showExplorer: false, showFilters: false})
+          }, 200);
         })
+        // this.setState({showExplorer: false, showFilters: false}, () => {
+        //   if(!this.state.mobile){
+        //     setTimeout(() => {this.enlargeWidth()}, 
+        //     200
+        //     )
+        //     return 
+        //   }
+        // })
       }
       else if(options && options.open){
         this.setState({showExplorer: true, showFilters: true}, () => {
@@ -1014,7 +1015,6 @@ export class Provider extends React.Component{
     }
 
     this.loadImage = fileName => {
-      console.log(fileName)
       const imageIndex = this.state.artworkInfoData[fileName].familyDisplayIndex
       const artworkFam = this.state.artworkInfoData[fileName].artworkFamily
       const imageOrder = this.state.relatedArtwork[artworkFam].column.fileIds
@@ -1047,17 +1047,13 @@ export class Provider extends React.Component{
       }
       let newState = {...this.state}
       if(options && options.close){
-        console.log(`options.close? ${options.close}`)
         newState.showFilters = false
         newState.showExplorer = false
         newState.info.infoUp = false
         newState.showLess = true
       }
-      else if(this.state.info.infoUp){
-        newState.showFilters = false
-        newState.showExplorer = false
-        newState.info.infoUp = false
-        newState.showLess = true
+      if(options && options.height){
+        newState.info.height = options.height
       }
       else{
         newState.info.infoUp = true
@@ -1067,7 +1063,6 @@ export class Provider extends React.Component{
             if(!this.state.info.infoUp){
               return
             }
-            this.enlargeWidth()
           }
         })
       return

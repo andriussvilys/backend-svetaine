@@ -14,11 +14,9 @@ const ViewControls = props => {
             >
                 <button
                     className={"viewControls-button viewControls-button-info"}
-                    onClick={e => {e.stopPropagation(); props.showInfo(e)}}
+                    onClick={e => {e.stopPropagation(); props.showInfo(e, {close: props.infoUp ? false : true})}}
                 >
-                    {/* <img className={"viewControls-showInfo-infoIcon"} alt="info icon" src="icons/svg/info.svg"></img> */}
                     <span>{props.showInfoText}</span>
-                    {/* <span>{props.infoUp ? "Less Info" : "More info"}</span> */}
                 </button>
             </div>
 

@@ -98,102 +98,6 @@ const ArtworkInfo = props => {
         </div>
       );
     };
-    //  const locationAndYear = () => {
-    //   let location = props.file.location
-    //     ? props.file.location
-    //     : null;
-    //   let year = props.file.year ? props.file.year : null;
-    //   if (location && year) {
-    //     return (
-    //       <div key={"location/year"} className="ArtworkInfo_locationYear">
-    //         ({location}. {year})
-    //       </div>
-    //     );
-    //   }
-    //   if (!year && location) {
-    //     return (
-    //       <div key={"location"} className="ArtworkInfo_locationYear">
-    //         ({location})
-    //       </div>
-    //     );
-    //   }
-    //   if (year) {
-    //     return (
-    //       <div key={"year"} className="ArtworkInfo_locationYear">
-    //         ({year})
-    //       </div>
-    //     );
-    //   } else {
-    //     return null;
-    //   }
-    // };
-    //  const artworkTitle = () => {
-    //   const artworkFamily = () => {
-    //     if (props.file.artworkFamily !== "none")
-    //       return (
-    //         <div
-    //           className={
-    //             props.file.artworkTitle
-    //               ? "ArtworkInfo_artworkFamily"
-    //               : "ArtworkInfo_artworkTitle"
-    //           }
-    //         >
-    //           {!props.file.artworkTitle ? null : <span>part of </span>}
-    //           <em className="ArtworkInfo_artworkFamily_variable">
-    //             {props.file.artworkFamily}
-    //           </em>
-    //         </div>
-    //       );
-    //     // }
-    //   };
-  
-    //   const artworkTitle = () => {
-    //     return (
-    //       <div>
-    //         {props.file.artworkTitle ? (
-    //           <em className="ArtworkInfo_artworkTitle">
-    //             {props.file.artworkTitle}
-    //           </em>
-    //         ) : null}
-    //       </div>
-    //     );
-    //   };
-    //   return (
-    //     <div className="ArtworkInfo-Title">
-    //         <ViewControls 
-    //           context={props.context}
-    //         />
-    //       <PreviewCounter
-    //         relatedArtwork={
-    //           props.context.state.enlarge
-    //             ? props.context.state.enlarge.familySequence.familySequence
-    //             : []
-    //         }
-    //         file={props.context.state.enlarge}
-    //       />
-    //       <div
-    //         style={{
-    //           flex: 1,
-    //           display: "flex",
-    //           justifyContent: "space-between",
-    //           alignItems: "center",
-    //         }}
-    //       >
-    //         <div>
-    //           {artworkTitle()}
-    //           {artworkFamily()}
-    //           {locationAndYear()}
-    //         </div>
-    //         <div className="controls-button controls-info">
-    //           <img
-    //             alt="info icon"
-    //             src="icons/svg/info.svg"
-    //           />
-    //         </div>
-    //       </div>
-    //     </div>
-    //   );
-    // };
      const descriptions = () => {
       return (
         <div className="ArtworkInfo--descriptions">
@@ -210,32 +114,11 @@ const ArtworkInfo = props => {
         </div>
       );
     };
-    //  const titleHeight = () => {
-    //   let height = 36;
-    //   const ArtworkInfoTitle = document.getElementById("ArtworkInfo-Title");
-    //   if (ArtworkInfoTitle) {
-    //     height = ArtworkInfoTitle.offsetHeight;
-    //   }
-    //   return height + 40;
-    // };
     const showInfo = (e) => {
-      console.log("SHOW INFO ARTWORK INFO")
       const newHeight = state.height > -60 ? -100 : 0
-      if(props.context.state.mobile){
-        if(props.context.state.showExplorer || state.tagsTrigger){
-          props.context.showInfo(e)
-          return
-        }
-        else{
-          setState({...state, infoUp: !state.infoUp, height: newHeight})
-          props.context.showInfo(e)
-        }
-      }
-      else{
-        setState({...state, infoUp: !state.infoUp, height: newHeight})
-        props.context.showInfo(e)
-        return
-      }
+      setState({...state, infoUp: !state.infoUp, height: newHeight})
+      props.context.showInfo(e, {height: state.height})
+      return
     };
     const secondaryInfo = () => {
       return <Fragment>
@@ -250,7 +133,7 @@ const ArtworkInfo = props => {
               file={props.file} 
               context={props.context} 
               tagsTrigger={() => {
-                setState({tagsTrigger: true})
+                setState({...state, tagsTrigger: true})
                   props.context.toggleExplorer()
               }}
               onClose={() => {
@@ -281,26 +164,9 @@ const ArtworkInfo = props => {
     }
     const moveStartHandeler = (state) => {
     }
-    const checkDirection = state => {
-        // if(!state.direction){
-            console.log(`%cPOSITION FREE {${state.direction}}`, "color: magenta");
-            console.log({Y: state.direction[1], X: state.direction[0]})
-        //     console.log({DIRECTION_Y: state.direction[1], DIRECTION_X: state.direction[0]})
-        if(Math.abs(state.direction[1]) > Math.abs(state.direction[0])){
-            console.log("DIRECTION - Y")
-            return setState({...state, direction:[0,1]});
-        }
-        else if(Math.abs(state.direction[1]) < Math.abs(state.direction[0])){
-            console.log("DIRECTION - X")
-            return setState({...state, direction:[1, 0]});
-        }
-    }
     const verticalMoveHandler = (gestureState, options) => {
-        console.log("%c VERTICAL HANDLER", "color: lime")
-        console.log({Y: gestureState.direction[1]})
         let heightValue = null;
         heightValue = state.height + (options.direction * gestureState.delta[1])
-        console.log({newHeight: heightValue})
         if(heightValue < -100){
             heightValue = -100
         }
@@ -316,12 +182,12 @@ const ArtworkInfo = props => {
     }
     const moveEndHandler = (gestureState) => {
         if(gestureState.direction){
-            console.log("NULL DIRECTION")
             setState({...state, direction: null});
         }
+        props.context.showInfo(gestureState.event, {height: state.height})
     }
     const genericOptions = {
-      // filterTaps: true,
+      filterTaps: true,
       domTarget: ArtworkInfoWrapperRef,
       lockDirection: true,
       eventOptions: {
@@ -343,7 +209,6 @@ const ArtworkInfo = props => {
           },
           onWheel: (gestureState) => {
             gestureState.event.preventDefault()
-            console.log("ON WHEEL")
             moveHandler(gestureState, {speed: 1, direction: 1})
           },
           onWheelEnd: gestureState => {
@@ -361,15 +226,12 @@ const ArtworkInfo = props => {
 
     return(
       <div
-        // className={"ArtworkInfo-container"}
         className={`ArtworkInfo-container`}
         id="ArtworkInfo-container"
       >
         <div 
         className={`ArtworkInfo-wrapper_main`}
-        // style={{transform: `translateY(${-props.transform}%`}}
         style={{transform: `translateY(${-state.height}%`}}
-        // {...bind()}
         ref={ArtworkInfoWrapperRef}
         >
           {props.children}

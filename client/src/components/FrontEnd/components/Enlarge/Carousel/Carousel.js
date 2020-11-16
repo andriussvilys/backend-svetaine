@@ -38,7 +38,6 @@ const Carousel = props => {
     const slideContainerRef = React.useRef()
 
     const slideTo = (index) => {
-        // console.log("SLIDE TO ")
         if(!slidePosition.file)return
         let slideToIndex = index;
         if(slideToIndex < 0){
@@ -50,9 +49,7 @@ const Carousel = props => {
         const newTransfrom = -((100 / props.images.length) * slideToIndex)
         let delay = zoom.zoom ? 250 : 0;
         const artworkFam = props.context.state.artworkInfoData[props.file].artworkFamily
-        // console.log(artworkFam)
         const nextImage = props.context.state.relatedArtwork[artworkFam].column.fileIds[slideToIndex]
-        // console.log(nextImage);
         if(zoom.zoom){
             setZoom({...zoomDefault})
         }
@@ -125,7 +122,9 @@ const Carousel = props => {
                         newZoom = newScale === 1 ? false : true
                         const position = newScale === 1 ? {x: 0, y: 0} : zoom.position
                         // props.context.toggleExplorer({close: newZoom, open: !newZoom})
-                        props.context.showInfo(e, {close: !props.context.state.info.infoUp})
+                        // props.context.showInfo(e, {close: !props.context.state.info.infoUp})
+                        props.context.showInfo(e, {close: true})
+                        
                         setInfoPosition({...infoPosition, height: -100})
                         setZoom({
                             ...zoom,
@@ -143,21 +142,14 @@ const Carousel = props => {
     const moveStartHandeler = (state) => {
     }
     const checkDirection = state => {
-        // if(!infoPosition.direction){
-            console.log(`%cPOSITION FREE {${infoPosition.direction}}`, "color: magenta");
-            console.log({Y: state.direction[1], X: state.direction[0]})
-        //     console.log({DIRECTION_Y: state.direction[1], DIRECTION_X: state.direction[0]})
         if(Math.abs(state.direction[1]) > Math.abs(state.direction[0])){
-            console.log("DIRECTION - Y")
-            return setInfoPosition({...infoPosition, direction:[0,1]});
+            return setInfoPosition({...infoPosition, direction:[0,1], height: props.context.state.info.height});
         }
         else if(Math.abs(state.direction[1]) < Math.abs(state.direction[0])){
-            console.log("DIRECTION - X")
             return setInfoPosition({...infoPosition, direction:[1, 0]});
         }
     }
     const verticalMoveHandler = (state, options) => {
-        console.log("VERTICAL HANDLER")
         let heightValue = null;
         heightValue = infoPosition.height + (options.direction * state.delta[1])
         if(heightValue < -100){
@@ -166,7 +158,6 @@ const Carousel = props => {
         if(heightValue > 0){
             heightValue = 0
         }
-        console.log({newHeight: heightValue})
         setInfoPosition({...infoPosition, height: heightValue})
     }
     const moveHandler = (state, options) => {
@@ -203,9 +194,9 @@ const Carousel = props => {
     const moveEndHandler = (state) => {
         if(zoom.zoom){return}
         if(infoPosition.direction){
-            console.log("NULL DIRECTION")
             setInfoPosition({...infoPosition, direction: null});
         }
+        props.context.showInfo(state.event, {height: infoPosition.height})
         slideTo(slidePosition.currentSlide)
     }
     const calcZoomPan = (cursorX, cursorY) => {
@@ -313,7 +304,6 @@ const Carousel = props => {
     )
 
     useEffect(() => {
-        // console.log("PROPS CHANGE")
         if(!slidePosition.file){
             return setSlidePosition({...slidePosition, file: props.file, currentSlide: props.currentSlide})
         }
