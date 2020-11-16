@@ -81,7 +81,7 @@ const Carousel = props => {
         return <ul className={styles.dotList}>{dots}</ul>
     }
     const arrowNext = () => {
-        if(props.images.length < 2){return}
+        if(props.images.length < 2 || props.context.state.mobile){return}
         return <div 
             className={styles.arrowNext}
             onClick={() => {
@@ -90,7 +90,7 @@ const Carousel = props => {
         ></div>
     }
     const arrowPrev = () => {
-        if(props.images.length < 2){return}
+        if(props.images.length < 2 || props.context.state.mobile){return}
         return <div 
             className={styles.arrowPrev}
             onClick={() => {
@@ -318,7 +318,6 @@ const Carousel = props => {
             return setSlidePosition({...slidePosition, file: props.file, currentSlide: props.currentSlide})
         }
         slideTo(props.currentSlide)
-    //   }, [props.file, props.currentSlide])
       }, [props.file])
 
       useEffect(bind, [bind])
