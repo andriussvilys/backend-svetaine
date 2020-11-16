@@ -33,7 +33,6 @@ const Carousel = props => {
         }
     }
     const [zoom, setZoom] = React.useState({...zoomDefault})
-
     const zoomRef = React.useRef(null)
     const containerRef = React.useRef()
     const slideContainerRef = React.useRef()
@@ -127,6 +126,7 @@ const Carousel = props => {
                         const position = newScale === 1 ? {x: 0, y: 0} : zoom.position
                         // props.context.toggleExplorer({close: newZoom, open: !newZoom})
                         props.context.showInfo(e, {close: !props.context.state.info.infoUp})
+                        setInfoPosition({...infoPosition, height: -100})
                         setZoom({
                             ...zoom,
                             zoom: newZoom,
@@ -155,19 +155,9 @@ const Carousel = props => {
             console.log("DIRECTION - X")
             return setInfoPosition({...infoPosition, direction:[1, 0]});
         }
-            // if(state.direction[1] != 0){
-            //     console.log("DIRECTION - Y")
-            //     return setInfoPosition({...infoPosition, direction:[0,1]});
-            // }
-            // else if(state.direction[0] != 0){
-            //     console.log("DIRECTION - X")
-            //     return setInfoPosition({...infoPosition, direction:[1, 0]});
-            // }
-        // }
     }
     const verticalMoveHandler = (state, options) => {
         console.log("VERTICAL HANDLER")
-        // console.log({initial: state.initial[1], movementY: state.movement[1], y: state.xy[1], delta: state.delta[1]})
         let heightValue = null;
         heightValue = infoPosition.height + (options.direction * state.delta[1])
         if(heightValue < -100){
@@ -180,16 +170,14 @@ const Carousel = props => {
         setInfoPosition({...infoPosition, height: heightValue})
     }
     const moveHandler = (state, options) => {
-        if(zoom.zoom){console.log("ZOOMED"); return}
+        if(zoom.zoom){return}
         if(!infoPosition.direction){return checkDirection(state);}
-        console.log(`%cPOSITION LOCKED ${infoPosition.direction[0] > 0 ? "**X**" : "**Y**"}`, "color: red");
         if(infoPosition.direction[1] > Math.abs(0.5)){
             return verticalMoveHandler(state, 
                 {direction: options.direction, speed: options.speed}
                 );
         }
         else if(infoPosition.direction[0] > Math.abs(0.5)){
-            console.log("MOVE HORIZONRAL")
             const containerWidth = containerRef.current.clientWidth;
             const slideCount = props.images.length
             const slideWidth = 100 / slideCount
@@ -363,7 +351,7 @@ const Carousel = props => {
                     dots={dots(props.images)}
                     transform={infoPosition.height}
                 >
-                </ArtworkInfo> 
+                </ArtworkInfo>
         </div>
     )
 }
