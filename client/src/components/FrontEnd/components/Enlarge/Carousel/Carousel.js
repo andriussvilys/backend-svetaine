@@ -39,6 +39,8 @@ const Carousel = props => {
     const slideContainerRef = React.useRef()
 
     const slideTo = (index, fileName) => {
+        console.log("SLIDE TO")
+        console.log({index, fileName})
         let slideToIndex = index;
         if(slideToIndex < 0){
             slideToIndex = props.images.length - 1; 
@@ -323,6 +325,7 @@ const Carousel = props => {
     )
 
     useEffect(() => {
+        console.log("USE EFFECT")
         return slideTo(props.currentSlide, props.file)
     }, [props.counter])
 

@@ -133,6 +133,7 @@ export default class FrontEndIndex extends React.Component{
                                             images={this.context.state.images}
                                             context={this.context}
                                             file={this.context.state.enlarge.file}
+                                            counter={this.context.state.enlarge.counter}
                                         /> 
                                     </div>: null
                                 }   

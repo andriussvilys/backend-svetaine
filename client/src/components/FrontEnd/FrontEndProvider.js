@@ -1033,7 +1033,7 @@ export class Provider extends React.Component{
       this.enlargeWidth({filters: this.state.showFilters})
       setTimeout(() => {
         this.setState(newState)
-        if(newState.showFilters){
+        if(newState.showFilters && !this.state.mobile){
           setTimeout(() => {
             newState.showExplorer = true;
             this.setState(newState)
