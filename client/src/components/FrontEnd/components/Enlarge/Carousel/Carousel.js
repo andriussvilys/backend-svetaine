@@ -12,6 +12,7 @@ const Carousel = props => {
         prevTransform: props.initialTransform,
         currentTransform: props.initialTransform,
         file: props.file,
+        cancelGesture: false
     })
     const [infoPosition, setInfoPosition] = React.useState({
         height: -100,
@@ -37,8 +38,7 @@ const Carousel = props => {
     const containerRef = React.useRef()
     const slideContainerRef = React.useRef()
 
-    const slideTo = (index) => {
-        if(!slidePosition.file)return
+    const slideTo = (index, fileName) => {
         let slideToIndex = index;
         if(slideToIndex < 0){
             slideToIndex = props.images.length - 1; 
@@ -48,8 +48,17 @@ const Carousel = props => {
         }
         const newTransfrom = -((100 / props.images.length) * slideToIndex)
         let delay = zoom.zoom ? 250 : 0;
-        const artworkFam = props.context.state.artworkInfoData[props.file].artworkFamily
-        const nextImage = props.context.state.relatedArtwork[artworkFam].column.fileIds[slideToIndex]
+        let nextImage = null;
+        if(fileName){
+            nextImage = fileName;
+        }
+        else{
+            if(props.file){
+                const artworkFam = props.context.state.artworkInfoData[props.file].artworkFamily
+                nextImage = props.context.state.relatedArtwork[artworkFam].column.fileIds[slideToIndex]
+            }
+            else return
+        }
         if(zoom.zoom){
             setZoom({...zoomDefault})
         }
@@ -100,8 +109,6 @@ const Carousel = props => {
         return (
             <div
             className={`${styles.slide} ${zoom.pinch ? styles.showOverflow : ""}`}
-            // className={`${styles.slide} ${zoom.pinch ? styles.showOverflow : ""} 
-            // ${zoom.smooth ? styles.smoothSlide : ""}`}
             key={`${image}-${index}`}
             style={{width: `${100 / props.images.length}%`}}
             >                    
@@ -169,6 +176,15 @@ const Carousel = props => {
                 );
         }
         else if(infoPosition.direction[0] > Math.abs(0.5)){
+            // if(state.wheeling && state.velocity < 0.06){
+            //     console.log({wheeling: state.wheeling, velocity: state.velocity, cancelable: state.event.cancelable, canceled: state.canceled})
+            //     if(!slidePosition.cancelGesture){
+            //         console.log("CANCEL GESTURE")
+            //         setSlidePosition({...slidePosition, cancelGesture: true});
+            //         return slideTo(slidePosition.currentSlide)
+            //     }
+            //     else{return}
+            // }
             const containerWidth = containerRef.current.clientWidth;
             const slideCount = props.images.length
             const slideWidth = 100 / slideCount
@@ -197,7 +213,9 @@ const Carousel = props => {
             setInfoPosition({...infoPosition, direction: null});
         }
         props.context.showInfo(state.event, {height: infoPosition.height})
-        slideTo(slidePosition.currentSlide)
+        if(!slidePosition.cancelGesture){
+            slideTo(slidePosition.currentSlide)
+        }
     }
     const calcZoomPan = (cursorX, cursorY) => {
         const container = containerRef.current
@@ -285,6 +303,7 @@ const Carousel = props => {
                 setZoom({...zoomDefault, smooth: true})
             },
             onWheelStart: () => {
+                setSlidePosition({...slidePosition, cancelGesture: false});
                 moveStartHandeler()
             },
             onWheel: (state) => {
@@ -304,11 +323,8 @@ const Carousel = props => {
     )
 
     useEffect(() => {
-        if(!slidePosition.file){
-            return setSlidePosition({...slidePosition, file: props.file, currentSlide: props.currentSlide})
-        }
-        slideTo(props.currentSlide)
-      }, [props.file])
+        return slideTo(props.currentSlide, props.file)
+    }, [props.counter])
 
       useEffect(bind, [bind])
     return(

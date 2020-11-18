@@ -15,7 +15,8 @@ export class Provider extends React.Component{
     images: [1, 2, 3, 4, 5],
     enlarge: {
       open: false,
-      file: null
+      file: null,
+      counter: 0
     },
   }
 
@@ -1025,17 +1026,20 @@ export class Provider extends React.Component{
       let newState = {...this.state}
       newState.images = imageList
       newState.currentSlide = {
-        index: imageIndex, 
-        initialTransform: null
+        index: imageIndex,
+        initialTransform: initialTransform
       }
-      if(newState.showFilters){
-        newState.showExplorer = true;
-      }
-      newState.enlarge = {open: true, file: fileName}
+      newState.enlarge = {open: true, file: fileName, counter: ++this.state.enlarge.counter}
       this.enlargeWidth({filters: this.state.showFilters})
       setTimeout(() => {
         this.setState(newState)
-      }, 300);
+        if(newState.showFilters){
+          setTimeout(() => {
+            newState.showExplorer = true;
+            this.setState(newState)
+          }, 400);
+        }
+      }, 100);
     }
 
     this.showInfo = (e, options) => {

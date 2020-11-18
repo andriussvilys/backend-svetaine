@@ -59,7 +59,6 @@ export default class FrontEndIndex extends React.Component{
                                     context={this.context}
                                     methods={{
                                         enlarge: this.context.enlarge,
-                                        // loadEnlarge: this.context.loadEnlarge,
                                         loadImage: this.context.loadImage,
                                         toggleMobile: this.context.toggleMobile,
                                         lazyLoad: this.context.lazyLoadImages
@@ -97,6 +96,7 @@ export default class FrontEndIndex extends React.Component{
                                                 images={this.context.state.images}
                                                 context={this.context}
                                                 file={this.context.state.enlarge.file}
+                                                counter={this.context.state.enlarge.counter}
                                             /> 
                                         </div>: null
                                     }                        

@@ -13,19 +13,11 @@ const ImageSelect = (props) => {
                         key={`imageSelect-${objName}`}
                         containerClassName={`FilePreview--imageContainer ${halfSize} ${index%2 == 0 ? "left-aligned" : "right-aligned"} `}
                         className="imageSelect-FilePreview loadByDefault" 
-                        // onClick={e => {
-                        //   props.methods.loadEnlarge(e, objName)
-                        //   if(props.callback){
-                        //     console.log(`IMAGE SELECT ${objName}`)
-                        //     props.callback(objName)
-                        //   }
-                        // }}
                         onClick={e => {
                           props.methods.loadImage(objName)
                         }}
                         file={data[objName]} 
                         mobile={props.mobile}
-                        // id={`${props.customClass}-${data[objName]}`}
                         />
               }
               else{
@@ -39,7 +31,6 @@ const ImageSelect = (props) => {
                         onClick={e => props.methods.loadEnlarge(e, objName)}
                         file={data[objName]} 
                         mobile={props.mobile}
-                        // id={`${props.customClass}-${data[objName]}`}
                         />
               }
             })
@@ -50,11 +41,6 @@ const ImageSelect = (props) => {
                         ${props.customClass}
                         ${props.context.state.showExplorer ? "explorer-view" : ""}
                         `}
-                      // className={
-                      //   `imageSelect-container 
-                      //   ${props.customClass}
-                      //   ${props.context.state.enlarge && props.context.state.enlarge.open ? "explorer-view" : ""}
-                      //   `}
                       >
                         <div className={`imageSelect-wrapper ${document.documentElement.clientWidth > 721 ? "full-height" : null} ${props.sideScroll ? "side-scroll" : ""}`}>
                           {previews}
