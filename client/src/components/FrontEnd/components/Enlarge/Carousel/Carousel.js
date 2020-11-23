@@ -292,7 +292,7 @@ const Carousel = props => {
                     distance: state.da[0],
                     scale,
                     origin: {x: state.origin[0], y: state.origin[0]},
-                    position: {x, y}
+                    // position: {x, y}
                     // position: {x: state.origin[0], y: state.origin[0]},
                 })
             },
