@@ -289,9 +289,9 @@ const Carousel = props => {
                     // origin: {
                     //     x, y
                     // },
-                    origin: {
-                        x: Math.round(state.origin[0]), y: Math.round(state.origin[1])
-                    },
+                    // origin: {
+                    //     x: Math.round(state.origin[0]), y: Math.round(state.origin[1])
+                    // },
                     position: {
                         x: Math.round(-x/2), y: Math.round(-y/2)
                     }
