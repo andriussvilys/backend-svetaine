@@ -280,6 +280,9 @@ const Carousel = props => {
                     scale = 1
                     zoomStatus = false
                 }
+                if(zoom.origin.x == 0 || zoom.origin.y == 0){
+
+                }
                 const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
                 props.context.toggleExplorer({close: true})
                 setZoom({
@@ -288,17 +291,9 @@ const Carousel = props => {
                     pinch: true,
                     distance: state.da[0],
                     scale,
-                    // origin: {
-                    //     x, y
-                    // },
-                    // origin: {
-                    //     x: Math.round(state.origin[0]), y: Math.round(state.origin[1])
-                    // },
-                    // position: {
-                    //     x: -x/2, y: -y/2
-                    // }
                     origin: {x: state.origin[0], y: state.origin[0]},
-                    position: {x: state.origin[0], y: state.origin[0]},
+                    position: {x, y}
+                    // position: {x: state.origin[0], y: state.origin[0]},
                 })
             },
             onPinchEnd: state => {
