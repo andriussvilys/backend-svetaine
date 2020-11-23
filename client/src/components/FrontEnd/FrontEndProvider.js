@@ -875,14 +875,6 @@ export class Provider extends React.Component{
             this.setState({showExplorer: false, showFilters: false})
           }, 200);
         })
-        // this.setState({showExplorer: false, showFilters: false}, () => {
-        //   if(!this.state.mobile){
-        //     setTimeout(() => {this.enlargeWidth()}, 
-        //     200
-        //     )
-        //     return 
-        //   }
-        // })
       }
       else if(options && options.open){
         this.setState({showExplorer: true, showFilters: true}, () => {
