@@ -176,6 +176,7 @@ const Carousel = props => {
     }
     const moveHandler = (state, options) => {
         if(zoom.zoom){return}
+        if(state.pinched){return}
         if(!infoPosition.direction){return checkDirection(state);}
         if(infoPosition.direction[1] > Math.abs(0.5)){
             return verticalMoveHandler(state, 
@@ -258,7 +259,10 @@ const Carousel = props => {
             
             onPinchStart: state => {
                 const boundRect = state.event.target.getBoundingClientRect()
-                const zoomOrigin = {x: (state.evet.clientX - boundRect.left) / zoom.scale, y: (state.evet.clientY - boundRect.top) / zoom.scale}
+                // const zoomOrigin = {x: (state.evet.clientX - boundRect.left) / zoom.scale, y: (state.evet.clientY - boundRect.top) / zoom.scale}
+                const zoomOrigin = {x: (state.event.clientX - boundRect.left) / zoom.scale, y: (state.event.clientY - boundRect.top) / zoom.scale}
+                props.context.showInfo(state.event, {height: -100})
+                setInfoPosition({...infoPosition, height: -100})
                 setZoom({
                     ...zoom,
                     zoom: true,
@@ -323,6 +327,12 @@ const Carousel = props => {
                 ref={containerRef}
                 className={`carousel-container ${styles.container} ${zoom.pinch ? styles.showOverflow : ""}`}
             >
+            <div style={{background: "yellow", position: "fixed", top: 0, zIndex: 999}}>
+                <p>scale: {zoom.scale}</p>
+                <p>pan: X: {zoom.position.x} | Y: {zoom.position.y}</p>
+                <p>origin: X: {zoom.origin.x} | Y: {zoom.origin.y}</p>
+                {/* <p>rect: |X: {zoomRef.current.clientWidth}| |Y: {zoomRef.current.clientHeight}|</p> */}
+            </div>
             <div className={styles.slideWrapper}>
                 {arrowPrev()}
                 <div 
