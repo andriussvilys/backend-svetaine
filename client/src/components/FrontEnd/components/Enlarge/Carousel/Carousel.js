@@ -286,8 +286,11 @@ const Carousel = props => {
                     pinch: true,
                     distance: state.da[0],
                     scale,
+                    // origin: {
+                    //     x, y
+                    // },
                     origin: {
-                        x, y
+                        x: state.initial[0], y: state.initial[1]
                     },
                     position: {
                         x, y
@@ -310,6 +313,7 @@ const Carousel = props => {
                 moveEndHandler(state)
             },
             onMove: state => {
+                console.log(state)
                 if(!zoom.zoom || zoom.pinch)return
                 zoomPanHandler(state)
             },
