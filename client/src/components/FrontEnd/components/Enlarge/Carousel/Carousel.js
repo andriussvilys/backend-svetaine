@@ -177,6 +177,7 @@ const Carousel = props => {
     const moveHandler = (state, options) => {
         if(zoom.zoom){return}
         if(state.pinched){return}
+        if(state.event.touches && state.event.touches.length > 1){return}
         if(!infoPosition.direction){return checkDirection(state);}
         if(infoPosition.direction[1] > Math.abs(0.5)){
             return verticalMoveHandler(state, 
@@ -293,9 +294,11 @@ const Carousel = props => {
                     // origin: {
                     //     x: Math.round(state.origin[0]), y: Math.round(state.origin[1])
                     // },
-                    position: {
-                        x: -x/2, y: -y/2
-                    }
+                    // position: {
+                    //     x: -x/2, y: -y/2
+                    // }
+                    origin: {x: state.origin[0], y: state.origin[0]},
+                    position: {x: state.origin[0], y: state.origin[0]},
                 })
             },
             onPinchEnd: state => {
