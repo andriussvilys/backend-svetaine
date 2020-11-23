@@ -282,7 +282,7 @@ const Carousel = props => {
                     zoomStatus = false
                 }
                 if(origin.x == 0 && origin.y == 0){
-                    origin.x = state.origin[0],
+                    origin.x = state.origin[0]
                     origin.y = state.origin[1]
                 }
                 const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
