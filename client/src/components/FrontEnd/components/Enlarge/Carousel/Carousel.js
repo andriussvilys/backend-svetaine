@@ -290,10 +290,10 @@ const Carousel = props => {
                     //     x, y
                     // },
                     origin: {
-                        x: state.initial[0], y: state.initial[1]
+                        x: state.origin[0], y: state.origin[1]
                     },
                     position: {
-                        x, y
+                        x: x/2, y: y/2
                     }
                 })
             },
