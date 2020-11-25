@@ -276,7 +276,10 @@ const Carousel = props => {
                 const pinchDistance = state.da[0]
                 let scale = pinchDistance / 200
                 let zoomStatus = true
-                let origin = {x: state.origin[0] / scale, y: state.origin[1] / scale}
+                let origin = zoom.origin
+                if(origin.x == 0 && origin.y == 0){
+                    origin = {x: state.origin[0] / scale, y: state.origin[1] / scale}
+                }
                 if(scale <= 1){
                     scale = 1
                     zoomStatus = false
