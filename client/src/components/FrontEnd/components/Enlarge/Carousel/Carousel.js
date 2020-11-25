@@ -42,11 +42,11 @@ const Carousel = props => {
             if(imageList.length < 2){return <ul className={styles.dotList}></ul>}
             if(!imageList || imageList.length < 0){return}
             const dots = imageList.map((image, index) => {
-                return <li 
+                return <li
                 onClick={() => {
                     slideTo(index)
                 }}
-                key={`carouselDot-${index}`} 
+                key={`carouselDot-${index}`}
                 className={`${styles.dot} ${index === slidePosition.currentSlide ? styles.dot_active : ""}`}
                 ></li>
             })
@@ -54,7 +54,7 @@ const Carousel = props => {
         }
         const arrowNext = () => {
             if(props.images.length < 2 || props.context.state.mobile){return}
-            return <div 
+            return <div
                 className={styles.arrowNext}
                 onClick={() => {
                     slideTo(slidePosition.currentSlide + 1)
@@ -63,7 +63,7 @@ const Carousel = props => {
         }
         const arrowPrev = () => {
             if(props.images.length < 2 || props.context.state.mobile){return}
-            return <div 
+            return <div
                 className={styles.arrowPrev}
                 onClick={() => {
                     slideTo(slidePosition.currentSlide - 1)
@@ -77,10 +77,10 @@ const Carousel = props => {
                 className={`${styles.slide} ${zoom.pinch ? styles.showOverflow : ""}`}
                 key={`${image}-${index}`}
                 style={{width: `${100 / props.images.length}%`}}
-                >                    
-                    <img 
-                        style={slidePosition.currentSlide === index ? 
-                        {transform: `scale(${zoom.scale}) translate(${zoom.position.x}%, ${zoom.position.y}%)`, 
+                >
+                    <img
+                        style={slidePosition.currentSlide === index ?
+                        {transform: `scale(${zoom.scale}) translate(${zoom.position.x}%, ${zoom.position.y}%)`,
                         transformOrigin: `${zoom.origin.x}px ${zoom.origin.y}px`} : {}}
                         className={`${zoom.smooth && slidePosition.currentSlide === index ? styles.smoothSlide : ""}`}
                         ref={slidePosition.currentSlide === index ? zoomRef : null}
@@ -122,7 +122,7 @@ const Carousel = props => {
     const slideTo = (index, fileName) => {
         let slideToIndex = index;
         if(slideToIndex < 0){
-            slideToIndex = props.images.length - 1; 
+            slideToIndex = props.images.length - 1;
         }
         else if(slideToIndex > props.images.length - 1){
             slideToIndex = 0;
@@ -143,7 +143,7 @@ const Carousel = props => {
         if(zoom.zoom){
             setZoom({...zoomDefault})
         }
-        setTimeout(() => {            
+        setTimeout(() => {
             setSlidePosition({
                 ...slidePosition,
                 currentSlide: slideToIndex,
@@ -180,7 +180,7 @@ const Carousel = props => {
         if(state.event.touches && state.event.touches.length > 1){return}
         if(!infoPosition.direction){return checkDirection(state);}
         if(infoPosition.direction[1] > Math.abs(0.5)){
-            return verticalMoveHandler(state, 
+            return verticalMoveHandler(state,
                 {direction: options.direction, speed: options.speed}
                 );
         }
@@ -189,7 +189,7 @@ const Carousel = props => {
             const slideCount = props.images.length
             const slideWidth = 100 / slideCount
             let  transform = slidePosition.prevTransform + ((state.movement[0] * (options.direction * -1) * options.speed * 100 / containerWidth) / slideCount)
-  
+
           if(transform > 0){
               transform = 0
           }
@@ -198,9 +198,9 @@ const Carousel = props => {
           }
           var index = Math.abs(Math.round(transform/slideWidth))
           index = index > slideCount - 1 ? slideCount - 1 : index
-  
-            return setSlidePosition({ 
-              ...slidePosition,  
+
+            return setSlidePosition({
+              ...slidePosition,
               currentSlide: index,
               currentTransform: transform,
               smooth: false
@@ -255,7 +255,7 @@ const Carousel = props => {
                 moveHandler(state, {speed: 2, direction: -1})
             },
             onDragEnd: (state) => moveEndHandler(state),
-            
+
             onPinchStart: state => {
                 const boundRect = state.event.target.getBoundingClientRect()
                 // const zoomOrigin = {x: (state.evet.clientX - boundRect.left) / zoom.scale, y: (state.evet.clientY - boundRect.top) / zoom.scale}
@@ -276,15 +276,16 @@ const Carousel = props => {
                 const pinchDistance = state.da[0]
                 let scale = pinchDistance / 100
                 let zoomStatus = true
-                let origin = {x: state.origin[0] - xOffset, y: state.origin[1] - yOffset}
+                // let origin = zoom.origin
+                let origin = {x: state.origin[0] / scale, y: state.origin[1] / scale}
                 if(scale <= 1){
                     scale = 1
                     zoomStatus = false
                 }
-                if(origin.x == 0 && origin.y == 0){
-                    origin.x = state.origin[0]
-                    origin.y = state.origin[1]
-                }
+                // if(origin.x == 0 && origin.y == 0){
+                //     origin.x = state.origin[0]
+                //     origin.y = state.origin[1]
+                // }
                 const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
                 props.context.toggleExplorer({close: true})
                 setZoom({
@@ -328,7 +329,7 @@ const Carousel = props => {
 
       useEffect(bind, [bind])
     return(
-            <div 
+            <div
                 ref={containerRef}
                 className={`carousel-container ${styles.container} ${zoom.pinch ? styles.showOverflow : ""}`}
             >
@@ -340,7 +341,7 @@ const Carousel = props => {
             </div>
             <div className={styles.slideWrapper}>
                 {arrowPrev()}
-                <div 
+                <div
                     id={"slideContainer"}
                     className={`${styles.slideContainer} ${slidePosition.smooth ? styles.smoothSlide : ""} ${zoom.pinch ? styles.showOverflow : ""}`}
                     ref={slideContainerRef}
@@ -353,7 +354,7 @@ const Carousel = props => {
                 </div>
                     {arrowNext()}
             </div>
-                <ArtworkInfo 
+                <ArtworkInfo
                     context={props.context}
                     mobile={props.context.state.mobile}
                     file={props.context.state.artworkInfoData[slidePosition.file]}
