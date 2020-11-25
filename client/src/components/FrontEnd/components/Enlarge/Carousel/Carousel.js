@@ -218,7 +218,6 @@ const Carousel = props => {
         }
     }
     const calcZoomPan = (cursorX, cursorY, state) => {
-
         const boundRect = zoomRef.current.getBoundingClientRect()
         const moveY = state.delta[1]
         const moveX = state.delta[0]
@@ -226,7 +225,6 @@ const Carousel = props => {
         const panY = zoom.position.y + (moveY * 100 / boundRect.height)
         const panX = zoom.position.x + (moveX * 100 / boundRect.width)
 
-        const pic = zoomRef.current
         return {x: panX, y: panY}
     }
     const zoomPanHandler = (state) => {
@@ -273,10 +271,12 @@ const Carousel = props => {
             },
             onPinch: state => {
 
+                const yOffset = zoomRef.current.getBoundingClientRect().top
+                const xOffset = zoomRef.current.getBoundingClientRect().left
                 const pinchDistance = state.da[0]
                 let scale = pinchDistance / 100
                 let zoomStatus = true
-                let origin = zoom.origin
+                let origin = {x: state.origin.x - xOffset, y: state.origin.y - yOffset}
                 if(scale <= 1){
                     scale = 1
                     zoomStatus = false
