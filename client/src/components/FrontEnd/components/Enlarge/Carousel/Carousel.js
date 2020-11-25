@@ -274,18 +274,13 @@ const Carousel = props => {
                 const yOffset = zoomRef.current.getBoundingClientRect().top
                 const xOffset = zoomRef.current.getBoundingClientRect().left
                 const pinchDistance = state.da[0]
-                let scale = pinchDistance / 100
+                let scale = pinchDistance / 200
                 let zoomStatus = true
-                // let origin = zoom.origin
                 let origin = {x: state.origin[0] / scale, y: state.origin[1] / scale}
                 if(scale <= 1){
                     scale = 1
                     zoomStatus = false
                 }
-                // if(origin.x == 0 && origin.y == 0){
-                //     origin.x = state.origin[0]
-                //     origin.y = state.origin[1]
-                // }
                 const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
                 props.context.toggleExplorer({close: true})
                 setZoom({
@@ -295,8 +290,6 @@ const Carousel = props => {
                     distance: state.da[0],
                     scale,
                     origin
-                    // position: {x, y}
-                    // position: {x: state.origin[0], y: state.origin[0]},
                 })
             },
             onPinchEnd: state => {
