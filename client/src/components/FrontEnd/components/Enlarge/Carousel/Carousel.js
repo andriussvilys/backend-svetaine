@@ -302,7 +302,7 @@ const Carousel = props => {
                     scale = 1
                     zoomStatus = false
                 }
-                const {x, y} = calcZoomPan(state.origin[0], state.origin[1])
+                const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
                 props.context.toggleExplorer({close: true})
                 setZoom({
                     ...zoom,
