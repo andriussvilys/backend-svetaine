@@ -271,20 +271,38 @@ const Carousel = props => {
             },
             onPinch: state => {
 
-                const yOffset = zoomRef.current.getBoundingClientRect().top
-                const xOffset = zoomRef.current.getBoundingClientRect().left
+                // const yOffset = zoomRef.current.getBoundingClientRect().top
+                // const xOffset = zoomRef.current.getBoundingClientRect().left
+                // const pinchDistance = state.da[0]
+                // let scale = pinchDistance / 200
+                // let zoomStatus = true
+                // let origin = zoom.origin
+                // if(origin.x == 0 && origin.y == 0){
+                //     origin = {x: state.origin[0], y: state.origin[1]}
+                // }
+                // if(scale <= 1){
+                //     scale = 1
+                //     zoomStatus = false
+                // }
+                // const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
+                // props.context.toggleExplorer({close: true})
+                // setZoom({
+                //     ...zoom,
+                //     zoom: zoomStatus,
+                //     pinch: true,
+                //     distance: state.da[0],
+                //     scale,
+                //     origin
+                // })
+
                 const pinchDistance = state.da[0]
-                let scale = pinchDistance / 200
+                let scale = pinchDistance / 100
                 let zoomStatus = true
-                let origin = zoom.origin
-                if(origin.x == 0 && origin.y == 0){
-                    origin = {x: state.origin[0] / scale, y: state.origin[1] / scale}
-                }
                 if(scale <= 1){
                     scale = 1
                     zoomStatus = false
                 }
-                const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
+                const {x, y} = calcZoomPan(state.origin[0], state.origin[1])
                 props.context.toggleExplorer({close: true})
                 setZoom({
                     ...zoom,
@@ -292,7 +310,12 @@ const Carousel = props => {
                     pinch: true,
                     distance: state.da[0],
                     scale,
-                    origin
+                    origin: {
+                        x, y
+                    },
+                    position: {
+                        x, y
+                    }
                 })
             },
             onPinchEnd: state => {
