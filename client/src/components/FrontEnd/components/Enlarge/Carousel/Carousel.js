@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
-import { useGesture } from 'react-use-gesture'
+import { useGesture, usePinch } from 'react-use-gesture'
 import ArtworkInfo from '../../ArtworkInfo/ArtworkInfo'
+import CarouselImage from './CarouselImage'
 
 import styles from './css/index.module.scss'
 
@@ -31,11 +32,13 @@ const Carousel = props => {
         position: {
             x: 0,
             y: 0
-        }
+        },
+        dot: {x: 0, y: 0}
     }
     const [zoom, setZoom] = React.useState({...zoomDefault})
     const zoomRef = React.useRef(null)
     const containerRef = React.useRef()
+    const containerOffset = containerRef.current ? {x: containerRef.current.getBoundingClientRect().x, y: containerRef.current.getBoundingClientRect().y} : {x: 0, y: 0}
     const slideContainerRef = React.useRef()
 
         const dots = (imageList) => {
@@ -76,12 +79,21 @@ const Carousel = props => {
                 <div
                 className={`${styles.slide} ${zoom.pinch ? styles.showOverflow : ""}`}
                 key={`${image}-${index}`}
-                style={{width: `${100 / props.images.length}%`}}
+                style={{width: `${100 / props.images.length}%`,
+                transform: slidePosition.currentSlide === index ? `scale(${zoom.scale})` : "",
+                transformOrigin: slidePosition.currentSlide === index ? `${zoom.origin.x}% ${zoom.origin.y}%` : ""
+                } 
+
+                }
                 >
                     <img
-                        style={slidePosition.currentSlide === index ?
-                        {transform: `scale(${zoom.scale}) translate(${zoom.position.x}%, ${zoom.position.y}%)`,
-                        transformOrigin: `${zoom.origin.x}px ${zoom.origin.y}px`} : {}}
+                        // style={slidePosition.currentSlide === index ?
+                        // {
+                        // // transform: `scale(${zoom.scale}) translate(${zoom.position.x}%, ${zoom.position.y}%)`,
+                        // transform: `scale(${zoom.scale})`,
+                        // transformOrigin: `${zoom.origin.x}% ${zoom.origin.y}%`} : {}
+                        // }
+                        // transformOrigin: `${zoom.origin.x}px ${zoom.origin.y}px`} : {}}
                         className={`${zoom.smooth && slidePosition.currentSlide === index ? styles.smoothSlide : ""}`}
                         ref={slidePosition.currentSlide === index ? zoomRef : null}
                         src={image}
@@ -97,10 +109,9 @@ const Carousel = props => {
                             const position = newScale === 1 ? {x: 0, y: 0} : zoom.position
                             const boundRect = e.target.getBoundingClientRect()
                             const zoomOrigin = {x: (e.clientX - boundRect.left) / zoom.scale, y: (e.clientY - boundRect.top) / zoom.scale}
-                            // console.log({clientWidth: e.target.clientWidth, clientHeight: e.target.clientHeight, boudWidth: boundRect.width, boundHeight: boundRect.height})
+                            const dot = {x: e.clientX - containerOffset.x, y: e.clientY - containerOffset.y}
                             console.log({clientX: e.clientX, clientY: e.clientY})
                             console.log(zoomOrigin)
-                            // props.context.showInfo(e, {close: true, height: -100})
                             props.context.showInfo(e, {height: -100})
                             setInfoPosition({...infoPosition, height: -100})
 
@@ -110,7 +121,8 @@ const Carousel = props => {
                                 scale: newScale,
                                 smooth: true,
                                 position,
-                                origin: zoomOrigin
+                                origin: zoomOrigin,
+                                dot
                             })
                         }}
                     />
@@ -239,13 +251,14 @@ const Carousel = props => {
     }
     const genericOptions = {
         // filterTaps: true,
-        domTarget: slideContainerRef,
+        domTarget: containerRef,
         lockDirection: true,
         eventOptions: {
             passive: false
         }
         // threshold: 10
     }
+
     const bind = useGesture(
         {
             onDragStart: () => {
@@ -255,67 +268,47 @@ const Carousel = props => {
                 moveHandler(state, {speed: 2, direction: -1})
             },
             onDragEnd: (state) => moveEndHandler(state),
-
             onPinchStart: state => {
                 const boundRect = state.event.target.getBoundingClientRect()
-                // const zoomOrigin = {x: (state.evet.clientX - boundRect.left) / zoom.scale, y: (state.evet.clientY - boundRect.top) / zoom.scale}
-                // const zoomOrigin = {x: (state.event.clientX - boundRect.left) / zoom.scale, y: (state.event.clientY - boundRect.top) / zoom.scale}
-                const zoomOrigin = {x: state.origin[0], y: state.origin[1]}
                 props.context.showInfo(state.event, {height: -100})
                 setInfoPosition({...infoPosition, height: -100})
                 setZoom({
                     ...zoom,
                     zoom: true,
-                    origin: zoomOrigin
                 })
             },
             onPinch: state => {
+                const zoomImg = zoomRef.current.getBoundingClientRect()
+                const parent = containerRef.current.getBoundingClientRect()
 
-                // const yOffset = zoomRef.current.getBoundingClientRect().top
-                // const xOffset = zoomRef.current.getBoundingClientRect().left
-                // const pinchDistance = state.da[0]
-                // let scale = pinchDistance / 200
-                // let zoomStatus = true
-                // let origin = zoom.origin
-                // if(origin.x == 0 && origin.y == 0){
-                //     origin = {x: state.origin[0], y: state.origin[1]}
-                // }
-                // if(scale <= 1){
-                //     scale = 1
-                //     zoomStatus = false
-                // }
-                // const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
-                // props.context.toggleExplorer({close: true})
-                // setZoom({
-                //     ...zoom,
-                //     zoom: zoomStatus,
-                //     pinch: true,
-                //     distance: state.da[0],
-                //     scale,
-                //     origin
-                // })
+                const imgOffset = {x: zoomImg.top - parent.top, y: zoomImg.left - parent.left}
+
+                const ratio = {width: parent.width / zoomImg.width, height: parent.height / zoomImg.height}
 
                 const pinchDistance = state.da[0]
-                let scale = pinchDistance / 100
+                let scale = pinchDistance / 75
                 let zoomStatus = true
-                if(scale <= 1){
-                    scale = 1
-                    zoomStatus = false
-                }
-                const {x, y} = calcZoomPan(state.origin[0], state.origin[1], state)
-                props.context.toggleExplorer({close: true})
+                
+                const dotX = (100 * (state.origin[0] - parent.left)) / parent.width
+                const dotY = (100 * (state.origin[1] - parent.top)) / parent.height
+
+                let X = (100 * (state.origin[0] - imgOffset.x)) / zoomImg.width / scale
+                let Y = (100 * (state.origin[1] - imgOffset.y)) / zoomImg.height / scale
+                // let X = (dotX - ((imgOffset.x * 100) / parent.width))
+                // let Y = (dotY - ((imgOffset.y * 100) / parent.height))
+
+                const dot = {x: dotX, y: dotY}
+                const origin = dot
+                // const origin = {x: X, y: Y}
+                // const dot = origin
                 setZoom({
                     ...zoom,
                     zoom: zoomStatus,
                     pinch: true,
                     distance: state.da[0],
                     scale,
-                    origin: {
-                        x, y
-                    },
-                    position: {
-                        x, y
-                    }
+                    origin,
+                    dot,
                 })
             },
             onPinchEnd: state => {
@@ -334,7 +327,6 @@ const Carousel = props => {
                 moveEndHandler(state)
             },
             onMove: state => {
-                console.log(state)
                 if(!zoom.zoom || zoom.pinch)return
                 zoomPanHandler(state)
             },
@@ -342,22 +334,50 @@ const Carousel = props => {
         {...genericOptions},
     )
 
+    document.addEventListener('gesturestart', e => e.preventDefault())
+    document.addEventListener('gesturechange', e => e.preventDefault())
+
     useEffect(() => {
         return slideTo(props.currentSlide, props.file)
     }, [props.counter])
+    useEffect(() => {
+        if(zoomRef && zoomRef.current){
+            setTimeout(() => {                
+                const zoomImg = zoomRef.current.getBoundingClientRect()
+                const parent = containerRef.current.getBoundingClientRect()
+                const imgOffset = {x: zoomImg.left - parent.left, y: zoomImg.top - parent.top}
+        
+                setZoom({...zoom, dot: imgOffset})
+            }, 400);
+        }
+    }, [slidePosition.currentSlide])
 
-      useEffect(bind, [bind])
+    useEffect(bind, [bind])
+//     <div style={{background: "yellow", position: "fixed", bottom: 0, zIndex: 999}}>
+//     <p>scale: {zoom.scale}</p>
+//     <p>origin: X: {zoom.origin.x} | Y: {zoom.origin.y}</p>
+//     <p>DOT: X: {zoom.dot.x} | Y: {zoom.dot.y}</p>
+//     <p>state.origin: X: {zoom.dot.x} | Y: {zoom.dot.y}</p>
+//     <p>offsetToParent: X: {zoom.offsetToParent ? zoom.offsetToParent.x : ""} | Y: {zoom.offsetToParent ? zoom.offsetToParent.y : ""}</p>
+//     {/* <p>rect: |X: {zoomRef.current.clientWidth}| |Y: {zoomRef.current.clientHeight}|</p> */}
+// </div>
     return(
             <div
                 ref={containerRef}
                 className={`carousel-container ${styles.container} ${zoom.pinch ? styles.showOverflow : ""}`}
             >
-            <div style={{background: "yellow", position: "fixed", top: 0, zIndex: 999}}>
-                <p>scale: {zoom.scale}</p>
-                <p>pan: X: {zoom.position.x} | Y: {zoom.position.y}</p>
-                <p>origin: X: {zoom.origin.x} | Y: {zoom.origin.y}</p>
-                {/* <p>rect: |X: {zoomRef.current.clientWidth}| |Y: {zoomRef.current.clientHeight}|</p> */}
-            </div>
+            {/* <div style={
+                {height: "10px", 
+                width: "10px", 
+                backgroundColor: "red", 
+                borderRadius: "10px", 
+                position: "absolute", 
+                top: `${zoom.dot.y}%`,
+                left: `${zoom.dot.x}%`,
+                zIndex: 999
+                }}
+            ></div> */}
+
             <div className={styles.slideWrapper}>
                 {arrowPrev()}
                 <div

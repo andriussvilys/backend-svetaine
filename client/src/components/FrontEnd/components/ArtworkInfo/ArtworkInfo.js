@@ -221,7 +221,7 @@ const ArtworkInfo = props => {
     React.useEffect(() => {
       setState({...state, height: props.transform})
     }, [props.transform])
-    React.useEffect(bind, [bind])
+    // React.useEffect(bind, [bind])
 
 
     return(
