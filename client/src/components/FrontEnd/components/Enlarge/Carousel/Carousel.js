@@ -108,10 +108,19 @@ const Carousel = props => {
                             newZoom = newScale === 1 ? false : true
                             const position = newScale === 1 ? {x: 0, y: 0} : zoom.position
                             const boundRect = e.target.getBoundingClientRect()
-                            const zoomOrigin = {x: (e.clientX - boundRect.left) / zoom.scale, y: (e.clientY - boundRect.top) / zoom.scale}
-                            const dot = {x: e.clientX - containerOffset.x, y: e.clientY - containerOffset.y}
-                            console.log({clientX: e.clientX, clientY: e.clientY})
+                            const parent = e.target.parentNode.getBoundingClientRect()
+                            const dot = {x: (e.screenX - containerOffset.x) * 100 / boundRect.width, y: (e.screenY - containerOffset.y) * 100 / boundRect.height}
+                            const zoomOrigin = {
+                                x: (e.clientX - parent.x) * 100 / parent.width, 
+                                y: (e.clientY - parent.y) * 100 / parent.height
+                                // x: (e.clientX - containerRef.current.getBoundingClientRect().x) * 100 / containerRef.current.getBoundingClientRect().width, 
+                                // y: (e.clientY - containerRef.current.getBoundingClientRect().y) * 100 / containerRef.current.getBoundingClientRect().height
+                            }
                             console.log(zoomOrigin)
+                            console.log({clientX: e.clientX, clientY: e.clientY})
+                            console.log({screenX: e.screenX, screenY: e.screenY})
+                            console.log({rectX: boundRect.x, rectY: boundRect.y})
+                            // console.log({resultX: , rectY: boundRect.y})
                             props.context.showInfo(e, {height: -100})
                             setInfoPosition({...infoPosition, height: -100})
 
@@ -240,14 +249,25 @@ const Carousel = props => {
         return {x: panX, y: panY}
     }
     const zoomPanHandler = (state) => {
-        const {x, y} = calcZoomPan(state.xy[0], state.xy[1], state)
-        setZoom({
-            ...zoom,
-            smooth: false,
-            position: {
-                x, y
-            },
-        })
+        // const {x, y} = calcZoomPan(state.xy[0], state.xy[1], state)
+        // setZoom({
+        //     ...zoom,
+        //     smooth: false,
+        //     position: {
+        //         x, y
+        //     },
+        // })
+        const parent = state.event.target.parentNode.getBoundingClientRect()
+        const zoomOrigin = {
+            // x: ((state.event.clientX - containerRef.current.getBoundingClientRect().x) * 100 / containerRef.current.getBoundingClientRect().width), 
+            // y: (state.event.clientY - containerRef.current.getBoundingClientRect().y) * 100 / containerRef.current.getBoundingClientRect().height
+            
+            x: ((state.event.clientX - parent.x) * 100 / parent.width) * 1.2, 
+            y: ((state.event.clientY - parent.y) * 100 / parent.height) * 1.2
+        }
+        // console.log()
+
+        setZoom({...zoom, origin: zoomOrigin})
     }
     const genericOptions = {
         // filterTaps: true,
