@@ -88,6 +88,7 @@ const Carousel = props => {
         setTimeout(() => {            
             setSlidePosition({
                 ...slidePosition,
+                smooth: true,
                 file: nextImage,
                 currentSlide: slideToIndex,
                 currentTransform: newTransfrom,
