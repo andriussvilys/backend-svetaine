@@ -329,6 +329,9 @@ const Carousel = props => {
                 if(toggleInfo(state) > 0){
                     return
                 }
+                if(props.images.length < 2){
+                    return
+                }
                 moveHandler(state, {moveSpeed: 2, direction: -1})
             },
             onWheelEnd: state => {
@@ -343,13 +346,13 @@ const Carousel = props => {
         {...genericOptions},
     )
 
-    useEffect(() => {
-        setInfoPosition({height: 100})
-    }, [props])
-    
+    // useEffect(() => {
+    //     setInfoPosition({height: 100})
+    // }, [props])
+
     useEffect(() => {
         slideTo(props.currentSlide)
-        setInfoPosition({height: 100})
+        // setInfoPosition({height: 100})
     }, [props.counter])
 
     useEffect(() => {
@@ -367,14 +370,9 @@ const Carousel = props => {
             >
             {arrowPrev()}
             <div 
-                // {...bind()}
                 id={"slideContainer"}
                 className={`${styles.slideContainer} ${slidePosition.smooth ? styles.smoothSlide : ""} ${zoom.pinch ? styles.showOverflow : ""} ${zoom.zoom ? styles.zoomOut : ""}`}
                 ref={slideContainerRef}
-                // style={{
-                //     width: `${100 * props.images.length}%`,
-                //     transform: `translateX(${transformX}%)`
-                // }}
                 style={{
                     width: `${100 * props.images.length}%`,
                     transform: `translateX(${slidePosition.currentTransform}%)`

@@ -18,6 +18,56 @@ const ArtworkInfo = props => {
     const ArtworkInfoWrapperRef = React.useRef(null)
     const [state, setState] = React.useState({tagsTrigger: false, infoUp: false, height: 100, direction: null})
 
+  const locationAndYear = () => {
+      let location = props.file.location ? props.file.location : null
+      let year = props.file.year ? props.file.year: null
+      if(location && year){
+          return <div key={"location/year"} className="ArtworkInfo_locationYear">({location}. {year})</div>
+      }
+      if(!year && location){
+          return <div key={"location"} className="ArtworkInfo_locationYear">({location})</div>
+      }
+      if(year){
+          return <div key={"year"} className="ArtworkInfo_locationYear">({year})</div>
+      }
+      // else{ return null}
+      else{ return <div key={"location/year"} className="ArtworkInfo_locationYear"></div>}
+  }
+
+    const title_post = () => {
+      let artworkFamily = props.file.artworkFamily
+      if(artworkFamily === "none"){
+          artworkFamily = "–"
+      }
+      if(artworkFamily === "Poilsis"){
+          artworkFamily = "Daiktai sandėlyje"
+      }
+
+      let artworkTitle = props.file.artworkTitle
+      if(!artworkTitle){
+          artworkTitle = artworkFamily
+      }
+
+      return <div 
+        className={
+        props.file.artworkTitle ? 
+        "ArtworkInfo_artworkFamily" :
+        "ArtworkInfo_artworkTitle"
+        }
+      >        
+            {props.file.artworkTitle && props.file.artworkFamily !== "none" ? 
+                <Fragment>
+                    <span className={"ArtworkInfo_artworkTitle_secondary"}>part of </span>
+                    <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary">{artworkFamily}</em>
+                </Fragment> :
+                <Fragment>
+                    <span className={"ArtworkInfo_artworkTitle_secondary"}></span>
+                    <em className="ArtworkInfo_artworkFamily_variable ArtworkInfo_artworkTitle_secondary"></em>
+                </Fragment>
+            }
+      </div>
+    }
+
      const seeAlso = () => {
       let seeAlsos = [];
       if (props.file.seeAlso.length > 0) {
@@ -100,7 +150,7 @@ const ArtworkInfo = props => {
     };
      const descriptions = () => {
       return (
-        <div className="ArtworkInfo--descriptions">
+        <Fragment>
           {props.file.artworkDescription ? (
             <div className="ArtworkInfo--artworkDescription ArtworkInfo--descriptions_instance">
               {ReactHtmlParser(props.file.artworkDescription)}
@@ -111,7 +161,7 @@ const ArtworkInfo = props => {
               {ReactHtmlParser(props.file.familyDescription)}
             </div>
           ) : null}
-        </div>
+        </Fragment>
       );
     };
     const showInfo = (e) => {
@@ -122,6 +172,10 @@ const ArtworkInfo = props => {
     };
     const secondaryInfo = () => {
       return <Fragment>
+          <div className="ArtworkInfo-title_secondary">
+            {locationAndYear()}
+            {title_post()}
+          </div>
           {descriptions()}
           <div
             key={"ArtworkInfo-container_seealso"}

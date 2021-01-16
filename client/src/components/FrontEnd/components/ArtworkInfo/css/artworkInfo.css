@@ -14,10 +14,32 @@
   z-index: 999;
 }
 
-.ArtworkInfo-Title {
-  height: 100px;
+.ArtworkInfo-title_wrapper {
   position: absolute;
-  top: -100px;
+  bottom: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  background-color: white;
+  width: 100%;
+}
+
+.ArtworkInfo-title_content {
+  line-height: 14px;
+  margin: 10px 0;
+  margin-bottom: 16px;
+}
+
+.ArtworkInfo-title_secondary {
+  margin-bottom: 3px;
+}
+
+.ArtworkInfo-title_content, .secondaryInfo {
+  padding-left: 20px;
+}
+
+.ArtworkInfo-wrapper {
+  padding-left: 30px;
 }
 
 .ArtworkInfo--descriptions,

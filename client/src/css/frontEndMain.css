@@ -905,13 +905,13 @@ label {
 }
 
 .ArtworkInfo--descriptions {
-  margin: 10px 0;
   font-size: 14px;
   max-width: 600px;
-  margin-left: 50px;
+  margin: 10px 0 5px 20px;
 }
 
 .ArtworkInfo--descriptions_instance {
+  max-width: 60ch;
   font-size: 12px;
 }
 
@@ -922,10 +922,6 @@ label {
 
 .ArtworkInfo_artworkTitle {
   font-size: 14px;
-}
-
-.ArtworkInfo_artworkTitle_secondary {
-  color: #ababab;
 }
 
 .ArtworkInfo_locationYear {
@@ -1857,15 +1853,6 @@ label {
 
 .previewCounter span {
   font-size: 12px;
-}
-
-.ArtworkInfo-Title {
-  position: relative;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-  background-color: white;
-  width: 100%;
 }
 
 .enlargeContainer {

@@ -58,7 +58,7 @@
     left: 0;
     position: absolute;
     z-index: 998;
-    height: calc(100% - 40px);
+    height: calc(100% - 70px);
     display: flex;
     touch-action: pan-y;
     will-change: transform;
@@ -123,22 +123,24 @@
     display: flex;
     align-items: center;
     list-style: none;
-
     position: absolute;
     top: 0;
-
     scroll-behavior: smooth;
+    height: 51%;
 }
 .dotWrapper{
     position: relative;
 }
 .dot{
     flex: none;
-    width: 20px;
-    height: 20px;
+    width: 15px;
+    height: 15px;
+    border: 2px solid rgb(0, 0, 0);
+    // width: 20px;
+    // height: 20px;
+    // border: 3px solid rgb(95, 95, 95);
     border-radius: 999px;
     background: white;
-    border: 3px solid rgb(95, 95, 95);
     margin: 5px;
     cursor: pointer;
 }

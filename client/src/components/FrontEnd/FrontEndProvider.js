@@ -700,6 +700,7 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
+      
       let newState = {...this.state}
       if(this.state.showLess){
         newState.showLess = false
