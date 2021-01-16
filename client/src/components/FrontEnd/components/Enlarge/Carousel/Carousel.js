@@ -8,6 +8,7 @@ const Carousel = props => {
     const containerRef = React.useRef()
     const dot_active = React.useRef()
     const dot_container = React.useRef()
+    const dot_list = React.useRef()
     const slideContainerRef = React.useRef()
     const zoomRef = React.useRef(null)
     const [mobile, setMobile] = useState(window.document.body.getBoundingClientRect().width > 720 ? false : true)
@@ -20,8 +21,9 @@ const Carousel = props => {
     
     window.onresize = checkDocumentSize;
 
-    const [ infoPostion, setInfoPosition ] = useState({
+    const [ infoPosition, setInfoPosition ] = useState({
         height: 100,
+        counter: 0
     })
     
     const [slidePosition, setSlidePosition] = useState({
@@ -58,8 +60,9 @@ const Carousel = props => {
 
     const slideTo_dot = () => {
         if(dot_active && dot_active.current){
+            const slide_indent = dot_list.current.clientWidth / props.images.length
             // let left = (slidePosition.currentSlide - 1) * 20
-            let left = (slidePosition.currentSlide - 1) * 15
+            let left = (slidePosition.currentSlide - 1) * slide_indent
             dot_container.current.scroll(left, 0);
         }
     }
@@ -108,7 +111,7 @@ const Carousel = props => {
             className={`${styles.dot} ${index === slidePosition.currentSlide ? styles.dot_active : ""}`}
             ></li>
         })
-        return <div ref={dot_container} className={styles.dotContainer}>{imageList.length < 2 ? null : <ul className={styles.dotList}>{dots}</ul>}</div>
+        return <div ref={dot_container} className={styles.dotContainer}>{imageList.length < 2 ? null : <ul ref={dot_list} className={styles.dotList}>{dots}</ul>}</div>
     }
     const arrowNext = () => {
         if(props.images.length < 2){
@@ -170,7 +173,6 @@ const Carousel = props => {
 
         let  transform = slidePosition.currentTransform + ((state.delta[0] * options.direction * options.moveSpeed * 100 / containerWidth) / slideCount)
         transform = Math.round((transform + Number.EPSILON) * 10) / 10
-        console.log(transform)
 
         const margin = (slideWidth / 3)
 
@@ -228,14 +230,12 @@ const Carousel = props => {
         })
     }
     const toggleInfo = state => {
+
         // 0 = UP, 100 = DOWN
-        // if(state.direction[0] != 0){
-        //     return 0
-        // }
         if(Math.abs(state.direction[1]) > Math.abs(state.direction[0])){
             let direction = mobile ? state.direction[1]*-1 : state.direction[1]
             let newHeight = direction > 0 ? 0 : 100;
-            setInfoPosition({height: newHeight})
+            setInfoPosition({height: newHeight, counter: infoPosition.counter + 1})
             return 1 
         }
         return 0
@@ -243,6 +243,7 @@ const Carousel = props => {
     const genericOptions = {
         domTarget: slideContainerRef,
         filterTaps: true,
+        lockDirection: true,
         eventOptions: {
             passive: false
         }
@@ -254,7 +255,6 @@ const Carousel = props => {
             },
             onDrag: (state) => {
                 if(state.tap){
-                    console.log("drag")
                     if(state.event.touches)return
                     const targetRect = containerRef.current.getBoundingClientRect()
                     const clientPosition = {x: state.initial[0], y: state.initial[1]}
@@ -280,15 +280,20 @@ const Carousel = props => {
                 }
             },
             onDragEnd: (state) => {
-                if(toggleInfo(state) > 0){
-                    return
+                if(state.swipe[1] != 0){
+                    if(toggleInfo(state) > 0){
+                        return
+                    }
                 }
-                const index = slidePosition.currentSlide - state.swipe[0]
-                slideTo(index)
+                else{
+                    const index = slidePosition.currentSlide - state.swipe[0]
+                    slideTo(index)
+                }
             },
             onPinch: state => {
-                // if(!mobile){return}
-                if(!mobile){state.event.preventDefault()}
+                // if(!mobile){state.event.preventDefault()}
+                state.event.preventDefault()
+
                 const targetRect = containerRef.current.getBoundingClientRect()
                 const currentImg = zoomRef.current.getBoundingClientRect()
                 const imgOffset = {x: currentImg.x - targetRect.x, y: currentImg.y - targetRect.y}
@@ -390,7 +395,8 @@ const Carousel = props => {
             </div>
             {arrowNext()}
                 <ArtworkInfo
-                    transform={infoPostion.height}
+                    counter={infoPosition.counter}
+                    transform={infoPosition.height}
                     context={props.context}
                     mobile={mobile}
                     file={props.context.state.artworkInfoData[slidePosition.file]}

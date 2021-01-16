@@ -668,7 +668,7 @@ label {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin: 10px 0 10px 0;
+  margin: 20px 0 15px 0;
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
@@ -869,6 +869,8 @@ label {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
           justify-content: flex-end;
+  margin-top: 10px;
+  margin-right: 3px;
   width: 100%;
   overflow: hidden;
 }
@@ -911,6 +913,7 @@ label {
 }
 
 .ArtworkInfo--descriptions_instance {
+  margin-top: 20px;
   max-width: 60ch;
   font-size: 12px;
 }
@@ -1818,13 +1821,6 @@ label {
   .pinch-to-zoom-container {
     display: inline-block !important;
   }
-  .ArtworkInfo-container_seealso {
-    padding: 0 20px 0 50px;
-  }
-  .Tags-item_wrapper {
-    padding: 0 20px;
-    margin-top: 2px;
-  }
   .ArtworkInfo-container .imageSelect-container {
     height: 0;
   }
@@ -1832,15 +1828,9 @@ label {
     border-top: 1px solid black;
     height: 60px !important;
   }
-  .ArtworkInfo-toggleTags {
-    margin-top: 6px;
-  }
   .Tags-item_container {
-    margin: 3px 0 0 6px !important;
+    margin: 3px !important;
     padding: 2px 5px 2px 5px !important;
-  }
-  .Tags-item_container-closeButton_open {
-    height: 32px;
   }
 }
 

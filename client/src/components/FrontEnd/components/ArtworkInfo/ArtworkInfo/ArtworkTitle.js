@@ -41,12 +41,10 @@ export default class ArtworkTitle extends React.Component{
                         >
                             {this.props.dots}
                         </ViewControls>
-                        {/* {this.props.children} */}
                         {this.props.file ? 
-                            <div className={"ArtworkInfo-title_content"}>
+                            <div className={"ArtworkInfo-title_content ArtworkInfo_padded"}>
 
                                 {artworkTitle()}
-                                {/* {this.locationAndYear()} */}
 
                             </div>
                             : null}

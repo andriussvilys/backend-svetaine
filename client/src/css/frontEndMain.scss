@@ -466,11 +466,8 @@ font-family: 'Times New Roman', Times, serif;
 }
 .Tags-item_wrapper{
     display: flex;
-    // display: grid;
-    // grid-template-columns: 1fr min-content;
-    margin: 10px 0 10px 0;
+    margin: 20px 0 15px 0;
     justify-content: flex-end;
-    
 }
 .Tags-item_selectors{
     display: flex;
@@ -633,7 +630,8 @@ font-family: 'Times New Roman', Times, serif;
 .ArtworkInfo-seeAlso-container{
     display: flex;
     justify-content: flex-end;
-    // justify-content: space-between;
+    margin-top: 10px;
+    margin-right: 3px;
     width: 100%;
     overflow: hidden;
 }
@@ -664,6 +662,7 @@ font-family: 'Times New Roman', Times, serif;
     margin: 10px 0 5px 20px;
 }
 .ArtworkInfo--descriptions_instance{
+    margin-top: 20px;
     max-width: 60ch;
     font-size: 12px;
 }
@@ -1356,13 +1355,6 @@ font-family: 'Times New Roman', Times, serif;
     .pinch-to-zoom-container{
         display: inline-block !important;
     }
-    .ArtworkInfo-container_seealso{
-        padding: 0 20px 0 50px;
-    }
-    .Tags-item_wrapper{
-        padding: 0 20px;
-        margin-top: 2px;
-    }
     .ArtworkInfo-container .imageSelect-container{
         height: 0;
     }
@@ -1370,16 +1362,11 @@ font-family: 'Times New Roman', Times, serif;
         border-top: 1px solid black;
         height: 60px !important;
     }
-    .ArtworkInfo-toggleTags{
-        margin-top: 6px;
-    }
     
     .Tags-item_container{
-        margin: 3px 0 0 6px !important;
+        margin: 3px !important;
+        // margin: 3px 0 0 6px !important;
         padding: 2px 5px 2px 5px !important;
-    }
-    .Tags-item_container-closeButton_open{
-        height: 32px;
     }
   }
 

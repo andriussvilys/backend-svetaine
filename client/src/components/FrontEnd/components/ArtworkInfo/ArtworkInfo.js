@@ -166,12 +166,13 @@ const ArtworkInfo = props => {
     };
     const showInfo = (e) => {
       //0 = UP, 100 = DOWN
-      const newHeight = state.height > 0 ? 0 : 100
+      const newHeight = state.height == 0 ? 100 : 0
       setState({...state, infoUp: !state.infoUp, height: newHeight})
       return
     };
     const secondaryInfo = () => {
       return <Fragment>
+        <div className="ArtworkInfo_padded">
           <div className="ArtworkInfo-title_secondary">
             {locationAndYear()}
             {title_post()}
@@ -195,6 +196,7 @@ const ArtworkInfo = props => {
                 props.context.toggleExplorer({close: true})
               }}
             />
+        </div>
       </Fragment>
     }
     const placeholder = {
@@ -274,9 +276,7 @@ const ArtworkInfo = props => {
   )
     React.useEffect(() => {
       setState({...state, height: props.transform})
-    }, [props.transform])
-
-    // React.useEffect(bind, [bind])
+    }, [props.counter])
 
 
     return(
@@ -301,7 +301,7 @@ const ArtworkInfo = props => {
             />
             <div
               key={"ArtworkInfo-wrapper"}
-              className={`ArtworkInfo-wrapper secondaryInfo ${props.context.state.info.infoUp ? "info-up" : ""}`}
+              className={`ArtworkInfo-wrapper secondaryInfo`}
               id="ArtworkInfo"
             >
                 {props.file ? 
