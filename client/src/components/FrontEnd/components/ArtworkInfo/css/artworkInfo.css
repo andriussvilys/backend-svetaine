@@ -3,12 +3,15 @@
   width: 100%;
   background-color: white;
   will-change: transform;
+  -webkit-transition: 0.2s -webkit-transform;
+  transition: 0.2s -webkit-transform;
+  transition: 0.2s transform;
+  transition: 0.2s transform, 0.2s -webkit-transform;
 }
 
 .ArtworkInfo-container {
-  position: relative;
-  height: 100px;
-  top: 0;
+  position: absolute;
+  z-index: 999;
 }
 
 .ArtworkInfo-Title {

@@ -16,7 +16,7 @@ import './css/artworkInfo.css';
 
 const ArtworkInfo = props => {
     const ArtworkInfoWrapperRef = React.useRef(null)
-    const [state, setState] = React.useState({tagsTrigger: false, infoUp: false, height: -100, direction: null})
+    const [state, setState] = React.useState({tagsTrigger: false, infoUp: false, height: 100, direction: null})
 
      const seeAlso = () => {
       let seeAlsos = [];
@@ -115,9 +115,9 @@ const ArtworkInfo = props => {
       );
     };
     const showInfo = (e) => {
-      const newHeight = state.height > -60 ? -100 : 0
+      //0 = UP, 100 = DOWN
+      const newHeight = state.height > 0 ? 0 : 100
       setState({...state, infoUp: !state.infoUp, height: newHeight})
-      props.context.showInfo(e, {height: state.height})
       return
     };
     const secondaryInfo = () => {
@@ -221,6 +221,7 @@ const ArtworkInfo = props => {
     React.useEffect(() => {
       setState({...state, height: props.transform})
     }, [props.transform])
+
     // React.useEffect(bind, [bind])
 
 
@@ -231,7 +232,7 @@ const ArtworkInfo = props => {
       >
         <div 
         className={`ArtworkInfo-wrapper_main`}
-        style={{transform: `translateY(${-state.height}%`}}
+        style={{transform: `translateY(${state.height}%`}}
         ref={ArtworkInfoWrapperRef}
         >
           {props.children}
@@ -241,8 +242,7 @@ const ArtworkInfo = props => {
               showInfo={
                 () => showInfo()
               }
-              // - 100: False, >-100 : TRUE
-              infoUp={state.height > -60 ? true : false}
+              infoUp={state.height > 0 ? false : true}
               dots={props.dots}
             />
             <div
@@ -264,7 +264,6 @@ const ArtworkInfo = props => {
                   context={props.context}
                   methods={{
                     enlarge: props.context.enlarge,
-                    // loadEnlarge: props.context.loadEnlarge,
                     loadImage: props.context.loadImage,
                     toggleMobile: props.context.toggleMobile,
                     lazyLoad: props.context.lazyLoadImages,
