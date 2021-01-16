@@ -85,10 +85,6 @@
           box-shadow: -2px 0px 17px 4px rgba(182, 182, 182, 0.28);
   cursor: -webkit-zoom-in;
   cursor: zoom-in;
-  -webkit-transition: 0.2s -webkit-transform;
-  transition: 0.2s -webkit-transform;
-  transition: 0.2s transform;
-  transition: 0.2s transform, 0.2s -webkit-transform;
 }
 
 .zoomOut {
@@ -173,7 +169,7 @@
   position: absolute;
   top: 0;
   scroll-behavior: smooth;
-  height: 51%;
+  height: 30px;
 }
 
 .dotWrapper {

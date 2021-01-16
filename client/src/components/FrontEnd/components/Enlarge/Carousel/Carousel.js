@@ -58,7 +58,8 @@ const Carousel = props => {
 
     const slideTo_dot = () => {
         if(dot_active && dot_active.current){
-            let left = (slidePosition.currentSlide - 1) * 30
+            // let left = (slidePosition.currentSlide - 1) * 20
+            let left = (slidePosition.currentSlide - 1) * 15
             dot_container.current.scroll(left, 0);
         }
     }
@@ -172,12 +173,18 @@ const Carousel = props => {
 
         const margin = (slideWidth / 3)
 
-        if(transform > margin){
+        if(transform > 0){
             transform = 0
         }
-        if(transform < -100 + margin){
+        if(transform < -100 + slideWidth){
             transform = -100 + slideWidth
         }
+        // if(transform > margin){
+        //     transform = 0
+        // }
+        // if(transform < -100 + margin){
+        //     transform = -100 + slideWidth
+        // }
 
         let index = Math.abs(Math.round(transform / slideWidth))
         if(index > slideCount -1){
@@ -221,9 +228,9 @@ const Carousel = props => {
     }
     const toggleInfo = state => {
         // 0 = UP, 100 = DOWN
-        if(state.direction[0] != 0){
-            return 0
-        }
+        // if(state.direction[0] != 0){
+        //     return 0
+        // }
         if(Math.abs(state.direction[1]) > Math.abs(state.direction[0])){
             let direction = mobile ? state.direction[1]*-1 : state.direction[1]
             let newHeight = direction > 0 ? 0 : 100;
