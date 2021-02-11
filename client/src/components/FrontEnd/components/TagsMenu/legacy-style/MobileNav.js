@@ -38,6 +38,7 @@ export default class MobileNav extends React.Component {
                 >
                     <span>Filters</span>
                 </button>
+
                 <button 
                     className={"Mobilenav-button"}
                     onClick={(e) => {
@@ -63,25 +64,20 @@ export default class MobileNav extends React.Component {
                             }, 400);
                         }
                         this.setState({openTab: openTab})
-                    }}    
+                    }}
+                    style={{
+                        flex: 2
+                    }} 
                 >
                     <span>About / Contact</span>
                 </button>
-
-                {/* <button
-                    className={"Mobilenav-button Mobilenav-contact"}
-                    onClick={() => {
-                        this.props.context.showInfo(0)
-                    }}
-                >
-                    <span>Contact</span>
-                </button> */}
 
             </div>
 
             <div 
                 className={"enlarge-closeButton-container"}
                 style={{
+                    display: this.props.context.state.mobile ? "none" : "flex",
                     opacity: this.props.context.state.enlarge.open ? 1 : 0
                 }}
                 >

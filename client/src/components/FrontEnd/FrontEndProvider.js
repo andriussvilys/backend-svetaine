@@ -736,23 +736,28 @@ export class Provider extends React.Component{
       if(e){
         e.stopPropagation()
       }
-      const enlargeContainer = document.getElementById('enlargeContainer')
       document.getElementById('imageSelect').style.width = `100%`   
-      enlargeContainer.classList.remove("enlarge-scroll-left")
+      // const enlargeContainer = document.getElementById('enlargeContainer')
+      // enlargeContainer.classList.remove("enlarge-scroll-left")
 
       let newState = {...this.state}
-      // const enlargeCopy = {...this.state.enlarge}
-      // Object.keys(enlargeCopy).forEach(key => {
-      //   newState.enlarge[key] = {}
-      // })
       
-      newState.enlarge.background = null
-      newState.enlarge.open = false
       newState.showExplorer = false
-      // newState.showFilters = false
+      newState.showFilters = this.state.showLess
       // newState.showLess = true
       newState.info.height = 100
       this.setState(newState)
+
+      setTimeout(() => {
+        const enlargeContainer = document.getElementById('enlargeContainer')
+        enlargeContainer.classList.remove("enlarge-scroll-left")
+
+        newState.enlarge.background = null
+        newState.enlarge.open = false
+
+        this.setState(newState)
+      }, 100);
+
     }
     this.viewNext = (direction) => {
       
@@ -1035,7 +1040,12 @@ export class Provider extends React.Component{
         initialTransform: initialTransform
       }
 
-      newState.showLess = this.state.showFilters ? true : false
+      if(!this.state.enlarge.open){
+        newState.showLess = this.state.showFilters ? true : false
+      }
+
+      // newState.info.height = 100;
+
 
       newState.enlarge = {open: true, file: fileName, counter: ++this.state.enlarge.counter}
 

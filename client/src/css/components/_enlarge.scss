@@ -60,21 +60,21 @@
     justify-content: space-between;
     overflow: hidden;
 
-    padding: 0 20px 0 15px;
+    padding-left: 15px;
 }
 .viewControls-button-info{
     position: relative;
     padding: 0 0 0 40px;
 }
 .viewControls-button{
+    padding-right: 20px;
+    border-left: 1px solid black;
     display: flex;
     align-items: center;
     justify-content: center;
     height: 100%;
     span{
         white-space: nowrap;
-        // font-family: sans-serif;
-        // text-transform: initial;
         font-weight: bold;
     }
 }
