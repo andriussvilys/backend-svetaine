@@ -145,6 +145,7 @@ $filtersWidth_desktop: 220px;
     .FilterTree-wrapper{
         padding: 6px;
         width: $filtersWidth_mobile;
+        max-height: unset;
     }
     .show-menu{
         width:$filtersWidth_mobile;

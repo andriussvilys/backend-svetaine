@@ -2208,6 +2208,7 @@ label {
   .FilterTree-wrapper {
     padding: 6px;
     width: 220px;
+    max-height: unset;
   }
   .show-menu {
     width: 220px;
@@ -2495,5 +2496,31 @@ input:checked + .slider:before {
 .imageSelect-container {
   -webkit-transition: width 0.2s;
   transition: width 0.2s;
+}
+
+@media only screen and (max-width: 768px) {
+  .enlarge-closeButton-container:hover,
+  .enlarge-closeButton-container:focus,
+  .Mobilenav_close:hover,
+  .Mobilenav_close:focus {
+    background-color: initial !important;
+    color: initial !important;
+    outline: none !important;
+  }
+  .enlarge-closeButton-container:hover *,
+  .enlarge-closeButton-container:focus *,
+  .Mobilenav_close:hover *,
+  .Mobilenav_close:focus * {
+    background-color: initial !important;
+    color: initial !important;
+    border-color: initial !important;
+    outline: none !important;
+  }
+  .enlarge-closeButton-container {
+    border-left: none;
+  }
+  .frontEndIndex-container {
+    overflow: hidden;
+  }
 }
 /*# sourceMappingURL=frontEndMain.css.map */

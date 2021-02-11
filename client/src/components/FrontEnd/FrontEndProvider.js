@@ -744,7 +744,12 @@ export class Provider extends React.Component{
       
       newState.showExplorer = false
       newState.showFilters = this.state.showLess
-      // newState.showLess = true
+
+      if(this.state.mobile){
+        newState.showFilters = this.state.showFilters
+        newState.showLess = false
+      }
+
       newState.info.height = 100
       this.setState(newState)
 
@@ -881,30 +886,6 @@ export class Provider extends React.Component{
         this.setState(newState)
       }
 
-      // if(options && options.close){
-      //   this.setState({showLess: true}, () => {
-      //     setTimeout(() => {
-      //       this.setState({showExplorer: false, showFilters: false})
-      //     }, 200);
-      //   })
-      // }
-      // else if(options && options.open){
-      //   this.setState({showExplorer: true, showFilters: true}, () => {
-      //     if(!this.state.mobile){
-      //       this.enlargeWidth()
-      //       return 
-      //     }
-      //   })
-      // }
-      // else if(!this.state.showExplorer){
-      //   this.setState({showExplorer: true}, () => {
-      //     if(!this.state.mobile){
-      //       this.enlargeWidth()
-      //       return 
-      //     }
-      //   })
-      // }
-
     }
     
     this.animateEnlarge = (file, options) => {
@@ -1040,7 +1021,7 @@ export class Provider extends React.Component{
         initialTransform: initialTransform
       }
 
-      if(!this.state.enlarge.open){
+      if(!this.state.enlarge.open && !this.state.mobile){
         newState.showLess = this.state.showFilters ? true : false
       }
 

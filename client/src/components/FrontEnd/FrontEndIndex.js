@@ -96,7 +96,7 @@ export default class FrontEndIndex extends React.Component{
                                     `}
                                     id="enlargeContainer"
                                 >             
-                                                <div 
+                                                {/* <div 
                                                     className={"enlarge-closeButton-container"}
                                                     >
                                                     <button 
@@ -110,7 +110,31 @@ export default class FrontEndIndex extends React.Component{
                                                         <span>close</span>
                                                             <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/>
                                                     </button>
-                                                </div>   
+                                                </div>    */}
+                                        <div 
+                                            className={"enlarge-closeButton-container"}
+                                            style={{
+                                                opacity: this.context.state.enlarge.open ? 1 : 0,
+                                                width: "100%",
+                                                justifyContent: "flex-end"
+                                            }}
+                                            >
+                                            <button 
+                                            className="Mobilenav-button Mobilenav_close"
+                                            style={{
+                                                border: "none",
+                                                borderLeft: "1px solid black",
+                                                maxWidth: "120px",
+                                                height: "100%"
+                                            }}
+                                            onClick={(e) => {
+                                                e.stopPropagation()
+                                                this.context.closeEnlarge()
+                                            }}
+                                            >
+                                                <span>close ></span>
+                                            </button>
+                                        </div>  
                                         <Carousel 
                                             currentSlide={this.context.state.currentSlide.index}
                                             initialTransform={this.context.state.currentSlide.initialTransform}

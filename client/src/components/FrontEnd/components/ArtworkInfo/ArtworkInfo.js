@@ -321,7 +321,8 @@ const ArtworkInfo = props => {
                 }   
               {props.context.state.mobile ? 
                 <ImageSelect
-                  customClass={`${props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
+                  customClass={`${props.context.state.showLess ? "ArtworkInfo-toggleTags" : ""}`}
+                  // customClass={`${props.context.state.showExplorer ? "ArtworkInfo-toggleTags" : ""}`}
                   customId="ImageSelect-info"
                   sideScroll
                   data={props.context.state.artworkInfoData}

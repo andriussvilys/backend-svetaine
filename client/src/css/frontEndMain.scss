@@ -1478,24 +1478,33 @@ font-family: 'Times New Roman', Times, serif;
     }
 }
 
-// .Mobilenav-contact:hover, .Mobilenav-contact:focus{
-//     background-color: white !important;
-//     color: black !important;
-//     outline: none !important;
-//     *{
-//         background-color: white !important;
-//         color: black !important;
-//         border-color: black !important;
-//         outline: none !important;
-//     }
-// }
-// .Mobilenav-contact{
-//     *{
-//         opacity: 0.4;
-//     }
-// }
-
 .FilterTree-container,
 .imageSelect-container{
     transition: width 0.2s;
+}
+
+@media only screen and (max-width: 768px) {
+
+    .enlarge-closeButton-container:hover, 
+    .enlarge-closeButton-container:focus,
+    .Mobilenav_close:hover, 
+    .Mobilenav_close:focus{
+        background-color: initial !important;
+        color: initial !important;
+        outline: none !important;
+        *{
+            background-color: initial !important;
+            color: initial !important;
+            border-color: initial !important;
+            outline: none !important;
+        }
+    }
+    .enlarge-closeButton-container{
+        border-left: none;
+    }
+
+    .frontEndIndex-container{
+        // border: 1px solid black;
+        overflow: hidden;
+    }
 }
