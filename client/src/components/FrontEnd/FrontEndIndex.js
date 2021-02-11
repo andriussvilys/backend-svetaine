@@ -93,7 +93,6 @@ export default class FrontEndIndex extends React.Component{
                                     enlargeContainer 
                                     ${!this.context.state.mobile && this.context.state.showLess ? "full-width" : ""}
                                     ${this.context.state.enlarge && this.context.state.enlarge.open === true ? "enlarge-scroll-left" : ""}
-                                    ${!this.context.state.mobile && this.context.state.showExplorer }
                                     `}
                                     id="enlargeContainer"
                                 >             

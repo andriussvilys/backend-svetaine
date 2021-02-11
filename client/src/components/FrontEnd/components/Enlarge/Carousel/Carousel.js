@@ -87,7 +87,6 @@ const Carousel = props => {
         }
         else{return}
 
-        // setInfoPosition({height: 100})
         setTimeout(() => {            
             setSlidePosition({
                 ...slidePosition,
@@ -235,7 +234,8 @@ const Carousel = props => {
         if(Math.abs(state.direction[1]) > Math.abs(state.direction[0])){
             let direction = mobile ? state.direction[1]*-1 : state.direction[1]
             let newHeight = direction > 0 ? 0 : 100;
-            setInfoPosition({height: newHeight, counter: infoPosition.counter + 1})
+            // setInfoPosition({height: newHeight, counter: infoPosition.counter + 1})
+            props.context.showInfo(newHeight)
             return 1 
         }
         return 0

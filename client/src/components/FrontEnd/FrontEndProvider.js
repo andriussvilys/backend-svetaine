@@ -9,7 +9,7 @@ export class Provider extends React.Component{
     super(props);
   this.state = {
     // ...staticState,
-    info: {infoUp: false, toggleTags: false, height: -100},
+    info: {infoUp: false, toggleTags: false, height: 100},
     showAll: true,
     currentSlide: {index: null, initialTransform: null},
     images: [1, 2, 3, 4, 5],
@@ -283,15 +283,16 @@ export class Provider extends React.Component{
       return new Promise((resolve, reject) => {
         let newState = {...this.filter(displayTrigger, value)}
         newState.filters = this.checkFilters(newState.artworkOnDisplay, newState, "onDisplay")
-        newState.showFilters = true;
-        newState.showExplorer = true;
-        newState.showLess = false;
+        // newState.showFilters = true;
+        // newState.showExplorer = true;
+        newState.showLess = true;
         return this.setState(newState, () => {
           this.enlargeWidth()
           resolve()
         })
       })
     }
+
     this.compoundFilter = (displayTrigger, value) => {
       let newState = {...this.state}
       const checked = this.state.filters.onDisplay[displayTrigger].indexOf(value) >= 0
@@ -750,7 +751,7 @@ export class Provider extends React.Component{
       newState.showExplorer = false
       // newState.showFilters = false
       // newState.showLess = true
-      newState.info.infoUp = false
+      newState.info.height = 100
       this.setState(newState)
     }
     this.viewNext = (direction) => {
@@ -862,30 +863,45 @@ export class Provider extends React.Component{
     }
     this.toggleExplorer = (options) => {
 
+      let newState = {...this.state}
+
       if(options && options.close){
-        this.setState({showLess: true}, () => {
-          setTimeout(() => {
-            this.setState({showExplorer: false, showFilters: false})
-          }, 200);
-        })
+        console.log("TOGGLE EXPLORE CLOSE")
+        newState.showLess = false
+        this.setState(newState)
       }
-      else if(options && options.open){
-        this.setState({showExplorer: true, showFilters: true}, () => {
-          if(!this.state.mobile){
-            this.enlargeWidth()
-            return 
-          }
-        })
+      else{
+        console.log("TOGGLE EXPLORE OOOPPPPEEEEnn")
+        newState.showLess = true
+        this.setState(newState)
       }
-      else if(!this.state.showExplorer){
-        this.setState({showExplorer: true}, () => {
-          if(!this.state.mobile){
-            this.enlargeWidth()
-            return 
-          }
-        })
-      }
+
+      // if(options && options.close){
+      //   this.setState({showLess: true}, () => {
+      //     setTimeout(() => {
+      //       this.setState({showExplorer: false, showFilters: false})
+      //     }, 200);
+      //   })
+      // }
+      // else if(options && options.open){
+      //   this.setState({showExplorer: true, showFilters: true}, () => {
+      //     if(!this.state.mobile){
+      //       this.enlargeWidth()
+      //       return 
+      //     }
+      //   })
+      // }
+      // else if(!this.state.showExplorer){
+      //   this.setState({showExplorer: true}, () => {
+      //     if(!this.state.mobile){
+      //       this.enlargeWidth()
+      //       return 
+      //     }
+      //   })
+      // }
+
     }
+    
     this.animateEnlarge = (file, options) => {
       this.enlarge.loaded = false
 

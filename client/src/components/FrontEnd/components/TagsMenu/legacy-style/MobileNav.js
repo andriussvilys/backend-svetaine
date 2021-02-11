@@ -50,26 +50,32 @@ export default class MobileNav extends React.Component {
                             else{
                                 openTab = "About"  
                                 this.props.context.loadImage("portrait.jpg")
+                                setTimeout(() => {
+                                    this.props.context.showInfo(0)
+                                }, 400);
                             }
                         }
                         else{
                             openTab = "About"  
                             this.props.context.loadImage("portrait.jpg")
+                            setTimeout(() => {
+                                this.props.context.showInfo(0)
+                            }, 400);
                         }
                         this.setState({openTab: openTab})
                     }}    
                 >
-                    <span>About</span>
+                    <span>About / Contact</span>
                 </button>
 
-                <button
+                {/* <button
                     className={"Mobilenav-button Mobilenav-contact"}
                     onClick={() => {
                         this.props.context.showInfo(0)
                     }}
                 >
                     <span>Contact</span>
-                </button>
+                </button> */}
 
             </div>
 

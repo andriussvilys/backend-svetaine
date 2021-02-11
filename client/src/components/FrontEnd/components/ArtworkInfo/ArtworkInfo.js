@@ -166,8 +166,10 @@ const ArtworkInfo = props => {
     };
     const showInfo = (e) => {
       //0 = UP, 100 = DOWN
-      const newHeight = state.height == 0 ? 100 : 0
-      setState({...state, infoUp: !state.infoUp, height: newHeight})
+
+      const newHeight = props.context.state.info.height == 0 ? 100 : 0
+      // setState({...state, infoUp: !state.infoUp, height: newHeight})
+      props.context.showInfo(newHeight)
       return
     };
     const secondaryInfo = () => {
@@ -188,11 +190,11 @@ const ArtworkInfo = props => {
               file={props.file} 
               context={props.context} 
               tagsTrigger={() => {
-                setState({...state, tagsTrigger: true})
+                // setState({...state, tagsTrigger: true})
                   props.context.toggleExplorer()
               }}
               onClose={() => {
-                setState({...state, tagsTrigger: false})
+                // setState({...state, tagsTrigger: false})
                 props.context.toggleExplorer({close: true})
               }}
             />
@@ -295,7 +297,8 @@ const ArtworkInfo = props => {
       >
         <div 
         className={`ArtworkInfo-wrapper_main`}
-        style={{transform: `translateY(${state.height}%`}}
+        style={{transform: `translateY(${props.context.state.info.height}%`}}
+        // style={{transform: `translateY(${state.height}%`}}
         ref={ArtworkInfoWrapperRef}
         >
           {props.children}

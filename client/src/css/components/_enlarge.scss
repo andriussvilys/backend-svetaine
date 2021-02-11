@@ -59,10 +59,12 @@
     display: flex;
     justify-content: space-between;
     overflow: hidden;
+
+    padding: 0 20px 0 15px;
 }
 .viewControls-button-info{
     position: relative;
-    padding: 0 10px 0 40px;
+    padding: 0 0 0 40px;
 }
 .viewControls-button{
     display: flex;

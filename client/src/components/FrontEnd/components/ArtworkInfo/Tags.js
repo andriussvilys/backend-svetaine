@@ -156,7 +156,8 @@ const Tags = (props) => {
                 {tags(props.file)}  
             </div>
             <div 
-                className={`Tags-item_container-closeButton ${props.context.state.showExplorer ? " Tags-item_container-closeButton_open" : ""}`}
+                className={`Tags-item_container-closeButton ${props.context.state.showLess ? " Tags-item_container-closeButton_open" : ""}`}
+                // className={`Tags-item_container-closeButton ${props.context.state.showExplorer ? " Tags-item_container-closeButton_open" : ""}`}
             >
                 <button 
                     className="Tags-item_container"
