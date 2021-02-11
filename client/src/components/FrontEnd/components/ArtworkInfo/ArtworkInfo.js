@@ -274,10 +274,19 @@ const ArtworkInfo = props => {
       },
       {...genericOptions},
   )
+
     React.useEffect(() => {
       setState({...state, height: props.transform})
     }, [props.counter])
 
+    React.useEffect(() => {
+      setState({...state, height: props.transform})
+    }, [props.transform])
+
+    // React.useEffect(() => {
+    //   setState({...state, height: props.context.state.info.height})
+    // }, [props.context.state.info.height])
+  
 
     return(
       <div

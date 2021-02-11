@@ -244,11 +244,11 @@ font-family: 'Times New Roman', Times, serif;
 .frontEndIndex-container{
     height: 100%;
     width: 100%;
-    // display: grid;
-    grid-template-columns: min-content 1fr;
-    grid-template-rows: min-content 1fr;
     background-color: $background-color;
     position: relative;
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: min-content 1fr;
 }
 .imageSelect-container{
     grid-column-start: 2;
@@ -307,8 +307,14 @@ font-family: 'Times New Roman', Times, serif;
     display: grid;
     grid-template-columns: min-content 1fr;
     grid-template-rows: 100%;
+
     grid-row-start: 2;
     grid-row-end: 3;
+
+    grid-column-start: 1;
+    grid-column-end: 3;
+
+    overflow: hidden;
 }
 
 .FilePreview--imageContainer{
@@ -963,8 +969,10 @@ font-family: 'Times New Roman', Times, serif;
     overflow: hidden;
 }
 .explorer-view{
-    // right: 0;
-    width: 120px !important;
+    width: calc(360px - 220px)!important;
+    .FilePreview--imageContainer{
+        flex-basis: 100%;
+    }
 }
 .carousel-wrapper{
     display: flex;
@@ -1386,17 +1394,20 @@ font-family: 'Times New Roman', Times, serif;
   @import './components/magnify';
 
 
-  $navHeight_desktop: 20px;
+  $navHeight_desktop: 30px;
+
   .enlargeContainer{
     overflow: visible;
     display: grid;
     grid-template-columns: 100%;
     grid-template-rows: 1fr min-content;
-    height: calc(100% - 20px) !important;
+    // height: calc(100% - 20px) !important;
+    max-width: calc(100% - 359px);
     transition: 0.2s all;
   }
   .full-width{
       width: 100% !important;
+      max-width: 100% !important;
   }
   .enlarge-closeButton-container{
       height: $navHeight_desktop;
@@ -1410,12 +1421,10 @@ font-family: 'Times New Roman', Times, serif;
       grid-row-end: 3;
   }
 
-  @media only screen and (max-width: 768px) {
+@media only screen and (max-width: 768px) {
     .FilePreview--imageContainer{
         flex: 1 1 33%;
     }
-  }
-  @media only screen and (max-width: 768px) {
     $navHeight_mobile: 30px;
     .MobileNav-container, .enlarge-closeButton-container{
         height: $navHeight_mobile;
@@ -1426,12 +1435,10 @@ font-family: 'Times New Roman', Times, serif;
     .enlarge-closeButton-button{
         padding-right: 0 !important;
     }
-    // .imageSelect-container.side-scroll{
-    //     position: absolute;
-    // }
     .enlargeContainer{
         height: calc(100%) !important;
         grid-template-rows: min-content 1fr min-content;
+        max-width: unset;
     }
     .slick-next, .slick-prev{
         display: none !important;
@@ -1471,6 +1478,24 @@ font-family: 'Times New Roman', Times, serif;
     }
 }
 
-// body{
-//     cursor: pointer;
+// .Mobilenav-contact:hover, .Mobilenav-contact:focus{
+//     background-color: white !important;
+//     color: black !important;
+//     outline: none !important;
+//     *{
+//         background-color: white !important;
+//         color: black !important;
+//         border-color: black !important;
+//         outline: none !important;
+//     }
 // }
+// .Mobilenav-contact{
+//     *{
+//         opacity: 0.4;
+//     }
+// }
+
+.FilterTree-container,
+.imageSelect-container{
+    transition: width 0.2s;
+}

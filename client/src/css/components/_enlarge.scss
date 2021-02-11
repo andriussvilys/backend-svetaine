@@ -1,6 +1,8 @@
+.fullWidth{
+    width: 100% !important;
+}
 .enlargeContainer{
     height: 100% !important;
-    // width: 1px;
     width: 100%;
     max-width: 100%;
     opacity: 1;
@@ -25,33 +27,13 @@
     }
 }
 .enlarge-closeButton-container{
-    padding: 0 10px;
+    width: 120px;
+    border-left: 1px solid black;
     border-bottom: 1px solid black;
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    position: absolute;
-    right: 0;
-}
-.enlarge-closeButton-button{
-    user-select: none;
-    height: 100%;
-    text-transform: uppercase;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    padding-right: 30px;
-    padding-left: 10px;
-}
-.enlarge-closeButton-button:after{
-    position: absolute;
-    line-height: 20px;
-    top: calc(50% - 10px);
-    right: 10px;
-    // font-size: 35px;
-    content: ">";
-    // right: 5px;
+    align-items: center;
+    transition: opacity 0.3s;
 }
 .controls-exitButton{
     position: absolute;
@@ -112,14 +94,6 @@
     width: 20px;
     margin-right: 7px;
 }
-// .viewControls-viewNext-container{
-//     display: flex;
-//     order: 2;
-// }
-// .viewControls-info-container{
-//     margin-right: 10px;
-//     order: 1;
-// }
 
 @media only screen and (max-width: 720px) {
     .enlargeContainer{
@@ -138,19 +112,6 @@
         display: grid;
         transition: 0.2s all;
     }
-    // .enlarge-closeButton-button{
-    //     right: unset;
-    //     left: 10px;
-    // }
-    // .viewControls{
-    //     justify-content: space-between;
-    // }
-    // .viewControls-viewNext-container{
-    //     order: 1;
-    // }
-    // .viewControls-info-container{
-    //     order: 2;
-    // }
 }
 .enlarge-scroll-left{
     transform: translateX(0);

@@ -335,14 +335,16 @@ label {
 .frontEndIndex-container {
   height: 100%;
   width: 100%;
+  background-color: white;
+  position: relative;
+  display: -ms-grid;
+  display: grid;
   -ms-grid-columns: min-content 1fr;
       grid-template-columns: -webkit-min-content 1fr;
       grid-template-columns: min-content 1fr;
   -ms-grid-rows: min-content 1fr;
       grid-template-rows: -webkit-min-content 1fr;
       grid-template-rows: min-content 1fr;
-  background-color: white;
-  position: relative;
 }
 
 .imageSelect-container {
@@ -429,6 +431,10 @@ label {
   -ms-grid-row: 2;
       grid-row-start: 2;
   grid-row-end: 3;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 3;
+  overflow: hidden;
 }
 
 .FilePreview--imageContainer {
@@ -1329,7 +1335,12 @@ label {
 }
 
 .explorer-view {
-  width: 120px !important;
+  width: calc(360px - 220px) !important;
+}
+
+.explorer-view .FilePreview--imageContainer {
+  -ms-flex-preferred-size: 100%;
+      flex-basis: 100%;
 }
 
 .carousel-wrapper {
@@ -1845,6 +1856,10 @@ label {
   font-size: 12px;
 }
 
+.fullWidth {
+  width: 100% !important;
+}
+
 .enlargeContainer {
   height: 100% !important;
   width: 100%;
@@ -1879,48 +1894,20 @@ label {
 }
 
 .enlarge-closeButton-container {
-  padding: 0 10px;
+  width: 120px;
+  border-left: 1px solid black;
   border-bottom: 1px solid black;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  position: absolute;
-  right: 0;
-}
-
-.enlarge-closeButton-button {
-  -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
-          user-select: none;
-  height: 100%;
-  text-transform: uppercase;
-  font-weight: bold;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  padding-right: 30px;
-  padding-left: 10px;
-}
-
-.enlarge-closeButton-button:after {
-  position: absolute;
-  line-height: 20px;
-  top: calc(50% - 10px);
-  right: 10px;
-  content: ">";
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transition: opacity 0.3s;
+  transition: opacity 0.3s;
 }
 
 .controls-exitButton {
@@ -2062,6 +2049,8 @@ label {
   background-color: white;
   width: 0;
   padding-top: 10px;
+  overflow-y: visible;
+  overflow-x: hidden;
 }
 
 .FilterTree-wrapper {
@@ -2116,6 +2105,12 @@ label {
       -ms-flex-pack: justify;
           justify-content: space-between;
   border-bottom: 1px solid black;
+  -ms-grid-row: 1;
+      grid-row-start: 1;
+  grid-row-end: 2;
+  -ms-grid-column: 1;
+      grid-column-start: 1;
+  grid-column-end: 3;
 }
 
 .MobileNav-wrapper {
@@ -2151,15 +2146,6 @@ label {
 
 .Mobilenav-button span {
   line-height: 100%;
-}
-
-.Mobilenav-contact {
-  cursor: initial;
-}
-
-.Mobilenav-contact span {
-  cursor: initial;
-  text-decoration: line-through;
 }
 
 .Mobilenav-button-close {
@@ -2411,22 +2397,23 @@ input:checked + .slider:before {
   -ms-grid-rows: 1fr min-content;
       grid-template-rows: 1fr -webkit-min-content;
       grid-template-rows: 1fr min-content;
-  height: calc(100% - 20px) !important;
+  max-width: calc(100% - 359px);
   -webkit-transition: 0.2s all;
   transition: 0.2s all;
 }
 
 .full-width {
   width: 100% !important;
+  max-width: 100% !important;
 }
 
 .enlarge-closeButton-container {
-  height: 20px;
-  top: -20px;
+  height: 30px;
+  top: -30px;
 }
 
 .MobileNav-container {
-  height: 20px;
+  height: 30px;
 }
 
 .ArtworkInfo-container {
@@ -2441,9 +2428,6 @@ input:checked + .slider:before {
         -ms-flex: 1 1 33%;
             flex: 1 1 33%;
   }
-}
-
-@media only screen and (max-width: 768px) {
   .MobileNav-container, .enlarge-closeButton-container {
     height: 30px;
   }
@@ -2458,6 +2442,7 @@ input:checked + .slider:before {
     -ms-grid-rows: min-content 1fr min-content;
         grid-template-rows: -webkit-min-content 1fr -webkit-min-content;
         grid-template-rows: min-content 1fr min-content;
+    max-width: unset;
   }
   .slick-next, .slick-prev {
     display: none !important;
@@ -2501,5 +2486,11 @@ input:checked + .slider:before {
   color: white !important;
   border-color: white !important;
   outline: none !important;
+}
+
+.FilterTree-container,
+.imageSelect-container {
+  -webkit-transition: width 0.2s;
+  transition: width 0.2s;
 }
 /*# sourceMappingURL=frontEndMain.css.map */

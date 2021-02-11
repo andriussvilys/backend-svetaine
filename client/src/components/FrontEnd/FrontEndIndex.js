@@ -69,36 +69,21 @@ export default class FrontEndIndex extends React.Component{
                                     <div 
                                         className={`
                                         enlargeContainer 
-                                        ${!this.context.state.mobile && this.context.state.showLess ? "full-width" : ""}
+                                        ${!this.context.state.mobile && !this.context.state.showLess ? "full-width" : ""}
                                         ${this.context.state.enlarge && this.context.state.enlarge.open === true ? "enlarge-scroll-left" : ""}
-                                        ${!this.context.state.mobile && this.context.state.showExplorer }
                                         `}
                                         id="enlargeContainer"
-                                    >             
-                                                    <div 
-                                                        className={"enlarge-closeButton-container"}
-                                                        >
-                                                        <button 
-                                                        className="enlarge-closeButton-button"
-                                                        onClick={(e) => {
-                                                            e.stopPropagation()
-                                                            // setCurrentArtwork(null)
-                                                            this.context.closeEnlarge()
-                                                        }}
-                                                        >
-                                                            <span>close</span>
-                                                                {/* <img className={"List-closeButton_img"} src="icons/svg/view-left.svg" alt="close icon"/> */}
-                                                        </button>
-                                                    </div>   
-                                            <Carousel 
-                                                currentSlide={this.context.state.currentSlide.index}
-                                                initialTransform={this.context.state.currentSlide.initialTransform}
-                                                images={this.context.state.images}
-                                                context={this.context}
-                                                file={this.context.state.enlarge.file}
-                                                counter={this.context.state.enlarge.counter}
-                                            /> 
-                                        </div>: null
+                                    >
+                                        <Carousel 
+                                            currentSlide={this.context.state.currentSlide.index}
+                                            initialTransform={this.context.state.currentSlide.initialTransform}
+                                            images={this.context.state.images}
+                                            context={this.context}
+                                            file={this.context.state.enlarge.file}
+                                            counter={this.context.state.enlarge.counter}
+                                        /> 
+                                    </div>
+                                    : null
                                     }                        
                                     
                             </div>

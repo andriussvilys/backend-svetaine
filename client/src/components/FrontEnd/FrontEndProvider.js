@@ -133,7 +133,6 @@ export class Provider extends React.Component{
         newState.showExplorer = true 
       }
       newState.filters.lastValue = value
-      // return this.setState(newState, () => {this.enlargeWidth()})
       return newState
     }
     this.compoundFilter = (displayTrigger, value) => {
@@ -383,8 +382,6 @@ export class Provider extends React.Component{
 
       if(filters.onDisplay[filterName].includes(value)){
         newFilters.onDisplay[filterName] = filters.onDisplay[filterName].filter(name => name !== value)
-        
-        
       }
       else{
         
@@ -662,11 +659,13 @@ export class Provider extends React.Component{
       })
       return onDisplay.length > 0
     }
+    
     this.enlargeWidth = (options) => {
       if(!this.state.mobile){
         const container = document.getElementById("enlargeContainer")
         const images = document.getElementById("images")
         let enlargeContainerWidth = images.offsetWidth
+
         if(options && options.showLess){
           return this.setState({showLess: true})
         }
@@ -694,36 +693,29 @@ export class Provider extends React.Component{
       }
 
       else{return}
-      }
+
+    }
+
     this.showMenu = (e) => {
-      //Mobile
       if(e){
         e.stopPropagation()
       }
       
       let newState = {...this.state}
-      if(this.state.showLess){
-        newState.showLess = false
-      }
+
       
-      // else{
+      if(this.state.enlarge.open){
+        newState.showLess = !newState.showLess
+        newState.showFilters = true
+        newState.showExplorer = true
+      }
+
+      else{
         newState.showFilters = !this.state.showFilters
-        
-        if(!this.state.mobile && this.state.enlarge && this.state.enlarge.open){
-          if(newState.showFilters ){
-            newState.showExplorer = true
-          }
-          else{
-            newState.showExplorer = false
-          }
-        }
-      // }
+      }
 
       this.setState(newState, () => {
-          if(this.state.mobile){
-          }
-          //DESKTOP
-          else{
+          if(!this.state.mobile){
             this.enlargeWidth()
           }
       })
@@ -1009,20 +1001,28 @@ export class Provider extends React.Component{
     }
 
     this.loadImage = fileName => {
+
       const imageIndex = this.state.artworkInfoData[fileName].familyDisplayIndex
       const artworkFam = this.state.artworkInfoData[fileName].artworkFamily
       const imageOrder = this.state.relatedArtwork[artworkFam].column.fileIds
+
       const imageList = imageOrder.map(imageName => {
         return this.state.artworkInfoData[imageName].desktopPath
       })
+
       const initialTransform = (100 / imageList.length) * imageIndex
       let newState = {...this.state}
       newState.images = imageList
+
       newState.currentSlide = {
         index: imageIndex,
         initialTransform: initialTransform
       }
+
+      newState.showLess = this.state.showFilters ? true : false
+
       newState.enlarge = {open: true, file: fileName, counter: ++this.state.enlarge.counter}
+
       this.enlargeWidth({filters: this.state.showFilters})
       setTimeout(() => {
         this.setState(newState)
@@ -1035,35 +1035,44 @@ export class Provider extends React.Component{
       }, 100);
     }
 
-    this.showInfo = (e, options) => {
-      if(this.state.enlarge && !this.state.enlarge.open){
-        return
-      }
-      if(e){
-        e.stopPropagation()
-      }
+    this.showInfo = (value) => {
       let newState = {...this.state}
-      if(options && options.close){
-        newState.showFilters = false
-        newState.showExplorer = false
-        newState.info.infoUp = false
-        newState.showLess = true
-      }
-      if(options && options.height){
-        newState.info.height = options.height
-      }
-      else{
-        newState.info.infoUp = true
-      }
-      this.setState(newState, () => {
-        if(!this.state.mobile){
-            if(!this.state.info.infoUp){
-              return
-            }
-          }
-        })
-      return
+
+      newState.info.height = value;
+
+      this.setState(newState)
     }
+
+    // this.showInfo = (e, options) => {
+    //   // if(this.state.enlarge && !this.state.enlarge.open){
+    //   //   return
+    //   // }
+    //   // if(e){
+    //   //   e.stopPropagation()
+    //   // }
+    //   // let newState = {...this.state}
+    //   // if(options && options.close){
+    //   //   newState.showFilters = false
+    //   //   newState.showExplorer = false
+    //   //   newState.info.infoUp = false
+    //   //   newState.showLess = true
+    //   // }
+    //   // if(options && options.height){
+    //   //   newState.info.height = options.height
+    //   // }
+    //   // else{
+    //   //   newState.info.infoUp = true
+    //   // }
+    //   // this.setState(newState, () => {
+    //   //   if(!this.state.mobile){
+    //   //       if(!this.state.info.infoUp){
+    //   //         return
+    //   //       }
+    //   //     }
+    //   //   })
+    //   // return
+    // }
+
     this.toggleMobile = () => {
       const container = document.getElementById("enlargeContainer")
       const images = document.getElementById("images")

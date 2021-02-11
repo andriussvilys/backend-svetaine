@@ -8,9 +8,6 @@ $filtersWidth_desktop: 220px;
     border-bottom: 1px dotted black;
     text-decoration: none;
     list-style: none;
-    .listItem{
-        // margin-left: 8px;
-    }
 }
 .legacyStyle-List-categoryTitle{
     text-transform: uppercase;
@@ -25,9 +22,11 @@ $filtersWidth_desktop: 220px;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 14px;
     background-color: white;
-    // border-right: 1px solid black;
     width: 0;
     padding-top: 10px;
+
+    overflow-y: visible;
+    overflow-x: hidden;
 }
 .FilterTree-wrapper{
     width: $filtersWidth_desktop;
@@ -65,6 +64,12 @@ $filtersWidth_desktop: 220px;
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid black;
+
+    grid-row-start: 1;
+    grid-row-end: 2;
+
+    grid-column-start: 1;
+    grid-column-end: 3;
 }
 .MobileNav-wrapper{
     width: 360px;
@@ -86,13 +91,13 @@ $filtersWidth_desktop: 220px;
         line-height: 100%;
     }
 }
-.Mobilenav-contact{
-    cursor: initial;
-    span{
-        cursor: initial;
-       text-decoration: line-through;
-    }
-}
+// .Mobilenav-contact{
+//     cursor: initial;
+//     span{
+//         cursor: initial;
+//        text-decoration: line-through;
+//     }
+// }
 .Mobilenav-button-close{
     position: absolute;
     top: 30px;

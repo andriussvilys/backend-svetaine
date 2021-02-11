@@ -20,7 +20,6 @@ export default class MobileNav extends React.Component {
                 this.props.context.closeEnlarge(e)
             }
             return
-            // return this.setState({openTab: null})
         }
     }
     render(){
@@ -44,25 +43,55 @@ export default class MobileNav extends React.Component {
                     onClick={(e) => {
                         let openTab = null;
                         if(this.state.openTab == "About"){
-                            this.props.context.closeEnlarge();
-                            openTab = null;
+                            if(this.props.context.state.enlarge.file == "portrait.jpg"){
+                                this.props.context.closeEnlarge();
+                                openTab = null;
+                            }
+                            else{
+                                openTab = "About"  
+                                this.props.context.loadImage("portrait.jpg")
+                            }
                         }
                         else{
                             openTab = "About"  
                             this.props.context.loadImage("portrait.jpg")
                         }
-                        // this.closePrev(e, "About")
-                        // this.props.context.loadEnlarge(e, "portrait.jpg");
                         this.setState({openTab: openTab})
                     }}    
                 >
                     <span>About</span>
                 </button>
-                <button 
-                className={"Mobilenav-button Mobilenav-contact"}>
+
+                <button
+                    className={"Mobilenav-button Mobilenav-contact"}
+                    onClick={() => {
+                        this.props.context.showInfo(0)
+                    }}
+                >
                     <span>Contact</span>
                 </button>
+
             </div>
+
+            <div 
+                className={"enlarge-closeButton-container"}
+                style={{
+                    opacity: this.props.context.state.enlarge.open ? 1 : 0
+                }}
+                >
+                <button 
+                className="Mobilenav-button"
+                style={{
+                    border: "none"
+                }}
+                onClick={(e) => {
+                    e.stopPropagation()
+                    this.props.context.closeEnlarge()
+                }}
+                >
+                    <span>close ></span>
+                </button>
+            </div>   
         </nav>)
     }
 }

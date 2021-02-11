@@ -365,7 +365,6 @@ const Carousel = props => {
 
     useEffect(() => {
         slideTo(props.currentSlide)
-        // setInfoPosition({height: 100})
     }, [props.counter])
 
     useEffect(() => {
