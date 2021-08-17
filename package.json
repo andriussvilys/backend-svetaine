@@ -12,7 +12,7 @@
     "build-prod": "npm run-script build --prefix client",
     "build_client": "npm run-script build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku_run": "concurrently \"npm run build_client\" \"npm run\" ",
+    "heroku_run": "concurrently \"npm start\" \"npm run client\"",
     "test-page": "npm start test-page.html"
   },
   "repository": {
