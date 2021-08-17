@@ -61,17 +61,17 @@ app.use('/resize', resize);
 app.use('/imagemin', imagemin);
 
 // this uses a folder inside the server
-app.use(express.static('files'))
+// app.use(express.static('files'))
 
 app.use((err, req, res, next) => {
     res.status(500).send({error: err})
 })
 
-// app.use(express.static(path.join(__dirname, 'client/public')));
+app.use(express.static(path.join(__dirname, 'client/build')));
 
-// app.get('/*', function(req, res) {
-//     res.sendFile(path.join(__dirname, 'client/public', 'index.html'));
-// });
+app.get('/*', function(req, res) {
+    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
 
 // app.use(express.static(path.join(__dirname, 'client/build')));
 
