@@ -10,9 +10,9 @@
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
     "build-prod": "npm run-script build --prefix client",
-    "build_client": "npm build --prefix client",
+    "build_client": "npm run-script build --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku_run": "concurrently \"npm run build_client\" \"npm run server\" ",
+    "heroku_run": "concurrently \"npm run build_client\" \"npm start\" ",
     "test-page": "npm start test-page.html"
   },
   "repository": {
