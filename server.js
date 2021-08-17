@@ -22,8 +22,8 @@ const app = express();
 app.use(bodyParser({limit: '50mb'}))
 app.use(bodyParser.json());
 
-const port = 5000;
-// const port = process.env.PORT || 5000;
+// const port = 5000;
+const port = process.env.PORT || 5000;
 
 app.listen(port, () => {console.log(`server started on port ${port}`)});
 
@@ -67,8 +67,8 @@ app.use((err, req, res, next) => {
     res.status(500).send({error: err})
 })
 
-app.use(express.static(path.join(__dirname, 'client/build')));
+// app.use(express.static(path.join(__dirname, 'client/build')));
 
-app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
-});
+// app.get('/*', function(req, res) {
+//     res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+// });
